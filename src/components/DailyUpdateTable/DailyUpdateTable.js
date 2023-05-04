@@ -17,6 +17,7 @@ const DailyUpdateTable = () => {
   const [flag, setFlag] = useState(false);
   const [showModal, setShowModal] = useState(false);
   const [selectedItem, setSelectedItem] = useState(null);
+  const [editedComment, setEditedComment] = useState("");
 
   const handleReadMore = (item) => {
     setSelectedItem(item);
@@ -48,6 +49,13 @@ const DailyUpdateTable = () => {
   const handleResultsPerPageChange = (event) => {
     setResultsPerPage(event.target.value);
     setCurrentPage(1);
+  };
+
+  const handleSave = () => {
+    const updatedTableArr = [...tableArr];
+    updatedTableArr[selectedItem.id - 1].comment = editedComment;
+    setTableData(updatedTableArr);
+    // handleCloseModal();
   };
 
   const handleFiltersChange = () => {
@@ -193,12 +201,12 @@ const DailyUpdateTable = () => {
                     <Modal.Title style={{fontSize: "1.4rem"}}>Daily Update</Modal.Title>
                   </Modal.Header>
                   <Modal.Body>
-                    <p><span className="fw-bold">Learning Type:</span> {selectedItem && selectedItem.learningType}</p>
-                    <p><span className="fw-bold">Topic:</span> {selectedItem && selectedItem.topics}</p>
+                    <p><span className="fw-bold">Learning Type:</span> <span className="opacity-75">{selectedItem && selectedItem.learningType}</span></p>
+                    <p><span className="fw-bold">Topic:</span> <span className="opacity-75">{selectedItem && selectedItem.topics}</span></p>
 
                     <Form.Group>
                       <Form.Label><span className="fw-bold">Comment: </span></Form.Label>
-                      <Form.Control as="textarea" style={{fontSize: "0.813rem"}} rows={4} cols={60}>{selectedItem && selectedItem.comment}</Form.Control>
+                      <Form.Control className="opacity-75" as="textarea" onChange={(event) => setEditedComment(event.target.value)} style={{fontSize: "0.813rem"}} rows={4} cols={60}>{selectedItem && selectedItem.comment}</Form.Control>
                     </Form.Group>
 
                   </Modal.Body>
@@ -206,7 +214,10 @@ const DailyUpdateTable = () => {
                     <Button variant="outline-primary" onClick={() => setShowModal(false)}>
                       Cancel
                     </Button>
-                    <Button variant="primary" onClick={() => setShowModal(false)}>
+                    <Button variant="primary" onClick={() => {
+                      setShowModal(false);
+                      handleSave()
+                    }}>
                       Save
                     </Button>
                   </Modal.Footer>
