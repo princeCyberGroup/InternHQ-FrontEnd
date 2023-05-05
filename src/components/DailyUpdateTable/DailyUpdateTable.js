@@ -14,10 +14,11 @@ const DailyUpdateTable = () => {
   const [dateFilterValue, setDateFilterValue] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
   const [resultsPerPage, setResultsPerPage] = useState(10);
-  const [flag, setFlag] = useState(false);
+  const [datemodalSaveFlag, setDatemodalSaveFlag] = useState(false);
   const [showModal, setShowModal] = useState(false);
   const [selectedItem, setSelectedItem] = useState(null);
   const [editedComment, setEditedComment] = useState("");
+  const [modalSaveFlag, setModalSaveFlag] = useState(true);
 
   const handleReadMore = (item) => {
     setSelectedItem(item);
@@ -55,7 +56,6 @@ const DailyUpdateTable = () => {
     const updatedTableArr = [...tableArr];
     updatedTableArr[selectedItem.id - 1].comment = editedComment;
     setTableData(updatedTableArr);
-    // handleCloseModal();
   };
 
   const handleFiltersChange = () => {
@@ -95,9 +95,9 @@ const DailyUpdateTable = () => {
         );
       });
 
-      setFlag(true);
+      setDatemodalSaveFlag(true);
       console.log("first");
-    } else if (flag && dateFilterValue == "") {
+    } else if (datemodalSaveFlag && dateFilterValue == "") {
       filteredData = tableArr; // Reset the filtered data to the original array
       console.log("Hi");
     }
@@ -147,7 +147,7 @@ const DailyUpdateTable = () => {
                   <th className="column-duration">Duration</th>
                 </tr>
               </thead>
-              <tbody>
+              <tbody className="align-middle">
                 <tr>
                   <td></td>
                   <td>
@@ -206,7 +206,11 @@ const DailyUpdateTable = () => {
 
                     <Form.Group>
                       <Form.Label><span className="fw-bold">Comment: </span></Form.Label>
-                      <Form.Control className="opacity-75" as="textarea" onChange={(event) => setEditedComment(event.target.value)} style={{fontSize: "0.813rem"}} rows={4} cols={60}>{selectedItem && selectedItem.comment}</Form.Control>
+                      <Form.Control className="opacity-75" as="textarea" onChange={(event) => {
+                        setModalSaveFlag(false);
+                        setEditedComment(event.target.value)
+                        
+                        }} style={{fontSize: "0.813rem"}} rows={4} cols={60}>{selectedItem && selectedItem.comment}</Form.Control>
                     </Form.Group>
 
                   </Modal.Body>
@@ -214,7 +218,7 @@ const DailyUpdateTable = () => {
                     <Button variant="outline-primary" onClick={() => setShowModal(false)}>
                       Cancel
                     </Button>
-                    <Button variant="primary" onClick={() => {
+                    <Button variant="primary" disabled={modalSaveFlag} onClick={() => {
                       setShowModal(false);
                       handleSave()
                     }}>
@@ -226,7 +230,7 @@ const DailyUpdateTable = () => {
               </tbody>
               <tfoot>
                 <tr>
-                  <td colSpan={2}>Total Items: {tableData.length}</td>
+                  <td className="f-bold" colSpan={2}>Total Items: {tableData.length}</td>
                   <td></td>
                   <td></td>
                   <td colSpan={2}>
@@ -241,7 +245,7 @@ const DailyUpdateTable = () => {
                         >
                           Results per page
                         </p>
-                        <select
+                        <select style={{ color: "#706F73" }}
                           className="form-select m-2"
                           value={resultsPerPage}
                           onChange={handleResultsPerPageChange}
@@ -286,7 +290,7 @@ const DailyUpdateTable = () => {
                                 }`}
                             >
                               <button
-                                className="page-link"
+                                className="page-link rounded pagination-styling"
                                 onClick={() => handlePageChange(page)}
                               >
                                 {page}
