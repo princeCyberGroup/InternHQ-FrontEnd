@@ -1,14 +1,17 @@
 import React, { useState } from 'react'
 import cgLogo from "./cglogo.svg"
-
+import DailyTaskTracker from './DailyTaskTracker/DailyTaskTracker';
 
 const Dashboard = () => {
 
+  const [currPage, setCurrPage] = useState("dashboard");
   const [dashNav, setDashNav] = useState("dashboard");
 
-  const changeNavLink = (type) =>{
+
+  const changePage = (type) => {
     console.log("working")
     setDashNav(type)
+    setCurrPage(type)
   }
 
   return (
@@ -28,7 +31,7 @@ const Dashboard = () => {
                 </li>
                 :
                 <li className="nav-item">
-                  <a className="nav-link" href="#" onClick={()=>setDashNav('dashboard')}>Dashboard</a>
+                  <a className="nav-link" href="#" onClick={() => changePage('dashboard')}>Dashboard</a>
                 </li>
               }
 
@@ -38,7 +41,7 @@ const Dashboard = () => {
                 </li>
                 :
                 <li className="nav-item">
-                  <a className="nav-link" href="#" onClick={()=>setDashNav('dailyUpdate')}>Daily Update</a>
+                  <a className="nav-link" href="#" onClick={() => changePage('dailyUpdate')}>Daily Update</a>
                 </li>
               }
 
@@ -48,13 +51,18 @@ const Dashboard = () => {
                 </li>
                 :
                 <li className="nav-item">
-                  <a className="nav-link" href="#" onClick={()=>setDashNav('skillmanagement')}>Skill Management</a>
+                  <a className="nav-link" href="#" onClick={() => changePage('skillmanagement')}>Skill Management</a>
                 </li>
               }
             </ul>
           </div>
         </nav>
       </div>
+      {currPage === 'dashboard' ?
+        <DailyTaskTracker/>
+        :
+        // {currPage === 'dashboard' ? " " : " "}
+        <h1>Table Page</h1>}
     </>
   )
 }
