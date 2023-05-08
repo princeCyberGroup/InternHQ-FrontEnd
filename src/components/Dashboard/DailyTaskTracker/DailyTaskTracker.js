@@ -93,7 +93,6 @@ const DailyTaskTracker = () => {
 
   return (
     <>
-  
           <div className="tracker border p-0">
             <div className="card-body p-0">
               <div className="border-bottom ">
