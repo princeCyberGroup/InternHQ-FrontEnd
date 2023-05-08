@@ -7,6 +7,7 @@ const tableArr = [
     comment:
       "Eiusmod aute ipsum laborum ad nostrud occaecat veniam velit quis adipisicing enim irure Lorem. Magna velit dolore id eu quis est consectetur magna proident sunt fugiat veniam non. Non exercitation minim nostrud exercitation pariatur minim ullamco ea proident.\r\n",
     duration: "11:45 AM - 1:15 PM\n1hrs 30 min",
+    timestamp: 1683396362146 //Time in millisec when comment is added
   },
   {
     id: 2,
