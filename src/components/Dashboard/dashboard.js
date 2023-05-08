@@ -1,7 +1,11 @@
 import React, { useState } from 'react'
 import cgLogo from "./cglogo.svg"
 import DailyTaskTracker from './DailyTaskTracker/DailyTaskTracker';
-
+import DailyUpdateTable from '../DailyUpdateTable/DailyUpdateTable';
+import { AddNewProjectComponent } from './ProjectIdea/ProjectComponent';
+import DashboardGraph from './ReportGraph/DashboardGraph';
+import { NotificationComponent } from './Notification/Notifications';
+import { MentorComponent } from './MentorList/MentorList';
 const Dashboard = () => {
 
   const [currPage, setCurrPage] = useState("dashboard");
@@ -18,7 +22,7 @@ const Dashboard = () => {
     // <div>Dashboard</div>
     <>
       <div>
-        <nav className="navbar navbar-expand-lg navbar-light bg-light">
+        <nav className="navbar navbar-expand-lg navbar-light bg-light border-bottom">
           <a className="navbar-brand" href="#">
             <img src={cgLogo} width="148" height="34" className="d-inline-block align-top" alt="" />
           </a>
@@ -59,10 +63,40 @@ const Dashboard = () => {
         </nav>
       </div>
       {currPage === 'dashboard' ?
-        <DailyTaskTracker/>
+        <>
+          {/* <DailyTaskTracker/> */}
+          <div class="container-fluid">
+            {/* <div class="container"> */}
+              <div class="row mt-3">
+                <div class="col">
+                  <DailyTaskTracker/>
+                </div>
+                <div class="col">
+                  <AddNewProjectComponent/>
+                </div>
+                <div class="col">
+                  <MentorComponent/>
+                </div>
+              </div>
+
+
+
+              <div class="row mt-3">
+                <div class="col-md-8">
+                  <DashboardGraph/>
+                </div>
+                <div class="col-md-4">
+                  <NotificationComponent/>
+                </div>
+            </div>
+          </div>
+          {/* <AddNewProjectComponent /> */}
+        </>
         :
         // {currPage === 'dashboard' ? " " : " "}
-        <h1>Table Page</h1>}
+        <DailyUpdateTable />
+        // ''
+        }
     </>
   )
 }

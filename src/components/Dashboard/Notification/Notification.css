@@ -1,0 +1,52 @@
+.notification-card{
+    position: relative;
+    top: -6rem;
+    max-height: 29.43rem;
+    overflow-y: scroll;
+}
+.card {
+    margin-top: 1%;
+    margin-left: auto;
+    margin-right: auto;
+    box-shadow: 0px 4px 20px rgba(40, 52, 73, 0.15);
+    border-radius: 8px;
+    width: 400px;
+    padding: 0px;
+    /* gap: 20px; */
+
+}
+
+.card-header {
+    font-style: normal;
+    font-weight: 600;
+    font-size: 16px;
+    line-height: 19px;
+    color: #343435;
+}
+
+.div-1
+{
+    padding: 12px 16px 16px;
+    gap: 12px;
+    background: #FFFFFF;
+    border-bottom: 1px solid #E9ECEB;
+
+}
+
+.skills {
+    font-style: normal;
+    font-weight: 600;
+    font-size: 14px;
+    line-height: 16px;
+    color: #343435;
+    padding-left: 3%;
+}
+
+.date {
+    font-style: normal;
+    font-weight: 400;
+    font-size: 13px;
+    line-height: 16px;
+    color: #8E8E92;
+}
+
