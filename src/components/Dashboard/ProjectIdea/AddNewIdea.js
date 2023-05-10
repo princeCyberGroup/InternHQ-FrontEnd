@@ -1,4 +1,4 @@
-import { NewComponent } from "./ProjectComponent";
+import { AddNewProjectComponent, NewComponent } from "./ProjectComponent";
 import React, { useState } from 'react';
 import './AddNewIdea.css';
 
@@ -24,7 +24,7 @@ export const NewIdea = () => {
                             </div>
 
                             <div className='col-6'>
-                                <button className="w-100">Project</button>
+                                <button className="w-100">Project <AddNewProjectComponent/></button>
                             </div>
                         </div>
                     </div>

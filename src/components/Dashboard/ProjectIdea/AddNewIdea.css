@@ -1,68 +1,125 @@
+.btn-1 {
+    width: 7rem;
+    border: none;
+    background: #FFFFFF;
+    font-style: normal;
+    font-weight: 600;
+    font-size: 1rem;
+    text-align: center;
+    /* padding-top: 1rem;
+    padding-bottom: 1rem; */
+    color: #343435;
+}
+
+.btn-2 {
+    border: none;
+    background: #FFFFFF;
+    font-style: normal;
+    font-weight: 600;
+    font-size: 1rem;
+    text-align: center;
+    /* padding-top: 1rem;
+    padding-bottom: 1rem; */
+    color: #343435;
+}
+
+.project-idea-btn {
+
+    border-radius: 8px 0px 0px 0px;
+    width: 10.5rem;
+    /* padding: 8px 16px;
+    gap: 8px; */
+    background: #FFFFFF;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem 2.563rem;
+
+}
+
+.p-active {
+    border-bottom: 0.188rem solid #28519E;
+}
+
+.project-btn {
+    width: 10.5rem;
+    margin-left: 2rem;
+    border-radius: 0px 8px 0px 0px;
+    /* padding: 8px 16px;
+    gap: 8px; */
+    padding: 1rem 3.656rem;
+    background: #FFFFFF;
+    align-items: center;
+    justify-content: center;
+}
+
+.card-header {
+    padding: 0;
+    display: flex;
+    flex: 1;
+    background-color: #FFFFFF;
+}
+
 .card {
-    width: 28rem;
+    width: 23.68rem;
     border-radius: 8px;
-    margin-left: auto;
-    margin-right: auto;
-    margin-top: 2rem;
-    padding: 1rem;
-    padding-bottom: 1rem;
-    padding-top: 0.5rem;
     box-shadow: 0px 4px 20px rgba(40, 52, 73, 0.15);
-    background-color: transparent;
+    background: #FFFFFF;
+    left: 0;
+    top: 0;
 }
 
-.third-div {
-
-    padding: 12px;
-    gap: 8px;
-
-    background: rgba(40, 81, 158, 0.08);
-    /* Primary/Blue */
-
-    border-left: 3px solid #28519E;
-    border-radius: 4px;
-
-}
-
-.stretched-link {
-    color: #28519E;
+.card-text {
+    width: 21.68rem;
     font-style: normal;
     font-weight: 400;
-    font-size: 14px;
-    line-height: 16px;
-    text-decoration-line: underline;
-    width: 59px;
-    height: 16px;
+    font-size: 0.87rem;
+    color: #343435;
+    opacity: 0.9;
+}
+
+p.card-text {
+    margin: 0rem;
+}
+
+.share-project {
+    font-style: normal;
+    font-weight: 600;
+    font-size: 0.8rem;
+    color: #343435;
+    padding-top: 1.25rem;
+}
+
+.div3 {
+    width: 21.68rem;
+    font-style: normal;
+    font-weight: 600;
+    font-size: 0.8rem;
+
+}
+
+.div3>h5 {
+    font-size: 1rem;
+}
+
+.div3>p {
+    font-size: 0.95rem;
+}
+
+.idea-div {
+    border-left: 3px solid #28519E;
+    border-radius: 4px;
+    padding: 0.75rem;
+    gap: 0.5rem;
+    background: rgba(40, 81, 158, 0.08);
 }
 
 .member {
     font-style: normal;
     font-weight: 500;
-    font-size: 14px;
-    line-height: 16px;
-    width: 64px;
-    height: 16px;
-
+    font-size: 0.94rem;
+    /* width: 4rem; */
+    padding-top: 0.75rem;
     color: #343435;
-}
-.member_row{
-    height: 15px;
-    width: 15px;
-    background-color: bisque;
-    border-radius: 25%;
-    box-shadow: #343435;
-    margin-right: 0%;
-    display:inline;
-}
-
-.view-all {
-    background-color: transparent;
-    border: none;
-    color: #28519E;
-    font-style: normal;
-    font-weight: 500;
-    font-size: 14px;
-    line-height: 16px;
 }
 
 .add-new-idea {
@@ -71,66 +128,174 @@
     color: #28519E;
     font-style: normal;
     font-weight: 500;
-    font-size: 14px;
-    line-height: 16px;
+    font-size: 0.8rem;
     text-align: left;
     text-decoration: none;
+    padding-top: 1.5rem;
 }
 
-.w-100 {
-    background-color: transparent;
-    border: none;
-    font-style: normal;
-    font-weight: 600;
-    font-size: 16px;
-    line-height: 19px;
-    color: #343435;
-    width: 52px;
-    height: 19px;
+.container {
+    width: 23.68rem;
+    border-radius: 8px;
+    box-shadow: 0px 4px 20px rgba(40, 52, 73, 0.15);
+    background: #FFFFFF;
+    left: 0;
+    top: 0;
 }
 
 .paragraph {
-    width: 347px;
-    height: 57px;
-    left: 16px;
-    top: 64px;
+    width: 21.68rem;
     font-style: normal;
     font-weight: 400;
-    font-size: 14px;
-    line-height: 19px;
+    font-size: 0.8rem;
     color: #343435;
     opacity: 0.7;
 }
 
-.techno {
+.project-idea {
     font-style: normal;
-    font-weight: 500;
-    font-size: 14px;
-    line-height: 16px;
+    font-weight: 600;
+    font-size: 0.8rem;
     color: #343435;
+}
+
+.row-3 {
+    border-left: 3px solid #28519E;
+    border-radius: 4px;
+    padding: 0.75rem;
+    gap: 0.5rem;
+    width: 21.68rem;
+    background: rgba(40, 81, 158, 0.08);
+}
+
+.stretched-link {
+    color: #28519E;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 0.8rem;
+    text-decoration-line: underline;
+    width: 59px;
+
+}
+
+.view-all {
+    background-color: transparent;
+    border: none;
+    color: #28519E;
+    font-style: bold;
+    font-weight: 500;
+    font-size: 0.8rem;
 }
 
 .project-link {
     font-style: normal;
-    font-weight: 400;
-    font-size: 14px;
-    line-height: 16px;
+    font-weight: 500;
+    font-size: 0.95rem;
     text-decoration-line: underline;
     color: #28519E;
 }
 
-.card-text {
+.technology-used {
     font-style: normal;
-    font-weight: 400;
-    font-size: 14px;
-    line-height: 19px;
-    color: #343435;
-    opacity: 0.7;
-    left: 16px;
-    top: 64px;
+    font-weight: 500;
+    font-size: 0.8rem;
+    padding-top: 1rem;
 }
 
-.last-link{
-    text-decoration: none;
+.technology-badges {
+    width: 12.5rem;
+    display: flex;
+    padding-top: 1rem;
+    justify-content: space-between;
+}
+
+.technology-badge-1,
+.technology-badge-2 {
+    background: #D3E1FA;
+    border-radius: 2px;
+    width: 3.5rem;
+    display: flex;
+    padding: 0.313rem 0.75rem;
+    /* text-align: center; */
+    justify-content: center;
+}
+
+.technology-badge-3 {
+    background: #D3E1FA;
+    border-radius: 2px;
+    width: 5rem;
+    align-items: center;
+    display: flex;
+    justify-content: center;
+}
+
+.add-project {
+    padding-top: 6.56rem;
+    font-style: normal;
+    font-weight: 600;
+    font-size: 0.8rem;
     color: #28519E;
+}
+
+.project-members {
+    display: flex;
+    flex-direction: row;
+    justify-content: start;
+    position: relative;
+    left: 0.6rem;
+}
+
+.project-idea-members {
+    width: 2.5rem;
+    height: 2.5rem;
+    border-radius: 50%;
+    background-color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    /* text-align: center; */
+    /* position: absolute; */
+
+}
+
+.project-idea-members p {
+    margin: 0;
+    font-size: 1rem;
+    font-weight: 500;
+
+}
+
+.project-idea-members:nth-child(even) {
+    margin-left: -0.5rem;
+    /* z-index: 1; */
+}
+
+.project-idea-members:nth-child(odd) {
+    margin-left: -0.5rem;
+}
+
+/* .project-idea-members:nth-child(1){
+background-color: #B8DDE1;
+}
+.project-idea-members:nth-child(2){
+background-color: #FFF0CE;
+}
+.project-idea-members:nth-child(3){
+background-color: #CEFFD3;
+}
+.project-idea-members:nth-child(4){
+background-color: #F0B6FF;
+}
+ */
+.project-idea-members:last-child {
+    background-color: rgba(40, 81, 158, 0.2);
+
+}
+
+.project-idea-members:last-child p {
+    font-size: 1.1rem;
+}
+.project-p {
+    font-weight: 600;
+    font-size: 0.9rem;
 }
