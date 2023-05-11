@@ -1,6 +1,5 @@
 import './AddNewIdea.css';
 import React, { useState } from 'react';
-import { NewIdea } from './AddNewIdea';
 
 export const AddNewProjectComponent = () => {
 
@@ -28,20 +27,6 @@ export const AddNewProjectComponent = () => {
         <>
             <div class="card">
                 <div class="card-header">
-                    {/* <div class="container">
-                        <div class="row">
-                            <div class="col">
-                                <div class="d-flex justify-content-center">
-                                    <a type="button" class="btn" onClick={() => { setProjectScreenType('projectIdea') }}>Project Idea</a>
-                                </div>
-                            </div>
-                            <div class="col">
-                                <div class="d-flex justify-content-center">
-                                    <button type="button" class="btn" onClick={() => { setProjectScreenType('addNewProject') }}>Project</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div> */}
                     <div className={"project-idea-btn" + (pActive ? " p-active" : "")}>
                         <button class='btn-1' onClick={() => {
                             setProjectScreenType('projectIdea')
@@ -83,18 +68,18 @@ export const AddNewProjectComponent = () => {
                                     <p className="fw-normal mb-1">
                                         The Recipe Recommendation Engine is a web-based application that uses machine learning algorithm...
                                     </p>
-                                    <div className='project-link'>
-                                        <a href="http.reciperecommendationengine.github">See More</a>
+                                    <div className='see-more'>
+                                        <a href="http.reciperecommendationengine.github" className='project-link-1 fw-normal mb-1'>See More</a>
                                     </div>
                                     <div className="members-div pt-0">
                                         <div className="member mb pt-1 fw-bold mb-2">
                                             Members:
                                         </div>
                                         <div className='project-members ml-0'>
-                                            <div className='project-idea-members'><p>AB</p></div>
-                                            <div className='project-idea-members'><p>CD</p></div>
-                                            <div className='project-idea-members'><p>EF</p></div>
-                                            <div className='project-idea-members'><p>IJ</p></div>
+                                            <div className='project-idea-members fw-bold'><p>JD</p></div>
+                                            <div className='project-idea-members'><p>MK</p></div>
+                                            <div className='project-idea-members'><p>DL</p></div>
+                                            <div className='project-idea-members'><p>KD</p></div>
                                             <div className='project-idea-members'><p>+2</p></div>
                                         </div>
 
@@ -146,43 +131,44 @@ export const AddNewProjectComponent = () => {
                     <>
                         <div className="card-body">
                             <div className='row-2'>
-                                <p className='paragraph'>
+                                <p className='card-text'>
                                     A star will be rewarded to you as a token of appreciation for your hardwork and dedication upon the successful completion of the project.
                                 </p>
                             </div>
                             <div className='project-idea'>
-                                <div class="d-flex justify-content-between">
+                                <div class="d-flex align-item-center justify-content-between mb-2">
                                     <div class="d-flex">
-                                        <p class='text mb-0 ms-1'>Project</p>
+                                        <p class='text mb-0 fw-bold'>Project</p>
                                     </div>
-                                    <button type="button" class="view-all">
-                                        <p class="me-2">View All</p>
+                                    <button type="button" class="view-all fw-bold">
+                                        View All
                                     </button>
                                 </div>
                             </div>
 
                             <div className='row-3'>
                                 <div className="div3">
-                                    <h5>Recipe Recommendation Engine</h5>
-                                    <div className='project-link'>
-                                        <a href="#">http.reciperecommendationengine.github</a> {/* Use the Link component from React Router */}
-                                    </div>
-
-                                    <div className="technology-used">
-                                        Technology Used:
-                                    </div>
-                                    <div className='technology-badges'>
-                                        <div className='technology-badge-1'>
-                                            HTML
-                                        </div>
-                                        <div className='technology-badge-2'>
-                                            CSS
-                                        </div>
-                                        <div className='technology-badge-3'>
-                                            Java Script
-                                        </div>
+                                    <h5 className='fw-bold'>Recipe Recommendation Engine</h5>
+                                    <div className='github-link'>
+                                        <a href="#" className='project-link-2 fw-normal'>http.reciperecommendationengine.github</a> {/* Use the Link component from React Router */}
                                     </div>
                                 </div>
+                                
+                                <div className="technology-used-1 fw-bold">
+                                    Technology Used:
+                                </div>
+                                <div className='technology-badges'>
+                                    <p className='technology-badge-1'>
+                                        HTML
+                                    </p>
+                                    <p className='technology-badge-2'>
+                                        CSS
+                                    </p>
+                                    <p className='technology-badge-3'>
+                                        Java Script
+                                    </p>
+                                </div>
+
 
                             </div>
                             <div className="add-project" data-bs-toggle="modal" data-bs-target="#exampleModal" data-bs-whatever="@mdo">
