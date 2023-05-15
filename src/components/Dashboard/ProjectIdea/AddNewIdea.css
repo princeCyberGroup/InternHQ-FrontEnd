@@ -1,5 +1,5 @@
 .btn-1 {
-    width: 7rem;
+    /* width: 7rem; */
     border: none;
     background: #FFFFFF;
     font-style: normal;
@@ -32,7 +32,7 @@
     background: #FFFFFF;
     align-items: center;
     justify-content: center;
-    padding: 1rem 2.563rem;
+    padding: 1rem 2rem;
 
 }
 
@@ -42,14 +42,18 @@
 
 .project-btn {
     width: 10.5rem;
-    margin-left: 2rem;
+    /* margin-left: 2rem; */
     border-radius: 0px 8px 0px 0px;
-    /* padding: 8px 16px;
-    gap: 8px; */
-    padding: 1rem 3.656rem;
+    /*padding: 8px 16px;
+    gap: 8px;
+    */padding: 1rem 3.656rem;
     background: #FFFFFF;
     align-items: center;
     justify-content: center;
+    -webkit-border-radius: 0px 8px 0px 0px;
+    -moz-border-radius: 0px 8px 0px 0px;
+    -ms-border-radius: 0px 8px 0px 0px;
+    -o-border-radius: 0px 8px 0px 0px;
 }
 
 .card-header {
