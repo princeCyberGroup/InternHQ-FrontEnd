@@ -16,8 +16,8 @@ export const MentorComponent = () => {
                             <div class="card-body card-dims">
                                 <img src="https://th.bing.com/th/id/OIP.08bGE4YPB9q_OZ9hS45YpgHaGm?pid=ImgDet&rs=1" class="d-block rounded-circle" alt="..." />
                                 <div className="mentor-text">
-                                    <p class="card-text"><b>Iron Man</b></p>
-                                    <p>Senior Developer</p>
+                                    <p class="card-text fs"><b>Iron Man</b></p>
+                                    <p className="role-fs">Senior Developer</p>
                                     <div className="row">
                                         <div className=" flex">
                                             <span class="badge badge-color">Primary</span>

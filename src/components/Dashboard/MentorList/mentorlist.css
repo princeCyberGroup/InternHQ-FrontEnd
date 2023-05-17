@@ -6,7 +6,7 @@
     height: 10px;
     margin: 0 5px;
 } */
-/* 
+/*
 .carousel-indicators .active {
     background-color: red;
 } */
@@ -27,9 +27,16 @@
 
 .badge-color {
     color: #343435;
+    font-size: 0.75rem;
     background-color: #E9ECEB;
 }
-
+.fs{
+    margin-top: 0.5rem;
+    font-size: 1rem;
+}
+.role-fs{
+    font-size: 0.81rem;
+}
 .carousal-navs {
     height: 8px;
     width: 8px;
