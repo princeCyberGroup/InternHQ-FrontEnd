@@ -39,9 +39,10 @@ const ForgotPasswordOtpScreen = () => {
 
   return (
     <div className="container-fluid login-screen-body ">
+    <div className="container-fluid login-screen-body ">
       <div className="row pos">
-        <div className="d-flex justify-content-center align-items-center flex-row">
-        <div className="col-md-5" style={{ backgroundColor: "#002C3F", width: "22rem"}}>
+        <div className="d-flex justify-content-center justify-content-center align-items-center flex-row">
+          <div className="col-md-5" style={{ backgroundColor: "#002C3F" }}>
             <div className="d-flex flex-column justify-content-center align-items-center">
               <div className="row cglogoimg">
                 <img
@@ -112,6 +113,7 @@ const ForgotPasswordOtpScreen = () => {
                   </div>
                   <div
                     style={{ width: "260px" }}
+                    style={{ width: "260px" }}
                     className={`carousel-item ${
                       activeIndex === 2 ? "active" : ""
                     }`}
@@ -130,7 +132,7 @@ const ForgotPasswordOtpScreen = () => {
               </div>
             </div>
           </div>
-          <div className="col-md-7 bg-white p-4" style={{height: "517.328px"}}>
+          <div className="col-md-7 bg-white p-4">
             <div className="row ">
               <p className="right-container-heading">Enter Code</p>
             </div>
