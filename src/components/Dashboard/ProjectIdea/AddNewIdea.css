@@ -1,68 +1,132 @@
-.card {
-    width: 28rem;
-    border-radius: 8px;
-    margin-left: auto;
-    margin-right: auto;
-    margin-top: 2rem;
-    padding: 1rem;
-    padding-bottom: 1rem;
-    padding-top: 0.5rem;
-    box-shadow: 0px 4px 20px rgba(40, 52, 73, 0.15);
-    background-color: transparent;
-}
-
-.third-div {
-
-    padding: 12px;
-    gap: 8px;
-
-    background: rgba(40, 81, 158, 0.08);
-    /* Primary/Blue */
-
-    border-left: 3px solid #28519E;
-    border-radius: 4px;
-
-}
-
-.stretched-link {
-    color: #28519E;
+.card-textt {
+    width: 21.68rem;
     font-style: normal;
     font-weight: 400;
-    font-size: 14px;
-    line-height: 16px;
-    text-decoration-line: underline;
-    width: 59px;
-    height: 16px;
-}
-
-.member {
-    font-style: normal;
-    font-weight: 500;
-    font-size: 14px;
-    line-height: 16px;
-    width: 64px;
-    height: 16px;
-
+    font-size: 0.87rem;
     color: #343435;
+    opacity: 0.9;
 }
-.member_row{
-    height: 15px;
-    width: 15px;
-    background-color: bisque;
-    border-radius: 25%;
-    box-shadow: #343435;
-    margin-right: 0%;
-    display:inline;
+
+p.card-textt {
+    margin: 0rem;
+}
+
+.share-project {
+    font-style: normal;
+    font-weight: 600;
+    font-size: 0.8rem;
+    color: #343435;
+    padding-top: 1.25rem;
 }
 
 .view-all {
     background-color: transparent;
     border: none;
     color: #28519E;
+    font-weight: 500;
+    font-size: 0.8rem;
+}
+
+.recipe-row {
+    border-left: 3px solid #28519E;
+    border-radius: 4px;
+    padding: 0.75rem;
+    gap: 0.5rem;
+    width: 21.68rem;
+    background: rgba(40, 81, 158, 0.08);
+}
+
+.recipe-text {
+    width: 21.68rem;
+    font-style: normal;
+
+    font-size: 0.8rem;
+
+}
+
+.recipe-text>h5 {
+    font-size: 1rem;
+}
+
+.recipe-text>p {
+    font-size: 0.95rem;
+}
+
+.project-link-2 {
+    font-style: normal;
+    font-weight: 400;
+    font-size: 0.8rem;
+    color: #28519E;
+    padding-bottom: 1rem;
+}
+
+.member {
     font-style: normal;
     font-weight: 500;
-    font-size: 14px;
-    line-height: 16px;
+    font-size: 0.94rem;
+    /* width: 4rem; */
+    padding-top: 0.75rem;
+    color: #343435;
+}
+
+.project-members {
+    display: flex;
+    flex-direction: row;
+    justify-content: start;
+    position: relative;
+    left: 0.6rem;
+}
+
+.project-idea-members {
+    width: 2.5rem;
+    height: 2.5rem;
+    border-radius: 50%;
+    background-color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0px 4px 20px rgba(40, 52, 73, 0.15);
+    /* text-align: center; */
+    /* position: absolute; */
+
+}
+
+.project-idea-members p {
+    margin: 0;
+    font-size: 1rem;
+    font-weight: 500;
+    color: #343435;
+}
+
+.project-idea-members:nth-child(even) {
+    margin-left: -0.5rem;
+    /* z-index: 1; */
+}
+
+.project-idea-members:nth-child(odd) {
+    margin-left: -0.5rem;
+}
+
+/* .project-idea-members:nth-child(1){
+background-color: #B8DDE1;
+}
+.project-idea-members:nth-child(2){
+background-color: #FFF0CE;
+}
+.project-idea-members:nth-child(3){
+background-color: #CEFFD3;
+}
+.project-idea-members:nth-child(4){
+background-color: #F0B6FF;
+}
+ */
+.project-idea-members:last-child {
+    background-color: rgba(40, 81, 158, 0.2);
+
+}
+
+.project-idea-members:last-child p {
+    font-size: 1.1rem;
 }
 
 .add-new-idea {
@@ -71,66 +135,34 @@
     color: #28519E;
     font-style: normal;
     font-weight: 500;
-    font-size: 14px;
-    line-height: 16px;
+    font-size: 0.8rem;
     text-align: left;
     text-decoration: none;
+    padding-top: 1.5rem;
 }
 
-.w-100 {
-    background-color: transparent;
-    border: none;
+.project-p {
+    /* font-weight: 600; */
+    font-size: 0.9rem;
+}
+
+
+.add-project-wrapper {
+    font-family: 'Roboto';
     font-style: normal;
     font-weight: 600;
-    font-size: 16px;
-    line-height: 19px;
-    color: #343435;
-    width: 52px;
-    height: 19px;
+    font-size: 1rem;
+    line-height: 2rem;
+    color: #1E1E1E;
 }
 
-.paragraph {
-    width: 347px;
-    height: 57px;
-    left: 16px;
-    top: 64px;
+.title-text {
+    font-family: 'Roboto';
     font-style: normal;
     font-weight: 400;
-    font-size: 14px;
-    line-height: 19px;
-    color: #343435;
-    opacity: 0.7;
+    font-size: 13px;
+    line-height: 15px;
+
+    color: #1E1E1E;
 }
 
-.techno {
-    font-style: normal;
-    font-weight: 500;
-    font-size: 14px;
-    line-height: 16px;
-    color: #343435;
-}
-
-.project-link {
-    font-style: normal;
-    font-weight: 400;
-    font-size: 14px;
-    line-height: 16px;
-    text-decoration-line: underline;
-    color: #28519E;
-}
-
-.card-text {
-    font-style: normal;
-    font-weight: 400;
-    font-size: 14px;
-    line-height: 19px;
-    color: #343435;
-    opacity: 0.7;
-    left: 16px;
-    top: 64px;
-}
-
-.last-link{
-    text-decoration: none;
-    color: #28519E;
-}
