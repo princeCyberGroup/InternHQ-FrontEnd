@@ -1,0 +1,136 @@
+.card {
+    width: 28rem;
+    border-radius: 8px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 2rem;
+    padding: 1rem;
+    padding-bottom: 1rem;
+    padding-top: 0.5rem;
+    box-shadow: 0px 4px 20px rgba(40, 52, 73, 0.15);
+    background-color: transparent;
+}
+
+.third-div {
+
+    padding: 12px;
+    gap: 8px;
+
+    background: rgba(40, 81, 158, 0.08);
+    /* Primary/Blue */
+
+    border-left: 3px solid #28519E;
+    border-radius: 4px;
+
+}
+
+.stretched-link {
+    color: #28519E;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 16px;
+    text-decoration-line: underline;
+    width: 59px;
+    height: 16px;
+}
+
+.member {
+    font-style: normal;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 16px;
+    width: 64px;
+    height: 16px;
+
+    color: #343435;
+}
+.member_row{
+    height: 15px;
+    width: 15px;
+    background-color: bisque;
+    border-radius: 25%;
+    box-shadow: #343435;
+    margin-right: 0%;
+    display:inline;
+}
+
+.view-all {
+    background-color: transparent;
+    border: none;
+    color: #28519E;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 16px;
+}
+
+.add-new-idea {
+    background-color: transparent;
+    border: none;
+    color: #28519E;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 16px;
+    text-align: left;
+    text-decoration: none;
+}
+
+.w-100 {
+    background-color: transparent;
+    border: none;
+    font-style: normal;
+    font-weight: 600;
+    font-size: 16px;
+    line-height: 19px;
+    color: #343435;
+    width: 52px;
+    height: 19px;
+}
+
+.paragraph {
+    width: 347px;
+    height: 57px;
+    left: 16px;
+    top: 64px;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 19px;
+    color: #343435;
+    opacity: 0.7;
+}
+
+.techno {
+    font-style: normal;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 16px;
+    color: #343435;
+}
+
+.project-link {
+    font-style: normal;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 16px;
+    text-decoration-line: underline;
+    color: #28519E;
+}
+
+.card-text {
+    font-style: normal;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 19px;
+    color: #343435;
+    opacity: 0.7;
+    left: 16px;
+    top: 64px;
+}
+
+.last-link{
+    text-decoration: none;
+    color: #28519E;
+}

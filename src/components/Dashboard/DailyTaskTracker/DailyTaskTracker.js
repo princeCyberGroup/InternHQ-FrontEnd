@@ -93,9 +93,7 @@ const DailyTaskTracker = () => {
 
   return (
     <>
-      <div className="container-fluid row ">
-        <div className="col-md-3 mx-3 my-3 tracker border p-0">
-          <div className="card">
+          <div className="tracker border p-0">
             <div className="card-body p-0">
               <div className="border-bottom ">
                 <h5 className="card-title dtt-hfs ">Daily Task Tracker</h5>
@@ -174,8 +172,6 @@ const DailyTaskTracker = () => {
               </div>
             </div>
           </div>
-        </div>
-      </div>
     </>
   );
 };
