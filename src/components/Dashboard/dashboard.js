@@ -6,6 +6,7 @@ import { AddNewProjectComponent } from './ProjectIdea/ProjectComponent';
 import DashboardGraph from './ReportGraph/DashboardGraph';
 import { NotificationComponent } from './Notification/Notifications';
 import { MentorComponent } from './MentorList/MentorList';
+import "./dashboard.css"
 const Dashboard = () => {
 
   const [currPage, setCurrPage] = useState("dashboard");
@@ -21,6 +22,7 @@ const Dashboard = () => {
   return (
     // <div>Dashboard</div>
     <>
+   
       <div>
         <nav className="navbar navbar-expand-lg navbar-light bg-light border-bottom">
           <a className="navbar-brand" href="#">
@@ -62,25 +64,22 @@ const Dashboard = () => {
           </div>
         </nav>
       </div>
+
+      <div className='responsiveness'>
       {currPage === 'dashboard' ?
         <>
-          {/* <DailyTaskTracker/> */}
           <div class="container-fluid">
-            {/* <div class="container"> */}
               <div class="row mt-3">
-                <div class="col">
+                <div class=" col-md-4" >
                   <DailyTaskTracker/>
                 </div>
-                <div class="col">
+                 <div class=" col-md-4" >
                   <AddNewProjectComponent/>
                 </div>
-                <div class="col">
+                <div class=" col-md-4" >
                   <MentorComponent/>
-                </div>
+                </div> 
               </div>
-
-
-
               <div class="row mt-3">
                 <div class="col-md-8">
                   <DashboardGraph/>
@@ -90,13 +89,17 @@ const Dashboard = () => {
                 </div>
             </div>
           </div>
-          {/* <AddNewProjectComponent /> */}
         </>
         :
-        // {currPage === 'dashboard' ? " " : " "}
+        <>
+        {currPage === 'dailyUpdate' ?
         <DailyUpdateTable />
-        // ''
+        :
+        <h1>Here Goes Skill Management Section</h1>
         }
+        </> 
+        }
+        </div>
     </>
   )
 }

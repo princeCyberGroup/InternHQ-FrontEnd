@@ -1,73 +1,50 @@
-import './AddNewIdea.js';
 
-export const AddNewIdea = () => {
+export const AddProject = () => {
     return (
         <>
             <div className="card-body pb-0">
-                <div class="text-row-1">
-                    <p class="card-textt">
-                        {" "}
-                        Simply share your project ideas with us, and our experts
-                        will review it and provide feedback and guidance on how to
-                        take it to the next level.
+                <div className="project-card-text-row">
+                    <p className="project-card-text">
+                        A star will be rewarded to you as a token of appreciation
+                        for your hardwork and dedication upon the successful
+                        completion of the project.
                     </p>
                 </div>
-
-                <div className="share-project">
-                    <div class="d-flex align-item-center justify-content-between mb-2 ">
+                <div className="project-idea">
+                    <div class="d-flex justify-content-between">
                         <div class="d-flex">
-                            <p class="text mb-0 fw-bold">Shared Project Idea</p>
+                            <p class="text mb-0 ms-1">Project</p>
                         </div>
-                        <button type="button" class="view-all fw-bold">
-                            View All
+                        <button type="button" class="view-all">
+                            <p class="me-2">View All</p>
                         </button>
                     </div>
                 </div>
 
-                <div className="recipe-row">
-                    <div className="recipe-text">
+                <div className="project-recipe-row mb-5">
+                    <div className="recipe-text project-recipe-name">
                         <h5 className="fw-bold">Recipe Recommendation Engine</h5>
-                        <p className="fw-normal mb-1">
-                            The Recipe Recommendation Engine is a web-based
-                            application that uses machine learning algorithm...
-                        </p>
-                        <div className="project-link-2">
-                            <a href="http.reciperecommendationengine.github">
-                                See More
-                            </a>
+                        <div className="project-link-1">
+                            <a href="#">http.reciperecommendationengine.github</a>{" "}
+                            {/* Use the Link component from React Router */}
                         </div>
-                        <div className="members-div pt-0">
-                            <div className="member mb pt-1 fw-bold mb-2">
-                                Members:
-                            </div>
-                            <div className="project-members ml-0">
-                                <div className="project-idea-members">
-                                    <p>AB</p>
-                                </div>
-                                <div className="project-idea-members">
-                                    <p>CD</p>
-                                </div>
-                                <div className="project-idea-members">
-                                    <p>EF</p>
-                                </div>
-                                <div className="project-idea-members">
-                                    <p>IJ</p>
-                                </div>
-                                <div className="project-idea-members">
-                                    <p>+2</p>
-                                </div>
-                            </div>
+
+                        <div className="technology-used ">Technology Used:</div>
+                        <div className="technology-badges">
+                            <div className="technology-badge-1">HTML</div>
+                            <div className="technology-badge-2">CSS</div>
+                            <div className="technology-badge-3">Java Script</div>
                         </div>
                     </div>
                 </div>
                 <div
-                    className="add-new-idea pt-2"
+                    className="add-project mt-5  pt-4 pb-0"
                     data-bs-toggle="modal"
                     data-bs-target="#exampleModal"
                     data-bs-whatever="@mdo"
                 >
-                    <p className="project-p mb-0 mt-2 pb-2">
-                        <span>+</span> Add New Idea
+                    <p className="project-p fw-bold mb-4 mt-4">
+                        <span className="fw-bold">+</span> <b>Add Project</b>
                     </p>
                 </div>
             </div>
@@ -82,7 +59,7 @@ export const AddNewIdea = () => {
                     <div class="modal-content">
                         <div class="modal-header">
                             <h1 class="modal-title fs-5 add-project-wrapper" id="exampleModalLabel">
-                                Add your Project Idea
+                                Add Project
                             </h1>
                             <button
                                 type="button"
@@ -101,9 +78,9 @@ export const AddNewIdea = () => {
                                         type="text"
                                         class="form-control"
                                         id="project-name"
-                                        placeholder='Enter Project Name'
                                     />
                                 </div>
+
                                 <div class="mb-3">
                                     <label
                                         for="project-description"
@@ -114,9 +91,6 @@ export const AddNewIdea = () => {
                                     <textarea
                                         class="form-control"
                                         id="project-description"
-                                        placeholder='Write Here..'
-                                        rows={3}
-
                                     ></textarea>
                                 </div>
 
@@ -132,11 +106,25 @@ export const AddNewIdea = () => {
                                         <option>SQL</option>
                                     </select>
                                     {/* <input
-                                    class="form-control"
-                                    type="text"
-                                    id="technology-used"
-                                /> */}
-
+                                                    class="form-control"
+                                                    type=""
+                                                    id="technology-used"
+                                                /> */}
+                                </div>
+                                <div class="mb-3">
+                                    <label for="Project Link" class="col-form-label title-text">
+                                        Project Link
+                                    </label>
+                                    <input class="form-control" id="project-link" />
+                                </div>
+                                <div class="mb-3">
+                                    <label
+                                        for="Hosted Link(Optional)"
+                                        class="col-form-label title-text"
+                                    >
+                                        Hosted Link(Optional)
+                                    </label>
+                                    <input class="form-control" id="hosted-link" />
                                 </div>
                                 <div class="mb-3">
                                     <label for="Members(Optional)" class="col-form-label title-text">
@@ -145,11 +133,11 @@ export const AddNewIdea = () => {
                                     <input
                                         class="form-control"
                                         id="project-description"
-                                        placeholder='Member Name'
                                     />
                                 </div>
                             </form>
                         </div>
+
                         <div class="modal-footer">
                             <button
                                 type="button"

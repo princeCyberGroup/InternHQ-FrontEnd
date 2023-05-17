@@ -5,7 +5,8 @@ import SearchBar from "./SearchBar";
 import tableArr from "./TableArr";
 import LearningTypeDropDown from "./LearningTypeDropDown";
 import { Modal, Button, Form } from "react-bootstrap";
-import ReadMore from "../../Assets/ReadMore.svg"
+import ReadMore from "../../Assets/ReadMore.svg";
+import EmptyDailyUpdateTable from "./EmptyDailyUpdateTable";
 
 const DailyUpdateTable = () => {
   const [tableData, setTableData] = useState(tableArr);
@@ -14,15 +15,31 @@ const DailyUpdateTable = () => {
   const [dateFilterValue, setDateFilterValue] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
   const [resultsPerPage, setResultsPerPage] = useState(10);
-  const [flag, setFlag] = useState(false);
+  const [datemodalSaveFlag, setDatemodalSaveFlag] = useState(false);
   const [showModal, setShowModal] = useState(false);
   const [selectedItem, setSelectedItem] = useState(null);
   const [editedComment, setEditedComment] = useState("");
+  const [modalSaveFlag, setModalSaveFlag] = useState(true);
+  const [timeLeftmessage, setTimeLeftMessage] = useState(""); //Time left to edit comment in modal
+
+  // let editableTime = Date.now();
+  // let currentTime = Date.now();
 
   const handleReadMore = (item) => {
+    var editableTime = item.timestamp + 48 * 60 * 60 * 1000; //48 hours in milliseconds
+    var currentTime = Date.now();
+    const timeRemaining = Math.floor(
+      // Remaining hours
+      (editableTime - currentTime) / (60 * 60 * 1000)
+    );
+    timeRemaining <= 0
+      ? setTimeLeftMessage("You Cannot Edit This Comment Now")
+      : setTimeLeftMessage(
+          "You Have " + timeRemaining + " Hours Left To Edit This Comment"
+        );
     setSelectedItem(item);
     setShowModal(true);
-  }
+  };
 
   const totalPaginationPages = Math.ceil(tableData.length / resultsPerPage);
   const arrayStartIndex = (currentPage - 1) * resultsPerPage;
@@ -55,13 +72,26 @@ const DailyUpdateTable = () => {
     const updatedTableArr = [...tableArr];
     updatedTableArr[selectedItem.id - 1].comment = editedComment;
     setTableData(updatedTableArr);
-    // handleCloseModal();
+  };
+
+  const handleEdit = (event) => {
+    var editableTime = selectedItem.timestamp + 48 * 60 * 60 * 1000; //48 hours in milliseconds
+    var currentTime = Date.now();
+    if (currentTime <= editableTime) {
+      console.log(currentTime);
+      console.log(editableTime);
+      setEditedComment(event.target.value);
+      setModalSaveFlag(false);
+    } else {
+      console.log(currentTime);
+      console.log(editableTime);
+      setModalSaveFlag(true);
+    }
   };
 
   const handleFiltersChange = () => {
     let filteredData = tableArr;
     if (searchFilterValue !== "") {
-      console.log("Inside search")
       filteredData = filteredData.filter(
         (item) =>
           item.topics.toLowerCase().includes(searchFilterValue.toLowerCase()) //Instead of includes we can use startsWith
@@ -71,13 +101,11 @@ const DailyUpdateTable = () => {
       dropdownFilterValue !== "" &&
       dropdownFilterValue !== "Select learning type"
     ) {
-      console.log("Hemlo drop")
       filteredData = filteredData.filter(
         (item) => item.learningType === dropdownFilterValue
       );
     }
     // else if (dropdownFilterValue === "Select learning type") {
-    //   console.log("Hemlo drop part 2")
     //   filteredData = tableArr; // Reset the filtered data to the original array
     // }
 
@@ -95,11 +123,9 @@ const DailyUpdateTable = () => {
         );
       });
 
-      setFlag(true);
-      console.log("first");
-    } else if (flag && dateFilterValue == "") {
+      setDatemodalSaveFlag(true);
+    } else if (datemodalSaveFlag && dateFilterValue == "") {
       filteredData = tableArr; // Reset the filtered data to the original array
-      console.log("Hi");
     }
     setTableData(filteredData);
   };
@@ -114,7 +140,7 @@ const DailyUpdateTable = () => {
     } else {
       return str;
     }
-  }
+  };
 
   return (
     <div className="container-fluid">
@@ -147,7 +173,7 @@ const DailyUpdateTable = () => {
                   <th className="column-duration">Duration</th>
                 </tr>
               </thead>
-              <tbody>
+              <tbody className="align-middle">
                 <tr>
                   <td></td>
                   <td>
@@ -175,58 +201,113 @@ const DailyUpdateTable = () => {
                   <td></td>
                   <td></td>
                 </tr>
+                {arrayCurrentResults.length == 0 ? (
+                  <tr>
+                    <td colSpan={6}>
+                      <EmptyDailyUpdateTable />
+                    </td>
+                  </tr>
+                ) : (
+                  arrayCurrentResults.map((item, index) => {
+                    return (
+                      <tr key={index}>
+                        <td>{arrayStartIndex + index + 1}</td>
+                        <td>{item.date}</td>
+                        <td>{item.learningType}</td>
+                        <td>{item.topics}</td>
+                        <td>
+                          {
+                            <div>
+                              {truncate(item.comment, 120)}&nbsp;
+                              <img
+                                src={ReadMore}
+                                alt="..."
+                                onClick={() => {
+                                  setModalSaveFlag(true);
+                                  handleReadMore(item);
+                                }}
+                              />
+                            </div>
+                          }
+                        </td>
+                        <td>{item.duration}</td>
+                      </tr>
+                    );
+                  })
+                )}
 
-                {arrayCurrentResults.map((item, index) => {
-                  return (
-                    <tr key={index}>
-                      <td>{arrayStartIndex + index + 1}</td>
-                      <td>{item.date}</td>
-                      <td>{item.learningType}</td>
-                      <td>{item.topics}</td>
-                      <td>{
-                        <div>
-                          {truncate(item.comment, 120)}&nbsp;
-                          <img src={ReadMore} alt="..." onClick={() => {
-                            handleReadMore(item)
-                          }}/>
-                        </div>
-                      }
-                      </td>
-                      <td>{item.duration}</td>
-                    </tr>
-                  );
-                })}
-                <Modal size="lg" dialogClassName="modal-90w" centered show={showModal} onHide={() => setShowModal(false)}>
+                <Modal
+                  size="lg"
+                  dialogClassName="modal-90w"
+                  centered
+                  show={showModal}
+                  onHide={() => setShowModal(false)}
+                >
                   <Modal.Header closeButton>
-                    <Modal.Title style={{fontSize: "1.4rem"}}>Daily Update</Modal.Title>
+                    <Modal.Title style={{ fontSize: "1.4rem" }}>
+                      Daily Update
+                    </Modal.Title>
                   </Modal.Header>
                   <Modal.Body>
-                    <p><span className="fw-bold">Learning Type:</span> <span className="opacity-75">{selectedItem && selectedItem.learningType}</span></p>
-                    <p><span className="fw-bold">Topic:</span> <span className="opacity-75">{selectedItem && selectedItem.topics}</span></p>
+                    <p>
+                      <span className="fw-bold">Learning Type:</span>{" "}
+                      <span className="opacity-75">
+                        {selectedItem && selectedItem.learningType}
+                      </span>
+                    </p>
+                    <p>
+                      <span className="fw-bold">Topic:</span>{" "}
+                      <span className="opacity-75">
+                        {selectedItem && selectedItem.topics}
+                      </span>
+                    </p>
 
                     <Form.Group>
-                      <Form.Label><span className="fw-bold">Comment: </span></Form.Label>
-                      <Form.Control className="opacity-75" as="textarea" onChange={(event) => setEditedComment(event.target.value)} style={{fontSize: "0.813rem"}} rows={4} cols={60}>{selectedItem && selectedItem.comment}</Form.Control>
+                      <Form.Label>
+                        <span className="fw-bold">Comment: </span>
+                      </Form.Label>
+                      <Form.Control
+                        className="opacity-75"
+                        as="textarea"
+                        onChange={handleEdit}
+                        style={{ fontSize: "0.813rem" }}
+                        defaultValue={selectedItem && selectedItem.comment}
+                        rows={4}
+                        cols={60}
+                      ></Form.Control>
                     </Form.Group>
-
                   </Modal.Body>
                   <Modal.Footer>
-                    <Button variant="outline-primary" onClick={() => setShowModal(false)}>
-                      Cancel
-                    </Button>
-                    <Button variant="primary" onClick={() => {
-                      setShowModal(false);
-                      handleSave()
-                    }}>
-                      Save
-                    </Button>
+                    <div className="d-flex justify-content-between align-items-center w-100">
+                      <span className="text-danger">{timeLeftmessage}</span>
+                      <div>
+                        <Button
+                          variant="outline-primary"
+                          onClick={() => setShowModal(false)}
+                        >
+                          Cancel
+                        </Button>
+                        <Button
+                          className="ms-2"
+                          variant="primary"
+                          disabled={modalSaveFlag}
+                          onClick={() => {
+                            setShowModal(false);
+                            handleSave();
+                          }}
+                        >
+                          Save
+                        </Button>
+                      </div>
+                    </div>
                   </Modal.Footer>
                 </Modal>
-
               </tbody>
               <tfoot>
                 <tr>
-                  <td colSpan={2}>Total Items: {tableData.length}</td>
+                  <td className="f-bold" colSpan={2}>
+                    Total Items: {tableData.length}
+                  </td>
                   <td></td>
                   <td></td>
                   <td colSpan={2}>
@@ -242,6 +323,7 @@ const DailyUpdateTable = () => {
                           Results per page
                         </p>
                         <select
+                          style={{ color: "#706F73" }}
                           className="form-select m-2"
                           value={resultsPerPage}
                           onChange={handleResultsPerPageChange}
@@ -252,8 +334,9 @@ const DailyUpdateTable = () => {
                         </select>
                         <ul className="pagination mb-0">
                           <li
-                            className={`page-item me-1 ${currentPage === 1 ? "page-item disabled" : ""
-                              }`}
+                            className={`page-item me-1 ${
+                              currentPage === 1 ? "page-item disabled" : ""
+                            }`}
                           >
                             <button
                               className="page-link"
@@ -282,11 +365,12 @@ const DailyUpdateTable = () => {
                           ).map((page) => (
                             <li
                               key={page}
-                              className={`page-item me-1 ${page === currentPage ? "active" : ""
-                                }`}
+                              className={`page-item me-1 ${
+                                page === currentPage ? "active" : ""
+                              }`}
                             >
                               <button
-                                className="page-link"
+                                className="page-link rounded pagination-styling"
                                 onClick={() => handlePageChange(page)}
                               >
                                 {page}
@@ -294,10 +378,11 @@ const DailyUpdateTable = () => {
                             </li>
                           ))}
                           <li
-                            className={`page-item ${currentPage === totalPaginationPages
+                            className={`page-item ${
+                              currentPage === totalPaginationPages
                                 ? "page-item disabled"
                                 : ""
-                              }`}
+                            }`}
                           >
                             <button
                               className="page-link"

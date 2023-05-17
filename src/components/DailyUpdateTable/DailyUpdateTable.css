@@ -1,6 +1,12 @@
-//body {
+/* //body {
 //  background-color: #fbfbfb;
-//}
+//} */
+/* body {
+ background-color: #fbfbfb;
+} */
+body {
+  background-color: #fbfbfb;
+}
 .daily-update-heading {
   font-weight: 700;
   font-size: 1.25rem;
@@ -23,6 +29,10 @@
   padding-right: 0;
   padding-left: 3.5rem;
 }
+
+.table-striped>tbody>tr:nth-child(odd)>td {
+   background-color: #F7F7F7;
+ }
 
 .daily-update-table-style {
   max-width: 90%;
@@ -96,6 +106,27 @@
   width: 32.75rem;
   max-height: 22.5rem;
   font-size: 0.813rem;
+}
+
+.f-bold {
+  font-weight: 500;
+}
+
+/* . :focus  { */
+  /* background-color: black; */
+  
+  /* } */
+  
+  .active .pagination-styling {
+    
+  background-color: rgba(40, 81, 158, 0.08);
+  color: #28519E;
+  border-color: #28519E;
+  /* background-color: black; */
+}
+.pagination-styling {
+  color: #23262B;
+  font-weight: 500;
 }
 /* 
 .table>tbody.no-border>tr>td,
