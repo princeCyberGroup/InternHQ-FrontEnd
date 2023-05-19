@@ -5,7 +5,7 @@ const SkillsAdded = () => {
   return (
     <div className="container-fluid mx-5 my-5">
       <div className="row">
-        <div className="col-3">
+        <div className="col-4">
           <div className="heading">
             <p>Skills Added</p>
           </div>
@@ -27,10 +27,10 @@ const SkillsAdded = () => {
                     Angular - The Complete Guide
                   </p>
                 </div>
-                <div className="row p-0" style={{marginLeft:"24px",marginRight:"24px",flexShrink:"1"}}>
+                <div className="row p-0" style={{marginLeft:"24px",marginRight:"24px",flexShrink:"1",marginBottom:"24px"}}>
                   <div className="col d-flex flex-column" style={{display:"flex",alignContent:"center"}}>
                     <img 
-                      style={{display:"flex",justifyContent:"center"}}
+                      style={{margin:"auto"}}
                       src="https://pixlok.com/wp-content/uploads/2021/07/Rating-SVG-Icon-s9fd.png"
                       height={"35px"}
                       width={"35px"}
@@ -42,6 +42,7 @@ const SkillsAdded = () => {
                   </div>
                   <div className="col d-flex flex-column">
                     <img
+                    style={{margin:"auto"}}
                       src="https://pixlok.com/wp-content/uploads/2021/07/Rating-SVG-Icon-s9fd.png"
                       height={"35px"}
                       width={"35px"}
@@ -53,6 +54,7 @@ const SkillsAdded = () => {
                   </div>
                   <div className="col d-flex flex-column">
                     <img
+                      style={{margin:"auto"}}
                       src="https://pixlok.com/wp-content/uploads/2021/07/Rating-SVG-Icon-s9fd.png"
                       height={"35px"}
                       width={"35px"}
@@ -64,6 +66,7 @@ const SkillsAdded = () => {
                   </div>
                   <div className="col d-flex flex-column starImg">
                     <img
+                      style={{margin:"auto"}}
                       src="https://pixlok.com/wp-content/uploads/2021/07/Rating-SVG-Icon-s9fd.png"
                       height={"35px"}
                       width={"35px"}
@@ -92,6 +95,7 @@ const SkillsAdded = () => {
                 <div className="row p-0" style={{marginLeft:"24px",marginRight:"24px",flexShrink:"1"}}>
                   <div className="col d-flex flex-column">
                     <img
+                      style={{margin:"auto"}}
                       src="https://pixlok.com/wp-content/uploads/2021/07/Rating-SVG-Icon-s9fd.png"
                       height={"35px"}
                       width={"35px"}
@@ -103,6 +107,7 @@ const SkillsAdded = () => {
                   </div>
                   <div className="col d-flex flex-column">
                     <img
+                      style={{margin:"auto"}}
                       src="https://pixlok.com/wp-content/uploads/2021/07/Rating-SVG-Icon-s9fd.png"
                       height={"35px"}
                       width={"35px"}
@@ -114,6 +119,7 @@ const SkillsAdded = () => {
                   </div>
                   <div className="col d-flex flex-column">
                     <img
+                      style={{margin:"auto"}}
                       src="https://pixlok.com/wp-content/uploads/2021/07/Rating-SVG-Icon-s9fd.png"
                       height={"35px"}
                       width={"35px"}
@@ -125,6 +131,7 @@ const SkillsAdded = () => {
                   </div>
                   <div className="col d-flex flex-column starImg">
                     <img
+                      style={{margin:"auto"}}
                       src="https://pixlok.com/wp-content/uploads/2021/07/Rating-SVG-Icon-s9fd.png"
                       height={"35px"}
                       width={"35px"}
