@@ -133,7 +133,7 @@ select option.dtt-opns{
 
 textarea{
     resize: none;
-    overflow: hidden;
+    overflow: auto;
 }
 
 .dtt-gap{
