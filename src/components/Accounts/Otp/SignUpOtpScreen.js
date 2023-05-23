@@ -23,11 +23,14 @@ const SignUpOtpScreen = () => {
     e.preventDefault();
     navigate("/success");
   };
+  const handleSlideChange = (index) => {
+    setActiveIndex(index);
+  };
 
   useEffect(() => {
     const interval = setInterval(() => {
       setActiveIndex((prevIndex) => (prevIndex + 1) % 3);
-    }, 1000); //Make it 1000
+    }, 3000); //Make it 1000
 
     return () => {
       clearInterval(interval);
@@ -35,10 +38,10 @@ const SignUpOtpScreen = () => {
   }, []);
 
   return (
-    <div className="container login-screen-body ">
+    <div className="container-fluid login-screen-body ">
       <div className="row pos">
-        <div className="d-flex justify-content-center justify-content-center align-items-center flex-row">
-          <div className="col-md-4" style={{ backgroundColor: "#002C3F" }}>
+        <div className="d-flex justify-content-center align-items-center flex-row">
+        <div className="col-md-5" style={{ backgroundColor: "#002C3F", width: "22rem"}}>
             <div className="d-flex flex-column justify-content-center align-items-center">
               <div className="row cglogoimg">
                 <img
@@ -52,35 +55,28 @@ const SignUpOtpScreen = () => {
               </div>
               <div
                 id="carouselExampleIndicators"
-                class="carousel slide"
+                className="carousel slide"
                 data-bs-ride="true"
                 // data-interval="false" //Remove it
               >
-                <div class="carousel-indicators">
+                <div className="carousel-indicators">
                   <button
-                    type="button"
                     data-bs-target="#carouselExampleIndicators"
-                    data-bs-slide-to="0"
+                    onClick={() => handleSlideChange(0)}
                     className={activeIndex === 0 ? "active" : ""}
-                    aria-current="true"
-                    aria-label="Slide 1"
                   ></button>
                   <button
-                    type="button"
                     data-bs-target="#carouselExampleIndicators"
-                    data-bs-slide-to="1"
+                    onClick={() => handleSlideChange(1)}
                     className={activeIndex === 1 ? "active" : ""}
-                    aria-label="Slide 2"
                   ></button>
                   <button
-                    type="button"
                     data-bs-target="#carouselExampleIndicators"
-                    data-bs-slide-to="2"
+                    onClick={() => handleSlideChange(2)}
                     className={activeIndex === 2 ? "active" : ""}
-                    aria-label="Slide 3"
                   ></button>
                 </div>
-                <div class="carousel-inner">
+                <div className="carousel-inner">
                   <div
                     style={{ width: "260px" }}
                     className={`carousel-item ${
@@ -89,7 +85,7 @@ const SignUpOtpScreen = () => {
                   >
                     <img
                       src={CarouselImage1}
-                      class="d-block "
+                      className="d-block "
                       alt="..."
                       style={{ width: "13rem", marginLeft: "24px" }}
                     />
@@ -106,7 +102,7 @@ const SignUpOtpScreen = () => {
                   >
                     <img
                       src={CarouselImage2}
-                      class="d-block "
+                      className="d-block "
                       alt="..."
                       style={{ width: "13rem", marginLeft: "24px" }}
                     />
@@ -115,14 +111,14 @@ const SignUpOtpScreen = () => {
                     </p>
                   </div>
                   <div
-                    style={{ width: "269px" }}
+                    style={{ width: "260px" }}
                     className={`carousel-item ${
                       activeIndex === 2 ? "active" : ""
                     }`}
                   >
                     <img
                       src={CarouselImage3}
-                      class="d-block "
+                      className="d-block "
                       alt="..."
                       style={{ width: "13rem", marginLeft: "24px" }}
                     />
@@ -134,7 +130,7 @@ const SignUpOtpScreen = () => {
               </div>
             </div>
           </div>
-          <div className="col-md-5 bg-white p-4">
+          <div className="col-md-7 bg-white p-4" style={{height: "517.328px"}}>
             <div className="row ">
               <p className="right-container-heading">Enter Code</p>
             </div>
@@ -154,7 +150,7 @@ const SignUpOtpScreen = () => {
                 email@email.com
               </span>
             </div>
-            <div className="row">
+            <div>
               <p
                 style={{
                   marginBottom: "1.9rem",
@@ -162,12 +158,13 @@ const SignUpOtpScreen = () => {
                   lineHeight: "19px",
                 }}
               >
-                Please type the Six digit code we have sent on your Microsoft
+                Please type the Six digit code we have sent on your<br/> Microsoft
                 account.
               </p>
               <form onSubmit={handleSubmit}>
-                <div className="form-group">
+                <div className="d-flex flex-column">
                   <input
+                  className="input-fields"
                     type="text"
                     pattern="\d*" // Used the "pattern" attribute to enforce digits only
                     value={value}
@@ -188,7 +185,6 @@ const SignUpOtpScreen = () => {
                 Use Another Account
               </Link>
             </div>
-            {/* <div className="bg-white d-flex flex-column justify-content-center align-items-center form-padding"></div> */}
           </div>
         </div>
       </div>
