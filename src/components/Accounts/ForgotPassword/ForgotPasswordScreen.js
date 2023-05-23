@@ -28,11 +28,14 @@ const ForgotPasswordScreen = () => {
     e.preventDefault();
     navigate("/email-verification")
   };
+  const handleSlideChange = (index) => {
+    setActiveIndex(index);
+  };
 
   useEffect(() => {
     const interval = setInterval(() => {
       setActiveIndex((prevIndex) => (prevIndex + 1) % 3);
-    }, 1000); //Make it 1000
+    }, 3000); //Make it 1000
 
     return () => {
       clearInterval(interval);
@@ -42,8 +45,8 @@ const ForgotPasswordScreen = () => {
   return (
     <div className="container-fluid login-screen-body ">
       <div className="row pos">
-        <div className="d-flex justify-content-center justify-content-center align-items-center flex-row">
-          <div className="col-md-5" style={{ backgroundColor: "#002C3F" }}>
+        <div className="d-flex justify-content-center align-items-center flex-row">
+        <div className="col-md-5" style={{ backgroundColor: "#002C3F", width: "22rem"}}>
             <div className="d-flex flex-column justify-content-center align-items-center">
               <div className="row cglogoimg">
                 <img
@@ -57,35 +60,28 @@ const ForgotPasswordScreen = () => {
               </div>
               <div
                 id="carouselExampleIndicators"
-                class="carousel slide"
+                className="carousel slide"
                 data-bs-ride="true"
                 // data-interval="false" //Remove it
               >
-                <div class="carousel-indicators">
+                <div className="carousel-indicators">
                   <button
-                    type="button"
                     data-bs-target="#carouselExampleIndicators"
-                    data-bs-slide-to="0"
+                    onClick={() => handleSlideChange(0)}
                     className={activeIndex === 0 ? "active" : ""}
-                    aria-current="true"
-                    aria-label="Slide 1"
                   ></button>
                   <button
-                    type="button"
                     data-bs-target="#carouselExampleIndicators"
-                    data-bs-slide-to="1"
+                    onClick={() => handleSlideChange(1)}
                     className={activeIndex === 1 ? "active" : ""}
-                    aria-label="Slide 2"
                   ></button>
                   <button
-                    type="button"
                     data-bs-target="#carouselExampleIndicators"
-                    data-bs-slide-to="2"
+                    onClick={() => handleSlideChange(2)}
                     className={activeIndex === 2 ? "active" : ""}
-                    aria-label="Slide 3"
                   ></button>
                 </div>
-                <div class="carousel-inner">
+                <div className="carousel-inner">
                   <div
                     style={{ width: "260px" }}
                     className={`carousel-item ${
@@ -94,7 +90,7 @@ const ForgotPasswordScreen = () => {
                   >
                     <img
                       src={CarouselImage1}
-                      class="d-block "
+                      className="d-block "
                       alt="..."
                       style={{ width: "13rem", marginLeft: "24px" }}
                     />
@@ -111,7 +107,7 @@ const ForgotPasswordScreen = () => {
                   >
                     <img
                       src={CarouselImage2}
-                      class="d-block "
+                      className="d-block "
                       alt="..."
                       style={{ width: "13rem", marginLeft: "24px" }}
                     />
@@ -127,7 +123,7 @@ const ForgotPasswordScreen = () => {
                   >
                     <img
                       src={CarouselImage3}
-                      class="d-block "
+                      className="d-block "
                       alt="..."
                       style={{ width: "13rem", marginLeft: "24px" }}
                     />
@@ -139,14 +135,14 @@ const ForgotPasswordScreen = () => {
               </div>
             </div>
           </div>
-          <div className="col-md-7 bg-white p-4">
+          <div className="col-md-7 bg-white p-4" style={{height: "517.328px"}}>
             <div className="row ">
               <p className="right-container-heading">Forgot Password</p>
             </div>
             <div
               className="row"
               style={{
-                width: "407px",
+                width: "390px",
                 background: "rgba(184, 221, 225, 0.54)",
                 borderRadius: "4px",
                 padding: "5px",
@@ -174,16 +170,12 @@ const ForgotPasswordScreen = () => {
             </div>
             <div className="row">
               <form onSubmit={handleSubmit}>
-                <div className="form-group">
+                <div className="d-flex flex-column">
                   <label className="input-label-text" for="exampleInputEmail1">
                     Email ID
                   </label>
-                  {!isEmailValid && email && (
-                    <span className="sign-up-warning ms-2">
-                      Please make use of CG-Infinity email only
-                    </span>
-                  )}
                   <input
+                  className="input-fields"
                     type="email"
                     id="exampleInputEmail1"
                     value={email}
@@ -191,10 +183,16 @@ const ForgotPasswordScreen = () => {
                     placeholder="Enter Your Email ID"
                     required
                   />
+                  {!isEmailValid && email && (
+                    <span className="sign-up-warning">
+                      Please make use of CG-Infinity email only
+                    </span>
+                  )}
                 </div>
                 <button
                   type="submit"
-                  class="btn btn-warning border-0 sign-up-btn"
+                  style={{top:"2.5rem", marginBottom: "2rem"}}
+                  className="btn btn-warning border-0 sign-up-btn"
                   disabled={
                     (!isEmailValid)
                   }
@@ -206,7 +204,6 @@ const ForgotPasswordScreen = () => {
             <div className="row">
               <Link className="right-container-link" to="/">Back to login?</Link>
             </div>
-            {/* <div className="bg-white d-flex flex-column justify-content-center align-items-center form-padding"></div> */}
           </div>
         </div>
       </div>
