@@ -83,14 +83,14 @@ input:focus {
   font-weight: 600;
 }
 
-.btn:hover {
+/* .btn:hover {
   background-color: #ffb81c;
   color: #343435;
 }
 
 a:hover {
   color: #28519e;
-}
+} */
 
 .right-container-link {
   display: flex;
