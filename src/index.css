@@ -6,3 +6,15 @@
 ::-webkit-scrollbar{
     width: 0;
 }
+body{
+    font-family: roboto;
+}
+  /* @media screen and (min-width: 1280px) {
+    .responsiveness {
+    
+   width: 70%;
+        margin: auto;
+
+    
+        }
+  } */

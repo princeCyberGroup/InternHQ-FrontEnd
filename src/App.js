@@ -9,6 +9,10 @@ import ForgotPasswordScreen from "./components/Accounts/ForgotPassword/ForgotPas
 import ForgotPasswordOtpScreen from "./components/Accounts/Otp/ForgotPasswordOtpScreen";
 import CreateNewPasswordScreen from "./components/Accounts/ForgotPassword/CreateNewPasswordScreen";
 import PasswordChangedScreen from "./components/Accounts/ForgotPassword/PasswordChangedSuccessfulScreen";
+import { ViewAll } from "./components/Dashboard/ProjectIdea/ViewAllComponent/ViewAll";
+
+// import './index.css'
+
 
 function App() {
   return (
@@ -30,6 +34,7 @@ function App() {
             element={<CreateNewPasswordScreen />}
           />
           <Route path="/change-success" element={<PasswordChangedScreen />} />
+          <Route path="/all-projects" element={<ViewAll />} />
         </Routes>
       </Router>
     </div>

@@ -1,78 +1,148 @@
-
+import "./mentorlist.css";
 
 export const MentorComponent = () => {
-    return (
-        <>
-            <div className="card" style={{ height: "348px" }}>
-                <div className="card-header">
-                    Know Your Mentors
-                </div>
-                <div className="card-body">
-                    <div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
-                        <div class="carousel-inner">
-                            <div class="carousel-item active">
-                                <div className="container ">
-                                    <div class=" text-center">
-                                        <div class="">
-                                            <img src="https://media1.popsugar-assets.com/files/thumbor/VtEIEPOZPzOk-Dkf8JN947DPNrs/fit-in/2048xorig/filters:format_auto-!!-:strip_icc-!!-/2018/03/27/788/n/24155406/tmp_1BYogo_59d3c106ace0fc9b_GettyImages-803082014.jpg" alt="Your image alt text" class="rounded-circle" height={"100px"} width={"100px"} />
-                                            <h6>Robert Downey Junior</h6>
-                                            <p>Actor</p>
-                                            <span class="badge alert-secondary">Secondary</span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="carousel-item ">
-                                <div className="container ">
-                                    <div class=" text-center">
-                                        <div class="">
-                                            <img src="https://media1.popsugar-assets.com/files/thumbor/VtEIEPOZPzOk-Dkf8JN947DPNrs/fit-in/2048xorig/filters:format_auto-!!-:strip_icc-!!-/2018/03/27/788/n/24155406/tmp_1BYogo_59d3c106ace0fc9b_GettyImages-803082014.jpg" alt="Your image alt text" class="rounded-circle" height={"100px"} width={"100px"} />
-                                            <h6>Robert Downey Junior</h6>
-                                            <p>Actor</p>
-
-                                            <span class="badge alert-secondary">Secondary</span>
-                                            <br />
-
-                                            <a href="#" class="btn btn-primary">Go somewhere</a>
-
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="carousel-item ">
-                                <div className="container ">
-                                    <div class=" text-center">
-                                        <div class="">
-                                            <img src="https://media1.popsugar-assets.com/files/thumbor/VtEIEPOZPzOk-Dkf8JN947DPNrs/fit-in/2048xorig/filters:format_auto-!!-:strip_icc-!!-/2018/03/27/788/n/24155406/tmp_1BYogo_59d3c106ace0fc9b_GettyImages-803082014.jpg" alt="Your image alt text" class="rounded-circle" height={"100px"} width={"100px"} />
-                                            <h6>Robert Downey Junior</h6>
-                                            <p>Actor</p>
-
-                                            <span class="badge alert-secondary">Secondary</span>
-                                            <br />
-
-                                            <a href="#" class="btn btn-primary">Go somewhere</a>
-
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                           
-                        </div>
-                        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="prev">
-                            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                            <span class="visually-hidden">Previous</span>
-                        </button>
-                        <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="next">
-                            <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                            <span class="visually-hidden">Next</span>
-                        </button>
-                    </div>
-                </div>
-                <div className="card-footer text-center">
-                   o o o 
-                </div>
+  return (
+    <>
+      <div className="card" style={{ height: "370px", alignContent: "center" }}>
+        <div className="border-bottom ">
+          <h5 className="card-title dtt-hfs">Know Your Mentors</h5>
+        </div>
+        <div className="box-shadow d-flex justify-content-center align-item-center">
+          <div
+            id="carouselExampleDark"
+            class="crousel slide "
+            data-bs-ride="carousel"
+          >
+            <div class="carousel-indicators">
+              <button
+                type="button"
+                data-bs-target="#carouselExampleDark"
+                data-bs-slide-to="0"
+                class="bg-dark active"
+                aria-current="true"
+                aria-label="Slide 1"
+              ></button>
+              <button
+                type="button"
+                data-bs-target="#carouselExampleDark"
+                data-bs-slide-to="1"
+                aria-label="Slide 2"
+                class="bg-dark "
+              ></button>
+              <button
+                type="button"
+                data-bs-target="#carouselExampleDark"
+                data-bs-slide-to="2"
+                aria-label="Slide 3"
+                class="bg-dark "
+              ></button>
             </div>
+            <div class="carousel-inner crousal-set" role="listbox">
+              <div
+                class="carousel-item active border"
+            
+              >
+                <div class="card-body pt-4">
+                  <img
+                    src="https://th.bing.com/th/id/OIP.08bGE4YPB9q_OZ9hS45YpgHaGm?pid=ImgDet&rs=1"
+                    class="d-block rounded-circle"
+                    alt="..."
+                  />
+                  <div className="mentor-text">
+                    <p class="card-text fs">
+                      <b>1. Iron Man</b>
+                    </p>
+                    <p className="role-fs">Senior Developer</p>
+                    <div className="row">
+                      <div className=" flex">
+                        <span class="badge badge-color">Primary</span>
+                        <span class="badge badge-color">Secondary</span>
+                        <span class="badge badge-color">Danger</span>
+                        <span class="badge badge-color">Primary</span>
+                        <span class="badge badge-color">Secondary</span>
+                        <span class="badge badge-color">Danger</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="carousel-item border">
+                <div class="card-body pt-4 ">
+                  <img
+                    src="https://th.bing.com/th/id/OIP.08bGE4YPB9q_OZ9hS45YpgHaGm?pid=ImgDet&rs=1"
+                    class="d-block rounded-circle"
+                    alt="..."
+                  />
+                  <div className="mentor-text">
+                    <p class="card-text fs">
+                      <b>2. Iron Man</b>
+                    </p>
+                    <p className="role-fs">Senior Developer</p>
+                    <div className="row">
+                      <div className=" flex">
+                        <span class="badge badge-color">Primary</span>
+                        <span class="badge badge-color">Secondary</span>
+                        <span class="badge badge-color">Danger</span>
+                        <span class="badge badge-color">Primary</span>
+                        <span class="badge badge-color">Secondary</span>
+                        <span class="badge badge-color">Danger</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="carousel-item border ">
+                <div class="card-body pt-4 ">
+                  <img
+                    src="https://th.bing.com/th/id/OIP.08bGE4YPB9q_OZ9hS45YpgHaGm?pid=ImgDet&rs=1"
+                    class="d-block rounded-circle"
+                    alt="..."
+                  />
+                  <div className="mentor-text">
+                    <p class="card-text fs">
+                      <b>3. Iron Man</b>
+                    </p>
+                    <p className="role-fs">Senior Developer</p>
+                    <div className="row">
+                      <div className=" flex">
+                        <span class="badge badge-color">Primary</span>
+                        <span class="badge badge-color">Secondary</span>
+                        <span class="badge badge-color">Danger</span>
+                        <span class="badge badge-color">Primary</span>
+                        <span class="badge badge-color">Secondary</span>
+                        <span class="badge badge-color">Danger</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <br />
 
-        </>
-    )
-}
+        {/* <div className="text-center">
+          <div class="carousel-indicators">
+            <button
+              data-mdb-target="#carouselExampleIndicators"
+              data-mdb-slide-to="0"
+              class="active"
+              aria-current="true"
+              aria-label="Slide 1"
+            ></button>
+            <button
+              data-mdb-target="#carouselExampleIndicators"
+              data-mdb-slide-to="1"
+              aria-label="Slide 1"
+            ></button>
+            <button
+              data-mdb-target="#carouselExampleIndicators"
+              data-mdb-slide-to="2"
+              aria-label="Slide 1"
+            ></button>
+          </div>
+        </div> */}
+      </div>
+    </>
+  );
+};
