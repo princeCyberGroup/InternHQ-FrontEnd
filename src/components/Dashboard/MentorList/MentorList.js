@@ -1,6 +1,29 @@
-import "./mentorlist.css";
+import { useState, useEffect } from 'react';import "./mentorlist.css";
+import { MentorData } from './MentorData';
 
 export const MentorComponent = () => {
+
+  const [mentors, setMentors] = useState([]);
+
+  useEffect(() => {
+    setMentors(MentorData);
+    // Fetch mentors data from the API
+    // fetchMentors();
+  }, []);
+
+  // const fetchMentors = async () => {
+  //   try {
+  //     // Make an API request to fetch mentors data
+  //     const response = await fetch('https://api.example.com/mentors');
+  //     const data = await response.json();
+
+  //     // Update the mentors state with the fetched data
+  //     setMentors(data);
+  //   } catch (error) {
+  //     console.log('Error occurred while fetching mentors:', error);
+  //   }
+  // };
+
   return (
     <>
       <div className="card" style={{ height: "370px", alignContent: "center" }}>
@@ -10,138 +33,58 @@ export const MentorComponent = () => {
         <div className="box-shadow d-flex justify-content-center align-item-center">
           <div
             id="carouselExampleDark"
-            class="crousel slide "
+            className="crousel slide "
             data-bs-ride="carousel"
           >
-            <div class="carousel-indicators">
-              <button
-                type="button"
-                data-bs-target="#carouselExampleDark"
-                data-bs-slide-to="0"
-                class="bg-dark active"
-                aria-current="true"
-                aria-label="Slide 1"
-              ></button>
-              <button
-                type="button"
-                data-bs-target="#carouselExampleDark"
-                data-bs-slide-to="1"
-                aria-label="Slide 2"
-                class="bg-dark "
-              ></button>
-              <button
-                type="button"
-                data-bs-target="#carouselExampleDark"
-                data-bs-slide-to="2"
-                aria-label="Slide 3"
-                class="bg-dark "
-              ></button>
+            <div className="carousel-indicators">
+              {mentors.map((mentor, index) => (
+                <button
+                  key={index}
+                  type="button"
+                  data-bs-target="#carouselExampleDark"
+                  data-bs-slide-to={index.toString()}
+                  className={`bg-dark ${index === 0 ? 'active' : ''}`}
+                  aria-current={index === 0 ? 'true' : 'false'}
+                  aria-label={`Slide ${index + 1}`}
+                ></button>
+              ))}
             </div>
-            <div class="carousel-inner crousal-set" role="listbox">
-              <div
-                class="carousel-item active border"
-            
-              >
-                <div class="card-body pt-4">
-                  <img
-                    src="https://th.bing.com/th/id/OIP.08bGE4YPB9q_OZ9hS45YpgHaGm?pid=ImgDet&rs=1"
-                    class="d-block rounded-circle"
-                    alt="..."
-                  />
-                  <div className="mentor-text">
-                    <p class="card-text fs">
-                      <b>1. Iron Man</b>
-                    </p>
-                    <p className="role-fs">Senior Developer</p>
-                    <div className="row">
-                      <div className=" flex">
-                        <span class="badge badge-color">Primary</span>
-                        <span class="badge badge-color">Secondary</span>
-                        <span class="badge badge-color">Danger</span>
-                        <span class="badge badge-color">Primary</span>
-                        <span class="badge badge-color">Secondary</span>
-                        <span class="badge badge-color">Danger</span>
+            <div className="carousel-inner crousal-set" role="listbox">
+              {mentors.map((mentor, index) => (
+                <div
+                  key={index}
+                  className={`carousel-item ${index === 0 ? 'active' : ''} border`}
+                >
+                  <div className="card-body pt-4" style={{width:"329px",height:"236px"}}>
+                    <img
+                      src="https://th.bing.com/th/id/OIP.08bGE4YPB9q_OZ9hS45YpgHaGm?pid=ImgDet&rs=1" // Replace with mentor image URL from API response
+                      className="d-block rounded-circle"
+                      alt="Mentor"
+                    />
+                    <div className="mentor-text">
+                      <p className="card-text fs">
+                        <b>{mentor.name}</b> {/* Replace with mentor name from API response */}
+                      </p>
+                      <p className="role-fs">{mentor.position}</p> {/* Replace with mentor position from API response */}
+                      <div className="row">
+                        <div className=" flex">
+                          {mentor.skills.map((skill, skillIndex) => (
+                            <span key={skillIndex} className="badge badge-color">
+                              {skill.toUpperCase()} {/* Replace with mentor skills from API response */}
+                            </span>
+                          ))}
+                        </div>
                       </div>
                     </div>
                   </div>
                 </div>
-              </div>
-              <div class="carousel-item border">
-                <div class="card-body pt-4 ">
-                  <img
-                    src="https://th.bing.com/th/id/OIP.08bGE4YPB9q_OZ9hS45YpgHaGm?pid=ImgDet&rs=1"
-                    class="d-block rounded-circle"
-                    alt="..."
-                  />
-                  <div className="mentor-text">
-                    <p class="card-text fs">
-                      <b>2. Iron Man</b>
-                    </p>
-                    <p className="role-fs">Senior Developer</p>
-                    <div className="row">
-                      <div className=" flex">
-                        <span class="badge badge-color">Primary</span>
-                        <span class="badge badge-color">Secondary</span>
-                        <span class="badge badge-color">Danger</span>
-                        <span class="badge badge-color">Primary</span>
-                        <span class="badge badge-color">Secondary</span>
-                        <span class="badge badge-color">Danger</span>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div class="carousel-item border ">
-                <div class="card-body pt-4 ">
-                  <img
-                    src="https://th.bing.com/th/id/OIP.08bGE4YPB9q_OZ9hS45YpgHaGm?pid=ImgDet&rs=1"
-                    class="d-block rounded-circle"
-                    alt="..."
-                  />
-                  <div className="mentor-text">
-                    <p class="card-text fs">
-                      <b>3. Iron Man</b>
-                    </p>
-                    <p className="role-fs">Senior Developer</p>
-                    <div className="row">
-                      <div className=" flex">
-                        <span class="badge badge-color">Primary</span>
-                        <span class="badge badge-color">Secondary</span>
-                        <span class="badge badge-color">Danger</span>
-                        <span class="badge badge-color">Primary</span>
-                        <span class="badge badge-color">Secondary</span>
-                        <span class="badge badge-color">Danger</span>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
+              ))}
             </div>
           </div>
         </div>
         <br />
 
-        {/* <div className="text-center">
-          <div class="carousel-indicators">
-            <button
-              data-mdb-target="#carouselExampleIndicators"
-              data-mdb-slide-to="0"
-              class="active"
-              aria-current="true"
-              aria-label="Slide 1"
-            ></button>
-            <button
-              data-mdb-target="#carouselExampleIndicators"
-              data-mdb-slide-to="1"
-              aria-label="Slide 1"
-            ></button>
-            <button
-              data-mdb-target="#carouselExampleIndicators"
-              data-mdb-slide-to="2"
-              aria-label="Slide 1"
-            ></button>
-          </div>
-        </div> */}
+
       </div>
     </>
   );
