@@ -38,10 +38,15 @@ const SignUpOtpScreen = () => {
   }, []);
 
   return (
-    <div className="container-fluid-fluid login-screen-body ">
+    <div className="container-fluid login-screen-body ">
       <div className="row pos">
-        <div className="d-flex justify-content-center justify-content-center align-items-center flex-row">
-          <div className="col-md-5" style={{ backgroundColor: "#002C3F" }}>
+        <div className="d-flex justify-content-center align-items-center flex-row">
+          <div className="col-md-5"
+            style={{
+              backgroundColor: "#002C3F",
+              height: "562px",
+              width: "370px",
+            }}>
             <div className="d-flex flex-column justify-content-center align-items-center">
               <div className="row cglogoimg">
                 <img
@@ -130,7 +135,7 @@ const SignUpOtpScreen = () => {
               </div>
             </div>
           </div>
-          <div className="col-md-5 bg-white p-4">
+          <div className="col-md-7 bg-white p-4" style={{ height: "562px" }}>
             <div className="row ">
               <p className="right-container-heading">Enter Code</p>
             </div>
@@ -173,7 +178,7 @@ const SignUpOtpScreen = () => {
                   />
                 </div>
                 <button
-                  class="btn btn-warning border-0 sign-up-btn"
+                  class="btn btn-warning border-0 sign-up-btn mt-3"
                   disabled={value.length < 6}
                 >
                   Verify

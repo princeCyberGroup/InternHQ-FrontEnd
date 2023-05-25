@@ -56,8 +56,13 @@ const SignUpScreen = () => {
   return (
     <div className="container-fluid login-screen-body ">
       <div className="row pos">
-        <div className="d-flex justify-content-center justify-content-center align-items-center flex-row">
-          <div className="col-md-4" style={{ backgroundColor: "#002C3F" }}>
+        <div className="d-flex justify-content-center align-items-center flex-row">
+          <div className="col-md-5"
+            style={{
+              backgroundColor: "#002C3F",
+              height: "562px",
+              width: "370px",
+            }}>
             <div className="d-flex flex-column justify-content-center align-items-center">
               <div className="row cglogoimg">
                 <img
@@ -146,12 +151,13 @@ const SignUpScreen = () => {
               </div>
             </div>
           </div>
-          <div className="col-md-5 bg-white p-4">
+          <div className="col-md-7 bg-white p-4" style={{ height: "562px" }}>
             <div className="row ">
               <p className="right-container-heading">Sign Up</p>
             </div>
-            <div className="row">
+            <div className="row" style={{ height: "250px" }}>
               <form onSubmit={handleSubmit}>
+                <div style={{ height: "180px" ,marginTop:"1rem"}}>
                 <div className="d-flex flex-column">
                   <label className="input-label-text" for="exampleInputEmail1">
                     Email ID
@@ -194,6 +200,8 @@ const SignUpScreen = () => {
                   </span>
                   )}
                 </div>
+                </div>
+               
                 <button
                   type="submit"
                   className="btn btn-warning border-0 sign-up-btn"
