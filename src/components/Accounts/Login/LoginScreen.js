@@ -18,11 +18,7 @@ const LoginScreen = () => {
   const handleEmailChange = (event) => {
     const { value } = event.target;
     setEmail(value);
-    setIsEmailValid(
-      value.match(/^[\w.-]+@cginfinity\.com$/)
-        ? true
-        : false
-    );
+    setIsEmailValid(value.match(/^[\w.-]+@cginfinity\.com$/) ? true : false);
   };
 
   const handlePasswordChange = (event) => {
@@ -42,7 +38,7 @@ const LoginScreen = () => {
   const handleSlideChange = (index) => {
     setActiveIndex(index);
   };
-  
+
   useEffect(() => {
     const interval = setInterval(() => {
       setActiveIndex((prevIndex) => (prevIndex + 1) % 3);
@@ -56,8 +52,15 @@ const LoginScreen = () => {
   return (
     <div className="container-fluid login-screen-body ">
       <div className="row pos">
-        <div className="d-flex justify-content-center align-items-center flex-row">
-          <div className="col-md-5" style={{ backgroundColor: "#002C3F", width: "22rem" }}>
+        <div className="d-flex justify-content-center  align-items-center flex-row">
+          <div
+            className="col-md-5"
+            style={{
+              backgroundColor: "#002C3F",
+              height: "562px",
+              width: "370px",
+            }}
+          >
             <div className="d-flex flex-column justify-content-center align-items-center">
               <div className="row cglogoimg">
                 <img
@@ -71,11 +74,11 @@ const LoginScreen = () => {
               </div>
               <div
                 id="carouselExampleIndicators"
-                className="carousel slide"
+                className="carousel slide mt-4"
                 data-bs-ride="true"
                 // data-interval="false" //Remove it
               >
-                <div className="carousel-indicators">
+                <div className="carousel-indicators ">
                   <button
                     data-bs-target="#carouselExampleIndicators"
                     onClick={() => handleSlideChange(0)}
@@ -146,66 +149,71 @@ const LoginScreen = () => {
               </div>
             </div>
           </div>
-          <div className="col-md-7 bg-white p-4" style={{height: "517.328px"}}>
+          <div className="col-md-7 bg-white p-4" style={{ height: "562px" }}>
             <div className="row ">
               <p className="right-container-heading">Login</p>
             </div>
-            <div className="row">
+            <div className="row" style={{ height: "250px" }}>
               <form onSubmit={handleSubmit}>
-                <div className="d-flex flex-column">
-                  <label className="input-label-text" for="exampleInputEmail1">
-                    Email ID
-                  </label>
-                  <input
-                    className="input-fields"
-                    type="email"
-                    id="exampleInputEmail1"
-                    value={email}
-                    onChange={handleEmailChange}
-                    placeholder="Enter Your Email ID"
-                    required
-                  />
-                  {!isEmailValid && email && (
-                    <span className="sign-up-warning">
-                      Please make use of CG-Infinity email only
-                    </span>
-                  )}
+                <div style={{ height: "170px" ,marginTop:"1rem"}}>
+                  <div className="d-flex flex-column">
+                    <label
+                      className="input-label-text"
+                      for="exampleInputEmail1"
+                    >
+                      Email ID
+                    </label>
+                    <input
+                      className="input-fields"
+                      type="email"
+                      id="exampleInputEmail1"
+                      value={email}
+                      onChange={handleEmailChange}
+                      placeholder="Enter Your Email ID"
+                      required
+                    />
+                    {!isEmailValid && email && (
+                      <span className="sign-up-warning">
+                        Please make use of CG-Infinity email only
+                      </span>
+                    )}
+                  </div>
+                  <div className="d-flex flex-column">
+                    <label
+                      style={{ marginTop: "28px" }}
+                      className="input-label-text"
+                      for="exampleInputPassword1"
+                    >
+                      Password
+                    </label>
+                    <input
+                      className="input-fields"
+                      type="password"
+                      id="exampleInputPassword1"
+                      placeholder="Enter Your Password"
+                      value={password}
+                      required
+                      onChange={handlePasswordChange}
+                    />
+                    {!isPasswordValid && password && (
+                      <span className="sign-up-warning">
+                        Atleast 8 characters, one uppercase, number & special
+                        characters required.
+                      </span>
+                    )}
+                  </div>
                 </div>
-                <div className="d-flex flex-column">
-                  <label
-                    style={{ marginTop: "28px" }}
-                    className="input-label-text"
-                    for="exampleInputPassword1"
-                  >
-                    Password
-                  </label>
-                  <input
-                  className="input-fields"
-                    type="password"
-                    id="exampleInputPassword1"
-                    placeholder="Enter Your Password"
-                    value={password}
-                    required
-                    onChange={handlePasswordChange}
-                  />
-                  {!isPasswordValid && password && (
-                    <span className="sign-up-warning">
-                      Atleast 8 characters, one uppercase, number & special characters required.
-                    </span>
-                  )}
-                </div>
+
                 <button
                   type="submit"
-                  className="btn btn-warning border-0 sign-up-btn"
-                  disabled={
-                    (!isEmailValid || !isPasswordValid)
-                  }
+                  className="btn btn-warning border-0 sign-up-btn mt-3"
+                  disabled={!isEmailValid || !isPasswordValid}
                 >
                   Login
                 </button>
               </form>
             </div>
-            <div className="row">
+            <div className="row mt-4">
               <Link className="right-container-link mb-3" to="/forgot-password">
                 Forgot Password?
               </Link>
