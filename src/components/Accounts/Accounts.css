@@ -1,3 +1,11 @@
+.container.login-screen-body{
+  /* background: linear-gradient(
+    to right,
+    rgba(202, 240, 248, 0.46) -0.31%,
+    rgba(0, 7, 45, 0.46) 112.65%
+  ),
+  #ffffff; */
+}
 .login-screen-body {
   height: 100vh;
   font-family: "Roboto";
@@ -10,9 +18,13 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .pos {
+  /* transform: translate(0,calc(100vh - 90vh)); */
   margin: 0 auto;
 }
 
