@@ -12,6 +12,7 @@ import PasswordChangedScreen from "./components/Accounts/ForgotPassword/Password
 import { ViewAll } from "./components/Dashboard/ProjectIdea/ViewAllComponent/ViewAll";
 import TakeYourTest from "./components/TakeYourTest/TakeYourTest";
 import DailyUpdateTable from "./components/DailyUpdateTable/DailyUpdateTable";
+import SkillManagement from "./components/SkillManagement/SkillManagement";
 function App() {
   return (
     <div className="App">
@@ -34,7 +35,7 @@ function App() {
           {/* <div> */}
             <Route path="/dashboard" element={<Dashboard />} />
             <Route path="/daily-Update" element={<DailyUpdateTable />} />
-            <Route path="/skill-Management" element={< Dashboard/>} />
+            <Route path="/skill-Management" element={< SkillManagement/>} />
             <Route path="/varun" element={<TakeYourTest/>}/>
             <Route path="/dashboard" element={<Dashboard />} />
             <Route path="/all-projects" element={<ViewAll />} />

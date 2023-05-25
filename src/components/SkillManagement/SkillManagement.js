@@ -2,10 +2,12 @@ import React from "react";
 import './skillmanagement.css';
 import TakeTest from "./TakeTest/TakeTest";
 import SkillsAdded from "./SkillsAdded/SkillsAdded";
+import Header from "../Header";
 const SkillManagement = () => {
 
     return (
         <>
+        <Header/>
             <div class="container-fluid">
                 <div className="row">
                     <div className="col-12">
