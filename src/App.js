@@ -10,6 +10,7 @@ import ForgotPasswordOtpScreen from "./components/Accounts/Otp/ForgotPasswordOtp
 import CreateNewPasswordScreen from "./components/Accounts/ForgotPassword/CreateNewPasswordScreen";
 import PasswordChangedScreen from "./components/Accounts/ForgotPassword/PasswordChangedSuccessfulScreen";
 import { ViewAll } from "./components/Dashboard/ProjectIdea/ViewAllComponent/ViewAll";
+import TakeYourTest from "./components/TakeTest/TakeYourTest";
 
 // import './index.css'
 
@@ -20,6 +21,7 @@ function App() {
       <Router>
         <Routes>
           <Route path="/" element={<LoginScreen />} />
+          <Route path="/varun" element={<TakeYourTest/>}/>
           <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/forgot-password" element={<ForgotPasswordScreen />} />
           <Route path="/sign-up" element={<SignUpScreen />} />
@@ -37,6 +39,7 @@ function App() {
           <Route path="/all-projects" element={<ViewAll />} />
         </Routes>
       </Router>
+      {/* <TakeYourTest/> */}
     </div>
   );
 }
