@@ -33,7 +33,7 @@ export const MentorComponent = () => {
         <div className="box-shadow d-flex justify-content-center align-item-center">
           <div
             id="carouselExampleDark"
-            className="crousel slide "
+            className="carousel slide "
             data-bs-ride="carousel"
           >
             <div className="carousel-indicators">
