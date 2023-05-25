@@ -47,8 +47,8 @@ const ForgotPasswordScreen = () => {
       <div className="row pos">
         <div className="d-flex justify-content-center  align-items-center flex-row">
           <div className="col-md-5" style={{ backgroundColor: "#002C3F",
-              height: "562px",
-              width: "370px", }}>
+              height: "35.125rem",
+              width: "23.125rem", }}>
             <div className="d-flex flex-column justify-content-center align-items-center">
               <div className="row cglogoimg">
                 <img
@@ -85,7 +85,7 @@ const ForgotPasswordScreen = () => {
                 </div>
                 <div className="carousel-inner">
                   <div
-                    style={{ width: "260px" }}
+                    style={{ width: "16.25rem" }}
                     className={`carousel-item ${
                       activeIndex === 0 ? "active" : ""
                     }`}
@@ -94,7 +94,7 @@ const ForgotPasswordScreen = () => {
                       src={CarouselImage1}
                       className="d-block "
                       alt="..."
-                      style={{ width: "13rem", marginLeft: "24px" }}
+                      style={{ width: "13rem", marginLeft: "1.5rem" }}
                     />
                     <p className="carousel-text ms-4">
                       Record your daily work items
@@ -102,7 +102,7 @@ const ForgotPasswordScreen = () => {
                   </div>
 
                   <div
-                    style={{ width: "260px" }}
+                    style={{ width: "16.25rem" }}
                     className={`carousel-item ${
                       activeIndex === 1 ? "active" : ""
                     }`}
@@ -111,14 +111,14 @@ const ForgotPasswordScreen = () => {
                       src={CarouselImage2}
                       className="d-block "
                       alt="..."
-                      style={{ width: "13rem", marginLeft: "24px" }}
+                      style={{ width: "13rem", marginLeft: "1.5rem" }}
                     />
                     <p className="carousel-text">
                       Enhance your skills via assessments
                     </p>
                   </div>
                   <div
-                    style={{ width: "260px" }}
+                    style={{ width: "16.25rem" }}
                     className={`carousel-item ${
                       activeIndex === 2 ? "active" : ""
                     }`}
@@ -127,7 +127,7 @@ const ForgotPasswordScreen = () => {
                       src={CarouselImage3}
                       className="d-block "
                       alt="..."
-                      style={{ width: "13rem", marginLeft: "24px" }}
+                      style={{ width: "13rem", marginLeft: "1.5rem" }}
                     />
                     <p className="carousel-text">
                       Get certificate and share achievement
@@ -137,18 +137,18 @@ const ForgotPasswordScreen = () => {
               </div>
             </div>
           </div>
-          <div className="col-md-7 bg-white p-4"  style={{ height: "562px" }}>
+          <div className="col-md-7 bg-white p-4"  style={{ height: "35.125rem" }}>
             <div className="row ">
               <p className="right-container-heading">Forgot Password</p>
             </div>
             <div
               className="row"
               style={{
-                width: "412px",
+                width: "25.75rem",
                 background: "rgba(184, 221, 225, 0.54)",
-                borderRadius: "4px",
-                padding: "5px",
-                marginLeft: "0px",
+                borderRadius: "0.25rem",
+                padding: "0.313rem",
+                marginLeft: "0",
                 paddingLeft: "0",
                 marginBottom: "2.2rem",
               }}
@@ -159,20 +159,20 @@ const ForgotPasswordScreen = () => {
                   style={{
                     width: "1.2rem",
                     padding: "0",
-                    marginTop: "3px",
-                    marginRight: "10px",
+                    marginTop: "0.188rem",
+                    marginRight: "0.625rem",
                   }}
                   alt="Go Back"
                 />
-                <p style={{ fontSize: "16px", margin: "0" }}>
+                <p style={{ fontSize: "1rem", margin: "0" }}>
                   Please enter your email address below. You will receive an OTP
                   to reset your password.
                 </p>
               </div>
             </div>
-            <div className="row" style={{ height: "160px" }}>
+            <div className="row" style={{ height: "10rem" }}>
               <form onSubmit={handleSubmit}>
-                <div className="d-flex flex-column" style={{ height: "70px" ,marginTop:"1rem"}}>
+                <div className="d-flex flex-column" style={{ height: "4.375rem" ,marginTop:"1rem"}}>
                   <label className="input-label-text" for="exampleInputEmail1">
                     Email ID
                   </label>

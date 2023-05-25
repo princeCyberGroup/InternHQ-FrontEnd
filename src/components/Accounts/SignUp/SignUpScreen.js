@@ -60,8 +60,8 @@ const SignUpScreen = () => {
           <div className="col-md-5"
             style={{
               backgroundColor: "#002C3F",
-              height: "562px",
-              width: "370px",
+              height: "35.125rem",
+              width: "23.125rem",
             }}>
             <div className="d-flex flex-column justify-content-center align-items-center">
               <div className="row cglogoimg">
@@ -99,7 +99,7 @@ const SignUpScreen = () => {
                 </div>
                 <div className="carousel-inner">
                   <div
-                    style={{ width: "260px" }}
+                    style={{ width: "16.25rem" }}
                     className={`carousel-item ${
                       activeIndex === 0 ? "active" : ""
                     }`}
@@ -108,7 +108,7 @@ const SignUpScreen = () => {
                       src={CarouselImage1}
                       className="d-block "
                       alt="..."
-                      style={{ width: "13rem", marginLeft: "24px" }}
+                      style={{ width: "13rem", marginLeft: "1.5rem" }}
                     />
                     <p className="carousel-text ms-4">
                       Record your daily work items
@@ -116,7 +116,7 @@ const SignUpScreen = () => {
                   </div>
 
                   <div
-                    style={{ width: "260px" }}
+                    style={{ width: "16.25rem" }}
                     className={`carousel-item ${
                       activeIndex === 1 ? "active" : ""
                     }`}
@@ -125,14 +125,14 @@ const SignUpScreen = () => {
                       src={CarouselImage2}
                       className="d-block "
                       alt="..."
-                      style={{ width: "13rem", marginLeft: "24px" }}
+                      style={{ width: "13rem", marginLeft: "1.5rem" }}
                     />
                     <p className="carousel-text">
                       Enhance your skills via assessments
                     </p>
                   </div>
                   <div
-                    style={{ width: "260px" }}
+                    style={{ width: "16.25rem" }}
                     className={`carousel-item ${
                       activeIndex === 2 ? "active" : ""
                     }`}
@@ -141,7 +141,7 @@ const SignUpScreen = () => {
                       src={CarouselImage3}
                       className="d-block "
                       alt="..."
-                      style={{ width: "13rem", marginLeft: "24px" }}
+                      style={{ width: "13rem", marginLeft: "1.5rem" }}
                     />
                     <p className="carousel-text">
                       Get certificate and share achievement
@@ -151,13 +151,13 @@ const SignUpScreen = () => {
               </div>
             </div>
           </div>
-          <div className="col-md-7 bg-white p-4" style={{ height: "562px" }}>
+          <div className="col-md-7 bg-white p-4" style={{ height: "35.125rem" }}>
             <div className="row ">
               <p className="right-container-heading">Sign Up</p>
             </div>
-            <div className="row" style={{ height: "250px" }}>
+            <div className="row" style={{ height: "15.625rem" }}>
               <form onSubmit={handleSubmit}>
-                <div style={{ height: "180px" ,marginTop:"1rem"}}>
+                <div style={{ height: "11.25rem" ,marginTop:"1rem"}}>
                 <div className="d-flex flex-column">
                   <label className="input-label-text" for="exampleInputEmail1">
                     Email ID
@@ -179,7 +179,7 @@ const SignUpScreen = () => {
                 </div>
                 <div className="d-flex flex-column">
                   <label
-                    style={{ marginTop: "28px" }}
+                    style={{ marginTop: "1.75rem" }}
                     className="input-label-text"
                     for="exampleInputPassword1"
                   >
