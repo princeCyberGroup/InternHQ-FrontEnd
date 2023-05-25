@@ -55,7 +55,14 @@ const CreateNewPasswordScreen = () => {
     <div className="container-fluid login-screen-body ">
       <div className="row pos">
         <div className="d-flex justify-content-center align-items-center flex-row">
-        <div className="col-md-5" style={{ backgroundColor: "#002C3F", width: "22rem"}}>
+          <div
+            className="col-md-5"
+            style={{
+              backgroundColor: "#002C3F",
+              height: "562px",
+              width: "370px",
+            }}
+          >
             <div className="d-flex flex-column justify-content-center align-items-center">
               <div className="row cglogoimg">
                 <img
@@ -144,88 +151,94 @@ const CreateNewPasswordScreen = () => {
               </div>
             </div>
           </div>
-          <div className="col-md-7 bg-white p-4" style={{height: "517.328px"}}>
+          <div className="col-md-7 bg-white p-4" style={{ height: "562px" }}>
             <div className="row ">
               <p className="right-container-heading">Create New Password</p>
             </div>
-            <div className="row">
+            <div className="row" style={{ height: "250px" }}>
               <form onSubmit={handleSubmit}>
-                <div className="d-flex flex-column">
-                  <label className="input-label-text" for="exampleInputEmail1">
-                    New Password
-                  </label>
-                  <input
-                  className="input-fields"
-                    type="password"
-                    id="exampleInputEmail1"
-                    placeholder="Enter New Password"
-                    value={password}
-                    onChange={handlePasswordChange}
-                    required
-                  />
-                  {!isPasswordValid && password && (
-                    <span className="sign-up-warning ms-2">
-                      To proceed, please provide a password as a requirement.
-                    </span>
-                  )}
-                </div>
-                <div className="d-flex flex-column">
-                  <label
-                    style={{ marginTop: "28px" }}
-                    className="input-label-text"
-                    for="exampleInputPassword1"
-                  >
-                    Confirm Password
-                  </label>
-                  <input
-                  className="input-fields"
-                    type="password"
-                    id="exampleInputPassword1"
-                    placeholder="Enter Confirm Password"
-                    value={confirmPassword}
-                    onChange={handleConfirmPasswordChange}
-                    required
-                  />
-                  {!isConfirmPasswordValid && confirmPassword && (
-                  <span className="sign-up-warning ms-2">
-                    Passwords are not matching
-                  </span>
-                )}
+                <div style={{ height: "170px" ,marginTop:"1rem"}}>
+                  <div className="d-flex flex-column">
+                    <label
+                      className="input-label-text"
+                      for="exampleInputEmail1"
+                    >
+                      New Password
+                    </label>
+                    <input
+                      className="input-fields"
+                      type="password"
+                      id="exampleInputEmail1"
+                      placeholder="Enter New Password"
+                      value={password}
+                      onChange={handlePasswordChange}
+                      required
+                    />
+                    {!isPasswordValid && password && (
+                      <span className="sign-up-warning ms-2">
+                        To proceed, please provide a password as a requirement.
+                      </span>
+                    )}
+                  </div>
+                  <div className="d-flex flex-column">
+                    <label
+                      style={{ marginTop: "28px" }}
+                      className="input-label-text"
+                      for="exampleInputPassword1"
+                    >
+                      Confirm Password
+                    </label>
+                    <input
+                      className="input-fields"
+                      type="password"
+                      id="exampleInputPassword1"
+                      placeholder="Enter Confirm Password"
+                      value={confirmPassword}
+                      onChange={handleConfirmPasswordChange}
+                      required
+                    />
+                    {!isConfirmPasswordValid && confirmPassword && (
+                      <span className="sign-up-warning ms-2">
+                        Passwords are not matching
+                      </span>
+                    )}
+                  </div>
+                  
                 </div>
                 <div
-                  className="row"
-                  style={{
-                    width: "407px",
-                    background: "rgba(184, 221, 225, 0.54)",
-                    borderRadius: "4px",
-                    padding: "5px",
-                    marginLeft: "0px",
-                    paddingLeft: "0",
-                    marginTop: "1.7rem",
-                  }}
-                >
-                  <div style={{ display: "flex", alignItems: "flex-start" }}>
-                    <img
-                      src={InfoIcon}
-                      style={{
-                        width: "1.2rem",
-                        padding: "0",
-                        marginTop: "3px",
-                        marginRight: "10px",
-                      }}
-                      alt="Go Back"
-                    />
-                    <p style={{ fontSize: "15px", margin: "0" }}>
-                      Must contain at least 6 characters, one uppercase, one
-                      lowercase, one symbol and one digit.
-                    </p>
+                    className="row"
+                    style={{
+                      width: "407px",
+                      background: "rgba(184, 221, 225, 0.54)",
+                      borderRadius: "4px",
+                      padding: "5px",
+                      marginLeft: "0px",
+                      paddingLeft: "0",
+                      marginTop: "2rem",
+                    }}
+                  >
+                    <div style={{ display: "flex", alignItems: "flex-start" }}>
+                      <img
+                        src={InfoIcon}
+                        style={{
+                          width: "1.2rem",
+                          padding: "0",
+                          marginTop: "3px",
+                          marginRight: "10px",
+                        }}
+                        alt="Go Back"
+                      />
+                      <p style={{ fontSize: "15px", margin: "0" }}>
+                        Must contain at least 6 characters, one uppercase, one
+                        lowercase, one symbol and one digit.
+                      </p>
+                    </div>
                   </div>
-                </div>
                 <button
                   type="submit"
-                  className="btn btn-warning border-0 sign-up-btn"
+                  className="btn btn-warning border-0 sign-up-btn mt-2"
                   style={{ marginBottom: "0.8rem" }}
-                  disabled={!isPasswordValid || !isConfirmPasswordValid }
+                  disabled={!isPasswordValid || !isConfirmPasswordValid}
                 >
                   Submit
                 </button>

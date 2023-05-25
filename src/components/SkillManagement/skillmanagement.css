@@ -1,0 +1,19 @@
+.SM-nav-bar {
+    margin-top: 20px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding: 0px;
+    gap: 4px;
+    width: 208px;
+    height: 32px;
+}
+.SM-nav-bar p {
+    margin: 0%;
+    font-family: 'Roboto';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 32px;
+    color: #343435;
+}
