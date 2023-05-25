@@ -1,20 +1,7 @@
-/* html{
-    width: 1280px !important;
-    border: 1px solid red ;
-    margin: 0 auto;
-} */
+
 ::-webkit-scrollbar{
     width: 0;
 }
 body{
     font-family: roboto;
 }
-  /* @media screen and (min-width: 1280px) {
-    .responsiveness {
-    
-   width: 70%;
-        margin: auto;
-
-    
-        }
-  } */

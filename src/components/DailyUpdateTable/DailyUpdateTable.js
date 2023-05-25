@@ -7,6 +7,7 @@ import LearningTypeDropDown from "./LearningTypeDropDown";
 import { Modal, Button, Form } from "react-bootstrap";
 import ReadMore from "../../Assets/ReadMore.svg";
 import EmptyDailyUpdateTable from "./EmptyDailyUpdateTable";
+import Header from "../Header";
 
 const DailyUpdateTable = () => {
   const [tableData, setTableData] = useState(tableArr);
@@ -143,6 +144,8 @@ const DailyUpdateTable = () => {
   };
 
   return (
+    <>
+    <Header />
     <div className="container-fluid">
       <div className="row">
         <div className="col-12">
@@ -418,6 +421,7 @@ const DailyUpdateTable = () => {
         </div>
       </div>
     </div>
+    </>
   );
 };
 
