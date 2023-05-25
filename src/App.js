@@ -10,7 +10,7 @@ import ForgotPasswordOtpScreen from "./components/Accounts/Otp/ForgotPasswordOtp
 import CreateNewPasswordScreen from "./components/Accounts/ForgotPassword/CreateNewPasswordScreen";
 import PasswordChangedScreen from "./components/Accounts/ForgotPassword/PasswordChangedSuccessfulScreen";
 import { ViewAll } from "./components/Dashboard/ProjectIdea/ViewAllComponent/ViewAll";
-import TakeYourTest from "./components/TakeTest/TakeYourTest";
+import TakeYourTest from "./components/TakeYourTest/TakeYourTest";
 
 // import './index.css'
 
