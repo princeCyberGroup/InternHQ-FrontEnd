@@ -36,7 +36,7 @@ const Dashboard = () => {
               {/* <li className="nav-item"> */}
               {dashNav === 'dashboard' ?
                 <li className="nav-item active">
-                  <a href="#" className="btn btn-primary navlinksHeightWidth" sx="navlinksHeightWidth">Dashboard<span></span></a>
+                  <a href="#" className="btn btn-primary navlinksHeightWidth" >Dashboard<span></span></a>
                 </li>
                 :
                 <li className="nav-item">
@@ -46,7 +46,7 @@ const Dashboard = () => {
 
               {dashNav === 'dailyUpdate' ?
                 <li className="nav-item active">
-                  <a href="#" className="btn btn-primary navlinksHeightWidth" sx="navlinksHeightWidth">Daily Update<span></span></a>
+                  <a href="#" className="btn btn-primary navlinksHeightWidth" >Daily Update<span></span></a>
                 </li>
                 :
                 <li className="nav-item">
@@ -56,7 +56,7 @@ const Dashboard = () => {
 
               {dashNav === 'skillmanagement' ?
                 <li className="nav-item active">
-                  <a href="#" className="btn btn-primary navlinksHeightWidth" sx="navlinksHeightWidth">Skill Management<span></span></a>
+                  <a href="#" className="btn btn-primary navlinksHeightWidth"   >Skill Management<span></span></a>
                 </li>
                 :
                 <li className="nav-item">

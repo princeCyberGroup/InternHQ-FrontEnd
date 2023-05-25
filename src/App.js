@@ -16,7 +16,6 @@ import PasswordChangedScreen from "./components/Accounts/ForgotPassword/Password
 function App() {
   return (
     <div className="App">
-      <div className="wrapper">
       <Router>
         <Routes>
           <Route path="/" element={<LoginScreen />} />
@@ -36,7 +35,6 @@ function App() {
           <Route path="/change-success" element={<PasswordChangedScreen />} />
         </Routes>
       </Router>
-      </div>
     </div>
   );
 }

@@ -7,10 +7,12 @@
       rgba(0, 7, 45, 0.46) 112.65%
     ),
     #ffffff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .pos {
-  transform: translate(0, 25%);
   margin: 0 auto;
 }
 
@@ -71,22 +73,24 @@ input:focus {
 }
 
 .sign-up-btn {
-  width: 25.438rem;
-  margin-top: 36px;
+  width: 24.313rem;
+  position: relative;
+  top: 27px;
+  margin-bottom: 21px;
   background: #ffb81c;
   color: #343435;
   font-size: 17px;
   font-weight: 600;
 }
 
-.btn:hover {
+/* .btn:hover {
   background-color: #ffb81c;
   color: #343435;
 }
 
 a:hover {
   color: #28519e;
-}
+} */
 
 .right-container-link {
   display: flex;
@@ -152,4 +156,8 @@ a:hover {
 .sign-up-warning {
   color: red;
   font-size: 0.70rem;
+}
+
+.input-fields {
+  max-width: 389px;
 }

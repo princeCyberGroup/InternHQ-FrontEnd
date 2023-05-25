@@ -16,7 +16,7 @@
     position: relative;
     /* border: 1px solid red; */
     text-align: center;
-    width: 80%;
+    /* width: 80%; */
 }
 
 .rounded-circle {
@@ -24,7 +24,6 @@
     width: 80px;
     margin: auto;
 }
-
 .badge-color {
     color: #343435;
     font-size: 0.75rem;
@@ -63,24 +62,24 @@
     justify-content: center;
 }
 
-.wrapper-cr {
+/* .wrapper-cr {
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
     height: 100%;
-}
+} */
 
-.crousal-set {
+/* .crousal-set {
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-}
+} */
 
 .card-dims {
     border: 1px solid #E9ECEB;
-    height: 236px;
+    /* height: 236px; */
     width: 329px;
 }
 
