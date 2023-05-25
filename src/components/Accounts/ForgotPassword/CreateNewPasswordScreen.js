@@ -59,8 +59,8 @@ const CreateNewPasswordScreen = () => {
             className="col-md-5"
             style={{
               backgroundColor: "#002C3F",
-              height: "562px",
-              width: "370px",
+              height: "35.125rem",
+              width: "23.125rem",
             }}
           >
             <div className="d-flex flex-column justify-content-center align-items-center">
@@ -99,7 +99,7 @@ const CreateNewPasswordScreen = () => {
                 </div>
                 <div className="carousel-inner">
                   <div
-                    style={{ width: "260px" }}
+                    style={{ width: "16.25rem" }}
                     className={`carousel-item ${
                       activeIndex === 0 ? "active" : ""
                     }`}
@@ -108,7 +108,7 @@ const CreateNewPasswordScreen = () => {
                       src={CarouselImage1}
                       className="d-block "
                       alt="..."
-                      style={{ width: "13rem", marginLeft: "24px" }}
+                      style={{ width: "13rem", marginLeft: "1.5rem" }}
                     />
                     <p className="carousel-text ms-4">
                       Record your daily work items
@@ -116,7 +116,7 @@ const CreateNewPasswordScreen = () => {
                   </div>
 
                   <div
-                    style={{ width: "260px" }}
+                    style={{ width: "16.25rem" }}
                     className={`carousel-item ${
                       activeIndex === 1 ? "active" : ""
                     }`}
@@ -125,14 +125,14 @@ const CreateNewPasswordScreen = () => {
                       src={CarouselImage2}
                       className="d-block "
                       alt="..."
-                      style={{ width: "13rem", marginLeft: "24px" }}
+                      style={{ width: "13rem", marginLeft: "1.5rem" }}
                     />
                     <p className="carousel-text">
                       Enhance your skills via assessments
                     </p>
                   </div>
                   <div
-                    style={{ width: "260px" }}
+                    style={{ width: "16.25rem" }}
                     className={`carousel-item ${
                       activeIndex === 2 ? "active" : ""
                     }`}
@@ -141,7 +141,7 @@ const CreateNewPasswordScreen = () => {
                       src={CarouselImage3}
                       className="d-block "
                       alt="..."
-                      style={{ width: "13rem", marginLeft: "24px" }}
+                      style={{ width: "13rem", marginLeft: "1.5rem" }}
                     />
                     <p className="carousel-text">
                       Get certificate and share achievement
@@ -151,13 +151,13 @@ const CreateNewPasswordScreen = () => {
               </div>
             </div>
           </div>
-          <div className="col-md-7 bg-white p-4" style={{ height: "562px" }}>
+          <div className="col-md-7 bg-white p-4" style={{ height: "35.125rem" }}>
             <div className="row ">
               <p className="right-container-heading">Create New Password</p>
             </div>
-            <div className="row" style={{ height: "250px" }}>
+            <div className="row" style={{ height: "15.625rem" }}>
               <form onSubmit={handleSubmit}>
-                <div style={{ height: "170px" ,marginTop:"1rem"}}>
+                <div style={{ height: "10.625rem" ,marginTop:"1rem"}}>
                   <div className="d-flex flex-column">
                     <label
                       className="input-label-text"
@@ -182,7 +182,7 @@ const CreateNewPasswordScreen = () => {
                   </div>
                   <div className="d-flex flex-column">
                     <label
-                      style={{ marginTop: "28px" }}
+                      style={{ marginTop: "1.75rem" }}
                       className="input-label-text"
                       for="exampleInputPassword1"
                     >
@@ -208,11 +208,11 @@ const CreateNewPasswordScreen = () => {
                 <div
                     className="row"
                     style={{
-                      width: "407px",
+                      width: "25.438rem",
                       background: "rgba(184, 221, 225, 0.54)",
-                      borderRadius: "4px",
-                      padding: "5px",
-                      marginLeft: "0px",
+                      borderRadius: "0.25rem",
+                      padding: "0.313rem",
+                      marginLeft: "0",
                       paddingLeft: "0",
                       marginTop: "2rem",
                     }}
@@ -223,12 +223,12 @@ const CreateNewPasswordScreen = () => {
                         style={{
                           width: "1.2rem",
                           padding: "0",
-                          marginTop: "3px",
-                          marginRight: "10px",
+                          marginTop: "0.188rem",
+                          marginRight: "0.625rem",
                         }}
                         alt="Go Back"
                       />
-                      <p style={{ fontSize: "15px", margin: "0" }}>
+                      <p style={{ fontSize: "0.938rem", margin: "0" }}>
                         Must contain at least 6 characters, one uppercase, one
                         lowercase, one symbol and one digit.
                       </p>

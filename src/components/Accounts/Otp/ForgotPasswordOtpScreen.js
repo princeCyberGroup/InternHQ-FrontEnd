@@ -44,8 +44,8 @@ const ForgotPasswordOtpScreen = () => {
           <div  className="col-md-5"
             style={{
               backgroundColor: "#002C3F",
-              height: "562px",
-              width: "370px",
+              height: "35.125rem",
+              width: "23.125rem",
             }}>
             <div className="d-flex flex-column justify-content-center align-items-center">
               <div className="row cglogoimg">
@@ -83,7 +83,7 @@ const ForgotPasswordOtpScreen = () => {
                 </div>
                 <div className="carousel-inner">
                   <div
-                    style={{ width: "260px" }}
+                    style={{ width: "16.25rem" }}
                     className={`carousel-item ${
                       activeIndex === 0 ? "active" : ""
                     }`}
@@ -92,7 +92,7 @@ const ForgotPasswordOtpScreen = () => {
                       src={CarouselImage1}
                       className="d-block "
                       alt="..."
-                      style={{ width: "13rem", marginLeft: "24px" }}
+                      style={{ width: "13rem", marginLeft: "1.5rem" }}
                     />
                     <p className="carousel-text ms-4">
                       Record your daily work items
@@ -100,7 +100,7 @@ const ForgotPasswordOtpScreen = () => {
                   </div>
 
                   <div
-                    style={{ width: "260px" }}
+                    style={{ width: "16.25rem" }}
                     className={`carousel-item ${
                       activeIndex === 1 ? "active" : ""
                     }`}
@@ -109,14 +109,14 @@ const ForgotPasswordOtpScreen = () => {
                       src={CarouselImage2}
                       className="d-block "
                       alt="..."
-                      style={{ width: "13rem", marginLeft: "24px" }}
+                      style={{ width: "13rem", marginLeft: "1.5rem" }}
                     />
                     <p className="carousel-text">
                       Enhance your skills via assessments
                     </p>
                   </div>
                   <div
-                    style={{ width: "260px" }}
+                    style={{ width: "16.25rem" }}
                     className={`carousel-item ${
                       activeIndex === 2 ? "active" : ""
                     }`}
@@ -125,7 +125,7 @@ const ForgotPasswordOtpScreen = () => {
                       src={CarouselImage3}
                       className="d-block "
                       alt="..."
-                      style={{ width: "13rem", marginLeft: "24px" }}
+                      style={{ width: "13rem", marginLeft: "1.5rem" }}
                     />
                     <p className="carousel-text">
                       Get certificate and share achievement
@@ -135,7 +135,7 @@ const ForgotPasswordOtpScreen = () => {
               </div>
             </div>
           </div>
-          <div className="col-md-7 bg-white p-4" style={{ height: "562px" }}>
+          <div className="col-md-7 bg-white p-4" style={{ height: "35.125rem" }}>
             <div className="row ">
               <p className="right-container-heading">Enter Code</p>
             </div>
@@ -144,13 +144,13 @@ const ForgotPasswordOtpScreen = () => {
                 src={BackArrow}
                 style={{
                   width: "1.8rem",
-                  paddingRight: "3px",
+                  paddingRight: "0.188rem",
                   cursor: "pointer",
                 }}
                 alt="Go Back"
                 onClick={() => navigate("/forgot-password")}
               />
-              <span style={{ display: "contents", fontSize: "14px" }}>
+              <span style={{ display: "contents", fontSize: "0.875rem" }}>
                 {" "}
                 email@email.com
               </span>
@@ -160,7 +160,7 @@ const ForgotPasswordOtpScreen = () => {
                 style={{
                   marginBottom: "1.9rem",
                   color: "#8A8A8A",
-                  lineHeight: "19px",
+                  lineHeight: "1.188rem",
                 }}
               >
                 Please type the Six digit code we have sent on your<br/> Microsoft
