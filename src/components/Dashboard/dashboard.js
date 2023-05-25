@@ -6,6 +6,7 @@ import { AddNewProjectComponent } from './ProjectIdea/ProjectComponent';
 import DashboardGraph from './ReportGraph/DashboardGraph';
 import { NotificationComponent } from './Notification/Notifications';
 import { MentorComponent } from './MentorList/MentorList';
+import SkillManagement from "../SkillManagement/SkillManagement"
 import "./dashboard.css"
 const Dashboard = () => {
 
@@ -95,7 +96,10 @@ const Dashboard = () => {
         {currPage === 'dailyUpdate' ?
         <DailyUpdateTable />
         :
-        <h1>Here Goes Skill Management Section</h1>
+        <>
+        {/* <h1>Here Goes Skill Management Section</h1> */}
+        <SkillManagement/>
+        </>
         }
         </> 
         }
