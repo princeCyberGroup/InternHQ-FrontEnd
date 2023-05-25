@@ -10,10 +10,8 @@ import ForgotPasswordOtpScreen from "./components/Accounts/Otp/ForgotPasswordOtp
 import CreateNewPasswordScreen from "./components/Accounts/ForgotPassword/CreateNewPasswordScreen";
 import PasswordChangedScreen from "./components/Accounts/ForgotPassword/PasswordChangedSuccessfulScreen";
 import { ViewAll } from "./components/Dashboard/ProjectIdea/ViewAllComponent/ViewAll";
+import TakeYourTest from "./components/TakeYourTest/TakeYourTest";
 import DailyUpdateTable from "./components/DailyUpdateTable/DailyUpdateTable";
-
-// import './index.css'
-
 function App() {
   return (
     <div className="App">
@@ -37,11 +35,13 @@ function App() {
             <Route path="/dashboard" element={<Dashboard />} />
             <Route path="/daily-Update" element={<DailyUpdateTable />} />
             <Route path="/skill-Management" element={< Dashboard/>} />
-
+            <Route path="/varun" element={<TakeYourTest/>}/>
+            <Route path="/dashboard" element={<Dashboard />} />
             <Route path="/all-projects" element={<ViewAll />} />
           {/* </div> */}
         </Routes>
       </Router>
+      {/* <TakeYourTest/> */}
     </div>
   );
 }

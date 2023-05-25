@@ -9,7 +9,6 @@ import { MentorComponent } from "./MentorList/MentorList";
 import "./dashboard.css";
 import { Link } from "react-router-dom";
 import Header from "../Header";
-
 const Dashboard = () => {
   const [currPage, setCurrPage] = useState("dashboard");
   const [dashNav, setDashNav] = useState("dashboard");
@@ -50,7 +49,7 @@ const Dashboard = () => {
           </div>
         </>
       </div>
-    </>
+   </>
   );
 };
 
