@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import cgLogo from "./cglogo.svg"
 import DailyTaskTracker from './DailyTaskTracker/DailyTaskTracker';
 import DailyUpdateTable from '../DailyUpdateTable/DailyUpdateTable';
-import SkillsAdded from '../SkillManagement/SkillsAdded';
+// import SkillsAdded from '../SkillManagement/SkillsAdded';
 import { AddNewProjectComponent } from './ProjectIdea/ProjectComponent';
 import DashboardGraph from './ReportGraph/DashboardGraph';
 import { NotificationComponent } from './Notification/Notifications';
@@ -98,8 +98,7 @@ const Dashboard = () => {
         {currPage === 'dailyUpdate' ?
         <DailyUpdateTable />
         :
-        <SkillsAdded/>
-        // <h1>Here Goes Skill Management Section</h1>
+       ''
         }
         </> 
         }
