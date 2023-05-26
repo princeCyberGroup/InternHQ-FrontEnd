@@ -105,12 +105,14 @@ width: 65%;
 .Category_box{
     display: flex;
 flex-direction: row;
+justify-content: center;
 align-items: flex-start;
 padding: 2.5px 8px;
 gap: 8px;
 
-width: 68px;
-height: 20px;
+width: 80px;
+height: 25px;
+font-size: 13px;
 background: #B8DDE1;
 border-radius: 2px;
 flex: none;
@@ -118,7 +120,7 @@ order: 0;
 flex-grow: 0;
 }
 .Category{
-    width: 52px;
+    /* width: 80px;
 height: 15px;
 
 font-family: 'Roboto';
@@ -129,7 +131,7 @@ line-height: 15px;
 color: #343435;
 flex: none;
 order: 0;
-flex-grow: 0;
+flex-grow: 0; */
 }
 .About{
     width: 309px;
