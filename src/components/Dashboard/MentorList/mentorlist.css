@@ -1,0 +1,116 @@
+/* .carousel-indicators li {
+    background-color: transparent;
+    border: 1px solid white;
+    border-radius: 50%;
+    width: 10px;
+    height: 10px;
+    margin: 0 5px;
+} */
+/*
+.carousel-indicators .active {
+    background-color: red;
+} */
+/*  */
+
+.carousel-item {
+    position: relative;
+    /* border: 1px solid red; */
+    text-align: center;
+    /* width: 80%; */
+}
+
+.rounded-circle {
+    height: 80px;
+    width: 80px;
+    margin: auto;
+}
+.badge-color {
+    color: #343435;
+    font-size: 0.75rem;
+    background-color: #E9ECEB;
+}
+.fs{
+    margin-top: 0.5rem;
+    font-size: 1rem;
+}
+.role-fs{
+    font-size: 0.81rem;
+}
+.carousal-navs {
+    height: 8px;
+    width: 8px;
+    border-radius: 50%;
+}
+
+.card-prop {
+    height: 300px;
+}
+
+.box-shadow {
+    box-shadow: 0px 0px 0px 0px rgba(0, 0, 0, 0.75);
+    -webkit-box-shadow: 0px 0px 0px 0px rgba(0, 0, 0, 0.75);
+    -moz-box-shadow: 0px 0px 0px 0px rgba(0, 0, 0, 0.75);
+    height: 258px;
+    max-width: 310px;
+    margin: auto;
+}
+
+
+.mentor-inner {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+/* .wrapper-cr {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+} */
+
+/* .crousal-set {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+} */
+
+.card-dims {
+    border: 1px solid #E9ECEB;
+    /* height: 236px; */
+    width: 329px;
+}
+
+.mentor-text {
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 12px;
+    line-height: 14px;
+}
+.flex{
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+h5.dtt-hfs{
+    width: 10.18rem;
+    margin-top: 1rem;
+    margin-left: 1rem;
+    margin-bottom: 1rem;
+    font-family: 'Roboto';
+    font-style: normal;
+    font-weight: 600;
+    font-size: 1rem;
+    line-height: 1.18rem;
+    /* identical to box height */
+
+
+    /* Primary/Gray */
+
+    color: #343435;
+}

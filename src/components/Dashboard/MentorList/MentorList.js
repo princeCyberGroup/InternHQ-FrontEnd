@@ -1,78 +1,91 @@
-
+import { useState, useEffect } from 'react';import "./mentorlist.css";
+import { MentorData } from './MentorData';
 
 export const MentorComponent = () => {
-    return (
-        <>
-            <div className="card" style={{ height: "348px" }}>
-                <div className="card-header">
-                    Know Your Mentors
-                </div>
-                <div className="card-body">
-                    <div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
-                        <div class="carousel-inner">
-                            <div class="carousel-item active">
-                                <div className="container ">
-                                    <div class=" text-center">
-                                        <div class="">
-                                            <img src="https://media1.popsugar-assets.com/files/thumbor/VtEIEPOZPzOk-Dkf8JN947DPNrs/fit-in/2048xorig/filters:format_auto-!!-:strip_icc-!!-/2018/03/27/788/n/24155406/tmp_1BYogo_59d3c106ace0fc9b_GettyImages-803082014.jpg" alt="Your image alt text" class="rounded-circle" height={"100px"} width={"100px"} />
-                                            <h6>Robert Downey Junior</h6>
-                                            <p>Actor</p>
-                                            <span class="badge alert-secondary">Secondary</span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="carousel-item ">
-                                <div className="container ">
-                                    <div class=" text-center">
-                                        <div class="">
-                                            <img src="https://media1.popsugar-assets.com/files/thumbor/VtEIEPOZPzOk-Dkf8JN947DPNrs/fit-in/2048xorig/filters:format_auto-!!-:strip_icc-!!-/2018/03/27/788/n/24155406/tmp_1BYogo_59d3c106ace0fc9b_GettyImages-803082014.jpg" alt="Your image alt text" class="rounded-circle" height={"100px"} width={"100px"} />
-                                            <h6>Robert Downey Junior</h6>
-                                            <p>Actor</p>
 
-                                            <span class="badge alert-secondary">Secondary</span>
-                                            <br />
+  const [mentors, setMentors] = useState([]);
 
-                                            <a href="#" class="btn btn-primary">Go somewhere</a>
+  useEffect(() => {
+    setMentors(MentorData);
+    // Fetch mentors data from the API
+    // fetchMentors();
+  }, []);
 
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="carousel-item ">
-                                <div className="container ">
-                                    <div class=" text-center">
-                                        <div class="">
-                                            <img src="https://media1.popsugar-assets.com/files/thumbor/VtEIEPOZPzOk-Dkf8JN947DPNrs/fit-in/2048xorig/filters:format_auto-!!-:strip_icc-!!-/2018/03/27/788/n/24155406/tmp_1BYogo_59d3c106ace0fc9b_GettyImages-803082014.jpg" alt="Your image alt text" class="rounded-circle" height={"100px"} width={"100px"} />
-                                            <h6>Robert Downey Junior</h6>
-                                            <p>Actor</p>
+  // const fetchMentors = async () => {
+  //   try {
+  //     // Make an API request to fetch mentors data
+  //     const response = await fetch('https://api.example.com/mentors');
+  //     const data = await response.json();
 
-                                            <span class="badge alert-secondary">Secondary</span>
-                                            <br />
+  //     // Update the mentors state with the fetched data
+  //     setMentors(data);
+  //   } catch (error) {
+  //     console.log('Error occurred while fetching mentors:', error);
+  //   }
+  // };
 
-                                            <a href="#" class="btn btn-primary">Go somewhere</a>
-
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                           
-                        </div>
-                        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="prev">
-                            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                            <span class="visually-hidden">Previous</span>
-                        </button>
-                        <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="next">
-                            <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                            <span class="visually-hidden">Next</span>
-                        </button>
-                    </div>
-                </div>
-                <div className="card-footer text-center">
-                   o o o 
-                </div>
+  return (
+    <>
+      <div className="card" style={{ height: "370px", alignContent: "center" }}>
+        <div className="border-bottom ">
+          <h5 className="card-title dtt-hfs">Know Your Mentors</h5>
+        </div>
+        <div className="box-shadow d-flex justify-content-center align-item-center">
+          <div
+            id="carouselExampleDark"
+            className="carousel slide "
+            data-bs-ride="carousel"
+          >
+            <div className="carousel-indicators">
+              {mentors.map((mentor, index) => (
+                <button
+                  key={index}
+                  type="button"
+                  data-bs-target="#carouselExampleDark"
+                  data-bs-slide-to={index.toString()}
+                  className={`bg-dark ${index === 0 ? 'active' : ''}`}
+                  aria-current={index === 0 ? 'true' : 'false'}
+                  aria-label={`Slide ${index + 1}`}
+                ></button>
+              ))}
             </div>
+            <div className="carousel-inner crousal-set" role="listbox">
+              {mentors.map((mentor, index) => (
+                <div
+                  key={index}
+                  className={`carousel-item ${index === 0 ? 'active' : ''} border`}
+                >
+                  <div className="card-body pt-4" style={{width:"329px",height:"236px"}}>
+                    <img
+                      src="https://th.bing.com/th/id/OIP.08bGE4YPB9q_OZ9hS45YpgHaGm?pid=ImgDet&rs=1" // Replace with mentor image URL from API response
+                      className="d-block rounded-circle"
+                      alt="Mentor"
+                    />
+                    <div className="mentor-text">
+                      <p className="card-text fs">
+                        <b>{mentor.name}</b> {/* Replace with mentor name from API response */}
+                      </p>
+                      <p className="role-fs">{mentor.position}</p> {/* Replace with mentor position from API response */}
+                      <div className="row">
+                        <div className=" flex">
+                          {mentor.skills.map((skill, skillIndex) => (
+                            <span key={skillIndex} className="badge badge-color">
+                              {skill.toUpperCase()} {/* Replace with mentor skills from API response */}
+                            </span>
+                          ))}
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+        <br />
 
-        </>
-    )
-}
+
+      </div>
+    </>
+  );
+};
