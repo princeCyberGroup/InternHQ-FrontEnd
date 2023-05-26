@@ -128,10 +128,11 @@ const TakeTest = () => {
                                                 </div>
                                                 <div class=" col d-flex justify-content-between eounded text-grey quesTimeClick ">
                                                     <div class="d-flex flex-column justify-content-center noOfQues">
-                                                        <span class="articles"> <MdOutlineBallot class='me-1.5' />{test.numberOfQuestion} Questions</span>
+                                                        <div class="articles d-flex justify-content-center"> <MdOutlineBallot style={{marginRight:"5px"}}/>{test.numberOfQuestion} Questions</div>
                                                     </div>
                                                     <div class="d-flex flex-column justify-content-center testTime">
-                                                        <span class="articles"><BsClock class='me-1.5' />{test.examDuration} mins</span>
+                                                        <div class="articles d-flex justify-content-center ">
+                                                            <BsClock style={{marginRight:"5px"}}/>{test.examDuration} mins</div>
                                                     </div>
                                                     <div class="d-flex flex-column">
                                                         <Button className='btnclick' data-bs-toggle="modal" data-bs-target="#staticBackdrop" >Start Test</Button>{' '}
