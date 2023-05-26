@@ -71,23 +71,23 @@ const Dashboard = () => {
       <div className='responsiveness'>
       {currPage === 'dashboard' ?
         <>
-          <div class="container-fluid">
-              <div class="row mt-3">
-                <div class=" col-md-4" >
+          <div className="container-fluid">
+              <div className="row mt-3">
+                <div className=" col-md-4" >
                   <DailyTaskTracker/>
                 </div>
-                 <div class=" col-md-4" >
+                 <div className=" col-md-4" >
                   <AddNewProjectComponent/>
                 </div>
-                <div class=" col-md-4" >
+                <div className=" col-md-4" >
                   <MentorComponent/>
                 </div> 
               </div>
-              <div class="row mt-3">
-                <div class="col-md-8">
+              <div className="row mt-3">
+                <div className="col-md-8">
                   <DashboardGraph/>
                 </div>
-                <div class="col-md-4">
+                <div className="col-md-4">
                   <NotificationComponent/>
                 </div>
             </div>
