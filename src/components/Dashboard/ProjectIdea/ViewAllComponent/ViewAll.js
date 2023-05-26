@@ -50,19 +50,10 @@ export const ViewAll = () => {
 
 export const ProjectIdeas = (props) => {
 
-    const [projectData, setProjectData] = useState();
     const truncate = (str, maxLength) => {
         if (str.length > maxLength) return (str.slice(0, maxLength) + "...");
         else return str;
     }
-
-    // const [arrowClicked, setArrowClicked] = useState(true);
-    const [pActive, setPActive] = useState(false);
-
-    // const handleClick = () => {
-    //     setArrowClicked(!arrowClicked);
-    // };
-
 
     return (
 
@@ -73,13 +64,10 @@ export const ProjectIdeas = (props) => {
                         onClick={() => {
                             props.projectDetails(index);
                         }}>
-                        {/* <span className="col "> */}
+                    
                         <div>
                             <h5 className="project-names">{user.ProjectNames}
                                 <span
-                                    onClick={() => {
-                                        setPActive(true);
-                                    }}
                                     className="click-arrow"
                                     style={{ marginLeft: "auto" }}
                                 >
@@ -87,16 +75,12 @@ export const ProjectIdeas = (props) => {
                                 </span>
                             </h5>
                         </div>
-                        {/* </span> */}
+
+                      
                         <div>
                             <p className="project-text flex-grow-1">{truncate(user.ProjectText, 100)}</p>
                         </div>
-
-                        {/* </div> */}
-
-                        {/* <p className="project-text">{truncate(user.ProjectText, 100)}</p> */}
                     </div>
-
                 )
             })}
         </div>
