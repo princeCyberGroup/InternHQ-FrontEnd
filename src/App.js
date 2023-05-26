@@ -19,10 +19,10 @@ function App() {
     <div className="App">
       <Router>
         <Routes>
-          <Route element={<AuthGuard />}>
+          {/* <Route element={<AuthGuard />}> */}
             <Route path="/dashboard"  element={<Dashboard/>}  />
             <Route path="/all-projects" element={<ViewAll/>} />
-          </Route>
+          {/* </Route> */}
           <Route path="/" element={<LoginScreen />} />
           <Route path="/forgot-password" element={<ForgotPasswordScreen />} />
           <Route path="/sign-up" element={<SignUpScreen />} />

@@ -26,25 +26,25 @@ const Dashboard = () => {
 
       <div className="responsiveness">
         <>
-          <div class="container-fluid">
-            <div class="row mt-3">
-              <div class=" col-md-4 ps-3">
-                <DailyTaskTracker />
+          <div className="container-fluid">
+              <div className="row mt-3">
+                <div className=" col-md-4" >
+                  <DailyTaskTracker/>
+                </div>
+                 <div className=" col-md-4" >
+                  <AddNewProjectComponent/>
+                </div>
+                <div className=" col-md-4" >
+                  <MentorComponent/>
+                </div> 
               </div>
-              <div class="col-md-4 ps-3">
-                <AddNewProjectComponent />
-              </div>
-              <div class="col-md-4 ps-1">
-                <MentorComponent />
-              </div>
-            </div>
-            <div class="row mt-3 ">
-              <div class="col-md-8">
-                <DashboardGraph />
-              </div>
-              <div class="col-md-4  ps-1">
-                <NotificationComponent />
-              </div>
+              <div className="row mt-3">
+                <div className="col-md-8">
+                  <DashboardGraph/>
+                </div>
+                <div className="col-md-4">
+                  <NotificationComponent/>
+                </div>
             </div>
           </div>
         </>
