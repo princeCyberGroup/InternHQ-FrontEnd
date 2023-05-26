@@ -64,19 +64,24 @@ export const ProjectIdeas = (props) => {
                         onClick={() => {
                             props.projectDetails(index);
                         }}>
-                    
-                        <div>
-                            <h5 className="project-names">{user.ProjectNames}
-                                <span
-                                    className="click-arrow"
-                                    style={{ marginLeft: "auto" }}
-                                >
-                                    &gt;
-                                </span>
+
+                        <div
+                            style={{
+                                display: "flex",
+                            }}>
+                            <h5
+                                className="project-names"
+                            >{user.ProjectNames}
                             </h5>
+                            <span
+                                className="click-arrow"
+                            // style={{ border:"1px solid black" }}
+                            >
+                                &gt;
+                            </span>
                         </div>
 
-                      
+
                         <div>
                             <p className="project-text flex-grow-1">{truncate(user.ProjectText, 100)}</p>
                         </div>

@@ -1,5 +1,18 @@
+import { Api } from "./Api";
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 export const AddProject = () => {
+    const [projectData, setProjectDara] = useState(Api)
+    const navigate = useNavigate();
+    const handleClick = (e) => {
+        //state = true
+        e.preventDefault();
+        const data = { projectData }
+        navigate('/all-projects', { state: projectData });
+    }
+
+
     return (
         <>
             <div className="card-body pb-0">
@@ -15,7 +28,8 @@ export const AddProject = () => {
                         <div class="d-flex">
                             <p class="text mb-0 ms-1">Project</p>
                         </div>
-                        <button type="button" class="view-all">
+                        <button
+                            type="button" onClick={(e) => { handleClick(e) }} class="view-all">
                             <p class="me-2">View All</p>
                         </button>
                     </div>
