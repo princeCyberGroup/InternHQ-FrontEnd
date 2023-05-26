@@ -10,9 +10,13 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .pos {
+  /* transform: translate(0,calc(100vh - 90vh)); */
   margin: 0 auto;
 }
 
@@ -73,7 +77,7 @@ input:focus {
 }
 
 .sign-up-btn {
-  width: 24.313rem;
+  width:95%;
   position: relative;
   top: 27px;
   margin-bottom: 21px;
@@ -159,5 +163,5 @@ a:hover {
 }
 
 .input-fields {
-  max-width: 389px;
+  max-width: 100%;
 }
