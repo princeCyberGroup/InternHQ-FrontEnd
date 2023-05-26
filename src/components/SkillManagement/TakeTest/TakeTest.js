@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useState } from "react";
 import logo from '../../../Assets/image 13.png';
 // import {TakeYourTest} from"../../TakeTest/TakeYourTest.js";
@@ -12,8 +12,37 @@ import { useNavigate } from "react-router-dom";
 const TakeTest = () => {
     const [activeButton, setActiveButton] = useState("all");
     const [searchQuery, setSearchQuery] = useState("");
-    let data=[{difficult:"advance"},{difficult:"beginner"},{difficult:"intermediate"},{difficult:"advance"},{difficult:"advance"},{difficult:"intermediate"},{difficult:"advance"},{difficult:"beginner"},{difficult:"beginner"}]
-    const [item,setItems]=useState(data);
+    const [tests,setTests]=useState([]);
+    const[allData, setAllData] = useState([]);
+    useEffect(()=>{
+        fetchTests();
+    },[])
+    
+    // let data=[
+    //     {imglogo:logo,difficult:"advance",name:"React , An advance level course test , click start to continue ",numberofQues:"20", noOfmins: "60", },
+    //     {imglogo:logo,difficult:"beginner",name:"Angular , An Beginner level course test , click start to continue ",numberofQues:"10", noOfmins: "20",},
+    //     {imglogo:logo ,difficult:"intermediate",name:"flutter , An intermideate level course test  , click start to continue ",numberofQues:"20", noOfmins: "50",},
+    //     {imglogo:logo ,difficult:"advance",name:"React Js , An advance level course test  , click start to continue",numberofQues:"5", noOfmins: "30",},
+    //     {imglogo:logo ,difficult:"advance",name:"SQL , An advance level course test  , click start to continue",numberofQues:"12", noOfmins: "35",},
+    //     {imglogo: logo,difficult:"intermediate",name:"Ruby , An advance Intermediate level course test  , click start to continue",numberofQues:"15", noOfmins: "30",},
+    //     {imglogo:logo ,difficult:"advance",name:"AI , An advance level course test  , click start to continue",numberofQues:"30", noOfmins: "60",},
+    //     {imglogo:logo ,difficult:"beginner",name:"Python , An Beginner level course test  , click start to continue",numberofQues:"5", noOfmins: "15",},
+    //     {imglogo:logo ,difficult:"beginner",name:".net , An advance Beginner level course test  , click start to continue",numberofQues:"16", noOfmins: "50",}
+    // ]
+    const fetchTests = async ()=>{
+        try{
+            const response = await fetch ("https://cg-interns-hq.azurewebsites.net/getAllExam");
+            const data = await response.json();
+            setAllData(data);
+            setTests(data);
+        }
+        
+        catch(e){
+            console.log(e);
+        }
+
+    }
+    
     const handleSearch = (event) => {
         setSearchQuery(event.target.value);
     };
@@ -25,9 +54,6 @@ const TakeTest = () => {
     const clickHandler = () => {
         navigate("/varun");
     }
-
-
-  
 
     return (
         <>
@@ -44,7 +70,7 @@ const TakeTest = () => {
                             className="btn-nav p-0"
                             onClick={() => {
                                 setActiveButton("all");
-                                setItems(data);
+                                setTests(allData);
                             }}
                         >
                             All
@@ -59,7 +85,9 @@ const TakeTest = () => {
                             className="btn-nav p-0"
                             onClick={() => {
                                 setActiveButton("beginner");
-                               setItems(data.filter(item=>item.difficult==='beginner'));
+                                 setTests(allData.filter(tests=>tests.level==='Beginner'));
+                                 console.log(tests)
+                                 //tests.filter(test=>test.level==='')
 
                             }}
                         >
@@ -74,7 +102,7 @@ const TakeTest = () => {
                             className="btn-nav p-0"
                             onClick={() => {
                                 setActiveButton("inter");
-                                setItems(data.filter(item=>item.difficult==='intermediate'));
+                                setTests(allData.filter(tests=>tests.level==='Intermediate'));
                                 
                             }}
                         >
@@ -90,7 +118,7 @@ const TakeTest = () => {
                             className="btn-nav p-0"
                             onClick={() => {
                                 setActiveButton("advanced");
-                                setItems(data.filter(item=>item.difficult==='advance'));
+                                setTests(tests.filter(tests=>tests.level==='Advanced'));
                             }}
                         >
                             Advanced
@@ -116,7 +144,7 @@ const TakeTest = () => {
                         <div className="row d-flex justify-content-evenly">
 
 
-                            {item.map(item=>(
+                            {tests.map(test=>(
                                    <div className='exam'>
                                    <div class="card outer-card">
                                        <div class="d-flex align-items-center">
@@ -127,19 +155,19 @@ const TakeTest = () => {
                                                    </div>
                                                    <div >
                                                        <div className="Category_box justify-content-center">
-                                                           <span className="Category" >{item.difficult}</span>
+                                                           <span className="Category" >{test.level}</span>
                                                        </div>
                                                        <div className=" About_box justify-content-center">
-                                                           <span className="About">React course content mentioned bellow the line hbvburvbu</span>
+                                                           <span className="About">{test.examName}</span>
                                                        </div>
                                                    </div>
                                                </div>
                                                <div class=" col d-flex justify-content-between eounded text-grey quesTimeClick ">
                                                    <div class="d-flex flex-column justify-content-center noOfQues">
-                                                       <span class="articles"> <MdOutlineBallot class='me-1.5' /> Questions</span>
+                                                       <span class="articles"> <MdOutlineBallot class='me-1.5' />{test.numberOfQuestion} Questions</span>
                                                    </div>
                                                    <div class="d-flex flex-column justify-content-center testTime">
-                                                       <span class="articles"><BsClock class='me-1.5' />  20 mins</span>
+                                                       <span class="articles"><BsClock class='me-1.5' />{test.examDuration} mins</span>
                                                    </div>
                                                    <div class="d-flex flex-column">
                                                        <Button className='btnclick' data-bs-toggle="modal" data-bs-target="#staticBackdrop" >Start Test</Button>{' '}
