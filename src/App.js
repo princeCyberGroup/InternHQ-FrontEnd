@@ -11,18 +11,13 @@ import CreateNewPasswordScreen from "./components/Accounts/ForgotPassword/Create
 import PasswordChangedScreen from "./components/Accounts/ForgotPassword/PasswordChangedSuccessfulScreen";
 import { ViewAll } from "./components/Dashboard/ProjectIdea/ViewAllComponent/ViewAll";
 import TakeYourTest from "./components/TakeYourTest/TakeYourTest";
-
-// import './index.css'
-
-
+import DailyUpdateTable from "./components/DailyUpdateTable/DailyUpdateTable";
 function App() {
   return (
     <div className="App">
       <Router>
         <Routes>
           <Route path="/" element={<LoginScreen />} />
-          <Route path="/varun" element={<TakeYourTest/>}/>
-          <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/forgot-password" element={<ForgotPasswordScreen />} />
           <Route path="/sign-up" element={<SignUpScreen />} />
           <Route path="/sign-up-verification" element={<SignUpOtpScreen />} />
@@ -36,7 +31,14 @@ function App() {
             element={<CreateNewPasswordScreen />}
           />
           <Route path="/change-success" element={<PasswordChangedScreen />} />
-          <Route path="/all-projects" element={<ViewAll />} />
+          {/* <div> */}
+            <Route path="/dashboard" element={<Dashboard />} />
+            <Route path="/daily-Update" element={<DailyUpdateTable />} />
+            <Route path="/skill-Management" element={< Dashboard/>} />
+            <Route path="/varun" element={<TakeYourTest/>}/>
+            <Route path="/dashboard" element={<Dashboard />} />
+            <Route path="/all-projects" element={<ViewAll />} />
+          {/* </div> */}
         </Routes>
       </Router>
       {/* <TakeYourTest/> */}
