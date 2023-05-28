@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import axios from "axios";
 import "../Accounts.css";
 import Cginfinitylogo from "../../../Assets/Cginfinitylogo.png";
 import CarouselImage1 from "../../../Assets/CarouselImage1.svg";
@@ -8,6 +9,9 @@ import CarouselImage3 from "../../../Assets/CarouselImage3.svg";
 import BackArrow from "../../../Assets/BackArrow.svg";
 
 const ForgotPasswordOtpScreen = () => {
+
+  const [otp, setOtp] = useState("");
+
   const navigate = useNavigate();
   const [activeIndex, setActiveIndex] = useState(0); //For carousel
   const [value, setValue] = useState('');
@@ -17,11 +21,36 @@ const ForgotPasswordOtpScreen = () => {
     if (inputValue.length <= 6 && /^\d*$/.test(inputValue)) {
       setValue(inputValue);
     }
+    if(inputValue.trim().length <= 11) {
+      setOtp(inputValue.trim());
+    }
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    navigate("/change-password");
+    const token = localStorage.getItem("token");
+    const email = localStorage.getItem("email");
+    axios
+      .post(
+        "https://cg-interns-hq.azurewebsites.net/forgetOtpVerify",
+        { email, otp },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      )
+      .then((response) => {
+        navigate("/change-password");
+        console.log(response.data);
+        localStorage.setItem("token");
+      })
+      .catch((error) => {
+        console.log(error.response.data);
+        console.log("Mera to life kharab hogya")
+      });
+    console.log(otp);
+    
   };
   const handleSlideChange = (index) => {
     setActiveIndex(index);

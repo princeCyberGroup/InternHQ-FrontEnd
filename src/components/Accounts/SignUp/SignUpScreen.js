@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
 import "../Accounts.css";
 import Cginfinitylogo from "../../../Assets/Cginfinitylogo.png";
@@ -37,6 +38,21 @@ const SignUpScreen = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    axios
+      .post("https://cg-interns-hq.azurewebsites.net/internSignUp", {
+        email,
+        password,
+      })
+      .then((response) => {
+        console.log(response.data);
+        localStorage.setItem("token", response.data.token);
+        localStorage.setItem("email", email);
+      })
+      .catch((error) => {
+        console.log(error.response.data);
+      });
+    console.log(email);
+    console.log(`password: ${password} (hidden visible only on backend)`);
     navigate("/sign-up-verification");
   };
   const handleSlideChange = (index) => {

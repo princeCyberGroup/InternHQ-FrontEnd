@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import axios from "axios"
 import { Link, useNavigate } from "react-router-dom";
 import "../Accounts.css";
 import Cginfinitylogo from "../../../Assets/Cginfinitylogo.png";
@@ -31,9 +32,41 @@ const LoginScreen = () => {
     );
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    navigate("/dashboard");
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+    await axios
+      .post("https://cg-interns-hq.azurewebsites.net/internLogin", {
+        email,
+        password,
+      })
+      .then((response) => {
+        console.log(response.data);
+        console.log(response.data.message);
+        // const res = {
+        //   token:response.data.token,
+        //   email:response.data.response[0].email,
+        //   id:response.data.response[0].id,
+        //   firstName:response.data.response[0].firstname,
+        //   lastName:response.data.response[0].lastname,
+        //   lastLogin:response.data.response[0].lastlogin
+        // };
+        
+        // console.log(response.data.response[0].id);
+        // console.log(response.data)
+        // setCurrentUser(response.data);
+        // const token = response.data.token;
+        // localStorage.setItem("token", response.data.token);
+        // localStorage.setItem('userData', JSON.stringify(res));
+        // setAuth({ email, password, token });
+        navigate("/dashboard");
+      })
+      .catch((error) => {
+        console.log(error.response?.data);
+        console.log(error.response?.data.msg);
+      });
+    console.log(email);
+    console.log(`password: ${password} (hidden visible only on backend)`);
+    
   };
   const handleSlideChange = (index) => {
     setActiveIndex(index);

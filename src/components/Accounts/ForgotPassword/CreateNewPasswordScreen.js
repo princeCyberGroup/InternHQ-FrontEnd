@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
 import "../Accounts.css";
 import Cginfinitylogo from "../../../Assets/Cginfinitylogo.png";
 import CarouselImage1 from "../../../Assets/CarouselImage1.svg";
@@ -33,9 +34,40 @@ const CreateNewPasswordScreen = () => {
     setIsConfirmPasswordValid(value === password ? true : false);
   };
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
-    navigate("/change-success");
+    const token = localStorage.getItem("token");
+    // const password = localStorage.getItem("password");
+    // const confirmPassword = localStorage.getItem("confirmPassword");
+
+    await axios
+      .post(
+        "https://cg-interns-hq.azurewebsites.net/changePassword",
+        {
+          password,
+          confirmPassword
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      )
+      .then((response) => {
+        navigate("/change-success");
+        console.log(response.data);
+        // console.log(response.data.message);
+
+      })
+      .catch((error) => {
+        console.log(error.response?.data);
+        // console.log(error.response?.data.msg);
+      });
+    console.log(password);
+    console.log(
+      // `confirm password: ${confirmPassword} (hidden visible only on backend)`
+      confirmPassword
+    );
   };
   const handleSlideChange = (index) => {
     setActiveIndex(index);
@@ -151,13 +183,16 @@ const CreateNewPasswordScreen = () => {
               </div>
             </div>
           </div>
-          <div className="col-md-7 bg-white p-4" style={{ height: "35.125rem" }}>
+          <div
+            className="col-md-7 bg-white p-4"
+            style={{ height: "35.125rem" }}
+          >
             <div className="row ">
               <p className="right-container-heading">Create New Password</p>
             </div>
             <div className="row" style={{ height: "15.625rem" }}>
               <form onSubmit={handleSubmit}>
-                <div style={{ height: "10.625rem" ,marginTop:"1rem"}}>
+                <div style={{ height: "10.625rem", marginTop: "1rem" }}>
                   <div className="d-flex flex-column">
                     <label
                       className="input-label-text"
@@ -203,37 +238,36 @@ const CreateNewPasswordScreen = () => {
                       </span>
                     )}
                   </div>
-                  
                 </div>
                 <div
-                    className="row"
-                    style={{
-                      width: "25.438rem",
-                      background: "rgba(184, 221, 225, 0.54)",
-                      borderRadius: "0.25rem",
-                      padding: "0.313rem",
-                      marginLeft: "0",
-                      paddingLeft: "0",
-                      marginTop: "2rem",
-                    }}
-                  >
-                    <div style={{ display: "flex", alignItems: "flex-start" }}>
-                      <img
-                        src={InfoIcon}
-                        style={{
-                          width: "1.2rem",
-                          padding: "0",
-                          marginTop: "0.188rem",
-                          marginRight: "0.625rem",
-                        }}
-                        alt="Go Back"
-                      />
-                      <p style={{ fontSize: "0.938rem", margin: "0" }}>
-                        Must contain at least 6 characters, one uppercase, one
-                        lowercase, one symbol and one digit.
-                      </p>
-                    </div>
+                  className="row"
+                  style={{
+                    width: "25.438rem",
+                    background: "rgba(184, 221, 225, 0.54)",
+                    borderRadius: "0.25rem",
+                    padding: "0.313rem",
+                    marginLeft: "0",
+                    paddingLeft: "0",
+                    marginTop: "2rem",
+                  }}
+                >
+                  <div style={{ display: "flex", alignItems: "flex-start" }}>
+                    <img
+                      src={InfoIcon}
+                      style={{
+                        width: "1.2rem",
+                        padding: "0",
+                        marginTop: "0.188rem",
+                        marginRight: "0.625rem",
+                      }}
+                      alt="Go Back"
+                    />
+                    <p style={{ fontSize: "0.938rem", margin: "0" }}>
+                      Must contain at least 6 characters, one uppercase, one
+                      lowercase, one symbol and one digit.
+                    </p>
                   </div>
+                </div>
                 <button
                   type="submit"
                   className="btn btn-warning border-0 sign-up-btn mt-2"
