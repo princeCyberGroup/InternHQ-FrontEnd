@@ -13,6 +13,7 @@ import { ViewAll } from "./components/Dashboard/ProjectIdea/ViewAllComponent/Vie
 import TakeYourTest from "./components/TakeYourTest/TakeYourTest";
 import DailyUpdateTable from "./components/DailyUpdateTable/DailyUpdateTable";
 import SkillManagement from "./components/SkillManagement/SkillManagement";
+import {ViewProjectIdeas} from "./components/Dashboard/ProjectIdea/ViewAllProjectIdea/ViewAllProjectIdea";
 function App() {
   return (
     <div className="App">
@@ -39,6 +40,7 @@ function App() {
             <Route path="/varun" element={<TakeYourTest/>}/>
             <Route path="/dashboard" element={<Dashboard />} />
             <Route path="/all-projects" element={<ViewAll />} />
+            <Route path="project-idea-projects" element={<ViewProjectIdeas />} />
           {/* </div> */}
         </Routes>
       </Router>

@@ -1,18 +1,18 @@
 import "./AddNewIdea.js";
-import { Link, useNavigate } from "react-router-dom";
-import { ProjectDetail } from "./ViewAllComponent/ProjectDetail.js";
-import { useState } from "react";
-import { Api } from "./Api.js";
+import {useNavigate } from "react-router-dom";
+import React, { useState } from "react";
+import { ProjectIdeaApi } from "./ProjectIdeaApi";
 
 export const AddNewIdea = () => {
-    const [projectDetail, setProjectDetail] = useState(Api);
+    const [projectDescription, setProjectDescription] = useState(ProjectIdeaApi)
     // const data="hellow";
 
     const navigate = useNavigate();
     const handleCLick = (e) => {
         // state = false
         e.preventDefault();
-        navigate('/all-projects', { state: projectDetail });
+        const data1= {projectDescription}
+        navigate('/project-idea-projects', { state: projectDescription });
     }
     return (
         <>
@@ -31,13 +31,8 @@ export const AddNewIdea = () => {
                         <div className="d-flex">
                             <p className="text mb-0 fw-bold">Shared Project Idea</p>
                         </div>
-                        {/* <Link className="view-all fw-bold" to={{ pathname: '/all-projects', state: {data} }} >
-                            View All
-                        </Link> */}
 
                         <button onClick={(e) => { handleCLick(e) }} >View All</button>
-                        {/* ViewAll */}
-                        {/* <ProjectDetail /> */}
                     </div>
                 </div>
 

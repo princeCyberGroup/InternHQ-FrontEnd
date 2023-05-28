@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 export const AddProject = () => {
-    const [projectData, setProjectDara] = useState(Api)
+    const [projectData, setProjectData] = useState(Api)
     const navigate = useNavigate();
     const handleClick = (e) => {
         //state = true
