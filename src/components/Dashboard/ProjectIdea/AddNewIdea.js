@@ -1,18 +1,34 @@
 import "./AddNewIdea.js";
-import {useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import React, { useState } from "react";
 import { ProjectIdeaApi } from "./ProjectIdeaApi";
-
+import axios from 'axios';
 export const AddNewIdea = () => {
-    const [projectDescription, setProjectDescription] = useState(ProjectIdeaApi)
+    const [projectDescription, setProjectDescription] = useState([])
     // const data="hellow";
 
     const navigate = useNavigate();
-    const handleCLick = (e) => {
+    const handleCLick = async (e) => {
         // state = false
         e.preventDefault();
+        await axios.get("https://cg-interns-hq.azurewebsites.net/getProjectIdea?userId=1")
+            .then((response) => {
+
+                console.log("llll:",response.data);
+
+                console.log("KKK:",response.data);
+                setProjectDescription(response.data)
+                navigate('/project-idea-projects', { state: projectDescription });
+
+            }).catch((error) => {
+
+                console.log(error.response?.data);
+
+                console.log(error.response?.data.msg);
+
+            });
         // const data1= {projectDescription}
-        navigate('/project-idea-projects', { state: projectDescription });
+        // navigate('/project-idea-projects', { state: projectDescription });
     }
     return (
         <>
@@ -32,7 +48,7 @@ export const AddNewIdea = () => {
                             <p className="text mb-0 fw-bold">Shared Project Idea</p>
                         </div>
 
-                        <button onClick={(e) => { handleCLick(e) }} >View All</button>
+                        <button className="view-all fw-bold" onClick={(e) => { handleCLick(e) }} >View All</button>
                     </div>
                 </div>
 
