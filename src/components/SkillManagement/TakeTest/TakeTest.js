@@ -1,12 +1,17 @@
 import React, { useEffect } from "react";
-import { useState } from "react";
+import { useState , createContext } from "react";
 import logo from '../../../Assets/image 13.png';
 import "./TakeTest.css";
 import { BsClock } from "react-icons/bs";
 import { MdOutlineBallot } from "react-icons/md";
 import Button from 'react-bootstrap/Button';
-import { useNavigate } from "react-router-dom";
-const TakeTest = () => {
+import { Link, useNavigate } from "react-router-dom";
+
+import { BrowserRouter as Router, Switch, Route  } from 'react-router-dom';
+
+export const TestContext = createContext();
+
+const TakeTest = (props) => {
     const [activeButton, setActiveButton] = useState("all");
     const [searchQuery, setSearchQuery] = useState("");
     const [tests, setTests] = useState([]);
@@ -18,6 +23,7 @@ const TakeTest = () => {
         try {
             const response = await fetch("https://cg-interns-hq.azurewebsites.net/getAllExam");
             const data = await response.json();
+            // console.log(data);
             setAllData(data);
             setTests(data);
         }
@@ -31,10 +37,12 @@ const TakeTest = () => {
     const navigate = useNavigate();
     //TODO: THIS IS THE CLICK FUNCTION START TEST
     const clickHandler = () => {
-        navigate("/varun");
+        navigate("/varun/examId");
     }
+  
+
     return (
-        <>
+        <> <TestContext.Provider>{props.children}</TestContext.Provider>
             <div className="TTheading">
                 <p>Take The Test</p>
             </div>
@@ -115,7 +123,7 @@ const TakeTest = () => {
                                             <div class="ml-3 w-100">
                                                 <div className="d-flex justify-content-start ">
                                                     <div className="imagespace">
-                                                        <img src={logo} class="imageLogo" width="30px" height="35px" />
+                                                        <img src={`https://raw.githubusercontent.com/github/explore/80688e429a7d4ef2fca1e82350fe8e3517d3494d/topics/${test.techName.toLowerCase()}/${test.techName.toLowerCase()}.png`} class="imageLogo" width="30px" height="35px" />
                                                     </div>
                                                     <div >
                                                         <div className="Category_box justify-content-center">
@@ -135,7 +143,9 @@ const TakeTest = () => {
                                                             <BsClock style={{marginRight:"5px"}}/>{test.examDuration} mins</div>
                                                     </div>
                                                     <div class="d-flex flex-column">
-                                                        <Button className='btnclick' data-bs-toggle="modal" data-bs-target="#staticBackdrop" >Start Test</Button>{' '}
+                                                      {/* <Link to={`/varun/${test.examId}`}> */}
+                                                      <Button className='btnclick' data-bs-toggle="modal" data-bs-target="#staticBackdrop" >Start Test</Button>
+                                                      {/* </Link>{' '} */}
                                                     </div>
                                                     <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
                                                         <div class="modal-dialog modal-dialog-centered">
@@ -153,7 +163,9 @@ const TakeTest = () => {
                                                                 </div>
                                                                 <div class="modal-footer">
                                                                     <button type="button" class="btn btn-outline-primary" data-bs-dismiss="modal">Cancel</button>
+                                                                    <Link to={`/varun/${test.examId}`}>
                                                                     <button type="button" onClick={() => { clickHandler() }} data-bs-dismiss="modal" class="btn btn-primary">Continue</button>
+                                                                    </Link>
                                                                 </div>
                                                             </div>
                                                         </div>

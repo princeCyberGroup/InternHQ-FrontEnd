@@ -36,7 +36,7 @@ function App() {
             <Route path="/dashboard" element={<Dashboard />} />
             <Route path="/daily-Update" element={<DailyUpdateTable />} />
             <Route path="/skill-Management" element={< SkillManagement/>} />
-            <Route path="/varun" element={<TakeYourTest/>}/>
+            <Route path="/varun/:examId" element={<TakeYourTest/>}/>
             <Route path="/dashboard" element={<Dashboard />} />
             <Route path="/all-projects" element={<ViewAll />} />
           {/* </div> */}

@@ -1,15 +1,57 @@
-
-.outerDiv{
+.outerDiv {
     height: 100%;
     width: 100%;
 }
-.InstructionsBox{
-   border: 0cap;
-    border-color: red ;
+
+.InstructionsBox {
+    border: 0cap;
+    border-color: red;
     justify-content: center;
     position: absolute;
-width: 530px;
-height: 266px;
-background: blue;
-border-radius: 4px;
+    width: 530px;
+    height: 266px;
+    background: blue;
+    border-radius: 4px;
+}
+
+.main-heading {
+    width: 400px;
+    font-family: "Roboto";
+    font-style: normal;
+    font-weight: 600;
+    font-size: 20px;
+    line-height: 32px;
+    color: #343435;
+}
+
+
+/* 
+.navigations {
+    width: 600px;
+} */
+
+.quiz-description {
+    font-size: small;
+    color: grey;
+}
+
+.ques-of-quiz {
+    font-weight: bold;
+    font-size: 18px;
+    padding: 20px;
+}
+
+.start-input {
+    display: flex;
+    justify-content: start;
+    align-items: start;
+    width: 50px;
+    padding-left: 25px;
+}
+
+.options-of-quiz {}
+
+.submit-button {
+    padding: 30px;
+    width: 200px;
 }
