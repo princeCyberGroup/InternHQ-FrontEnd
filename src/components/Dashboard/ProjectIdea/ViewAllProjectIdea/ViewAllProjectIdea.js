@@ -2,6 +2,7 @@ import { ProjectNames } from "./ProjectNames";
 import { ProjectDescription } from "./ProjectDescription";
 import { Link, useLocation } from "react-router-dom";
 import React, { useState } from "react";
+import "./ViewAllProjectIdea.css";
 
 export const ViewProjectIdeas = () => {
 
@@ -9,14 +10,15 @@ export const ViewProjectIdeas = () => {
 
     const location = useLocation();
     const details = location.state;
-    console.log("Details:", details)
+    // console.log("Details of all projects idea:", details)
     const handelIndex = (index) => {
         setProjectIndex(index);
     }
 
     return (
-        <div className="container">
-            <nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
+        // <div>working</div>
+        <div className="container page-color">
+            <nav aria-label="breadcrumb">
                 <ol class="breadcrumb">
                     <li class="breadcrumb-item"><Link className="view-all fw-bold" to={{ pathname: '/dashboard' }} >Dashboard</Link></li>
                     <li class="breadcrumb-item " aria-current="page">Project Idea</li>

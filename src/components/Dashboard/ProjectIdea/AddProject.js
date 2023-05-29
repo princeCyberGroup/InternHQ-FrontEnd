@@ -8,7 +8,7 @@ export const AddProject = () => {
     const handleClick = (e) => {
         //state = true
         e.preventDefault();
-        const data = { projectData }
+        // const data = { projectData }
         navigate('/all-projects', { state: projectData });
     }
 

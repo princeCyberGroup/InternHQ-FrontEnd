@@ -106,20 +106,6 @@ p.card-textt {
 .project-idea-members:nth-child(odd) {
     margin-left: -0.5rem;
 }
-
-/* .project-idea-members:nth-child(1){
-background-color: #B8DDE1;
-}
-.project-idea-members:nth-child(2){
-background-color: #FFF0CE;
-}
-.project-idea-members:nth-child(3){
-background-color: #CEFFD3;
-}
-.project-idea-members:nth-child(4){
-background-color: #F0B6FF;
-}
- */
 .project-idea-members:last-child {
     background-color: rgba(40, 81, 158, 0.2);
 

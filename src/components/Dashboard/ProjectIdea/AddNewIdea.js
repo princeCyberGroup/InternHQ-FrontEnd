@@ -11,7 +11,7 @@ export const AddNewIdea = () => {
     const handleCLick = (e) => {
         // state = false
         e.preventDefault();
-        const data1= {projectDescription}
+        // const data1= {projectDescription}
         navigate('/project-idea-projects', { state: projectDescription });
     }
     return (
