@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 import "./DailyTaskTracker.css";
 import { ReactComponent as Tick } from "./tick.svg";
+import Congo from "../../SkillManagement/Modals/Congo";
+import Sorry from "../../SkillManagement/Modals/Sorry";
 
 const learningTypeOptions = [
   "CG Learning Video",
@@ -181,6 +183,7 @@ const DailyTaskTracker = () => {
               )}
             </p>
 
+
             {/* SUCCESS MODAL */}
             <div
               className="modal fade"
@@ -190,7 +193,7 @@ const DailyTaskTracker = () => {
               aria-hidden="true"
             >
               <div className="modal-dialog modal-dialog-centered">
-                <div className="modal-content">
+                <div className="modal-content sSize">
                   <div className="row crossBtn">
                     <button
                       type="button"

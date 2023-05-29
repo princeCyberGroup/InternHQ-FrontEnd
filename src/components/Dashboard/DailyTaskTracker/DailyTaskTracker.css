@@ -150,6 +150,10 @@ textarea{
 
 /* SUCCESS MODAL */
 
+.sSize{
+  width: 464px;
+}
+
 .crossBtn {
   display: flex;
   justify-content: end;
