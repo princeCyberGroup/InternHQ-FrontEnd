@@ -1,9 +1,13 @@
 import React from "react";
 import { ReactComponent as Cong } from "./Group 7Congrats.svg";
+//import { useLocation } from 'react-router-dom';
 import "./Congo.css";
 import TakeYourTest from "../../TakeYourTest/TakeYourTest";
 
 const Congo = () => {
+
+  // const location = useLocation();
+  // const { score } = location.state;
   return (
     <div
       className="modal fade"

@@ -1,7 +1,27 @@
-import React from "react";
+import React ,{ useEffect } from "react";
 import "./SkillsAdded.css";
+import { useState , createContext } from "react";
+
 
 const SkillsAdded = () => {
+
+  const [tests, setTests] = useState([]);
+    const [allData, setAllData] = useState([]);
+    useEffect(() => {
+        fetchTests();
+    }, [])
+    const fetchTests = async () => {
+        try {
+            const response = await fetch("https://cg-interns-hq.azurewebsites.net/getAllExam");
+            const data = await response.json();
+            // console.log(data);
+            setAllData(data);
+            setTests(data);
+        }
+        catch (e) {
+            console.log(e);
+        }
+    }
   return (
     <>
       <div className="heading">

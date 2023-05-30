@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { useState , createContext } from "react";
-import logo from '../../../Assets/image 13.png';
+// import logo from '../../../Assets/image 13.png';
 import "./TakeTest.css";
 import { BsClock } from "react-icons/bs";
 import { MdOutlineBallot } from "react-icons/md";
@@ -46,7 +46,7 @@ const TakeTest = (props) => {
             <div className="TTheading">
                 <p>Take The Test</p>
             </div>
-            <div className="card" style={{ width: "950px" }}>
+            <div className="card maincard" style={{ width: "950px" }}>
                 <div className="card-header-nav">
                     <div
                         className={`nav-btn ${activeButton === "all" ? "activated" : ""}`}

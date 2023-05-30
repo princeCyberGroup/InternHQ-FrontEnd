@@ -17,54 +17,53 @@ const TakeYourTest = () => {
 
 
     const navigate = useNavigate();
+    // const [res, setScore] = useState(0);
 
     //TODO: THIS IS THE CLICK FUNCTION START TEST
-    const clickHandler = () => {
-        navigate("/skill-Management");
-    };
-    
-    //   const [allData, setAllData] = useState([]);
-    //   const [tests, setTests] = useState([]);
-    //     useEffect(() => {
-    //         fetchTests();
-    //     }, [])
-    //     const fetchTests = async () => {
-    //         try {
-    //             const response = await fetch("https://cg-interns-hq.azurewebsites.net/getAllExam");
-    //             const data = await response.json();
-    //             setAllData(data);
-    //             setTests(data);
-    //         }
-    //         catch (e) {
-    //             console.log(e);
-    //         }
-    //     }
+
+    const [Ques, setTestsQues] = useState([]);
+    const [allQuesData, setAllQuesData] = useState([]);
+    useEffect(() => {
+        fetchTests();
+    }, [])
+    const fetchTests = async () => {
+        try {
+            const response = await fetch("https://cg-interns-hq.azurewebsites.net/getAllQuestions?examId=1");
+            const Quesdata = await response.json();
+            console.log(Quesdata);
+            setAllQuesData(Quesdata);
+            setTestsQues(Quesdata);
+        }
+        catch (e) {
+            console.log(e);
+        }
+    }
 
 
     // const [showChildModal, setShowChildModal] = useState(false);
-  
+
     // const openChildModal = () => {
     //   setShowChildModal(true);
     // };
-  
+
     // const closeChildModal = () => {
     //   setShowChildModal(false);
     // };
-    const questions = [
-        {
-            id: 1,
-            text: "What is the capital of France?",
-            options: ["Paris", "London", "Rome"],
-            answer: "Paris",
-        },
-        {
-            id: 2,
-            text: "Which planet is known as the Red Planet?",
-            options: ["Mars", "Venus", "Jupiter"],
-            answer: "Mars",
-        },
-        // Add more questions here
-    ];
+    // const questions = [
+    //     {
+    //         id: 1,
+    //         text: "What is the capital of France?",
+    //         options: ["Paris", "London", "Rome"],
+    //         answer: "Paris",
+    //     },
+    //     {
+    //         id: 2,
+    //         text: "Which planet is known as the Red Planet?",
+    //         options: ["Mars", "Venus", "Jupiter"],
+    //         answer: "Mars",
+    //     },
+    //     // Add more questions here
+    // ];
     /////////////////////////////////////////////////////
     const [userAnswers, setUserAnswers] = useState([]);
 
@@ -75,18 +74,58 @@ const TakeYourTest = () => {
         }));
     };
     //////////////////////////////////////////////////////
+
+    /////////////////////////////////////////////////////
+    const calculateScore = () => {
+        let score = 0;
+        Ques.forEach((quest) => {
+            if (userAnswers[quest.questionId] === quest.answer) {
+                score++;
+            }
+        });
+        // setScore(calculateScore);
+        return score;
+
+
+    };
+    ///////////////////////////////////////////////////////
+
+    const submitQuiz = () => {
+        const score = calculateScore();
+
+        console.log("Quiz submitted! Score:", score);
+
+    };
+
+    const clickHandler = () => {
+        navigate("/skill-Management");
+    };
+
+    const score = calculateScore();
+    const modalTarget = () => {
+
+        const a = '#congoModal123'
+        const b = '#sorryModal'
+        if (score >= 5) {
+            return a;
+        }
+        else {
+            return b;
+        }
+    }
+    const Targetm = modalTarget();
+
+
     const renderQuestions = () => {
         return (
             <div>
-                {questions.map((question, index) => (
-                    <div key={question.id}>
+                {Ques.map((quest, index) => (
+                    <div key={quest.questionId}>
                         <div className="ques-of-quiz">
-                            {" "}
-                            {index + 1} {"."} {question.text}
+                            {index + 1} {"."} {quest.question}
                         </div>
                         <div>
-                            {" "}
-                            {question.options.map((option, index) => (
+                            {quest.options.map((option, index) => (
                                 <div
                                     key={index}
                                     style={{ display: "flex", alignItems: "center" }}
@@ -94,10 +133,10 @@ const TakeYourTest = () => {
                                     <div className="start-input">
                                         <input
                                             type="radio"
-                                            name={`question_${question.id}`}
+                                            name={`question_${quest.questionId}`}
                                             value={option}
-                                            onChange={() => handleAnswerSelect(question.id, option)}
-                                            checked={userAnswers[question.id] === option}
+                                            onChange={() => handleAnswerSelect(quest.questionId, option)}
+                                            checked={userAnswers[quest.questionId] === option}
                                         />
                                     </div>
                                     <label className="options-of-quiz"> {option} </label>
@@ -149,16 +188,13 @@ const TakeYourTest = () => {
                                 <button
                                     type="button"
                                     onClick={() => {
-                                        // event.preventDefault();
-                                         submitQuiz();
-                                         clickHandler();
-                                        // {console.log(submitQuiz)}
-
+                                        submitQuiz();
+                                        clickHandler();
                                     }}
-                                     data-bs-dismiss="modal"
-                                     data-bs-target="#congoModal123"
-                                    class="btn btn-primary"
-                                    data-bs-toggle= "modal"
+                                    data-bs-dismiss="modal"
+                                    className="btn btn-primary"
+                                    data-bs-toggle="modal"
+                                    data-bs-target={Targetm}
                                 >
                                     Submit
                                 </button>
@@ -166,34 +202,12 @@ const TakeYourTest = () => {
                         </div>
                     </div>
                 </div>
-                {/* <Congo /> */}
-                <div>
-                    
-                </div>
-            </div>
-            
-        
+                <Congo />
+                <Sorry />
+            </div >
         );
     };
-    /////////////////////////////////////////////////////
-    const calculateScore = () => {
-        let score = 0;
-        questions.forEach((question) => {
-            if (userAnswers[question.id] === question.answer) {
-                score++;
-            }
-        });
-        return score;
-    };
-    ///////////////////////////////////////////////////////
-    const submitQuiz = () => {
-        const score = calculateScore();
 
-        console.log("Quiz submitted! Score:", score);
-         score>=1 ? <Congo score={score} /> : <Sorry />       
-    
-    };
-  
 
 
     return (
@@ -201,24 +215,37 @@ const TakeYourTest = () => {
             <Header />
             <div class="container-fluid ">
                 <div className="row">
-                    <div className="col-12 mt-4 mx-4 ">
-                        <div className="navDiv">
+                    <div className="col-12 mt-4  ">
+                        <div className="textfornow">
                             Dashboard {">"}
                             Skill Management {">"}
                             Name of the Test{" "}
                         </div>
                     </div>
                 </div>
-                <div className="main-heading mt-4 mx-4">
-                    <p> Take The Test </p>
+                <div className="row testhHeading-and-Timer-Div">
+                    <div className="col-3" >
+                        <div className="main-heading">
+                            <p> Take The Test </p>
+                        </div>
+                        <div className="quiz-description mx-5 ">
+                            Quiz {"\u2B24"}
+                            20 mins {"\u2B24"}
+                            10 Questions
+                        </div>
+                    </div>
+                    <div className="col-3 Timer-and-attemtedQues">
+                        <div className="col-3 timer-Box" >
+                                00:00:00
+                              </div>
+                              <div  className="col-3 attempted-Ques">
+                                Attempted Questions: 02/10
+                              </div>
+                        </div>
+                        
                 </div>
-                <div className="quiz-description mx-4">
-                    Quiz {"\u2B24"}
-                    20 mins {"\u2B24"}
-                    10 Questions
-                </div>
-                <div className="ques.card mt-1 mx-4 me-10 ">
-                    <div className="card " style={{ width: "1220px" }}>
+                <div className="ques.card ">
+                    <div className="card insidecard" style={{ width: "1220px" }}>
                         <div> {renderQuestions()} </div>{" "}
                     </div>{" "}
                 </div>{" "}
