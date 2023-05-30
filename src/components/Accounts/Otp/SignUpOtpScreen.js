@@ -21,7 +21,7 @@ const SignUpOtpScreen = () => {
     if (inputValue.length <= 6 && /^\d*$/.test(inputValue)) {
       setValue(inputValue);
     }
-    if(inputValue.trim().length <= 11) {
+    if(inputValue.trim().length <= 6) {
       setOtp(inputValue.trim());
     }
   };
@@ -43,13 +43,28 @@ const SignUpOtpScreen = () => {
         }
       )
       .then((response) => {
+        const res = {
+          // token:response.data.token,
+          email:response.data.email,
+          userId:response.data.userId,
+          firstName:response.data.firstName,
+          lastName:response.data.lastName,
+        };
+        console.log(res)
+
+        // console.log(response.data.response[0].id);
+        // console.log(response.data)
+        // setCurrentUser(response.data);
+        // const token = response.data.token;
+        // localStorage.setItem("token", response.data.token);
+        localStorage.setItem('userData', JSON.stringify(res));
+        // setAuth({ email, password, token });
         navigate("/success");
         console.log(response.data);
         localStorage.setItem("token");
       })
       .catch((error) => {
         console.log(error.response.data);
-        console.log("Mera to life kharab hogya")
       });
     console.log(otp);
   }
@@ -184,7 +199,7 @@ const SignUpOtpScreen = () => {
               />
               <span style={{ display: "contents", fontSize: "0.875rem" }}>
                 {" "}
-                email@email.com
+                {localStorage.getItem("email")}
               </span>
             </div>
             <div>

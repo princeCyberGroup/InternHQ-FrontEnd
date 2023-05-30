@@ -41,13 +41,12 @@ const ForgotPasswordOtpScreen = () => {
         }
       )
       .then((response) => {
+        localStorage.setItem("token",response.data.token);
         navigate("/change-password");
         console.log(response.data);
-        localStorage.setItem("token");
       })
       .catch((error) => {
         console.log(error.response.data);
-        console.log("Mera to life kharab hogya")
       });
     console.log(otp);
     

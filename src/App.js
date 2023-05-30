@@ -10,17 +10,20 @@ import ForgotPasswordOtpScreen from "./components/Accounts/Otp/ForgotPasswordOtp
 import CreateNewPasswordScreen from "./components/Accounts/ForgotPassword/CreateNewPasswordScreen";
 import PasswordChangedScreen from "./components/Accounts/ForgotPassword/PasswordChangedSuccessfulScreen";
 import { ViewAll } from "./components/Dashboard/ProjectIdea/ViewAllComponent/ViewAll";
+import AuthGuard from "./components/AuthGuard";
 
 // import './index.css'
-
 
 function App() {
   return (
     <div className="App">
       <Router>
         <Routes>
+          <Route element={<AuthGuard />}>
+            <Route path="/dashboard"  element={<Dashboard/>}  />
+            <Route path="/all-projects" element={<ViewAll/>} />
+          </Route>
           <Route path="/" element={<LoginScreen />} />
-          <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/forgot-password" element={<ForgotPasswordScreen />} />
           <Route path="/sign-up" element={<SignUpScreen />} />
           <Route path="/sign-up-verification" element={<SignUpOtpScreen />} />
@@ -34,7 +37,7 @@ function App() {
             element={<CreateNewPasswordScreen />}
           />
           <Route path="/change-success" element={<PasswordChangedScreen />} />
-          <Route path="/all-projects" element={<ViewAll />} />
+          <Route path="*" element={<h1>Hello WRONg</h1>} />
         </Routes>
       </Router>
     </div>

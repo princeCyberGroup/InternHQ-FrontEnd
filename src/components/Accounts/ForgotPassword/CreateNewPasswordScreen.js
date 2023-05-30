@@ -12,7 +12,7 @@ const CreateNewPasswordScreen = () => {
   const navigate = useNavigate();
   const [activeIndex, setActiveIndex] = useState(0); //For carousel
 
-  const [password, setPassword] = useState("");
+  const [newPassword, setPassword] = useState("");
   const [isPasswordValid, setIsPasswordValid] = useState(false);
   const [confirmPassword, setConfirmPassword] = useState("");
   const [isConfirmPasswordValid, setIsConfirmPasswordValid] = useState(false);
@@ -31,7 +31,7 @@ const CreateNewPasswordScreen = () => {
   const handleConfirmPasswordChange = (event) => {
     const { value } = event.target;
     setConfirmPassword(value);
-    setIsConfirmPasswordValid(value === password ? true : false);
+    setIsConfirmPasswordValid(value === newPassword ? true : false);
   };
 
   const handleSubmit = async (event) => {
@@ -44,7 +44,7 @@ const CreateNewPasswordScreen = () => {
       .post(
         "https://cg-interns-hq.azurewebsites.net/changePassword",
         {
-          password,
+          newPassword,
           confirmPassword
         },
         {
@@ -54,8 +54,16 @@ const CreateNewPasswordScreen = () => {
         }
       )
       .then((response) => {
+         const res = {
+          email:response.data.email,
+          userID:response.data.userId,
+          firstName:response.data.firstName,
+          lastName:response.data.lastName,
+        };
+        localStorage.setItem("Data", JSON.stringify(res));
         navigate("/change-success");
-        console.log(response.data);
+        console.log("Data",response);
+        console.log("Data2",res);
         // console.log(response.data.message);
 
       })
@@ -63,7 +71,7 @@ const CreateNewPasswordScreen = () => {
         console.log(error.response?.data);
         // console.log(error.response?.data.msg);
       });
-    console.log(password);
+    console.log(newPassword);
     console.log(
       // `confirm password: ${confirmPassword} (hidden visible only on backend)`
       confirmPassword
@@ -205,11 +213,11 @@ const CreateNewPasswordScreen = () => {
                       type="password"
                       id="exampleInputEmail1"
                       placeholder="Enter New Password"
-                      value={password}
+                      value={newPassword}
                       onChange={handlePasswordChange}
                       required
                     />
-                    {!isPasswordValid && password && (
+                    {!isPasswordValid && newPassword && (
                       <span className="sign-up-warning ms-2">
                         To proceed, please provide a password as a requirement.
                       </span>
