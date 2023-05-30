@@ -14,7 +14,7 @@ const SearchBar = ({ searchfunc }) => {
           type="text"
           value={searchInnerValue}
           onChange={(event) => {
-            searchfunc(searchInnerValue);
+            // searchfunc(searchInnerValue);
             setSearchInnerValue(event.target.value)
             event.preventDefault();
         }}

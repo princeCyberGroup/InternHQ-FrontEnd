@@ -1,8 +1,52 @@
-.report{
-    background-color: #fff;
-    box-shadow: 0px 4px 20px rgba(40, 52, 73, 0.15);
+.report {
+  font-family: "Roboto";
+  background-color: #fff;
+  color: #343435;
+  box-shadow: 0px 4px 20px rgba(40, 52, 73, 0.15);
 }
-.legend-gap{
-    /* margin-left: 3rem; */
-    border: #fff;
+.legend-gap {
+  /* margin-left: 3rem; */
+  border: #fff;
+}
+.card-heading {
+  width: 105px;
+  font-weight: 600;
+  height: 57px;
+  color: #343435;
+  font-size: 15px;
+  border-radius: 0;
+}
+.card-heading-active {
+  border-bottom: 3px solid #28519e;
+}
+
+.dropdown-button {
+  width: 123px;
+  font-size: 14px;
+  border: 1px solid #b2b2b3;
+  border-radius: 4px;
+  padding-left: 8px;
+}
+
+.dropdown-button::after {
+  margin-left: 1rem;
+}
+.dropdown-button:hover {
+  border: 1px solid #b2b2b3;
+}
+
+.recharts-cartesian-grid-horizontal line:first-child,
+.recharts-cartesian-grid-horizontal line:last-child {
+  display: none;
+}
+.recharts-legend-wrapper {
+    position: absolute;
+    transform: translateX(30%);
+  }
+.recharts-legend-item-text {
+    color: #343435 !important;
+    line-height: 33px;
+    margin-left: 9px;
+    font-weight: 600;
+    font-size: 14px;
 }
