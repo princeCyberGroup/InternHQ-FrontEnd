@@ -72,7 +72,7 @@ export const ProjectIdeas = (props) => {
                             }}>
                             <h5
                                 className="project-names"
-                            >{user.ProjectNames}
+                            >{user.projectNames}
                             </h5>
                             <span
                                 className="click-arrow"
@@ -84,7 +84,7 @@ export const ProjectIdeas = (props) => {
 
 
                         <div>
-                            <p className="project-text flex-grow-1">{truncate(user.ProjectText, 100)}</p>
+                            <p className="project-text flex-grow-1">{truncate(user.projectText, 100)}</p>
                         </div>
                     </div>
                 )

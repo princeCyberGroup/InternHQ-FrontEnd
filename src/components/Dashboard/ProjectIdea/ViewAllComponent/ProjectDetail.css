@@ -4,7 +4,7 @@
     font-size: 1.25rem;
     line-height: 1.438rem;
     color: #343435;
-    padding-bottom: 1rem;
+    /* padding-bottom: 1rem; */
     margin-bottom: 0px;
 }
 
@@ -37,40 +37,11 @@
 .technology-badge {
     background: #D3E1FA;
     border-radius: 2px;
-    /* width: 3.5rem; */
-    /* display: flex; */
-    /* align-items: center; */
     padding-left: 0.75rem;
     padding-right: 0.75rem;
     padding-top: 0.3rem;
     padding-bottom: 5px;
-    /* gap: 8px; */
-    /* padding: 0.313rem 0.75rem; */
-    /* text-align: center; */
-    /* justify-content: center; */
 }
-
-/* .technology-badge-2 {
-    background: #D3E1FA;
-    border-radius: 2px;
-    width: 2.9rem;
-    display: flex;
-    align-items: center;
-    padding: 0px 12px;
-    gap: 8px;
-    padding: 0.313rem 0.75rem;
-text-align: center;
- justify-content: center;
-} */
-
-/* .technology-badge-3 {
-    background: #D3E1FA;
-    border-radius: 2px;
-    width: 5.25rem;
-    align-items: center;
-    display: flex;
-    justify-content: center;
-} */
 
 .project-detail-link {
     font-style: normal;

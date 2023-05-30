@@ -21,13 +21,13 @@ export const ViewProjectIdeas = () => {
             <nav aria-label="breadcrumb">
                 <ol class="breadcrumb">
                     <li class="breadcrumb-item"><Link className="view-all fw-bold" to={{ pathname: '/dashboard' }} >Dashboard</Link></li>
-                    <li class="breadcrumb-item " aria-current="page">Project Idea</li>
+                    <li class="breadcrumb-item " aria-current="page">My Idea</li>
                 </ol>
             </nav>
             <div className="d-flex justify-content-between">
 
                 <div className="d-flex">
-                    <p className="sub-text ps-0">Project Idea</p>
+                    <p className="sub-text ps-0">My Idea</p>
                 </div>
 
                 <div className="mr-3">

@@ -3,8 +3,8 @@ import "./ProjectDescription.css";
 export const ProjectDescription = ({ data, indexNumber }) => {
     return (
         <div className="">
-            <h5 className="project-detail-name">{data[indexNumber].ProjectNames}</h5>
-            <p className="project-detail-text">{data[indexNumber].ProjectText}</p>
+            <h5 className="project-detail-name">{data[indexNumber].projectNames}</h5>
+            <p className="project-detail-text">{data[indexNumber].projectText}</p>
             <p className="project-detail-technology-used mb-0">Technology Used:</p>
 
             <div className="project-detail-technology-badges">
