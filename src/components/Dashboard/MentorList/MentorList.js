@@ -27,7 +27,7 @@ export const MentorComponent = () => {
 
   return (
     <>
-      <div className="card" style={{ height: "370px", alignContent: "center" }}>
+      <div className="card" style={{ height: "370px",width:"378px" , alignContent: "center" }}>
         <div className="border-bottom ">
           <h5 className="card-title dtt-hfs">Know Your Mentors</h5>
         </div>

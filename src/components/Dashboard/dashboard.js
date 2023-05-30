@@ -9,6 +9,12 @@ import { MentorComponent } from "./MentorList/MentorList";
 import "./dashboard.css";
 import { Link } from "react-router-dom";
 import Header from "../Header";
+import { KYMEmpty } from "./EmptyStates/EmptyMentorList/KYMEmpty";
+import { EmptyNoti } from "./EmptyStates/EmptyNoti/EmptyNoti";
+import EmptyGraph from "./EmptyStates/EmptyGraph/EmptyGraph";
+
+
+
 const Dashboard = () => {
   const [currPage, setCurrPage] = useState("dashboard");
   const [dashNav, setDashNav] = useState("dashboard");
@@ -27,24 +33,27 @@ const Dashboard = () => {
       <div className="responsiveness">
         <>
           <div className="container-fluid">
-              <div className="row mt-3">
-                <div className=" col-md-4" >
-                  <DailyTaskTracker/>
-                </div>
-                 <div className=" col-md-4" >
-                  <AddNewProjectComponent/>
-                </div>
-                <div className=" col-md-4" >
-                  <MentorComponent/>
-                </div> 
+            <div className="mt-3 das-card-wrapper-row1">
+              <div className="">
+                <DailyTaskTracker />
               </div>
-              <div className="row mt-3">
-                <div className="col-md-8">
-                  <DashboardGraph/>
-                </div>
-                <div className="col-md-4">
-                  <NotificationComponent/>
-                </div>
+              <div className="">
+                <AddNewProjectComponent />
+              </div>
+              <div className="">
+                <MentorComponent />
+                {/* <KYMEmpty/> */}
+              </div>
+            </div>
+            <div className="mt-3 das-card-wrapper-row2">
+              <div className="">
+                <DashboardGraph />
+                {/* <EmptyGraph/> */}
+              </div>
+              <div className="">
+                <NotificationComponent />
+                   {/* <EmptyNoti/>*/}
+              </div>
             </div>
           </div>
         </>
