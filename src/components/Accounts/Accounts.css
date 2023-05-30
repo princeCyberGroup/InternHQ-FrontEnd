@@ -25,22 +25,22 @@
 }
 
 .card-left-heading {
-  margin-top: 78.05px;
+  margin-top: 4.878rem;
   color: #ffffff;
   font-weight: 500;
-  font-size: 40px;
+  font-size: 2.5rem;
 }
 
 .carousel-img {
-  margin: 36px 75px 20px 75px;
+  margin: 2.25rem 4.688rem 1.25rem 4.688rem;
 }
 
 input {
   border: none;
-  border-bottom: 1px solid #b2b2b3;
-  width: 407px;
-  font-size: 15px;
-  line-height: 41px;
+  border-bottom: 0.063rem solid #b2b2b3;
+  width: 25.438rem;
+  font-size: 0.938rem;
+  line-height: 2.563rem;
 }
 
 input:focus {
@@ -49,7 +49,7 @@ input:focus {
 
 .carousel-text {
   color: #ffffff;
-  font-size: 16px;
+  font-size: 1rem;
   font-weight: 500;
   width: 13rem;
   margin-top: 1.411rem;
@@ -59,7 +59,7 @@ input:focus {
 
 .right-container-heading {
   font-weight: 600;
-  font-size: 32px;
+  font-size: 2rem;
   line-height: 125%;
   color: #343435;
   display: flex;
@@ -71,20 +71,25 @@ input:focus {
 
 .input-label-text {
   font-weight: 400;
-  font-size: 15px;
-  line-height: 18px;
+  font-size: 0.938rem;
+  line-height: 1.125rem;
   color: #343435;
 }
 
 .sign-up-btn {
   width:95%;
   position: relative;
-  top: 27px;
-  margin-bottom: 21px;
+  top: 1.688rem;
+  margin-bottom: 1.313rem;
   background: #ffb81c;
   color: #343435;
-  font-size: 17px;
+  font-size: 1.063rem;
   font-weight: 600;
+}
+
+.sign-up-btn:hover {
+  background-color: #ffb81c;
+  color: #343435;
 }
 
 /* .btn:hover {
@@ -102,11 +107,15 @@ a:hover {
   justify-content: center;
   color: #28519e;
   font-weight: 600;
-  font-size: 16px;
-  line-height: 19px;
+  font-size: 1rem;
+  line-height: 1.188rem;
   text-decoration: none;
   cursor: pointer;
   margin-bottom: 3.1rem;
+}
+
+.right-container-link:hover {
+  color: #28519e;
 }
 
 .success-body-container {

@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
 import "../Accounts.css";
 import Cginfinitylogo from "../../../Assets/Cginfinitylogo.png";
 import CarouselImage1 from "../../../Assets/CarouselImage1.svg";
@@ -11,7 +12,7 @@ const CreateNewPasswordScreen = () => {
   const navigate = useNavigate();
   const [activeIndex, setActiveIndex] = useState(0); //For carousel
 
-  const [password, setPassword] = useState("");
+  const [newPassword, setPassword] = useState("");
   const [isPasswordValid, setIsPasswordValid] = useState(false);
   const [confirmPassword, setConfirmPassword] = useState("");
   const [isConfirmPasswordValid, setIsConfirmPasswordValid] = useState(false);
@@ -30,12 +31,51 @@ const CreateNewPasswordScreen = () => {
   const handleConfirmPasswordChange = (event) => {
     const { value } = event.target;
     setConfirmPassword(value);
-    setIsConfirmPasswordValid(value === password ? true : false);
+    setIsConfirmPasswordValid(value === newPassword ? true : false);
   };
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
-    navigate("/change-success");
+    const token = localStorage.getItem("token");
+    // const password = localStorage.getItem("password");
+    // const confirmPassword = localStorage.getItem("confirmPassword");
+
+    await axios
+      .post(
+        "https://cg-interns-hq.azurewebsites.net/changePassword",
+        {
+          newPassword,
+          confirmPassword
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      )
+      .then((response) => {
+         const res = {
+          email:response.data.email,
+          userID:response.data.userId,
+          firstName:response.data.firstName,
+          lastName:response.data.lastName,
+        };
+        localStorage.setItem("Data", JSON.stringify(res));
+        navigate("/change-success");
+        console.log("Data",response);
+        console.log("Data2",res);
+        // console.log(response.data.message);
+
+      })
+      .catch((error) => {
+        console.log(error.response?.data);
+        // console.log(error.response?.data.msg);
+      });
+    console.log(newPassword);
+    console.log(
+      // `confirm password: ${confirmPassword} (hidden visible only on backend)`
+      confirmPassword
+    );
   };
   const handleSlideChange = (index) => {
     setActiveIndex(index);
@@ -59,8 +99,8 @@ const CreateNewPasswordScreen = () => {
             className="col-md-5"
             style={{
               backgroundColor: "#002C3F",
-              height: "562px",
-              width: "370px",
+              height: "35.125rem",
+              width: "23.125rem",
             }}
           >
             <div className="d-flex flex-column justify-content-center align-items-center">
@@ -99,7 +139,7 @@ const CreateNewPasswordScreen = () => {
                 </div>
                 <div className="carousel-inner">
                   <div
-                    style={{ width: "260px" }}
+                    style={{ width: "16.25rem" }}
                     className={`carousel-item ${
                       activeIndex === 0 ? "active" : ""
                     }`}
@@ -108,7 +148,7 @@ const CreateNewPasswordScreen = () => {
                       src={CarouselImage1}
                       className="d-block "
                       alt="..."
-                      style={{ width: "13rem", marginLeft: "24px" }}
+                      style={{ width: "13rem", marginLeft: "1.5rem" }}
                     />
                     <p className="carousel-text ms-4">
                       Record your daily work items
@@ -116,7 +156,7 @@ const CreateNewPasswordScreen = () => {
                   </div>
 
                   <div
-                    style={{ width: "260px" }}
+                    style={{ width: "16.25rem" }}
                     className={`carousel-item ${
                       activeIndex === 1 ? "active" : ""
                     }`}
@@ -125,14 +165,14 @@ const CreateNewPasswordScreen = () => {
                       src={CarouselImage2}
                       className="d-block "
                       alt="..."
-                      style={{ width: "13rem", marginLeft: "24px" }}
+                      style={{ width: "13rem", marginLeft: "1.5rem" }}
                     />
                     <p className="carousel-text">
                       Enhance your skills via assessments
                     </p>
                   </div>
                   <div
-                    style={{ width: "260px" }}
+                    style={{ width: "16.25rem" }}
                     className={`carousel-item ${
                       activeIndex === 2 ? "active" : ""
                     }`}
@@ -141,7 +181,7 @@ const CreateNewPasswordScreen = () => {
                       src={CarouselImage3}
                       className="d-block "
                       alt="..."
-                      style={{ width: "13rem", marginLeft: "24px" }}
+                      style={{ width: "13rem", marginLeft: "1.5rem" }}
                     />
                     <p className="carousel-text">
                       Get certificate and share achievement
@@ -151,13 +191,16 @@ const CreateNewPasswordScreen = () => {
               </div>
             </div>
           </div>
-          <div className="col-md-7 bg-white p-4" style={{ height: "562px" }}>
+          <div
+            className="col-md-7 bg-white p-4"
+            style={{ height: "35.125rem" }}
+          >
             <div className="row ">
               <p className="right-container-heading">Create New Password</p>
             </div>
-            <div className="row" style={{ height: "250px" }}>
+            <div className="row" style={{ height: "15.625rem" }}>
               <form onSubmit={handleSubmit}>
-                <div style={{ height: "170px" ,marginTop:"1rem"}}>
+                <div style={{ height: "10.625rem", marginTop: "1rem" }}>
                   <div className="d-flex flex-column">
                     <label
                       className="input-label-text"
@@ -170,11 +213,11 @@ const CreateNewPasswordScreen = () => {
                       type="password"
                       id="exampleInputEmail1"
                       placeholder="Enter New Password"
-                      value={password}
+                      value={newPassword}
                       onChange={handlePasswordChange}
                       required
                     />
-                    {!isPasswordValid && password && (
+                    {!isPasswordValid && newPassword && (
                       <span className="sign-up-warning ms-2">
                         To proceed, please provide a password as a requirement.
                       </span>
@@ -182,7 +225,7 @@ const CreateNewPasswordScreen = () => {
                   </div>
                   <div className="d-flex flex-column">
                     <label
-                      style={{ marginTop: "28px" }}
+                      style={{ marginTop: "1.75rem" }}
                       className="input-label-text"
                       for="exampleInputPassword1"
                     >
@@ -203,37 +246,36 @@ const CreateNewPasswordScreen = () => {
                       </span>
                     )}
                   </div>
-                  
                 </div>
                 <div
-                    className="row"
-                    style={{
-                      width: "407px",
-                      background: "rgba(184, 221, 225, 0.54)",
-                      borderRadius: "4px",
-                      padding: "5px",
-                      marginLeft: "0px",
-                      paddingLeft: "0",
-                      marginTop: "2rem",
-                    }}
-                  >
-                    <div style={{ display: "flex", alignItems: "flex-start" }}>
-                      <img
-                        src={InfoIcon}
-                        style={{
-                          width: "1.2rem",
-                          padding: "0",
-                          marginTop: "3px",
-                          marginRight: "10px",
-                        }}
-                        alt="Go Back"
-                      />
-                      <p style={{ fontSize: "15px", margin: "0" }}>
-                        Must contain at least 6 characters, one uppercase, one
-                        lowercase, one symbol and one digit.
-                      </p>
-                    </div>
+                  className="row"
+                  style={{
+                    width: "25.438rem",
+                    background: "rgba(184, 221, 225, 0.54)",
+                    borderRadius: "0.25rem",
+                    padding: "0.313rem",
+                    marginLeft: "0",
+                    paddingLeft: "0",
+                    marginTop: "2rem",
+                  }}
+                >
+                  <div style={{ display: "flex", alignItems: "flex-start" }}>
+                    <img
+                      src={InfoIcon}
+                      style={{
+                        width: "1.2rem",
+                        padding: "0",
+                        marginTop: "0.188rem",
+                        marginRight: "0.625rem",
+                      }}
+                      alt="Go Back"
+                    />
+                    <p style={{ fontSize: "0.938rem", margin: "0" }}>
+                      Must contain at least 6 characters, one uppercase, one
+                      lowercase, one symbol and one digit.
+                    </p>
                   </div>
+                </div>
                 <button
                   type="submit"
                   className="btn btn-warning border-0 sign-up-btn mt-2"

@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
 import "../Accounts.css";
 import Cginfinitylogo from "../../../Assets/Cginfinitylogo.png";
@@ -8,6 +9,9 @@ import CarouselImage3 from "../../../Assets/CarouselImage3.svg";
 import BackArrow from "../../../Assets/BackArrow.svg";
 
 const SignUpOtpScreen = () => {
+
+  const [otp, setOtp] = useState("");
+
   const navigate = useNavigate();
   const [activeIndex, setActiveIndex] = useState(0); //For carousel
   const [value, setValue] = useState('');
@@ -17,12 +21,55 @@ const SignUpOtpScreen = () => {
     if (inputValue.length <= 6 && /^\d*$/.test(inputValue)) {
       setValue(inputValue);
     }
+    if(inputValue.trim().length <= 6) {
+      setOtp(inputValue.trim());
+    }
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    navigate("/success");
-  };
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    
+
+    const token = localStorage.getItem("token");
+    const email = localStorage.getItem("email");
+    axios
+      .post(
+        "https://cg-interns-hq.azurewebsites.net/verifyOtp",
+        { email, otp },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      )
+      .then((response) => {
+        const res = {
+          // token:response.data.token,
+          email:response.data.email,
+          userId:response.data.userId,
+          firstName:response.data.firstName,
+          lastName:response.data.lastName,
+        };
+        console.log(res)
+
+        // console.log(response.data.response[0].id);
+        // console.log(response.data)
+        // setCurrentUser(response.data);
+        // const token = response.data.token;
+        // localStorage.setItem("token", response.data.token);
+        localStorage.setItem('userData', JSON.stringify(res));
+        // setAuth({ email, password, token });
+        navigate("/success");
+        console.log(response.data);
+        localStorage.setItem("token");
+      })
+      .catch((error) => {
+        console.log(error.response.data);
+      });
+    console.log(otp);
+  }
+
+  // };
   const handleSlideChange = (index) => {
     setActiveIndex(index);
   };
@@ -44,8 +91,8 @@ const SignUpOtpScreen = () => {
           <div className="col-md-5"
             style={{
               backgroundColor: "#002C3F",
-              height: "562px",
-              width: "370px",
+              height: "35.125rem",
+              width: "23.125rem",
             }}>
             <div className="d-flex flex-column justify-content-center align-items-center">
               <div className="row cglogoimg">
@@ -83,7 +130,7 @@ const SignUpOtpScreen = () => {
                 </div>
                 <div className="carousel-inner">
                   <div
-                    style={{ width: "260px" }}
+                    style={{ width: "16.25rem" }}
                     className={`carousel-item ${
                       activeIndex === 0 ? "active" : ""
                     }`}
@@ -92,7 +139,7 @@ const SignUpOtpScreen = () => {
                       src={CarouselImage1}
                       className="d-block "
                       alt="..."
-                      style={{ width: "13rem", marginLeft: "24px" }}
+                      style={{ width: "13rem", marginLeft: "1.5rem" }}
                     />
                     <p className="carousel-text ms-4">
                       Record your daily work items
@@ -100,7 +147,7 @@ const SignUpOtpScreen = () => {
                   </div>
 
                   <div
-                    style={{ width: "260px" }}
+                    style={{ width: "16.25rem" }}
                     className={`carousel-item ${
                       activeIndex === 1 ? "active" : ""
                     }`}
@@ -109,14 +156,14 @@ const SignUpOtpScreen = () => {
                       src={CarouselImage2}
                       className="d-block "
                       alt="..."
-                      style={{ width: "13rem", marginLeft: "24px" }}
+                      style={{ width: "13rem", marginLeft: "1.5rem" }}
                     />
                     <p className="carousel-text">
                       Enhance your skills via assessments
                     </p>
                   </div>
                   <div
-                    style={{ width: "260px" }}
+                    style={{ width: "16.25rem" }}
                     className={`carousel-item ${
                       activeIndex === 2 ? "active" : ""
                     }`}
@@ -125,7 +172,7 @@ const SignUpOtpScreen = () => {
                       src={CarouselImage3}
                       className="d-block "
                       alt="..."
-                      style={{ width: "13rem", marginLeft: "24px" }}
+                      style={{ width: "13rem", marginLeft: "1.5rem" }}
                     />
                     <p className="carousel-text">
                       Get certificate and share achievement
@@ -135,7 +182,7 @@ const SignUpOtpScreen = () => {
               </div>
             </div>
           </div>
-          <div className="col-md-7 bg-white p-4" style={{ height: "562px" }}>
+          <div className="col-md-7 bg-white p-4" style={{ height: "35.125rem" }}>
             <div className="row ">
               <p className="right-container-heading">Enter Code</p>
             </div>
@@ -144,15 +191,15 @@ const SignUpOtpScreen = () => {
                 src={BackArrow}
                 style={{
                   width: "1.8rem",
-                  paddingRight: "3px",
+                  paddingRight: "0.188rem",
                   cursor: "pointer",
                 }}
                 alt="Go Back"
                 onClick={() => navigate("/sign-up")}
               />
-              <span style={{ display: "contents", fontSize: "14px" }}>
+              <span style={{ display: "contents", fontSize: "0.875rem" }}>
                 {" "}
-                email@email.com
+                {localStorage.getItem("email")}
               </span>
             </div>
             <div>
@@ -160,7 +207,7 @@ const SignUpOtpScreen = () => {
                 style={{
                   marginBottom: "1.9rem",
                   color: "#8A8A8A",
-                  lineHeight: "19px",
+                  lineHeight: "1.188rem",
                 }}
               >
                 Please type the Six digit code we have sent on your<br/> Microsoft

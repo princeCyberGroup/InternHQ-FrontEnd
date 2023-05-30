@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
 import "../Accounts.css";
 import Cginfinitylogo from "../../../Assets/Cginfinitylogo.png";
@@ -15,9 +16,12 @@ const SignUpScreen = () => {
   const [password, setPassword] = useState("");
   const [isPasswordValid, setIsPasswordValid] = useState(false);
 
+  const [incorrectemail, setIncorrectemail] = useState(false);
+
   const handleEmailChange = (event) => {
     const { value } = event.target;
     setEmail(value);
+    setIncorrectemail(false);
     setIsEmailValid(
       value.match(/^[\w.-]+@cginfinity\.com$/)
         ? true
@@ -37,7 +41,26 @@ const SignUpScreen = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    navigate("/sign-up-verification");
+    axios
+      .post("https://cg-interns-hq.azurewebsites.net/internSignUp", {
+        email,
+        password,
+      })
+      .then((response) => {
+        console.log(response.data);
+        localStorage.setItem("token", response.data.token);
+        localStorage.setItem("email", email);
+        navigate("/sign-up-verification");
+      })
+      .catch((error) => {
+        console.log(error.response?.data);
+        if(error.response?.data.msg == "Error: User Already Exists!") {
+          setIsEmailValid(false);
+          setIncorrectemail(true);
+        }
+      });
+    // console.log(email);
+    // console.log(`password: ${password} (hidden visible only on backend)`);
   };
   const handleSlideChange = (index) => {
     setActiveIndex(index);
@@ -60,8 +83,8 @@ const SignUpScreen = () => {
           <div className="col-md-5"
             style={{
               backgroundColor: "#002C3F",
-              height: "562px",
-              width: "370px",
+              height: "35.125rem",
+              width: "23.125rem",
             }}>
             <div className="d-flex flex-column justify-content-center align-items-center">
               <div className="row cglogoimg">
@@ -99,7 +122,7 @@ const SignUpScreen = () => {
                 </div>
                 <div className="carousel-inner">
                   <div
-                    style={{ width: "260px" }}
+                    style={{ width: "16.25rem" }}
                     className={`carousel-item ${
                       activeIndex === 0 ? "active" : ""
                     }`}
@@ -108,7 +131,7 @@ const SignUpScreen = () => {
                       src={CarouselImage1}
                       className="d-block "
                       alt="..."
-                      style={{ width: "13rem", marginLeft: "24px" }}
+                      style={{ width: "13rem", marginLeft: "1.5rem" }}
                     />
                     <p className="carousel-text ms-4">
                       Record your daily work items
@@ -116,7 +139,7 @@ const SignUpScreen = () => {
                   </div>
 
                   <div
-                    style={{ width: "260px" }}
+                    style={{ width: "16.25rem" }}
                     className={`carousel-item ${
                       activeIndex === 1 ? "active" : ""
                     }`}
@@ -125,14 +148,14 @@ const SignUpScreen = () => {
                       src={CarouselImage2}
                       className="d-block "
                       alt="..."
-                      style={{ width: "13rem", marginLeft: "24px" }}
+                      style={{ width: "13rem", marginLeft: "1.5rem" }}
                     />
                     <p className="carousel-text">
                       Enhance your skills via assessments
                     </p>
                   </div>
                   <div
-                    style={{ width: "260px" }}
+                    style={{ width: "16.25rem" }}
                     className={`carousel-item ${
                       activeIndex === 2 ? "active" : ""
                     }`}
@@ -141,7 +164,7 @@ const SignUpScreen = () => {
                       src={CarouselImage3}
                       className="d-block "
                       alt="..."
-                      style={{ width: "13rem", marginLeft: "24px" }}
+                      style={{ width: "13rem", marginLeft: "1.5rem" }}
                     />
                     <p className="carousel-text">
                       Get certificate and share achievement
@@ -151,13 +174,13 @@ const SignUpScreen = () => {
               </div>
             </div>
           </div>
-          <div className="col-md-7 bg-white p-4" style={{ height: "562px" }}>
+          <div className="col-md-7 bg-white p-4" style={{ height: "35.125rem" }}>
             <div className="row ">
               <p className="right-container-heading">Sign Up</p>
             </div>
-            <div className="row" style={{ height: "250px" }}>
+            <div className="row" style={{ height: "15.625rem" }}>
               <form onSubmit={handleSubmit}>
-                <div style={{ height: "180px" ,marginTop:"1rem"}}>
+                <div style={{ height: "11.25rem" ,marginTop:"1rem"}}>
                 <div className="d-flex flex-column">
                   <label className="input-label-text" for="exampleInputEmail1">
                     Email ID
@@ -173,13 +196,13 @@ const SignUpScreen = () => {
                   />
                   {!isEmailValid && email && (
                     <span className="sign-up-warning">
-                      Please make use of CG-Infinity email only
+                      {incorrectemail ? "User Already Exists!" : "Please make use of CG-Infinity email only"}
                     </span>
                   )}
                 </div>
                 <div className="d-flex flex-column">
                   <label
-                    style={{ marginTop: "28px" }}
+                    style={{ marginTop: "1.75rem" }}
                     className="input-label-text"
                     for="exampleInputPassword1"
                   >
