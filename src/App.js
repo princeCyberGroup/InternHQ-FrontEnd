@@ -11,9 +11,9 @@ import CreateNewPasswordScreen from "./components/Accounts/ForgotPassword/Create
 import PasswordChangedScreen from "./components/Accounts/ForgotPassword/PasswordChangedSuccessfulScreen";
 import { ViewAll } from "./components/Dashboard/ProjectIdea/ViewAllComponent/ViewAll";
 import AuthGuard from "./components/AuthGuard";
-
-// import './index.css'
-
+import TakeYourTest from "./components/TakeYourTest/TakeYourTest";
+import DailyUpdateTable from "./components/DailyUpdateTable/DailyUpdateTable";
+import SkillManagement from "./components/SkillManagement/SkillManagement";
 function App() {
   return (
     <div className="App">
@@ -38,8 +38,13 @@ function App() {
           />
           <Route path="/change-success" element={<PasswordChangedScreen />} />
           <Route path="*" element={<h1>Hello WRONg</h1>} />
+            <Route path="/daily-Update" element={<DailyUpdateTable />} />
+            <Route path="/skill-Management" element={< SkillManagement/>} />
+            <Route path="/varun" element={<TakeYourTest/>}/>
+          {/* </div> */}
         </Routes>
       </Router>
+      {/* <TakeYourTest/> */}
     </div>
   );
 }

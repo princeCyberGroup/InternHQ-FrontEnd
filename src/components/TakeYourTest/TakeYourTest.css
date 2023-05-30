@@ -1,0 +1,15 @@
+
+.outerDiv{
+    height: 100%;
+    width: 100%;
+}
+.InstructionsBox{
+   border: 0cap;
+    border-color: red ;
+    justify-content: center;
+    position: absolute;
+width: 530px;
+height: 266px;
+background: blue;
+border-radius: 4px;
+}
