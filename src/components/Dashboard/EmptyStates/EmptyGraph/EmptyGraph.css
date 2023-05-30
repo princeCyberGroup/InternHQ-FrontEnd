@@ -1,0 +1,46 @@
+.report{
+    /* display: flex;
+    flex-direction: column;
+    justify-content: center; */
+    /* align-items: center; */
+    /* padding: 0px; */
+    /* gap: 8px; */
+    /* isolation: isolate; */
+
+
+    height: 368px;
+    /* left: 56px;
+    top: 539px; */
+
+    background: #FFFFFF;
+    /* Shadow */
+
+    box-shadow: 0px 4px 20px rgba(40, 52, 73, 0.15);
+    border-radius: 8px;
+}
+
+.noRep p{
+    font-family: 'Roboto';
+    font-style: normal;
+    font-weight: 600;
+    font-size: 20px;
+    line-height: 23px;
+    margin-top: 1rem;
+    /* Primary/Gray */
+
+    color: #343435;
+
+}
+
+.p2 p{
+    font-family: 'Roboto';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 20px;
+    line-height: 23px;
+    text-align: center;
+    width: 346px;
+    /* Primary/Gray */
+
+    color: #343435;
+}

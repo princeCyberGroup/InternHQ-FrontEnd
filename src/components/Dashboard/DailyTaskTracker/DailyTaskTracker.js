@@ -96,8 +96,8 @@ const DailyTaskTracker = () => {
 
   return (
     <>
-      <div className="tracker border p-0">
-        <div className="card-body p-0">
+      {/* <div className="tracker border p-0"> */}
+        <div className="tracker border card-body p-0">
           <div className="border-bottom ">
             <h5 className="card-title dtt-hfs ">Daily Task Tracker</h5>
           </div>
@@ -231,7 +231,7 @@ const DailyTaskTracker = () => {
             </div>
           </div>
         </div>
-      </div>
+      {/* </div> */}
     </>
   );
 };
