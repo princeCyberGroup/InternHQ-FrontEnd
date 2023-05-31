@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 import "./DailyTaskTracker.css";
 import { ReactComponent as Tick } from "./tick.svg";
+import Congo from "../../SkillManagement/Modals/Congo";
+import Sorry from "../../SkillManagement/Modals/Sorry";
 
 const learningTypeOptions = [
   "CG Learning Video",
@@ -94,8 +96,8 @@ const DailyTaskTracker = () => {
 
   return (
     <>
-      <div className="tracker border p-0">
-        <div className="card-body p-0">
+      {/* <div className="tracker border p-0"> */}
+        <div className="tracker border card-body p-0">
           <div className="border-bottom ">
             <h5 className="card-title dtt-hfs ">Daily Task Tracker</h5>
           </div>
@@ -181,16 +183,17 @@ const DailyTaskTracker = () => {
               )}
             </p>
 
+
             {/* SUCCESS MODAL */}
             <div
               className="modal fade"
               id="exampleModal1"
-              tabindex="-1"
+              tabIndex="-1"
               aria-labelledby="exampleModalLabel"
               aria-hidden="true"
             >
               <div className="modal-dialog modal-dialog-centered">
-                <div className="modal-content">
+                <div className="modal-content sSize">
                   <div className="row crossBtn">
                     <button
                       type="button"
@@ -228,7 +231,7 @@ const DailyTaskTracker = () => {
             </div>
           </div>
         </div>
-      </div>
+      {/* </div> */}
     </>
   );
 };
