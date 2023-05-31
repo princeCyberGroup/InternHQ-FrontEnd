@@ -116,3 +116,16 @@ h5.dtt-hfs{
 
     color: #343435;
 }
+
+.noMentor p{
+    margin-top: 12px;
+    font-family: 'Roboto';
+    font-style: normal;
+    font-weight: 600;
+    font-size: 20px;
+    line-height: 23px;
+
+    /* Primary/Gray */
+
+    color: #343435;
+}

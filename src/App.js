@@ -10,6 +10,7 @@ import ForgotPasswordOtpScreen from "./components/Accounts/Otp/ForgotPasswordOtp
 import CreateNewPasswordScreen from "./components/Accounts/ForgotPassword/CreateNewPasswordScreen";
 import PasswordChangedScreen from "./components/Accounts/ForgotPassword/PasswordChangedSuccessfulScreen";
 import { ViewAll } from "./components/Dashboard/ProjectIdea/ViewAllComponent/ViewAll";
+import AuthGuard from "./components/AuthGuard";
 import TakeYourTest from "./components/TakeYourTest/TakeYourTest";
 import DailyUpdateTable from "./components/DailyUpdateTable/DailyUpdateTable";
 import SkillManagement from "./components/SkillManagement/SkillManagement";
@@ -19,6 +20,14 @@ function App() {
     <div className="App">
       <Router>
         <Routes>
+          <Route element={<AuthGuard />}>
+            <Route path="/dashboard"  element={<Dashboard/>}  />
+            <Route path="/all-projects" element={<ViewAll/>} />
+             <Route exact path="/TakeTest" component={<TakeTest />} />
+            <Route path="/take-your-test/:examId" element={<TakeYourTest/>}/>
+            <Route path="/dashboard" element={<Dashboard />} />
+            <Route path="/all-projects" element={<ViewAll />} />
+          </Route>
           <Route path="/" element={<LoginScreen />} />
           <Route path="/forgot-password" element={<ForgotPasswordScreen />} />
           <Route path="/sign-up" element={<SignUpScreen />} />
@@ -33,15 +42,9 @@ function App() {
             element={<CreateNewPasswordScreen />}
           />
           <Route path="/change-success" element={<PasswordChangedScreen />} />
-          {/* <div> */}
-            <Route path="/dashboard" element={<Dashboard />} />
+          <Route path="*" element={<h1>Hello WRONg</h1>} />
             <Route path="/daily-Update" element={<DailyUpdateTable />} />
-            <Route path="/skill-Management" element={< SkillManagement/>} />
-            <Route exact path="/TakeTest" component={<TakeTest />} />
-            <Route path="/take-your-test/:examId" element={<TakeYourTest/>}/>
-            <Route path="/dashboard" element={<Dashboard />} />
-            <Route path="/all-projects" element={<ViewAll />} />
-          {/* </div> */}
+            <Route path="/skill-Management" element={< SkillManagement/>} />           
         </Routes>
       </Router>
       {/* <TakeYourTest/> */}

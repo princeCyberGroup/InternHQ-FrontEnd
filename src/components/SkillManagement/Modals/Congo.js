@@ -37,6 +37,7 @@ const Congo = () => {
           </div>
           <div className="row c3">
             <p>5 /10</p>
+
           </div>
           <div className="row c4">
             <p>
@@ -56,7 +57,6 @@ const Congo = () => {
         </div>
       </div>
     </div>
-  
   );
 };
 

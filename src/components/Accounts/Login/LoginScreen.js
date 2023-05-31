@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import axios from "axios"
 import { Link, useNavigate } from "react-router-dom";
 import "../Accounts.css";
 import Cginfinitylogo from "../../../Assets/Cginfinitylogo.png";
@@ -13,33 +14,85 @@ const LoginScreen = () => {
   const [email, setEmail] = useState("");
   const [isEmailValid, setIsEmailValid] = useState(false);
   const [password, setPassword] = useState("");
-  const [isPasswordValid, setIsPasswordValid] = useState(false);
+  const [isPasswordValid, setIsPasswordValid] = useState(true);
+
+  const [incorrectemail, setIncorrectemail] = useState(false);
 
   const handleEmailChange = (event) => {
     const { value } = event.target;
     setEmail(value);
+    setIncorrectemail(false);
     setIsEmailValid(value.match(/^[\w.-]+@cginfinity\.com$/) ? true : false);
   };
 
   const handlePasswordChange = (event) => {
     const { value } = event.target;
     setPassword(value);
-    setIsPasswordValid(
-      /^(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*])[A-Za-z\d!@#$%^&*]{8,}$/.test(value)
-        ? true
-        : false
-    );
+    setIsPasswordValid(true);
+    // setIsPasswordValid(
+    //   /^(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*])[A-Za-z\d!@#$%^&*]{8,}$/.test(value)
+    //     ? true
+    //     : false
+    // );
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    navigate("/dashboard");
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+    await axios
+      .post("https://cg-interns-hq.azurewebsites.net/internLogin", {
+        email,
+        password,
+      })
+      .then((response) => {
+        console.log(response.data);
+        console.log("success",response.data.success)
+        localStorage.setItem("token", response.data.token);
+        localStorage.setItem("login", true);
+        // const res = {
+        //   token:response.data.token,
+        //   email:response.data.response[0].email,
+        //   id:response.data.response[0].id,
+        //   firstName:response.data.response[0].firstname,
+        //   lastName:response.data.response[0].lastname,
+        //   lastLogin:response.data.response[0].lastlogin
+        // };
+        
+        // console.log(response.data.response[0].id);
+        // console.log(response.data)
+        // setCurrentUser(response.data);
+        // const token = response.data.token;
+        // localStorage.setItem("token", response.data.token);
+        // localStorage.setItem('userData', JSON.stringify(res));
+        // setAuth({ email, password, token });
+        navigate("/dashboard");
+      })
+      .catch((error) => {
+        console.log(error.response?.data);
+        // console.log(error.response.data);
+        // console.log(error.response?.data.msg);
+        console.log(error.response.data.status)
+        
+        // localStorage.setItem("login",false);
+        if(error.response?.data.msg == "Error: Email does not exist") {
+          setIsEmailValid(false);
+          setIncorrectemail(true);
+        } else {
+          setIsPasswordValid(false);
+        }
+      });
+    // console.log(email);
+    // console.log(`password: ${password} (hidden visible only on backend)`);
+    
   };
   const handleSlideChange = (index) => {
     setActiveIndex(index);
   };
 
   useEffect(() => {
+    let login = localStorage.getItem('login');
+    if(login) {
+      navigate('/dashboard')
+    }
     const interval = setInterval(() => {
       setActiveIndex((prevIndex) => (prevIndex + 1) % 3);
     }, 3000); //Make it 1000
@@ -174,7 +227,7 @@ const LoginScreen = () => {
                     />
                     {!isEmailValid && email && (
                       <span className="sign-up-warning">
-                        Please make use of CG-Infinity email only
+                        {incorrectemail ? "Email does not exist" : "Please make use of CG-Infinity email only"}
                       </span>
                     )}
                   </div>
@@ -197,8 +250,7 @@ const LoginScreen = () => {
                     />
                     {!isPasswordValid && password && (
                       <span className="sign-up-warning">
-                        Atleast 8 characters, one uppercase, number & special
-                        characters required.
+                        Incorrect Password
                       </span>
                     )}
                   </div>
@@ -207,7 +259,7 @@ const LoginScreen = () => {
                 <button
                   type="submit"
                   className="btn btn-warning border-0 sign-up-btn mt-3"
-                  disabled={!isEmailValid || !isPasswordValid}
+                  disabled={!isEmailValid}
                 >
                   Login
                 </button>

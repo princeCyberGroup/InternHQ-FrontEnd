@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
 import "../Accounts.css";
 import Cginfinitylogo from "../../../Assets/Cginfinitylogo.png";
@@ -8,6 +9,9 @@ import CarouselImage3 from "../../../Assets/CarouselImage3.svg";
 import BackArrow from "../../../Assets/BackArrow.svg";
 
 const SignUpOtpScreen = () => {
+
+  const [otp, setOtp] = useState("");
+
   const navigate = useNavigate();
   const [activeIndex, setActiveIndex] = useState(0); //For carousel
   const [value, setValue] = useState('');
@@ -17,12 +21,55 @@ const SignUpOtpScreen = () => {
     if (inputValue.length <= 6 && /^\d*$/.test(inputValue)) {
       setValue(inputValue);
     }
+    if(inputValue.trim().length <= 6) {
+      setOtp(inputValue.trim());
+    }
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    navigate("/success");
-  };
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    
+
+    const token = localStorage.getItem("token");
+    const email = localStorage.getItem("email");
+    axios
+      .post(
+        "https://cg-interns-hq.azurewebsites.net/verifyOtp",
+        { email, otp },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      )
+      .then((response) => {
+        const res = {
+          // token:response.data.token,
+          email:response.data.email,
+          userId:response.data.userId,
+          firstName:response.data.firstName,
+          lastName:response.data.lastName,
+        };
+        console.log(res)
+
+        // console.log(response.data.response[0].id);
+        // console.log(response.data)
+        // setCurrentUser(response.data);
+        // const token = response.data.token;
+        // localStorage.setItem("token", response.data.token);
+        localStorage.setItem('userData', JSON.stringify(res));
+        // setAuth({ email, password, token });
+        navigate("/success");
+        console.log(response.data);
+        localStorage.setItem("token");
+      })
+      .catch((error) => {
+        console.log(error.response.data);
+      });
+    console.log(otp);
+  }
+
+  // };
   const handleSlideChange = (index) => {
     setActiveIndex(index);
   };
@@ -152,7 +199,7 @@ const SignUpOtpScreen = () => {
               />
               <span style={{ display: "contents", fontSize: "0.875rem" }}>
                 {" "}
-                email@email.com
+                {localStorage.getItem("email")}
               </span>
             </div>
             <div>
