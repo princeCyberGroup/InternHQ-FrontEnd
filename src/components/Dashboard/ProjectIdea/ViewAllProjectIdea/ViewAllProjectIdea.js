@@ -21,12 +21,15 @@ export const ViewProjectIdeas = () => {
         <>
         <Header/>
         <div className="container page-color">
-            <nav aria-label="breadcrumb ">
+        <div className="view-all-nav-bar pt-4">
+            <p>Dashboard &gt; MyIdea</p>
+          </div>
+            {/* <nav aria-label="breadcrumb ">
                 <ol class="breadcrumb pt-3">
-                    <li class="breadcrumb-item"><Link className="main-header-text fw-bold" to={{ pathname: '/dashboard' }} >Dashboard</Link></li>
-                    <li class="breadcrumb-item " aria-current="page">My Idea</li>
+                    <li class="breadcrumb-item"><Link className="main-header-text" to={{ pathname: '/dashboard' }} >Dashboard</Link></li>
+                    <li class="breadcrumb-item main-header-text">My Idea</li>
                 </ol>
-            </nav>
+            </nav> */}
             <div className="d-flex justify-content-between">
 
                 <div className="d-flex">

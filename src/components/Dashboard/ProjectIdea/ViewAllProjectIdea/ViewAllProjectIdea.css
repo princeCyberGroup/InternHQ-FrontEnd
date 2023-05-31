@@ -1,15 +1,24 @@
-.page-color{
+.page-color {
     background-color: #FBFBFB;
     height: 100vh;
 }
-.main-header-text {
+
+.view-all-nav-bar {
     font-style: normal;
     font-weight: 400;
     font-size: 0.8rem;
     line-height: 1rem;
-    padding-top: 1.25rem;
     color: #343435;
+    text-decoration: none;
 }
+
+/* .my-idea {
+    font-style: normal;
+    font-weight: 400;
+    font-size: 0.8rem;
+    line-height: 1rem;
+    color: #343435;
+} */
 
 .sub-text {
     font-style: normal;
@@ -30,8 +39,8 @@
     background: #28519E;
     border: none;
     border: 0.25rem;
-    
-    margin-right:3.5rem;
+
+    margin-right: 3.5rem;
 }
 
 .add-your-project {
@@ -53,8 +62,8 @@
     display: flex;
 }
 
-.project-detail{
-   padding: 23px;
+.project-detail {
+    padding: 23px;
 }
 
 .entire-component {
@@ -63,7 +72,7 @@
     background-color: #FFFFFF;
     box-shadow: 0px 4px 20px rgba(40, 52, 73, 0.15);
     border-radius: 8px;
-    margin-left:3.5rem;
+    margin-left: 3.5rem;
 }
 
 .all-project-names {
@@ -73,9 +82,11 @@
     padding-left: 15px;
     padding-right: 15px;
 }
-.border-between{
-border-right: 1px solid #000000;
+
+.border-between {
+    border-right: 1px solid #000000;
 }
+
 .project-names-wrapper {
     display: flex;
     flex-direction: column;
@@ -89,6 +100,7 @@ border-right: 1px solid #000000;
     margin-left: 11px;
     /* margin-top: 1.5rem; */
 }
+
 .project-names-wrapper-border {
     border-left: 3px solid #28519E;
 }

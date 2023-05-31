@@ -13,6 +13,8 @@ export const AddNewIdea = (props) => {
             .then((response) => {
                 console.log("project ideas:",response.data.response);
                setProjectDescription(response.data.response)
+               console.log(projectDescription, "HEre lies project desc")
+               
                 navigate('/project-idea-projects', { state: response.data.response});
 
             }).catch((error) => {
@@ -49,7 +51,8 @@ export const AddNewIdea = (props) => {
 
                 <div className="recipe-row">
                     <div className="recipe-text">
-                        <h5 className="fw-bold">Recipe Recommendation Engine</h5>
+                        <h5 className="fw-bold"></h5>
+                        {/* {console.log(projectDescription[0].projectNames)} */}
                         <p className="fw-normal mb-1">
                             The Recipe Recommendation Engine is a web-based
                             application that uses machine learning algorithm...
