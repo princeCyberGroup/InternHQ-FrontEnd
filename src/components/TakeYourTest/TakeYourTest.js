@@ -1,34 +1,49 @@
 import React from "react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import "./TakeYourTest.css";
 import Header from "../Header";
 import { useNavigate } from "react-router-dom";
-//import { useLocation } from "react-router-dom";
-import { useEffect } from "react";
-import TakeTest from "../SkillManagement/TakeTest/TakeTest.js";
+import { useParams } from 'react-router-dom';
 import Congo from "../SkillManagement/Modals/Congo.js";
 import Sorry from "../SkillManagement/Modals/Sorry.js";
 
-//import Button from 'react-bootstrap/Button';
 const TakeYourTest = () => {
-    //   const location = useLocation();
-    //   const searchParams = new URLSearchParams(location.search);
-    //   const selectedData = searchParams.get("selectedData");
-
+    const { examId } = useParams();
+    const [testsData, setTestsData] = useState([]);
+    const [allData, setAllData] = useState([]);
 
     const navigate = useNavigate();
-    // const [res, setScore] = useState(0);
-
-    //TODO: THIS IS THE CLICK FUNCTION START TEST
 
     const [Ques, setTestsQues] = useState([]);
     const [allQuesData, setAllQuesData] = useState([]);
+    const [testDetails, setTestDetails] = useState({})
+    const fetchTestsForExams = async (examIdToCheck) => {
+        try {
+            // console.log("Working")
+            const response = await fetch("https://cg-interns-hq.azurewebsites.net/getAllExam");
+            const data = await response.json();
+            console.log(data);
+            data.forEach((i) => {
+                if (i.examId == examId) {
+                    setTestDetails(i);
+                }
+            })
+            setAllData(data);
+            setTestsData(data);
+        }
+        catch (e) {
+            console.error('Error fetching exam details:', e);
+        }
+    };
     useEffect(() => {
         fetchTests();
+        fetchTestsForExams();
+
     }, [])
     const fetchTests = async () => {
         try {
             const response = await fetch("https://cg-interns-hq.azurewebsites.net/getAllQuestions?examId=1");
+            console.log(response)
             const Quesdata = await response.json();
             console.log(Quesdata);
             setAllQuesData(Quesdata);
@@ -38,33 +53,6 @@ const TakeYourTest = () => {
             console.log(e);
         }
     }
-
-
-    // const [showChildModal, setShowChildModal] = useState(false);
-
-    // const openChildModal = () => {
-    //   setShowChildModal(true);
-    // };
-
-    // const closeChildModal = () => {
-    //   setShowChildModal(false);
-    // };
-    // const questions = [
-    //     {
-    //         id: 1,
-    //         text: "What is the capital of France?",
-    //         options: ["Paris", "London", "Rome"],
-    //         answer: "Paris",
-    //     },
-    //     {
-    //         id: 2,
-    //         text: "Which planet is known as the Red Planet?",
-    //         options: ["Mars", "Venus", "Jupiter"],
-    //         answer: "Mars",
-    //     },
-    //     // Add more questions here
-    // ];
-    /////////////////////////////////////////////////////
     const [userAnswers, setUserAnswers] = useState([]);
 
     const handleAnswerSelect = (questionId, selectedAnswer) => {
@@ -75,6 +63,11 @@ const TakeYourTest = () => {
     };
     //////////////////////////////////////////////////////
 
+    const formatTime = (time) => {
+        const minutes = Math.floor(time / 60).toString().padStart(2, '0');
+        const seconds = (time % 60).toString().padStart(2, '0');
+        return `${minutes}:${seconds}`;
+    };
     /////////////////////////////////////////////////////
     const calculateScore = () => {
         let score = 0;
@@ -83,24 +76,17 @@ const TakeYourTest = () => {
                 score++;
             }
         });
-        // setScore(calculateScore);
         return score;
-
-
     };
     ///////////////////////////////////////////////////////
-
     const submitQuiz = () => {
         const score = calculateScore();
 
         console.log("Quiz submitted! Score:", score);
-
     };
-
     const clickHandler = () => {
         navigate("/skill-Management");
     };
-
     const score = calculateScore();
     const modalTarget = () => {
 
@@ -114,8 +100,6 @@ const TakeYourTest = () => {
         }
     }
     const Targetm = modalTarget();
-
-
     const renderQuestions = () => {
         return (
             <div>
@@ -207,9 +191,6 @@ const TakeYourTest = () => {
             </div >
         );
     };
-
-
-
     return (
         <>
             <Header />
@@ -229,27 +210,25 @@ const TakeYourTest = () => {
                             <p> Take The Test </p>
                         </div>
                         <div className="quiz-description mx-5 ">
-                            Quiz {"\u2B24"}
-                            20 mins {"\u2B24"}
-                            10 Questions
+                            {testDetails.examName}{" "}{'\u2B24'}{" "}{testDetails.examDuration}{" "}mins{" "}{'\u2B24'}{" "}{testDetails.numberOfQuestion}{" "}Questions
                         </div>
                     </div>
                     <div className="col-3 Timer-and-attemtedQues">
                         <div className="col-3 timer-Box" >
-                                00:00:00
-                              </div>
-                              <div  className="col-3 attempted-Ques">
-                                Attempted Questions: 02/10
-                              </div>
+                            00:{testDetails.examDuration}:00
+
                         </div>
-                        
+                        <div className="col-3 attempted-Ques">
+                            Attempted Questions: 02/{testDetails.numberOfQuestion}
+                        </div>
+                    </div>
                 </div>
                 <div className="ques.card ">
                     <div className="card insidecard" style={{ width: "1220px" }}>
-                        <div> {renderQuestions()} </div>{" "}
-                    </div>{" "}
-                </div>{" "}
-            </div>{" "}
+                        <div> {renderQuestions()} </div>
+                    </div>
+                </div>
+            </div>
         </>
     );
 };

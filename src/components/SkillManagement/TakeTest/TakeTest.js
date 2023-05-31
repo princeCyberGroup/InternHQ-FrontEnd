@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { useState , createContext } from "react";
+import { useState, createContext } from "react";
 // import logo from '../../../Assets/image 13.png';
 import "./TakeTest.css";
 import { BsClock } from "react-icons/bs";
@@ -7,7 +7,7 @@ import { MdOutlineBallot } from "react-icons/md";
 import Button from 'react-bootstrap/Button';
 import { Link, useNavigate } from "react-router-dom";
 
-import { BrowserRouter as Router, Switch, Route  } from 'react-router-dom';
+import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 
 export const TestContext = createContext();
 
@@ -19,28 +19,24 @@ const TakeTest = (props) => {
     useEffect(() => {
         fetchTests();
     }, [])
-    const fetchTests = async () => {
+    const fetchTests = async (examId) => {
         try {
             const response = await fetch("https://cg-interns-hq.azurewebsites.net/getAllExam");
             const data = await response.json();
-            // console.log(data);
             setAllData(data);
             setTests(data);
         }
         catch (e) {
-            console.log(e);
+            console.error('Error fetching exam details:', e);
         }
-    }
+    };
     const handleSearch = (event) => {
         setSearchQuery(event.target.value);
     };
     const navigate = useNavigate();
-    //TODO: THIS IS THE CLICK FUNCTION START TEST
     const clickHandler = () => {
-        navigate("/varun/examId");
+        navigate("/take-your-test/examId");
     }
-  
-
     return (
         <> <TestContext.Provider>{props.children}</TestContext.Provider>
             <div className="TTheading">
@@ -136,16 +132,17 @@ const TakeTest = (props) => {
                                                 </div>
                                                 <div class=" col d-flex justify-content-between eounded text-grey quesTimeClick ">
                                                     <div class="d-flex flex-column justify-content-center noOfQues">
-                                                        <div class="articles d-flex justify-content-center"> <MdOutlineBallot style={{marginRight:"5px"}}/>{test.numberOfQuestion} Questions</div>
+                                                        <div class="articles d-flex justify-content-center">
+                                                            <MdOutlineBallot style={{ marginRight: "5px" }} />{test.numberOfQuestion} Questions</div>
                                                     </div>
                                                     <div class="d-flex flex-column justify-content-center testTime">
                                                         <div class="articles d-flex justify-content-center ">
-                                                            <BsClock style={{marginRight:"5px"}}/>{test.examDuration} mins</div>
+                                                            <BsClock style={{ marginRight: "5px" }} />{test.examDuration} mins</div>
                                                     </div>
                                                     <div class="d-flex flex-column">
-                                                      {/* <Link to={`/varun/${test.examId}`}> */}
-                                                      <Button className='btnclick' data-bs-toggle="modal" data-bs-target="#staticBackdrop" >Start Test</Button>
-                                                      {/* </Link>{' '} */}
+
+                                                        <Button className='btnclick' data-bs-toggle="modal" data-bs-target="#staticBackdrop" >Start Test</Button>
+                                                        {/* </Link>{' '} */}
                                                     </div>
                                                     <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
                                                         <div class="modal-dialog modal-dialog-centered">
@@ -163,8 +160,8 @@ const TakeTest = (props) => {
                                                                 </div>
                                                                 <div class="modal-footer">
                                                                     <button type="button" class="btn btn-outline-primary" data-bs-dismiss="modal">Cancel</button>
-                                                                    <Link to={`/varun/${test.examId}`}>
-                                                                    <button type="button" onClick={() => { clickHandler() }} data-bs-dismiss="modal" class="btn btn-primary">Continue</button>
+                                                                    <Link key={test.examId} to={`/take-your-test/${test.examId}`}>
+                                                                        <button type="button" onClick={() => { clickHandler() }} data-bs-dismiss="modal" class="btn btn-primary">Continue</button>
                                                                     </Link>
                                                                 </div>
                                                             </div>

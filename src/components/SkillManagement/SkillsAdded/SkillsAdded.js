@@ -30,7 +30,7 @@ const SkillsAdded = () => {
       <div className="card" style={{ width: "288px" }}>
         <div
           class="card-body p-0"
-          style={{ maxHeight: "50rem", overflow: "auto" }}
+          style={{ maxHeight: "730px", overflow: "auto" }}
         >
           <div className="row cards">
             <div className="col-12 d-flex mainImg">
