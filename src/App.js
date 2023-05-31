@@ -20,7 +20,7 @@ function App() {
     <div className="App">
       <Router>
         <Routes>
-          <Route element={<AuthGuard />}>
+          <Route element={<AuthGuard />}> 
             <Route path="/dashboard"  element={<Dashboard/>}  />
             <Route path="/all-projects" element={<ViewAll/>} />
              <Route exact path="/TakeTest" component={<TakeTest />} />
