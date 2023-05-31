@@ -9,13 +9,11 @@ const AuthGuard = () => {
   const handleAuth = () => {
     if (localStorage.getItem("login")) {
       if (localStorage.getItem("login") === "true") {
+        navigate(location.pathname)
         setIsAuthenticated(true);
         // navigate({
         //     pathname:path
         // });
-        navigate({
-            pathname:location.pathname
-        })
         // console.log("first", isAuthenticated);
         // return true;
       } else {

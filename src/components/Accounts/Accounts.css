@@ -174,3 +174,8 @@ a:hover {
 .input-fields {
   max-width: 100%;
 }
+
+.password-toggle-button {
+  position: absolute;
+    right: 32px;
+}
