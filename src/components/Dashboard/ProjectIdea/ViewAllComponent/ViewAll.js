@@ -6,7 +6,7 @@ import { useLocation } from 'react-router-dom';
 
 export const ViewAll = () => {
     const [projectIndex, setProjectIndex] = useState(0);
-
+    // const [projectData, setProjectData] = useState()
     const location = useLocation();
     const details = location.state;
     console.log("Details:", details)
@@ -50,6 +50,8 @@ export const ViewAll = () => {
 }
 
 export const ProjectIdeas = (props) => {
+    const [isBorder, setIsBorder] = useState(false);
+    const [selectedIdx, setSelectedIdx] = useState(0);
 
     const truncate = (str, maxLength) => {
         if (str.length > maxLength) return (str.slice(0, maxLength) + "...");
@@ -59,36 +61,44 @@ export const ProjectIdeas = (props) => {
     return (
 
         <div className="all-project-names pt-3" >
-            {props.data.map((user, index) => {
-                return (
-                    <div className="project-names-wrapper mt-2 pb-0 d-flex justify-content-between" key={index}
-                        onClick={() => {
-                            props.projectDetails(index);
-                        }}>
-
-                        <div
-                            style={{
-                                display: "flex",
+            <div className="child-wrapper">
+                {props.data.map((user, index) => {
+                    const isBorder = index === selectedIdx;
+                    return (
+                        <div className={"project-names-wrapper mt-2 pb-0 d-flex justify-content-between" + (isBorder ? " project-names-wrapper-border" : "")} key={index}
+                            onClick={() => {
+                                props.projectDetails(index);
+                                setSelectedIdx(index);
+                                setIsBorder(true);
                             }}>
-                            <h5
-                                className="project-names"
-                            >{user.projectNames}
-                            </h5>
-                            <span
-                                className="click-arrow"
-                            // style={{ border:"1px solid black" }}
-                            >
-                                &gt;
-                            </span>
-                        </div>
+                            {console.log("This is another", user)}
+                            <div
+                                style={{
+                                    display: "flex",
+                                }}>
+                                <h5
+                                    className="project-names"
+                                >
+                                    {user.name}
+
+                                </h5>
+                                <span
+                                    className="click-arrow"
+                                // style={{ border:"1px solid black" }}
+                                >
+                                    &gt;
+                                </span>
+                            </div>
 
 
-                        <div>
-                            <p className="project-text flex-grow-1">{truncate(user.projectText, 100)}</p>
+                            <div>
+                                <p className="project-text flex-grow-1">
+                                    {truncate(user.description, 100)}</p>
+                            </div>
                         </div>
-                    </div>
-                )
-            })}
+                    )
+                })}
+            </div>
         </div>
     )
 }

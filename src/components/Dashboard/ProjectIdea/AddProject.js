@@ -1,22 +1,20 @@
-import { Api } from "./Api";
+import axios from "axios";
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import axios from "axios";
 
-export const AddProject = () => {
-    const [projectData, setProjectData] = useState(Api)
+export const AddProject = (props) => {
+    // const [projectData, setProjectData] = useState([])
     const navigate = useNavigate();
     const handleClick = async(e) => {
         //state = true
         e.preventDefault();
         await axios.get("https://cg-interns-hq.azurewebsites.net/getProject?userId=1")
         .then((response) => {
+            console.log("KKK:",response.data.response);
+            // setProjectData(response.data.response[0].name)
+            // console.log("lll:", projectData);
 
-            console.log("llll:",response.data);
-
-            console.log("KKK:",response.data);
-            setProjectData(response.data)
-            navigate('/all-projects', { state: projectData });
+            navigate('/all-projects', { state: response.data.response });
 
         }).catch((error) => {
 

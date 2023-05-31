@@ -84,10 +84,13 @@ border-right: 1px solid #000000;
     /* gap: 0.5rem; */
     align-items: flex-start;
     background: rgba(40, 81, 158, 0.08);
-    border-left: 3px solid #28519E;
+    /* border-left: 3px solid #28519E; */
     border-radius: 0.25rem;
     margin-left: 11px;
     /* margin-top: 1.5rem; */
+}
+.project-names-wrapper-border {
+    border-left: 3px solid #28519E;
 }
 
 

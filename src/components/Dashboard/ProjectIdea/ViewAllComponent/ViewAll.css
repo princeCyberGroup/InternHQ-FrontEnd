@@ -1,7 +1,8 @@
-.page-color{
+.page-color {
     background-color: #FBFBFB;
     height: 100vh;
 }
+
 .header-text {
     font-style: normal;
     font-weight: 400;
@@ -30,8 +31,8 @@
     background: #28519E;
     border: none;
     border: 0.25rem;
-    
-    margin-right:3.5rem;
+
+    margin-right: 3.5rem;
 }
 
 .add-your-project {
@@ -53,8 +54,8 @@
     display: flex;
 }
 
-.project-detail{
-   padding: 23px;
+.project-detail {
+    padding: 23px;
 }
 
 .entire-component {
@@ -63,19 +64,28 @@
     background-color: #FFFFFF;
     box-shadow: 0px 4px 20px rgba(40, 52, 73, 0.15);
     border-radius: 8px;
-    margin-left:3.5rem;
+    margin-left: 3.5rem;
 }
 
 .all-project-names {
     padding-left: 1.5rem;
-    overflow-y: scroll;
     height: 450px;
-    padding-left: 15px;
+    padding-top: 24px;
+    padding-bottom: 12px;
+}
+
+.child-wrapper {
+    height: 100%;
+    overflow-y: scroll;
     padding-right: 15px;
+    padding-left: 15px;
+    border-right: 1px solid rgba(0, 0, 0, 0.1);
 }
-.border-between{
-border-right: 1px solid #000000;
+
+.border-between {
+    border-right: 1px solid #000000;
 }
+
 .project-names-wrapper {
     display: flex;
     flex-direction: column;
@@ -84,10 +94,14 @@ border-right: 1px solid #000000;
     /* gap: 0.5rem; */
     align-items: flex-start;
     background: rgba(40, 81, 158, 0.08);
-    border-left: 3px solid #28519E;
+    /* border-left: 3px solid #28519E; */
     border-radius: 0.25rem;
     margin-left: 11px;
     /* margin-top: 1.5rem; */
+}
+
+.project-names-wrapper-border {
+    border-left: 3px solid #28519E;
 }
 
 
@@ -97,6 +111,7 @@ border-right: 1px solid #000000;
     font-size: 1rem;
     line-height: 1.188rem;
     color: #343435;
+    width: 20rem;
 }
 
 .project-text {
@@ -107,10 +122,9 @@ border-right: 1px solid #000000;
 }
 
 .click-arrow {
-    padding-left: 260px;
+    position: relative;
+    left: 1rem;
     border: none;
     background: transparent;
     color: #28519E;
-    width: 0.491rem;
 }
-
