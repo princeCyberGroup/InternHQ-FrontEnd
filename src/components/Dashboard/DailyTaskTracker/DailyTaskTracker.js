@@ -5,12 +5,13 @@ import Congo from "../../SkillManagement/Modals/Congo";
 import Sorry from "../../SkillManagement/Modals/Sorry";
 
 const learningTypeOptions = [
-  "CG Learning Video",
+  "CG Learning Videos",
   "Self Learning",
   "Mentor Assigned Task",
   "Project",
 ];
-const topics = ["React", "Angular", "DotNet", "SQL"];
+const topics = ["React", "Angular", "C# .Net", "AWS", "Azure", "JavaScript", "Salesforce"];
+
 
 const DailyTaskTracker = () => {
   const [learningType, setLearningType] = useState("");
