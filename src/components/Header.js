@@ -1,8 +1,8 @@
 import React,{useState} from "react";
 import { Link, NavLink, useNavigate } from "react-router-dom";
-import cgLogo from "../Assets/cglogo.svg";
 import { BsChevronDown } from "react-icons/bs";
-import "./Header.css";
+import { ReactComponent as CGlogo} from "../Assets/CG-Logo (1) 1CGlogo.svg"
+import './Header.css'
 const Header = () => {
   // localStorage.setItem("userData",{"email":"prinec.kumar@cginfinity.com","userId":43,"firstName":"Prince","lastName":"kumar"})
   const [userData, setUserData] = useState(JSON.parse(localStorage.getItem("userData")));
@@ -16,17 +16,18 @@ const Header = () => {
     <>
       <div>
         <nav className="navbar navbar-expand-lg navbar-light bg-light border-bottom">
-          <NavLink className="navbar-brand" to="/dashboard">
-            <img
+          <NavLink className="navbar-brand" to="/dashboard" style={{marginLeft:"10px",marginRight:"0px"}}>
+            {/* <img
               src={cgLogo}
               width="148"
               height="34"
               className="d-inline-block align-top"
               alt=""
-            />
+            /> */}
+            <CGlogo/>
           </NavLink>
           <div className="collapse navbar-collapse" id="navbarNav">
-            <ul className="navbar-nav">
+            <ul className="navbar-nav" style={{marginLeft:"38px"}}>
               {/* <li className="nav-item"> */}
 
               <li className="nav-item ">

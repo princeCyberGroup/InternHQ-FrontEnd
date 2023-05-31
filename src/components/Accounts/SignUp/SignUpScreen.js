@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
 import "../Accounts.css";
 import Cginfinitylogo from "../../../Assets/Cginfinitylogo.png";
@@ -15,9 +16,12 @@ const SignUpScreen = () => {
   const [password, setPassword] = useState("");
   const [isPasswordValid, setIsPasswordValid] = useState(false);
 
+  const [incorrectemail, setIncorrectemail] = useState(false);
+
   const handleEmailChange = (event) => {
     const { value } = event.target;
     setEmail(value);
+    setIncorrectemail(false);
     setIsEmailValid(
       value.match(/^[\w.-]+@cginfinity\.com$/)
         ? true
@@ -37,7 +41,26 @@ const SignUpScreen = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    navigate("/sign-up-verification");
+    axios
+      .post("https://cg-interns-hq.azurewebsites.net/internSignUp", {
+        email,
+        password,
+      })
+      .then((response) => {
+        console.log(response.data);
+        localStorage.setItem("token", response.data.token);
+        localStorage.setItem("email", email);
+        navigate("/sign-up-verification");
+      })
+      .catch((error) => {
+        console.log(error.response?.data);
+        if(error.response?.data.msg == "Error: User Already Exists!") {
+          setIsEmailValid(false);
+          setIncorrectemail(true);
+        }
+      });
+    // console.log(email);
+    // console.log(`password: ${password} (hidden visible only on backend)`);
   };
   const handleSlideChange = (index) => {
     setActiveIndex(index);
@@ -173,7 +196,7 @@ const SignUpScreen = () => {
                   />
                   {!isEmailValid && email && (
                     <span className="sign-up-warning">
-                      Please make use of CG-Infinity email only
+                      {incorrectemail ? "User Already Exists!" : "Please make use of CG-Infinity email only"}
                     </span>
                   )}
                 </div>

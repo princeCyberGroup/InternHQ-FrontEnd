@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
+import axios from "axios";
 import "../Accounts.css";
 import Cginfinitylogo from "../../../Assets/Cginfinitylogo.png";
 import CarouselImage1 from "../../../Assets/CarouselImage1.svg";
@@ -24,9 +25,23 @@ const ForgotPasswordScreen = () => {
     );
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    navigate("/email-verification")
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    axios
+    .post(
+      "https://cg-interns-hq.azurewebsites.net/forgetPassword",
+      { email },
+      
+    )
+    .then((response) => {
+      console.log(response.data);
+      localStorage.setItem('token',response.data.token)
+      navigate("/email-verification")
+    })
+    .catch((error) => {
+      console.log(error.response.data);
+    });
+    
   };
   const handleSlideChange = (index) => {
     setActiveIndex(index);
