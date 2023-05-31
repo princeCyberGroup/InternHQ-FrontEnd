@@ -19,25 +19,25 @@ const DailyUpdateTable = () => {
   const [datemodalSaveFlag, setDatemodalSaveFlag] = useState(false);
   const [showModal, setShowModal] = useState(false);
   const [selectedItem, setSelectedItem] = useState(null);
-  const [editedComment, setEditedComment] = useState("");
-  const [modalSaveFlag, setModalSaveFlag] = useState(true);
-  const [timeLeftmessage, setTimeLeftMessage] = useState(""); //Time left to edit comment in modal
+  // const [editedComment, setEditedComment] = useState("");
+  // const [modalSaveFlag, setModalSaveFlag] = useState(true);
+  // const [timeLeftmessage, setTimeLeftMessage] = useState(""); //Time left to edit comment in modal
 
   // let editableTime = Date.now();
   // let currentTime = Date.now();
 
   const handleReadMore = (item) => {
-    var editableTime = item.timestamp + 48 * 60 * 60 * 1000; //48 hours in milliseconds
-    var currentTime = Date.now();
-    const timeRemaining = Math.floor(
-      // Remaining hours
-      (editableTime - currentTime) / (60 * 60 * 1000)
-    );
-    timeRemaining <= 0
-      ? setTimeLeftMessage("You Cannot Edit This Comment Now")
-      : setTimeLeftMessage(
-          "You Have " + timeRemaining + " Hours Left To Edit This Comment"
-        );
+    // var editableTime = item.timestamp + 48 * 60 * 60 * 1000; //48 hours in milliseconds
+    // var currentTime = Date.now();
+    // const timeRemaining = Math.floor(
+    //   // Remaining hours
+    //   (editableTime - currentTime) / (60 * 60 * 1000)
+    // );
+    // timeRemaining <= 0
+    //   ? setTimeLeftMessage("You Cannot Edit This Comment Now")
+    //   : setTimeLeftMessage(
+    //       "You Have " + timeRemaining + " Hours Left To Edit This Comment"
+    //     );
     setSelectedItem(item);
     setShowModal(true);
   };
@@ -69,26 +69,26 @@ const DailyUpdateTable = () => {
     setCurrentPage(1);
   };
 
-  const handleSave = () => {
-    const updatedTableArr = [...tableArr];
-    updatedTableArr[selectedItem.id - 1].comment = editedComment;
-    setTableData(updatedTableArr);
-  };
+  // const handleSave = () => {
+  //   const updatedTableArr = [...tableArr];
+  //   updatedTableArr[selectedItem.id - 1].comment = editedComment;
+  //   setTableData(updatedTableArr);
+  // };
 
-  const handleEdit = (event) => {
-    var editableTime = selectedItem.timestamp + 48 * 60 * 60 * 1000; //48 hours in milliseconds
-    var currentTime = Date.now();
-    if (currentTime <= editableTime) {
-      console.log(currentTime);
-      console.log(editableTime);
-      setEditedComment(event.target.value);
-      setModalSaveFlag(false);
-    } else {
-      console.log(currentTime);
-      console.log(editableTime);
-      setModalSaveFlag(true);
-    }
-  };
+  // const handleEdit = (event) => {
+  //   var editableTime = selectedItem.timestamp + 48 * 60 * 60 * 1000; //48 hours in milliseconds
+  //   var currentTime = Date.now();
+  //   if (currentTime <= editableTime) {
+  //     console.log(currentTime);
+  //     console.log(editableTime);
+  //     // setEditedComment(event.target.value);
+  //     // setModalSaveFlag(false);
+  //   } else {
+  //     console.log(currentTime);
+  //     console.log(editableTime);
+  //     // setModalSaveFlag(true);
+  //   }
+  // };
 
   const handleFiltersChange = () => {
     let filteredData = tableArr;
@@ -226,7 +226,7 @@ const DailyUpdateTable = () => {
                                 src={ReadMore}
                                 alt="..."
                                 onClick={() => {
-                                  setModalSaveFlag(true);
+                                  // setModalSaveFlag(true);
                                   handleReadMore(item);
                                 }}
                               />
@@ -270,17 +270,18 @@ const DailyUpdateTable = () => {
                         <span className="fw-bold">Comment: </span>
                       </Form.Label>
                       <Form.Control
-                        className="opacity-75"
+                        className="opacity-75 modal-comment"
                         as="textarea"
-                        onChange={handleEdit}
+                        // onChange={handleEdit}
                         style={{ fontSize: "0.813rem" }}
                         defaultValue={selectedItem && selectedItem.comment}
+                        disabled
                         rows={4}
                         cols={60}
                       ></Form.Control>
                     </Form.Group>
                   </Modal.Body>
-                  <Modal.Footer>
+                  {/* <Modal.Footer>
                     <div className="d-flex justify-content-between align-items-center w-100">
                       <span className="text-danger">{timeLeftmessage}</span>
                       <div>
@@ -303,7 +304,7 @@ const DailyUpdateTable = () => {
                         </Button>
                       </div>
                     </div>
-                  </Modal.Footer>
+                  </Modal.Footer> */}
                 </Modal>
               </tbody>
               <tfoot>

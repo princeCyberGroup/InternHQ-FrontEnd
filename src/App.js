@@ -22,7 +22,9 @@ function App() {
         <Routes>
           <Route element={<AuthGuard />}> 
             <Route path="/dashboard"  element={<Dashboard/>}  />
+            <Route path="/daily-Update" element={<DailyUpdateTable />} />
             <Route path="/all-projects" element={<ViewAll/>} />
+            <Route path="/skill-Management" element={< SkillManagement/>} />
              <Route exact path="/TakeTest" component={<TakeTest />} />
             <Route path="/take-your-test/:examId" element={<TakeYourTest/>}/>
             <Route path="/dashboard" element={<Dashboard />} />
@@ -43,8 +45,6 @@ function App() {
           />
           <Route path="/change-success" element={<PasswordChangedScreen />} />
           <Route path="*" element={<h1>Hello WRONg</h1>} />
-            <Route path="/daily-Update" element={<DailyUpdateTable />} />
-            <Route path="/skill-Management" element={< SkillManagement/>} />           
         </Routes>
       </Router>
       {/* <TakeYourTest/> */}

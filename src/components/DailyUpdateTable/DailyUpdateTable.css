@@ -128,6 +128,9 @@ body {
   color: #23262B;
   font-weight: 500;
 }
+.modal-comment:disabled {
+  background-color: #ffffff;
+}
 /* 
 .table>tbody.no-border>tr>td,
 .table>thead.no-border>tr>th {
