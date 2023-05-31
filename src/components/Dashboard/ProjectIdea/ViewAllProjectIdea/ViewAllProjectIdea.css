@@ -2,12 +2,11 @@
     background-color: #FBFBFB;
     height: 100vh;
 }
-.header-text {
+.main-header-text {
     font-style: normal;
     font-weight: 400;
     font-size: 0.8rem;
     line-height: 1rem;
-    padding-left: 3.5rem;
     padding-top: 1.25rem;
     color: #343435;
 }
@@ -18,7 +17,8 @@
     font-size: 1.25rem;
     line-height: 1.438rem;
     color: #343435;
-    width: 4.063rem;
+    /* width: 4.063rem; */
+    white-space: nowrap;
     padding-left: 3.5rem;
     padding-bottom: 2.031rem;
     padding-top: 1.031rem;

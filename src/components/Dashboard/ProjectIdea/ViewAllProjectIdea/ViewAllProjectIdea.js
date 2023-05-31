@@ -3,6 +3,7 @@ import { ProjectDescription } from "./ProjectDescription";
 import { Link, useLocation } from "react-router-dom";
 import React, { useState } from "react";
 import "./ViewAllProjectIdea.css";
+import Header from "../../../Header";
 
 export const ViewProjectIdeas = () => {
 
@@ -10,17 +11,19 @@ export const ViewProjectIdeas = () => {
 
     const location = useLocation();
     const details = location.state;
-    // console.log("Details of all projects idea:", details)
+    console.log("Details of all projects idea:", details)
     const handelIndex = (index) => {
         setProjectIndex(index);
     }
 
     return (
         // <div>working</div>
+        <>
+        <Header/>
         <div className="container page-color">
-            <nav aria-label="breadcrumb">
-                <ol class="breadcrumb">
-                    <li class="breadcrumb-item"><Link className="view-all fw-bold" to={{ pathname: '/dashboard' }} >Dashboard</Link></li>
+            <nav aria-label="breadcrumb ">
+                <ol class="breadcrumb pt-3">
+                    <li class="breadcrumb-item"><Link className="main-header-text fw-bold" to={{ pathname: '/dashboard' }} >Dashboard</Link></li>
                     <li class="breadcrumb-item " aria-current="page">My Idea</li>
                 </ol>
             </nav>
@@ -45,5 +48,6 @@ export const ViewProjectIdeas = () => {
                 </div>
             </div>
         </div>
+        </>
     )
 }

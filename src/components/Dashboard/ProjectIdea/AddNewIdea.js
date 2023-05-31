@@ -1,24 +1,19 @@
-import "./AddNewIdea.js";
+import "./AddNewIdea.css";
 import { useNavigate } from "react-router-dom";
 import React, { useState } from "react";
-import { ProjectIdeaApi } from "./ProjectIdeaApi";
 import axios from 'axios';
-export const AddNewIdea = () => {
-    const [projectDescription, setProjectDescription] = useState([])
-    // const data="hellow";
 
+export const AddNewIdea = (props) => {
+    const [projectDescription, setProjectDescription] = useState([])
     const navigate = useNavigate();
     const handleCLick = async (e) => {
         // state = false
         e.preventDefault();
         await axios.get("https://cg-interns-hq.azurewebsites.net/getProjectIdea?userId=1")
             .then((response) => {
-
-                console.log("llll:",response.data);
-
-                console.log("KKK:",response.data);
-                setProjectDescription(response.data)
-                navigate('/project-idea-projects', { state: projectDescription });
+                console.log("project ideas:",response.data.response);
+               setProjectDescription(response.data.response)
+                navigate('/project-idea-projects', { state: response.data.response});
 
             }).catch((error) => {
 
@@ -152,7 +147,7 @@ export const AddNewIdea = () => {
                                     <label for="technology-used" className="col-form-label title-text">
                                         Technology Used
                                     </label>
-                                    <select classNameName='form-select'>
+                                    <select className='form-select'>
                                         <option hidden selected>Select Technology</option>
                                         <option>TypeScript</option>
                                         <option>PHP</option>

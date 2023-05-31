@@ -5,24 +5,22 @@ import { useNavigate } from "react-router-dom";
 export const AddProject = (props) => {
     // const [projectData, setProjectData] = useState([])
     const navigate = useNavigate();
-    const handleClick = async(e) => {
-        //state = true
+    const handleClick = async (e) => {
+        console.log("Hello");
         e.preventDefault();
         await axios.get("https://cg-interns-hq.azurewebsites.net/getProject?userId=1")
-        .then((response) => {
-            console.log("KKK:",response.data.response);
-            // setProjectData(response.data.response[0].name)
-            // console.log("lll:", projectData);
+            .then((response) => {
+                console.log("KKK:", response.data.response);
 
-            navigate('/all-projects', { state: response.data.response });
+                navigate('/all-projects', { state: response.data.response });
 
-        }).catch((error) => {
+            }).catch((error) => {
 
-            console.log(error.response?.data);
+                console.log(error.response?.data);
 
-            console.log(error.response?.data.msg);
+                console.log(error.response?.data.msg);
 
-        });
+            });
         // const data = { projectData }
     }
 
@@ -43,8 +41,10 @@ export const AddProject = (props) => {
                             <p class="text mb-0 ms-1">Project</p>
                         </div>
                         <button
-                            type="button" onClick={(e) => { handleClick(e) }} class="view-all">
-                            <p class="me-2">View All</p>
+                            type="button" onClick={(e) => {
+                                handleClick(e)
+                            }} class="view-all">
+                                View All
                         </button>
                     </div>
                 </div>

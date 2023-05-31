@@ -4,9 +4,9 @@ export const ProjectDetail = ({data, indexNumber}) => {
     return (
         <div className="">
             {console.log("This is data" , data[indexNumber])}
-            <h5 className="project-detail-name">{data[indexNumber].name}</h5>
-            <p>{data[indexNumber].created_at}</p>
-            <p className="project-detail-text">{data[indexNumber].description}</p>
+            <h5 className="project-detail-name">{data[indexNumber].projectNames}</h5>
+            <p>{data[indexNumber].createdAt}</p>
+            <p className="project-detail-text">{data[indexNumber].projectText}</p>
             <p className="project-detail-technology-used mb-0">Technology Used:</p>
 
             {console.log(data[indexNumber].tech_1)}
@@ -18,8 +18,8 @@ export const ProjectDetail = ({data, indexNumber}) => {
             </div> */}
 
             <p className="project-detail-link">Project Link:</p>
-            <p className="project-link-name">{data[indexNumber].project_link}</p>
-            <p className="project-detail-hosted-link">Hosted Link:</p> <p className="hosted-link-name">{data[indexNumber].hosted_link}</p>
+            <p className="project-link-name">{data[indexNumber].projectLink}</p>
+            <p className="project-detail-hosted-link">Hosted Link:</p> <p className="hosted-link-name">{data[indexNumber].hostedLink}</p>
         
         </div>
     )

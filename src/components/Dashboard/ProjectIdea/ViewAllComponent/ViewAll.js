@@ -79,12 +79,11 @@ export const ProjectIdeas = (props) => {
                                 <h5
                                     className="project-names"
                                 >
-                                    {user.name}
+                                    {user.projectNames}
 
                                 </h5>
                                 <span
                                     className="click-arrow"
-                                // style={{ border:"1px solid black" }}
                                 >
                                     &gt;
                                 </span>
@@ -93,7 +92,7 @@ export const ProjectIdeas = (props) => {
 
                             <div>
                                 <p className="project-text flex-grow-1">
-                                    {truncate(user.description, 100)}</p>
+                                    {user.projectText.length > 100 ? truncate(user.projectText,100) : user.projectText}</p>
                             </div>
                         </div>
                     )
