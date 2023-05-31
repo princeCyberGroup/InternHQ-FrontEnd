@@ -1,6 +1,15 @@
 import React, { useState } from "react";
-import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Legend } from "recharts";
+import {
+  BarChart,
+  Bar,
+  XAxis,
+  YAxis,
+  CartesianGrid,
+  Legend,
+  Tooltip,
+} from "recharts";
 import "./graph.css";
+import { Link } from "react-router-dom";
 
 const data = [
   {
@@ -20,7 +29,7 @@ const data = [
     "Self Learning": 1.6,
     "CG Learning Video": 1.5,
     Other: 2.3,
-    // amt: 2210,
+    amt: 2210,
   },
   {
     name: "Wed",
@@ -131,22 +140,22 @@ export default function DashboardGraph() {
       return (
         <>
           <li>
-            <a
+            <Link
               className="dropdown-item pe-0"
-              href="#"
+              // href="#"
               style={{ paddingLeft: "8px", fontSize: "14px" }}
             >
               This Week
-            </a>
+            </Link>
           </li>
           <li>
-            <a
+            <Link
               className="dropdown-item pe-0"
               href="#"
               style={{ paddingLeft: "8px", fontSize: "14px" }}
             >
               Previous Week
-            </a>
+            </Link>
           </li>
         </>
       );
@@ -167,13 +176,13 @@ export default function DashboardGraph() {
       ];
       return months.map((month) => (
         <li key={month}>
-          <a
+          <Link
             className="dropdown-item pe-0"
             href="#"
             style={{ paddingLeft: "8px", fontSize: "14px" }}
           >
             {month}
-          </a>
+          </Link>
         </li>
       ));
     }
@@ -181,41 +190,45 @@ export default function DashboardGraph() {
 
   return (
     <>
-      <div class="card text-center w-100 report">
+      <div class="card text-center report">
         <div
           className="card-header bg-white pt-0 pb-0"
           style={{ paddingRight: "22px" }}
         >
           <div class="d-flex justify-content-between">
             <div class="btn-group" role="group">
-              <button
-                type="button"
-                class={`bg-white p-0 border-top-0 border-end-0 border-start-0 card-heading ${
-                  active ? "card-heading-active" : "border-bottom-0"
-                }`}
-                onClick={() => {
-                  setGraphData("daily");
-                  setActive(true);
-                }}
-              >
-                Daily Hours
-              </button>
-              <button
-                type="button"
-                class={`bg-white p-0 border-top-0 border-end-0 border-start-0 card-heading ${
-                  active ? "border-bottom-0" : "card-heading-active"
-                }`}
-                style={{
-                  width: "125px",
-                  marginLeft: "8px",
-                }}
-                onClick={() => {
-                  setGraphData("monthly");
-                  setActive(false);
-                }}
-              >
-                Monthly Hours
-              </button>
+              <div className="daily"  class={`center ${
+                    active ? "card-heading-active" : "border-bottom-0"
+                  }`}
+                  onClick={() => {
+                    setGraphData("daily");
+                    setActive(true);
+                  }}>
+                {/* <button
+                  type="button"
+                 
+                > */}
+                 <p className="txt"> Daily Hours </p>
+                {/* </button> */}
+              </div>
+              <div className="monthly" class={`center ${
+                    active ? "border-bottom-0" : "card-heading-active"
+                  }`}  style={{
+                    // width: "125px",
+                    marginLeft: "8px",
+                  }}
+                  onClick={() => {
+                    setGraphData("monthly");
+                    setActive(false);
+                  }}>
+                {/* <button
+                  type="button"
+                  
+                 
+                > */}
+                  <p className="txt"> Monthly Hours </p>
+                {/* </button> */}
+              </div>
             </div>
             <div
               class="dropdown"
@@ -260,65 +273,70 @@ export default function DashboardGraph() {
             </div>
           </div>
         </div>
-        <BarChart
-          width={700}
-          height={376}
-          style={{ fontSize: "14px" }}
-          data={graphType === "daily" ? data : dataMonthly}
-          margin={{
-            top: 40,
-            right: 0,
-            left: 0,
-            bottom: 30,
-          }}
-        >
-          <CartesianGrid
-            vertical={false}
-            strokeDasharray="2"
-            stroke="#B2B2B3"
-          />
-          <XAxis
-            tick={{ stroke: "#000", strokeWidth: 0.6 }}
-            padding={{ left: 8, right: 20 }}
-            tickMargin={5}
-            tickLine={false}
-            dataKey="name"
-          />
-          <YAxis
-            tick={{ stroke: "#000", strokeWidth: 0.6 }}
-            padding={{ top: 30 }}
-            tickMargin={5}
-            tickLine={false}
-            dataKey="val"
-          />
-          <Legend
-            layout="vertical"
-            iconSize={17}
-            iconType="square"
-            verticalAlign="middle"
-            align="right"
-          />
-          <Bar dataKey="Project" stackId="a" fill="#2DC26B" barSize={20} />
-          <Bar
-            dataKey="Task by Mentor"
-            stackId="a"
-            fill="#28519E"
-            barSize={20}
-          />
-          <Bar
-            dataKey="Self Learning"
-            stackId="a"
-            fill="#FFB81C"
-            barSize={20}
-          />
-          <Bar
-            dataKey="CG Learning Video"
-            stackId="a"
-            fill="#FF8311"
-            barSize={20}
-          />
-          <Bar dataKey="Other" stackId="a" fill="#B2B2B3" barSize={20} />
-        </BarChart>
+        <div className="chart">
+          <BarChart
+            width={700}
+            height={350}
+            style={{ fontSize: "16px" }}
+            data={graphType === "daily" ? data : dataMonthly}
+            margin={{
+              top: 10,
+              right: 0,
+              left: 0,
+              bottom: 40,
+            }}
+          >
+            <Tooltip
+              wrapperStyle={{ backgroundColor: "#ccc", fontSize: "12px" }}
+            />
+            <CartesianGrid
+              vertical={false}
+              strokeDasharray="2"
+              stroke="#B2B2B3"
+            />
+            <XAxis
+              tick={{ stroke: "#000", strokeWidth: 0.6 }}
+              padding={{ left: 8, right: 20 }}
+              tickMargin={5}
+              tickLine={false}
+              dataKey="name"
+            />
+            <YAxis
+              tick={{ stroke: "#000", strokeWidth: 0.6 }}
+              padding={{ top: 30 }}
+              tickMargin={5}
+              tickLine={false}
+              dataKey="val"
+            />
+            <Legend
+              layout="vertical"
+              iconSize={17}
+              iconType="square"
+              verticalAlign="center"
+              align="right"
+            />
+            <Bar dataKey="Project" stackId="a" fill="#2DC26B" barSize={20} />
+            <Bar
+              dataKey="Task by Mentor"
+              stackId="a"
+              fill="#28519E"
+              barSize={20}
+            />
+            <Bar
+              dataKey="Self Learning"
+              stackId="a"
+              fill="#FFB81C"
+              barSize={20}
+            />
+            <Bar
+              dataKey="CG Learning Video"
+              stackId="a"
+              fill="#FF8311"
+              barSize={20}
+            />
+            <Bar dataKey="Other" stackId="a" fill="#B2B2B3" barSize={20} />
+          </BarChart>
+        </div>
       </div>
     </>
   );

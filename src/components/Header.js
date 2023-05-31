@@ -17,13 +17,6 @@ const Header = () => {
       <div>
         <nav className="navbar navbar-expand-lg navbar-light bg-light border-bottom">
           <NavLink className="navbar-brand" to="/dashboard" style={{marginLeft:"10px",marginRight:"0px"}}>
-            {/* <img
-              src={cgLogo}
-              width="148"
-              height="34"
-              className="d-inline-block align-top"
-              alt=""
-            /> */}
             <CGlogo/>
           </NavLink>
           <div className="collapse navbar-collapse" id="navbarNav">
