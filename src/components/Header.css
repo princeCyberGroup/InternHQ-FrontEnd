@@ -6,3 +6,34 @@
     background-color:#002c3f ;
     color: #fff;
 }
+.profile-Image{
+    width: 2.5rem;
+    height: 2.5rem;
+    border-radius: 50%;
+}
+.margin{
+
+    margin-right: 3rem;
+}
+.dropdown-menu[aria-labelledby="profileDropDown"]{
+    position: absolute;
+    left:-13.7rem;
+    top: 3rem;
+    width:17.5rem;
+}
+span.username{
+    font-size: 16px;
+    font-weight: 700;
+}
+span.email{
+    font-size: 14px;
+    font-weight: 500;
+    word-break: "break-word" !important;
+    white-space:"normal" !important;
+}
+span.logout{
+    font-size: 14px;
+    font-weight: 600;
+    margin-top: 1.5rem;
+    color:#f82c44;
+}
