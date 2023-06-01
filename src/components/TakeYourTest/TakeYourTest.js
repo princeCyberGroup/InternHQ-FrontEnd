@@ -11,12 +11,12 @@ const TakeYourTest = () => {
     const { examId } = useParams();
     const [testsData, setTestsData] = useState([]);
     const [allData, setAllData] = useState([]);
-
     const navigate = useNavigate();
-
     const [Ques, setTestsQues] = useState([]);
     const [allQuesData, setAllQuesData] = useState([]);
-    const [testDetails, setTestDetails] = useState({})
+    const [testDetails, setTestDetails] = useState({});
+    const [activeRadioButtons, setActiveRadioButtons] = useState();
+    const [userAnswers, setUserAnswers] = useState([]);
     const fetchTestsForExams = async (examIdToCheck) => {
         try {
             // console.log("Working")
@@ -35,17 +35,44 @@ const TakeYourTest = () => {
             console.error('Error fetching exam details:', e);
         }
     };
+    const [time, setTime] = useState(0);
     useEffect(() => {
         fetchTests();
         fetchTestsForExams();
+        handleAnswerSelect();
+        const examDurationInSeconds = parseInt(testDetails.examDuration) * 60;
+        setTime(examDurationInSeconds);
+        // console.log(testDetails.examDuration)
+        const timer = setInterval(() => {
+            setTime((prevTime) => {
+                if (prevTime > 0) {
+                    return prevTime - 1;
+                } else {
+                    clearInterval(timer);
+                    return 0;
+                }
+            });
+        }, 1000);
 
-    }, [])
+        return () => {
+            clearInterval(timer); 
+        };
+    }, [testDetails.examDuration]);
+
+
+    const formatTime = (time) => {
+        const minutes = Math.floor(time / 60);
+        const seconds = time % 60;
+        return `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+    };
+
+
     const fetchTests = async () => {
         try {
             const response = await fetch("https://cg-interns-hq.azurewebsites.net/getAllQuestions?examId=1");
-            console.log(response)
+            // console.log(response)
             const Quesdata = await response.json();
-            console.log(Quesdata);
+            // console.log(Quesdata);
             setAllQuesData(Quesdata);
             setTestsQues(Quesdata);
         }
@@ -53,21 +80,38 @@ const TakeYourTest = () => {
             console.log(e);
         }
     }
-    const [userAnswers, setUserAnswers] = useState([]);
+
+
 
     const handleAnswerSelect = (questionId, selectedAnswer) => {
         setUserAnswers((prevAnswers) => ({
             ...prevAnswers,
             [questionId]: selectedAnswer,
         }));
+        // console.log(userAnswers)
+        setActiveRadioButtons(getActiveRadioCount());
     };
     //////////////////////////////////////////////////////
-
-    const formatTime = (time) => {
-        const minutes = Math.floor(time / 60).toString().padStart(2, '0');
-        const seconds = (time % 60).toString().padStart(2, '0');
-        return `${minutes}:${seconds}`;
+    const getActiveRadioCount = () => {
+        let count = 0;
+        Object.values(userAnswers).forEach((answer) => {
+            if (answer) {
+                count++;
+            }
+        });
+        return count;
     };
+
+    const radioButtons = document.querySelectorAll('input[type="radio"]');
+    const activeRadioCount = getActiveRadioCount();
+    radioButtons.forEach((radioButton) => {
+        radioButton.addEventListener('change', () => {
+        }
+        );
+        
+    });
+    ///////////////////////////////////////////////////
+
     /////////////////////////////////////////////////////
     const calculateScore = () => {
         let score = 0;
@@ -194,41 +238,45 @@ const TakeYourTest = () => {
     return (
         <>
             <Header />
-            <div class="container-fluid ">
-                <div className="row">
-                    <div className="col-12 mt-4  ">
-                        <div className="textfornow">
-                            Dashboard {">"}
-                            Skill Management {">"}
-                            Name of the Test{" "}
+            <div className="resp">
+                <div class="container-fluid ">
+                    <div className="row">
+                        <div className="col-12 mt-4  ">
+                            <div className="textfornow">
+                                Dashboard {">"}
+                                Skill Management {">"}
+                                Name of the Test{" "}
+                            </div>
                         </div>
                     </div>
-                </div>
-                <div className="row testhHeading-and-Timer-Div">
-                    <div className="col-3" >
-                        <div className="main-heading">
-                            <p> Take The Test </p>
+                    <div className="row testhHeading-and-Timer-Div">
+                        <div className="col-3" >
+                            <div className="main-heading">
+                                <p> Take The Test </p>
+                            </div>
+                            <div className="quiz-description mx-5 ">
+                                {testDetails.examName}{" "}{'\u2B24'}{" "}{testDetails.examDuration}{" "}mins{" "}{'\u2B24'}{" "}{testDetails.numberOfQuestion}{" "}Questions
+                            </div>
                         </div>
-                        <div className="quiz-description mx-5 ">
-                            {testDetails.examName}{" "}{'\u2B24'}{" "}{testDetails.examDuration}{" "}mins{" "}{'\u2B24'}{" "}{testDetails.numberOfQuestion}{" "}Questions
+                        <div className="col-3 Timer-and-attemtedQues">
+                            <div className="col-3 timer-Box" >
+                                <p>{formatTime(time)}</p>
+                            </div>
+                            <div className="col-3 active-Radio-Buttons attempted-Ques">
+                           
+                                {/* Attempted Questions: {activeRadioButtons}/{testDetails.numberOfQuestion} */}
+                                Attempted Questions: {activeRadioCount}/{testDetails.numberOfQuestion}
+                            </div>
                         </div>
                     </div>
-                    <div className="col-3 Timer-and-attemtedQues">
-                        <div className="col-3 timer-Box" >
-                            00:{testDetails.examDuration}:00
-
+                    <div className="ques.card ">
+                        <div className="card insidecard" style={{ width: "1220px" }}>
+                            <div> {renderQuestions()} </div>
                         </div>
-                        <div className="col-3 attempted-Ques">
-                            Attempted Questions: 02/{testDetails.numberOfQuestion}
-                        </div>
-                    </div>
-                </div>
-                <div className="ques.card ">
-                    <div className="card insidecard" style={{ width: "1220px" }}>
-                        <div> {renderQuestions()} </div>
                     </div>
                 </div>
             </div>
+
         </>
     );
 };

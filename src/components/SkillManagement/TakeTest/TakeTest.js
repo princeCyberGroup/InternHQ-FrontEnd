@@ -38,11 +38,10 @@ const TakeTest = (props) => {
         navigate("/take-your-test/examId");
     }
     return (
-        <> <TestContext.Provider>{props.children}</TestContext.Provider>
-            <div className="TTheading">
-                <p>Take The Test</p>
-            </div>
-            <div className="card maincard" style={{ width: "950px" }}>
+        <> <div className="TTheading">
+        <p>Take The Test</p>
+    </div>
+            <div className="card maincard">
                 <div className="card-header-nav">
                     <div
                         className={`nav-btn ${activeButton === "all" ? "activated" : ""}`}
