@@ -20,16 +20,6 @@ function App() {
     <div className="App">
       <Router>
         <Routes>
-          <Route element={<AuthGuard />}> 
-            <Route path="/dashboard"  element={<Dashboard/>}  />
-            <Route path="/daily-Update" element={<DailyUpdateTable />} />
-            <Route path="/all-projects" element={<ViewAll/>} />
-            <Route path="/skill-Management" element={< SkillManagement/>} />
-             <Route exact path="/TakeTest" component={<TakeTest />} />
-            <Route path="/take-your-test/:examId" element={<TakeYourTest/>}/>
-            <Route path="/dashboard" element={<Dashboard />} />
-            <Route path="/all-projects" element={<ViewAll />} />
-          </Route>
           <Route path="/" element={<LoginScreen />} />
           <Route path="/forgot-password" element={<ForgotPasswordScreen />} />
           <Route path="/sign-up" element={<SignUpScreen />} />
@@ -44,6 +34,18 @@ function App() {
             element={<CreateNewPasswordScreen />}
           />
           <Route path="/change-success" element={<PasswordChangedScreen />} />
+          {/* Protech Routes  */}
+          <Route element={<AuthGuard />}>
+            <Route path="/dashboard" element={<Dashboard />} />
+            <Route path="/daily-update" element={<DailyUpdateTable />} />
+            <Route path="/all-projects" element={<ViewAll />} />
+            <Route path="/skill-management" element={<SkillManagement />} />
+            <Route path="/take-test" component={<TakeTest />} />
+            <Route path="/take-your-test/:examId" element={<TakeYourTest />} />
+            <Route path="/dashboard" element={<Dashboard />} />
+            <Route path="/all-projects" element={<ViewAll />} />
+          </Route>
+
           <Route path="*" element={<h1>Hello WRONg</h1>} />
         </Routes>
       </Router>
