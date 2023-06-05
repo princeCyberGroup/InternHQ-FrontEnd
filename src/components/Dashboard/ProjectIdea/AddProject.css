@@ -45,6 +45,7 @@
     font-weight: 400;
     font-size: 0.8rem;
     color: #28519E;
+    text-decoration: underline;
 }
 
 
@@ -74,9 +75,11 @@
     padding-top: 0.3rem;
     padding-bottom: 5px;
     gap: 8px;
-    /* padding: 0.313rem 0.75rem; */
-    /* text-align: center; */
     justify-content: center;
+    font-weight: 400;
+    font-size: 0.75rem;
+    color: #343435;
+    font-style: normal;
 }
 
 .technology-badge-2 {
@@ -87,8 +90,10 @@
     align-items: center;
     padding: 0px 12px;
     gap: 8px;
-    /* padding: 0.313rem 0.75rem; */
-    /* text-align: center; */
+    font-weight: 400;
+    font-size: 0.75rem;
+    color: #343435;
+    font-style: normal;
     justify-content: center;
 }
 
@@ -98,6 +103,10 @@
     width: 5.25rem;
     align-items: center;
     display: flex;
+    font-weight: 400;
+    font-size: 0.75rem;
+    color: #343435;
+    font-style: normal;
     justify-content: center;
 }
 

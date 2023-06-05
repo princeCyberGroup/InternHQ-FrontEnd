@@ -10,12 +10,7 @@ export const AddNewIdea = ({ projectDescript }) => {
     const [memberNames, setMembers] = useState(null);
     const [userId, setUserId] = useState(0);
     const navigate = useNavigate();
-    // console.log("project", projectDescript);
     const [first, ...rest] = projectDescript;
-    // console.log(projectDescript[0].projectNames, "This is 0th member");
-
-
-    //code for dropdown
     const [selectedOptions, setSelectedOptions] = useState([]);
 
     const handleOptionClick = (event) => {

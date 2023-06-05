@@ -19,8 +19,6 @@ export const AddNewProjectComponent = () => {
         try {
             const response = await axios.get("https://cg-interns-hq.azurewebsites.net/getProjectIdea?userId=1");
             setProjectData(response.data.response);
-            // console.log(response.data.response)
-            // console.log('state;', projectData);
         } catch (error) {
             console.log(error.response?.data);
             console.log(error.response?.data.msg);
@@ -30,8 +28,6 @@ export const AddNewProjectComponent = () => {
         try {
             const response = await axios.get("https://cg-interns-hq.azurewebsites.net/getProject?userId=1");
             setProjectApiData(response.data.response);
-            // console.log(response.data.response)
-            // console.log('state2:', projectApiData);
         } catch (error) {
             console.log(error.response?.data);
             console.log(error.response?.data.msg);

@@ -10,12 +10,14 @@ export const ProjectDetail = ({data, indexNumber}) => {
             <p className="project-detail-technology-used mb-0">Technology Used:</p>
 
            
-{/* 
+
             <div className="project-detail-technology-badges">
                 {data[indexNumber].technology.map((tech) => {
+                    if (tech != null){
                     return <p className="technology-badge me-1"> {tech} </p>
+                    }
                 })}
-            </div> */}
+            </div>
 
             <p className="project-detail-link">Project Link:</p>
             <p className="project-link-name">{data[indexNumber].projectLink}</p>

@@ -2,15 +2,14 @@ import axios from "axios";
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-export const AddProject = ({projectApiDataa}) => {
+export const AddProject = ({ projectApiDataa }) => {
     const navigate = useNavigate();
     console.log("Project Name:", projectApiDataa);
     const [first, ...rest] = projectApiDataa;
-    console.log(projectApiDataa[0].projectNames, "This is 0th member");
 
     const handleClick = async (e) => {
         e.preventDefault();
-        const data= {projectApiDataa}
+        const data = { projectApiDataa }
         navigate('/all-projects', { state: projectApiDataa });
     }
 
@@ -34,24 +33,29 @@ export const AddProject = ({projectApiDataa}) => {
                             type="button" onClick={(e) => {
                                 handleClick(e)
                             }} class="view-all">
-                                View All
+                            View All
                         </button>
                     </div>
                 </div>
 
                 <div className="project-recipe-row mb-5">
                     <div className="recipe-text project-recipe-name">
-                        <h5 className="fw-bold">Recipe Recommendation Engine</h5>
+                        <h5 className="fw-bold">{first.projectNames}</h5>
                         <div className="project-link-1">
-                            <a href="#">http.reciperecommendationengine.github</a>{" "}
+                            <a>{first.projectLink}</a>
                             {/* Use the Link component from React Router */}
                         </div>
 
-                        <div className="technology-used ">Technology Used:</div>
+                        <div className="technology-used fw-bold">Technology Used:</div>
                         <div className="technology-badges">
-                            <div className="technology-badge-1">HTML</div>
-                            <div className="technology-badge-2">CSS</div>
-                            <div className="technology-badge-3">Java Script</div>
+                            {first.technology.map((currElem, index) => {
+                                if (currElem != null) {
+                                    return(
+                                    <div className="technology-badge-1">{currElem}</div>
+                                    )
+                                }
+                            })}
+
                         </div>
                     </div>
                 </div>
