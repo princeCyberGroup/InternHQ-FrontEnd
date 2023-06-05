@@ -99,7 +99,11 @@ const LoginScreen = () => {
           setIsPasswordValid(false);
         }
         setIsLoading(false);
-        navigate(`/error?statusCode=${error.response?.data.statusCode}`);
+        navigate({
+          pathname:"/error",
+          search:`statusCode=${error.response?.data.statusCode}`
+        })
+        // navigate(`/error?statusCode=${error.response?.data.statusCode}`);
       });
     // console.log(email);
     // console.log(`password: ${password} (hidden visible only on backend)`);

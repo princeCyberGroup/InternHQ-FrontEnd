@@ -6,7 +6,7 @@ import { useLocation, useParams } from "react-router-dom";
 const ErrorPage = () => {
   // const params = useParams();
   const location = useLocation();
-  // console.log(params)
+  console.log(location)
   // let errorCode = params["*"];
   // if(errorCode != '*')
   let errorCode = location.search.slice(12);
