@@ -23,6 +23,7 @@ import DailyUpdateTable from "./components/DailyUpdateTable/DailyUpdateTable";
 import SkillManagement from "./components/SkillManagement/SkillManagement";
 import ErrorPage from "./components/ErrorPage/ErrorPage";
 // import CustomRoute from "./components/CustomRoute";
+import TakeTest from "./components/SkillManagement/TakeTest/TakeTest";
 function App() {
   const location = useLocation();
   const navigate = useNavigate();
@@ -78,6 +79,35 @@ function App() {
 
   return (
     <div className="App">
+      <Router>
+        <Routes>
+          <Route element={<AuthGuard />}> 
+            <Route path="/dashboard"  element={<Dashboard/>}  />
+            <Route path="/daily-Update" element={<DailyUpdateTable />} />
+            <Route path="/all-projects" element={<ViewAll/>} />
+            <Route path="/skill-Management" element={< SkillManagement/>} />
+             <Route exact path="/TakeTest" component={<TakeTest />} />
+            <Route path="/take-your-test/:examId" element={<TakeYourTest/>}/>
+            <Route path="/dashboard" element={<Dashboard />} />
+            <Route path="/all-projects" element={<ViewAll />} />
+          </Route>
+          <Route path="/" element={<LoginScreen />} />
+          <Route path="/forgot-password" element={<ForgotPasswordScreen />} />
+          <Route path="/sign-up" element={<SignUpScreen />} />
+          <Route path="/sign-up-verification" element={<SignUpOtpScreen />} />
+          <Route path="/success" element={<RegistrationSuccessfulScreen />} />
+          <Route
+            path="/email-verification"
+            element={<ForgotPasswordOtpScreen />}
+          />
+          <Route
+            path="/change-password"
+            element={<CreateNewPasswordScreen />}
+          />
+          <Route path="/change-success" element={<PasswordChangedScreen />} />
+          <Route path="*" element={<h1>Hello WRONg</h1>} />
+        </Routes>
+      </Router>
       {/* <Router> */}
       <Routes>
         {/* <Route path={encodeUrl("/dashboard")} element={<Dashboard />} /> */}
