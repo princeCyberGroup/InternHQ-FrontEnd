@@ -208,7 +208,7 @@ export default function DashboardGraph() {
                   type="button"
                  
                 > */}
-                 <p className="txt"> Daily Hours </p>
+                 <p className="txt fw-bold me-3"> Daily Hours </p>
                 {/* </button> */}
               </div>
               <div className="monthly" class={`center ${
@@ -226,7 +226,7 @@ export default function DashboardGraph() {
                   
                  
                 > */}
-                  <p className="txt"> Monthly Hours </p>
+                  <p className="txt fw-bold"> Monthly Hours </p>
                 {/* </button> */}
               </div>
             </div>
