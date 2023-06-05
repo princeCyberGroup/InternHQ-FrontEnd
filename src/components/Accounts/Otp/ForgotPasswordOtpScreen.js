@@ -102,7 +102,7 @@ const ForgotPasswordOtpScreen = () => {
               </div>
               <div
                 id="carouselExampleIndicators"
-                className="carousel slide mt-4"
+                className="carousel slide "
                 data-bs-ride="carousel"
                 // data-bs-interval="4000"
                 // data-interval="false" //Remove it
