@@ -16,7 +16,7 @@ const LoginScreen = () => {
   const [isEmailValid, setIsEmailValid] = useState(false);
   const [password, setPassword] = useState("");
   const [isPasswordValid, setIsPasswordValid] = useState(true);
-  const [showPassword, setShowPassword] = useState(true);
+  const [showPassword, setShowPassword] = useState(false);
 
   const [incorrectemail, setIncorrectemail] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
@@ -37,7 +37,7 @@ const LoginScreen = () => {
   const handleTogglePasswordVisibility = () => {
     setShowPassword(!showPassword);
   };
-
+  let firstNaming;
   const handleSubmit = async (event) => {
     event.preventDefault();
     setIsLoading(true);
@@ -58,7 +58,9 @@ const LoginScreen = () => {
           firstName: response.data.firstName,
           lastName: response.data.lastName,
         };
-        console.log(res);
+         firstNaming = (response.data.firstName);
+         console.log(firstNaming, "HEre lies this")
+        console.log(res, "This is res that have been set");
         localStorage.setItem("userData", JSON.stringify(res));
         // const res = {
         //   token:response.data.token,
@@ -81,6 +83,9 @@ const LoginScreen = () => {
         localStorage.setItem("token");
       })
       .catch((error) => {
+        // if(error.response?.data.statusCode == 400) {
+        //   navigate(`/error?statusCode=${error.response?.data.statusCode}`)
+        // }
         console.log(error.response?.data);
         // console.log(error.response.data);
         // console.log(error.response?.data.msg);
@@ -94,6 +99,7 @@ const LoginScreen = () => {
           setIsPasswordValid(false);
         }
         setIsLoading(false);
+        navigate(`/error?statusCode=${error.response?.data.statusCode}`);
       });
     // console.log(email);
     // console.log(`password: ${password} (hidden visible only on backend)`);
@@ -115,9 +121,11 @@ const LoginScreen = () => {
     //   clearInterval(interval);
     // };
   }, []);
-
   return (
     <div className="container-fluid login-screen-body ">
+      {/* {console.log(btoa("sign-up"))}
+      {console.log(encodeURIComponent("c2lnbi11cA=="))}
+      {console.log(atob("c2lnbi11cA=="))} */}
       <div className="row pos">
         <div className="d-flex justify-content-center  align-items-center flex-row">
           <div

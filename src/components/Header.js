@@ -28,13 +28,13 @@ const Header = () => {
 
 
                 <li className="nav-item">
-                  <NavLink to="/daily-Update" className="btn activeBtn">
+                  <NavLink to="/daily-update" className="btn activeBtn">
                     Daily Update<span></span>
                  </NavLink>
                 </li>
               
                 <li className="nav-item">
-                  <NavLink to="/skill-Management" className="btn activeBtn ">
+                  <NavLink to="/skill-management" className="btn activeBtn ">
                     Skill Management<span></span>
                  </NavLink>
                 </li>
