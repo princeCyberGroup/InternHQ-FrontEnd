@@ -1,21 +1,46 @@
 import { AddNewIdea } from './AddNewIdea';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { AddProject } from './AddProject';
 import './ProjectComponent.css';
 import './AddProject.css';
 import './AddNewIdea.css';
+import axios from "axios";
+import { ProjectIdeaApi } from "./ProjectIdeaApi";
 
 export const AddNewProjectComponent = () => {
 
 
     const [pActive, setPActive] = useState(true);
+    const [projectData, setProjectData] = useState(ProjectIdeaApi)
+    const [projectApiData, setProjectApiData] = useState()
+    // const userId=1;
 
-    const setProjectScreenType = (input) => {
-        console.log("Working")
+    const MyIdeaComponent = async () => {
+        try {
+            const response = await axios.get("https://cg-interns-hq.azurewebsites.net/getProjectIdea?userId=1");
+            setProjectData(response.data.response);
+            // console.log(response.data.response)
+            // console.log('state;', projectData);
+        } catch (error) {
+            console.log(error.response?.data);
+            console.log(error.response?.data.msg);
+        }
     }
-
-
-
+    const ProjectApi = async () => {
+        try {
+            const response = await axios.get("https://cg-interns-hq.azurewebsites.net/getProject?userId=1");
+            setProjectApiData(response.data.response);
+            // console.log(response.data.response)
+            // console.log('state2:', projectApiData);
+        } catch (error) {
+            console.log(error.response?.data);
+            console.log(error.response?.data.msg);
+        }
+    }
+    useEffect(() => {
+        ProjectApi();
+        MyIdeaComponent();
+    }, []);
     return (
         <>
             <div class="card">
@@ -27,7 +52,7 @@ export const AddNewProjectComponent = () => {
                                 setPActive(true);
                             }}
                         >
-                            Project Idea
+                            My Idea
                         </button>
                     </div>
                     <div className={"project-btn" + (pActive ? " " : " p-active")}>
@@ -42,9 +67,9 @@ export const AddNewProjectComponent = () => {
                     </div>
                 </div>
                 {pActive ? (
-                    <AddNewIdea />
+                    <AddNewIdea projectDescript={projectData} />
                 ) : (
-                    <AddProject />
+                    <AddProject projectApiDataa={projectApiData} />
                 )}
             </div>
         </>

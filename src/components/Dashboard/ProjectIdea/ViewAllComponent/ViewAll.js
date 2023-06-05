@@ -3,49 +3,56 @@ import "./ViewAll.css";
 import { Link } from "react-router-dom";
 import React, { useState } from "react";
 import { useLocation } from 'react-router-dom';
+import Header from "../../../Header";
 
 export const ViewAll = () => {
     const [projectIndex, setProjectIndex] = useState(0);
-    // const [projectData, setProjectData] = useState()
+   
     const location = useLocation();
     const details = location.state;
-    console.log("Details:", details)
+
     const handelIndex = (index) => {
         setProjectIndex(index);
     }
     return (
-        <div className="container page-color">
-            <nav style={{ "--bs-breadcrumb-divider: '>';": '' }} aria-label="breadcrumb">
-                <ol class="breadcrumb">
-                    <li className="breadcrumb-item header-text ps-0"> <Link className="view-all fw-bold" to={{ pathname: '/dashboard' }} >
-                        Dashboard
-                    </Link></li>
-                    <li className="breadcrumb-item active header-text" aria-current="page">Project</li>
-                </ol>
-            </nav>
+        <>
+            <Header />
+            <div className="container page-color">
+                {/* <div className="view-all-nav-bar pt-4">
+            <p>Dashboard &gt; Project</p>
+          </div> */}
+                <nav style={{ "--bs-breadcrumb-divider: '>';": '' }} aria-label="breadcrumb">
+                    <ol class="breadcrumb">
+                        <li className="breadcrumb-item header-text ps-0"> <Link className="view-all fw-bold" to={{ pathname: '/dashboard' }} >
+                            Dashboard
+                        </Link></li>
+                        <li className="breadcrumb-item active header-text" aria-current="page">Project</li>
+                    </ol>
+                </nav>
 
-            <div className="d-flex justify-content-between">
+                <div className="d-flex justify-content-between">
 
-                <div className="d-flex">
-                    <p className="sub-text ps-0">Project</p>
+                    <div className="d-flex">
+                        <p className="sub-text ps-0">Project</p>
+                    </div>
+
+                    <div className="mr-3">
+                        <button type="button" className="add-your-project-wrapper me-0">
+                            <p className="me-2 add-your-project">Add Project</p></button>
+                    </div>
                 </div>
 
-                <div className="mr-3">
-                    <button type="button" className="add-your-project-wrapper me-0">
-                        <p className="me-2 add-your-project">Add Project</p></button>
+                <div className="all-project-idea-wrapper entire-component ms-0" style={{ overFlowY: "scroll" }}>
+                    <div >
+                        <ProjectIdeas data={details} projectDetails={handelIndex} />
+                    </div>
+                    <div className="project-detail" >
+                        <ProjectDetail data={details} indexNumber={projectIndex} />
+                    </div>
                 </div>
+
             </div>
-
-            <div className="all-project-idea-wrapper entire-component ms-0" style={{ overFlowY: "scroll" }}>
-                <div >
-                    <ProjectIdeas data={details} projectDetails={handelIndex} />
-                </div>
-                <div className="project-detail" >
-                    <ProjectDetail data={details} indexNumber={projectIndex} />
-                </div>
-            </div>
-
-        </div>
+        </>
     )
 }
 
@@ -62,6 +69,7 @@ export const ProjectIdeas = (props) => {
 
         <div className="all-project-names pt-3" >
             <div className="child-wrapper">
+                {/* {console.log("props data type",typeof props.data)} */}
                 {props.data.map((user, index) => {
                     const isBorder = index === selectedIdx;
                     return (
@@ -92,7 +100,10 @@ export const ProjectIdeas = (props) => {
 
                             <div>
                                 <p className="project-text flex-grow-1">
-                                    {user.projectText.length > 100 ? truncate(user.projectText,100) : user.projectText}</p>
+
+                                    {user.projectText.length > 100 ? truncate(user.projectText, 100) : user.projectText}
+                                    {/* {user.projectText} */}
+                                </p>
                             </div>
                         </div>
                     )

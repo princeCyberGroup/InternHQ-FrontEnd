@@ -22,7 +22,7 @@ export const ProjectNames = (props) => {
                                 setSelectedIdx(index);
                                 setIsBorder(true);
                             }}>
-                            {console.log("This is another", user)}
+                           
                             <div
                                 style={{
                                     display: "flex",
@@ -30,12 +30,12 @@ export const ProjectNames = (props) => {
                                 <h5
                                     className="project-names"
                                 >
-                                    {/* {console.log("these are the project names",user.ProjectNames)} */}
+                                   
                                     {user.projectNames}
                                 </h5>
                                 <span
                                     className="click-arrow"
-                                // style={{ border:"1px solid black" }}
+                               
                                 >
                                     &gt;
                                 </span>

@@ -3,16 +3,16 @@ import "./ProjectDetail.css";
 export const ProjectDetail = ({data, indexNumber}) => {
     return (
         <div className="">
-            {console.log("This is data" , data[indexNumber])}
+            {console.log("This is props data of perticular index data" , data[indexNumber])}
             <h5 className="project-detail-name">{data[indexNumber].projectNames}</h5>
-            <p>{data[indexNumber].createdAt}</p>
+            <p className="created-at">{data[indexNumber].createdAt}</p>
             <p className="project-detail-text">{data[indexNumber].projectText}</p>
             <p className="project-detail-technology-used mb-0">Technology Used:</p>
 
-            {console.log(data[indexNumber].tech_1)}
-
-            {/* <div className="project-detail-technology-badges">
-                {data[indexNumber].Technology.map((tech) => {
+           
+{/* 
+            <div className="project-detail-technology-badges">
+                {data[indexNumber].technology.map((tech) => {
                     return <p className="technology-badge me-1"> {tech} </p>
                 })}
             </div> */}

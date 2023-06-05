@@ -2,26 +2,16 @@ import axios from "axios";
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-export const AddProject = (props) => {
-    // const [projectData, setProjectData] = useState([])
+export const AddProject = ({projectApiDataa}) => {
     const navigate = useNavigate();
+    console.log("Project Name:", projectApiDataa);
+    const [first, ...rest] = projectApiDataa;
+    console.log(projectApiDataa[0].projectNames, "This is 0th member");
+
     const handleClick = async (e) => {
-        console.log("Hello");
         e.preventDefault();
-        await axios.get("https://cg-interns-hq.azurewebsites.net/getProject?userId=1")
-            .then((response) => {
-                console.log("KKK:", response.data.response);
-
-                navigate('/all-projects', { state: response.data.response });
-
-            }).catch((error) => {
-
-                console.log(error.response?.data);
-
-                console.log(error.response?.data.msg);
-
-            });
-        // const data = { projectData }
+        const data= {projectApiDataa}
+        navigate('/all-projects', { state: projectApiDataa });
     }
 
 

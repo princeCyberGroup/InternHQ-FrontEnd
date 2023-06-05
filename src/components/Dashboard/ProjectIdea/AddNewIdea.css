@@ -100,12 +100,13 @@ p.card-textt {
 
 .project-idea-members:nth-child(even) {
     margin-left: -0.5rem;
-    /* z-index: 1; */
+  
 }
 
 .project-idea-members:nth-child(odd) {
     margin-left: -0.5rem;
 }
+
 .project-idea-members:last-child {
     background-color: rgba(40, 81, 158, 0.2);
 
@@ -113,6 +114,14 @@ p.card-textt {
 
 .project-idea-members:last-child p {
     font-size: 1.1rem;
+}
+
+.name-of-members{
+    font-style: normal;
+    font-weight: 400;
+    font-size: 1.094rem;
+    line-height: 1.313rem;
+    color: #343435;
 }
 
 .add-new-idea {
@@ -151,4 +160,3 @@ p.card-textt {
 
     color: #1E1E1E;
 }
-

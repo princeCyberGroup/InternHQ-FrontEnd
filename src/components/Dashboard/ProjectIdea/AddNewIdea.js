@@ -1,38 +1,70 @@
 import "./AddNewIdea.css";
 import { useNavigate } from "react-router-dom";
-import React, { useState } from "react";
-import axios from 'axios';
+import React, { useEffect, useState } from "react";
+import axios from "axios";
 
-export const AddNewIdea = (props) => {
-    const [projectDescription, setProjectDescription] = useState([])
+export const AddNewIdea = ({ projectDescript }) => {
+    const [projName, setProjName] = useState("");
+    const [projDescription, setProjDescription] = useState("");
+    const [technologyNames, setTechnologyNames] = useState(null);
+    const [memberNames, setMembers] = useState(null);
+    const [userId, setUserId] = useState(0);
     const navigate = useNavigate();
-    const handleCLick = async (e) => {
-        // state = false
+    // console.log("project", projectDescript);
+    const [first, ...rest] = projectDescript;
+    // console.log(projectDescript[0].projectNames, "This is 0th member");
+
+
+    //code for dropdown
+    const [selectedOptions, setSelectedOptions] = useState([]);
+
+    const handleOptionClick = (event) => {
+        const { value } = event.currentTarget.dataset;
+        const isChecked = event.currentTarget.querySelector('input').checked;
+
+        if (isChecked) {
+            const optionObject = { value };
+            console.log(optionObject, "Valuesesars")
+            setSelectedOptions((prevSelectedOptions) => [...prevSelectedOptions, optionObject]);
+        } else {
+            setSelectedOptions((prevSelectedOptions) =>
+                prevSelectedOptions.filter((option) => option.value !== value)
+            );
+        }
+    };
+
+    const [dropDown, setDropDown] = useState(false);
+    //code for dropdown
+
+    //get api
+    const handleClick = (e) => {
+
         e.preventDefault();
-        await axios.get("https://cg-interns-hq.azurewebsites.net/getProjectIdea?userId=1")
-            .then((response) => {
-                console.log("project ideas:",response.data.response);
-               setProjectDescription(response.data.response)
-               console.log(projectDescription, "HEre lies project desc")
-               
-                navigate('/project-idea-projects', { state: response.data.response});
+        const data = { projectDescript }
+        navigate('/project-idea-projects', { state: projectDescript });
+    }
 
-            }).catch((error) => {
-
-                console.log(error.response?.data);
-
-                console.log(error.response?.data.msg);
-
-            });
-        // const data1= {projectDescription}
-        // navigate('/project-idea-projects', { state: projectDescription });
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        axios.post("https://cg-interns-hq.azurewebsites.net/projectIdea", {
+            projName,
+            projDescription,
+            userId,
+            technologyNames,
+            memberNames
+        }).then((res) => {
+            console.log(res.data);
+        }).catch((err) => {
+            console.log(err);
+        })
+        console.log("Laga diya")
     }
     return (
         <>
             <div className="card-body pb-0">
                 <div className="text-row-1">
+
                     <p className="card-textt">
-                        {" "}
                         Simply share your project ideas with us, and our experts
                         will review it and provide feedback and guidance on how to
                         take it to the next level.
@@ -45,17 +77,17 @@ export const AddNewIdea = (props) => {
                             <p className="text mb-0 fw-bold">Shared Project Idea</p>
                         </div>
 
-                        <button className="view-all fw-bold" onClick={(e) => { handleCLick(e) }} >View All</button>
+                        <button className="view-all fw-bold" onClick={(e) => {
+                            handleClick(e)
+                        }} >View All</button>
                     </div>
                 </div>
 
                 <div className="recipe-row">
                     <div className="recipe-text">
-                        <h5 className="fw-bold"></h5>
-                        {/* {console.log(projectDescription[0].projectNames)} */}
+                        <h5 className="fw-bold">{first.projectNames}</h5>
                         <p className="fw-normal mb-1">
-                            The Recipe Recommendation Engine is a web-based
-                            application that uses machine learning algorithm...
+                            {first.projectText}
                         </p>
                         <div className="project-link-2">
                             <a href="http.reciperecommendationengine.github">
@@ -67,21 +99,18 @@ export const AddNewIdea = (props) => {
                                 Members:
                             </div>
                             <div className="project-members ml-0">
-                                <div className="project-idea-members">
-                                    <p>AB</p>
-                                </div>
-                                <div className="project-idea-members">
-                                    <p>CD</p>
-                                </div>
-                                <div className="project-idea-members">
-                                    <p>EF</p>
-                                </div>
-                                <div className="project-idea-members">
-                                    <p>IJ</p>
-                                </div>
-                                <div className="project-idea-members">
-                                    <p>+2</p>
-                                </div>
+                                
+                                {first.members.map((curElem, index) => {
+                                    if(curElem != null){
+                                    return (
+                                      <div className="project-idea-members">
+                                        <p className="name-of-members">
+                                            {curElem.slice(0,2).toUpperCase()}
+                                            </p>
+                                        </div>   
+                                    )
+                                    }
+                                })}
                             </div>
                         </div>
                     </div>
@@ -128,6 +157,7 @@ export const AddNewIdea = (props) => {
                                         className="form-control"
                                         id="project-name"
                                         placeholder='Enter Project Name'
+                                        onChange={(event) => setProjName(event.target.value)}
                                     />
                                 </div>
                                 <div className="mb-3">
@@ -150,28 +180,90 @@ export const AddNewIdea = (props) => {
                                     <label for="technology-used" className="col-form-label title-text">
                                         Technology Used
                                     </label>
-                                    <select className='form-select'>
-                                        <option hidden selected>Select Technology</option>
-                                        <option>TypeScript</option>
-                                        <option>PHP</option>
-                                        <option>React JS</option>
-                                        <option>SQL</option>
-                                    </select>
-                                    {/* <input
-                                    className="form-control"
-                                    type="text"
-                                    id="technology-used"
-                                /> */}
-
                                 </div>
-                                <div className="mb-3">
-                                    <label for="Members(Optional)" className="col-form-label title-text">
+
+                                <div className="container border">
+                                    <div className="row">
+                                        <div className="col-lg-12">
+                                            <div className="button-group">
+                                                <button
+                                                    type="button"
+                                                    className="btn btn-default btn-sm dropdown-toggle"
+                                                    onClick={() => {
+                                                        setDropDown(!dropDown)
+                                                    }}
+                                                >
+
+                                                </button>
+                                                <ul style={{ display: dropDown ? "" : "none" }}>
+
+                                                    <a
+                                                        href="#"
+                                                        className="text-decoration-none"
+                                                        data-value="option1"
+                                                        tabIndex="-1"
+                                                        onClick={handleOptionClick}
+                                                    >
+                                                        <input type="checkbox" />ReactJs
+                                                    </a>
+                                                    <a
+                                                        href="#"
+                                                        className="small text-decoration-none"
+                                                        data-value="option2"
+                                                        tabIndex="-1"
+                                                        onClick={handleOptionClick}
+                                                    >
+                                                        <input type="checkbox" />TypeScript
+                                                    </a>
+                                                    <a
+                                                        href="#"
+                                                        className="small text-decoration-none"
+                                                        data-value="option3"
+                                                        tabIndex="-1"
+                                                        onClick={handleOptionClick}
+                                                    >
+                                                        <input type="checkbox" />.Net
+                                                    </a>
+                                                    <a
+                                                        href="#"
+                                                        className="small text-decoration-none"
+                                                        data-value="option4"
+                                                        tabIndex="-1"
+                                                        onClick={handleOptionClick}
+                                                    >
+                                                        <input type="checkbox" />Angular
+                                                    </a>
+                                                    <a
+                                                        href="#"
+                                                        className="small text-decoration-none"
+                                                        data-value="option5"
+                                                        tabIndex="-1"
+                                                        onClick={handleOptionClick}
+                                                    >
+                                                        <input type="checkbox" />Python
+                                                    </a>
+                                                    <a
+                                                        href="#"
+                                                        className="small text-decoration-none"
+                                                        data-value="option6"
+                                                        tabIndex="-1"
+                                                        onClick={handleOptionClick}
+                                                    >
+                                                        <input type="checkbox" />NodeJS
+                                                    </a>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="Members(Optional)" class="col-form-label title-text">
                                         Members(Optional)
                                     </label>
                                     <input
-                                        className="form-control"
+                                        class="form-control"
                                         id="project-description"
-                                        placeholder='Member Name'
+                                        placeholder="Member Name"
                                     />
                                 </div>
                             </form>
@@ -184,7 +276,8 @@ export const AddNewIdea = (props) => {
                             >
                                 Cancel
                             </button>
-                            <button type="button" className="btn btn-primary">
+                            <button type="button" className="btn btn-primary" onClick={handleSubmit}
+                            >
                                 Save
                             </button>
                         </div>
