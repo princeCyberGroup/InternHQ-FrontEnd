@@ -4,26 +4,41 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 
 export const AddNewIdea = ({ projectDescript }) => {
+    const navigate = useNavigate();
     const [projName, setProjName] = useState("");
     const [projDescription, setProjDescription] = useState("");
-    const [technologyNames, setTechnologyNames] = useState(null);
-    const [memberNames, setMembers] = useState(null);
-    const [userId, setUserId] = useState(0);
-    const navigate = useNavigate();
+    const [technologyNames, setTechnologyNames] = useState([]);
+    // const [memberNames, setMemberNames] = useState({});
+    const [userId, setUserId] = useState("1");
     const [first, ...rest] = projectDescript;
     const [selectedOptions, setSelectedOptions] = useState([]);
+    const [counter, setCounter] = useState(1);
+/////////////////////////////////////////////////////////////////
+    const [textInput, setTextInput] = useState('');
+  const [memberNames, setMemberNames] = useState({});
+
+  const handleInputChange = (event) => {
+    setTextInput(event.target.value);
+  };
+
+    // const handleChange = (e) => {
+    //     const { name, value } = e.target;
+    //     setMemberNames((prevData) => ({ ...prevData, [name]: value }));
+    //     console.log("members",memberNames);
+    //   };
 
     const handleOptionClick = (event) => {
         const { value } = event.currentTarget.dataset;
         const isChecked = event.currentTarget.querySelector('input').checked;
 
         if (isChecked) {
-            const optionObject = { value };
+            const optionObject = { [`tech${counter}`]: value };
             console.log(optionObject, "Valuesesars")
             setSelectedOptions((prevSelectedOptions) => [...prevSelectedOptions, optionObject]);
+            setCounter((prevCounter) => prevCounter + 1);
         } else {
             setSelectedOptions((prevSelectedOptions) =>
-                prevSelectedOptions.filter((option) => option.value !== value)
+                prevSelectedOptions.filter((option) => Object.values(option)[0] !== value)
             );
         }
     };
@@ -48,11 +63,23 @@ export const AddNewIdea = ({ projectDescript }) => {
             technologyNames,
             memberNames
         }).then((res) => {
-            console.log(res.data);
+            console.log("print", res.data);
         }).catch((err) => {
             console.log(err);
         })
-        console.log("Laga diya")
+        console.log("Laga diya", selectedOptions)
+
+        ////////////////////////////////////////////////////////
+        const texts = textInput.split(',').map((text) => text.trim());
+    const textObj = {};
+
+    texts.forEach((text, index) => {
+      textObj[`member${index + 1}`] = text;
+    });
+
+    setMemberNames(textObj);
+    console.log("This is members object", memberNames);
+    setTextInput('');
     }
     return (
         <>
@@ -94,16 +121,16 @@ export const AddNewIdea = ({ projectDescript }) => {
                                 Members:
                             </div>
                             <div className="project-members ml-0">
-                                
+
                                 {first.members.map((curElem, index) => {
-                                    if(curElem != null){
-                                    return (
-                                      <div className="project-idea-members">
-                                        <p className="name-of-members">
-                                            {curElem.slice(0,2).toUpperCase()}
-                                            </p>
-                                        </div>   
-                                    )
+                                    if (curElem != null) {
+                                        return (
+                                            <div className="project-idea-members">
+                                                <p className="name-of-members">
+                                                    {curElem.slice(0, 2).toUpperCase()}
+                                                </p>
+                                            </div>
+                                        )
                                     }
                                 })}
                             </div>
@@ -166,6 +193,7 @@ export const AddNewIdea = ({ projectDescript }) => {
                                         className="form-control"
                                         id="project-description"
                                         placeholder='Write Here..'
+                                        onChange={(event) => setProjDescription(event.target.value)}
                                         rows={3}
 
                                     ></textarea>
@@ -195,7 +223,7 @@ export const AddNewIdea = ({ projectDescript }) => {
                                                     <a
                                                         href="#"
                                                         className="text-decoration-none"
-                                                        data-value="option1"
+                                                        data-value="ReactJs"
                                                         tabIndex="-1"
                                                         onClick={handleOptionClick}
                                                     >
@@ -204,7 +232,7 @@ export const AddNewIdea = ({ projectDescript }) => {
                                                     <a
                                                         href="#"
                                                         className="small text-decoration-none"
-                                                        data-value="option2"
+                                                        data-value="TypeScript"
                                                         tabIndex="-1"
                                                         onClick={handleOptionClick}
                                                     >
@@ -213,7 +241,7 @@ export const AddNewIdea = ({ projectDescript }) => {
                                                     <a
                                                         href="#"
                                                         className="small text-decoration-none"
-                                                        data-value="option3"
+                                                        data-value=".Net"
                                                         tabIndex="-1"
                                                         onClick={handleOptionClick}
                                                     >
@@ -222,7 +250,7 @@ export const AddNewIdea = ({ projectDescript }) => {
                                                     <a
                                                         href="#"
                                                         className="small text-decoration-none"
-                                                        data-value="option4"
+                                                        data-value="Angular"
                                                         tabIndex="-1"
                                                         onClick={handleOptionClick}
                                                     >
@@ -231,7 +259,7 @@ export const AddNewIdea = ({ projectDescript }) => {
                                                     <a
                                                         href="#"
                                                         className="small text-decoration-none"
-                                                        data-value="option5"
+                                                        data-value="Python"
                                                         tabIndex="-1"
                                                         onClick={handleOptionClick}
                                                     >
@@ -240,7 +268,7 @@ export const AddNewIdea = ({ projectDescript }) => {
                                                     <a
                                                         href="#"
                                                         className="small text-decoration-none"
-                                                        data-value="option6"
+                                                        data-value="NodeJS"
                                                         tabIndex="-1"
                                                         onClick={handleOptionClick}
                                                     >
@@ -259,6 +287,9 @@ export const AddNewIdea = ({ projectDescript }) => {
                                         class="form-control"
                                         id="project-description"
                                         placeholder="Member Name"
+                                        value={textInput}
+          onChange={handleInputChange}
+                                    // onChange={handleChange}
                                     />
                                 </div>
                             </form>
