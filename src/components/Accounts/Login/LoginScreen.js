@@ -92,7 +92,7 @@ const LoginScreen = () => {
         console.log(error.response.data.status);
 
         // localStorage.setItem("login",false);
-        if (error.response?.data.msg == "Error: Email does not exist") {
+        if (error.response?.data.msg === "Error: Email does not exist") {
           setIsEmailValid(false);
           setIncorrectemail(true);
         } else {
@@ -162,7 +162,7 @@ const LoginScreen = () => {
                   <button
                     data-bs-target="#carouselExampleIndicators"
                     data-bs-slide-to="0"
-                    class="active"
+                    className="active"
                     aria-current="true"
                     aria-label="Slide 1"
                     // onClick={() => handleSlideChange(0)}

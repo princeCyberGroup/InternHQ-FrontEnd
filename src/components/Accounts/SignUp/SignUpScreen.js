@@ -64,8 +64,8 @@ const SignUpScreen = () => {
         }
         setIsLoading(false);
       });
-    // console.log(email);
-    // console.log(`password: ${password} (hidden visible only on backend)`);
+    console.log(email);
+    console.log(`password: ${password} (hidden visible only on backend)`);
   };
   // const handleSlideChange = (index) => {
   //   setActiveIndex(index);

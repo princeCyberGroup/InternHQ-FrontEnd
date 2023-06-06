@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
 import "./DailyTaskTracker.css";
 import { ReactComponent as Tick } from "./tick.svg";
-import Congo from "../../SkillManagement/Modals/Congo";
-import Sorry from "../../SkillManagement/Modals/Sorry";
+// import Congo from "../../SkillManagement/Modals/Congo";
+// import Sorry from "../../SkillManagement/Modals/Sorry";
 
 const learningTypeOptions = [
   "CG Learning Video",
@@ -112,8 +112,9 @@ const DailyTaskTracker = () => {
               id="learning"
               aria-label=""
               onChange={(e) => onLearningChange(e)}
+              defaultValue=""
             >
-              <option value="default" disabled selected hidden>
+              <option value="" hidden>
                 Select learning type
               </option>
               {learningTypeOptions.map((option) => (
@@ -135,8 +136,9 @@ const DailyTaskTracker = () => {
               id="topic"
               aria-label=""
               onChange={(e) => onTopicChange(e)}
+              defaultValue=""
             >
-              <option value="" disabled selected hidden>
+              <option value="" hidden>
                 Select Topic
               </option>
               {topics.map((option) => (

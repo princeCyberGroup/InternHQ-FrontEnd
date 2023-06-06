@@ -173,8 +173,8 @@
 
 .start-input {
     display: flex;
-    justify-content: start;
-    align-items: start;
+    justify-content: flex-start;
+    align-items: flex-start;
     width: 50px;
     padding: 10px;
     margin-left: 10px;

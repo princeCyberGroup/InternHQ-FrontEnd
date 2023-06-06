@@ -31,7 +31,7 @@
     width: 25.5rem;
     display: flex;
     padding-top: 0.5rem;
-    justify-content: start;
+    justify-content: flex-start;
 }
 
 .technology-badge {
