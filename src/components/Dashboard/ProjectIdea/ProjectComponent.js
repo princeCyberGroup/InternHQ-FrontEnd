@@ -9,7 +9,7 @@ import { ProjectIdeaApi } from "./ProjectIdeaApi";
 
 
 export const AddNewProjectComponent = () => {
-  const [pActive, setPActive] = useState(true);
+
 
   // const setProjectScreenType = (input) => {
   //   console.log("Working");
@@ -22,7 +22,7 @@ export const AddNewProjectComponent = () => {
 
     const MyIdeaComponent = async () => {
         try {
-            const response = await axios.get("https://cg-interns-hq.azurewebsites.net/getProjectIdea?userId=1");
+            const response = await axios.get("https://cg-interns-hq.azurewebsites.net/getProjectIdea?userId=30");
             setProjectData(response.data.response);
         } catch (error) {
             console.log(error.response?.data);
@@ -31,7 +31,7 @@ export const AddNewProjectComponent = () => {
     }
     const ProjectApi = async () => {
         try {
-            const response = await axios.get("https://cg-interns-hq.azurewebsites.net/getProject?userId=1");
+            const response = await axios.get("https://cg-interns-hq.azurewebsites.net/getProject?userId=30");
             setProjectApiData(response.data.response);
         } catch (error) {
             console.log(error.response?.data);

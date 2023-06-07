@@ -1,3 +1,4 @@
+import { useState, useEffect } from "react";
 import "./Notification.css";
 // import angular from '../Notification/angular.svg';
 
@@ -16,85 +17,105 @@ export const NotificationComponent = () => {
 };
 
 export const NewNotifications = () => {
-  const data = [
-    {
-      id: 1,
-      FullName: "John Doe",
-      Skill: "Angular skill",
-      Technology: "Angular",
-    },
-    {
-      id: 2,
-      FullName: "John Doe",
-      Skill: "Android Skill",
-      Technology: "Android",
-    },
-    {
-      id: 3,
-      FullName: "John Doe",
-      Skill: "HTML 5 Skill",
-      Technology: "Html",
-    },
-    {
-      id: 4,
-      FullName: "John Doe",
-      Skill: "SQL Skill",
-      Technology: "SQL",
-    },
-    {
-      id: 5,
-      FullName: "John Doe",
-      Skill: "Angular Skill",
-      Technology: "Angular",
-    },
-    {
-      id: 6,
-      FullName: "John Doe",
-      Skill: "Android Skill",
-      Technology: "android",
-    },
-    {
-      id: 7,
-      FullName: "John Doe",
-      Skill: "HTML 5 Skill",
-      Technology: "Html",
-    },
-    {
-      id: 8,
-      FullName: "John Doe",
-      Skill: "SQL Skill",
-      Technology: "SQL",
-    },
-    {
-      id: 9,
-      FullName: "John Doe",
-      Skill: "Angular Skill",
-      Technology: "Angular",
-    },
-  ];
+//   const data = [
+//     {
+//       id: 1,
+//       FullName: "John Doe",
+//       Skill: "Angular skill",
+//       Technology: "Angular",
+//     },
+//     {
+//       id: 2,
+//       FullName: "John Doe",
+//       Skill: "Android Skill",
+//       Technology: "Android",
+//     },
+//     {
+//       id: 3,
+//       FullName: "John Doe",
+//       Skill: "HTML 5 Skill",
+//       Technology: "Html",
+//     },
+//     {
+//       id: 4,
+//       FullName: "John Doe",
+//       Skill: "SQL Skill",
+//       Technology: "SQL",
+//     },
+//     {
+//       id: 5,
+//       FullName: "John Doe",
+//       Skill: "Angular Skill",
+//       Technology: "Angular",
+//     },
+//     {
+//       id: 6,
+//       FullName: "John Doe",
+//       Skill: "Android Skill",
+//       Technology: "android",
+//     },
+//     {
+//       id: 7,
+//       FullName: "John Doe",
+//       Skill: "HTML 5 Skill",
+//       Technology: "Html",
+//     },
+//     {
+//       id: 8,
+//       FullName: "John Doe",
+//       Skill: "SQL Skill",
+//       Technology: "SQL",
+//     },
+//     {
+//       id: 9,
+//       FullName: "John Doe",
+//       Skill: "Angular Skill",
+//       Technology: "Angular",
+//     },
+//   ];
+
+  const [notifications, setNotifications] = useState([]);
+  useEffect(() => {
+    fetchNotifications();
+  }, []);
+
+  const fetchNotifications = async () => {
+    try {
+      // Make an API request to fetch data
+      const response = await fetch(
+        "https://cg-interns-hq.azurewebsites.net/getNotification"
+      );
+
+      const data = await response.json();
+
+      setNotifications(data.response);
+    } catch (error) {
+      console.log("Error occurred while fetching notificatons:", error);
+    }
+  };
 
   return (
     <div className="">
       {" "}
       {/* Notification parent */}
-      {data.map((user) => {
+      {notifications.map((user) => {
         return (
           <>
-            <div key={user.id} className="notification-wrapper">
+            <div key={user.userId} className="notification-wrapper">
               <div className="image-wrapper mt-1">
                 <div className="image-box">
                   <img
-                    key={user.id}
-                    src={`https://raw.githubusercontent.com/github/explore/80688e429a7d4ef2fca1e82350fe8e3517d3494d/topics/${user.Technology.toLowerCase()}/${user.Technology.toLowerCase()}.png`}
+                    key={user.userId}
+                    src={`https://raw.githubusercontent.com/github/explore/80688e429a7d4ef2fca1e82350fe8e3517d3494d/topics/${user.technology.toLowerCase()}/${user.technology.toLowerCase()}.png`}
                     width={32}
                     alt=""
                   />
                 </div>
               </div>
               <div className="text-wrapper mt-3">
-                <p key={user.id} className="m-0">
-                  <b>{user.FullName}</b> has achieved <b>skill</b> on{" "}
-                  <b>{user.Skill}</b> on <b>{user.Technology}</b>
+                <p key={user.userId} className="m-0">
+                  <b>{user.firstName}</b> has achieved <b>{user.level}</b> 
+                  <b> skill </b> on <b>{user.technology}</b>
                 </p>
                 <p className="m-0 date-wrapper"> 02-06-2023</p>
               </div>

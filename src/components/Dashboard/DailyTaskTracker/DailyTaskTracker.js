@@ -206,7 +206,7 @@ const DailyTaskTracker = () => {
     setComments("");
     setLearningType("");
     setTopicName("");
-    localStorage.clear();
+    // localStorage.clear();
 
 
     // localStorage.removeItem('isRunning'); // Remove the isRunning state from local storage
