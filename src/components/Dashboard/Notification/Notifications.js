@@ -62,7 +62,7 @@ export const NewNotifications = () => {
     ];
 
     return (
-        <div className="">  {/* Notification parent */}
+        <>  {/* Notification parent */}
             {data.map((user, key) => {
                 return (
                     <>
@@ -81,6 +81,6 @@ export const NewNotifications = () => {
                     </>
                 )
             })}
-        </div>
+        </>
     )
 }
