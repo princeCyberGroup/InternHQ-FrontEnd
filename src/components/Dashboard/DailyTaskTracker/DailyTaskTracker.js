@@ -23,7 +23,13 @@ const DailyTaskTracker = () => {
   const [topicName, setTopicName] = useState(localStorage.getItem("topicName") || "");
   const [isRunning, setIsRunning] = useState( localStorage.getItem("isRunning") || false);
   const [startTime, setStartTime] = useState( localStorage.getItem("startTime") ? parseInt(localStorage.getItem("startTime")) : null);
-  const [elapsedTime, setElapsedTime] = useState(0);
+  // const [elapsedTime, setElapsedTime] =  useState(() => {
+  //   const storedElapsedTime = localStorage.getItem("elapsedTime");
+  //   return storedElapsedTime && parseInt(storedElapsedTime) !== 0
+  //     ? parseInt(storedElapsedTime)
+  //     : 0;
+  // });
+  const [elapsedTime, setElapsedTime] = useState( localStorage.getItem("elapsedTime") || 0)
   const [comments, setComments] = useState(localStorage.getItem("comments") || "");
   const [comDisabled, setComDisabled] = useState(true);
   const [disabled, setDisabled] = useState(false);
@@ -108,7 +114,7 @@ const DailyTaskTracker = () => {
   useEffect(() => {
     const storedData = localStorage.getItem('taskData');
     if (storedData) {
-      const { isRunning, disabled, comDisabled, learningType, topicName, comments, startTime } = JSON.parse(storedData);
+      const { isRunning, disabled, comDisabled, learningType, topicName, comments, startTime, elapsedTime, isPaused} = JSON.parse(storedData);
       setIsRunning(isRunning);
       setDisabled(disabled);
       setComDisabled(comDisabled)
@@ -116,13 +122,15 @@ const DailyTaskTracker = () => {
       setTopicName(topicName);
       setComments(comments);
       setStartTime(startTime);
+      setElapsedTime(elapsedTime);
+      setIsPaused(isPaused);
     }
   }, []);
 
   useEffect(() => {
-    const taskData = JSON.stringify({ isRunning, disabled, comDisabled, learningType, topicName, comments, startTime });
+    const taskData = JSON.stringify({ isRunning, disabled, comDisabled, learningType, topicName, comments, startTime, elapsedTime, isPaused });
     localStorage.setItem('taskData', taskData);
-  }, [isRunning, disabled, comDisabled, learningType, topicName, comments, startTime]);
+  }, [isRunning, disabled, comDisabled, learningType, topicName, comments, startTime, elapsedTime, isPaused]);
 
   // useEffect(() => {
   //   const selectedLearningType = localStorage.getItem("selectedLearningType");
@@ -135,7 +143,7 @@ const DailyTaskTracker = () => {
 
   const sendStartDataToBackend = async () => {
     try {
-      const response = await axios.post("https://cg-interns-hq.azurewebsites.net/dailyTaskTrackerStart", {
+      const response = await axios.post("https://cg-interns-hq.azurewebsites.net/dailyTaskTrackerStartCheck", {
         userId,
         learningType,
         topicName,
@@ -143,23 +151,37 @@ const DailyTaskTracker = () => {
       localStorage.setItem("token",response.data.token);
       console.log(response.data.token);
       ;
-      console.log("Data sent to backend:", response.data);
+      console.log("Start Data sent to backend:", response.data);
     } catch (error) {
-      console.error("Error sending data to backend:", error);
+      console.error("Error sending start data to backend:", error);
+    }
+  };
+
+  const sendPauseDataToBackend = async () => {
+    try {
+      const token = localStorage.getItem("token");
+      const response = await axios.post("https://cg-interns-hq.azurewebsites.net/dailyTaskTrackerPauseCheck",
+      {headers:{
+        Authorization:`Bearer ${token}`,
+      }});
+      console.log("Pause Data sent to backend:", response.data);
+    } catch (error) {
+      console.error("Error sending pause data to backend:", error);
     }
   };
 
   const sendStopDataToBackend = async () => {
     try {
       const token = localStorage.getItem("token");
-      const response = await axios.post("https://cg-interns-hq.azurewebsites.net/dailyTaskTrackerEnd", {
-        comments
+      const response = await axios.post("https://cg-interns-hq.azurewebsites.net/dailyTaskTrackerEndCheck", {
+        comments,
+        elapsedTime,
       },{headers:{
         Authorization:`Bearer ${token}`,
       }});
-      console.log("Data sent to backend:", response.data);
+      console.log("Stop Data sent to backend:", response.data);
     } catch (error) {
-      console.error("Error sending data to backend:", error);
+      console.error("Error sending stop data to backend:", error);
     }
   };
 
@@ -185,6 +207,7 @@ const DailyTaskTracker = () => {
     setComments("");
     setLearningType("");
     setTopicName("");
+    localStorage.clear();
 
 
     // localStorage.removeItem('isRunning'); // Remove the isRunning state from local storage
@@ -195,8 +218,9 @@ const DailyTaskTracker = () => {
   };
 
   const handlePause = () => {
+    sendPauseDataToBackend();
     setIsPaused(true);
-    setComDisabled(false);
+    // setComDisabled(false);
   }
 
   const handleStart = () => {
@@ -212,7 +236,7 @@ const DailyTaskTracker = () => {
       setFirstCount(false);
     }
 
-    setComDisabled(true);
+    setComDisabled(false);
     setDisabled(true);
     // setStopBtnDisabled(true);
   
