@@ -17,6 +17,7 @@ export const NotificationComponent = () => {
 };
 
 export const NewNotifications = () => {
+
 //   const data = [
 //     {
 //       id: 1,
@@ -126,3 +127,4 @@ export const NewNotifications = () => {
     </div>
   );
 };
+

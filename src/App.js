@@ -87,12 +87,13 @@ function App() {
         {/* <Route element={<AuthGuard />}> */}
 
         <Route path="/daily-update" element={<DailyUpdateTable />} />
+        <Route path="project-idea-projects" element={<ViewProjectIdeas />}/>
         <Route path="/all-projects" element={<ViewAll/>} />
         {/* <Route path={encodeUrl("/all-projects")} element={<ViewAll />} /> */}
         <Route path="/skill-management" element={<SkillManagement />} />
         <Route exact path="/TakeTest" component={<TakeTest />} />
         <Route path="/take-test" element={<TakeYourTest />} />
-        <Route path="/take-your-test/:examId" element={<TakeYourTest/>}/>
+        <Route path="/take-your-test" element={<TakeYourTest/>}/>
         {/* </Route> */}
         <Route path="/" element={<LoginScreen />} />
         <Route path="/forgot-password" element={<ForgotPasswordScreen />} />
