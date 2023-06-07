@@ -39,7 +39,7 @@ export const AddNewProjectComponent = () => {
     }, []);
     return (
         <>
-            <div class="card">
+            <div class="card whole-card-wrapper">
                 <div class="card-header-1  d-flex  d-flex justify-content-center align-item-center ">
                     <div className={"project-idea-btn" + (pActive ? " p-active" : "")}>
                         <button

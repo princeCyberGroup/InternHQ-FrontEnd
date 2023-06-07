@@ -57,7 +57,6 @@ export const AddNewIdea = ({ projectDescript }) => {
 
     const handleSubmit = (e) => {
         if (projName.trim() === '') {
-            // Display error message or perform any other validation logic
             alert('Project Name is required');
             return;
           }
@@ -93,7 +92,6 @@ export const AddNewIdea = ({ projectDescript }) => {
         })
 
         setMemberNames(textObj);
-        // console.log(selectedOptions);
     }, [textInput]);
 
     return (
@@ -293,7 +291,7 @@ export const AddNewIdea = ({ projectDescript }) => {
                                                         onClick={handleOptionClick}
                                                     >
                                                         <label className="checkbox-label">
-                                                            <input type="checkbox" className="checkbox-input" /><span>Python</span>
+                                                            <input type="checkbox" className="checkbox-input" /><span>Salesforce</span>
                                                         </label>
                                                     </a>
                                                     <a

@@ -3,7 +3,6 @@ import "./ProjectDescription.css";
 export const ProjectDescription = ({ data, indexNumber }) => {
     return (
         <>
-            {/* {console.log("This is data" , data[indexNumber])} */}
             <h5 className="project-detail-name">{data[indexNumber].projectNames}</h5>
             <p className="created-at">{data[indexNumber].createdAt}</p>
             <p className="project-detail-text">{data[indexNumber].projectText}</p>
@@ -19,8 +18,6 @@ export const ProjectDescription = ({ data, indexNumber }) => {
                     }
                 })}
             </div>
-
-            {/* {console.log(data[indexNumber].member_1)} */}
             <p className="members mb-0">Members:</p>
             <div className="members-name project-members text-center">
                 {data[indexNumber].members.map((val, index) => {
@@ -31,10 +28,6 @@ export const ProjectDescription = ({ data, indexNumber }) => {
                     }
                 })}
             </div>
-            {/* <p className="project-detail-link">Project Link:</p>
-            <p className="project-link-name">{data[indexNumber].ProjectLink}</p>
-            <p className="project-detail-hosted-link">Hosted Link:</p> <p className="hosted-link-name">{data[indexNumber].HostedLink}</p> */}
-
         </>
     )
 }

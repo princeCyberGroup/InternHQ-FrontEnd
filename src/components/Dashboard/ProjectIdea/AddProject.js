@@ -238,7 +238,10 @@ export const AddProject = ({ projectApiDataa }) => {
                                                         tabIndex="-1"
                                                         onClick={handleOptionClick}
                                                     >
-                                                        <input type="checkbox" />ReactJs
+                                                       <label className="checkbox-label">
+                                                            <input type="checkbox" className="checkbox-input" />
+                                                            <span className="checkbox-text">ReactJs</span>
+                                                        </label>
                                                     </a>
                                                     <a
                                                         href="#"
@@ -247,7 +250,10 @@ export const AddProject = ({ projectApiDataa }) => {
                                                         tabIndex="-1"
                                                         onClick={handleOptionClick}
                                                     >
-                                                        <input type="checkbox" />TypeScript
+                                                       <label className="checkbox-label">
+                                                            <input type="checkbox" className="checkbox-input" />
+                                                            <span className="checkbox-text">TypeScript</span>
+                                                        </label>
                                                     </a>
                                                     <a
                                                         href="#"
@@ -256,7 +262,10 @@ export const AddProject = ({ projectApiDataa }) => {
                                                         tabIndex="-1"
                                                         onClick={handleOptionClick}
                                                     >
-                                                        <input type="checkbox" />.Net
+                                                        <label className="checkbox-label">
+                                                            <input type="checkbox" className="checkbox-input" />
+                                                            <span className="checkbox-text">DotNet</span>
+                                                        </label>
                                                     </a>
                                                     <a
                                                         href="#"
@@ -265,7 +274,10 @@ export const AddProject = ({ projectApiDataa }) => {
                                                         tabIndex="-1"
                                                         onClick={handleOptionClick}
                                                     >
-                                                        <input type="checkbox" />Angular
+                                                       <label className="checkbox-label">
+                                                            <input type="checkbox" className="checkbox-input" />
+                                                            <span className="checkbox-text">Angular</span>
+                                                        </label>
                                                     </a>
                                                     <a
                                                         href="#"
@@ -274,7 +286,10 @@ export const AddProject = ({ projectApiDataa }) => {
                                                         tabIndex="-1"
                                                         onClick={handleOptionClick}
                                                     >
-                                                        <input type="checkbox" />Python
+                                                       <label className="checkbox-label">
+                                                            <input type="checkbox" className="checkbox-input" />
+                                                            <span className="checkbox-text">Salesforce</span>
+                                                        </label>
                                                     </a>
                                                     <a
                                                         href="#"
@@ -283,7 +298,10 @@ export const AddProject = ({ projectApiDataa }) => {
                                                         tabIndex="-1"
                                                         onClick={handleOptionClick}
                                                     >
-                                                        <input type="checkbox" />NodeJS
+                                                      <label className="checkbox-label">
+                                                            <input type="checkbox" className="checkbox-input" />
+                                                            <span className="checkbox-text">NodeJs</span>
+                                                        </label>
                                                     </a>
                                                 </ul>
                                             </div>

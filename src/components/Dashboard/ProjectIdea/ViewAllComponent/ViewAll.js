@@ -18,9 +18,6 @@ export const ViewAll = () => {
         <>
             <Header />
             <div className="container page-color">
-                {/* <div className="view-all-nav-bar pt-4">
-            <p>Dashboard &gt; Project</p>
-          </div> */}
                 <nav style={{ "--bs-breadcrumb-divider: '>';": '' }} aria-label="breadcrumb">
                     <ol class="breadcrumb">
                         <li className="breadcrumb-item header-text ps-0"> <Link className="view-all fw-bold" to={{ pathname: '/dashboard' }} >
@@ -69,7 +66,6 @@ export const ProjectIdeas = (props) => {
 
         <div className="all-project-names pt-3" >
             <div className="child-wrapper">
-                {/* {console.log("props data type",typeof props.data)} */}
                 {props.data.map((user, index) => {
                     const isBorder = index === selectedIdx;
                     return (
@@ -102,7 +98,6 @@ export const ProjectIdeas = (props) => {
                                 <p className="project-text flex-grow-1">
 
                                     {user.projectText.length > 100 ? truncate(user.projectText, 100) : user.projectText}
-                                    {/* {user.projectText} */}
                                 </p>
                             </div>
                         </div>
