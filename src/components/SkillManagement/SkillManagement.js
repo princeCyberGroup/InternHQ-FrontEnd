@@ -12,7 +12,7 @@ const SkillManagement = () => {
                 <div className="row">
                     <div className="col-12">
                         <div className="SM-nav-bar">
-                            <p>Dashboard &gt; Skill Management</p>
+                            <div className="textfornow">Dashboard &gt; Skill Management</div>
                         </div>
                     </div>
                 </div>
@@ -20,7 +20,7 @@ const SkillManagement = () => {
                     <div class=" col-md-9">
                         <TakeTest />
                     </div>
-                    <div class=" col-md-3">
+                    <div class=" col-md-3 ">
                         <SkillsAdded />
                     </div>
                 </div>

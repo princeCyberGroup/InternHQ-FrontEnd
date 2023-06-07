@@ -66,7 +66,7 @@ export const AddNewIdea = () => {
                     data-bs-target="#exampleModal"
                     data-bs-whatever="@mdo"
                 >
-                    <p className="project-p mb-0 mt-2 pb-2">
+                    <p className="project-p mb-0 mt-2 pb-2 fw-bold">
                         <span>+</span> Add New Idea
                     </p>
                 </div>

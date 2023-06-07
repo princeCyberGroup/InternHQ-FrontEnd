@@ -19,11 +19,6 @@ import 'react-loading-skeleton/dist/skeleton.css'
 const DailyUpdateTable = () => {
   // const [loading, setLoading] = useState(false);
   const [tableData, setTableData] = useState([]);
-  // const [apiData, setApiData] = useState(tableData);
-  // setTimeout(() => {
-
-  //   console.log("object2", tableData);
-  // }, 5000);
   const [searchFilterValue, setSearchFilterValue] = useState("");
   const [dropdownFilterValue, setDropdownFilterValue] = useState("");
   const [dateFilterValue, setDateFilterValue] = useState("");
@@ -32,8 +27,6 @@ const DailyUpdateTable = () => {
   const [datemodalSaveFlag, setDatemodalSaveFlag] = useState(false);
   const [showModal, setShowModal] = useState(false);
   const [selectedItem, setSelectedItem] = useState(null);
-
-  // const [copydata, setCopyData] = useState([]);
   const [editedComment, setEditedComment] = useState("");
   const [modalSaveFlag, setModalSaveFlag] = useState(true);
   const [timeLeftmessage, setTimeLeftMessage] = useState(""); //Time left to edit comment in modal
@@ -42,9 +35,6 @@ const DailyUpdateTable = () => {
     fetchData();
     // loading?"":
     // handleFiltersChange();
-    // setTimeout(() => {
-    //     return setLoading(false);
-    // }, 5000);
   }, []);
   
   // useEffect(() => {
@@ -59,36 +49,14 @@ const DailyUpdateTable = () => {
         return response.json();
       })
       .then(async (data) => {
-        // const daCom = await ;
-        // console.log(daCom, "This is response")
-        // dataArr=[...tableData,data.response]
           setTableData(data.response);
           console.log(data.response);
-        // setCopyData(daCom);
-        // console.log("data coming: ", daCom);
-        // console.log(tableData);
-        // handleFiltersChange(data.response);
-
-        // setLoading(false);
-        // console.log("Data: ", data.response);
-        // console.log("Data:td ", tableData);
       });
   };
   let editableTime = Date.now();
   let currentTime = Date.now();
 
   const handleReadMore = (item) => {
-    var editableTime = item.timestamp + 48 * 60 * 60 * 1000; //48 hours in milliseconds
-    var currentTime = Date.now();
-    const timeRemaining = Math.floor(
-      // Remaining hours
-      (editableTime - currentTime) / (60 * 60 * 1000)
-    );
-    timeRemaining <= 0
-      ? setTimeLeftMessage("You Cannot Edit This Comment Now")
-      : setTimeLeftMessage(
-          "You Have " + timeRemaining + " Hours Left To Edit This Comment"
-        );
     setSelectedItem(item);
     setShowModal(true);
   };
@@ -98,9 +66,6 @@ const DailyUpdateTable = () => {
   const arrayStartIndex = (currentPage - 1) * resultsPerPage;
   const arrayEndIndex = arrayStartIndex + resultsPerPage;
   const arrayCurrentResults = tableData.slice(arrayStartIndex, arrayEndIndex);
-  // setTimeout(() => {
-  //   return setLoading(false);
-  // }, 5000);
   const handlePageChange = (pageNumber) => {
     setCurrentPage(pageNumber);
     window.scrollTo(0, 0); //To scroll all the way up whenever page gets clicked
@@ -123,26 +88,26 @@ const DailyUpdateTable = () => {
     setCurrentPage(1);
   };
 
-  const handleSave = () => {
-    const updatedTableArr = [...tableData];
-    updatedTableArr[selectedItem.id - 1].comment = editedComment;
-    setTableData(updatedTableArr);
-  };
 
-  const handleEdit = (event) => {
-    var editableTime = selectedItem.timestamp + 48 * 60 * 60 * 1000; //48 hours in milliseconds
-    var currentTime = Date.now();
-    if (currentTime <= editableTime) {
-      console.log(currentTime);
-      console.log(editableTime);
-      setEditedComment(event.target.value);
-      setModalSaveFlag(false);
-    } else {
-      console.log(currentTime);
-      console.log(editableTime);
-      setModalSaveFlag(true);
-    }
-  };
+  // const handleSave = () => {
+  //   const updatedTableArr = [...tableArr];
+  //   updatedTableArr[selectedItem.id - 1].comment = editedComment;
+  //   setTableData(updatedTableArr);
+  // };
+  // const handleEdit = (event) => {
+  //   var editableTime = selectedItem.timestamp + 48 * 60 * 60 * 1000; //48 hours in milliseconds
+  //   var currentTime = Date.now();
+  //   if (currentTime <= editableTime) {
+  //     console.log(currentTime);
+  //     console.log(editableTime);
+  //     // setEditedComment(event.target.value);
+  //     // setModalSaveFlag(false);
+  //   } else {
+  //     console.log(currentTime);
+  //     console.log(editableTime);
+  //     // setModalSaveFlag(true);
+  //   }
+  // };
 
   // const handleFiltersChange = () => {
   //   // console.log("dwdw",tableData);
