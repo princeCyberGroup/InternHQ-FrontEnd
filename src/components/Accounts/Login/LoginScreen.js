@@ -16,7 +16,7 @@ const LoginScreen = () => {
   const [isEmailValid, setIsEmailValid] = useState(false);
   const [password, setPassword] = useState("");
   const [isPasswordValid, setIsPasswordValid] = useState(true);
-  const [showPassword, setShowPassword] = useState(true);
+  const [showPassword, setShowPassword] = useState(false);
 
   const [incorrectemail, setIncorrectemail] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
@@ -37,7 +37,7 @@ const LoginScreen = () => {
   const handleTogglePasswordVisibility = () => {
     setShowPassword(!showPassword);
   };
-
+  let firstNaming;
   const handleSubmit = async (event) => {
     event.preventDefault();
     setIsLoading(true);
@@ -58,7 +58,9 @@ const LoginScreen = () => {
           firstName: response.data.firstName,
           lastName: response.data.lastName,
         };
-        console.log(res);
+         firstNaming = (response.data.firstName);
+         console.log(firstNaming, "HEre lies this")
+        console.log(res, "This is res that have been set");
         localStorage.setItem("userData", JSON.stringify(res));
         // const res = {
         //   token:response.data.token,
@@ -81,19 +83,27 @@ const LoginScreen = () => {
         localStorage.setItem("token");
       })
       .catch((error) => {
+        // if(error.response?.data.statusCode == 400) {
+        //   navigate(`/error?statusCode=${error.response?.data.statusCode}`)
+        // }
         console.log(error.response?.data);
         // console.log(error.response.data);
         // console.log(error.response?.data.msg);
         console.log(error.response.data.status);
 
         // localStorage.setItem("login",false);
-        if (error.response?.data.msg == "Error: Email does not exist") {
+        if (error.response?.data.msg === "Error: Email does not exist") {
           setIsEmailValid(false);
           setIncorrectemail(true);
         } else {
           setIsPasswordValid(false);
         }
         setIsLoading(false);
+        navigate({
+          pathname:"/error",
+          search:`statusCode=${error.response?.data.statusCode}`
+        })
+        // navigate(`/error?statusCode=${error.response?.data.statusCode}`);
       });
     // console.log(email);
     // console.log(`password: ${password} (hidden visible only on backend)`);
@@ -115,9 +125,11 @@ const LoginScreen = () => {
     //   clearInterval(interval);
     // };
   }, []);
-
   return (
     <div className="container-fluid login-screen-body ">
+      {/* {console.log(btoa("sign-up"))}
+      {console.log(encodeURIComponent("c2lnbi11cA=="))}
+      {console.log(atob("c2lnbi11cA=="))} */}
       <div className="row pos">
         <div className="d-flex justify-content-center  align-items-center flex-row">
           <div
@@ -141,7 +153,7 @@ const LoginScreen = () => {
               </div>
               <div
                 id="carouselExampleIndicators"
-                className="carousel slide mt-4"
+                className="carousel slide "
                 data-bs-ride="carousel"
                 // data-bs-interval="4000"
                 // data-interval="false" //Remove it
@@ -150,7 +162,7 @@ const LoginScreen = () => {
                   <button
                     data-bs-target="#carouselExampleIndicators"
                     data-bs-slide-to="0"
-                    class="active"
+                    className="active"
                     aria-current="true"
                     aria-label="Slide 1"
                     // onClick={() => handleSlideChange(0)}

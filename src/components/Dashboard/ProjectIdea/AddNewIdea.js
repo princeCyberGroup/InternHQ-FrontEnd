@@ -4,8 +4,8 @@ export const AddNewIdea = () => {
     return (
         <>
             <div className="card-body pb-0">
-                <div class="text-row-1">
-                    <p class="card-textt">
+                <div className="text-row-1">
+                    <p className="card-textt">
                         {" "}
                         Simply share your project ideas with us, and our experts
                         will review it and provide feedback and guidance on how to
@@ -14,11 +14,11 @@ export const AddNewIdea = () => {
                 </div>
 
                 <div className="share-project">
-                    <div class="d-flex align-item-center justify-content-between mb-2 ">
-                        <div class="d-flex">
-                            <p class="text mb-0 fw-bold">Shared Project Idea</p>
+                    <div className="d-flex align-item-center justify-content-between mb-2 ">
+                        <div className="d-flex">
+                            <p className="text mb-0 fw-bold">Shared Project Idea</p>
                         </div>
-                        <button type="button" class="view-all fw-bold">
+                        <button type="button" className="view-all fw-bold">
                             View All
                         </button>
                     </div>
@@ -72,47 +72,47 @@ export const AddNewIdea = () => {
                 </div>
             </div>
             <div
-                class="modal fade"
+                className="modal fade"
                 id="exampleModal"
-                tabindex="-1"
+                tabIndex="-1"
                 aria-labelledby="exampleModalLabel"
                 aria-hidden="true"
             >
-                <div class="modal-dialog">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h1 class="modal-title fs-5 add-project-wrapper" id="exampleModalLabel">
+                <div className="modal-dialog">
+                    <div className="modal-content">
+                        <div className="modal-header">
+                            <h1 className="modal-title fs-5 add-project-wrapper" id="exampleModalLabel">
                                 Add your Project Idea
                             </h1>
                             <button
                                 type="button"
-                                class="btn-close"
+                                className="btn-close"
                                 data-bs-dismiss="modal"
                                 aria-label="Close"
                             ></button>
                         </div>
-                        <div class="modal-body">
+                        <div className="modal-body">
                             <form>
-                                <div class="mb-3">
-                                    <label for="project-name" class="col-form-label title-text">
+                                <div className="mb-3">
+                                    <label htmlFor="project-name" className="col-form-label title-text">
                                         Project Name
                                     </label>
                                     <input
                                         type="text"
-                                        class="form-control"
+                                        className="form-control"
                                         id="project-name"
                                         placeholder='Enter Project Name'
                                     />
                                 </div>
-                                <div class="mb-3">
+                                <div className="mb-3">
                                     <label
-                                        for="project-description"
-                                        class="col-form-label title-text"
+                                        htmlFor="project-description"
+                                        className="col-form-label title-text"
                                     >
                                         Project Description
                                     </label>
                                     <textarea
-                                        class="form-control"
+                                        className="form-control"
                                         id="project-description"
                                         placeholder='Write Here..'
                                         rows={3}
@@ -120,8 +120,8 @@ export const AddNewIdea = () => {
                                     ></textarea>
                                 </div>
 
-                                <div class="mb-3">
-                                    <label for="technology-used" class="col-form-label title-text">
+                                <div className="mb-3">
+                                    <label htmlFor="technology-used" className="col-form-label title-text">
                                         Technology Used
                                     </label>
                                     <select className='form-select'>
@@ -132,33 +132,33 @@ export const AddNewIdea = () => {
                                         <option>SQL</option>
                                     </select>
                                     {/* <input
-                                    class="form-control"
+                                    className="form-control"
                                     type="text"
                                     id="technology-used"
                                 /> */}
 
                                 </div>
-                                <div class="mb-3">
-                                    <label for="Members(Optional)" class="col-form-label title-text">
+                                <div className="mb-3">
+                                    <label htmlFor="Members(Optional)" className="col-form-label title-text">
                                         Members(Optional)
                                     </label>
                                     <input
-                                        class="form-control"
+                                        className="form-control"
                                         id="project-description"
                                         placeholder='Member Name'
                                     />
                                 </div>
                             </form>
                         </div>
-                        <div class="modal-footer">
+                        <div className="modal-footer">
                             <button
                                 type="button"
-                                class="btn btn-secondary"
+                                className="btn btn-secondary"
                                 data-bs-dismiss="modal"
                             >
                                 Cancel
                             </button>
-                            <button type="button" class="btn btn-primary">
+                            <button type="button" className="btn btn-primary">
                                 Save
                             </button>
                         </div>

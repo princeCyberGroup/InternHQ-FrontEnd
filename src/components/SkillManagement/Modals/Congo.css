@@ -6,7 +6,7 @@
 
 .crossBtn {
     display: flex;
-    justify-content: end;
+    justify-content: flex-end;
     margin-right: 0.563rem;
     margin-top: 0.813rem;
     color: #232122;
