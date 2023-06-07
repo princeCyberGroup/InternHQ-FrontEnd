@@ -7,6 +7,7 @@ import { ReactComponent as Pause} from "./time trackingpause.svg"
 import { ReactComponent as Stop} from "./time trackingstop.svg"
 import { ReactComponent as StopD} from "./time trackingStopDisabled.svg"
 import { ReactComponent as PlayD} from "./time trackingStartDisabled.svg"
+import { useNavigate } from "react-router";
 
 const learningTypeOptions = [
   "CG Learning Videos",
@@ -39,6 +40,7 @@ const DailyTaskTracker = () => {
   const [isPaused, setIsPaused] = useState(false);
 
   const[firstCount,setFirstCount] = useState(true);
+  const navigate = useNavigate();
 
   // useEffect(() => {
   //   let interval;
@@ -152,6 +154,11 @@ const DailyTaskTracker = () => {
       ;
       console.log("Start Data sent to backend:", response.data);
     } catch (error) {
+      // console.log(error.response.status)
+      navigate({
+        pathname:"/error",
+        search:`statusCode=${error.response.status}`
+      })
       console.error("Error sending start data to backend:", error);
     }
   };
@@ -165,6 +172,10 @@ const DailyTaskTracker = () => {
       }});
       console.log("Pause Data sent to backend:", response.data);
     } catch (error) {
+      navigate({
+        pathname:"/error",
+        search:`statusCode=${error.response.status}`
+      })
       console.error("Error sending pause data to backend:", error);
     }
   };
@@ -180,6 +191,10 @@ const DailyTaskTracker = () => {
       }});
       console.log("Stop Data sent to backend:", response.data);
     } catch (error) {
+      navigate({
+        pathname:"/error",
+        search:`statusCode=${error.response.status}`
+      })
       console.error("Error sending stop data to backend:", error);
     }
   };
