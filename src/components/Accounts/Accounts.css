@@ -87,6 +87,11 @@ input:focus {
   font-weight: 600;
 }
 
+.sign-up-btn:hover {
+  background-color: #ffb81c;
+  color: #343435;
+}
+
 /* .btn:hover {
   background-color: #ffb81c;
   color: #343435;
@@ -107,6 +112,10 @@ a:hover {
   text-decoration: none;
   cursor: pointer;
   margin-bottom: 3.1rem;
+}
+
+.right-container-link:hover {
+  color: #28519e;
 }
 
 .success-body-container {
@@ -159,9 +168,14 @@ a:hover {
 
 .sign-up-warning {
   color: red;
-  font-size: 0.70rem;
+  font-size: 0.80rem;
 }
 
 .input-fields {
   max-width: 100%;
+}
+
+.password-toggle-button {
+  position: absolute;
+    right: 32px;
 }

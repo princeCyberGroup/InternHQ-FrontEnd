@@ -1,17 +1,33 @@
 .whole-card-wrapper {
-    width: 25rem;
+/*     width: 25rem; */
+    width: 378px;
+    height: 460px;
     border-radius: 0.5rem;
     box-shadow: 0px 4px 20px rgba(40, 52, 73, 0.15);
     background: #FFFFFF;
 }
 
-.card-header-1 {
+.dtt-hfs-abc {
+    /* width: 8.18rem; */
+    /* margin-top: 1rem;
+    margin-left: 1rem;
+    margin-bottom: 1rem; */
+    font-family: "Roboto";
+    font-style: normal;
+    font-weight: 600;
+    font-size: 1rem;
+    line-height: 1rem;
+    color: #343435;
+  }
+
+/* .card-header-1 {
+    padding-left: 1rem;
     max-height: 3.188rem;
     display: flex;
     flex: 1;
     background-color: #FFFFFF;
     border-bottom: 2px solid #E9ECEB;
-}
+} */
 
 .project-idea-btn {
 
@@ -27,7 +43,7 @@
 .project-btn {
     width: 10.5rem;
     border-radius: 0px 8px 0px 0px;
-    padding: 1rem 3.656rem;
+    padding: 1rem 3.65rem;
     background: #FFFFFF;
     align-items: center;
     justify-content: center;

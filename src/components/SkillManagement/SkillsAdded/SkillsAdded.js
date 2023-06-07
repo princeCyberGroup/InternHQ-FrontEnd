@@ -1,16 +1,36 @@
-import React from "react";
+import React ,{ useEffect } from "react";
 import "./SkillsAdded.css";
+import { useState , createContext } from "react";
+
 
 const SkillsAdded = () => {
+
+  const [tests, setTests] = useState([]);
+    const [allData, setAllData] = useState([]);
+    useEffect(() => {
+        fetchTests();
+    }, [])
+    const fetchTests = async () => {
+        try {
+            const response = await fetch("https://cg-interns-hq.azurewebsites.net/getAllExam");
+            const data = await response.json();
+            // console.log(data);
+            setAllData(data);
+            setTests(data);
+        }
+        catch (e) {
+            console.log(e);
+        }
+    }
   return (
-    <>
-      <div className="heading">
+    <> 
+       <div className="heading">
         <p>Skills Added</p>
       </div>
       <div className="card" style={{ width: "288px" }}>
         <div
           class="card-body p-0"
-          style={{ maxHeight: "50rem", overflow: "auto" }}
+          style={{ maxHeight: "730px", overflow: "auto" }}
         >
           <div className="row cards">
             <div className="col-12 d-flex mainImg">
@@ -124,6 +144,7 @@ const SkillsAdded = () => {
           </div>
         </div>
       </div>
+     
     </>
   );
 };

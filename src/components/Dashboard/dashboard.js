@@ -9,6 +9,12 @@ import { MentorComponent } from "./MentorList/MentorList";
 import "./dashboard.css";
 import { Link } from "react-router-dom";
 import Header from "../Header";
+import { KYMEmpty } from "./EmptyStates/EmptyMentorList/KYMEmpty";
+import { EmptyNoti } from "./EmptyStates/EmptyNoti/EmptyNoti";
+import EmptyGraph from "./EmptyStates/EmptyGraph/EmptyGraph";
+
+
+
 const Dashboard = () => {
   const [currPage, setCurrPage] = useState("dashboard");
   const [dashNav, setDashNav] = useState("dashboard");
@@ -26,24 +32,27 @@ const Dashboard = () => {
 
       <div className="responsiveness">
         <>
-          <div class="container-fluid">
-            <div class="row mt-3">
-              <div class=" col-md-4 ps-3">
+          <div className="container-fluid">
+            <div className="mt-3 das-card-wrapper-row1">
+              <div className="">
                 <DailyTaskTracker />
               </div>
-              <div class="col-md-4 ps-3">
+              <div className="">
                 <AddNewProjectComponent />
               </div>
-              <div class="col-md-4 ps-1">
+              <div className="">
                 <MentorComponent />
+                {/* <KYMEmpty/> */}
               </div>
             </div>
-            <div class="row mt-3 ">
-              <div class="col-md-8">
+            <div className="mt-2 das-card-wrapper-row2">
+              <div className="" style={{height:"376px"}}>
                 <DashboardGraph />
+                {/* <EmptyGraph/> */}
               </div>
-              <div class="col-md-4  ps-1">
+              <div className="mt-2" style={{height:"378px"}}>
                 <NotificationComponent />
+                   {/* <EmptyNoti/>*/}
               </div>
             </div>
           </div>

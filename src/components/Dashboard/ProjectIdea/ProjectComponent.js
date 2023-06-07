@@ -7,8 +7,13 @@ import './AddNewIdea.css';
 import axios from "axios";
 import { ProjectIdeaApi } from "./ProjectIdeaApi";
 
-export const AddNewProjectComponent = () => {
 
+export const AddNewProjectComponent = () => {
+  const [pActive, setPActive] = useState(true);
+
+  // const setProjectScreenType = (input) => {
+  //   console.log("Working");
+  // };
 
     const [pActive, setPActive] = useState(true);
     const [projectData, setProjectData] = useState(ProjectIdeaApi)
@@ -37,37 +42,39 @@ export const AddNewProjectComponent = () => {
         ProjectApi();
         MyIdeaComponent();
     }, []);
-    return (
-        <>
-            <div class="card whole-card-wrapper">
-                <div class="card-header-1  d-flex  d-flex justify-content-center align-item-center ">
-                    <div className={"project-idea-btn" + (pActive ? " p-active" : "")}>
-                        <button
-                            class="btn-1 p-0"
-                            onClick={() => {
-                                setPActive(true);
-                            }}
-                        >
-                            My Idea
-                        </button>
-                    </div>
-                    <div className={"project-btn" + (pActive ? " " : " p-active")}>
-                        <button
-                            class="btn-2 p-0"
-                            onClick={() => {
-                                setPActive(false);
-                            }}
-                        >
-                            Project
-                        </button>
-                    </div>
-                </div>
-                {pActive ? (
+  return (
+    <>
+      <div className="card whole-card-wrapper px-0">
+        <div className="border-bottom">
+        <div className="card-title dtt-hfs-abc m-0 d-flex  d-flex justify-content-center align-item-center ">
+          <div className={"project-idea-btn" + (pActive ? " p-active" : "")}>
+            <button
+              className="btn-1 p-0"
+              onClick={() => {
+                setPActive(true);
+              }}
+            >
+              My Idea
+            </button>
+          </div>
+          <div className={"project-btn" + (pActive ? " " : " p-active")}>
+            <button
+              className="btn-2 p-0"
+              onClick={() => {
+                setPActive(false);
+              }}
+            >
+              Project
+            </button>
+          </div>
+        </div>
+        </div>
+        {pActive ? (
                     <AddNewIdea projectDescript={projectData} />
                 ) : (
                     <AddProject projectApiDataa={projectApiData} />
                 )}
-            </div>
-        </>
-    );
-}
+      </div>
+    </>
+  );
+};

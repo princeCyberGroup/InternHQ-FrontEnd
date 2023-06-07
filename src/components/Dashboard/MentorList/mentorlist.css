@@ -18,7 +18,9 @@
     text-align: center;
     /* width: 80%; */
 }
-
+div.KYM {
+    bottom: -2.8rem;
+}
 .rounded-circle {
     height: 80px;
     width: 80px;

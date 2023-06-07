@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
+import axios from "axios";
 import "../Accounts.css";
 import Cginfinitylogo from "../../../Assets/Cginfinitylogo.png";
 import CarouselImage1 from "../../../Assets/CarouselImage1.svg";
@@ -9,13 +10,18 @@ import InfoIcon from "../../../Assets/InfoIcon.svg";
 
 const ForgotPasswordScreen = () => {
   const navigate = useNavigate();
-  const [activeIndex, setActiveIndex] = useState(0); //For carousel
+  // const [activeIndex, setActiveIndex] = useState(0); //For carousel
 
   const [email, setEmail] = useState("");
   const [isEmailValid, setIsEmailValid] = useState(false);
 
+  const [incorrectemail, setIncorrectemail] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+
+
   const handleEmailChange = (event) => {
     const { value } = event.target;
+    setIncorrectemail(false);
     setEmail(value);
     setIsEmailValid(
       value.match(/^[\w.-]+@cginfinity\.com$/)
@@ -24,31 +30,62 @@ const ForgotPasswordScreen = () => {
     );
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    navigate("/email-verification")
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    setIsLoading(true);
+    axios
+    .post(
+      "https://cg-interns-hq.azurewebsites.net/forgetPassword",
+      { email },
+      
+    )
+    .then((response) => {
+      console.log(response.data);
+      localStorage.setItem('token',response.data.token)
+      setIsLoading(false);
+      navigate("/email-verification")
+    })
+    .catch((error) => {
+      console.log(error.response.data);
+      if(error.response?.data[0].response == "Error: Invalid Email!") {
+        setIsEmailValid(false);
+        setIncorrectemail(true);
+      }
+      console.log(error.response?.data[0].response)
+      setIsLoading(false);
+    });
+    
   };
-  const handleSlideChange = (index) => {
-    setActiveIndex(index);
-  };
+  // const handleSlideChange = (index) => {
+  //   setActiveIndex(index);
+  // };
 
   useEffect(() => {
-    const interval = setInterval(() => {
-      setActiveIndex((prevIndex) => (prevIndex + 1) % 3);
-    }, 3000); //Make it 1000
+    let login = localStorage.getItem("login");
+    if (login) {
+      navigate("/dashboard");
+    }
+    // const interval = setInterval(() => {
+    //   setActiveIndex((prevIndex) => (prevIndex + 1) % 3);
+    // }, 3000); //Make it 1000
 
-    return () => {
-      clearInterval(interval);
-    };
+    // return () => {
+    //   clearInterval(interval);
+    // };
   }, []);
 
   return (
     <div className="container-fluid login-screen-body ">
       <div className="row pos">
         <div className="d-flex justify-content-center  align-items-center flex-row">
-          <div className="col-md-5" style={{ backgroundColor: "#002C3F",
+        <div
+            className="col-md-5"
+            style={{
+              backgroundColor: "#002C3F",
               height: "35.125rem",
-              width: "23.125rem", }}>
+              width: "23.125rem",
+            }}
+          >
             <div className="d-flex flex-column justify-content-center align-items-center">
               <div className="row cglogoimg">
                 <img
@@ -63,32 +100,42 @@ const ForgotPasswordScreen = () => {
               <div
                 id="carouselExampleIndicators"
                 className="carousel slide"
-                data-bs-ride="true"
+                data-bs-ride="carousel"
+                // data-bs-interval="4000"
                 // data-interval="false" //Remove it
               >
                 <div className="carousel-indicators">
                   <button
                     data-bs-target="#carouselExampleIndicators"
-                    onClick={() => handleSlideChange(0)}
-                    className={activeIndex === 0 ? "active" : ""}
+                    data-bs-slide-to="0"
+                    class="active"
+                    aria-current="true"
+                    aria-label="Slide 1"
+                    // onClick={() => handleSlideChange(0)}
+                    // className={activeIndex === 0 ? "active" : ""}
                   ></button>
                   <button
                     data-bs-target="#carouselExampleIndicators"
-                    onClick={() => handleSlideChange(1)}
-                    className={activeIndex === 1 ? "active" : ""}
+                    data-bs-slide-to="1"
+                    aria-label="Slide 2"
+                    // onClick={() => handleSlideChange(1)}
+                    // className={activeIndex === 1 ? "active" : ""}
                   ></button>
                   <button
                     data-bs-target="#carouselExampleIndicators"
-                    onClick={() => handleSlideChange(2)}
-                    className={activeIndex === 2 ? "active" : ""}
+                    data-bs-slide-to="2"
+                    aria-label="Slide 3"
+                    // onClick={() => handleSlideChange(2)}
+                    // className={activeIndex === 2 ? "active" : ""}
                   ></button>
                 </div>
                 <div className="carousel-inner">
                   <div
                     style={{ width: "16.25rem" }}
-                    className={`carousel-item ${
-                      activeIndex === 0 ? "active" : ""
-                    }`}
+                    // className={`carousel-item ${
+                    //   activeIndex === 0 ? "active" : ""
+                    // }`}
+                    className="carousel-item active"
                   >
                     <img
                       src={CarouselImage1}
@@ -103,9 +150,10 @@ const ForgotPasswordScreen = () => {
 
                   <div
                     style={{ width: "16.25rem" }}
-                    className={`carousel-item ${
-                      activeIndex === 1 ? "active" : ""
-                    }`}
+                    // className={`carousel-item ${
+                    //   activeIndex === 1 ? "active" : ""
+                    // }`}
+                    className="carousel-item"
                   >
                     <img
                       src={CarouselImage2}
@@ -119,9 +167,10 @@ const ForgotPasswordScreen = () => {
                   </div>
                   <div
                     style={{ width: "16.25rem" }}
-                    className={`carousel-item ${
-                      activeIndex === 2 ? "active" : ""
-                    }`}
+                    // className={`carousel-item ${
+                    //   activeIndex === 2 ? "active" : ""
+                    // }`}
+                    className="carousel-item"
                   >
                     <img
                       src={CarouselImage3}
@@ -187,7 +236,7 @@ const ForgotPasswordScreen = () => {
                   />
                   {!isEmailValid && email && (
                     <span className="sign-up-warning">
-                      Please make use of CG-Infinity email only
+                      {incorrectemail ? "Invalid Email!" : "Please make use of CG-Infinity email only"}
                     </span>
                   )}
                 </div>
@@ -196,10 +245,19 @@ const ForgotPasswordScreen = () => {
                   style={{top:"2.5rem", marginBottom: "2rem"}}
                   className="btn btn-warning border-0 sign-up-btn"
                   disabled={
-                    (!isEmailValid)
+                    (!isEmailValid || isLoading)
                   }
                 >
-                  Submit
+                 {isLoading ? (
+                    <div
+                      className="spinner-border spinner-border-sm text-light"
+                      role="status"
+                    >
+                      <span className="visually-hidden">Loading...</span>
+                    </div>
+                  ) : (
+                    "Submit"
+                  )}
                 </button>
               </form>
             </div>

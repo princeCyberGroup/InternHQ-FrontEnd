@@ -98,7 +98,6 @@ export const AddNewIdea = ({ projectDescript }) => {
         <>
             <div className="card-body pb-0">
                 <div className="text-row-1">
-
                     <p className="card-textt">
                         Simply share your project ideas with us, and our experts
                         will review it and provide feedback and guidance on how to
@@ -111,7 +110,6 @@ export const AddNewIdea = ({ projectDescript }) => {
                         <div className="d-flex">
                             <p className="text mb-0 fw-bold">Shared Project Idea</p>
                         </div>
-
                         <button className="view-all fw-bold" onClick={(e) => {
                             handleClick(e)
                         }} >View All</button>
@@ -154,7 +152,7 @@ export const AddNewIdea = ({ projectDescript }) => {
                     data-bs-target="#exampleModal"
                     data-bs-whatever="@mdo"
                 >
-                    <p className="project-p mb-0 mt-2 pb-2">
+                    <p className="project-p mb-0 mt-2 pb-2 fw-bold">
                         <span>+</span> Add New Idea
                     </p>
                 </div>
@@ -162,7 +160,7 @@ export const AddNewIdea = ({ projectDescript }) => {
             <div
                 className="modal fade"
                 id="exampleModal"
-                tabindex="-1"
+                tabIndex="-1"
                 aria-labelledby="exampleModalLabel"
                 aria-hidden="true"
             >
@@ -182,8 +180,8 @@ export const AddNewIdea = ({ projectDescript }) => {
                         <div className="modal-body">
                             <form>
                                 <div className="mb-3">
-                                    <label for="project-name" className="col-form-label title-text">
-                                        Project Name
+                                    <label htmlFor="project-name" className="col-form-label title-text">
+                                       Project Name
                                     </label>
                                     <input
                                         type="text"
@@ -197,7 +195,7 @@ export const AddNewIdea = ({ projectDescript }) => {
                                 </div>
                                 <div className="mb-3">
                                     <label
-                                        for="project-description"
+                                        htmlFor="project-description"
                                         className="col-form-label title-text"
                                     >
                                         Project Description
@@ -214,7 +212,7 @@ export const AddNewIdea = ({ projectDescript }) => {
                                 </div>
 
                                 <div className="mb-3">
-                                    <label for="technology-used" className="col-form-label title-text">
+                                    <label htmlFor="technology-used" className="col-form-label title-text">
                                         Technology Used
                                     </label>
                                 </div>
@@ -230,7 +228,6 @@ export const AddNewIdea = ({ projectDescript }) => {
                                                         setDropDown(!dropDown)
                                                     }}
                                                 >
-
                                                 </button>
 
                                                 <ul style={{ display: dropDown ? "" : "none" }}>
@@ -311,12 +308,12 @@ export const AddNewIdea = ({ projectDescript }) => {
                                         </div>
                                     </div>
                                 </div>
-                                <div class="mb-3">
-                                    <label for="Members(Optional)" class="col-form-label title-text">
+                                <div className="mb-3">
+                                    <label htmlFor="Members(Optional)" className="col-form-label title-text">
                                         Members(Optional)
                                     </label>
                                     <input
-                                        class="form-control"
+                                        className="form-control"
                                         id="project-description"
                                         placeholder="Member Name"
                                         value={textInput}

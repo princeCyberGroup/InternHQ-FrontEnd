@@ -3,7 +3,7 @@ import React, { useState, useEffect } from "react";
 const LearningTypeDropDown = ({ dropdownfunc }) => {
   const learningTypeOptions = [
     "Select learning type",
-    "CG Learning Video",
+    "CG Learning Videos",
     "Self Learning",
     "Mentor Assigned Task",
     "Project",

@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
 import "../Accounts.css";
 import Cginfinitylogo from "../../../Assets/Cginfinitylogo.png";
@@ -8,8 +9,11 @@ import CarouselImage3 from "../../../Assets/CarouselImage3.svg";
 import BackArrow from "../../../Assets/BackArrow.svg";
 
 const SignUpOtpScreen = () => {
+
+  const [otp, setOtp] = useState("");
+
   const navigate = useNavigate();
-  const [activeIndex, setActiveIndex] = useState(0); //For carousel
+  // const [activeIndex, setActiveIndex] = useState(0); //For carousel
   const [value, setValue] = useState('');
 
   const handleChange = (event) => {
@@ -17,36 +21,85 @@ const SignUpOtpScreen = () => {
     if (inputValue.length <= 6 && /^\d*$/.test(inputValue)) {
       setValue(inputValue);
     }
+    if(inputValue.trim().length <= 6) {
+      setOtp(inputValue.trim());
+    }
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    navigate("/success");
-  };
-  const handleSlideChange = (index) => {
-    setActiveIndex(index);
-  };
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    
+
+    const token = localStorage.getItem("token");
+    const email = localStorage.getItem("email");
+    axios
+      .post(
+        "https://cg-interns-hq.azurewebsites.net/verifyOtp",
+        { email, otp },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      )
+      .then((response) => {
+        const res = {
+          // token:response.data.token,
+          email:response.data.email,
+          userId:response.data.userId,
+          firstName:response.data.firstName,
+          lastName:response.data.lastName,
+        };
+        console.log(res)
+
+        // console.log(response.data.response[0].id);
+        // console.log(response.data)
+        // setCurrentUser(response.data);
+        // const token = response.data.token;
+        // localStorage.setItem("token", response.data.token);
+        localStorage.setItem('userData', JSON.stringify(res));
+        // setAuth({ email, password, token });
+        navigate("/success");
+        console.log(response.data);
+        localStorage.setItem("token");
+      })
+      .catch((error) => {
+        console.log(error.response.data);
+      });
+    console.log(otp);
+  }
+
+  // };
+  // const handleSlideChange = (index) => {
+  //   setActiveIndex(index);
+  // };
 
   useEffect(() => {
-    const interval = setInterval(() => {
-      setActiveIndex((prevIndex) => (prevIndex + 1) % 3);
-    }, 3000); //Make it 1000
+    let login = localStorage.getItem("login");
+    if (login) {
+      navigate("/dashboard");
+    }
+    // const interval = setInterval(() => {
+    //   setActiveIndex((prevIndex) => (prevIndex + 1) % 3);
+    // }, 3000); //Make it 1000
 
-    return () => {
-      clearInterval(interval);
-    };
+    // return () => {
+    //   clearInterval(interval);
+    // };
   }, []);
 
   return (
     <div className="container-fluid login-screen-body ">
       <div className="row pos">
         <div className="d-flex justify-content-center align-items-center flex-row">
-          <div className="col-md-5"
+        <div
+            className="col-md-5"
             style={{
               backgroundColor: "#002C3F",
               height: "35.125rem",
               width: "23.125rem",
-            }}>
+            }}
+          >
             <div className="d-flex flex-column justify-content-center align-items-center">
               <div className="row cglogoimg">
                 <img
@@ -61,32 +114,42 @@ const SignUpOtpScreen = () => {
               <div
                 id="carouselExampleIndicators"
                 className="carousel slide"
-                data-bs-ride="true"
+                data-bs-ride="carousel"
+                // data-bs-interval="4000"
                 // data-interval="false" //Remove it
               >
                 <div className="carousel-indicators">
                   <button
                     data-bs-target="#carouselExampleIndicators"
-                    onClick={() => handleSlideChange(0)}
-                    className={activeIndex === 0 ? "active" : ""}
+                    data-bs-slide-to="0"
+                    class="active"
+                    aria-current="true"
+                    aria-label="Slide 1"
+                    // onClick={() => handleSlideChange(0)}
+                    // className={activeIndex === 0 ? "active" : ""}
                   ></button>
                   <button
                     data-bs-target="#carouselExampleIndicators"
-                    onClick={() => handleSlideChange(1)}
-                    className={activeIndex === 1 ? "active" : ""}
+                    data-bs-slide-to="1"
+                    aria-label="Slide 2"
+                    // onClick={() => handleSlideChange(1)}
+                    // className={activeIndex === 1 ? "active" : ""}
                   ></button>
                   <button
                     data-bs-target="#carouselExampleIndicators"
-                    onClick={() => handleSlideChange(2)}
-                    className={activeIndex === 2 ? "active" : ""}
+                    data-bs-slide-to="2"
+                    aria-label="Slide 3"
+                    // onClick={() => handleSlideChange(2)}
+                    // className={activeIndex === 2 ? "active" : ""}
                   ></button>
                 </div>
                 <div className="carousel-inner">
                   <div
                     style={{ width: "16.25rem" }}
-                    className={`carousel-item ${
-                      activeIndex === 0 ? "active" : ""
-                    }`}
+                    // className={`carousel-item ${
+                    //   activeIndex === 0 ? "active" : ""
+                    // }`}
+                    className="carousel-item active"
                   >
                     <img
                       src={CarouselImage1}
@@ -101,9 +164,10 @@ const SignUpOtpScreen = () => {
 
                   <div
                     style={{ width: "16.25rem" }}
-                    className={`carousel-item ${
-                      activeIndex === 1 ? "active" : ""
-                    }`}
+                    // className={`carousel-item ${
+                    //   activeIndex === 1 ? "active" : ""
+                    // }`}
+                    className="carousel-item"
                   >
                     <img
                       src={CarouselImage2}
@@ -117,9 +181,10 @@ const SignUpOtpScreen = () => {
                   </div>
                   <div
                     style={{ width: "16.25rem" }}
-                    className={`carousel-item ${
-                      activeIndex === 2 ? "active" : ""
-                    }`}
+                    // className={`carousel-item ${
+                    //   activeIndex === 2 ? "active" : ""
+                    // }`}
+                    className="carousel-item"
                   >
                     <img
                       src={CarouselImage3}
@@ -152,7 +217,7 @@ const SignUpOtpScreen = () => {
               />
               <span style={{ display: "contents", fontSize: "0.875rem" }}>
                 {" "}
-                email@email.com
+                {localStorage.getItem("email")}
               </span>
             </div>
             <div>
