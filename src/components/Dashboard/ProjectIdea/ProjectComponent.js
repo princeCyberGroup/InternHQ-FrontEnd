@@ -9,7 +9,7 @@ import { ProjectIdeaApi } from "./ProjectIdeaApi";
 
 
 export const AddNewProjectComponent = () => {
-  const [pActive, setPActive] = useState(true);
+  // const [pActive, setPActive] = useState(true);
 
   // const setProjectScreenType = (input) => {
   //   console.log("Working");
