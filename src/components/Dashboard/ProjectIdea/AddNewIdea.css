@@ -72,7 +72,7 @@ p.card-textt {
 .project-members {
     display: flex;
     flex-direction: row;
-    justify-content: start;
+    justify-content: flex-start;
     position: relative;
     left: 0.6rem;
 }

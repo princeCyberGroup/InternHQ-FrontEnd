@@ -190,52 +190,58 @@ export default function DashboardGraph() {
 
   return (
     <>
-      <div class="card text-center report">
+      <div className="card text-center report">
         <div
           className="card-header bg-white pt-0 pb-0"
           style={{ paddingRight: "22px" }}
         >
-          <div class="d-flex justify-content-between">
-            <div class="btn-group" role="group">
-              <div className="daily"  class={`center ${
-                    active ? "card-heading-active" : "border-bottom-0"
-                  }`}
-                  onClick={() => {
-                    setGraphData("daily");
-                    setActive(true);
-                  }}>
+          <div className="d-flex justify-content-between">
+            <div className="btn-group" role="group">
+              <div
+                // className="daily"
+                className={`daily center ${
+                  active ? "card-heading-active" : "border-bottom-0"
+                }`}
+                onClick={() => {
+                  setGraphData("daily");
+                  setActive(true);
+                }}
+              >
                 {/* <button
                   type="button"
                  
                 > */}
-                 <p className="txt"> Daily Hours </p>
+                <p className="txt fw-bold me-3"> Daily Hours </p>
                 {/* </button> */}
               </div>
-              <div className="monthly" class={`center ${
-                    active ? "border-bottom-0" : "card-heading-active"
-                  }`}  style={{
-                    // width: "125px",
-                    marginLeft: "8px",
-                  }}
-                  onClick={() => {
-                    setGraphData("monthly");
-                    setActive(false);
-                  }}>
+              <div
+                className={`monthly center ${
+                  active ? "border-bottom-0" : "card-heading-active"
+                }`}
+                style={{
+                  // width: "125px",
+                  marginLeft: "8px",
+                }}
+                onClick={() => {
+                  setGraphData("monthly");
+                  setActive(false);
+                }}
+              >
                 {/* <button
                   type="button"
                   
                  
                 > */}
-                  <p className="txt"> Monthly Hours </p>
+                <p className="txt fw-bold"> Monthly Hours </p>
                 {/* </button> */}
               </div>
             </div>
             <div
-              class="dropdown"
+              className="dropdown"
               style={{ marginTop: "0.694rem", marginBottom: "0.594rem" }}
             >
               <button
-                class="btn dropdown-toggle dropdown-button"
+                className="btn dropdown-toggle dropdown-button"
                 type="button"
                 data-bs-toggle="dropdown"
                 aria-expanded="false"
@@ -243,7 +249,7 @@ export default function DashboardGraph() {
                 {graphType === "daily" ? "This Week" : "January"}
               </button>
               <ul
-                class="dropdown-menu"
+                className="dropdown-menu"
                 style={{
                   width: "123px",
                   "--bs-dropdown-min-width": 0,
@@ -253,7 +259,7 @@ export default function DashboardGraph() {
                 <DropdownItems />
                 {/* <li>
                   <a
-                    class="dropdown-item pe-0"
+                    className="dropdown-item pe-0"
                     href="#"
                     style={{ paddingLeft: "8px", fontSize: "14px" }}
                   >
@@ -262,7 +268,7 @@ export default function DashboardGraph() {
                 </li>
                 <li>
                   <a
-                    class="dropdown-item pe-0"
+                    className="dropdown-item pe-0"
                     href="#"
                     style={{ paddingLeft: "8px", fontSize: "14px" }}
                   >

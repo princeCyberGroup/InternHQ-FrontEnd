@@ -8,7 +8,7 @@ export const MentorComponent = () => {
     // setMentors(MentorData);
     // Fetch mentors data from the API
     fetchMentors();
-  }, [mentors]);
+  }, []);
 
   const fetchMentors = async () => {
     try {
