@@ -92,7 +92,7 @@ function App() {
         <Route path="/skill-management" element={<SkillManagement />} />
         <Route exact path="/TakeTest" component={<TakeTest />} />
         <Route path="/take-test" element={<TakeYourTest />} />
-        <Route path="/take-your-test/:examId" element={<TakeYourTest/>}/>
+        <Route path="/take-your-test" element={<TakeYourTest/>}/>
         {/* </Route> */}
         <Route path="/" element={<LoginScreen />} />
         <Route path="/forgot-password" element={<ForgotPasswordScreen />} />
