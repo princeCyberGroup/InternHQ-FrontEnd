@@ -72,53 +72,6 @@ export const NewNotifications = () => {
       Technology: "Angular",
     },
   ];
-    const data = [
-        {
-            FullName: 'John Doe',
-            Skill: 'Angular skill',
-            Technology: 'Angular'
-        },
-        {
-            FullName: 'John Doe',
-            Skill: 'Android Skill',
-            Technology: 'Android'
-        },
-        {
-            FullName: 'John Doe',
-            Skill: 'HTML 5 Skill',
-            Technology: 'Html'
-        },
-        {
-            FullName: 'John Doe',
-            Skill: 'SQL Skill',
-            Technology: 'SQL'
-        },
-        {
-            FullName: 'John Doe',
-            Skill: 'Angular Skill',
-            Technology: 'Angular'
-        }, {
-            FullName: 'John Doe',
-            Skill: 'Android Skill',
-            Technology: 'android'
-        },
-        {
-            FullName: 'John Doe',
-            Skill: 'HTML 5 Skill',
-            Technology: 'Html'
-        },
-        {
-            FullName: 'John Doe',
-            Skill: 'SQL Skill',
-            Technology: 'SQL'
-        },
-        {
-            FullName: 'John Doe',
-            Skill: 'Angular Skill',
-            Technology: 'Angular'
-        },
-    ];
-
     return (
         <>  {/* Notification parent */}
             {data.map((user, key) => {
