@@ -1,5 +1,108 @@
+import axios from "axios";
+import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
-export const AddProject = () => {
+export const AddProject = ({ projectApiDataa }) => {
+    const navigate = useNavigate();
+    const [first, ...rest] = projectApiDataa;
+    const [projName, setProjName] = useState("");
+    const [projDescription, setProjDescription] = useState("");
+    const [technologyNames, setTechnologyNames] = useState([]);
+    const [userId, setUserId] = useState("1");
+    const [projectLink,setProjectLink]=useState("");
+    const [hostedLink, setHostedLink] = useState("");
+    const [selectedOptions, setSelectedOptions] = useState([]);
+    const [counter, setCounter] = useState(1);
+    const [textInput, setTextInput] = useState('');
+    const [memberNames, setMemberNames] = useState({});
+    const [techNames, seTechNames] = useState({});
+    const [dropDown, setDropDown] = useState(false);
+
+    const handleInputChange = (event) => {
+        setTextInput(event.target.value);
+    };
+
+    //     const { value } = event.currentTarget.dataset;
+    //     const isChecked = event.currentTarget.querySelector('input').checked;
+
+    //     if (isChecked) {
+    //         const optionObject = { [`tech${counter}`]: value };
+    //         console.log(optionObject, "Valuesesars")
+    //         setSelectedOptions((prevSelectedOptions) => [...prevSelectedOptions, optionObject]);
+    //         setCounter((prevCounter) => prevCounter + 1);
+    //     } else {
+    //         setSelectedOptions((prevSelectedOptions) =>
+    //             prevSelectedOptions.filter((option) => Object.values(option)[0] !== value)
+    //         );
+    //     }
+    //     setTechnologyNames(selectedOptions);
+    //     console.log(selectedOptions, "This is selectedOptions")
+    //     console.log(technologyNames, "This is technologyNames")
+
+    // };
+   
+    let dataArr= {
+    }
+    const handleOptionClick = (event) => {
+        const { value } = event.currentTarget.dataset;
+        const isChecked = event.currentTarget.querySelector('input').checked;
+
+        if (isChecked) {
+            
+            var optionObject = `tech${counter}`;
+            technologyNames.push(value)
+            setSelectedOptions((prevSelectedOptions) => [...prevSelectedOptions, optionObject]);
+            setCounter((prevCounter) => prevCounter + 1);
+        } else {
+            setSelectedOptions((prevSelectedOptions) =>
+                prevSelectedOptions.filter((option) => Object.values(option)[0] !== value)
+            );
+        }
+    };
+    const handleClick = async (e) => {
+        e.preventDefault();
+        const data = { projectApiDataa }
+        navigate('/all-projects', { state: projectApiDataa });
+    }
+
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        axios.post("https://cg-interns-hq.azurewebsites.net/Project", {
+            projName,
+            projDescription,
+            userId,
+            projectLink,
+            hostedLink,
+            technologyNames:techNames,
+            memberNames
+        }).then((res) => {
+            console.log("print", res.data);
+        }).catch((err) => {
+            console.log(err);
+        })
+        setTextInput('');
+        setProjName("");
+        setProjDescription("");
+        setProjectLink("");
+        setHostedLink("");
+    }
+
+    useEffect(() => {
+        const texts = textInput.split(',').map((text) => text.trim());
+        const textObj = {};
+    
+        texts.forEach((text, index) => {
+          textObj[`member${index + 1}`] = text;
+        });
+    
+        
+        technologyNames.forEach((curElem,index)=>{
+            techNames[`tech${index+1}`]=curElem
+        })
+        setMemberNames(textObj);
+       
+      }, [textInput]);
+
     return (
         <>
             <div className="card-body pb-0">
@@ -15,25 +118,32 @@ export const AddProject = () => {
                         <div class="d-flex">
                             <p class="text mb-0 ms-1">Project</p>
                         </div>
-                        <button type="button" class="view-all">
-                            <p class="me-2">View All</p>
+                        <button
+                            type="button" onClick={(e) => {
+                                handleClick(e)
+                            }} class="view-all">
+                            View All
                         </button>
                     </div>
                 </div>
 
                 <div className="project-recipe-row mb-5">
                     <div className="recipe-text project-recipe-name">
-                        <h5 className="fw-bold">Recipe Recommendation Engine</h5>
+                        <h5 className="fw-bold">{first.projectNames}</h5>
                         <div className="project-link-1">
-                            <a href="#">http.reciperecommendationengine.github</a>{" "}
-                            {/* Use the Link component from React Router */}
+                            <a href="#" target="_blank" rel="noopener noreferrer">{first.projectLink}</a>
                         </div>
 
-                        <div className="technology-used ">Technology Used:</div>
+                        <div className="technology-used fw-bold">Technology Used:</div>
                         <div className="technology-badges">
-                            <div className="technology-badge-1">HTML</div>
-                            <div className="technology-badge-2">CSS</div>
-                            <div className="technology-badge-3">Java Script</div>
+                            {first.technology.map((currElem, index) => {
+                                if (currElem != null) {
+                                    return (
+                                        <div className="technology-badge-1">{currElem}</div>
+                                    )
+                                }
+                            })}
+
                         </div>
                     </div>
                 </div>
@@ -78,6 +188,9 @@ export const AddProject = () => {
                                         type="text"
                                         class="form-control"
                                         id="project-name"
+                                        value={projName}
+                                        placeholder="Enter Project Name"
+                                        onChange={(event) => setProjName(event.target.value)}
                                     />
                                 </div>
 
@@ -91,6 +204,10 @@ export const AddProject = () => {
                                     <textarea
                                         class="form-control"
                                         id="project-description"
+                                        value={projDescription}
+                                        placeholder="Write Here..."
+                                        onChange={(event) => setProjDescription(event.target.value)}
+                                        rows={3}
                                     ></textarea>
                                 </div>
 
@@ -98,24 +215,105 @@ export const AddProject = () => {
                                     <label for="technology-used" class="col-form-label title-text">
                                         Technology Used
                                     </label>
-                                    <select className='form-select'>
-                                        <option hidden selected>Select Technology</option>
-                                        <option>TypeScript</option>
-                                        <option>PHP</option>
-                                        <option>React JS</option>
-                                        <option>SQL</option>
-                                    </select>
-                                    {/* <input
-                                                    class="form-control"
-                                                    type=""
-                                                    id="technology-used"
-                                                /> */}
+                                </div>
+                                <div className="container border">
+                                    <div className="row">
+                                        <div className="col-lg-12">
+                                            <div className="button-group">
+                                                <button
+                                                    type="button"
+                                                    className="btn btn-default btn-sm dropdown-toggle"
+                                                    onClick={() => {
+                                                        setDropDown(!dropDown)
+                                                    }}
+                                                >
+
+                                                </button>
+                                                <ul style={{ display: dropDown ? "" : "none" }}>
+
+                                                    <a
+                                                        href="#"
+                                                        className="text-decoration-none"
+                                                        data-value="ReactJs"
+                                                        tabIndex="-1"
+                                                        onClick={handleOptionClick}
+                                                    >
+                                                       <label className="checkbox-label">
+                                                            <input type="checkbox" className="checkbox-input" />
+                                                            <span className="checkbox-text">ReactJs</span>
+                                                        </label>
+                                                    </a>
+                                                    <a
+                                                        href="#"
+                                                        className="small text-decoration-none"
+                                                        data-value="TypeScript"
+                                                        tabIndex="-1"
+                                                        onClick={handleOptionClick}
+                                                    >
+                                                       <label className="checkbox-label">
+                                                            <input type="checkbox" className="checkbox-input" />
+                                                            <span className="checkbox-text">TypeScript</span>
+                                                        </label>
+                                                    </a>
+                                                    <a
+                                                        href="#"
+                                                        className="small text-decoration-none"
+                                                        data-value=".Net"
+                                                        tabIndex="-1"
+                                                        onClick={handleOptionClick}
+                                                    >
+                                                        <label className="checkbox-label">
+                                                            <input type="checkbox" className="checkbox-input" />
+                                                            <span className="checkbox-text">DotNet</span>
+                                                        </label>
+                                                    </a>
+                                                    <a
+                                                        href="#"
+                                                        className="small text-decoration-none"
+                                                        data-value="Angular"
+                                                        tabIndex="-1"
+                                                        onClick={handleOptionClick}
+                                                    >
+                                                       <label className="checkbox-label">
+                                                            <input type="checkbox" className="checkbox-input" />
+                                                            <span className="checkbox-text">Angular</span>
+                                                        </label>
+                                                    </a>
+                                                    <a
+                                                        href="#"
+                                                        className="small text-decoration-none"
+                                                        data-value="Python"
+                                                        tabIndex="-1"
+                                                        onClick={handleOptionClick}
+                                                    >
+                                                       <label className="checkbox-label">
+                                                            <input type="checkbox" className="checkbox-input" />
+                                                            <span className="checkbox-text">Salesforce</span>
+                                                        </label>
+                                                    </a>
+                                                    <a
+                                                        href="#"
+                                                        className="small text-decoration-none"
+                                                        data-value="NodeJS"
+                                                        tabIndex="-1"
+                                                        onClick={handleOptionClick}
+                                                    >
+                                                      <label className="checkbox-label">
+                                                            <input type="checkbox" className="checkbox-input" />
+                                                            <span className="checkbox-text">NodeJs</span>
+                                                        </label>
+                                                    </a>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
                                 <div class="mb-3">
                                     <label for="Project Link" class="col-form-label title-text">
                                         Project Link
                                     </label>
-                                    <input class="form-control" id="project-link" />
+                                    <input class="form-control" id="project-link" value={projectLink}
+                                    onChange={(event) => setProjectLink(event.target.value)}/>
                                 </div>
                                 <div class="mb-3">
                                     <label
@@ -124,7 +322,8 @@ export const AddProject = () => {
                                     >
                                         Hosted Link(Optional)
                                     </label>
-                                    <input class="form-control" id="hosted-link" />
+                                    <input class="form-control" id="hosted-link" value={hostedLink}
+                                    onChange={(event) => setHostedLink(event.target.value)}/>
                                 </div>
                                 <div class="mb-3">
                                     <label for="Members(Optional)" class="col-form-label title-text">
@@ -133,6 +332,9 @@ export const AddProject = () => {
                                     <input
                                         class="form-control"
                                         id="project-description"
+                                        placeholder="Member Name"
+                                        value={textInput}
+                                        onChange={handleInputChange}
                                     />
                                 </div>
                             </form>
@@ -141,13 +343,13 @@ export const AddProject = () => {
                         <div class="modal-footer">
                             <button
                                 type="button"
-                                class="btn btn-secondary"
+                                className="btn cancel-button"
                                 data-bs-dismiss="modal"
                             >
-                                Cancel
+                              <span className="cancel-text">  Cancel</span>
                             </button>
-                            <button type="button" class="btn btn-primary">
-                                Save
+                            <button type="button" className="btn save-button" data-bs-dismiss="modal" onClick={handleSubmit}>
+                               <span className="save-text"> Save</span>
                             </button>
                         </div>
                     </div>
