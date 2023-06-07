@@ -9,12 +9,6 @@ import { ProjectIdeaApi } from "./ProjectIdeaApi";
 
 
 export const AddNewProjectComponent = () => {
-  const [pActive, setPActive] = useState(true);
-
-  // const setProjectScreenType = (input) => {
-  //   console.log("Working");
-  // };
-
     const [pActive, setPActive] = useState(true);
     const [projectData, setProjectData] = useState(ProjectIdeaApi)
     const [projectApiData, setProjectApiData] = useState()
@@ -69,6 +63,7 @@ export const AddNewProjectComponent = () => {
           </div>
         </div>
         </div>
+        {console.log("PData",projectData)}
         {pActive ? (
                     <AddNewIdea projectDescript={projectData} />
                 ) : (

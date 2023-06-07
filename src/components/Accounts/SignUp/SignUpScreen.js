@@ -50,6 +50,7 @@ const SignUpScreen = () => {
         password,
       })
       .then((response) => {
+        console.log("Inside then")
         console.log(response.data);
         localStorage.setItem("token", response.data.token);
         localStorage.setItem("email", email);
@@ -57,6 +58,7 @@ const SignUpScreen = () => {
         navigate("/sign-up-verification");
       })
       .catch((error) => {
+        console.log("Inside Catch")
         console.log(error.response?.data);
         if (error.response?.data.msg == "Error: User Already Exists!") {
           setIsEmailValid(false);
@@ -115,11 +117,11 @@ const SignUpScreen = () => {
                 // data-bs-interval="4000"
                 // data-interval="false" //Remove it
               >
-                <div className="carousel-indicators">
+                <div className="carousel-indicators" style={{marginBottom: "2.5rem"}}>
                   <button
                     data-bs-target="#carouselExampleIndicators"
                     data-bs-slide-to="0"
-                    class="active"
+                    className="active"
                     aria-current="true"
                     aria-label="Slide 1"
                     // onClick={() => handleSlideChange(0)}
@@ -205,12 +207,13 @@ const SignUpScreen = () => {
               <p className="right-container-heading">Sign Up</p>
             </div>
             <div className="row" style={{ height: "15.625rem" }}>
-              <form onSubmit={handleSubmit}>
+              <form onSubmit={(e)=>{
+                handleSubmit(e)}}>
                 <div style={{ height: "11.25rem", marginTop: "1rem" }}>
                   <div className="d-flex flex-column">
                     <label
                       className="input-label-text"
-                      for="exampleInputEmail1"
+                      htmlFor="exampleInputEmail1"
                     >
                       Email ID
                     </label>
@@ -235,7 +238,7 @@ const SignUpScreen = () => {
                     <label
                       style={{ marginTop: "1.75rem" }}
                       className="input-label-text"
-                      for="exampleInputPassword1"
+                      htmlFor="exampleInputPassword1"
                     >
                       Password
                     </label>
