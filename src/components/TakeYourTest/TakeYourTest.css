@@ -1,3 +1,6 @@
+.resp{
+  max-width: 1168px;  
+}
 .outerDiv {
     height: 100%;
     width: 100%;
@@ -43,12 +46,13 @@
 
 .testhHeading-and-Timer-Div {
     justify-content: space-between;
+    width: 1250px;
 }
 
 .Timer-and-attemtedQues {
     display: flex;
     justify-content: space-between;
-    margin-right: 80px;
+    /* margin-right: 80px; */
     margin-top: 10px;
     width: 380px;
 }
@@ -73,10 +77,14 @@
 }
 
 .attempted-Ques {
+    /* background: #D9D9D9; */
+box-shadow: 0px 4px 20px rgba(40, 52, 73, 0.15);
     margin-top: 40px;
     width: 228px;
     height: 32px;
-
+     border-radius: 4px;
+     border-color: black;
+     box-shadow: inset;
     font-family: 'Roboto';
     font-style: normal;
     font-weight: 600;
@@ -173,8 +181,8 @@
 
 .start-input {
     display: flex;
-    justify-content: start;
-    align-items: start;
+    justify-content: flex-start;
+    align-items: flex-start;
     width: 50px;
     padding: 10px;
     margin-left: 10px;

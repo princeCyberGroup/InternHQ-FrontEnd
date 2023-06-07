@@ -1,10 +1,23 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import SuccessCgLogo from "../../../Assets/SuccessCgLogo.svg";
 import SuccessIcon from "../../../Assets/SuccessIcon.svg";
 
 const RegistrationSuccessfulScreen = () => {
   const navigate = useNavigate();
+  useEffect(() => {
+    let login = localStorage.getItem("login");
+    if (login) {
+      navigate("/dashboard");
+    }
+    // const interval = setInterval(() => {
+    //   setActiveIndex((prevIndex) => (prevIndex + 1) % 3);
+    // }, 3000); //Make it 1000
+
+    // return () => {
+    //   clearInterval(interval);
+    // };
+  }, []);
   return (
     <div className="container-fluid flex-column justify-content-center success-body-container">
       <div className="row">

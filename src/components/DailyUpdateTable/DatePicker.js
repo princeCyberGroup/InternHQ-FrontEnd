@@ -12,12 +12,13 @@ const DatePicker = ({ datefunc }) => {
       <input
         className="form-control"
         type="month"
-        value= {selectedDate}
+        value= {selectedDate || "2023-12"}
+        // value={selectedDate}
         onChange={(event) => {
           setSelectedDate(event.target.value);
           // datefunc(selectedDate);
         }}
-        style={{ width: "80%" }}
+        style={{ width: "75%" }}
       />
     </div>
   );

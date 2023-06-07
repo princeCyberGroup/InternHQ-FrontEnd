@@ -13,11 +13,14 @@ const ForgotPasswordOtpScreen = () => {
   const [otp, setOtp] = useState("");
 
   const navigate = useNavigate();
-  const [activeIndex, setActiveIndex] = useState(0); //For carousel
+  // const [activeIndex, setActiveIndex] = useState(0); //For carousel
   const [value, setValue] = useState('');
+  const [isOtpValid, setIsOtpValid] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleChange = (event) => {
     const inputValue = event.target.value;
+    setIsOtpValid(false);
     if (inputValue.length <= 6 && /^\d*$/.test(inputValue)) {
       setValue(inputValue);
     }
@@ -28,6 +31,7 @@ const ForgotPasswordOtpScreen = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    setIsLoading(true);
     const token = localStorage.getItem("token");
     const email = localStorage.getItem("email");
     axios
@@ -42,39 +46,49 @@ const ForgotPasswordOtpScreen = () => {
       )
       .then((response) => {
         localStorage.setItem("token",response.data.token);
+        localStorage.setItem("email", email);
+        setIsLoading(false);
         navigate("/change-password");
         console.log(response.data);
       })
       .catch((error) => {
         console.log(error.response.data);
+        setIsOtpValid(true)
+        setIsLoading(false);
       });
     console.log(otp);
     
   };
-  const handleSlideChange = (index) => {
-    setActiveIndex(index);
-  };
+  // const handleSlideChange = (index) => {
+  //   setActiveIndex(index);
+  // };
 
   useEffect(() => {
-    const interval = setInterval(() => {
-      setActiveIndex((prevIndex) => (prevIndex + 1) % 3);
-    }, 3000); //Make it 1000
+    let login = localStorage.getItem("login");
+    if (login) {
+      navigate("/dashboard");
+    }
+    // const interval = setInterval(() => {
+    //   setActiveIndex((prevIndex) => (prevIndex + 1) % 3);
+    // }, 3000); //Make it 1000
 
-    return () => {
-      clearInterval(interval);
-    };
+    // return () => {
+    //   clearInterval(interval);
+    // };
   }, []);
 
   return (
     <div className="container-fluid login-screen-body ">
       <div className="row pos">
         <div className="d-flex justify-content-center align-items-center flex-row">
-          <div  className="col-md-5"
+        <div
+            className="col-md-5"
             style={{
               backgroundColor: "#002C3F",
               height: "35.125rem",
               width: "23.125rem",
-            }}>
+            }}
+          >
             <div className="d-flex flex-column justify-content-center align-items-center">
               <div className="row cglogoimg">
                 <img
@@ -88,33 +102,43 @@ const ForgotPasswordOtpScreen = () => {
               </div>
               <div
                 id="carouselExampleIndicators"
-                className="carousel slide"
-                data-bs-ride="true"
+                className="carousel slide "
+                data-bs-ride="carousel"
+                // data-bs-interval="4000"
                 // data-interval="false" //Remove it
               >
                 <div className="carousel-indicators">
                   <button
                     data-bs-target="#carouselExampleIndicators"
-                    onClick={() => handleSlideChange(0)}
-                    className={activeIndex === 0 ? "active" : ""}
+                    data-bs-slide-to="0"
+                    class="active"
+                    aria-current="true"
+                    aria-label="Slide 1"
+                    // onClick={() => handleSlideChange(0)}
+                    // className={activeIndex === 0 ? "active" : ""}
                   ></button>
                   <button
                     data-bs-target="#carouselExampleIndicators"
-                    onClick={() => handleSlideChange(1)}
-                    className={activeIndex === 1 ? "active" : ""}
+                    data-bs-slide-to="1"
+                    aria-label="Slide 2"
+                    // onClick={() => handleSlideChange(1)}
+                    // className={activeIndex === 1 ? "active" : ""}
                   ></button>
                   <button
                     data-bs-target="#carouselExampleIndicators"
-                    onClick={() => handleSlideChange(2)}
-                    className={activeIndex === 2 ? "active" : ""}
+                    data-bs-slide-to="2"
+                    aria-label="Slide 3"
+                    // onClick={() => handleSlideChange(2)}
+                    // className={activeIndex === 2 ? "active" : ""}
                   ></button>
                 </div>
                 <div className="carousel-inner">
                   <div
                     style={{ width: "16.25rem" }}
-                    className={`carousel-item ${
-                      activeIndex === 0 ? "active" : ""
-                    }`}
+                    // className={`carousel-item ${
+                    //   activeIndex === 0 ? "active" : ""
+                    // }`}
+                    className="carousel-item active"
                   >
                     <img
                       src={CarouselImage1}
@@ -129,9 +153,10 @@ const ForgotPasswordOtpScreen = () => {
 
                   <div
                     style={{ width: "16.25rem" }}
-                    className={`carousel-item ${
-                      activeIndex === 1 ? "active" : ""
-                    }`}
+                    // className={`carousel-item ${
+                    //   activeIndex === 1 ? "active" : ""
+                    // }`}
+                    className="carousel-item"
                   >
                     <img
                       src={CarouselImage2}
@@ -145,9 +170,10 @@ const ForgotPasswordOtpScreen = () => {
                   </div>
                   <div
                     style={{ width: "16.25rem" }}
-                    className={`carousel-item ${
-                      activeIndex === 2 ? "active" : ""
-                    }`}
+                    // className={`carousel-item ${
+                    //   activeIndex === 2 ? "active" : ""
+                    // }`}
+                    className="carousel-item"
                   >
                     <img
                       src={CarouselImage3}
@@ -180,7 +206,7 @@ const ForgotPasswordOtpScreen = () => {
               />
               <span style={{ display: "contents", fontSize: "0.875rem" }}>
                 {" "}
-                email@email.com
+                {localStorage.getItem("email")}
               </span>
             </div>
             <div>
@@ -204,12 +230,26 @@ const ForgotPasswordOtpScreen = () => {
                     onChange={handleChange}
                     placeholder="Code"
                   />
+                  {isOtpValid && otp && (
+                    <span className="sign-up-warning">
+                      Invalid OTP
+                    </span>
+                  )}
                 </div>
                 <button
                   class="btn btn-warning border-0 sign-up-btn mt-3"
-                  disabled={value.length < 6}
+                  disabled={value.length < 6 || isLoading}
                 >
-                  Verify
+                  {isLoading ? (
+                    <div
+                      className="spinner-border spinner-border-sm text-light"
+                      role="status"
+                    >
+                      <span className="visually-hidden">Loading...</span>
+                    </div>
+                  ) : (
+                    "Verify"
+                  )}
                 </button>
               </form>
             </div>

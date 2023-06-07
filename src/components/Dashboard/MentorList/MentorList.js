@@ -8,7 +8,7 @@ export const MentorComponent = () => {
     // setMentors(MentorData);
     // Fetch mentors data from the API
     fetchMentors();
-  }, [mentors]);
+  }, []);
 
   const fetchMentors = async () => {
     try {
@@ -37,7 +37,7 @@ export const MentorComponent = () => {
             className="carousel slide "
             data-bs-ride="carousel"
           >
-            <div className="carousel-indicators" style={{}}>
+            <div className="carousel-indicators KYM" style={{}}>
               {mentors.map((mentor, index) => (
                 <button
                   key={index}

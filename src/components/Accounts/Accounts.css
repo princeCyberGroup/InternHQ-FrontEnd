@@ -168,9 +168,14 @@ a:hover {
 
 .sign-up-warning {
   color: red;
-  font-size: 0.70rem;
+  font-size: 0.80rem;
 }
 
 .input-fields {
   max-width: 100%;
+}
+
+.password-toggle-button {
+  position: absolute;
+    right: 32px;
 }

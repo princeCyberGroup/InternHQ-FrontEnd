@@ -23,7 +23,7 @@
     padding: 16px;
     gap: 10px;
 
-    width: 407px;
+    width: 400px;
     height: 134px;
 
     background: #F7F8FB;
@@ -41,17 +41,19 @@
 
 .maincard {
     flex-direction: column;
-    align-items: center;
-    justify-content: center;
+    /* align-items: center;
+    justify-content: center; */
     /* padding: 16px 0px; */
     gap: 16px;
 
-    position: absolute;
+    /* position: absolute; */
     width: 862px;
-    height: 730px;
-    left: 55px;
-    top: 164px;
-    margin-top: 10px;
+    /* height: 730px; */
+    /* left: 55px;
+    top: 164px; */
+    /* margin-top: 5px;
+    margin-right: 10px; */
+    margin-left: 50px;
 
     background: #FFFFFF;
     box-shadow: 0px 4px 20px rgba(40, 52, 73, 0.15);
@@ -61,7 +63,9 @@
 .card-header-nav {
     /* padding-left: 1rem; */
     margin-top: 16px;
-    /* margin-left: 16px; */
+    width: 860px;
+    /* margin-left: 100px; */
+    margin-right: 200px;
     max-height: 3.188rem;
     display: flex;
     flex: 1;
@@ -71,7 +75,7 @@
 
 .nav-btn {
     display: flex;
-    width: 10.5rem;
+    width: 20px;
     /* margin-left: 2rem; */
     border-radius: 0px 8px 0px 0px;
     /*padding: 8px 16px;
@@ -118,18 +122,16 @@
     /* Secondary/Gray */
     border: 1px solid #B2B2B3;
     border-radius: 4px;
+    margin-left: 125px;
+    /* margin-right: 16px; */
 }
 
 .exam {
     border: 2px;
-    width: 407px;
+    width: 400px;
     height: 134px;
     margin-top: 20px;
 }
-.outer-card {
-    padding: 16px;
-}
-
 .imagespace {
     color: #28519E;
     width: 54px;
@@ -232,4 +234,6 @@
 
 }
 
-/* /////Modal Styling  */
+.skill-added-card{
+    margin-left: 60px;
+}
