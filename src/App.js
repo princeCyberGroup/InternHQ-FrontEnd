@@ -87,6 +87,7 @@ function App() {
         {/* <Route element={<AuthGuard />}> */}
 
         <Route path="/daily-update" element={<DailyUpdateTable />} />
+        <Route path="project-idea-projects" element={<ViewProjectIdeas />}/>
         <Route path="/all-projects" element={<ViewAll/>} />
         {/* <Route path={encodeUrl("/all-projects")} element={<ViewAll />} /> */}
         <Route path="/skill-management" element={<SkillManagement />} />
