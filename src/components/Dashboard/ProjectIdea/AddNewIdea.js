@@ -5,35 +5,40 @@ import axios from "axios";
 
 export const AddNewIdea = ({ projectDescript }) => {
     const navigate = useNavigate();
+    const [first, ...rest] = projectDescript;
     const [projName, setProjName] = useState("");
     const [projDescription, setProjDescription] = useState("");
-    const [technologyNames, setTechnologyNames] = useState([]);
-    // const [memberNames, setMemberNames] = useState({});
-    const [userId, setUserId] = useState("1");
-    const [first, ...rest] = projectDescript;
     const [selectedOptions, setSelectedOptions] = useState([]);
+    const [technologyNames, setTechnologyNames] = useState([]);
+    const [userId, setUserId] = useState("1");
     const [counter, setCounter] = useState(1);
-/////////////////////////////////////////////////////////////////
     const [textInput, setTextInput] = useState('');
-  const [memberNames, setMemberNames] = useState({});
+    const [memberNames, setMemberNames] = useState({});
+    const [techNames, seTechNames] = useState({});
+    const [dropDown, setDropDown] = useState(false);
 
-  const handleInputChange = (event) => {
-    setTextInput(event.target.value);
-  };
 
-    // const handleChange = (e) => {
-    //     const { name, value } = e.target;
-    //     setMemberNames((prevData) => ({ ...prevData, [name]: value }));
-    //     console.log("members",memberNames);
-    //   };
+    const truncate = (str, maxLength) => {
+        if (str.length > maxLength) return (str.slice(0, maxLength) + "...");
+        else return str;
+    }
 
+    const handleInputChange = (event) => {
+        setTextInput(event.target.value);
+    };
+
+    let dataArr = {
+    }
     const handleOptionClick = (event) => {
         const { value } = event.currentTarget.dataset;
         const isChecked = event.currentTarget.querySelector('input').checked;
 
         if (isChecked) {
-            const optionObject = { [`tech${counter}`]: value };
-            console.log(optionObject, "Valuesesars")
+
+            var optionObject = `tech${counter}`;
+            technologyNames.push(value)
+            console.log("Name:", technologyNames);
+            console.log(dataArr, "Valuesesars")
             setSelectedOptions((prevSelectedOptions) => [...prevSelectedOptions, optionObject]);
             setCounter((prevCounter) => prevCounter + 1);
         } else {
@@ -43,10 +48,6 @@ export const AddNewIdea = ({ projectDescript }) => {
         }
     };
 
-    const [dropDown, setDropDown] = useState(false);
-    //code for dropdown
-
-    //get api
     const handleClick = (e) => {
 
         e.preventDefault();
@@ -55,32 +56,46 @@ export const AddNewIdea = ({ projectDescript }) => {
     }
 
     const handleSubmit = (e) => {
+        if (projName.trim() === '') {
+            // Display error message or perform any other validation logic
+            alert('Project Name is required');
+            return;
+          }
+        
         e.preventDefault();
         axios.post("https://cg-interns-hq.azurewebsites.net/projectIdea", {
             projName,
             projDescription,
             userId,
-            technologyNames,
+            technologyNames: techNames,
             memberNames
         }).then((res) => {
             console.log("print", res.data);
         }).catch((err) => {
             console.log(err);
         })
-        console.log("Laga diya", selectedOptions)
-
-        ////////////////////////////////////////////////////////
-        const texts = textInput.split(',').map((text) => text.trim());
-    const textObj = {};
-
-    texts.forEach((text, index) => {
-      textObj[`member${index + 1}`] = text;
-    });
-
-    setMemberNames(textObj);
-    console.log("This is members object", memberNames);
-    setTextInput('');
+        setTextInput('');
+        setProjName("");
+        setProjDescription("");
+        
     }
+
+    useEffect(() => {
+        const texts = textInput.split(',').map((text) => text.trim());
+        const textObj = {};
+        texts.forEach((text, index) => {
+            textObj[`member${index + 1}`] = text;
+        });
+
+
+        technologyNames.forEach((curElem, index) => {
+            techNames[`tech${index + 1}`] = curElem
+        })
+
+        setMemberNames(textObj);
+        // console.log(selectedOptions);
+    }, [textInput]);
+
     return (
         <>
             <div className="card-body pb-0">
@@ -109,30 +124,28 @@ export const AddNewIdea = ({ projectDescript }) => {
                     <div className="recipe-text">
                         <h5 className="fw-bold">{first.projectNames}</h5>
                         <p className="fw-normal mb-1">
-                            {first.projectText}
+                            {first.projectText.length > 100 ? truncate(first.projectText, 100) : first.projectText}
                         </p>
-                        <div className="project-link-2">
-                            <a href="http.reciperecommendationengine.github">
-                                See More
-                            </a>
-                        </div>
                         <div className="members-div pt-0">
                             <div className="member mb pt-1 fw-bold mb-2">
                                 Members:
                             </div>
                             <div className="project-members ml-0">
-
-                                {first.members.map((curElem, index) => {
-                                    if (curElem != null) {
-                                        return (
-                                            <div className="project-idea-members">
-                                                <p className="name-of-members">
-                                                    {curElem.slice(0, 2).toUpperCase()}
-                                                </p>
-                                            </div>
-                                        )
-                                    }
-                                })}
+                                {first.members.length > 4 ? (
+                                    first.members.map((curElem, index) => {
+                                        if (curElem != null) {
+                                            return (
+                                                <div className="project-idea-members" key={index}>
+                                                    <p className="name-of-members">{curElem.slice(0, 2).toUpperCase()}</p>
+                                                </div>
+                                            );
+                                        }
+                                    })
+                                ) : (
+                                    <div className="project-idea-members">
+                                        <p className="name-of-members">+ {first.members.length}</p>
+                                    </div>
+                                )}
                             </div>
                         </div>
                     </div>
@@ -177,9 +190,11 @@ export const AddNewIdea = ({ projectDescript }) => {
                                     <input
                                         type="text"
                                         className="form-control"
+                                        value={projName}
                                         id="project-name"
                                         placeholder='Enter Project Name'
                                         onChange={(event) => setProjName(event.target.value)}
+                                        required
                                     />
                                 </div>
                                 <div className="mb-3">
@@ -191,11 +206,12 @@ export const AddNewIdea = ({ projectDescript }) => {
                                     </label>
                                     <textarea
                                         className="form-control"
+                                        value={projDescription}
                                         id="project-description"
                                         placeholder='Write Here..'
                                         onChange={(event) => setProjDescription(event.target.value)}
                                         rows={3}
-
+                                        required
                                     ></textarea>
                                 </div>
 
@@ -211,13 +227,14 @@ export const AddNewIdea = ({ projectDescript }) => {
                                             <div className="button-group">
                                                 <button
                                                     type="button"
-                                                    className="btn btn-default btn-sm dropdown-toggle"
+                                                    className="btn btn-default btn-sm dropdown-toggle drop-down-technology"
                                                     onClick={() => {
                                                         setDropDown(!dropDown)
                                                     }}
                                                 >
 
                                                 </button>
+
                                                 <ul style={{ display: dropDown ? "" : "none" }}>
 
                                                     <a
@@ -227,7 +244,10 @@ export const AddNewIdea = ({ projectDescript }) => {
                                                         tabIndex="-1"
                                                         onClick={handleOptionClick}
                                                     >
-                                                        <input type="checkbox" />ReactJs
+                                                        <label className="checkbox-label">
+                                                            <input type="checkbox" className="checkbox-input" />
+                                                            <span className="checkbox-text">ReactJs</span>
+                                                        </label>
                                                     </a>
                                                     <a
                                                         href="#"
@@ -236,7 +256,10 @@ export const AddNewIdea = ({ projectDescript }) => {
                                                         tabIndex="-1"
                                                         onClick={handleOptionClick}
                                                     >
-                                                        <input type="checkbox" />TypeScript
+                                                        <label className="checkbox-label">
+                                                            <input type="checkbox" className="checkbox-input" />
+                                                            <span className="">TypeScript</span>
+                                                        </label>
                                                     </a>
                                                     <a
                                                         href="#"
@@ -245,16 +268,22 @@ export const AddNewIdea = ({ projectDescript }) => {
                                                         tabIndex="-1"
                                                         onClick={handleOptionClick}
                                                     >
-                                                        <input type="checkbox" />.Net
+                                                        <label className="checkbox-label">
+                                                            <input type="checkbox" className="checkbox-input" />
+                                                            <span>.Net</span>
+                                                        </label>
                                                     </a>
                                                     <a
                                                         href="#"
                                                         className="small text-decoration-none"
-                                                        data-value="Angular"
+                                                        data-value="angular"
                                                         tabIndex="-1"
                                                         onClick={handleOptionClick}
                                                     >
-                                                        <input type="checkbox" />Angular
+                                                        <label className="checkbox-label">
+                                                            <input type="checkbox" className="checkbox-input" />
+                                                            <span>Angular</span>
+                                                        </label>
                                                     </a>
                                                     <a
                                                         href="#"
@@ -263,7 +292,9 @@ export const AddNewIdea = ({ projectDescript }) => {
                                                         tabIndex="-1"
                                                         onClick={handleOptionClick}
                                                     >
-                                                        <input type="checkbox" />Python
+                                                        <label className="checkbox-label">
+                                                            <input type="checkbox" className="checkbox-input" /><span>Python</span>
+                                                        </label>
                                                     </a>
                                                     <a
                                                         href="#"
@@ -272,9 +303,12 @@ export const AddNewIdea = ({ projectDescript }) => {
                                                         tabIndex="-1"
                                                         onClick={handleOptionClick}
                                                     >
-                                                        <input type="checkbox" />NodeJS
+                                                        <label className="checkbox-label">
+                                                            <input type="checkbox" className="checkbox-input" /><span>NodeJS</span>
+                                                        </label>
                                                     </a>
                                                 </ul>
+
                                             </div>
                                         </div>
                                     </div>
@@ -288,8 +322,7 @@ export const AddNewIdea = ({ projectDescript }) => {
                                         id="project-description"
                                         placeholder="Member Name"
                                         value={textInput}
-          onChange={handleInputChange}
-                                    // onChange={handleChange}
+                                        onChange={handleInputChange}
                                     />
                                 </div>
                             </form>
@@ -297,14 +330,14 @@ export const AddNewIdea = ({ projectDescript }) => {
                         <div className="modal-footer">
                             <button
                                 type="button"
-                                className="btn btn-secondary"
+                                className="btn cancel-button"
                                 data-bs-dismiss="modal"
                             >
-                                Cancel
+                                <span className="cancel-text"> Cancel </span>
                             </button>
-                            <button type="button" className="btn btn-primary" onClick={handleSubmit}
+                            <button type="button" className="btn save-button" data-bs-dismiss="modal" onClick={handleSubmit}
                             >
-                                Save
+                                <span className="save-text">  Save </span>
                             </button>
                         </div>
                     </div>

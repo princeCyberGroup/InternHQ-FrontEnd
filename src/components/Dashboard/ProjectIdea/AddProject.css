@@ -58,7 +58,7 @@
 }
 
 .technology-badges {
-    width: 12.5rem;
+    width: 7.5rem;
     display: flex;
     padding-top: 0.5rem;
     justify-content: space-between;
@@ -117,6 +117,7 @@
     font-weight: 600;
     font-size: 0.8rem;
     color: #28519E;
+    cursor: pointer;
 }
 
 .project-p {

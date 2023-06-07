@@ -2,7 +2,7 @@ import "./ProjectDescription.css";
 
 export const ProjectDescription = ({ data, indexNumber }) => {
     return (
-        <div className="">
+        <>
             {/* {console.log("This is data" , data[indexNumber])} */}
             <h5 className="project-detail-name">{data[indexNumber].projectNames}</h5>
             <p className="created-at">{data[indexNumber].createdAt}</p>
@@ -35,6 +35,6 @@ export const ProjectDescription = ({ data, indexNumber }) => {
             <p className="project-link-name">{data[indexNumber].ProjectLink}</p>
             <p className="project-detail-hosted-link">Hosted Link:</p> <p className="hosted-link-name">{data[indexNumber].HostedLink}</p> */}
 
-        </div>
+        </>
     )
 }
