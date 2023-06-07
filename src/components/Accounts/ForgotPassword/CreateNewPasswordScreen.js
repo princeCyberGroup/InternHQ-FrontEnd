@@ -16,8 +16,8 @@ const CreateNewPasswordScreen = () => {
   const [isPasswordValid, setIsPasswordValid] = useState(false);
   const [confirmPassword, setConfirmPassword] = useState("");
   const [isConfirmPasswordValid, setIsConfirmPasswordValid] = useState(false);
-  const [showNewPassword, setShowNewPassword] = useState(true);
-  const [showConfirmPassword, setShowConfirmPassword] = useState(true);
+  const [showNewPassword, setShowNewPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
   const [isPasswordSame, setIsPasswordSame] = useState(false);
   const [isLoading, setIsLoading] = useState(false);

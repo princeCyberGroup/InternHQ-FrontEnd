@@ -8,17 +8,18 @@ import "./AddNewIdea.css";
 export const AddNewProjectComponent = () => {
   const [pActive, setPActive] = useState(true);
 
-  const setProjectScreenType = (input) => {
-    console.log("Working");
-  };
+  // const setProjectScreenType = (input) => {
+  //   console.log("Working");
+  // };
 
   return (
     <>
-      <div class="card px-0">
-        <div class="card-header-1  d-flex  d-flex justify-content-center align-item-center ">
+      <div className="card px-0">
+        <div className="border-bottom">
+        <div className="card-title dtt-hfs-abc m-0 d-flex  d-flex justify-content-center align-item-center ">
           <div className={"project-idea-btn" + (pActive ? " p-active" : "")}>
             <button
-              class="btn-1 p-0"
+              className="btn-1 p-0"
               onClick={() => {
                 setPActive(true);
               }}
@@ -28,7 +29,7 @@ export const AddNewProjectComponent = () => {
           </div>
           <div className={"project-btn" + (pActive ? " " : " p-active")}>
             <button
-              class="btn-2 p-0"
+              className="btn-2 p-0"
               onClick={() => {
                 setPActive(false);
               }}
@@ -36,6 +37,7 @@ export const AddNewProjectComponent = () => {
               Project
             </button>
           </div>
+        </div>
         </div>
         {pActive ? <AddNewIdea /> : <AddProject />}
       </div>

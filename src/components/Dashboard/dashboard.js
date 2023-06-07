@@ -45,12 +45,12 @@ const Dashboard = () => {
                 {/* <KYMEmpty/> */}
               </div>
             </div>
-            <div className="mt-3 das-card-wrapper-row2">
-              <div className="">
+            <div className="mt-2 das-card-wrapper-row2">
+              <div className="" style={{height:"376px"}}>
                 <DashboardGraph />
                 {/* <EmptyGraph/> */}
               </div>
-              <div className="">
+              <div className="mt-2" style={{height:"378px"}}>
                 <NotificationComponent />
                    {/* <EmptyNoti/>*/}
               </div>

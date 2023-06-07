@@ -15,7 +15,7 @@ const SignUpScreen = () => {
   const [isEmailValid, setIsEmailValid] = useState(false);
   const [password, setPassword] = useState("");
   const [isPasswordValid, setIsPasswordValid] = useState(false);
-  const [showPassword, setShowPassword] = useState(true);
+  const [showPassword, setShowPassword] = useState(false);
 
   const [incorrectemail, setIncorrectemail] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
@@ -64,8 +64,8 @@ const SignUpScreen = () => {
         }
         setIsLoading(false);
       });
-    // console.log(email);
-    // console.log(`password: ${password} (hidden visible only on backend)`);
+    console.log(email);
+    console.log(`password: ${password} (hidden visible only on backend)`);
   };
   // const handleSlideChange = (index) => {
   //   setActiveIndex(index);
