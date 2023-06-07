@@ -5,13 +5,13 @@ import "./TakeTest.css";
 import { BsClock } from "react-icons/bs";
 import { MdOutlineBallot } from "react-icons/md";
 import Button from 'react-bootstrap/Button';
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 
 export const TestContext = createContext();
 
-const TakeTest = (props) => {
+const TakeTest = ({ test }) => {
     const [activeButton, setActiveButton] = useState("all");
     const [searchQuery, setSearchQuery] = useState("");
     const [tests, setTests] = useState([]);
@@ -33,9 +33,24 @@ const TakeTest = (props) => {
     const handleSearch = (event) => {
         setSearchQuery(event.target.value);
     };
-    const navigate = useNavigate();
-    const clickHandler = () => {
-        navigate("/take-your-test/examId");
+    const navigate =useNavigate();
+    // const location = useLocation();
+    
+    const clickHandler = (examId,examName,examDuration,numberOfQuestion,techName,level) => {
+        const data={
+            examId:examId,
+            examName:examName,
+            examDuration:examDuration,
+            numberOfQuestion:numberOfQuestion,
+            techName:techName,
+            level:level
+        };
+        // const locationstate=location.state;
+
+        navigate("/take-your-test",{
+            state:{ data }
+        });
+        
     }
     return (
         <> <div className="TTheading">
@@ -159,9 +174,12 @@ const TakeTest = (props) => {
                                                                 </div>
                                                                 <div class="modal-footer">
                                                                     <button type="button" class="btn btn-outline-primary" data-bs-dismiss="modal">Cancel</button>
-                                                                    <Link key={test.examId} to={`/take-your-test/${test.examId}`}>
-                                                                        <button type="button" onClick={() => { clickHandler() }} data-bs-dismiss="modal" class="btn btn-primary">Continue</button>
-                                                                    </Link>
+                                                                    {/* <Link key={test.examId} to={`/take-your-test`}> */}
+                                                                        <button type="button" 
+                                                                          onClick={() => clickHandler(test.examId, test.examName, test.examDuration, test.numberOfQuestion, test.techName, test.level)}
+                                                                        // onClick={() => { clickHandler(test.examId,test.examName,test.examDuration,test.numberOfQuestion,test.techName,test.level) }} 
+                                                                        data-bs-dismiss="modal" class="btn btn-primary">Continue</button>
+                                                                    {/* </Link> */}
                                                                 </div>
                                                             </div>
                                                         </div>

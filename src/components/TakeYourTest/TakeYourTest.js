@@ -2,45 +2,76 @@ import React from "react";
 import { useEffect, useState } from "react";
 import "./TakeYourTest.css";
 import Header from "../Header";
-import { useNavigate } from "react-router-dom";
+import { ScrollRestoration, useNavigate } from "react-router-dom";
 import { useParams } from 'react-router-dom';
+
+import { useLocation } from 'react-router-dom';
 import Congo from "../SkillManagement/Modals/Congo.js";
 import Sorry from "../SkillManagement/Modals/Sorry.js";
 
 const TakeYourTest = () => {
-    const { examId } = useParams();
+
+    // const { examId } = useParams();
     const [testsData, setTestsData] = useState([]);
     const [allData, setAllData] = useState([]);
     const navigate = useNavigate();
+    const location = useLocation();
+  const { data } = location.state;
+    // const location = useLocation();
+    // const { data } = location.state;
+    const { examId, examName, examDuration, numberOfQuestion, techName, level } = data;
     const [Ques, setTestsQues] = useState([]);
     const [allQuesData, setAllQuesData] = useState([]);
-    const [testDetails, setTestDetails] = useState({});
     const [activeRadioButtons, setActiveRadioButtons] = useState();
     const [userAnswers, setUserAnswers] = useState([]);
-    const fetchTestsForExams = async (examIdToCheck) => {
-        try {
-            // console.log("Working")
-            const response = await fetch("https://cg-interns-hq.azurewebsites.net/getAllExam");
-            const data = await response.json();
-            console.log(data);
-            data.forEach((i) => {
-                if (i.examId == examId) {
-                    setTestDetails(i);
-                }
-            })
-            setAllData(data);
-            setTestsData(data);
+    const [fullscreen, setFullscreen] = useState(false);
+    const [submitted, setSubmitted] = useState(false);
+    const [submitAnswer, setSubmitAnswer] = useState([]);
+    const clickHandler = () => {
+        navigate("/skill-Management");
+    };
+    useEffect(() => {
+        if (fullscreen) {
+            enterFullscreen();
+        } else {
+            exitFullscreen();
         }
-        catch (e) {
-            console.error('Error fetching exam details:', e);
+    }, [fullscreen]);
+
+    const enterFullscreen = () => {
+        const element = document.documentElement;
+        if (element.requestFullscreen) {
+            element.requestFullscreen();
+        } else if (element.mozRequestFullScreen) {
+            element.mozRequestFullScreen();
+        } else if (element.webkitRequestFullscreen) {
+            element.webkitRequestFullscreen();
+        } else if (element.msRequestFullscreen) {
+            element.msRequestFullscreen();
         }
     };
+
+    const exitFullscreen = () => {
+        if (document.exitFullscreen) {
+            document.exitFullscreen();
+        } else if (document.mozCancelFullScreen) {
+            document.mozCancelFullScreen();
+        } else if (document.webkitExitFullscreen) {
+            document.webkitExitFullscreen();
+        } else if (document.msExitFullscreen) {
+            document.msExitFullscreen();
+        }
+    };
+
     const [time, setTime] = useState(0);
+    //main use effect
     useEffect(() => {
         fetchTests();
-        fetchTestsForExams();
+        // fetchTestsForExams();
         handleAnswerSelect();
-        const examDurationInSeconds = parseInt(testDetails.examDuration) * 60;
+        setFullscreen(true);
+        window.addEventListener("keydown", handleKeyDown);
+        const examDurationInSeconds = parseInt(examDuration) * 60;
         setTime(examDurationInSeconds);
         // console.log(testDetails.examDuration)
         const timer = setInterval(() => {
@@ -49,15 +80,19 @@ const TakeYourTest = () => {
                     return prevTime - 1;
                 } else {
                     clearInterval(timer);
+                    submitQuiz();
                     return 0;
                 }
             });
         }, 1000);
-
+      
         return () => {
-            clearInterval(timer); 
+            clearInterval(timer);
+            exitFullscreen();
+            window.removeEventListener("keydown", handleKeyDown);
         };
-    }, [testDetails.examDuration]);
+    }, []);
+ 
 
 
     const formatTime = (time) => {
@@ -66,13 +101,10 @@ const TakeYourTest = () => {
         return `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
     };
 
-
     const fetchTests = async () => {
         try {
-            const response = await fetch("https://cg-interns-hq.azurewebsites.net/getAllQuestions?examId=1");
-            // console.log(response)
+            const response = await fetch(`https://cg-interns-hq.azurewebsites.net/getAllQuestions?examId=1`);
             const Quesdata = await response.json();
-            // console.log(Quesdata);
             setAllQuesData(Quesdata);
             setTestsQues(Quesdata);
         }
@@ -81,17 +113,16 @@ const TakeYourTest = () => {
         }
     }
 
-
-
     const handleAnswerSelect = (questionId, selectedAnswer) => {
         setUserAnswers((prevAnswers) => ({
             ...prevAnswers,
             [questionId]: selectedAnswer,
         }));
-        // console.log(userAnswers)
+
+        //setUserAnswers(prevAnswers => [...prevAnswers,{"qId":[questionId], "choosenOpt": selectedAnswer}])
         setActiveRadioButtons(getActiveRadioCount());
     };
-    //////////////////////////////////////////////////////
+
     const getActiveRadioCount = () => {
         let count = 0;
         Object.values(userAnswers).forEach((answer) => {
@@ -108,42 +139,74 @@ const TakeYourTest = () => {
         radioButton.addEventListener('change', () => {
         }
         );
-        
+
     });
-    ///////////////////////////////////////////////////
 
-    /////////////////////////////////////////////////////
-    const calculateScore = () => {
-        let score = 0;
-        Ques.forEach((quest) => {
-            if (userAnswers[quest.questionId] === quest.answer) {
-                score++;
-            }
-        });
-        return score;
-    };
-    ///////////////////////////////////////////////////////
     const submitQuiz = () => {
-        const score = calculateScore();
+        setFullscreen(false);
+        setSubmitted(true);
+        clickHandler();
+    };
 
-        console.log("Quiz submitted! Score:", score);
+    const handleKeyDown = (event) => {
+        if (event.key === "Escape") {
+            event.preventDefault(); // Prevent default behavior of Esc key
+        }
     };
-    const clickHandler = () => {
-        navigate("/skill-Management");
+    let submitQuesData;
+    let totalScore;
+    let resp;
+
+    const submitTest = async () => {
+        try {
+            const mappedAnswers = Object.entries(userAnswers).map(([questionId, selectedAnswer]) => ({
+                qId: questionId,
+                choosenOpt: selectedAnswer
+            }));
+            const response = await fetch('https://cg-interns-hq.azurewebsites.net/submitAnswer', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+
+                    "userId": 30,
+                    "technology": techName,
+                    "level":level,
+                    "optRequest": mappedAnswers
+
+                })
+            });
+            submitQuesData = await response.json();
+            totalScore = submitQuesData.totalScore;
+            resp = submitQuesData.resp; //array 
+            //  console.log(totalScore);
+            setSubmitAnswer(submitQuesData);
+             console.log(submitQuesData);
+            console.log(submitQuesData.totalScore);
+            console.log(totalScore);
+            // console.log(submitQuesData.resp);
+
+        } catch (error) {
+            console.log(error);
+        }
+
     };
-    const score = calculateScore();
+
     const modalTarget = () => {
-
         const a = '#congoModal123'
         const b = '#sorryModal'
-        if (score >= 5) {
+        // console.log(totalScore);
+        if (totalScore >= 5) {
             return a;
         }
         else {
             return b;
         }
     }
-    const Targetm = modalTarget();
+
+    const Targetm = modalTarget(totalScore);
+
     const renderQuestions = () => {
         return (
             <div>
@@ -161,13 +224,14 @@ const TakeYourTest = () => {
                                     <div className="start-input">
                                         <input
                                             type="radio"
+                                            // id = "select"
                                             name={`question_${quest.questionId}`}
                                             value={option}
                                             onChange={() => handleAnswerSelect(quest.questionId, option)}
                                             checked={userAnswers[quest.questionId] === option}
                                         />
                                     </div>
-                                    <label className="options-of-quiz"> {option} </label>
+                                    <label  className="options-of-quiz"> {option} </label>
                                 </div>
                             ))}
                         </div>
@@ -197,12 +261,14 @@ const TakeYourTest = () => {
                                 <span class="modal-title instruction" id="staticBackdropLabel">
                                     Submit Test{" "}
                                 </span>
-                                <button
-                                    type="button"
-                                    class="btn-close"
-                                    data-bs-dismiss="modal"
-                                    aria-label="Close"
-                                ></button>
+                                {submitted && (
+                                    <button
+                                        type="button"
+                                        class="btn-close"
+                                        data-bs-dismiss="modal"
+                                        aria-label="Close"
+                                    ></button>
+                                )}
                             </div>
                             <div class="modal-body"> Sure Want to submit the test ? </div>
                             <div class="modal-footer">
@@ -217,7 +283,10 @@ const TakeYourTest = () => {
                                     type="button"
                                     onClick={() => {
                                         submitQuiz();
+                                        // setFullscreen(false);
                                         clickHandler();
+                                        submitTest();
+                                        console.log(userAnswers);
                                     }}
                                     data-bs-dismiss="modal"
                                     className="btn btn-primary"
@@ -237,17 +306,9 @@ const TakeYourTest = () => {
     };
     return (
         <>
-            <Header />
             <div className="resp">
                 <div class="container-fluid ">
                     <div className="row">
-                        <div className="col-12 mt-4  ">
-                            <div className="textfornow">
-                                Dashboard {">"}
-                                Skill Management {">"}
-                                Name of the Test{" "}
-                            </div>
-                        </div>
                     </div>
                     <div className="row testhHeading-and-Timer-Div">
                         <div className="col-3" >
@@ -255,7 +316,7 @@ const TakeYourTest = () => {
                                 <p> Take The Test </p>
                             </div>
                             <div className="quiz-description mx-5 ">
-                                {testDetails.examName}{" "}{'\u2B24'}{" "}{testDetails.examDuration}{" "}mins{" "}{'\u2B24'}{" "}{testDetails.numberOfQuestion}{" "}Questions
+                                {examName}{" "}{'\u2B24'}{" "}{examDuration}{" "}mins{" "}{'\u2B24'}{" "}{numberOfQuestion}{" "}Questions
                             </div>
                         </div>
                         <div className="col-3 Timer-and-attemtedQues">
@@ -263,15 +324,20 @@ const TakeYourTest = () => {
                                 <p>{formatTime(time)}</p>
                             </div>
                             <div className="col-3 active-Radio-Buttons attempted-Ques">
-                           
+
                                 {/* Attempted Questions: {activeRadioButtons}/{testDetails.numberOfQuestion} */}
-                                Attempted Questions: {activeRadioCount}/{testDetails.numberOfQuestion}
+                                Attempted Questions: {activeRadioCount}/{numberOfQuestion}
                             </div>
                         </div>
                     </div>
                     <div className="ques.card ">
                         <div className="card insidecard" style={{ width: "1220px" }}>
-                            <div> {renderQuestions()} </div>
+
+                            {fullscreen && !submitted && (
+                                <div> {renderQuestions()} </div>
+
+                            )}
+
                         </div>
                     </div>
                 </div>
@@ -281,3 +347,7 @@ const TakeYourTest = () => {
     );
 };
 export default TakeYourTest;
+
+
+
+

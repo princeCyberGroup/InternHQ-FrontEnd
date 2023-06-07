@@ -26,7 +26,7 @@ function App() {
             <Route path="/all-projects" element={<ViewAll/>} />
             <Route path="/skill-Management" element={< SkillManagement/>} />
              <Route exact path="/TakeTest" component={<TakeTest />} />
-            <Route path="/take-your-test/:examId" element={<TakeYourTest/>}/>
+            <Route path="/take-your-test" element={<TakeYourTest/>}/>
             <Route path="/dashboard" element={<Dashboard />} />
             <Route path="/all-projects" element={<ViewAll />} />
           </Route>
