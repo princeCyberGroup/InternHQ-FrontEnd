@@ -1,3 +1,11 @@
+.mainDiv{
+    max-width: 1280px;
+    margin: 0 auto;
+}
+.skill-added-card{
+    /* margin-left: 10px; */
+}
+
 .SM-nav-bar {
     margin-top: 20px;
     display: flex;
@@ -35,6 +43,5 @@ order: 0;
 flex-grow: 0;
 }
 .bothcard{
-    justify-content: space-evenly;
-   
+    justify-content: space-evenly; 
 }

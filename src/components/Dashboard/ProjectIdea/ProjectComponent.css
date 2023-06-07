@@ -1,12 +1,10 @@
-.card {
+.whole-card-wrapper {
+/*     width: 25rem; */
     width: 378px;
     height: 460px;
-    /* width: 25rem; */
     border-radius: 0.5rem;
     box-shadow: 0px 4px 20px rgba(40, 52, 73, 0.15);
     background: #FFFFFF;
-    /* left: 0;
-    top: 0; */
 }
 
 .dtt-hfs-abc {
@@ -35,8 +33,6 @@
 
     border-radius: 8px 0px 0px 0px;
     width: 10.5rem;
-    /* padding: 8px 16px;
-    gap: 8px; */
     background: #FFFFFF;
     align-items: center;
     justify-content: center;
@@ -46,11 +42,7 @@
 
 .project-btn {
     width: 10.5rem;
-    /* margin-left: 2rem; */
     border-radius: 0px 8px 0px 0px;
-    /*padding: 8px 16px;
-    gap: 8px;
-    */
     padding: 1rem 3.65rem;
     background: #FFFFFF;
     align-items: center;
@@ -62,15 +54,12 @@
 }
 
 .btn-1 {
-    /* width: 7rem; */
     border: none;
     background: #FFFFFF;
     font-style: normal;
     font-weight: 600;
     font-size: 1rem;
     text-align: center;
-    /* padding-top: 1rem;
-    padding-bottom: 1rem; */
     color: #343435;
 }
 
@@ -81,8 +70,6 @@
     font-weight: 600;
     font-size: 1rem;
     text-align: center;
-    /* padding-top: 1rem;
-    padding-bottom: 1rem; */
     color: #343435;
 }
 

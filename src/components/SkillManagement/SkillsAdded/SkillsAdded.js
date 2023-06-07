@@ -23,8 +23,8 @@ const SkillsAdded = () => {
         }
     }
   return (
-    <>
-      <div className="heading">
+    <> 
+       <div className="heading">
         <p>Skills Added</p>
       </div>
       <div className="card" style={{ width: "288px" }}>
@@ -144,6 +144,7 @@ const SkillsAdded = () => {
           </div>
         </div>
       </div>
+     
     </>
   );
 };
