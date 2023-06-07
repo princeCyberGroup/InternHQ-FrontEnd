@@ -105,12 +105,10 @@ function App() {
         <Route path="/change-password" element={<CreateNewPasswordScreen />} />
         <Route path="/change-success" element={<PasswordChangedScreen />} />
         <Route path="*" element={<ErrorPage />} />
-
-        {/* </div> */}
+          
       </Routes>
       {/* </Router> */}
-      {/* <TakeYourTest/> */}
-    </div>
+  </div>
   );
 }
 
