@@ -21,6 +21,7 @@ import AuthGuard from "./components/AuthGuard";
 import TakeYourTest from "./components/TakeYourTest/TakeYourTest";
 import DailyUpdateTable from "./components/DailyUpdateTable/DailyUpdateTable";
 import SkillManagement from "./components/SkillManagement/SkillManagement";
+import {ViewProjectIdeas} from "./components/Dashboard/ProjectIdea/ViewAllProjectIdea/ViewAllProjectIdea";
 import ErrorPage from "./components/ErrorPage/ErrorPage";
 // import CustomRoute from "./components/CustomRoute";
 import TakeTest from "./components/SkillManagement/TakeTest/TakeTest";
@@ -105,12 +106,10 @@ function App() {
         <Route path="/change-password" element={<CreateNewPasswordScreen />} />
         <Route path="/change-success" element={<PasswordChangedScreen />} />
         <Route path="*" element={<ErrorPage />} />
-
-        {/* </div> */}
+          
       </Routes>
       {/* </Router> */}
-      {/* <TakeYourTest/> */}
-    </div>
+  </div>
   );
 }
 

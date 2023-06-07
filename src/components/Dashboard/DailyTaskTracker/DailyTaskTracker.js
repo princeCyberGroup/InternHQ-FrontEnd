@@ -1,44 +1,94 @@
 import React, { useState, useEffect } from "react";
 import "./DailyTaskTracker.css";
 import { ReactComponent as Tick } from "./tick.svg";
-// import Congo from "../../SkillManagement/Modals/Congo";
-// import Sorry from "../../SkillManagement/Modals/Sorry";
+import axios from "axios";
+import { ReactComponent as Play} from "./time trackingplay.svg"
+import { ReactComponent as Pause} from "./time trackingpause.svg"
+import { ReactComponent as Stop} from "./time trackingstop.svg"
+import { ReactComponent as StopD} from "./time trackingStopDisabled.svg"
+import { ReactComponent as PlayD} from "./time trackingStartDisabled.svg"
 
 const learningTypeOptions = [
-  "CG Learning Video",
+  "CG Learning Videos",
   "Self Learning",
   "Mentor Assigned Task",
   "Project",
 ];
-const topics = ["React", "Angular", "DotNet", "SQL"];
+const topics = ["React", "Angular", "C# .Net", "AWS", "Azure", "JavaScript", "Salesforce"];
+
 
 const DailyTaskTracker = () => {
-  const [learningType, setLearningType] = useState("");
-  const [topic, setTopic] = useState("");
-  const [isRunning, setIsRunning] = useState(false);
-  const [startTime, setStartTime] = useState(null);
-  const [elapsedTime, setElapsedTime] = useState(0);
-  const [comments, setComments] = useState("");
+  const [learningType, setLearningType] = useState(localStorage.getItem("learningType") || "");
+  const [topicName, setTopicName] = useState(localStorage.getItem("topicName") || "");
+  const [isRunning, setIsRunning] = useState( localStorage.getItem("isRunning") || false);
+  const [startTime, setStartTime] = useState( localStorage.getItem("startTime") ? parseInt(localStorage.getItem("startTime")) : null);
+  // const [elapsedTime, setElapsedTime] =  useState(() => {
+  //   const storedElapsedTime = localStorage.getItem("elapsedTime");
+  //   return storedElapsedTime && parseInt(storedElapsedTime) !== 0
+  //     ? parseInt(storedElapsedTime)
+  //     : 0;
+  // });
+  const [elapsedTime, setElapsedTime] = useState( localStorage.getItem("elapsedTime") || 0)
+  const [comments, setComments] = useState(localStorage.getItem("comments") || "");
+  const [comDisabled, setComDisabled] = useState(true);
   const [disabled, setDisabled] = useState(false);
   const [btnDisabled, setBtnDisabled] = useState(true);
   const [stopBtnDisabled, setStopBtnDisabled] = useState(true);
   const [resetSelect, setResetSelect] = useState(false);
 
-  useEffect(() => {
-    let interval;
-    if (isRunning) {
-      interval = setInterval(() => {
-        setElapsedTime(Date.now() - startTime);
-      }, 1);
-    }
-    return () => clearInterval(interval);
-  }, [isRunning, startTime]);
+  const [isPaused, setIsPaused] = useState(false);
+
+  const[firstCount,setFirstCount] = useState(true);
+
+  // useEffect(() => {
+  //   let interval;
+  //   if (isRunning) {
+  //     interval = setInterval(() => {
+  //       setElapsedTime(Date.now() - startTime);
+  //     }, 1);
+  //   }
+  //   return () => clearInterval(interval);
+  // }, [isRunning, startTime]);
+
+  // useEffect(() => {
+  //   let interval;
+  //   if (isRunning && !isPaused) {
+  //     interval = setInterval(() => {
+  //       setElapsedTime(Date.now() - startTime);
+  //     }, 1000);
+  //   }
+  //   return () => clearInterval(interval);
+  // }, [isRunning, isPaused, startTime]);
+
+
 
   useEffect(() => {
-    if (learningType && topic) {
+    let interval;
+    let timerInterval;
+  
+    if (isRunning) {
+      if (isPaused) {
+        clearInterval(timerInterval);
+      } else {
+        const timerStartTime = Date.now() - elapsedTime;
+        timerInterval = setInterval(() => {
+          setElapsedTime(Date.now() - timerStartTime);
+        }, 1000);
+      }
+    }
+  
+    return () => {
+      clearInterval(interval);
+      clearInterval(timerInterval);
+    };
+  }, [isRunning, isPaused, elapsedTime]);
+
+
+  useEffect(() => {
+    if (learningType && topicName) {
       setBtnDisabled(false);
     }
-  }, [learningType, topic]);
+  }, [learningType, topicName]);
 
   useEffect(() => {
     if (comments.length >= 150) {
@@ -46,34 +96,179 @@ const DailyTaskTracker = () => {
     }
   }, [comments]);
 
+  // useEffect(() => {
+  //   const disabledState = localStorage.getItem('disabled');
+  //   if (disabledState === 'true') {
+  //     setDisabled(true);
+  //   }
+  // }, []);
+
+  // useEffect(() => {
+  //   const isRunningState = localStorage.getItem('isRunning');
+  //   if (isRunningState === 'true') {
+  //     setIsRunning(true);
+  //   }
+  // }, []);
+
   useEffect(() => {
-    const selectedLearningType = localStorage.getItem("selectedLearningType");
-    if (selectedLearningType) {
-      setLearningType(selectedLearningType);
+    const storedData = localStorage.getItem('taskData');
+    if (storedData) {
+      const { isRunning, disabled, comDisabled, learningType, topicName, comments, startTime, elapsedTime, isPaused} = JSON.parse(storedData);
+      setIsRunning(isRunning);
+      setDisabled(disabled);
+      setComDisabled(comDisabled)
+      setLearningType(learningType);
+      setTopicName(topicName);
+      setComments(comments);
+      setStartTime(startTime);
+      setElapsedTime(elapsedTime);
+      setIsPaused(isPaused);
     }
   }, []);
 
+  useEffect(() => {
+    const taskData = JSON.stringify({ isRunning, disabled, comDisabled, learningType, topicName, comments, startTime, elapsedTime, isPaused });
+    localStorage.setItem('taskData', taskData);
+  }, [isRunning, disabled, comDisabled, learningType, topicName, comments, startTime, elapsedTime, isPaused]);
+
+  // useEffect(() => {
+  //   const selectedLearningType = localStorage.getItem("selectedLearningType");
+  //   if (selectedLearningType) {
+  //     setLearningType(selectedLearningType);
+  //   }
+  // }, []);
+
+  var userId = 30;
+
+  const sendStartDataToBackend = async () => {
+    try {
+      const response = await axios.post("https://cg-interns-hq.azurewebsites.net/dailyTaskTrackerStartCheck", {
+        userId,
+        learningType,
+        topicName,
+      })
+      localStorage.setItem("token",response.data.token);
+      console.log(response.data.token);
+      ;
+      console.log("Start Data sent to backend:", response.data);
+    } catch (error) {
+      console.error("Error sending start data to backend:", error);
+    }
+  };
+
+  const sendPauseDataToBackend = async () => {
+    try {
+      const token = localStorage.getItem("token");
+      const response = await axios.post("https://cg-interns-hq.azurewebsites.net/dailyTaskTrackerPauseCheck",
+      {headers:{
+        Authorization:`Bearer ${token}`,
+      }});
+      console.log("Pause Data sent to backend:", response.data);
+    } catch (error) {
+      console.error("Error sending pause data to backend:", error);
+    }
+  };
+
+  const sendStopDataToBackend = async () => {
+    try {
+      const token = localStorage.getItem("token");
+      const response = await axios.post("https://cg-interns-hq.azurewebsites.net/dailyTaskTrackerEndCheck", {
+        comments,
+        elapsedTime,
+      },{headers:{
+        Authorization:`Bearer ${token}`,
+      }});
+      console.log("Stop Data sent to backend:", response.data);
+    } catch (error) {
+      console.error("Error sending stop data to backend:", error);
+    }
+  };
+
+
   const handleStop = () => {
     //A function for sending data to backend
+    sendStopDataToBackend();
 
+    setFirstCount(true);
+    if (isPaused) {
+      setIsPaused(false); // Resume the timer
+    }
     setIsRunning(false);
     setDisabled(false);
+    setComDisabled(true);
     setResetSelect((val) => {
       return !val;
     });
 
     setElapsedTime(0);
     setBtnDisabled(true);
+    setStopBtnDisabled(true);
     setComments("");
     setLearningType("");
-    setTopic("");
+    setTopicName("");
+    localStorage.clear();
+
+
+    // localStorage.removeItem('isRunning'); // Remove the isRunning state from local storage
+    // localStorage.removeItem('disabled'); // Remove the disabled state from local storage
+    // localStorage.removeItem("startTime");
+    // localStorage.removeItem("learningType");
+    // localStorage.removeItem("topic");
   };
+
+  const handlePause = () => {
+    sendPauseDataToBackend();
+    setIsPaused(true);
+    // setComDisabled(false);
+  }
+
   const handleStart = () => {
+    // setComDisabled(false);
+    // setDisabled(true);
+    // setIsRunning(true);
+    // setStartTime(Date.now());
+    // setElapsedTime(0);
+    // setStopBtnDisabled(true);
+
+    if(firstCount){
+      sendStartDataToBackend();
+      setFirstCount(false);
+    }
+
+    setComDisabled(false);
     setDisabled(true);
-    setIsRunning(true);
-    setStartTime(Date.now());
-    setElapsedTime(0);
-    setStopBtnDisabled(true);
+    // setStopBtnDisabled(true);
+  
+    if (isRunning) {
+      setIsPaused(!isPaused);
+      // setComDisabled(true);
+    } else {
+      if (isPaused) {
+        // setComDisabled(false);
+        const timerStartTime = Date.now() - elapsedTime;
+        setStartTime(Date.now() - elapsedTime);
+        const timerInterval = setInterval(() => {
+          setElapsedTime(Date.now() - timerStartTime);
+        }, 1000);
+
+        setIsRunning(true);
+        setIsPaused(false);
+      } else {
+        // setComDisabled(false);
+        setStartTime(Date.now());
+        setIsRunning(true);
+        setElapsedTime(0);
+      }
+    }
+
+
+    // localStorage.setItem('isRunning', true); // Store the isRunning state in local storage
+    // localStorage.setItem('disabled', true);
+    // localStorage.setItem("learningType", learningType);
+    // localStorage.setItem("topic", topic);
+    // localStorage.setItem("startTime", Date.now().toString());
+
+
   };
 
   const onLearningChange = (e) => {
@@ -81,7 +276,7 @@ const DailyTaskTracker = () => {
   };
 
   const onTopicChange = (e) => {
-    setTopic(e.target.value);
+    setTopicName(e.target.value);
   };
 
   const formatTime = (timeInMs) => {
@@ -111,10 +306,11 @@ const DailyTaskTracker = () => {
               className="form-select dtt-selector "
               id="learning"
               aria-label=""
+              value={learningType}
               onChange={(e) => onLearningChange(e)}
               defaultValue=""
             >
-              <option value="" hidden>
+              <option value="" disabled selected hidden>
                 Select learning type
               </option>
               {learningTypeOptions.map((option) => (
@@ -130,11 +326,12 @@ const DailyTaskTracker = () => {
               Topic
             </label>
             <select
-              key={resetSelect ? "topicReset" : "topic"}
+              key={resetSelect ? "topicReset" : "topicName"}
               disabled={disabled}
               className="form-select dtt-selector"
               id="topic"
               aria-label=""
+              value={topicName}
               onChange={(e) => onTopicChange(e)}
               defaultValue=""
             >
@@ -158,14 +355,56 @@ const DailyTaskTracker = () => {
               className="form-control dtt-text"
               value={comments}
               onChange={(e) => setComments(e.target.value)}
+              disabled={comDisabled} // Add the disabled attribute
             ></textarea>
           </div>
 
+
           <div className="d-flex align-items-center justify-content-end dtt-gap ">
-            <p className="dtt-timer">{formatTime(elapsedTime)}</p>
+
+            <p className="dtt-timer" >{formatTime(elapsedTime)}</p>
+            <div className="d-flex align-items-center justify-content-center iconGap ">
             <p>
-              {isRunning ? (
-                <button
+              {isRunning && !isPaused ? (
+                <Pause
+                onClick={handlePause}
+                // onClick={() => setIsPaused(true)} // Pause the timer
+                />
+                // <button
+                //   // disabled={isRunning ? stopBtnDisabled : btnDisabled}
+                //   className="dtt-button-pause"
+                //   // data-bs-toggle="modal"
+                //   // data-bs-target="#exampleModal1"
+                //   // onClick={handlePause}
+                // >
+                //   Pause
+                // </button>
+              ) : (
+                btnDisabled ? <PlayD/> :
+                <Play
+                // disabled={isRunning ? stopBtnDisabled : btnDisabled}
+                onClick={btnDisabled ? null : handleStart}
+                />
+                // <button
+                //   disabled={isRunning ? stopBtnDisabled : btnDisabled}
+                //   className="dtt-button-start"
+                //   onClick={handleStart}
+                // >
+                //   Start
+                // </button>
+              )}
+            </p>
+            <p>
+              {stopBtnDisabled ? (<StopD/>) :
+              (<Stop
+                // disabled={isRunning ? stopBtnDisabled : btnDisabled}
+                data-bs-toggle="modal"
+                data-bs-target="#exampleModal1"
+                onClick={stopBtnDisabled ? null : handleStop}
+              />
+              )}
+              
+            {/* <button
                   disabled={isRunning ? stopBtnDisabled : btnDisabled}
                   className="dtt-button-stop"
                   data-bs-toggle="modal"
@@ -173,18 +412,9 @@ const DailyTaskTracker = () => {
                   onClick={handleStop}
                 >
                   Stop
-                </button>
-              ) : (
-                <button
-                  disabled={isRunning ? stopBtnDisabled : btnDisabled}
-                  className="dtt-button-start"
-                  onClick={handleStart}
-                >
-                  Start
-                </button>
-              )}
+                </button> */}
             </p>
-
+            </div>
 
             {/* SUCCESS MODAL */}
             <div
