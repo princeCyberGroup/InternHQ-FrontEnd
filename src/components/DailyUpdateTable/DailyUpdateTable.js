@@ -369,7 +369,7 @@ const DailyUpdateTable = () => {
                             {/* Azure is a powerful and widely used cloud computing platform offered by Microsoft. It provides a vast array of services and tools for building, deploying, and managing various applications and services */}
                                  {/* <div> */}
                                  {/* {item.comment} */}
-                                  {truncate(item.comment, 60)} &nbsp;
+                                  {truncate(item.comment, 35)} &nbsp;
                                   <img
                                     src={ReadMore}
                                     alt="..."
