@@ -369,7 +369,7 @@ const DailyUpdateTable = () => {
                             {/* Azure is a powerful and widely used cloud computing platform offered by Microsoft. It provides a vast array of services and tools for building, deploying, and managing various applications and services */}
                                  {/* <div> */}
                                  {/* {item.comment} */}
-                                  {truncate(item.comment, 60)} &nbsp;
+                                  {truncate(item.comment, 35)} &nbsp;
                                   <img
                                     src={ReadMore}
                                     alt="..."
@@ -431,7 +431,7 @@ const DailyUpdateTable = () => {
                           <Form.Control
                             className="opacity-75"
                             as="textarea"
-                            onChange={handleEdit}
+                            // onChange={handleEdit}
                             style={{ fontSize: "0.813rem" }}
                             defaultValue={selectedItem && selectedItem.comment}
                             rows={4}
@@ -455,7 +455,7 @@ const DailyUpdateTable = () => {
                               disabled={modalSaveFlag}
                               onClick={() => {
                                 setShowModal(false);
-                                handleSave();
+                                // handleSave();
                               }}
                             >
                               Save
