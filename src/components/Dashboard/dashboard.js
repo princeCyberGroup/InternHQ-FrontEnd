@@ -50,7 +50,7 @@ const Dashboard = () => {
                 <DashboardGraph />
                 {/* <EmptyGraph/> */}
               </div>
-              <div className="mt-2" style={{height:"378px"}}>
+              <div className="mt-2" style={{height:"378px", width: "23.65rem"}}>
                 <NotificationComponent />
                    {/* <EmptyNoti/>*/}
               </div>
