@@ -4,6 +4,7 @@ import { useLocation } from "react-router-dom";
 import React, { useState } from "react";
 import "./ViewAllProjectIdea.css";
 import Header from "../../../Header";
+import {EmptyIdea} from "../../EmptyStates/EmptyProject/MyIdeaViewAll";
 
 export const ViewProjectIdeas = () => {
 
@@ -35,8 +36,13 @@ export const ViewProjectIdeas = () => {
                         <p className="me-2 add-your-project">Add New Idea</p></button>
                 </div>
             </div>
-
-            <div className="all-project-idea-wrapper entire-component ms-0" style={{ overFlowY: "scroll" }}>
+            
+            {details.length === 0 ? (
+            <EmptyIdea/>
+            )
+            :
+            (
+                <div className="all-project-idea-wrapper entire-component ms-0" style={{ overFlowY: "scroll" }}>
                 <div >
                     <ProjectNames data={details} projectDetails={handelIndex} />
                 </div>
@@ -44,6 +50,15 @@ export const ViewProjectIdeas = () => {
                     <ProjectDescription data={details} indexNumber={projectIndex} />
                 </div>
             </div>
+            )}
+            {/* <div className="all-project-idea-wrapper entire-component ms-0" style={{ overFlowY: "scroll" }}>
+                <div >
+                    <ProjectNames data={details} projectDetails={handelIndex} />
+                </div>
+                <div className="project-detail" >
+                    <ProjectDescription data={details} indexNumber={projectIndex} />
+                </div>
+            </div> */}
         </div>
         </>
     )

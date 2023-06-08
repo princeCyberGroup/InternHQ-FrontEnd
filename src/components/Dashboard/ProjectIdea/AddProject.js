@@ -222,14 +222,14 @@ export const AddProject = ({ projectApiDataa }) => {
                                             <div className="button-group">
                                                 <button
                                                     type="button"
-                                                    className="btn btn-default btn-sm dropdown-toggle"
+                                                    className="btn btn-default btn-sm dropdown-toggle drop-down-technology"
                                                     onClick={() => {
                                                         setDropDown(!dropDown)
                                                     }}
                                                 >
 
                                                 </button>
-                                                <ul style={{ display: dropDown ? "" : "none" }}>
+                                                <ul style={{ display: dropDown ? "" : "none" }} className="ul-styling">
 
                                                     <p
                                                         href="#"

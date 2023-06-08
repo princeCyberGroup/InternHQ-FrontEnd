@@ -20,7 +20,7 @@ export const AddNewProjectComponent = () => {
 
     const MyIdeaComponent = async () => {
         try {
-            const response = await axios.get("https://cg-interns-hq.azurewebsites.net/getProjectIdea?userId=30");
+            const response = await axios.get("https://cg-interns-hq.azurewebsites.net/getProjectIdea?userId=3");
             setProjectData(response.data.response);
         } catch (error) {
             console.log(error.response?.data);

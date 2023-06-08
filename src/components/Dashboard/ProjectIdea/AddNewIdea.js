@@ -17,6 +17,7 @@ export const AddNewIdea = ({ projectDescript }) => {
     const [memberNames, setMemberNames] = useState({});
     const [techNames, seTechNames] = useState({});
     const [dropDown, setDropDown] = useState(false);
+    const [formError, setFormError] = useState(false);
 
 
     const truncate = (str, maxLength) => {
@@ -57,10 +58,14 @@ export const AddNewIdea = ({ projectDescript }) => {
     }
 
     const handleSubmit = async (e) => {
-        if (projName.trim() === '') {
-            alert('Project Name is required');
-            return;
-        }
+        // if (projName.trim() === '') {
+        //     alert('Project Name is required');
+        //     return;
+        // }
+        // if (projName === "" || projDescription === "" || textInput === "") {
+        //     setFormError(true);
+        //   } else {
+        //     setFormError(false);}
 
         e.preventDefault();
         await axios.post("https://cg-interns-hq.azurewebsites.net/projectIdea", {
@@ -154,83 +159,11 @@ export const AddNewIdea = ({ projectDescript }) => {
                                     </div>
                                 )}
                             </div>
-
-                            {/* <div className="project-members ml-0">
-                                {first.members.length > 4 ? (
-                                    first.members.map((curElem, index) => {
-                                        if (curElem != null) {
-                                            return (
-                                                <div className="project-idea-members" key={index}>
-                                                    <p className="name-of-members">{curElem.slice(0, 2).toUpperCase()}</p>
-                                                </div>
-                                            );
-                                        }
-                                    })
-                                ) : (
-                                    <div className="project-idea-members">
-                                        <p className="name-of-members">+ {first.members.length}</p>
-                                    </div>
-                                )}
-                            </div> */}
                         </div>
                     </div>
                 </div>
                 )
                 }
-                {/* <div className="recipe-row">
-                    <div className="recipe-text">
-                        <h5 className="fw-bold">{first.projectNames}</h5>
-                        <p className="fw-normal mb-1">
-                            {first.projectText.length > 100 ? truncate(first.projectText, 100) : first.projectText}
-                        </p>
-                        <div className="members-div pt-0">
-                            <div className="member mb pt-1 fw-bold mb-2">
-                                Members:
-                            </div>
-                            <div className="project-members ml-0">
-                                {first.members.length > 4 ? (
-                                    first.members.map((curElem, index) => {
-                                        if (curElem != null) {
-                                            const initials = curElem
-                                                .split(" ")
-                                                .map((name) => name[0])
-                                                .join("")
-                                                .toUpperCase();
-
-                                            return (
-                                                <div className="project-idea-members" key={index}>
-                                                    <p className="name-of-members">{initials}</p>
-                                                </div>
-                                            );
-                                        }
-                                    })
-                                ) : (
-                                    <div className="project-idea-members">
-                                        <p className="name-of-members">+ {first.members.length}</p>
-                                    </div>
-                                )}
-                            </div>
-
-                            {/* <div className="project-members ml-0">
-                                {first.members.length > 4 ? (
-                                    first.members.map((curElem, index) => {
-                                        if (curElem != null) {
-                                            return (
-                                                <div className="project-idea-members" key={index}>
-                                                    <p className="name-of-members">{curElem.slice(0, 2).toUpperCase()}</p>
-                                                </div>
-                                            );
-                                        }
-                                    })
-                                ) : (
-                                    <div className="project-idea-members">
-                                        <p className="name-of-members">+ {first.members.length}</p>
-                                    </div>
-                                )}
-                            </div> */}
-                        {/* </div>
-                    </div> */}
-                 {/* </div>  */}
 
                 <div className="add-new-idea-container">
                     <div
@@ -239,7 +172,7 @@ export const AddNewIdea = ({ projectDescript }) => {
                         data-bs-target="#exampleModal"
                         data-bs-whatever="@mdo"
                     >
-                        <p className="project-p mb-0 mt-2 pb-2 fw-bold">
+                        <p className="project-p mb-0 fw-bold">
                             <span>+</span> Add New Idea
                         </p>
                     </div>
@@ -300,7 +233,7 @@ export const AddNewIdea = ({ projectDescript }) => {
                                 </div>
 
                                 <div className="mb-3">
-                                    <label htmlFor="technology-used" className="col-form-label title-text">
+                                    <label htmlFor="technology-used" className="col-form-label title-text" required>
                                         Technology Used
                                     </label>
                                 </div>
@@ -318,7 +251,7 @@ export const AddNewIdea = ({ projectDescript }) => {
                                                 >
                                                 </button>
 
-                                                <ul style={{ display: dropDown ? "" : "none" }}>
+                                                <ul style={{ display: dropDown ? "" : "none" }} className="ul-styling">
 
                                                     <p
                                                         href="#"
@@ -341,7 +274,7 @@ export const AddNewIdea = ({ projectDescript }) => {
                                                     >
                                                         <label className="checkbox-label">
                                                             <input type="checkbox" className="checkbox-input" />
-                                                            <span className="">TypeScript</span>
+                                                            <span className="checkbox-text">TypeScript</span>
                                                         </label>
                                                     </p>
                                                     <p
@@ -353,7 +286,7 @@ export const AddNewIdea = ({ projectDescript }) => {
                                                     >
                                                         <label className="checkbox-label">
                                                             <input type="checkbox" className="checkbox-input" />
-                                                            <span>.Net</span>
+                                                            <span className="checkbox-text">.Net</span>
                                                         </label>
                                                     </p>
                                                     <p
@@ -365,7 +298,7 @@ export const AddNewIdea = ({ projectDescript }) => {
                                                     >
                                                         <label className="checkbox-label">
                                                             <input type="checkbox" className="checkbox-input" />
-                                                            <span>Angular</span>
+                                                            <span className="checkbox-text"> Angular</span>
                                                         </label>
                                                     </p>
                                                     <p
@@ -376,7 +309,8 @@ export const AddNewIdea = ({ projectDescript }) => {
                                                         onClick={handleOptionClick}
                                                     >
                                                         <label className="checkbox-label">
-                                                            <input type="checkbox" className="checkbox-input" /><span>Salesforce</span>
+                                                            <input type="checkbox" className="checkbox-input" />
+                                                            <span className="checkbox-text">Salesforce</span>
                                                         </label>
                                                     </p>
                                                     <p
@@ -387,7 +321,8 @@ export const AddNewIdea = ({ projectDescript }) => {
                                                         onClick={handleOptionClick}
                                                     >
                                                         <label className="checkbox-label">
-                                                            <input type="checkbox" className="checkbox-input" /><span>NodeJS</span>
+                                                            <input type="checkbox" className="checkbox-input" />
+                                                            <span className="checkbox-text">NodeJS</span>
                                                         </label>
                                                     </p>
                                                 </ul>
@@ -406,6 +341,7 @@ export const AddNewIdea = ({ projectDescript }) => {
                                         placeholder="Member Name"
                                         value={textInput}
                                         onChange={handleInputChange}
+                                        required
                                     />
                                 </div>
                             </form>
