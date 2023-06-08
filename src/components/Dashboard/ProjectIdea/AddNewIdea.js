@@ -2,6 +2,7 @@ import "./AddNewIdea.css";
 import { useNavigate } from "react-router-dom";
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import { EmptyProject } from "../EmptyStates/EmptyProject/MyIdea";
 
 export const AddNewIdea = ({ projectDescript }) => {
     const navigate = useNavigate();
@@ -10,7 +11,7 @@ export const AddNewIdea = ({ projectDescript }) => {
     const [projDescription, setProjDescription] = useState("");
     const [selectedOptions, setSelectedOptions] = useState([]);
     const [technologyNames, setTechnologyNames] = useState([]);
-    const [userId, setUserId] = useState("1");
+    const [userId, setUserId] = useState("30");
     const [counter, setCounter] = useState(1);
     const [textInput, setTextInput] = useState('');
     const [memberNames, setMemberNames] = useState({});
@@ -55,14 +56,14 @@ export const AddNewIdea = ({ projectDescript }) => {
         navigate('/project-idea-projects', { state: projectDescript });
     }
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         if (projName.trim() === '') {
             alert('Project Name is required');
             return;
-          }
-        
+        }
+
         e.preventDefault();
-        axios.post("https://cg-interns-hq.azurewebsites.net/projectIdea", {
+        await axios.post("https://cg-interns-hq.azurewebsites.net/projectIdea", {
             projName,
             projDescription,
             userId,
@@ -76,7 +77,8 @@ export const AddNewIdea = ({ projectDescript }) => {
         setTextInput('');
         setProjName("");
         setProjDescription("");
-        
+        setDropDown(false);
+
     }
 
     useEffect(() => {
@@ -115,8 +117,11 @@ export const AddNewIdea = ({ projectDescript }) => {
                         }} >View All</button>
                     </div>
                 </div>
-
-                <div className="recipe-row">
+                {projectDescript.length === 0 ? (
+                    <EmptyProject/>
+                ):
+                (
+                    <div className="recipe-row">
                     <div className="recipe-text">
                         <h5 className="fw-bold">{first.projectNames}</h5>
                         <p className="fw-normal mb-1">
@@ -127,6 +132,30 @@ export const AddNewIdea = ({ projectDescript }) => {
                                 Members:
                             </div>
                             <div className="project-members ml-0">
+                                {first.members.length > 4 ? (
+                                    first.members.map((curElem, index) => {
+                                        if (curElem != null) {
+                                            const initials = curElem
+                                                .split(" ")
+                                                .map((name) => name[0])
+                                                .join("")
+                                                .toUpperCase();
+
+                                            return (
+                                                <div className="project-idea-members" key={index}>
+                                                    <p className="name-of-members">{initials}</p>
+                                                </div>
+                                            );
+                                        }
+                                    })
+                                ) : (
+                                    <div className="project-idea-members">
+                                        <p className="name-of-members">+ {first.members.length}</p>
+                                    </div>
+                                )}
+                            </div>
+
+                            {/* <div className="project-members ml-0">
                                 {first.members.length > 4 ? (
                                     first.members.map((curElem, index) => {
                                         if (curElem != null) {
@@ -142,19 +171,78 @@ export const AddNewIdea = ({ projectDescript }) => {
                                         <p className="name-of-members">+ {first.members.length}</p>
                                     </div>
                                 )}
-                            </div>
+                            </div> */}
                         </div>
                     </div>
                 </div>
-                <div
-                    className="add-new-idea pt-2"
-                    data-bs-toggle="modal"
-                    data-bs-target="#exampleModal"
-                    data-bs-whatever="@mdo"
-                >
-                    <p className="project-p mb-0 mt-2 pb-2 fw-bold">
-                        <span>+</span> Add New Idea
-                    </p>
+                )
+                }
+                {/* <div className="recipe-row">
+                    <div className="recipe-text">
+                        <h5 className="fw-bold">{first.projectNames}</h5>
+                        <p className="fw-normal mb-1">
+                            {first.projectText.length > 100 ? truncate(first.projectText, 100) : first.projectText}
+                        </p>
+                        <div className="members-div pt-0">
+                            <div className="member mb pt-1 fw-bold mb-2">
+                                Members:
+                            </div>
+                            <div className="project-members ml-0">
+                                {first.members.length > 4 ? (
+                                    first.members.map((curElem, index) => {
+                                        if (curElem != null) {
+                                            const initials = curElem
+                                                .split(" ")
+                                                .map((name) => name[0])
+                                                .join("")
+                                                .toUpperCase();
+
+                                            return (
+                                                <div className="project-idea-members" key={index}>
+                                                    <p className="name-of-members">{initials}</p>
+                                                </div>
+                                            );
+                                        }
+                                    })
+                                ) : (
+                                    <div className="project-idea-members">
+                                        <p className="name-of-members">+ {first.members.length}</p>
+                                    </div>
+                                )}
+                            </div>
+
+                            {/* <div className="project-members ml-0">
+                                {first.members.length > 4 ? (
+                                    first.members.map((curElem, index) => {
+                                        if (curElem != null) {
+                                            return (
+                                                <div className="project-idea-members" key={index}>
+                                                    <p className="name-of-members">{curElem.slice(0, 2).toUpperCase()}</p>
+                                                </div>
+                                            );
+                                        }
+                                    })
+                                ) : (
+                                    <div className="project-idea-members">
+                                        <p className="name-of-members">+ {first.members.length}</p>
+                                    </div>
+                                )}
+                            </div> */}
+                        {/* </div>
+                    </div> */}
+                 {/* </div>  */}
+
+                <div className="add-new-idea-container">
+                    <div
+                        className="add-new-idea pt-2"
+                        data-bs-toggle="modal"
+                        data-bs-target="#exampleModal"
+                        data-bs-whatever="@mdo"
+                    >
+                        <p className="project-p mb-0 mt-2 pb-2 fw-bold">
+                            <span>+</span> Add New Idea
+                        </p>
+                    </div>
                 </div>
             </div>
             <div
@@ -181,7 +269,7 @@ export const AddNewIdea = ({ projectDescript }) => {
                             <form>
                                 <div className="mb-3">
                                     <label htmlFor="project-name" className="col-form-label title-text">
-                                       Project Name
+                                        Project Name
                                     </label>
                                     <input
                                         type="text"
@@ -232,7 +320,7 @@ export const AddNewIdea = ({ projectDescript }) => {
 
                                                 <ul style={{ display: dropDown ? "" : "none" }}>
 
-                                                    <a
+                                                    <p
                                                         href="#"
                                                         className="text-decoration-none"
                                                         data-value="ReactJs"
@@ -243,8 +331,8 @@ export const AddNewIdea = ({ projectDescript }) => {
                                                             <input type="checkbox" className="checkbox-input" />
                                                             <span className="checkbox-text">ReactJs</span>
                                                         </label>
-                                                    </a>
-                                                    <a
+                                                    </p>
+                                                    <p
                                                         href="#"
                                                         className="small text-decoration-none"
                                                         data-value="TypeScript"
@@ -255,8 +343,8 @@ export const AddNewIdea = ({ projectDescript }) => {
                                                             <input type="checkbox" className="checkbox-input" />
                                                             <span className="">TypeScript</span>
                                                         </label>
-                                                    </a>
-                                                    <a
+                                                    </p>
+                                                    <p
                                                         href="#"
                                                         className="small text-decoration-none"
                                                         data-value=".Net"
@@ -267,8 +355,8 @@ export const AddNewIdea = ({ projectDescript }) => {
                                                             <input type="checkbox" className="checkbox-input" />
                                                             <span>.Net</span>
                                                         </label>
-                                                    </a>
-                                                    <a
+                                                    </p>
+                                                    <p
                                                         href="#"
                                                         className="small text-decoration-none"
                                                         data-value="angular"
@@ -279,8 +367,8 @@ export const AddNewIdea = ({ projectDescript }) => {
                                                             <input type="checkbox" className="checkbox-input" />
                                                             <span>Angular</span>
                                                         </label>
-                                                    </a>
-                                                    <a
+                                                    </p>
+                                                    <p
                                                         href="#"
                                                         className="small text-decoration-none"
                                                         data-value="Python"
@@ -290,8 +378,8 @@ export const AddNewIdea = ({ projectDescript }) => {
                                                         <label className="checkbox-label">
                                                             <input type="checkbox" className="checkbox-input" /><span>Salesforce</span>
                                                         </label>
-                                                    </a>
-                                                    <a
+                                                    </p>
+                                                    <p
                                                         href="#"
                                                         className="small text-decoration-none"
                                                         data-value="NodeJS"
@@ -301,7 +389,7 @@ export const AddNewIdea = ({ projectDescript }) => {
                                                         <label className="checkbox-label">
                                                             <input type="checkbox" className="checkbox-input" /><span>NodeJS</span>
                                                         </label>
-                                                    </a>
+                                                    </p>
                                                 </ul>
 
                                             </div>

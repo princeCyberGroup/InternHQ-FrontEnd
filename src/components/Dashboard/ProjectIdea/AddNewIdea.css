@@ -91,6 +91,12 @@ p.card-textt {
     line-height: 1.313rem;
     color: #343435;
 }
+
+.add-new-idea-container{
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-start;
+}
 .add-new-idea {
     background-color: transparent;
     border: none;
@@ -100,8 +106,9 @@ p.card-textt {
     font-size: 0.8rem;
     text-align: left;
     text-decoration: none;
-    padding-top: 1.5rem;
+    /* padding-top: 1.5rem; */
     cursor: pointer;
+    margin-top: 30px;
 }
 .project-p {
     font-size: 0.9rem;

@@ -58,7 +58,7 @@
 }
 
 .technology-badges {
-    width: 7.5rem;
+    width: 9.5rem;
     display: flex;
     padding-top: 0.5rem;
     justify-content: space-between;
@@ -67,7 +67,7 @@
 .technology-badge-1 {
     background: #D3E1FA;
     border-radius: 2px;
-    width: 3.5rem;
+    width: 4.5rem;
     display: flex;
     align-items: center;
     padding-left: 0.75rem;

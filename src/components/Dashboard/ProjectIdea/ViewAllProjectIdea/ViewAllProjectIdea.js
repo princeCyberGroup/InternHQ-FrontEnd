@@ -21,7 +21,7 @@ export const ViewProjectIdeas = () => {
         <>
         <Header/>
         <div className="container page-color">
-        <div className="view-all-nav-bar pt-4">
+         <div className="view-all-nav-bar pt-4">
             <p>Dashboard &gt; MyIdea</p>
           </div>
             <div className="d-flex justify-content-between">

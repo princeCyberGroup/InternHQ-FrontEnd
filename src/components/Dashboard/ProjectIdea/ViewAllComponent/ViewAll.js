@@ -75,7 +75,6 @@ export const ProjectIdeas = (props) => {
                                 setSelectedIdx(index);
                                 setIsBorder(true);
                             }}>
-                            {console.log("This is another", user)}
                             <div
                                 style={{
                                     display: "flex",

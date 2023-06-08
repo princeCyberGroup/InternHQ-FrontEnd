@@ -8,7 +8,7 @@ export const AddProject = ({ projectApiDataa }) => {
     const [projName, setProjName] = useState("");
     const [projDescription, setProjDescription] = useState("");
     const [technologyNames, setTechnologyNames] = useState([]);
-    const [userId, setUserId] = useState("1");
+    const [userId, setUserId] = useState("30");
     const [projectLink,setProjectLink]=useState("");
     const [hostedLink, setHostedLink] = useState("");
     const [selectedOptions, setSelectedOptions] = useState([]);
@@ -231,7 +231,7 @@ export const AddProject = ({ projectApiDataa }) => {
                                                 </button>
                                                 <ul style={{ display: dropDown ? "" : "none" }}>
 
-                                                    <a
+                                                    <p
                                                         href="#"
                                                         className="text-decoration-none"
                                                         data-value="ReactJs"
@@ -242,8 +242,8 @@ export const AddProject = ({ projectApiDataa }) => {
                                                             <input type="checkbox" className="checkbox-input" />
                                                             <span className="checkbox-text">ReactJs</span>
                                                         </label>
-                                                    </a>
-                                                    <a
+                                                    </p>
+                                                    <p
                                                         href="#"
                                                         className="small text-decoration-none"
                                                         data-value="TypeScript"
@@ -254,8 +254,8 @@ export const AddProject = ({ projectApiDataa }) => {
                                                             <input type="checkbox" className="checkbox-input" />
                                                             <span className="checkbox-text">TypeScript</span>
                                                         </label>
-                                                    </a>
-                                                    <a
+                                                    </p>
+                                                    <p
                                                         href="#"
                                                         className="small text-decoration-none"
                                                         data-value=".Net"
@@ -266,8 +266,8 @@ export const AddProject = ({ projectApiDataa }) => {
                                                             <input type="checkbox" className="checkbox-input" />
                                                             <span className="checkbox-text">DotNet</span>
                                                         </label>
-                                                    </a>
-                                                    <a
+                                                    </p>
+                                                    <p
                                                         href="#"
                                                         className="small text-decoration-none"
                                                         data-value="Angular"
@@ -278,11 +278,11 @@ export const AddProject = ({ projectApiDataa }) => {
                                                             <input type="checkbox" className="checkbox-input" />
                                                             <span className="checkbox-text">Angular</span>
                                                         </label>
-                                                    </a>
-                                                    <a
+                                                    </p>
+                                                    <p
                                                         href="#"
                                                         className="small text-decoration-none"
-                                                        data-value="Python"
+                                                        data-value="Salesforce"
                                                         tabIndex="-1"
                                                         onClick={handleOptionClick}
                                                     >
@@ -290,8 +290,8 @@ export const AddProject = ({ projectApiDataa }) => {
                                                             <input type="checkbox" className="checkbox-input" />
                                                             <span className="checkbox-text">Salesforce</span>
                                                         </label>
-                                                    </a>
-                                                    <a
+                                                    </p>
+                                                    <p
                                                         href="#"
                                                         className="small text-decoration-none"
                                                         data-value="NodeJS"
@@ -302,7 +302,7 @@ export const AddProject = ({ projectApiDataa }) => {
                                                             <input type="checkbox" className="checkbox-input" />
                                                             <span className="checkbox-text">NodeJs</span>
                                                         </label>
-                                                    </a>
+                                                    </p>
                                                 </ul>
                                             </div>
                                         </div>
