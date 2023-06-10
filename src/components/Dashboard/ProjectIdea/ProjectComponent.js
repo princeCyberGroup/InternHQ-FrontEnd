@@ -18,6 +18,7 @@ export const AddNewProjectComponent = () => {
     const MyIdeaComponent = async () => {
         try {
             const response = await axios.get(`https://cg-interns-hq.azurewebsites.net/getProjectIdea?userId=${userId}`);
+
             setProjectData(response.data.response);
         } catch (error) {
             // console.log(error.response?.data);
@@ -26,7 +27,9 @@ export const AddNewProjectComponent = () => {
     }
     const ProjectApi = async () => {
         try {
+
             const response = await axios.get(`https://cg-interns-hq.azurewebsites.net/getProject?userId=${userId}`);
+
             setProjectApiData(response.data.response);
         } catch (error) {
             // console.log(error.response?.data);

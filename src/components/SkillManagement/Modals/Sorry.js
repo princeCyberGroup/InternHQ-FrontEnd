@@ -1,8 +1,20 @@
 import React from "react";
 import { ReactComponent as Sor } from "./EmojiSorry.svg";
 import "./Sorry.css"
+import { useLocation } from "react-router-dom";
+import { useEffect } from "react";
+import { useState } from "react";
 
-const Sorry = () => {
+const Sorry = ({scoreValue} ) => {
+ // const location =useLocation()
+ const [isloading, setIsloading]=useState()
+ 
+ useEffect(()=>{
+  setTimeout(() => {
+    return setIsloading(true) 
+ }, 5000);
+ },[])
+
   return (
     <div
       className="modal fade"
@@ -31,7 +43,7 @@ const Sorry = () => {
             <p>Your Score</p>
           </div>
           <div className="row s3">
-            <p>5/10</p>
+            <p>{scoreValue}/10</p>
           </div>
           <div className="row s4">
             <p>
