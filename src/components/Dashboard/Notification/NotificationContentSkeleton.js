@@ -7,15 +7,16 @@ const NotificationContentSkeleton = () => {
     <div className="notification-wrapper">
           <div className="image-wrapper mt-1">
             <div className="image-box">
-              <Skeleton circle={true} width={32} />
+              <Skeleton width={32} />
             </div>
           </div>
           <div className="text-wrapper mt-3">
             <p className="m-0">
               <Skeleton />
+              <Skeleton />
             </p>
             <p className="m-0 date-wrapper">
-              <Skeleton />
+              <Skeleton width={80}/>
             </p>
           </div>
         </div>

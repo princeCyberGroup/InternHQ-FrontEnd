@@ -140,7 +140,9 @@ const DailyTaskTracker = () => {
   //   }
   // }, []);
 
-  var userId = 30;
+  var storedObject = localStorage.getItem('userData');
+  var parsedObject = JSON.parse(storedObject);
+  var userId = parsedObject.userId;
 
   const sendStartDataToBackend = async () => {
     try {
