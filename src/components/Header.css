@@ -12,8 +12,31 @@
     border-radius: 50%;
 }
 .margin{
-
     margin-right: 3rem;
+    cursor: pointer;
+}
+.border-Side{
+    border-left: 3px solid #002C3F;
+    margin-left: 20px;
+    border-radius: 2px 2px 2px 2px;
+}
+.nav-bg{
+    margin-left:38px;
+    background-color:#F9FAFB;
+    border:1px solid #F2F4F7;
+    border-radius:4px;
+}
+.dropdown-menu:hover{
+    background-color: none;
+}
+.background-set{
+    background-color: #B8DDE1;
+    height: 2.5rem;
+    width: 2.5rem;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 .dropdown-menu[aria-labelledby="profileDropDown"]{
     position: absolute;

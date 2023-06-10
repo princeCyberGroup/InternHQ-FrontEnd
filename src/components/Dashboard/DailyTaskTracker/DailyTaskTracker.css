@@ -21,7 +21,7 @@ h5.dtt-hfs {
 }
 
 .dtt-lt {
-  width: 5.06rem;
+  /* width: 5.06rem; */
   margin-top: 1rem;
   margin-left: 1rem;
   font-family: "Roboto";
@@ -34,7 +34,7 @@ h5.dtt-hfs {
 }
 
 .dtt-t {
-  width: 5.06rem;
+  /* width: 5.06rem; */
   margin-top: 1.68rem;
   margin-left: 1rem;
   font-family: "Roboto";
@@ -109,11 +109,23 @@ textarea{
 }
 
 .dtt-gap {
-  margin-top: 30px;
+  margin-top: 12px;
   margin-bottom: 10px;
   /* gap: 4rem; */
   /* gap: 1rem; */
   padding-right: 1rem;
+}
+.charLen {
+  /* width: 5.06rem; */
+  margin-top: 4px;
+  margin-left: 1rem;
+  font-family: "Roboto";
+  font-style: normal;
+  font-weight: 600;
+  font-size: 0.81rem;
+  line-height: 0.93rem;
+  color: #343435;
+
 }
 .iconGap{
   gap: 1rem;

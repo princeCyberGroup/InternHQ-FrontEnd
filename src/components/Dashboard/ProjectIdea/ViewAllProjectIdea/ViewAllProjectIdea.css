@@ -83,19 +83,16 @@
     flex-direction: column;
     width: 23.5rem;
     padding: 0.75rem;
-    /* gap: 0.5rem; */
     align-items: flex-start;
     background: rgba(40, 81, 158, 0.08);
-    /* border-left: 3px solid #28519E; */
     border-radius: 0.25rem;
     margin-left: 11px;
-    /* margin-top: 1.5rem; */
 }
 
 .project-names-wrapper-border {
     border-left: 3px solid #28519E;
+    background: rgba(40, 81, 158, 0.08);
 }
-
 
 .project-names {
     font-style: normal;

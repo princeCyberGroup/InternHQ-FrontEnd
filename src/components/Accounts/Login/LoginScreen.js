@@ -7,6 +7,7 @@ import CarouselImage1 from "../../../Assets/CarouselImage1.svg";
 import CarouselImage2 from "../../../Assets/CarouselImage2.svg";
 import CarouselImage3 from "../../../Assets/CarouselImage3.svg";
 import "bootstrap-icons/font/bootstrap-icons.css";
+import { bottom } from "@popperjs/core";
 
 const LoginScreen = () => {
   const navigate = useNavigate();
@@ -99,10 +100,7 @@ const LoginScreen = () => {
           setIsPasswordValid(false);
         }
         setIsLoading(false);
-        navigate({
-          pathname:"/error",
-          search:`statusCode=${error.response?.data.statusCode}`
-        })
+
         // navigate(`/error?statusCode=${error.response?.data.statusCode}`);
       });
     // console.log(email);
@@ -158,7 +156,7 @@ const LoginScreen = () => {
                 // data-bs-interval="4000"
                 // data-interval="false" //Remove it
               >
-                <div className="carousel-indicators">
+                <div className="carousel-indicators" style={{marginBottom: "2.5rem"}}>
                   <button
                     data-bs-target="#carouselExampleIndicators"
                     data-bs-slide-to="0"
