@@ -74,7 +74,7 @@ const Header = () => {
                     {userData.firstName} {userData.lastName} <br />
                   </span>
                   <span style={{color:"#28519E",fontStyle:"italic",fontSize:"14px"}}>
-                    {userData.bench?"On Bench":"Occupied"}
+                    {userData.deployed?"Occupied":"On Bench"}
                   </span>
                 </li>
                 <li 
