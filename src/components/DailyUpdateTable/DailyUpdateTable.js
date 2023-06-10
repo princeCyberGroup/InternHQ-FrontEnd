@@ -431,7 +431,6 @@ const DailyUpdateTable = () => {
                           <Form.Control
                             className="opacity-75"
                             as="textarea"
-                            onChange={handleEdit}
                             style={{ fontSize: "0.813rem" }}
                             defaultValue={selectedItem && selectedItem.comment}
                             rows={4}
@@ -455,7 +454,6 @@ const DailyUpdateTable = () => {
                               disabled={modalSaveFlag}
                               onClick={() => {
                                 setShowModal(false);
-                                handleSave();
                               }}
                             >
                               Save
