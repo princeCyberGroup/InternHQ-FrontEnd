@@ -50,12 +50,14 @@ const SkillsAdded = () => {
               <div className="d-flex p-0 stars">
                 {/* ///////////// */}
                 <div className={`col d-flex flex-column ${DataUsed.examLevels[0] ? "block" : "grey"}`}>
-                  <img
+                <div  className="my-spacing">
+                  { DataUsed.examScores[0]>8 ?  <img
                     src="https://pixlok.com/wp-content/uploads/2021/07/Rating-SVG-Icon-s9fd.png"
                     height={"20px"}
                     width={"20px"}
                     alt=""
-                  />
+                  /> :<EmptyStar/>}
+                    </div>
                   {DataUsed.examLevels[0] ? (
                     <>
                       <p className="m-0">{DataUsed.examLevels[0]}</p>
@@ -68,13 +70,16 @@ const SkillsAdded = () => {
                     </>
                   )}
                 </div>
+                
                 <div className={`col d-flex flex-column ${DataUsed.examLevels[1] ? "block" : "grey"}`}>
-                  <img
+                <div  className="my-spacing">
+                  { DataUsed.examScores[1]>8 ?  <img
                     src="https://pixlok.com/wp-content/uploads/2021/07/Rating-SVG-Icon-s9fd.png"
                     height={"20px"}
                     width={"20px"}
                     alt=""
-                  />
+                  /> :<EmptyStar/>}
+                    </div>
                   {DataUsed.examLevels[1] ? (
                     <>
                       <p className="m-0">{DataUsed.examLevels[1]}</p>
@@ -87,16 +92,21 @@ const SkillsAdded = () => {
                     </>
                   )}
                 </div>
-                  <div className={`col d-flex flex-column ${DataUsed.examLevels[2] ? "block" : "grey"}`}
+
+                <div className={`col d-flex flex-column ${DataUsed.examLevels[2] ? "block" : "grey"}`}
                   style={{
                     background: DataUsed.examScores[2] === 0 ? "grey" : "none",
-                    color: DataUsed.examScores[3] === 0 ? "grey" : "inherit",
+                    color: DataUsed.examScores[2] === 0 ? "grey" : "inherit",
 
-                    // Add other inline styles as needed
                   }}
                   >
-                   <div  className="my-spacing">
-                  { DataUsed.examScores>8 ?<Star /> :<EmptyStar/>}
+                 <div  className="my-spacing">
+                  { DataUsed.examScores[2]>8 ?  <img
+                    src="https://pixlok.com/wp-content/uploads/2021/07/Rating-SVG-Icon-s9fd.png"
+                    height={"20px"}
+                    width={"20px"}
+                    alt=""
+                  /> :<EmptyStar/>}
                     </div>
                   {DataUsed.examLevels[2] ? (
                     <>
@@ -110,16 +120,16 @@ const SkillsAdded = () => {
                     </>
                   )}
                 </div>
+              
                 <div className={`col d-flex flex-column ${DataUsed.examLevels[3] ? "block" : "grey"}`}>
-                  <div  className="my-spacing">
-                  { DataUsed.examScores>8 ?<Star /> :<EmptyStar/>}
-                    </div>
-                  {/* <img
-                    src={`${DataUsed.examScores>8 ? "https://pixlok.com/wp-content/uploads/2021/07/Rating-SVG-Icon-s9fd.png": <EmptyStar />}`}
+                <div  className="my-spacing">
+                  { DataUsed.examScores[3]>8 ?  <img
+                    src="https://pixlok.com/wp-content/uploads/2021/07/Rating-SVG-Icon-s9fd.png"
                     height={"20px"}
                     width={"20px"}
                     alt=""
-                  /> */}
+                  /> :<EmptyStar/>}
+                    </div>
                   {DataUsed.examLevels[3] ? (
                     <>
                       <p className="m-0">{DataUsed.examLevels[3]}</p>
