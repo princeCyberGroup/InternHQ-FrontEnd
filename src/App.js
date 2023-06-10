@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   BrowserRouter as Router,
   Routes,
@@ -26,6 +26,7 @@ import ErrorPage from "./components/ErrorPage/ErrorPage";
 // import CustomRoute from "./components/CustomRoute";
 import TakeTest from "./components/SkillManagement/TakeTest/TakeTest";
 import { AddNewIdea } from "./components/Dashboard/ProjectIdea/AddNewIdea";
+import BadRequest from "./components/ErrorPage/BadRequest";
 function App() {
   const location = useLocation();
   const navigate = useNavigate();
@@ -78,6 +79,19 @@ function App() {
   //   // console.log(atob(decodedUrl), "decoded");
   //   return atob(decodedUrl);
   // };
+const [dataFromDailyUpdate, setDataFromDailyUpdate] = useState("");
+const handleDataFromDailyUpdate = (data) => {
+  setDataFromDailyUpdate(data)
+}
+// console.log(dataFromDailyUpdate, "This is data from daily update")
+
+// // Example usage
+// const timeString = '2 hrs 00 min';
+// const result = convertTimeStringToNumber(timeString);
+// console.log(result, "This is result"); // Output: 1.5
+
+
+
 
   return (
     <div className="App">
@@ -97,20 +111,20 @@ function App() {
         {/* <Route path={encodeUrl("/dashboard")} element={<Dashboard />} /> */}
         {/* Protected Routes here */}
         <Route element={<AuthGuard />}>
-          <Route path="/dashboard" element={<Dashboard />} />
-          <Route path="/daily-update" element={<DailyUpdateTable />} />
+          <Route path="/dashboard" element={<Dashboard sendDataToDashboard={dataFromDailyUpdate}/>} />
+          <Route path="/daily-update" element={<DailyUpdateTable sendDataToDailyUpdate={handleDataFromDailyUpdate}/>} />
           <Route path="/all-projects" element={<ViewAll />} />
           <Route path="/project-idea-projects" element={<ViewProjectIdeas/>}/>
           {/* <Route path={encodeUrl("/all-projects")} element={<ViewAll />} /> */}
           <Route path="/skill-management" element={<SkillManagement />} />
           <Route exact path="/TakeTest" component={<TakeTest />} />
           <Route path="/take-test" element={<TakeYourTest />} />
-          <Route path="/take-your-test/:examId" element={<TakeYourTest />} />
+          <Route path="/take-your-test" element={<TakeYourTest />} />
         </Route>
 
         {/* </Route> */}
 
-        <Route path="*" element={<ErrorPage />} />
+        <Route path="*" element={<BadRequest />} />
       </Routes>
       {/* </Router> */}
     </div>
