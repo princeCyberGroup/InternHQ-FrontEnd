@@ -6,7 +6,8 @@ import { EmptyProject } from "../EmptyStates/EmptyProject/MyIdea";
 
 export const AddNewIdea = ({ projectDescript }) => {
     const navigate = useNavigate();
-    const [first, ...rest] = projectDescript;
+    const [first,...rest] = projectDescript;
+    // console.log(first, "This is projectDescript")
     const [projName, setProjName] = useState("");
     const [projDescription, setProjDescription] = useState("");
     const [selectedOptions, setSelectedOptions] = useState([]);

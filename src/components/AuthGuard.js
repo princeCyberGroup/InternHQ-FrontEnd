@@ -4,7 +4,7 @@ import { Link, Navigate, Outlet, useLocation, useNavigate } from "react-router-d
 const AuthGuard = () => {
   const navigate = useNavigate();
   const location =useLocation();
-  console.log(location)
+  // console.log(location)
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const handleAuth = () => {
     if (localStorage.getItem("login")) {

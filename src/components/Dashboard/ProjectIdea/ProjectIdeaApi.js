@@ -1,7 +1,7 @@
 export const ProjectIdeaApi = [
     {
-        "projectNames": "Demo Kishan ji jai ho Cool",
-        "projectText": "Capital Check very good projet ",
+        "projectNames": "Demo",
+        "projectText": "Capital Check very good project ",
         "createdAt": "2023-05-08",
         "technology": [
             "angular",

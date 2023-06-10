@@ -8,11 +8,9 @@ import axios from "axios";
 import { ProjectIdeaApi } from "./ProjectIdeaApi";
 
 export const AddNewProjectComponent = () => {
-
   const [pActive, setPActive] = useState(true);
   const [projectData, setProjectData] = useState(ProjectIdeaApi);
   const [projectApiData, setProjectApiData] = useState();
-  // const userId=1;
 
   const storedObject = localStorage.getItem('userData');
   const parsedObject = JSON.parse(storedObject);
@@ -22,8 +20,8 @@ export const AddNewProjectComponent = () => {
             const response = await axios.get(`https://cg-interns-hq.azurewebsites.net/getProjectIdea?userId=${userId}`);
             setProjectData(response.data.response);
         } catch (error) {
-            console.log(error.response?.data);
-            console.log(error.response?.data.msg);
+            // console.log(error.response?.data);
+            // console.log(error.response?.data.msg);
         }
     }
     const ProjectApi = async () => {
@@ -31,8 +29,8 @@ export const AddNewProjectComponent = () => {
             const response = await axios.get(`https://cg-interns-hq.azurewebsites.net/getProject?userId=${userId}`);
             setProjectApiData(response.data.response);
         } catch (error) {
-            console.log(error.response?.data);
-            console.log(error.response?.data.msg);
+            // console.log(error.response?.data);
+            // console.log(error.response?.data.msg);
         }
     }
     useEffect(() => {
