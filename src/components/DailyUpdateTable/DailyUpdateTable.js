@@ -56,6 +56,7 @@ const DailyUpdateTable = (props) => {
       });
   };
 
+  //Function to handle read more
   const handleReadMore = (item) => {
     setSelectedItem(item);
     setShowModal(true);
