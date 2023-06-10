@@ -40,6 +40,9 @@ const DailyUpdateTable = (props) => {
   var parsedObject = JSON.parse(storedObject);
   var userId = parsedObject.userId;
 
+  const data = localStorage.getItem('userData');
+  const parsedData = JSON.parse(data);
+  const userId = parsedData.userId;
   const fetchData = async () => {
     await fetch(
       `https://cg-interns-hq.azurewebsites.net/getDailyTaskTrackerRecords?userId=${userId}`
