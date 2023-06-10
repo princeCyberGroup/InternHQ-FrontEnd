@@ -41,9 +41,12 @@ const DailyUpdateTable = () => {
   //   handleFiltersChange();
   // }, [searchFilterValue, dropdownFilterValue, dateFilterValue]);
 
+  const data = localStorage.getItem('userData');
+  const parsedData = JSON.parse(data);
+  const userId = parsedData.userId;
   const fetchData = async () => {
     await fetch(
-      "https://cg-interns-hq.azurewebsites.net/getDailyTaskTrackerRecords?userId=30"
+      `https://cg-interns-hq.azurewebsites.net/getDailyTaskTrackerRecords?userId=${userId}`
     )
       .then((response) => {
         return response.json();
@@ -61,7 +64,7 @@ const DailyUpdateTable = () => {
     setShowModal(true);
   };
 
-  // console.log(tableData, "This table data is null")
+  // console.log(tableData, "This table data is null");
   const totalPaginationPages = Math.ceil(tableData.length / resultsPerPage);
   const arrayStartIndex = (currentPage - 1) * resultsPerPage;
   const arrayEndIndex = arrayStartIndex + resultsPerPage;
@@ -362,9 +365,9 @@ const DailyUpdateTable = () => {
                         return (
                           <tr key={index}>
                             <td>{arrayStartIndex + index + 1}</td>
-                            <td>{item.start_date}</td>
-                            <td>{item.learning_type}</td>
-                            <td>{item.topic_name}</td>
+                            <td>{item.startDate}</td>
+                            <td>{item.learningType}</td>
+                            <td>{item.topicName}</td>
                             <td>
                             {/* Azure is a powerful and widely used cloud computing platform offered by Microsoft. It provides a vast array of services and tools for building, deploying, and managing various applications and services */}
                                  {/* <div> */}
@@ -382,7 +385,7 @@ const DailyUpdateTable = () => {
                                  {/* </div> */}
                               
                             </td>
-                            <td>{item.total_time}
+                            <td>{item.totalTime}
                             <ImageTooltip
                             src={DurationClock}
                             alt="Clock Icon"

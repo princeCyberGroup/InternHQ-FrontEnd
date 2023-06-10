@@ -63,7 +63,7 @@ export const NewNotifications = () => {
                   <div className="image-box">
                     <img
                       key={user.userId}
-                      src={`https://raw.githubusercontent.com/github/explore/80688e429a7d4ef2fca1e82350fe8e3517d3494d/topics/${user.technology.toLowerCase()}/${user.technology.toLowerCase()}.png`}
+                      src={user.techImage}
                       width={32}
                       alt=""
                     />
@@ -71,10 +71,10 @@ export const NewNotifications = () => {
                 </div>
                 <div className="text-wrapper mt-3">
                   <p key={user.userId} className="m-0">
-                    <b>{user.firstName}</b> has achieved <b>{user.level}</b>
-                    <b> skill </b> on <b>{user.technology}</b>
+                    <b>{user.firstName} {user.lastName}</b> has achieved <b>{user.level}</b>
+                    <b> skill </b> on <b>{user.techName}</b>
                   </p>
-                  <p className="m-0 date-wrapper"> 02-06-2023</p>
+                  <p className="m-0 date-wrapper">{user.date} </p>
                 </div>
               </div>
             </>
