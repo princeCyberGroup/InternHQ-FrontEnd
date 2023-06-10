@@ -17,9 +17,8 @@ const SearchBar = ({ searchfunc }) => {
           type="text"
           value={searchInnerValue}
           onChange={(event) => {
-            // searchfunc(searchInnerValue);
-            setSearchInnerValue(event.target.value)
             event.preventDefault();
+            setSearchInnerValue(event.target.value)
         }}
           placeholder="Search"
         />

@@ -5,41 +5,40 @@ import SearchBar from "./SearchBar";
 import tableArr from "./TableArr";
 import LearningTypeDropDown from "./LearningTypeDropDown";
 import { Modal, Button, Form } from "react-bootstrap";
-import ReadMore from "../../Assets/ReadMore.svg";
 import EmptyDailyUpdateTable from "./EmptyDailyUpdateTable";
 import Header from "../Header";
 import axios from "axios";
-import DurationClock from "../../Assets/DurationClock.svg"
+import DurationClock from "../../Assets/DurationClock.svg";
 import ImageTooltip from "./ImageTooltip";
-import Skeleton from 'react-loading-skeleton'
-import 'react-loading-skeleton/dist/skeleton.css'
-// import {Tooltip} from 'react-tooltip';
-// import 'react-tooltip/dist/index.css';
+import Skeleton from "react-loading-skeleton";
+import "react-loading-skeleton/dist/skeleton.css";
 
-const DailyUpdateTable = () => {
+const DailyUpdateTable = (props) => {
+  // const sendDataToParent = () => {
+  //   const data = "Hello World From Daily Update Component";
+  //   props.sendData(data);
+  // }
+  // sendDataToParent();
   // const [loading, setLoading] = useState(false);
   const [tableData, setTableData] = useState([]);
+  const [originalTableData, setOriginalTableData] = useState([]);
   const [searchFilterValue, setSearchFilterValue] = useState("");
   const [dropdownFilterValue, setDropdownFilterValue] = useState("");
   const [dateFilterValue, setDateFilterValue] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
   const [resultsPerPage, setResultsPerPage] = useState(10);
-  const [datemodalSaveFlag, setDatemodalSaveFlag] = useState(false);
   const [showModal, setShowModal] = useState(false);
   const [selectedItem, setSelectedItem] = useState(null);
-  const [editedComment, setEditedComment] = useState("");
   const [modalSaveFlag, setModalSaveFlag] = useState(true);
-  const [timeLeftmessage, setTimeLeftMessage] = useState(""); //Time left to edit comment in modal
   useEffect(() => {
     // setLoading(true);
     fetchData();
     // loading?"":
-    // handleFiltersChange();
   }, []);
-  
-  // useEffect(() => {
-  //   handleFiltersChange();
-  // }, [searchFilterValue, dropdownFilterValue, dateFilterValue]);
+
+  var storedObject = localStorage.getItem("userData");
+  var parsedObject = JSON.parse(storedObject);
+  var userId = parsedObject.userId;
 
   const data = localStorage.getItem('userData');
   const parsedData = JSON.parse(data);
@@ -52,23 +51,23 @@ const DailyUpdateTable = () => {
         return response.json();
       })
       .then(async (data) => {
-          setTableData(data.response);
-          console.log(data.response);
+        setTableData(data.response);
+        setOriginalTableData(data.response);
+        props.sendDataToDailyUpdate(data.response);
+        // setLoading(false);
+        console.log(data.response, "Here you go");
       });
   };
-  let editableTime = Date.now();
-  let currentTime = Date.now();
 
   const handleReadMore = (item) => {
     setSelectedItem(item);
     setShowModal(true);
   };
 
-  // console.log(tableData, "This table data is null");
-  const totalPaginationPages = Math.ceil(tableData.length / resultsPerPage);
+  const totalPaginationPages = Math.ceil(tableData?.length / resultsPerPage);
   const arrayStartIndex = (currentPage - 1) * resultsPerPage;
   const arrayEndIndex = arrayStartIndex + resultsPerPage;
-  const arrayCurrentResults = tableData.slice(arrayStartIndex, arrayEndIndex);
+  const arrayCurrentResults = tableData?.slice(arrayStartIndex, arrayEndIndex);
   const handlePageChange = (pageNumber) => {
     setCurrentPage(pageNumber);
     window.scrollTo(0, 0); //To scroll all the way up whenever page gets clicked
@@ -85,215 +84,112 @@ const DailyUpdateTable = () => {
     }
     window.scrollTo(0, 0);
   };
-
   const handleResultsPerPageChange = (event) => {
     setResultsPerPage(event.target.value);
     setCurrentPage(1);
   };
 
-
-  // const handleSave = () => {
-  //   const updatedTableArr = [...tableArr];
-  //   updatedTableArr[selectedItem.id - 1].comment = editedComment;
-  //   setTableData(updatedTableArr);
-  // };
-  // const handleEdit = (event) => {
-  //   var editableTime = selectedItem.timestamp + 48 * 60 * 60 * 1000; //48 hours in milliseconds
-  //   var currentTime = Date.now();
-  //   if (currentTime <= editableTime) {
-  //     console.log(currentTime);
-  //     console.log(editableTime);
-  //     // setEditedComment(event.target.value);
-  //     // setModalSaveFlag(false);
-  //   } else {
-  //     console.log(currentTime);
-  //     console.log(editableTime);
-  //     // setModalSaveFlag(true);
-  //   }
-  // };
-
-  // const handleFiltersChange = () => {
-  //   // console.log("dwdw",tableData);
-  //   let filteredData = tableData;
-
-  //   console.log("object",filteredData   );
-  //   if (searchFilterValue !== "") {
-  //     console.log(searchFilterValue ," I am the search filter Value");
-  //     filteredData = filteredData.filter(
-
-  //       (item) =>(
-
-  //         item.topic_name
-  //           .toLowerCase().includes((searchFilterValue.toLowerCase())))
-
-  //           // (searchFilterValue.toLowerCase()))
-  //            //Instead of includes we can use startsWith
-  //     );
-
-  //     // console.log(filteredData,"printing one by one")
-  //   }
-
-  //   if (
-  //     dropdownFilterValue !== "" &&
-  //     dropdownFilterValue !== "Select learning type"
-  //   ) {
-  //     console.log("I am here",dropdownFilterValue);
-  //     filteredData = filteredData.filter(
-  //       (item) => item.learning_type === dropdownFilterValue
-  //     );
-  //     console.log(filteredData ,"just now")
-  //   }
-  //   // else if (dropdownFilterValue === "Select learning type") {
-  //   //   filteredData = tableArr; // Reset the filtered data to the original array
-  //   // }
-
-  //   if (dateFilterValue !== "") {
-  //     const dateObject = new Date(dateFilterValue);
-  //     const year = dateObject.getFullYear();
-  //     const month = dateObject.getMonth() + 1;
-
-  //     filteredData = filteredData.filter((item) => {
-  //       const tempDateString = item.start_date;
-  //       const tempDateArr = tempDateString.split("-");
-  //       return (
-  //         year === parseInt(tempDateArr[0]) &&
-  //         month === parseInt(tempDateArr[1])
-  //       );
-  //     });
-
-  //     setDatemodalSaveFlag(true);
-  //   } else if (datemodalSaveFlag && dateFilterValue == "") {
-  //     filteredData = tableData; // Reset the filtered data to the original array
-  //   }
-
-  //   // if(!searchFilterValue && (!dropdownFilterValue && dropdownFilterValue==='Select learning type') && !dateFilterValue ){
-  //   //   setTableData(copydata);
-  //   //   return;
-  //   // }
-  //   console.log(filteredData ," before setting");
-  //   setTableData(filteredData);
-  // };
-
   const truncate = (str, maxLength) => {
     if (str?.length > maxLength) {
-      return str.slice(0, maxLength);
+      return str.slice(0, maxLength) + "...";
     } else {
       return str;
     }
   };
 
-  // const handleFiltersChange = () => {
-  //   // let filteredData = tableData
-  //   const filterItemsDropDown = filterDropDown(tableData, dropdownFilterValue);
-  //   const filterDropDown = (filteredData, dropdownFilterValue) => {
-  //     if (dropdownFilterValue && dropdownFilterValue !== "Select learning type") {
-  //       // console.log("I am here", dropDownValue);
-  
-  //       return filteredData.filter((item) => item.learning_type === dropdownFilterValue);
-  //     }
-  
-  //     return filteredData;
-  //   };
-  //   const filterItems = getFilterItems(filterItemsDropDown, searchFilterValue);
-  //   const getFilterItems = (filterDropDown, searchValue) => {
-  //     // console.log(searchValue);
-  
-  //     if (searchValue) {
-  //       return filterDropDown.filter((item) =>
-  //         item.topic_name.toLowerCase().includes(searchValue.toLowerCase())
-  //       );
-  //     }
-  
-  //     return filterDropDown;
-  //   };
-  
-  //   const filterDate = getFilterDate(filterItems, dateFilterValue);
-  //   const getFilterDate = (getFilterItems, dateFilterValue) => {
-  //     if (dateFilterValue !== "") {
-  //       const dateObject = new Date(dateFilterValue);
-  
-  //       const year = dateObject.getFullYear();
-  
-  //       const month = dateObject.getMonth() + 1;
-  
-  //       return getFilterItems.filter((item) => {
-  //         const tempDateString = item.start_date;
-  
-  //         const tempDateArr = tempDateString.split("-");
-  
-  //         return (
-  //           year === parseInt(tempDateArr[0]) &&
-  //           month === parseInt(tempDateArr[1])
-  //         );
-  //       });
-  //     }
-  
-  //     return getFilterItems;
-  //   };
-  //   // filteredData = getFilterDate;
-  //   console.log(filterDate, "Filter Items");
-  // }
-  const getFilterItems = (items, searchValue) => {
-    // console.log(searchValue);
-
-    if (searchValue) {
-      return items.filter((item) =>
-        item.topic_name.toLowerCase().includes(searchValue.toLowerCase())
-      );
-    }
-
-    return items;
+  //Function to format YYYY-MM-DD to MM-DD-YYYY
+  const dateFormat = (dateString) => {
+    const dateObject = new Date(dateString);
+    let formattedDate = dateObject.toLocaleDateString("en-US", {
+      month: "2-digit",
+      day: "2-digit",
+      year: "numeric",
+    });
+    return formattedDate.replace(/\//g, "-");
   };
 
-  const filterDropDown = (items, dropDownValue) => {
-    if (dropDownValue && dropDownValue !== "Select learning type") {
-      // console.log("I am here", dropDownValue);
-
-      return items.filter((item) => item.learning_type === dropDownValue);
+  //Function to convert a time string in the format "HH:MM:SS" to a 12-hour format with AM/PM.
+  const convertTime = (timeString) => {
+    const timeComponents = timeString?.split(":");
+    let hour = parseInt(timeComponents[0]);
+    const minute = timeComponents[1];
+    const second = timeComponents[2];
+    let meridiem = "AM";
+    if (hour >= 12) {
+      meridiem = "PM";
+      if (hour > 12) {
+        hour -= 12;
+      }
     }
-
-    return items;
+    if (hour === 0) {
+      hour = 12;
+    }
+    const convertedTime = `${hour}:${minute} ${meridiem}`;
+    return convertedTime;
   };
 
-  const getFilterDate = (items, dateFilterValue) => {
-    if (dateFilterValue !== "") {
-      const dateObject = new Date(dateFilterValue);
+  console.log( convertTime(
+    "18:16:59"
+  ) +
+  " - " +
+  convertTime("18:17:06"))
 
-      const year = dateObject.getFullYear();
-
-      const month = dateObject.getMonth() + 1;
-
-      return items.filter((item) => {
-        const tempDateString = item.start_date;
-
-        const tempDateArr = tempDateString.split("-");
-
-        return (
-          year === parseInt(tempDateArr[0]) &&
-          month === parseInt(tempDateArr[1])
+  const handleFiltersChange = () => {
+    const getFilterItems = (items, searchValue) => {
+      if (searchValue) {
+        return items.filter((item) =>
+          item.topicName.toLowerCase().includes(searchValue.toLowerCase())
         );
-      });
-    }
+      }
 
-    return items;
+      return items;
+    };
+
+    const filterDropDown = (items, dropDownValue, tableArr) => {
+      if (dropDownValue && dropDownValue !== "Select learning type") {
+        return items.filter((item) => item.learning === dropDownValue);
+      }
+
+      return items;
+    };
+
+    const getFilterDate = (items, dateFilterValue, tableArr) => {
+      if (dateFilterValue !== "") {
+        const dateObject = new Date(dateFilterValue);
+        const year = dateObject.getFullYear();
+        const month = dateObject.getMonth() + 1;
+        return items.filter((item) => {
+          const tempDateString = item.startDate;
+          const tempDateArr = tempDateString.split("-");
+          return (
+            year === parseInt(tempDateArr[0]) &&
+            month === parseInt(tempDateArr[1])
+          );
+        });
+      }
+
+      return items;
+    };
+
+    const filterItemsDropDown = filterDropDown(
+      originalTableData,
+      dropdownFilterValue
+    );
+    const filterItems = getFilterItems(filterItemsDropDown, searchFilterValue);
+    const filterDate = getFilterDate(filterItems, dateFilterValue);
+    setTableData(filterDate);
+    // console.log(filterDate)
   };
 
-  const filterItemsDropDown = filterDropDown(tableData, dropdownFilterValue);
+  useEffect(() => {
+    handleFiltersChange();
+  }, [dropdownFilterValue, searchFilterValue, dateFilterValue]);
 
-  const filterItems = getFilterItems(filterItemsDropDown, searchFilterValue);
-
-  const filterDate = getFilterDate(filterItems, dateFilterValue);
-
-  // useEffect(() => {
-  //   setTableData(filterDate)
-  // }, [filterDate])
-
-  // console.log(filterDate, "Now this is filtered")
   return (
     <>
       <Header />
-        <div className="container-fluid daily-update-table-container d-flex flex-column align-items-center">
-          <div className="daily-update-table-wrapper ">
+      <div className="container-fluid daily-update-table-container d-flex flex-column">
+        <div className="daily-update-table-wrapper ">
           <div className="row ">
             <div className="col-12">
               <div className="daily-update-nav-bar">
@@ -351,50 +247,86 @@ const DailyUpdateTable = () => {
                       <td></td>
                       <td></td>
                     </tr>
-                    {arrayCurrentResults.length === 0 ? (
+                    {arrayCurrentResults?.length === 0 ? (
                       <tr>
                         <td colSpan={6}>
                           <EmptyDailyUpdateTable />
                         </td>
                       </tr>
                     ) : (
-                      arrayCurrentResults.map((item, index) => {
-                        const isLastTooltip = index === arrayCurrentResults.length - 1;
-  const isSecondLastTooltip = index === arrayCurrentResults.length - 2;
-  const tooltipClassName = isLastTooltip || isSecondLastTooltip;
+                      arrayCurrentResults?.map((item, index) => {
+                        const isLastTooltip =
+                          index === arrayCurrentResults?.length - 1;
+                        const isSecondLastTooltip =
+                          index === arrayCurrentResults?.length - 2;
+                        const tooltipClassName =
+                          isLastTooltip || isSecondLastTooltip;
+                        const activityLength = item.activityTime.length; //To calculate length of activityTime array that i'm getting from backend
+                        
                         return (
                           <tr key={index}>
                             <td>{arrayStartIndex + index + 1}</td>
-                            <td>{item.startDate}</td>
-                            <td>{item.learningType}</td>
+                            <td>{dateFormat(item.startDate)}</td>
+                            <td>{item.learning}</td>
                             <td>{item.topicName}</td>
                             <td>
-                            {/* Azure is a powerful and widely used cloud computing platform offered by Microsoft. It provides a vast array of services and tools for building, deploying, and managing various applications and services */}
-                                 {/* <div> */}
-                                 {/* {item.comment} */}
-                                  {truncate(item.comment, 35)} &nbsp;
-                                  <img
-                                    src={ReadMore}
-                                    alt="..."
-                                    onClick={() => {
-                                      setModalSaveFlag(true);
-                                      handleReadMore(item);
-                                    }}
-                                  />
-                                  {/* </p> */}
-                                 {/* </div> */}
-                              
+                              {truncate(item.comment, 35)}
+                              <span
+                                className="text-decoration-underline"
+                                style={{ color: "#28519E", cursor: "pointer" }}
+                                onClick={() => {
+                                  setModalSaveFlag(true);
+                                  handleReadMore(item);
+                                }}
+                              >
+                                Read more
+                              </span>
                             </td>
-                            <td>{item.totalTime}
-                            <ImageTooltip
-                            src={DurationClock}
-                            alt="Clock Icon"
-                            tooltipHead="Activity Time"
-                            tooltipBody="10:45 AM - 11:05 AM\n12:05 AM - 12:25 AM\n02:05 AM - 02:45 AM\n05:00 AM - 06:10 AM"
-                            styleClass = {tooltipClassName}
-                            />
-                            {/* <img src={DurationClock} alt="Clock Icon" data-tip="Tooltip Text"/>
-                            <Tooltip effect="solid" /> */}
+                            <td>
+                              {item.totalTime}
+                              <ImageTooltip
+                                src={DurationClock}
+                                alt="Clock Icon"
+                                tooltipHead="Activity Time"
+                                // firstActivity={`${convertTime(item.activityTime[0].startedAt)} - ${convertTime(item.activityTime[0].endedAt)}`}
+                                firstActivity={
+                                  activityLength >= 1
+                                    ? convertTime(item.activityTime[0].startedAt) +
+                                    " - " +
+                                    convertTime(item.activityTime[0].endedAt)
+                                    : ""
+                                }
+                                secondActivity={
+                                  activityLength >= 2
+                                    ? convertTime(item.activityTime[1].startedAt) +
+                                      " - " +
+                                      convertTime(item.activityTime[1].endedAt)
+                                    : ""
+                                }
+                                thirdActivity={
+                                  activityLength >= 3
+                                    ? item.activityTime[0].startedAt +
+                                      " - " +
+                                      item.activityTime[0].endedAt
+                                    : ""
+                                }
+                                fourthActivity={
+                                  activityLength >= 4
+                                    ? item.activityTime[0].startedAt +
+                                      " - " +
+                                      item.activityTime[0].endedAt
+                                    : ""
+                                }
+                                fifthActivity={
+                                  activityLength >= 5
+                                    ? item.activityTime[0].startedAt +
+                                      " - " +
+                                      item.activityTime[0].endedAt
+                                    : ""
+                                }
+                                // tooltipBody="10:45 AM - 11:05 AM\n12:05 AM - 12:25 AM\n02:05 AM - 02:45 AM\n05:00 AM - 06:10 AM"
+                                styleClass={tooltipClassName}
+                              />
                             </td>
                           </tr>
                         );
@@ -408,33 +340,41 @@ const DailyUpdateTable = () => {
                       show={showModal}
                       onHide={() => setShowModal(false)}
                     >
-                      <Modal.Header closeButton>
-                        <Modal.Title style={{ fontSize: "1.4rem" }}>
+                      <Modal.Header
+                        closeButton
+                        style={{
+                          borderBottom:
+                            "1px solid var(--bs-modal-header-border-color)",
+                        }}
+                      >
+                        <Modal.Title
+                          style={{ fontSize: "1.1rem", fontWeight: "600" }}
+                        >
                           Daily Update
                         </Modal.Title>
                       </Modal.Header>
                       <Modal.Body>
                         <p>
-                          <span className="fw-bold">Learning Type:</span>{" "}
+                          <span>Learning Type:</span>{" "}
                           <span className="opacity-75">
-                            {selectedItem && selectedItem.learningType}
+                            {selectedItem && selectedItem.learning}
                           </span>
                         </p>
                         <p>
-                          <span className="fw-bold">Topic:</span>{" "}
+                          <span>Topic:</span>{" "}
                           <span className="opacity-75">
-                            {selectedItem && selectedItem.topics}
+                            {selectedItem && selectedItem.topicName}
                           </span>
                         </p>
 
                         <Form.Group>
                           <Form.Label>
-                            <span className="fw-bold">Comment: </span>
+                            <span>Comment: </span>
                           </Form.Label>
                           <Form.Control
                             className="opacity-75"
+                            disabled
                             as="textarea"
-                            // onChange={handleEdit}
                             style={{ fontSize: "0.813rem" }}
                             defaultValue={selectedItem && selectedItem.comment}
                             rows={4}
@@ -458,7 +398,6 @@ const DailyUpdateTable = () => {
                               disabled={modalSaveFlag}
                               onClick={() => {
                                 setShowModal(false);
-                                // handleSave();
                               }}
                             >
                               Save
@@ -471,7 +410,7 @@ const DailyUpdateTable = () => {
                   <tfoot>
                     <tr>
                       <td className="f-bold" colSpan={2}>
-                        Total Items: {tableData.length}
+                        Total Items: {tableData?.length}
                       </td>
                       <td></td>
                       <td></td>
@@ -584,9 +523,8 @@ const DailyUpdateTable = () => {
               </div>
             </div>
           </div>
-          </div>
         </div>
-      
+      </div>
     </>
   );
 };

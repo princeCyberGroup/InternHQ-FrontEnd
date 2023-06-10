@@ -17,7 +17,7 @@ const learningTypeOptions = [
 ];
 const topics = ["React", "Angular", "C# .Net", "AWS", "Azure", "JavaScript", "Salesforce"];
 
-
+const MAX_COMMENT_LENGTH = 150;
 const DailyTaskTracker = () => {
   const [learningType, setLearningType] = useState(localStorage.getItem("learningType") || "");
   const [topicName, setTopicName] = useState(localStorage.getItem("topicName") || "");
@@ -40,6 +40,8 @@ const DailyTaskTracker = () => {
   const [isPaused, setIsPaused] = useState(false);
 
   const[firstCount,setFirstCount] = useState(true);
+  const [commentLength, setCommentLength] = useState(comments.length);
+
   const navigate = useNavigate();
 
   // useEffect(() => {
@@ -96,6 +98,9 @@ const DailyTaskTracker = () => {
     if (comments.length >= 150) {
       setStopBtnDisabled(false);
     }
+    else if(comments.length < 150){
+      setStopBtnDisabled(true);
+    }
   }, [comments]);
 
   // useEffect(() => {
@@ -138,10 +143,12 @@ const DailyTaskTracker = () => {
   //   if (selectedLearningType) {
   //     setLearningType(selectedLearningType);
   //   }
-  // }, []);
-
-  var userId = 30;
-
+  // }
+  
+  var storedObject = localStorage.getItem('userData');
+  var parsedObject = JSON.parse(storedObject);
+  var userId = parsedObject.userId;
+  // console.log(userId);
   const sendStartDataToBackend = async () => {
     try {
       const response = await axios.post("https://cg-interns-hq.azurewebsites.net/dailyTaskTrackerStartCheck", {
@@ -149,9 +156,8 @@ const DailyTaskTracker = () => {
         learningType,
         topicName,
       })
-      localStorage.setItem("token",response.data.token);
+      localStorage.setItem("DTT-token",response.data.token);
       console.log(response.data.token);
-      ;
       console.log("Start Data sent to backend:", response.data);
     } catch (error) {
       // console.log(error.response.status)
@@ -165,24 +171,27 @@ const DailyTaskTracker = () => {
 
   const sendPauseDataToBackend = async () => {
     try {
-      const token = localStorage.getItem("token");
-      const response = await axios.post("https://cg-interns-hq.azurewebsites.net/dailyTaskTrackerPauseCheck",
-      {headers:{
-        Authorization:`Bearer ${token}`,
-      }});
+      const dttToken = localStorage.getItem("DTT-token");
+      console.log("Pause:",dttToken);
+      const response = await axios.post("https://cg-interns-hq.azurewebsites.net/dailyTaskTrackerPauseCheck",{},{
+        headers:{
+          'content-type':'application/json',
+          "Authorization":`Bearer ${dttToken}`
+        }
+      })
       console.log("Pause Data sent to backend:", response.data);
     } catch (error) {
-      navigate({
-        pathname:"/error",
-        search:`statusCode=${error.response.status}`
-      })
+      // navigate({
+      //   pathname:"/error",
+      //   search:`statusCode=${error.response.status}`
+      // })
       console.error("Error sending pause data to backend:", error);
     }
   };
 
   const sendStopDataToBackend = async () => {
     try {
-      const token = localStorage.getItem("token");
+      const token = localStorage.getItem("DTT-token");
       const response = await axios.post("https://cg-interns-hq.azurewebsites.net/dailyTaskTrackerEndCheck", {
         comments,
         elapsedTime,
@@ -197,6 +206,13 @@ const DailyTaskTracker = () => {
       })
       console.error("Error sending stop data to backend:", error);
     }
+    finally{
+
+      localStorage.removeItem('taskData');
+
+      localStorage.removeItem('DTT-token');
+
+    }
   };
 
 
@@ -210,6 +226,7 @@ const DailyTaskTracker = () => {
     }
     setIsRunning(false);
     setDisabled(false);
+    setCommentLength(0);
     setComDisabled(true);
     setResetSelect((val) => {
       return !val;
@@ -249,6 +266,9 @@ const DailyTaskTracker = () => {
       sendStartDataToBackend();
       setFirstCount(false);
     }
+    else{ 
+         sendPauseDataToBackend();
+        }
 
     setComDisabled(false);
     setDisabled(true);
@@ -294,6 +314,12 @@ const DailyTaskTracker = () => {
     setTopicName(e.target.value);
   };
 
+  const onCommentsChange = (e) => {
+    const inputComments = e.target.value;
+    setComments(inputComments);
+    setCommentLength(inputComments.length);
+  };
+
   const formatTime = (timeInMs) => {
     const totalSeconds = Math.floor(timeInMs / 1000);
     const hours = Math.floor(totalSeconds / 3600);
@@ -313,7 +339,7 @@ const DailyTaskTracker = () => {
           </div>
           <div>
             <label htmlFor="learning" className="form-label mt-3 dtt-lt">
-              Learning Type
+              Learning Type <span style={{ color: 'red' }}>*</span>
             </label>
             <select
               key={resetSelect ? "learningTypeReset" : "learningType"}
@@ -338,7 +364,7 @@ const DailyTaskTracker = () => {
 
           <div>
             <label htmlFor="topic" className="form-label dtt-t">
-              Topic
+              Topic <span style={{ color: 'red' }}>*</span>
             </label>
             <select
               key={resetSelect ? "topicReset" : "topicName"}
@@ -362,16 +388,19 @@ const DailyTaskTracker = () => {
           </div>
           <div>
             <label htmlFor="comments" className="form-label dtt-t">
-              Comments
+              Comments <span style={{ color: 'red' }}>*</span> <span style={{ color: 'grey' }}>(Minimum 150 Characters)</span>
+              
             </label>
             <textarea
-              placeholder="Type comments (Minimum 150 characters)"
+              placeholder="Type comments"
               id="comments"
               className="form-control dtt-text"
               value={comments}
-              onChange={(e) => setComments(e.target.value)}
+              onChange={onCommentsChange}
               disabled={comDisabled} // Add the disabled attribute
             ></textarea>
+            <span className="charLen" style={{ color: 'grey',display:"flex",justifyContent:"flex-end", marginRight:"1rem" }}>{commentLength}/{MAX_COMMENT_LENGTH}</span>
+            
           </div>
 
 

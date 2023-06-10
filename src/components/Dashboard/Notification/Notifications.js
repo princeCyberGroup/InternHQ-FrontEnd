@@ -23,7 +23,7 @@ export const NewNotifications = () => {
   useEffect(() => {
     setTimeout(() => {
       fetchNotifications();
-    }, 5000);
+    }, 1000);
   }, []);
 
   const fetchNotifications = async () => {
@@ -34,6 +34,7 @@ export const NewNotifications = () => {
       );
 
       const data = await response.json();
+      console.log(data)
 
       setNotifications(data.response);
       setIsLoading(false);
@@ -62,7 +63,8 @@ export const NewNotifications = () => {
                 <div className="image-wrapper mt-1">
                   <div className="image-box">
                     <img
-                      key={user.userId}
+                    key={user.userId}
+
                       src={user.techImage}
                       width={32}
                       alt=""

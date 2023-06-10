@@ -127,9 +127,19 @@ const dataMonthly = [
   //   }
 ];
 
-export default function DashboardGraph() {
+export default function DashboardGraph(props) {
+  const graphDataFromDailyUpdate = props.sendDataToGraph
+  console.log(graphDataFromDailyUpdate, "This is graph data")
+  // function convertTimeStringToNumber(timeString) {
+  //   const [hoursPart, minutesPart] = timeString.split(' hrs ');
+  //   const hours = parseInt(hoursPart, 10);
+  //   // console.log(hours, "This is hours")
+  //   const minutes = parseInt(minutesPart, 10) || 0;
+  //   // console.log(minutes, "This is minutes")
+  //   const decimalHours = hours + (minutes / 60);
+  //   return decimalHours;
+  // }
   const [graphType, setGraphType] = useState("daily");
-
   const setGraphData = (type) => {
     setGraphType(type);
   };

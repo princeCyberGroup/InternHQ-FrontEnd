@@ -1,35 +1,36 @@
-import { AddNewIdea } from './AddNewIdea';
-import React, { useEffect, useState } from 'react';
-import { AddProject } from './AddProject';
-import './ProjectComponent.css';
-import './AddProject.css';
-import './AddNewIdea.css';
+import { AddNewIdea } from "./AddNewIdea";
+import React, { useEffect, useState } from "react";
+import { AddProject } from "./AddProject";
+import "./ProjectComponent.css";
+import "./AddProject.css";
+import "./AddNewIdea.css";
 import axios from "axios";
 import { ProjectIdeaApi } from "./ProjectIdeaApi";
 
-
 export const AddNewProjectComponent = () => {
-    const [pActive, setPActive] = useState(true);
-    const [projectData, setProjectData] = useState(ProjectIdeaApi)
-    const [projectApiData, setProjectApiData] = useState()
-    // const userId=1;
+  const [pActive, setPActive] = useState(true);
+  const [projectData, setProjectData] = useState(ProjectIdeaApi);
+  const [projectApiData, setProjectApiData] = useState();
 
+  const storedObject = localStorage.getItem('userData');
+  const parsedObject = JSON.parse(storedObject);
+  const userId = parsedObject.userId;
     const MyIdeaComponent = async () => {
         try {
-            const response = await axios.get("https://cg-interns-hq.azurewebsites.net/getProjectIdea?userId=30");
+            const response = await axios.get(`https://cg-interns-hq.azurewebsites.net/getProjectIdea?userId=${userId}`);
             setProjectData(response.data.response);
         } catch (error) {
-            console.log(error.response?.data);
-            console.log(error.response?.data.msg);
+            // console.log(error.response?.data);
+            // console.log(error.response?.data.msg);
         }
     }
     const ProjectApi = async () => {
         try {
-            const response = await axios.get("https://cg-interns-hq.azurewebsites.net/getProject?userId=30");
+            const response = await axios.get(`https://cg-interns-hq.azurewebsites.net/getProject?userId=${userId}`);
             setProjectApiData(response.data.response);
         } catch (error) {
-            console.log(error.response?.data);
-            console.log(error.response?.data.msg);
+            // console.log(error.response?.data);
+            // console.log(error.response?.data.msg);
         }
     }
     useEffect(() => {
@@ -40,35 +41,34 @@ export const AddNewProjectComponent = () => {
     <>
       <div className="card whole-card-wrapper px-0">
         <div className="border-bottom">
-        <div className="card-title dtt-hfs-abc m-0 d-flex  d-flex justify-content-center align-item-center ">
-          <div className={"project-idea-btn" + (pActive ? " p-active" : "")}>
-            <button
-              className="btn-1 p-0"
-              onClick={() => {
-                setPActive(true);
-              }}
-            >
-              My Idea
-            </button>
-          </div>
-          <div className={"project-btn" + (pActive ? " " : " p-active")}>
-            <button
-              className="btn-2 p-0"
-              onClick={() => {
-                setPActive(false);
-              }}
-            >
-              Project
-            </button>
+          <div className="card-title dtt-hfs-abc m-0 d-flex  d-flex justify-content-center align-item-center ">
+            <div className={"project-idea-btn" + (pActive ? " p-active" : "")}>
+              <button
+                className="btn-1 p-0"
+                onClick={() => {
+                  setPActive(true);
+                }}
+              >
+                My Idea
+              </button>
+            </div>
+            <div className={"project-btn" + (pActive ? " " : " p-active")}>
+              <button
+                className="btn-2 p-0"
+                onClick={() => {
+                  setPActive(false);
+                }}
+              >
+                Project
+              </button>
+            </div>
           </div>
         </div>
-        </div>
-        {console.log("PData",projectData)}
         {pActive ? (
-                    <AddNewIdea projectDescript={projectData} />
-                ) : (
-                    <AddProject projectApiDataa={projectApiData} />
-                )}
+          <AddNewIdea projectDescript={projectData} />
+        ) : (
+          <AddProject projectApiDataa={projectApiData} />
+        )}
       </div>
     </>
   );
