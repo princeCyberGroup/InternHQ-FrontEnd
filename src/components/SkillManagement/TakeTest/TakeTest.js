@@ -16,6 +16,7 @@ const TakeTest = ({ test }) => {
     const [searchQuery, setSearchQuery] = useState("");
     const [tests, setTests] = useState([]);
     const [allData, setAllData] = useState([]);
+    const [data , setdata ]= useState();
     useEffect(() => {
         fetchTests();
     }, [])
@@ -33,29 +34,28 @@ const TakeTest = ({ test }) => {
     const handleSearch = (event) => {
         setSearchQuery(event.target.value);
     };
-    const navigate =useNavigate();
-    // const location = useLocation();
-    
-    const clickHandler = (examId,examName,examDuration,numberOfQuestion,techName,level) => {
-        const data={
-            examId:examId,
-            examName:examName,
-            examDuration:examDuration,
-            numberOfQuestion:numberOfQuestion,
-            techName:techName,
-            level:level
-        };
-        // const locationstate=location.state;
+    const navigate = useNavigate();
+     const location = useLocation();
 
-        navigate("/take-your-test",{
-            state:{ data }
-        });
-        
+    const clickHandler = (examId, examName, examDuration, numberOfQuestion, techName, level) => {
+         setdata({
+            examId: examId,
+            examName: examName,
+            examDuration: examDuration,
+            numberOfQuestion: numberOfQuestion,
+            techName: techName,
+            level: level
+        })
+        // const locationstate=location.state;
+       
+    }
+    const clickCont =()=>{
+        navigate("/take-your-test", { state: data });
     }
     return (
         <> <div className="TTheading">
-        <p>Take The Test</p>
-    </div>
+            <p>Take The Test</p>
+        </div>
             <div className="card maincard">
                 <div className="card-header-nav">
                     <div
@@ -133,7 +133,7 @@ const TakeTest = ({ test }) => {
                                             <div class="ml-3 w-100">
                                                 <div className="d-flex justify-content-start ">
                                                     <div className="imagespace">
-                                                        <img src={`https://raw.githubusercontent.com/github/explore/80688e429a7d4ef2fca1e82350fe8e3517d3494d/topics/${test.techName.toLowerCase()}/${test.techName.toLowerCase()}.png`} class="imageLogo" width="30px" height="35px" />
+                                                        <img src={test.techImageLink} class="imageLogo" width="30px" height="35px" />
                                                     </div>
                                                     <div >
                                                         <div className="Category_box justify-content-center">
@@ -155,7 +155,15 @@ const TakeTest = ({ test }) => {
                                                     </div>
                                                     <div class="d-flex flex-column">
 
-                                                        <Button className='btnclick' data-bs-toggle="modal" data-bs-target="#staticBackdrop" >Start Test</Button>
+                                                        <Button 
+                                                         onClick={() => clickHandler(
+                                                            test.examId,
+                                                            test.examName,
+                                                            test.examDuration,
+                                                            test.numberOfQuestion,
+                                                            test.techName,
+                                                            test.level)}
+                                                             className='btnclick' data-bs-toggle="modal" data-bs-target="#staticBackdrop" >Start Test</Button>
                                                         {/* </Link>{' '} */}
                                                     </div>
                                                     <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
@@ -175,8 +183,8 @@ const TakeTest = ({ test }) => {
                                                                 <div class="modal-footer">
                                                                     <button type="button" class="btn btn-outline-primary" data-bs-dismiss="modal">Cancel</button>
                                                                     {/* <Link key={test.examId} to={`/take-your-test`}> */}
-                                                                        <button type="button" 
-                                                                          onClick={() => clickHandler(test.examId, test.examName, test.examDuration, test.numberOfQuestion, test.techName, test.level)}
+                                                                    <button type="button"
+                                                                        onClick={() => clickCont()}
                                                                         // onClick={() => { clickHandler(test.examId,test.examName,test.examDuration,test.numberOfQuestion,test.techName,test.level) }} 
                                                                         data-bs-dismiss="modal" class="btn btn-primary">Continue</button>
                                                                     {/* </Link> */}

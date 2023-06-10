@@ -62,3 +62,10 @@
     width: 20px;
 }
 
+.grey p{
+/* color: #343435; */
+color : grey;
+}
+.my-spacing{
+    margin-left: 20px;
+}

@@ -3,11 +3,13 @@ import { ReactComponent as Cong } from "./Group 7Congrats.svg";
 //import { useLocation } from 'react-router-dom';
 import "./Congo.css";
 import TakeYourTest from "../../TakeYourTest/TakeYourTest";
+import { useLocation } from "react-router-dom";
 
-const Congo = () => {
+const Congo = ({scoreValue}) => {
 
   // const location = useLocation();
   // const { score } = location.state;
+  // const location=useLocation()
   return (
     <div
       className="modal fade"
@@ -36,7 +38,7 @@ const Congo = () => {
             <p>Your Score</p>
           </div>
           <div className="row c3">
-            <p>/10</p>
+            <p>{scoreValue}/10</p>
 
           </div>
           <div className="row c4">
