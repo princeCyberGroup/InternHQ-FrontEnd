@@ -1,52 +1,42 @@
-import { AddNewIdea } from './AddNewIdea';
-import React, { useEffect, useState } from 'react';
-import { AddProject } from './AddProject';
-import './ProjectComponent.css';
-import './AddProject.css';
-import './AddNewIdea.css';
+import { AddNewIdea } from "./AddNewIdea";
+import React, { useEffect, useState } from "react";
+import { AddProject } from "./AddProject";
+import "./ProjectComponent.css";
+import "./AddProject.css";
+import "./AddNewIdea.css";
 import axios from "axios";
 import { ProjectIdeaApi } from "./ProjectIdeaApi";
 
-
 export const AddNewProjectComponent = () => {
-
   const [pActive, setPActive] = useState(true);
-  const [projectData, setProjectData] = useState(ProjectIdeaApi)
-  const [projectApiData, setProjectApiData] = useState()
+  const [projectData, setProjectData] = useState(ProjectIdeaApi);
+  const [projectApiData, setProjectApiData] = useState();
 
-  const MyIdeaComponent = async () => {
-    var storedObject = localStorage.getItem('userData');
-
-    var parsedObject = JSON.parse(storedObject);
-
-    var userId = parsedObject.userId;
-    console.log(userId);
-    try {
-      const response = await axios.get(`https://cg-interns-hq.azurewebsites.net/getProjectIdea?userId=${userId}`);
-      setProjectData(response.data.response);
-    } catch (error) {
-      console.log(error.response?.data);
-      console.log(error.response?.data.msg);
+  const storedObject = localStorage.getItem('userData');
+  const parsedObject = JSON.parse(storedObject);
+  const userId = parsedObject.userId;
+    const MyIdeaComponent = async () => {
+        try {
+            const response = await axios.get(`https://cg-interns-hq.azurewebsites.net/getProjectIdea?userId=${userId}`);
+            setProjectData(response.data.response);
+        } catch (error) {
+            // console.log(error.response?.data);
+            // console.log(error.response?.data.msg);
+        }
     }
-  }
-  const ProjectApi = async () => {
-    var storedObject = localStorage.getItem('userData');
-
-    var parsedObject = JSON.parse(storedObject);
-
-    var userId = parsedObject.userId;
-    try {
-      const response = await axios.get(`https://cg-interns-hq.azurewebsites.net/getProject?userId=${userId}`);
-      setProjectApiData(response.data.response);
-    } catch (error) {
-      console.log(error.response?.data);
-      console.log(error.response?.data.msg);
+    const ProjectApi = async () => {
+        try {
+            const response = await axios.get(`https://cg-interns-hq.azurewebsites.net/getProject?userId=${userId}`);
+            setProjectApiData(response.data.response);
+        } catch (error) {
+            // console.log(error.response?.data);
+            // console.log(error.response?.data.msg);
+        }
     }
-  }
-  useEffect(() => {
-    ProjectApi();
-    MyIdeaComponent();
-  }, []);
+    useEffect(() => {
+        ProjectApi();
+        MyIdeaComponent();
+    }, []);
   return (
     <>
       <div className="card whole-card-wrapper px-0">
