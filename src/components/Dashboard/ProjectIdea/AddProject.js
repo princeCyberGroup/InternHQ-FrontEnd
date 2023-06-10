@@ -1,6 +1,8 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { EmptyProjectView } from "../EmptyStates/EmptyProject/ProjectViewAll";
+
 
 export const AddProject = ({ projectApiDataa }) => {
     const navigate = useNavigate();
@@ -8,8 +10,7 @@ export const AddProject = ({ projectApiDataa }) => {
     const [projName, setProjName] = useState("");
     const [projDescription, setProjDescription] = useState("");
     const [technologyNames, setTechnologyNames] = useState([]);
-    const [userId, setUserId] = useState("30");
-    const [projectLink,setProjectLink]=useState("");
+    const [projectLink, setProjectLink] = useState("");
     const [hostedLink, setHostedLink] = useState("");
     const [selectedOptions, setSelectedOptions] = useState([]);
     const [counter, setCounter] = useState(1);
@@ -17,7 +18,42 @@ export const AddProject = ({ projectApiDataa }) => {
     const [memberNames, setMemberNames] = useState({});
     const [techNames, seTechNames] = useState({});
     const [dropDown, setDropDown] = useState(false);
+    const [error, setError] = useState('');
+    const [desError, setDesError] = useState('');
+    const [projLinkError, setProjLinkError] = useState('');
 
+    const handleProjectNameChange = (event) => {
+
+        const name = event.target.value;
+        setProjName(name);
+        if (!name) {
+            setError('Project name is required');
+        } else {
+            setError('');
+        }
+    };
+
+    const handleProjectDescriptionChange = (event) => {
+
+        const description = event.target.value;
+        setProjDescription(description);
+        if (!description) {
+            setDesError('Project description is required');
+        } else {
+            setDesError('');
+        }
+    };
+
+    const handleProjectLinkChange = (event) => {
+
+        const link = event.target.value;
+        setProjectLink(link);
+        if (!link) {
+            setProjLinkError('Project link is required');
+        } else {
+            setProjLinkError('');
+        }
+    };
     const handleInputChange = (event) => {
         setTextInput(event.target.value);
     };
@@ -40,15 +76,14 @@ export const AddProject = ({ projectApiDataa }) => {
     //     console.log(technologyNames, "This is technologyNames")
 
     // };
-   
-    let dataArr= {
+
+    let dataArr = {
     }
     const handleOptionClick = (event) => {
         const { value } = event.currentTarget.dataset;
         const isChecked = event.currentTarget.querySelector('input').checked;
 
         if (isChecked) {
-            
             var optionObject = `tech${counter}`;
             technologyNames.push(value)
             setSelectedOptions((prevSelectedOptions) => [...prevSelectedOptions, optionObject]);
@@ -64,17 +99,31 @@ export const AddProject = ({ projectApiDataa }) => {
         const data = { projectApiDataa }
         navigate('/all-projects', { state: projectApiDataa });
     }
+    const clear = () => {
+        setTextInput("");
+        setProjName("");
+        setProjDescription("");
+        setProjectLink("");
+        setHostedLink("");
+        setTechnologyNames({});
+        setDropDown(false);
+    }
 
     const handleSubmit = (e) => {
         e.preventDefault();
+        var storedObject = localStorage.getItem('userData');
+
+        var parsedObject = JSON.parse(storedObject);
+
+        var userId = parsedObject.userId;
         axios.post("https://cg-interns-hq.azurewebsites.net/Project", {
             projName,
             projDescription,
             userId,
             projectLink,
             hostedLink,
-            technologyNames:techNames,
-            memberNames
+            technologyNames: techNames,
+            memberNames: textInput
         }).then((res) => {
             console.log("print", res.data);
         }).catch((err) => {
@@ -90,18 +139,18 @@ export const AddProject = ({ projectApiDataa }) => {
     useEffect(() => {
         const texts = textInput.split(',').map((text) => text.trim());
         const textObj = {};
-    
+
         texts.forEach((text, index) => {
-          textObj[`member${index + 1}`] = text;
+            textObj[`member${index + 1}`] = text;
         });
-    
-        
-        technologyNames.forEach((curElem,index)=>{
-            techNames[`tech${index+1}`]=curElem
+
+
+        technologyNames.forEach((curElem, index) => {
+            techNames[`tech${index + 1}`] = curElem
         })
         setMemberNames(textObj);
-       
-      }, [textInput]);
+
+    }, [textInput]);
 
     return (
         <>
@@ -126,34 +175,38 @@ export const AddProject = ({ projectApiDataa }) => {
                         </button>
                     </div>
                 </div>
+                {projectApiDataa.length === 0 ? (
+                    <EmptyProjectView />
+                ) :
+                    (
+                        <div className="project-recipe-row mb-5">
+                            <div className="recipe-text project-recipe-name">
+                                <h5 className="fw-bold">{first.projectNames}</h5>
+                                <div className="project-link-1">
+                                    <a href="#" target="_blank" rel="noopener noreferrer">{first.projectLink}</a>
+                                </div>
 
-                <div className="project-recipe-row mb-5">
-                    <div className="recipe-text project-recipe-name">
-                        <h5 className="fw-bold">{first.projectNames}</h5>
-                        <div className="project-link-1">
-                            <a href="#" target="_blank" rel="noopener noreferrer">{first.projectLink}</a>
+                                <div className="technology-used fw-bold">Technology Used:</div>
+                                <div className="technology-badges">
+                                    {first.technology.map((currElem, index) => {
+                                        if (currElem != null) {
+                                            return (
+                                                <div className="technology-badge-1">{currElem}</div>
+                                            )
+                                        }
+                                    })}
+
+                                </div>
+                            </div>
                         </div>
-
-                        <div className="technology-used fw-bold">Technology Used:</div>
-                        <div className="technology-badges">
-                            {first.technology.map((currElem, index) => {
-                                if (currElem != null) {
-                                    return (
-                                        <div className="technology-badge-1">{currElem}</div>
-                                    )
-                                }
-                            })}
-
-                        </div>
-                    </div>
-                </div>
+                    )}
                 <div
-                    className="add-project mt-5  pt-4 pb-0"
+                    className="add-project"
                     data-bs-toggle="modal"
                     data-bs-target="#exampleModal"
                     data-bs-whatever="@mdo"
                 >
-                    <p className="project-p fw-bold mb-4 mt-4">
+                    <p className="project-p">
                         <span className="fw-bold">+</span> <b>Add Project</b>
                     </p>
                 </div>
@@ -176,13 +229,14 @@ export const AddProject = ({ projectApiDataa }) => {
                                 class="btn-close"
                                 data-bs-dismiss="modal"
                                 aria-label="Close"
+                                onClick={clear}
                             ></button>
                         </div>
                         <div class="modal-body">
                             <form>
                                 <div class="mb-3">
                                     <label for="project-name" class="col-form-label title-text">
-                                        Project Name
+                                        Project Name<span style={{ color: 'red' }}>*</span> {error && <span style={{ color: 'red',fontSize:"11px" }}>({error})</span>}
                                     </label>
                                     <input
                                         type="text"
@@ -190,7 +244,7 @@ export const AddProject = ({ projectApiDataa }) => {
                                         id="project-name"
                                         value={projName}
                                         placeholder="Enter Project Name"
-                                        onChange={(event) => setProjName(event.target.value)}
+                                        onChange={handleProjectNameChange}
                                     />
                                 </div>
 
@@ -199,14 +253,14 @@ export const AddProject = ({ projectApiDataa }) => {
                                         for="project-description"
                                         class="col-form-label title-text"
                                     >
-                                        Project Description
+                                        Project Description<span style={{ color: 'red' }}>*</span> {desError && <span style={{ color: 'red',fontSize:"11px" }}>({desError})</span>}
                                     </label>
                                     <textarea
                                         class="form-control"
                                         id="project-description"
                                         value={projDescription}
                                         placeholder="Write Here..."
-                                        onChange={(event) => setProjDescription(event.target.value)}
+                                        onChange={handleProjectDescriptionChange}
                                         rows={3}
                                     ></textarea>
                                 </div>
@@ -238,7 +292,7 @@ export const AddProject = ({ projectApiDataa }) => {
                                                         tabIndex="-1"
                                                         onClick={handleOptionClick}
                                                     >
-                                                       <label className="checkbox-label">
+                                                        <label className="checkbox-label">
                                                             <input type="checkbox" className="checkbox-input" />
                                                             <span className="checkbox-text">ReactJs</span>
                                                         </label>
@@ -250,7 +304,7 @@ export const AddProject = ({ projectApiDataa }) => {
                                                         tabIndex="-1"
                                                         onClick={handleOptionClick}
                                                     >
-                                                       <label className="checkbox-label">
+                                                        <label className="checkbox-label">
                                                             <input type="checkbox" className="checkbox-input" />
                                                             <span className="checkbox-text">TypeScript</span>
                                                         </label>
@@ -274,7 +328,7 @@ export const AddProject = ({ projectApiDataa }) => {
                                                         tabIndex="-1"
                                                         onClick={handleOptionClick}
                                                     >
-                                                       <label className="checkbox-label">
+                                                        <label className="checkbox-label">
                                                             <input type="checkbox" className="checkbox-input" />
                                                             <span className="checkbox-text">Angular</span>
                                                         </label>
@@ -286,7 +340,7 @@ export const AddProject = ({ projectApiDataa }) => {
                                                         tabIndex="-1"
                                                         onClick={handleOptionClick}
                                                     >
-                                                       <label className="checkbox-label">
+                                                        <label className="checkbox-label">
                                                             <input type="checkbox" className="checkbox-input" />
                                                             <span className="checkbox-text">Salesforce</span>
                                                         </label>
@@ -298,7 +352,7 @@ export const AddProject = ({ projectApiDataa }) => {
                                                         tabIndex="-1"
                                                         onClick={handleOptionClick}
                                                     >
-                                                      <label className="checkbox-label">
+                                                        <label className="checkbox-label">
                                                             <input type="checkbox" className="checkbox-input" />
                                                             <span className="checkbox-text">NodeJs</span>
                                                         </label>
@@ -310,10 +364,10 @@ export const AddProject = ({ projectApiDataa }) => {
                                 </div>
                                 <div class="mb-3">
                                     <label for="Project Link" class="col-form-label title-text">
-                                        Project Link
+                                        Project Link<span style={{ color: 'red' }}>*</span> {projLinkError && <span style={{ color: 'red',fontSize:"11px" }}>({projLinkError})</span>}
                                     </label>
                                     <input class="form-control" id="project-link" value={projectLink}
-                                    onChange={(event) => setProjectLink(event.target.value)}/>
+                                        onChange={handleProjectLinkChange} />
                                 </div>
                                 <div class="mb-3">
                                     <label
@@ -323,7 +377,7 @@ export const AddProject = ({ projectApiDataa }) => {
                                         Hosted Link(Optional)
                                     </label>
                                     <input class="form-control" id="hosted-link" value={hostedLink}
-                                    onChange={(event) => setHostedLink(event.target.value)}/>
+                                        onChange={(event) => setHostedLink(event.target.value)} />
                                 </div>
                                 <div class="mb-3">
                                     <label for="Members(Optional)" class="col-form-label title-text">
@@ -345,11 +399,12 @@ export const AddProject = ({ projectApiDataa }) => {
                                 type="button"
                                 className="btn cancel-button"
                                 data-bs-dismiss="modal"
+                                onClick={clear}
                             >
-                              <span className="cancel-text">  Cancel</span>
+                                <span className="cancel-text">  Cancel</span>
                             </button>
                             <button type="button" className="btn save-button" data-bs-dismiss="modal" onClick={handleSubmit}>
-                               <span className="save-text"> Save</span>
+                                <span className="save-text"> Save</span>
                             </button>
                         </div>
                     </div>

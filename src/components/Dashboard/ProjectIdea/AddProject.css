@@ -111,17 +111,23 @@
 }
 
 .add-project {
-    padding-top: 9rem;
-    padding-bottom: 2.62rem;
+    /* padding-top: 9rem;
+    padding-bottom: 2.62rem; */
     font-style: normal;
     font-weight: 600;
     font-size: 0.8rem;
     color: #28519E;
     cursor: pointer;
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    margin-left: 16px;
+    margin-bottom: 24px;
 }
 
 .project-p {
-    /* font-weight: 600; */
+    font-weight: 600;
+    margin: 0;
     font-size: 0.9rem;
 }
 

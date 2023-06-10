@@ -11,15 +11,42 @@ export const AddNewIdea = ({ projectDescript }) => {
     const [projDescription, setProjDescription] = useState("");
     const [selectedOptions, setSelectedOptions] = useState([]);
     const [technologyNames, setTechnologyNames] = useState([]);
-    const [userId, setUserId] = useState("30");
+    // const [userId, setUserId] = useState("30");
     const [counter, setCounter] = useState(1);
     const [textInput, setTextInput] = useState('');
     const [memberNames, setMemberNames] = useState({});
     const [techNames, seTechNames] = useState({});
     const [dropDown, setDropDown] = useState(false);
-    const [formError, setFormError] = useState(false);
+    const [projNameError, setProjNameError] = useState('');
+    const [projDescriptionError, setProjDescriptionError] = useState('');
 
+    const handleClickClear = () =>{
+        setTextInput('');
+        setProjName("");
+        setProjDescription("");
+        setDropDown(false);
+    }
+    const handleChangeProjNameError = (event) => {
+        const name = event.target.value
+        setProjName(name);
+        if (!name) {
+            setProjNameError("Project Name is required");
+        }
+        else {
+            setProjNameError("");
+        }
+    }
 
+    const handleChangeProjDescriptionError = (event) => {
+        const description = event.target.value;
+        setProjDescription(description);
+        if (!description) {
+            setProjDescriptionError("Project Description is required");
+        }
+        else {
+            setProjDescriptionError("");
+        }
+    }
     const truncate = (str, maxLength) => {
         if (str.length > maxLength) return (str.slice(0, maxLength) + "...");
         else return str;
@@ -58,22 +85,20 @@ export const AddNewIdea = ({ projectDescript }) => {
     }
 
     const handleSubmit = async (e) => {
-        // if (projName.trim() === '') {
-        //     alert('Project Name is required');
-        //     return;
-        // }
-        // if (projName === "" || projDescription === "" || textInput === "") {
-        //     setFormError(true);
-        //   } else {
-        //     setFormError(false);}
 
         e.preventDefault();
+        var storedObject = localStorage.getItem('userData');
+
+        var parsedObject = JSON.parse(storedObject);
+
+        var userId = parsedObject.userId;
+        console.log(userId);
         await axios.post("https://cg-interns-hq.azurewebsites.net/projectIdea", {
             projName,
             projDescription,
             userId,
             technologyNames: techNames,
-            memberNames
+            memberNames: textInput
         }).then((res) => {
             console.log("print", res.data);
         }).catch((err) => {
@@ -83,7 +108,6 @@ export const AddNewIdea = ({ projectDescript }) => {
         setProjName("");
         setProjDescription("");
         setDropDown(false);
-
     }
 
     useEffect(() => {
@@ -123,46 +147,46 @@ export const AddNewIdea = ({ projectDescript }) => {
                     </div>
                 </div>
                 {projectDescript.length === 0 ? (
-                    <EmptyProject/>
-                ):
-                (
-                    <div className="recipe-row">
-                    <div className="recipe-text">
-                        <h5 className="fw-bold">{first.projectNames}</h5>
-                        <p className="fw-normal mb-1">
-                            {first.projectText.length > 100 ? truncate(first.projectText, 100) : first.projectText}
-                        </p>
-                        <div className="members-div pt-0">
-                            <div className="member mb pt-1 fw-bold mb-2">
-                                Members:
-                            </div>
-                            <div className="project-members ml-0">
-                                {first.members.length > 4 ? (
-                                    first.members.map((curElem, index) => {
-                                        if (curElem != null) {
-                                            const initials = curElem
-                                                .split(" ")
-                                                .map((name) => name[0])
-                                                .join("")
-                                                .toUpperCase();
-
-                                            return (
-                                                <div className="project-idea-members" key={index}>
-                                                    <p className="name-of-members">{initials}</p>
-                                                </div>
-                                            );
-                                        }
-                                    })
-                                ) : (
-                                    <div className="project-idea-members">
-                                        <p className="name-of-members">+ {first.members.length}</p>
+                    <EmptyProject />
+                ) :
+                    (
+                        <div className="recipe-row">
+                            <div className="recipe-text">
+                                <h5 className="fw-bold">{first.projectNames}</h5>
+                                <p className="fw-normal mb-1">
+                                    {first.projectText.length > 100 ? truncate(first.projectText, 100) : first.projectText}
+                                </p>
+                                <div className="members-div pt-0">
+                                    <div className="member mb pt-1 fw-bold mb-2">
+                                        Members:
                                     </div>
-                                )}
+                                    <div className="project-members ml-0">
+                                        {first.members.length > 4 ? (
+                                            first.members.map((curElem, index) => {
+                                                if (curElem != null) {
+                                                    const initials = curElem
+                                                        .split(" ")
+                                                        .map((name) => name[0])
+                                                        .join("")
+                                                        .toUpperCase();
+
+                                                    return (
+                                                        <div className="project-idea-members" key={index}>
+                                                            <p className="name-of-members">{initials}</p>
+                                                        </div>
+                                                    );
+                                                }
+                                            })
+                                        ) : (
+                                            <div className="project-idea-members">
+                                                <p className="name-of-members">+ {first.members.length}</p>
+                                            </div>
+                                        )}
+                                    </div>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                </div>
-                )
+                    )
                 }
 
                 <div className="add-new-idea-container">
@@ -196,13 +220,14 @@ export const AddNewIdea = ({ projectDescript }) => {
                                 className="btn-close"
                                 data-bs-dismiss="modal"
                                 aria-label="Close"
+                                onClick={handleClickClear}
                             ></button>
                         </div>
                         <div className="modal-body">
                             <form>
                                 <div className="mb-3">
                                     <label htmlFor="project-name" className="col-form-label title-text">
-                                        Project Name
+                                        Project Name<span style={{ color: 'red' }}>*</span> {projNameError && <span style={{ color: 'red', fontSize: "11px" }}>({projNameError})</span>}
                                     </label>
                                     <input
                                         type="text"
@@ -210,8 +235,7 @@ export const AddNewIdea = ({ projectDescript }) => {
                                         value={projName}
                                         id="project-name"
                                         placeholder='Enter Project Name'
-                                        onChange={(event) => setProjName(event.target.value)}
-                                        required
+                                        onChange={handleChangeProjNameError}
                                     />
                                 </div>
                                 <div className="mb-3">
@@ -219,22 +243,21 @@ export const AddNewIdea = ({ projectDescript }) => {
                                         htmlFor="project-description"
                                         className="col-form-label title-text"
                                     >
-                                        Project Description
+                                        Project Description<span style={{ color: 'red' }}>*</span> {projDescriptionError && <span style={{ color: 'red', fontSize: "11px" }}>({projDescriptionError})</span>}
                                     </label>
                                     <textarea
                                         className="form-control"
                                         value={projDescription}
                                         id="project-description"
                                         placeholder='Write Here..'
-                                        onChange={(event) => setProjDescription(event.target.value)}
+                                        onChange={handleChangeProjDescriptionError}
                                         rows={3}
-                                        required
                                     ></textarea>
                                 </div>
 
                                 <div className="mb-3">
                                     <label htmlFor="technology-used" className="col-form-label title-text" required>
-                                        Technology Used
+                                        Technology Used <span style={{ color: 'red' }}>*</span>
                                     </label>
                                 </div>
 
@@ -292,7 +315,7 @@ export const AddNewIdea = ({ projectDescript }) => {
                                                     <p
                                                         href="#"
                                                         className="small text-decoration-none"
-                                                        data-value="angular"
+                                                        data-value="Angular"
                                                         tabIndex="-1"
                                                         onClick={handleOptionClick}
                                                     >
@@ -304,7 +327,7 @@ export const AddNewIdea = ({ projectDescript }) => {
                                                     <p
                                                         href="#"
                                                         className="small text-decoration-none"
-                                                        data-value="Python"
+                                                        data-value="Salesforce"
                                                         tabIndex="-1"
                                                         onClick={handleOptionClick}
                                                     >
@@ -341,7 +364,6 @@ export const AddNewIdea = ({ projectDescript }) => {
                                         placeholder="Member Name"
                                         value={textInput}
                                         onChange={handleInputChange}
-                                        required
                                     />
                                 </div>
                             </form>
@@ -351,6 +373,7 @@ export const AddNewIdea = ({ projectDescript }) => {
                                 type="button"
                                 className="btn cancel-button"
                                 data-bs-dismiss="modal"
+                                onClick={handleClickClear}
                             >
                                 <span className="cancel-text"> Cancel </span>
                             </button>

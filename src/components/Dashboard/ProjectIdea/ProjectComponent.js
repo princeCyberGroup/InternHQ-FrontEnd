@@ -9,69 +9,76 @@ import { ProjectIdeaApi } from "./ProjectIdeaApi";
 
 
 export const AddNewProjectComponent = () => {
-  // const setProjectScreenType = (input) => {
-  //   console.log("Working");
-  // };
 
-    const [pActive, setPActive] = useState(true);
-    const [projectData, setProjectData] = useState(ProjectIdeaApi)
-    const [projectApiData, setProjectApiData] = useState()
-    // const userId=1;
+  const [pActive, setPActive] = useState(true);
+  const [projectData, setProjectData] = useState(ProjectIdeaApi)
+  const [projectApiData, setProjectApiData] = useState()
 
-    const MyIdeaComponent = async () => {
-        try {
-            const response = await axios.get("https://cg-interns-hq.azurewebsites.net/getProjectIdea?userId=3");
-            setProjectData(response.data.response);
-        } catch (error) {
-            console.log(error.response?.data);
-            console.log(error.response?.data.msg);
-        }
+  const MyIdeaComponent = async () => {
+    var storedObject = localStorage.getItem('userData');
+
+    var parsedObject = JSON.parse(storedObject);
+
+    var userId = parsedObject.userId;
+    console.log(userId);
+    try {
+      const response = await axios.get(`https://cg-interns-hq.azurewebsites.net/getProjectIdea?userId=${userId}`);
+      setProjectData(response.data.response);
+    } catch (error) {
+      console.log(error.response?.data);
+      console.log(error.response?.data.msg);
     }
-    const ProjectApi = async () => {
-        try {
-            const response = await axios.get("https://cg-interns-hq.azurewebsites.net/getProject?userId=30");
-            setProjectApiData(response.data.response);
-        } catch (error) {
-            console.log(error.response?.data);
-            console.log(error.response?.data.msg);
-        }
+  }
+  const ProjectApi = async () => {
+    var storedObject = localStorage.getItem('userData');
+
+    var parsedObject = JSON.parse(storedObject);
+
+    var userId = parsedObject.userId;
+    try {
+      const response = await axios.get(`https://cg-interns-hq.azurewebsites.net/getProject?userId=${userId}`);
+      setProjectApiData(response.data.response);
+    } catch (error) {
+      console.log(error.response?.data);
+      console.log(error.response?.data.msg);
     }
-    useEffect(() => {
-        ProjectApi();
-        MyIdeaComponent();
-    }, []);
+  }
+  useEffect(() => {
+    ProjectApi();
+    MyIdeaComponent();
+  }, []);
   return (
     <>
       <div className="card whole-card-wrapper px-0">
         <div className="border-bottom">
-        <div className="card-title dtt-hfs-abc m-0 d-flex  d-flex justify-content-center align-item-center ">
-          <div className={"project-idea-btn" + (pActive ? " p-active" : "")}>
-            <button
-              className="btn-1 p-0"
-              onClick={() => {
-                setPActive(true);
-              }}
-            >
-              My Idea
-            </button>
+          <div className="card-title dtt-hfs-abc m-0 d-flex  d-flex justify-content-center align-item-center ">
+            <div className={"project-idea-btn" + (pActive ? " p-active" : "")}>
+              <button
+                className="btn-1 p-0"
+                onClick={() => {
+                  setPActive(true);
+                }}
+              >
+                My Idea
+              </button>
+            </div>
+            <div className={"project-btn" + (pActive ? " " : " p-active")}>
+              <button
+                className="btn-2 p-0"
+                onClick={() => {
+                  setPActive(false);
+                }}
+              >
+                Project
+              </button>
+            </div>
           </div>
-          <div className={"project-btn" + (pActive ? " " : " p-active")}>
-            <button
-              className="btn-2 p-0"
-              onClick={() => {
-                setPActive(false);
-              }}
-            >
-              Project
-            </button>
-          </div>
-        </div>
         </div>
         {pActive ? (
-                    <AddNewIdea projectDescript={projectData} />
-                ) : (
-                    <AddProject projectApiDataa={projectApiData} />
-                )}
+          <AddNewIdea projectDescript={projectData} />
+        ) : (
+          <AddProject projectApiDataa={projectApiData} />
+        )}
       </div>
     </>
   );

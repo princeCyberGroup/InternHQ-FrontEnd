@@ -4,6 +4,8 @@ import { Link } from "react-router-dom";
 import React, { useState } from "react";
 import { useLocation } from 'react-router-dom';
 import Header from "../../../Header";
+import {EmptyProjectState} from "../../EmptyStates/EmptyProject/Project";
+import { ReactComponent as Arrow } from "./arrow_forward_iosarrow.svg";
 
 export const ViewAll = () => {
     const [projectIndex, setProjectIndex] = useState(0);
@@ -38,15 +40,25 @@ export const ViewAll = () => {
                             <p className="me-2 add-your-project">Add Project</p></button>
                     </div>
                 </div>
-
-                <div className="all-project-idea-wrapper entire-component ms-0" style={{ overFlowY: "scroll" }}>
+                 {details.length === 0 ? (
+                    <EmptyProjectState/>
+                 ):
+                 ( <div className="all-project-idea-wrapper entire-component ms-0" style={{ overFlowY: "scroll" }}>
+                 <div >
+                     <ProjectIdeas data={details} projectDetails={handelIndex} />
+                 </div>
+                 <div className="project-detail" >
+                     <ProjectDetail data={details} indexNumber={projectIndex} />
+                 </div>
+             </div>)}
+                {/* <div className="all-project-idea-wrapper entire-component ms-0" style={{ overFlowY: "scroll" }}>
                     <div >
                         <ProjectIdeas data={details} projectDetails={handelIndex} />
                     </div>
                     <div className="project-detail" >
                         <ProjectDetail data={details} indexNumber={projectIndex} />
                     </div>
-                </div>
+                </div> */}
 
             </div>
         </>
@@ -69,7 +81,9 @@ export const ProjectIdeas = (props) => {
                 {props.data.map((user, index) => {
                     const isBorder = index === selectedIdx;
                     return (
-                        <div className={"project-names-wrapper mt-2 pb-0 d-flex justify-content-between" + (isBorder ? " project-names-wrapper-border" : "")} key={index}
+                        <div className={"project-names-wrapper mt-2 pb-0 d-flex justify-content-between" + 
+                        (isBorder ? " project-names-wrapper-border" : "")} 
+                        key={index}
                             onClick={() => {
                                 props.projectDetails(index);
                                 setSelectedIdx(index);
@@ -88,7 +102,7 @@ export const ProjectIdeas = (props) => {
                                 <span
                                     className="click-arrow"
                                 >
-                                    &gt;
+                                    <Arrow />
                                 </span>
                             </div>
 
