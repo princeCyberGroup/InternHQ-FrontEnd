@@ -1,0 +1,19 @@
+.empty-idea {
+    padding: 0px;
+    gap: 4px;
+    background: #FFFFFF;
+    border-radius: 8px;
+    height: 109px;
+}
+.empty-image{
+    margin-top: 42.81px;
+}
+.empty-text {
+    text-align: center;
+    font-style: normal;
+    font-weight: 600;
+    font-size: 20px;
+    line-height: 23px;
+    color: #343435;
+    margin-top: 1rem;
+}

@@ -379,6 +379,29 @@ const DailyUpdateTable = (props) => {
                           ></Form.Control>
                         </Form.Group>
                       </Modal.Body>
+                      <Modal.Footer>
+                        <div className="d-flex justify-content-between align-items-center w-100">
+                          <span className="text-danger">{timeLeftmessage}</span>
+                          <div>
+                            <Button
+                              variant="outline-primary"
+                              onClick={() => setShowModal(false)}
+                            >
+                              Cancel
+                            </Button>
+                            <Button
+                              className="ms-2"
+                              variant="primary"
+                              disabled={modalSaveFlag}
+                              onClick={() => {
+                                setShowModal(false);
+                              }}
+                            >
+                              Save
+                            </Button>
+                          </div>
+                        </div>
+                      </Modal.Footer>
                     </Modal>
                   </tbody>
                   <tfoot>
