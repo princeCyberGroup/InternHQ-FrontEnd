@@ -19,8 +19,8 @@ export const AddNewProjectComponent = () => {
             const response = await axios.get("https://cg-interns-hq.azurewebsites.net/getProjectIdea?userId=30");
             setProjectData(response.data.response);
         } catch (error) {
-            console.log(error.response?.data);
-            console.log(error.response?.data.msg);
+            // console.log(error.response?.data);
+            // console.log(error.response?.data.msg);
         }
     }
     const ProjectApi = async () => {
@@ -28,8 +28,8 @@ export const AddNewProjectComponent = () => {
             const response = await axios.get("https://cg-interns-hq.azurewebsites.net/getProject?userId=30");
             setProjectApiData(response.data.response);
         } catch (error) {
-            console.log(error.response?.data);
-            console.log(error.response?.data.msg);
+            // console.log(error.response?.data);
+            // console.log(error.response?.data.msg);
         }
     }
     useEffect(() => {
@@ -63,7 +63,7 @@ export const AddNewProjectComponent = () => {
           </div>
         </div>
         </div>
-        {console.log("PData",projectData)}
+        {/* {console.log("PData",projectData)} */}
         {pActive ? (
                     <AddNewIdea projectDescript={projectData} />
                 ) : (

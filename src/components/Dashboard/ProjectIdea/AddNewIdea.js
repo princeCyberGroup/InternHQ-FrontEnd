@@ -6,7 +6,7 @@ import axios from "axios";
 export const AddNewIdea = ({ projectDescript }) => {
     const navigate = useNavigate();
     const [first,...rest] = projectDescript;
-    console.log(first, "This is projectDescript")
+    // console.log(first, "This is projectDescript")
     const [projName, setProjName] = useState("");
     const [projDescription, setProjDescription] = useState("");
     const [selectedOptions, setSelectedOptions] = useState([]);
