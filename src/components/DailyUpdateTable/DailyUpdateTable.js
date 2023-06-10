@@ -40,9 +40,6 @@ const DailyUpdateTable = (props) => {
   var parsedObject = JSON.parse(storedObject);
   var userId = parsedObject.userId;
 
-  const data = localStorage.getItem('userData');
-  const parsedData = JSON.parse(data);
-  const userId = parsedData.userId;
   const fetchData = async () => {
     await fetch(
       `https://cg-interns-hq.azurewebsites.net/getDailyTaskTrackerRecords?userId=${userId}`
@@ -59,6 +56,7 @@ const DailyUpdateTable = (props) => {
       });
   };
 
+  //Function to handle read more
   const handleReadMore = (item) => {
     setSelectedItem(item);
     setShowModal(true);
@@ -293,14 +291,14 @@ const DailyUpdateTable = (props) => {
                                   activityLength >= 1
                                     ? convertTime(item.activityTime[0].startedAt) +
                                     " - " +
-                                    convertTime(item.activityTime[0].endedAt)
+                                    item.activityTime[0].endedAt
                                     : ""
                                 }
                                 secondActivity={
                                   activityLength >= 2
                                     ? convertTime(item.activityTime[1].startedAt) +
                                       " - " +
-                                      convertTime(item.activityTime[1].endedAt)
+                                      item.activityTime[1].endedAt
                                     : ""
                                 }
                                 thirdActivity={
@@ -382,29 +380,6 @@ const DailyUpdateTable = (props) => {
                           ></Form.Control>
                         </Form.Group>
                       </Modal.Body>
-                      <Modal.Footer>
-                        <div className="d-flex justify-content-between align-items-center w-100">
-                          <span className="text-danger">{timeLeftmessage}</span>
-                          <div>
-                            <Button
-                              variant="outline-primary"
-                              onClick={() => setShowModal(false)}
-                            >
-                              Cancel
-                            </Button>
-                            <Button
-                              className="ms-2"
-                              variant="primary"
-                              disabled={modalSaveFlag}
-                              onClick={() => {
-                                setShowModal(false);
-                              }}
-                            >
-                              Save
-                            </Button>
-                          </div>
-                        </div>
-                      </Modal.Footer>
                     </Modal>
                   </tbody>
                   <tfoot>

@@ -34,7 +34,6 @@ export const NewNotifications = () => {
       );
 
       const data = await response.json();
-      console.log(data)
 
       setNotifications(data.response);
       setIsLoading(false);
@@ -76,7 +75,7 @@ export const NewNotifications = () => {
                     <b>{user.firstName} {user.lastName}</b> has achieved <b>{user.level}</b>
                     <b> skill </b> on <b>{user.techName}</b>
                   </p>
-                  <p className="m-0 date-wrapper">{user.date} </p>
+                  <p className="m-0 date-wrapper">{user.examDate} </p>
                 </div>
               </div>
             </>

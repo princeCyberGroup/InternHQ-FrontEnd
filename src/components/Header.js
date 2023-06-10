@@ -38,7 +38,7 @@ const Header = () => {
                 </NavLink>
               </li>
 
-              <li className="nav-item mx-3">
+              <li className="nav-item mx-2">
                 <NavLink to="/daily-Update" className="btn activeBtn">
                   Daily Update<span></span>
                 </NavLink>
@@ -69,13 +69,16 @@ const Header = () => {
               {/* <button type="button" class="btn btn-danger">Action</button> */}
 
               <ul className="dropdown-menu " aria-labelledby="profileDropDown">
-                <li className="dropdown-item">
+                <li className="dropdown-item " >
                   <span className="username">
-                    {userData.firstName} {userData.lastName}
+                    {userData.firstName} {userData.lastName} <br />
+                  </span>
+                  <span style={{color:"#28519E",fontStyle:"italic",fontSize:"14px"}}>
+                    {userData.bench?"On Bench":"Occupied"}
                   </span>
                 </li>
-                <li
-                  className="dropdown-item"
+                <li 
+                  className="dropdown-item "
                   style={{
                     wordBreak: "break-word",
                     whiteSpace: "normal",
@@ -84,7 +87,7 @@ const Header = () => {
                   <span className="email">{userData.email}</span>
                 </li>
                 <li
-                  className="dropdown-item"
+                  className="dropdown-item logout-hover"
                   onClick={(e) => {
                     handleLogout(e);
                   }}

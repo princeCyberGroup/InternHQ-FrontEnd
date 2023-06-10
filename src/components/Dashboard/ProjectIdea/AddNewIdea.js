@@ -94,12 +94,12 @@ export const AddNewIdea = ({ projectDescript }) => {
 
         var userId = parsedObject.userId;
         console.log(userId);
-        await axios.post("https://cg-interns-hq.azurewebsites.net/projectIdea", {
+        await axios.post("https://cg-interns-hq.azurewebsites.net/projetIdea", {
             projName,
             projDescription,
             userId,
             technologyNames: techNames,
-            memberNames: textInput
+            memberNames: memberNames    
         }).then((res) => {
             console.log("print", res.data);
         }).catch((err) => {
@@ -140,7 +140,7 @@ export const AddNewIdea = ({ projectDescript }) => {
                 <div className="share-project">
                     <div className="d-flex align-item-center justify-content-between mb-2 ">
                         <div className="d-flex">
-                            <p className="text mb-0 fw-bold">Shared Project Idea</p>
+                            <p className="text mb-0 fw-bold">Got Any Idea ?</p>
                         </div>
                         <button className="view-all fw-bold" onClick={(e) => {
                             handleClick(e)
