@@ -8,37 +8,37 @@ import axios from "axios";
 import { ProjectIdeaApi } from "./ProjectIdeaApi";
 
 export const AddNewProjectComponent = () => {
+
   const [pActive, setPActive] = useState(true);
   const [projectData, setProjectData] = useState(ProjectIdeaApi);
   const [projectApiData, setProjectApiData] = useState();
   // const userId=1;
 
-  const MyIdeaComponent = async () => {
-    try {
-      const response = await axios.get(
-        "https://cg-interns-hq.azurewebsites.net/getProjectIdea?userId=1"
-      );
-      setProjectData(response.data.response);
-    } catch (error) {
-      console.log(error.response?.data);
-      console.log(error.response?.data.msg);
+  const storedObject = localStorage.getItem('userData');
+  const parsedObject = JSON.parse(storedObject);
+  const userId = parsedObject.userId;
+    const MyIdeaComponent = async () => {
+        try {
+            const response = await axios.get(`https://cg-interns-hq.azurewebsites.net/getProjectIdea?userId=${userId}`);
+            setProjectData(response.data.response);
+        } catch (error) {
+            console.log(error.response?.data);
+            console.log(error.response?.data.msg);
+        }
     }
-  };
-  const ProjectApi = async () => {
-    try {
-      const response = await axios.get(
-        "https://cg-interns-hq.azurewebsites.net/getProject?userId=1"
-      );
-      setProjectApiData(response.data.response);
-    } catch (error) {
-      console.log(error.response?.data);
-      console.log(error.response?.data.msg);
+    const ProjectApi = async () => {
+        try {
+            const response = await axios.get(`https://cg-interns-hq.azurewebsites.net/getProject?userId=${userId}`);
+            setProjectApiData(response.data.response);
+        } catch (error) {
+            console.log(error.response?.data);
+            console.log(error.response?.data.msg);
+        }
     }
-  };
-  useEffect(() => {
-    ProjectApi();
-    MyIdeaComponent();
-  }, []);
+    useEffect(() => {
+        ProjectApi();
+        MyIdeaComponent();
+    }, []);
   return (
     <>
       <div className="card whole-card-wrapper px-0">

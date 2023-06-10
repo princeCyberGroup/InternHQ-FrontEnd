@@ -3,7 +3,6 @@ import "./ProjectDetail.css";
 export const ProjectDetail = ({data, indexNumber}) => {
     return (
         <div className="">
-            {console.log("This is props data of perticular index data" , data[indexNumber])}
             <h5 className="project-detail-name">{data[indexNumber].projectNames}</h5>
             <p className="created-at">{data[indexNumber].createdAt}</p>
             <p className="project-detail-text">{data[indexNumber].projectText}</p>
