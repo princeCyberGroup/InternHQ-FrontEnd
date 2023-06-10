@@ -2,7 +2,7 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { EmptyProjectView } from "../EmptyStates/EmptyProject/ProjectViewAll";
-
+import {ReactComponent as ExpandMore} from "../ProjectIdea/expand_more.svg";
 
 export const AddProject = ({ projectApiDataa }) => {
     const navigate = useNavigate();
@@ -271,18 +271,19 @@ export const AddProject = ({ projectApiDataa }) => {
                                     </label>
                                 </div>
                                 <div className="container border">
-                                    <div className="row">
-                                        <div className="col-lg-12">
-                                            <div className="button-group">
-                                                <button
-                                                    type="button"
-                                                    className="btn btn-default btn-sm dropdown-toggle drop-down-technology"
-                                                    onClick={() => {
+                                    <div>
+                                        <div>
+                                            <div className="input-with-button">
+                                                <input
+                                                    type="text"
+                                                    className="custom-input"
+                                                    disabled
+                                                />
+                                                <button type="button" className="expand-more" onClick={() => {
                                                         setDropDown(!dropDown)
-                                                    }}
-                                                >
+                                                    }}><ExpandMore/></button>
+                                                    </div>
 
-                                                </button>
                                                 <ul style={{ display: dropDown ? "" : "none" }} className="ul-styling">
 
                                                     <p
@@ -358,7 +359,7 @@ export const AddProject = ({ projectApiDataa }) => {
                                                         </label>
                                                     </p>
                                                 </ul>
-                                            </div>
+                                            {/* </div> */}
                                         </div>
                                     </div>
                                 </div>

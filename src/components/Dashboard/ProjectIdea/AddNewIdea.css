@@ -156,6 +156,9 @@ p.card-textt {
 
 .ul-styling{
     padding-left: 0px;
+    position: absolute;
+    background-color: #FFFFFF;
+    width: 453px;
 }
 .checkbox-label {
     display: flex;
@@ -215,4 +218,18 @@ p.card-textt {
 .cancel-button:hover {
     color: #28519E;
     border: 1px solid #28519E;
+}
+
+.input-with-button{
+    display: flex;
+    align-items: center;
+    border-bottom: none;
+}
+.expand-more{
+    border: none;
+    background: none;
+}
+.custom-input{
+    border-bottom: none;
+    background: none;
 }

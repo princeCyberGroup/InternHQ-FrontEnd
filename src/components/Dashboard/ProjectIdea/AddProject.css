@@ -111,8 +111,6 @@
 }
 
 .add-project {
-    /* padding-top: 9rem;
-    padding-bottom: 2.62rem; */
     font-style: normal;
     font-weight: 600;
     font-size: 0.8rem;
@@ -148,4 +146,11 @@
     line-height: 15px;
 
     color: #1E1E1E;
+}
+
+.ul-styling{
+    padding-left: 0px;
+    position: absolute;
+    background-color: #FFFFFF;
+    width: 453px;
 }

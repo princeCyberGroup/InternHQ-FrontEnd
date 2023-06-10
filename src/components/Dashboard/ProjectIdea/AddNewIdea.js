@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { EmptyProject } from "../EmptyStates/EmptyProject/MyIdea";
+import {ReactComponent as ExpandMore} from "../ProjectIdea/expand_more.svg";
 
 export const AddNewIdea = ({ projectDescript }) => {
     const navigate = useNavigate();
@@ -262,18 +263,20 @@ export const AddNewIdea = ({ projectDescript }) => {
                                 </div>
 
                                 <div className="container border">
-                                    <div className="row">
-                                        <div className="col-lg-12">
-                                            <div className="button-group">
-                                                <button
-                                                    type="button"
-                                                    className="btn btn-default btn-sm dropdown-toggle drop-down-technology"
-                                                    onClick={() => {
+                                    <div>
+                                        <div>
+                                            {/* <div className="button-group"> */}
+                                            <div className="input-with-button">
+                                                <input
+                                                    type="text"
+                                                    className="custom-input"
+                                                    disabled
+                                                />
+                                                <button type="button" className="expand-more" onClick={() => {
                                                         setDropDown(!dropDown)
-                                                    }}
-                                                >
-                                                </button>
-
+                                                    }}><ExpandMore/></button>
+                                                    </div>
+                                                
                                                 <ul style={{ display: dropDown ? "" : "none" }} className="ul-styling">
 
                                                     <p
@@ -349,8 +352,8 @@ export const AddNewIdea = ({ projectDescript }) => {
                                                         </label>
                                                     </p>
                                                 </ul>
-
-                                            </div>
+                                                
+                                            {/* </div> */}
                                         </div>
                                     </div>
                                 </div>
