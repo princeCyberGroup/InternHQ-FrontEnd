@@ -291,14 +291,14 @@ const DailyUpdateTable = (props) => {
                                   activityLength >= 1
                                     ? convertTime(item.activityTime[0].startedAt) +
                                     " - " +
-                                    convertTime(item.activityTime[0].endedAt)
+                                    item.activityTime[0].endedAt
                                     : ""
                                 }
                                 secondActivity={
                                   activityLength >= 2
                                     ? convertTime(item.activityTime[1].startedAt) +
                                       " - " +
-                                      convertTime(item.activityTime[1].endedAt)
+                                      item.activityTime[1].endedAt
                                     : ""
                                 }
                                 thirdActivity={

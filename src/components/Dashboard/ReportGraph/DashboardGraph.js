@@ -129,7 +129,6 @@ const dataMonthly = [
 
 export default function DashboardGraph(props) {
   const graphDataFromDailyUpdate = props.sendDataToGraph
-  console.log(graphDataFromDailyUpdate, "This is graph data")
   // function convertTimeStringToNumber(timeString) {
   //   const [hoursPart, minutesPart] = timeString.split(' hrs ');
   //   const hours = parseInt(hoursPart, 10);
