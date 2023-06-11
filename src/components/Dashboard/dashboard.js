@@ -20,7 +20,6 @@ const Dashboard = (props) => {
   const [dashNav, setDashNav] = useState("dashboard");
 console.log("This is i'm getting from dashboard", props.sendDataToDashboard)
   const changePage = (type) => {
-    console.log("working");
     setDashNav(type);
     setCurrPage(type);
   };

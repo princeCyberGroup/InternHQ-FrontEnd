@@ -11,7 +11,7 @@ export const ProjectDetail = ({data, indexNumber}) => {
            
 
             <div className="project-detail-technology-badges">
-                {data[indexNumber].technology.map((tech) => {
+                {data[indexNumber].technologyNames.map((tech) => {
                     if (tech != null){
                     return <p className="technology-badge me-1"> {tech} </p>
                     }

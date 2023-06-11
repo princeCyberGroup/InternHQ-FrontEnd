@@ -2,7 +2,7 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { EmptyProjectView } from "../EmptyStates/EmptyProject/ProjectViewAll";
-import {ReactComponent as ExpandMore} from "../ProjectIdea/expand_more.svg";
+import { ReactComponent as ExpandMore } from "../ProjectIdea/expand_more.svg";
 
 export const AddProject = ({ projectApiDataa }) => {
     const navigate = useNavigate();
@@ -21,6 +21,7 @@ export const AddProject = ({ projectApiDataa }) => {
     const [error, setError] = useState('');
     const [desError, setDesError] = useState('');
     const [projLinkError, setProjLinkError] = useState('');
+    const [technologyError, setTechnologyError] = useState('');
 
     const handleProjectNameChange = (event) => {
 
@@ -54,28 +55,19 @@ export const AddProject = ({ projectApiDataa }) => {
             setProjLinkError('');
         }
     };
+    const handleTechnologyChange = (event) =>{
+        const technology = event.target.value;
+        setTechnologyNames(technology);
+        if(!technology){
+            setTechnologyError("Technology is required");
+        }
+        else{
+            setTechnologyError("");
+        }
+    }
     const handleInputChange = (event) => {
         setTextInput(event.target.value);
     };
-
-    //     const { value } = event.currentTarget.dataset;
-    //     const isChecked = event.currentTarget.querySelector('input').checked;
-
-    //     if (isChecked) {
-    //         const optionObject = { [`tech${counter}`]: value };
-    //         console.log(optionObject, "Valuesesars")
-    //         setSelectedOptions((prevSelectedOptions) => [...prevSelectedOptions, optionObject]);
-    //         setCounter((prevCounter) => prevCounter + 1);
-    //     } else {
-    //         setSelectedOptions((prevSelectedOptions) =>
-    //             prevSelectedOptions.filter((option) => Object.values(option)[0] !== value)
-    //         );
-    //     }
-    //     setTechnologyNames(selectedOptions);
-    //     console.log(selectedOptions, "This is selectedOptions")
-    //     console.log(technologyNames, "This is technologyNames")
-
-    // };
 
     let dataArr = {
     }
@@ -92,8 +84,13 @@ export const AddProject = ({ projectApiDataa }) => {
             setSelectedOptions((prevSelectedOptions) =>
                 prevSelectedOptions.filter((option) => Object.values(option)[0] !== value)
             );
+            setTechnologyNames((prevTechnologyNames) =>
+            prevTechnologyNames.filter((technology) => technology !== value)
+          );
         }
     };
+
+
     const handleClick = async (e) => {
         e.preventDefault();
         const data = { projectApiDataa }
@@ -236,7 +233,7 @@ export const AddProject = ({ projectApiDataa }) => {
                             <form>
                                 <div class="mb-3">
                                     <label for="project-name" class="col-form-label title-text">
-                                        Project Name<span style={{ color: 'red' }}>*</span> {error && <span style={{ color: 'red',fontSize:"11px" }}>({error})</span>}
+                                        Project Name<span style={{ color: 'red' }}>*</span> {error && <span style={{ color: 'red', fontSize: "11px" }}>({error})</span>}
                                     </label>
                                     <input
                                         type="text"
@@ -253,7 +250,7 @@ export const AddProject = ({ projectApiDataa }) => {
                                         for="project-description"
                                         class="col-form-label title-text"
                                     >
-                                        Project Description<span style={{ color: 'red' }}>*</span> {desError && <span style={{ color: 'red',fontSize:"11px" }}>({desError})</span>}
+                                        Project Description<span style={{ color: 'red' }}>*</span> {desError && <span style={{ color: 'red', fontSize: "11px" }}>({desError})</span>}
                                     </label>
                                     <textarea
                                         class="form-control"
@@ -267,107 +264,110 @@ export const AddProject = ({ projectApiDataa }) => {
 
                                 <div class="mb-3">
                                     <label for="technology-used" class="col-form-label title-text">
-                                        Technology Used
+                                        Technology Used<span style={{ color: 'red' }}>*</span>{technologyError && <span style={{ color: 'red', fontSize: "11px" }}>({technologyError})</span>}
                                     </label>
                                 </div>
-                                <div className="container border">
+                                <div className="container border p-0">
+                                    <div className="input-with-button">
+                                        <button type="button" className="button-for-dropdown" onClick={() => {
+                                            setDropDown(!dropDown)
+                                        }}>
+                                        <input
+                                            type="text"
+                                            className="custom-input"
+                                            disabled
+                                            value={technologyNames.join(",")}
+                                           placeholder="Select Technology"
+                                           onChange={handleTechnologyChange}
+                                        />
+                                        </button>
+                                        <button type="button" className="expand-more" onClick={() => {
+                                            setDropDown(!dropDown)
+                                        }}><ExpandMore /></button>
+                                    </div>
                                     <div>
-                                        <div>
-                                            <div className="input-with-button">
-                                                <input
-                                                    type="text"
-                                                    className="custom-input"
-                                                    disabled
-                                                />
-                                                <button type="button" className="expand-more" onClick={() => {
-                                                        setDropDown(!dropDown)
-                                                    }}><ExpandMore/></button>
-                                                    </div>
+                                        <ul style={{ display: dropDown ? "" : "none" }} className="ul-styling">
 
-                                                <ul style={{ display: dropDown ? "" : "none" }} className="ul-styling">
-
-                                                    <p
-                                                        href="#"
-                                                        className="text-decoration-none"
-                                                        data-value="ReactJs"
-                                                        tabIndex="-1"
-                                                        onClick={handleOptionClick}
-                                                    >
-                                                        <label className="checkbox-label">
-                                                            <input type="checkbox" className="checkbox-input" />
-                                                            <span className="checkbox-text">ReactJs</span>
-                                                        </label>
-                                                    </p>
-                                                    <p
-                                                        href="#"
-                                                        className="small text-decoration-none"
-                                                        data-value="TypeScript"
-                                                        tabIndex="-1"
-                                                        onClick={handleOptionClick}
-                                                    >
-                                                        <label className="checkbox-label">
-                                                            <input type="checkbox" className="checkbox-input" />
-                                                            <span className="checkbox-text">TypeScript</span>
-                                                        </label>
-                                                    </p>
-                                                    <p
-                                                        href="#"
-                                                        className="small text-decoration-none"
-                                                        data-value=".Net"
-                                                        tabIndex="-1"
-                                                        onClick={handleOptionClick}
-                                                    >
-                                                        <label className="checkbox-label">
-                                                            <input type="checkbox" className="checkbox-input" />
-                                                            <span className="checkbox-text">DotNet</span>
-                                                        </label>
-                                                    </p>
-                                                    <p
-                                                        href="#"
-                                                        className="small text-decoration-none"
-                                                        data-value="Angular"
-                                                        tabIndex="-1"
-                                                        onClick={handleOptionClick}
-                                                    >
-                                                        <label className="checkbox-label">
-                                                            <input type="checkbox" className="checkbox-input" />
-                                                            <span className="checkbox-text">Angular</span>
-                                                        </label>
-                                                    </p>
-                                                    <p
-                                                        href="#"
-                                                        className="small text-decoration-none"
-                                                        data-value="Salesforce"
-                                                        tabIndex="-1"
-                                                        onClick={handleOptionClick}
-                                                    >
-                                                        <label className="checkbox-label">
-                                                            <input type="checkbox" className="checkbox-input" />
-                                                            <span className="checkbox-text">Salesforce</span>
-                                                        </label>
-                                                    </p>
-                                                    <p
-                                                        href="#"
-                                                        className="small text-decoration-none"
-                                                        data-value="NodeJS"
-                                                        tabIndex="-1"
-                                                        onClick={handleOptionClick}
-                                                    >
-                                                        <label className="checkbox-label">
-                                                            <input type="checkbox" className="checkbox-input" />
-                                                            <span className="checkbox-text">NodeJs</span>
-                                                        </label>
-                                                    </p>
-                                                </ul>
-                                            {/* </div> */}
-                                        </div>
+                                            <p
+                                                href="#"
+                                                className="text-decoration-none"
+                                                data-value="ReactJs"
+                                                tabIndex="-1"
+                                                onClick={handleOptionClick}
+                                            >
+                                                <label className="checkbox-label">
+                                                    <input type="checkbox" className="checkbox-input" />
+                                                    <span className="checkbox-text">ReactJs</span>
+                                                </label>
+                                            </p>
+                                            <p
+                                                href="#"
+                                                className="small text-decoration-none"
+                                                data-value="TypeScript"
+                                                tabIndex="-1"
+                                                onClick={handleOptionClick}
+                                            >
+                                                <label className="checkbox-label">
+                                                    <input type="checkbox" className="checkbox-input" />
+                                                    <span className="checkbox-text">TypeScript</span>
+                                                </label>
+                                            </p>
+                                            <p
+                                                href="#"
+                                                className="small text-decoration-none"
+                                                data-value=".Net"
+                                                tabIndex="-1"
+                                                onClick={handleOptionClick}
+                                            >
+                                                <label className="checkbox-label">
+                                                    <input type="checkbox" className="checkbox-input" />
+                                                    <span className="checkbox-text">DotNet</span>
+                                                </label>
+                                            </p>
+                                            <p
+                                                href="#"
+                                                className="small text-decoration-none"
+                                                data-value="Angular"
+                                                tabIndex="-1"
+                                                onClick={handleOptionClick}
+                                            >
+                                                <label className="checkbox-label">
+                                                    <input type="checkbox" className="checkbox-input" />
+                                                    <span className="checkbox-text">Angular</span>
+                                                </label>
+                                            </p>
+                                            <p
+                                                href="#"
+                                                className="small text-decoration-none"
+                                                data-value="Salesforce"
+                                                tabIndex="-1"
+                                                onClick={handleOptionClick}
+                                            >
+                                                <label className="checkbox-label">
+                                                    <input type="checkbox" className="checkbox-input" />
+                                                    <span className="checkbox-text">Salesforce</span>
+                                                </label>
+                                            </p>
+                                            <p
+                                                href="#"
+                                                className="small text-decoration-none"
+                                                data-value="NodeJS"
+                                                tabIndex="-1"
+                                                onClick={handleOptionClick}
+                                            >
+                                                <label className="checkbox-label">
+                                                    <input type="checkbox" className="checkbox-input" />
+                                                    <span className="checkbox-text">NodeJs</span>
+                                                </label>
+                                            </p>
+                                        </ul>
                                     </div>
                                 </div>
                                 <div class="mb-3">
                                     <label for="Project Link" class="col-form-label title-text">
-                                        Project Link<span style={{ color: 'red' }}>*</span> {projLinkError && <span style={{ color: 'red',fontSize:"11px" }}>({projLinkError})</span>}
+                                        Project Link<span style={{ color: 'red' }}>*</span> {projLinkError && <span style={{ color: 'red', fontSize: "11px" }}>({projLinkError})</span>}
                                     </label>
-                                    <input class="form-control" id="project-link" value={projectLink}
+                                    <input class="form-control" id="project-link" placeholder="Enter Project Link" value={projectLink}
                                         onChange={handleProjectLinkChange} />
                                 </div>
                                 <div class="mb-3">
@@ -377,7 +377,7 @@ export const AddProject = ({ projectApiDataa }) => {
                                     >
                                         Hosted Link(Optional)
                                     </label>
-                                    <input class="form-control" id="hosted-link" value={hostedLink}
+                                    <input class="form-control" id="hosted-link" placeholder="Enter Hosted Link" value={hostedLink}
                                         onChange={(event) => setHostedLink(event.target.value)} />
                                 </div>
                                 <div class="mb-3">

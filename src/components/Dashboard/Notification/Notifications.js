@@ -34,7 +34,7 @@ export const NewNotifications = () => {
       );
 
       const data = await response.json();
-      console.log(data)
+     
 
       setNotifications(data.response);
       setIsLoading(false);

@@ -3,11 +3,11 @@ import { useNavigate } from "react-router-dom";
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { EmptyProject } from "../EmptyStates/EmptyProject/MyIdea";
-import {ReactComponent as ExpandMore} from "../ProjectIdea/expand_more.svg";
+import { ReactComponent as ExpandMore } from "../ProjectIdea/expand_more.svg";
 
 export const AddNewIdea = ({ projectDescript }) => {
     const navigate = useNavigate();
-    const [first,...rest] = projectDescript;
+    const [first, ...rest] = projectDescript;
     // console.log(first, "This is projectDescript")
     const [projName, setProjName] = useState("");
     const [projDescription, setProjDescription] = useState("");
@@ -22,7 +22,7 @@ export const AddNewIdea = ({ projectDescript }) => {
     const [projNameError, setProjNameError] = useState('');
     const [projDescriptionError, setProjDescriptionError] = useState('');
 
-    const handleClickClear = () =>{
+    const handleClickClear = () => {
         setTextInput('');
         setProjName("");
         setProjDescription("");
@@ -68,13 +68,14 @@ export const AddNewIdea = ({ projectDescript }) => {
 
             var optionObject = `tech${counter}`;
             technologyNames.push(value)
-            console.log("Name:", technologyNames);
-            console.log(dataArr, "Valuesesars")
             setSelectedOptions((prevSelectedOptions) => [...prevSelectedOptions, optionObject]);
             setCounter((prevCounter) => prevCounter + 1);
         } else {
             setSelectedOptions((prevSelectedOptions) =>
                 prevSelectedOptions.filter((option) => Object.values(option)[0] !== value)
+            );
+            setTechnologyNames((prevTechnologyNames) =>
+                prevTechnologyNames.filter((technology) => technology !== value)
             );
         }
     };
@@ -166,11 +167,8 @@ export const AddNewIdea = ({ projectDescript }) => {
                                         {first.members.length > 4 ? (
                                             first.members.map((curElem, index) => {
                                                 if (curElem != null) {
-                                                    const initials = curElem
-                                                        .split(" ")
-                                                        .map((name) => name[0])
-                                                        .join("")
-                                                        .toUpperCase();
+                                                    const nameParts = curElem.split(" ");
+                                                    const initials = nameParts[0][0].toUpperCase() + nameParts[nameParts.length - 1][0].toUpperCase();
 
                                                     return (
                                                         <div className="project-idea-members" key={index}>
@@ -263,100 +261,102 @@ export const AddNewIdea = ({ projectDescript }) => {
                                     </label>
                                 </div>
 
-                                <div className="container border">
-                                    <div>
-                                        <div>
-                                            {/* <div className="button-group"> */}
-                                            <div className="input-with-button">
-                                                <input
-                                                    type="text"
-                                                    className="custom-input"
-                                                    disabled
-                                                />
-                                                <button type="button" className="expand-more" onClick={() => {
-                                                        setDropDown(!dropDown)
-                                                    }}><ExpandMore/></button>
-                                                    </div>
-                                                
-                                                <ul style={{ display: dropDown ? "" : "none" }} className="ul-styling">
-
-                                                    <p
-                                                        href="#"
-                                                        className="text-decoration-none"
-                                                        data-value="ReactJs"
-                                                        tabIndex="-1"
-                                                        onClick={handleOptionClick}
-                                                    >
-                                                        <label className="checkbox-label">
-                                                            <input type="checkbox" className="checkbox-input" />
-                                                            <span className="checkbox-text">ReactJs</span>
-                                                        </label>
-                                                    </p>
-                                                    <p
-                                                        href="#"
-                                                        className="small text-decoration-none"
-                                                        data-value="TypeScript"
-                                                        tabIndex="-1"
-                                                        onClick={handleOptionClick}
-                                                    >
-                                                        <label className="checkbox-label">
-                                                            <input type="checkbox" className="checkbox-input" />
-                                                            <span className="checkbox-text">TypeScript</span>
-                                                        </label>
-                                                    </p>
-                                                    <p
-                                                        href="#"
-                                                        className="small text-decoration-none"
-                                                        data-value=".Net"
-                                                        tabIndex="-1"
-                                                        onClick={handleOptionClick}
-                                                    >
-                                                        <label className="checkbox-label">
-                                                            <input type="checkbox" className="checkbox-input" />
-                                                            <span className="checkbox-text">.Net</span>
-                                                        </label>
-                                                    </p>
-                                                    <p
-                                                        href="#"
-                                                        className="small text-decoration-none"
-                                                        data-value="Angular"
-                                                        tabIndex="-1"
-                                                        onClick={handleOptionClick}
-                                                    >
-                                                        <label className="checkbox-label">
-                                                            <input type="checkbox" className="checkbox-input" />
-                                                            <span className="checkbox-text"> Angular</span>
-                                                        </label>
-                                                    </p>
-                                                    <p
-                                                        href="#"
-                                                        className="small text-decoration-none"
-                                                        data-value="Salesforce"
-                                                        tabIndex="-1"
-                                                        onClick={handleOptionClick}
-                                                    >
-                                                        <label className="checkbox-label">
-                                                            <input type="checkbox" className="checkbox-input" />
-                                                            <span className="checkbox-text">Salesforce</span>
-                                                        </label>
-                                                    </p>
-                                                    <p
-                                                        href="#"
-                                                        className="small text-decoration-none"
-                                                        data-value="NodeJS"
-                                                        tabIndex="-1"
-                                                        onClick={handleOptionClick}
-                                                    >
-                                                        <label className="checkbox-label">
-                                                            <input type="checkbox" className="checkbox-input" />
-                                                            <span className="checkbox-text">NodeJS</span>
-                                                        </label>
-                                                    </p>
-                                                </ul>
-                                                
-                                            {/* </div> */}
-                                        </div>
+                                <div className="container border p-0">
+                                    <div className="input-with-button">
+                                    <button type="button" className="button-for-dropdown" onClick={() => {
+                                            setDropDown(!dropDown)
+                                        }}>
+                                        <input
+                                            type="text"
+                                            className="custom-input"
+                                            value={technologyNames.join(",")}
+                                            disabled
+                                        />
+                                        </button>
+                                        <button type="button" className="expand-more" onClick={() => {
+                                            setDropDown(!dropDown)
+                                        }}><ExpandMore /></button>
                                     </div>
+                                    <div>
+                                        <ul style={{ display: dropDown ? "" : "none" }} className="ul-styling">
+
+                                            <p
+                                                href="#"
+                                                className="text-decoration-none"
+                                                data-value="ReactJs"
+                                                tabIndex="-1"
+                                                onClick={handleOptionClick}
+                                            >
+                                                <label className="checkbox-label">
+                                                    <input type="checkbox" className="checkbox-input" />
+                                                    <span className="checkbox-text">ReactJs</span>
+                                                </label>
+                                            </p>
+                                            <p
+                                                href="#"
+                                                className="small text-decoration-none"
+                                                data-value="TypeScript"
+                                                tabIndex="-1"
+                                                onClick={handleOptionClick}
+                                            >
+                                                <label className="checkbox-label">
+                                                    <input type="checkbox" className="checkbox-input" />
+                                                    <span className="checkbox-text">TypeScript</span>
+                                                </label>
+                                            </p>
+                                            <p
+                                                href="#"
+                                                className="small text-decoration-none"
+                                                data-value=".Net"
+                                                tabIndex="-1"
+                                                onClick={handleOptionClick}
+                                            >
+                                                <label className="checkbox-label">
+                                                    <input type="checkbox" className="checkbox-input" />
+                                                    <span className="checkbox-text">.Net</span>
+                                                </label>
+                                            </p>
+                                            <p
+                                                href="#"
+                                                className="small text-decoration-none"
+                                                data-value="Angular"
+                                                tabIndex="-1"
+                                                onClick={handleOptionClick}
+                                            >
+                                                <label className="checkbox-label">
+                                                    <input type="checkbox" className="checkbox-input" />
+                                                    <span className="checkbox-text"> Angular</span>
+                                                </label>
+                                            </p>
+                                            <p
+                                                href="#"
+                                                className="small text-decoration-none"
+                                                data-value="Salesforce"
+                                                tabIndex="-1"
+                                                onClick={handleOptionClick}
+                                            >
+                                                <label className="checkbox-label">
+                                                    <input type="checkbox" className="checkbox-input" />
+                                                    <span className="checkbox-text">Salesforce</span>
+                                                </label>
+                                            </p>
+                                            <p
+                                                href="#"
+                                                className="small text-decoration-none"
+                                                data-value="NodeJS"
+                                                tabIndex="-1"
+                                                onClick={handleOptionClick}
+                                            >
+                                                <label className="checkbox-label">
+                                                    <input type="checkbox" className="checkbox-input" />
+                                                    <span className="checkbox-text">NodeJS</span>
+                                                </label>
+                                            </p>
+                                        </ul>
+                                    </div>
+                                    {/* </div> */}
+
+
                                 </div>
                                 <div className="mb-3">
                                     <label htmlFor="Members(Optional)" className="col-form-label title-text">

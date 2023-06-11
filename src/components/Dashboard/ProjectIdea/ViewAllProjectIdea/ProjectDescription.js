@@ -10,7 +10,7 @@ export const ProjectDescription = ({ data, indexNumber }) => {
 
 
             <div className="project-detail-technology-badges">
-                {data[indexNumber].technology.map((tech, index) => {
+                {data[indexNumber].technologyName.map((tech, index) => {
                     if (tech != null) {
                         return (
                             <p className="technology-badge me-1" key={index}> {tech} </p>
@@ -40,15 +40,6 @@ export const ProjectDescription = ({ data, indexNumber }) => {
                     </div>
                 )}
             </div>
-            
-            {/* {data[indexNumber].members.map((val, index) => {
-                    if(val != null){
-                    return (
-                        <p className="project-idea-members" key={index}> {val.slice(0,2).toUpperCase()} </p>
-                    )
-                    }
-                })} */}
-        
         </>
     )
 }
