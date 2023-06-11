@@ -157,7 +157,7 @@
   position: absolute;
   top: 100%;
   left: 50%;
-  transform: translate(-95%, 7%);
+  transform: translate(-95%, 20%);
   background-color: #fff;
   color: #343435;
   padding: 16px 16px 0 16px;
@@ -200,5 +200,5 @@
   position: absolute;
   top: -11.5rem;
   left: 50%;
-  transform: translate(-95%, 7%);
+  transform: translate(-95%, 100%);
 }
