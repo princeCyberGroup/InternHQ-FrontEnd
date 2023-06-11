@@ -19,7 +19,6 @@ const Dashboard = (props) => {
   const [currPage, setCurrPage] = useState("dashboard");
   const [dashNav, setDashNav] = useState("dashboard");
   const changePage = (type) => {
-    console.log("working");
     setDashNav(type);
     setCurrPage(type);
   };

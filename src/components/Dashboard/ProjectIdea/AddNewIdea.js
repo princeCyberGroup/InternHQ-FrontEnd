@@ -3,20 +3,23 @@ import { useNavigate } from "react-router-dom";
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { EmptyProject } from "../EmptyStates/EmptyProject/MyIdea";
+import { ReactComponent as ExpandMore } from "../ProjectIdea/expand_more.svg";
+import TechDropDown from "./TechDropDown";
 
 export const AddNewIdea = ({ projectDescript }) => {
   const navigate = useNavigate();
   const [first, ...rest] = projectDescript;
-  // console.log(first, "This is projectDescript")
+  console.log(...rest)
   const [projName, setProjName] = useState("");
   const [projDescription, setProjDescription] = useState("");
-  const [selectedOptions, setSelectedOptions] = useState([]);
-  const [technologyNames, setTechnologyNames] = useState([]);
+//  const [selectedOptions, setSelectedOptions] = useState([]);
+//  const [technologyNames, setTechnologyNames] = useState([]);
   // const [userId, setUserId] = useState("30");
   const [counter, setCounter] = useState(1);
   const [textInput, setTextInput] = useState("");
   const [memberNames, setMemberNames] = useState({});
-  const [techNames, seTechNames] = useState({});
+  // const [techNames, seTechNames] = useState({});
+  const [tech, setTech] = useState({})
   const [dropDown, setDropDown] = useState(false);
   const [projNameError, setProjNameError] = useState("");
   const [projDescriptionError, setProjDescriptionError] = useState("");
@@ -55,48 +58,67 @@ export const AddNewIdea = ({ projectDescript }) => {
   };
 
   const handleInputChange = (event) => {
-    event.preventDefault();
-
     setTextInput(event.target.value);
   };
+  // const handleOptionClick = (event) => {
+  //   event.preventDefault();
+  //   const { value } = event.currentTarget.dataset;
+  //   const isChecked = event.currentTarget.querySelector('input').checked;
 
-  const handleOptionClick = (event) => {
-    event.preventDefault();
-    const { value } = event.currentTarget.dataset;
-    const isChecked = event.currentTarget.querySelector("input").checked;
+  //   if (isChecked) {
 
-    if (isChecked) {
-      var optionObject = `tech${counter}`;
-      technologyNames.push(value);
-      setSelectedOptions((prevSelectedOptions) => [
-        ...prevSelectedOptions,
-        optionObject,
-      ]);
-      setCounter((prevCounter) => prevCounter + 1);
-    } else {
-      setSelectedOptions((prevSelectedOptions) =>
-        prevSelectedOptions.filter(
-          (option) => Object.values(option)[0] !== value
-        )
-      );
-    }
-  };
+  //             var optionObject = `tech${counter}`;
+  //             technologyNames.push(value)
+  //             setSelectedOptions((prevSelectedOptions) => [...prevSelectedOptions, optionObject]);
+  //             setCounter((prevCounter) => prevCounter + 1);
+  //         } else {
+  //             setSelectedOptions((prevSelectedOptions) =>
+  //                 prevSelectedOptions.filter((option) => Object.values(option)[0] !== value)
+  //             );
+  //             setTechnologyNames((prevTechnologyNames) =>
+  //                 prevTechnologyNames.filter((technology) => technology !== value)
+  //             );
+  //         }
+  //     };
+  //     setTextInput(event.target.value);
+  //   };
+  // const handleOptionClick = (event) => {
+  //   const { value } = event.currentTarget.dataset;
+  //   const isChecked = event.currentTarget.querySelector("input").checked;
 
-  const handleClick = (e) => {
+  //   if (isChecked) {
+  //     var optionObject = `tech${counter}`;
+  //     technologyNames.push(value);
+  //     setSelectedOptions((prevSelectedOptions) => [
+  //       ...prevSelectedOptions,
+  //       optionObject,
+  //     ]);
+  //     setCounter((prevCounter) => prevCounter + 1);
+  //   } else {
+  //     setSelectedOptions((prevSelectedOptions) =>
+  //       prevSelectedOptions.filter(
+  //         (option) => Object.values(option)[0] !== value
+  //       )
+  //     );
+  //   }
+  // };
+
+  const handleClick = async (e) => {
     e.preventDefault();
     const data = { projectDescript };
+    console.log("PD",projDescription)
     navigate("/project-idea-projects", { state: projectDescript });
   };
   const isObjectEmpty = (object) => {
     if (object.member1.length > 0) {
-      console.log("value", memberNames);
       return setMemberNames(object);
     } else {
-      console.log("No Value");
       return setMemberNames("");
     }
   };
-
+  const techDataComingFrmChild= (data)=>{
+    return setTech(data)
+  }
   const handleSubmit = async (e) => {
     e.preventDefault();
     var storedObject = localStorage.getItem("userData");
@@ -107,7 +129,7 @@ export const AddNewIdea = ({ projectDescript }) => {
         projName,
         projDescription,
         userId,
-        technologyNames: techNames,
+        technologyNames: tech,
         memberNames: memberNames,
       })
       .then((res) => {
@@ -129,16 +151,12 @@ export const AddNewIdea = ({ projectDescript }) => {
       membersObj[`member${index + 1}`] = text;
     });
 
-    technologyNames.forEach((curElem, index) => {
-      techNames[`tech${index + 1}`] = curElem;
-    });
+    // technologyNames.forEach((curElem, index) => {
+    //   techNames[`tech${index + 1}`] = curElem;
+    // });
 
     isObjectEmpty(membersObj);
-    // console.log(memberNames)
-    // setMemberNames(membersObj)
-    console.log(memberNames);
-  }, [textInput]);
-
+  }, [textInput,tech]);
   return (
     <>
       <div className="card-body pb-0">
@@ -149,7 +167,6 @@ export const AddNewIdea = ({ projectDescript }) => {
             level.
           </p>
         </div>
-
         <div className="share-project">
           <div className="d-flex align-item-center justify-content-between mb-2 ">
             <div className="d-flex">
@@ -242,9 +259,7 @@ export const AddNewIdea = ({ projectDescript }) => {
                 className="btn-close"
                 data-bs-dismiss="modal"
                 aria-label="Close"
-                onClick={(e) => {
-                  handleClickClear(e);
-                }}
+                onClick={handleClickClear}
               ></button>
             </div>
             <div className="modal-body">
@@ -267,9 +282,7 @@ export const AddNewIdea = ({ projectDescript }) => {
                     value={projName}
                     id="project-name"
                     placeholder="Enter Project Name"
-                    onChange={(e) => {
-                      handleChangeProjNameError(e);
-                    }}
+                    onChange={handleChangeProjNameError}
                   />
                 </div>
                 <div className="mb-3">
@@ -289,9 +302,7 @@ export const AddNewIdea = ({ projectDescript }) => {
                     value={projDescription}
                     id="project-description"
                     placeholder="Write Here.."
-                    onChange={(e) => {
-                      handleChangeProjDescriptionError(e);
-                    }}
+                    onChange={handleChangeProjDescriptionError}
                     rows={3}
                   ></textarea>
                 </div>
@@ -304,131 +315,62 @@ export const AddNewIdea = ({ projectDescript }) => {
                   >
                     Technology Used <span style={{ color: "red" }}>*</span>
                   </label>
-                </div>
-
-                <div className="container border">
-                  <div className="row">
-                    <div className="col-lg-12">
-                      <div className="button-group">
-                        <button
-                          type="button"
-                          className="btn btn-default btn-sm dropdown-toggle drop-down-technology"
-                          onClick={() => {
-                            setDropDown(!dropDown);
-                          }}
-                        ></button>
-
-                        <ul
-                          style={{ display: dropDown ? "" : "none" }}
-                          className="ul-styling"
-                        >
-                          <p
-                            href="#"
-                            className="text-decoration-none"
-                            data-value="ReactJs"
-                            tabIndex="-1"
-                            onClick={(e) => {
-                              handleOptionClick(e);
-                            }}
-                          >
-                            <label className="checkbox-label">
-                              <input
-                                type="checkbox"
-                                className="checkbox-input"
-                              />
-                              <span className="checkbox-text">ReactJs</span>
-                            </label>
-                          </p>
-                          <p
-                            href="#"
-                            className="small text-decoration-none"
-                            data-value="TypeScript"
-                            tabIndex="-1"
-                            onClick={(e) => {
-                              handleOptionClick(e);
-                            }}
-                          >
-                            <label className="checkbox-label">
-                              <input
-                                type="checkbox"
-                                className="checkbox-input"
-                              />
-                              <span className="checkbox-text">TypeScript</span>
-                            </label>
-                          </p>
-                          <p
-                            href="#"
-                            className="small text-decoration-none"
-                            data-value=".Net"
-                            tabIndex="-1"
-                            onClick={(e) => {
-                              handleOptionClick(e);
-                            }}
-                          >
-                            <label className="checkbox-label">
-                              <input
-                                type="checkbox"
-                                className="checkbox-input"
-                              />
-                              <span className="checkbox-text">.Net</span>
-                            </label>
-                          </p>
-                          <p
-                            href="#"
-                            className="small text-decoration-none"
-                            data-value="Angular"
-                            tabIndex="-1"
-                            onClick={(e) => {
-                              handleOptionClick(e);
-                            }}
-                          >
-                            <label className="checkbox-label">
-                              <input
-                                type="checkbox"
-                                className="checkbox-input"
-                              />
-                              <span className="checkbox-text"> Angular</span>
-                            </label>
-                          </p>
-                          <p
-                            href="#"
-                            className="small text-decoration-none"
-                            data-value="Salesforce"
-                            tabIndex="-1"
-                            onClick={(e) => {
-                              handleOptionClick(e);
-                            }}
-                          >
-                            <label className="checkbox-label">
-                              <input
-                                type="checkbox"
-                                className="checkbox-input"
-                              />
-                              <span className="checkbox-text">Salesforce</span>
-                            </label>
-                          </p>
-                          <p
-                            href="#"
-                            className="small text-decoration-none"
-                            data-value="NodeJS"
-                            tabIndex="-1"
-                            onClick={(e) => {
-                              handleOptionClick(e);
-                            }}
-                          >
-                            <label className="checkbox-label">
-                              <input
-                                type="checkbox"
-                                className="checkbox-input"
-                              />
-                              <span className="checkbox-text">NodeJS</span>
-                            </label>
-                          </p>
-                        </ul>
-                      </div>
+                  <div className="container border p-0">
+                    <div className="input-with-button">
+                      <button
+                        type="button"
+                        className="button-for-dropdown"
+                        onClick={() => {
+                          setDropDown(!dropDown);
+                        }}
+                      >
+                        <input
+                          type="text"
+                          className="custom-input"
+                          value={Object.values(tech)}
+                          disabled
+                        />
+                      </button>
+                      <button
+                        type="button"
+                        className="expand-more"
+                        onClick={() => {
+                          setDropDown(!dropDown);
+                        }}
+                      >
+                        <ExpandMore />
+                      </button>
                     </div>
+                    <div>
+                      <ul
+                        style={{ display: dropDown ? "" : "none" }}
+                        className="ul-styling"
+                      >
+                        <TechDropDown techDataComingChild={techDataComingFrmChild}/>
+                        {/* <div
+                          class="form-check small"
+                          onClick={(e)=>{handleOptionClick(e)}}
+                          data-value="NodeJS"
+                        >
+                          <label
+                            class="form-check-label"
+                            for="nodeJs"
+                          >
+                            Node Js 
+                          </label>
+                          <input
+                            class="form-check-input"
+                            type="checkbox"
+                            value="ytch"
+                            id="nodeJs"
+                          />
+                        </div> */}
+                      </ul>
+                    </div>
+                    {/* </div> */}
                   </div>
                 </div>
+
                 <div className="mb-3">
                   <label
                     htmlFor="Members(Optional)"
@@ -441,9 +383,7 @@ export const AddNewIdea = ({ projectDescript }) => {
                     id="project-description"
                     placeholder="Member Name"
                     value={textInput}
-                    onChange={(e) => {
-                      handleInputChange(e);
-                    }}
+                    onChange={handleInputChange}
                   />
                 </div>
               </form>
@@ -453,9 +393,7 @@ export const AddNewIdea = ({ projectDescript }) => {
                 type="button"
                 className="btn cancel-button"
                 data-bs-dismiss="modal"
-                onClick={(e) => {
-                  handleClickClear(e);
-                }}
+                onClick={handleClickClear}
               >
                 <span className="cancel-text"> Cancel </span>
               </button>
@@ -463,9 +401,7 @@ export const AddNewIdea = ({ projectDescript }) => {
                 type="button"
                 className="btn save-button"
                 data-bs-dismiss="modal"
-                onClick={(e) => {
-                  handleSubmit(e);
-                }}
+                onClick={handleSubmit}
               >
                 <span className="save-text"> Save </span>
               </button>

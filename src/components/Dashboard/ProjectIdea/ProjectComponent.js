@@ -15,6 +15,7 @@ export const AddNewProjectComponent = () => {
   const storedObject = localStorage.getItem("userData");
   const parsedObject = JSON.parse(storedObject);
   const userId = parsedObject.userId;
+  
   const MyIdeaComponent = async () => {
     try {
       const response = await axios.get(
