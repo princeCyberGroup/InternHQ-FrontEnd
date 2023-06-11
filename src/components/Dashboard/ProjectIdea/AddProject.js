@@ -73,8 +73,6 @@ export const AddProject = ({ projectApiDataa }) => {
   //     console.log(technologyNames, "This is technologyNames")
 
   // };
-
-  let dataArr = {};
   const handleOptionClick = (event) => {
     const { value } = event.currentTarget.dataset;
     const isChecked = event.currentTarget.querySelector("input").checked;
@@ -109,6 +107,16 @@ export const AddProject = ({ projectApiDataa }) => {
     setTechnologyNames({});
     setDropDown(false);
   };
+  const isObjectEmpty = (object) => {
+    if (object.member1.length > 0) {
+      console.log("value", object.member1.length > 0);
+      setMemberNames(object);
+      return;
+    } else {
+      console.log("No Value");
+      return setMemberNames("");
+    }
+  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -142,16 +150,15 @@ export const AddProject = ({ projectApiDataa }) => {
 
   useEffect(() => {
     const texts = textInput.split(",").map((text) => text.trim());
-    const textObj = {};
-
+    const membersObj = {};
     texts.forEach((text, index) => {
-      textObj[`member${index + 1}`] = text;
+      membersObj[`member${index + 1}`] = text;
     });
 
     technologyNames.forEach((curElem, index) => {
       techNames[`tech${index + 1}`] = curElem;
     });
-    setMemberNames(textObj);
+    isObjectEmpty(membersObj);
   }, [textInput]);
 
   return (
@@ -194,7 +201,9 @@ export const AddProject = ({ projectApiDataa }) => {
                 </p>
               </div>
 
-              <div className="technology-used fw-bold pt-0">Technology Used:</div>
+              <div className="technology-used fw-bold pt-0">
+                Technology Used:
+              </div>
               <div className="technology-badges">
                 {first.technology.map((currElem, index) => {
                   if (currElem != null) {
