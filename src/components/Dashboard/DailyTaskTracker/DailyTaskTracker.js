@@ -144,14 +144,12 @@ const DailyTaskTracker = () => {
   //   if (selectedLearningType) {
   //     setLearningType(selectedLearningType);
   //   }
-  // }, []);
-
-  // var userId = 30;
+  // }
+  
   var storedObject = localStorage.getItem('userData');
   var parsedObject = JSON.parse(storedObject);
   var userId = parsedObject.userId;
   // console.log(userId);
-
   const sendStartDataToBackend = async () => {
     try {
       const response = await axios.post("https://cg-interns-hq.azurewebsites.net/dailyTaskTrackerStartCheck", {
