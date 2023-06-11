@@ -18,62 +18,6 @@ export const NotificationComponent = () => {
 };
 
 export const NewNotifications = () => {
-  //   const data = [
-  //     {
-  //       id: 1,
-  //       FullName: "John Doe",
-  //       Skill: "Angular skill",
-  //       Technology: "Angular",
-  //     },
-  //     {
-  //       id: 2,
-  //       FullName: "John Doe",
-  //       Skill: "Android Skill",
-  //       Technology: "Android",
-  //     },
-  //     {
-  //       id: 3,
-  //       FullName: "John Doe",
-  //       Skill: "HTML 5 Skill",
-  //       Technology: "Html",
-  //     },
-  //     {
-  //       id: 4,
-  //       FullName: "John Doe",
-  //       Skill: "SQL Skill",
-  //       Technology: "SQL",
-  //     },
-  //     {
-  //       id: 5,
-  //       FullName: "John Doe",
-  //       Skill: "Angular Skill",
-  //       Technology: "Angular",
-  //     },
-  //     {
-  //       id: 6,
-  //       FullName: "John Doe",
-  //       Skill: "Android Skill",
-  //       Technology: "android",
-  //     },
-  //     {
-  //       id: 7,
-  //       FullName: "John Doe",
-  //       Skill: "HTML 5 Skill",
-  //       Technology: "Html",
-  //     },
-  //     {
-  //       id: 8,
-  //       FullName: "John Doe",
-  //       Skill: "SQL Skill",
-  //       Technology: "SQL",
-  //     },
-  //     {
-  //       id: 9,
-  //       FullName: "John Doe",
-  //       Skill: "Angular Skill",
-  //       Technology: "Angular",
-  //     },
-  //   ];
   const [isLoading, setIsLoading] = useState(true);
   const [notifications, setNotifications] = useState([]);
   useEffect(() => {
@@ -90,7 +34,6 @@ export const NewNotifications = () => {
       );
 
       const data = await response.json();
-      console.log(data)
 
       setNotifications(data.response);
       setIsLoading(false);
@@ -119,7 +62,8 @@ export const NewNotifications = () => {
                 <div className="image-wrapper mt-1">
                   <div className="image-box">
                     <img
-                      key={user.user_id}
+                    key={user.userId}
+
                       src={user.techImage}
                       width={32}
                       alt=""
@@ -127,11 +71,11 @@ export const NewNotifications = () => {
                   </div>
                 </div>
                 <div className="text-wrapper mt-3">
-                  <p key={user.user_id} className="m-0">
+                  <p key={user.userId} className="m-0">
                     <b>{user.firstName} {user.lastName}</b> has achieved <b>{user.level}</b>
                     <b> skill </b> on <b>{user.techName}</b>
                   </p>
-                  <p className="m-0 date-wrapper"> 02-06-2023</p>
+                  <p className="m-0 date-wrapper">{user.examDate} </p>
                 </div>
               </div>
             </>

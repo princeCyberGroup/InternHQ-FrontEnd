@@ -1,0 +1,18 @@
+.empty-idea {
+    height: 54%;
+    display: flex;
+    justify-content: center;
+     align-items: center;   
+}
+.empty-image{
+    margin-top: 42.81px;
+}
+.empty-text {
+    text-align: center;
+    font-style: normal;
+    font-weight: 600;
+    font-size: 20px;
+    line-height: 23px;
+    color: #343435;
+    margin-top: 1rem;
+}

@@ -1,5 +1,6 @@
 import "./ViewAllProjectIdea.css";
 import React, { useState } from "react";
+import { ReactComponent as Arrow } from "./arrow_forward_iosarrow.svg";
 
 export const ProjectNames = (props) => {
     const [isBorder, setIsBorder] = useState(false);
@@ -37,7 +38,7 @@ export const ProjectNames = (props) => {
                                     className="click-arrow"
                                
                                 >
-                                    &gt;
+                                    <Arrow />
                                 </span>
                             </div>
                             <div>

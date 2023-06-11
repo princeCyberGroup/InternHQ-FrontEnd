@@ -2,7 +2,7 @@ import React from "react";
 import { useEffect, useState } from "react";
 import "./TakeYourTest.css";
 import Header from "../Header";
-import { ScrollRestoration, useNavigate } from "react-router-dom";
+import { ScrollRestoration, resolvePath, useNavigate } from "react-router-dom";
 import { useParams } from 'react-router-dom';
 
 import { useLocation } from 'react-router-dom';
@@ -16,7 +16,7 @@ const TakeYourTest = () => {
     const [allData, setAllData] = useState([]);
     const navigate = useNavigate();
     const location = useLocation();
-  const { data } = location.state;
+    const data = location.state;
     // const location = useLocation();
     // const { data } = location.state;
     const { examId, examName, examDuration, numberOfQuestion, techName, level } = data;
@@ -25,16 +25,23 @@ const TakeYourTest = () => {
     const [activeRadioButtons, setActiveRadioButtons] = useState();
     const [userAnswers, setUserAnswers] = useState([]);
     const [fullscreen, setFullscreen] = useState(false);
+    const [score , setScore] = useState(0);
     const [submitted, setSubmitted] = useState(false);
     const [submitAnswer, setSubmitAnswer] = useState([]);
     const clickHandler = () => {
         navigate("/skill-Management");
+        setFullscreen(false);
     };
+    // useEffect(()=>{
+    //     // console.log("this is the data from takeyourtest site", data);
+    // },[]);
     useEffect(() => {
         if (fullscreen) {
             enterFullscreen();
+            window.addEventListener("keydown", handleKeyDown);
         } else {
             exitFullscreen();
+            window.removeEventListener("keydown", handleKeyDown);
         }
     }, [fullscreen]);
 
@@ -70,7 +77,7 @@ const TakeYourTest = () => {
         // fetchTestsForExams();
         handleAnswerSelect();
         setFullscreen(true);
-        window.addEventListener("keydown", handleKeyDown);
+        // window.addEventListener("keydown", handleKeyDown);
         const examDurationInSeconds = parseInt(examDuration) * 60;
         setTime(examDurationInSeconds);
         // console.log(testDetails.examDuration)
@@ -89,7 +96,7 @@ const TakeYourTest = () => {
         return () => {
             clearInterval(timer);
             exitFullscreen();
-            window.removeEventListener("keydown", handleKeyDown);
+            // window.removeEventListener("keydown", handleKeyDown);
         };
     }, []);
  
@@ -103,7 +110,7 @@ const TakeYourTest = () => {
 
     const fetchTests = async () => {
         try {
-            const response = await fetch(`https://cg-interns-hq.azurewebsites.net/getAllQuestions?examId=1`);
+            const response = await fetch(`https://cg-interns-hq.azurewebsites.net/getAllQuestions?examId=${examId}`);
             const Quesdata = await response.json();
             setAllQuesData(Quesdata);
             setTestsQues(Quesdata);
@@ -149,8 +156,9 @@ const TakeYourTest = () => {
     };
 
     const handleKeyDown = (event) => {
-        if (event.key === "Escape") {
-            event.preventDefault(); // Prevent default behavior of Esc key
+        if (event.key === "Escape" || event.key === "F11") {
+            event.disabled = true 
+            console.log(event);
         }
     };
     let submitQuesData;
@@ -178,14 +186,7 @@ const TakeYourTest = () => {
                 })
             });
             submitQuesData = await response.json();
-            totalScore = submitQuesData.totalScore;
-            resp = submitQuesData.resp; //array 
-            //  console.log(totalScore);
-            setSubmitAnswer(submitQuesData);
-             console.log(submitQuesData);
-            console.log(submitQuesData.totalScore);
-            console.log(totalScore);
-            // console.log(submitQuesData.resp);
+            setScore(submitQuesData.totalScore);
 
         } catch (error) {
             console.log(error);
@@ -193,11 +194,13 @@ const TakeYourTest = () => {
 
     };
 
+    
+
     const modalTarget = () => {
+
         const a = '#congoModal123'
         const b = '#sorryModal'
-        // console.log(totalScore);
-        if (totalScore >= 5) {
+        if (score >= 6) {
             return a;
         }
         else {
@@ -205,7 +208,7 @@ const TakeYourTest = () => {
         }
     }
 
-    const Targetm = modalTarget(totalScore);
+    const Targetm = modalTarget();
 
     const renderQuestions = () => {
         return (
@@ -283,10 +286,9 @@ const TakeYourTest = () => {
                                     type="button"
                                     onClick={() => {
                                         submitQuiz();
-                                        // setFullscreen(false);
+                                         setFullscreen(false);
                                         clickHandler();
                                         submitTest();
-                                        console.log(userAnswers);
                                     }}
                                     data-bs-dismiss="modal"
                                     className="btn btn-primary"
@@ -299,8 +301,8 @@ const TakeYourTest = () => {
                         </div>
                     </div>
                 </div>
-                <Congo />
-                <Sorry />
+                <Congo scoreValue = {score} />
+                <Sorry scoreValue = {score} />
             </div >
         );
     };
