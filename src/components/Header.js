@@ -1,35 +1,44 @@
-import React,{useState} from "react";
+import React, { useState } from "react";
 import { Link, NavLink, useNavigate } from "react-router-dom";
 import { BsChevronDown } from "react-icons/bs";
-import { ReactComponent as CGlogo} from "../Assets/CG-Logo (1) 1CGlogo.svg"
-import './Header.css'
+import { ReactComponent as CGlogo } from "../Assets/CG-Logo (1) 1CGlogo.svg";
+import "./Header.css";
 const Header = () => {
   // localStorage.setItem("userData",{"email":"prinec.kumar@cginfinity.com","userId":43,"firstName":"Prince","lastName":"kumar"})
-  const [userData, setUserData] = useState(JSON.parse(localStorage.getItem("userData")));
-  const navigate=useNavigate();
-  const handleLogout=(e)=>{
+  const [userData, setUserData] = useState(
+    JSON.parse(localStorage.getItem("userData"))
+  );
+  const navigate = useNavigate();
+  const handleLogout = (e) => {
     e.preventDefault();
     localStorage.clear("userData");
-    navigate("/")
-  }
+    navigate("/");
+  };
   return (
     <>
       <div>
-        <nav className="navbar navbar-expand-lg navbar-light bg-light border-bottom">
-          <NavLink className="navbar-brand" to="/dashboard" style={{marginLeft:"10px",marginRight:"0px"}}>
-            <CGlogo/>
+        <nav
+          className="navbar navbar-expand-lg navbar-light  border-bottom"
+          style={{ backgroundColor: "#FFFFFF" }}
+        >
+          <NavLink
+            className="navbar-brand"
+            to="/dashboard"
+            style={{ marginLeft: "10px", marginRight: "0px" }}
+          >
+            <div className="d-flex flex-column border-right">
+              <CGlogo />
+            </div>
           </NavLink>
-          <div className="collapse navbar-collapse" id="navbarNav">
-            <ul className="navbar-nav" style={{marginLeft:"38px"}}>
-              {/* <li className="nav-item"> */}
-
+          <div className="collapse navbar-collapse border-Side" id="navbarNav">
+            <ul className="navbar-nav nav-bg">
               <li className="nav-item ">
                 <NavLink to="/dashboard" className="btn activeBtn">
                   Dashboard<span></span>
                 </NavLink>
               </li>
 
-              <li className="nav-item">
+              <li className="nav-item mx-2">
                 <NavLink to="/daily-Update" className="btn activeBtn">
                   Daily Update<span></span>
                 </NavLink>
@@ -42,40 +51,55 @@ const Header = () => {
               </li>
             </ul>
           </div>
-          <div className="dropdown margin">
-            <Link
-              id="profileDropDown"
-              data-bs-toggle="dropdown"
-              aria-expanded="false"
-            >
-              <img
+          <div
+            className="d-flex margin"
+            data-bs-toggle="dropdown"
+            aria-expanded="false"
+          >
+            <div className="dropdown  background-set">
+              <Link id="profileDropDown" className="text-decoration-none ">
+                {/* <img
                 src="https://m.media-amazon.com/images/M/MV5BYjhiNjBlODctY2ZiOC00YjVlLWFlNzAtNTVhNzM1YjI1NzMxXkEyXkFqcGdeQXVyMjQxNTE1MDA@._V1_.jpg"
                 alt="profile-Image"
                 className="profile-Image"
-              />
-              <span className="ms-2" style={{ color: "#000" }}>
-                <BsChevronDown />
-              </span>
-            </Link>
-            {/* <button type="button" class="btn btn-danger">Action</button> */}
+              /> */}
+                {userData.firstName.toUpperCase().slice(0, 1)}
+                {userData.lastName.toUpperCase().slice(0, 1)}
+              </Link>
+              {/* <button type="button" class="btn btn-danger">Action</button> */}
 
-            <ul className="dropdown-menu " aria-labelledby="profileDropDown">
-              <li className="dropdown-item">
-                <span className="username">{userData.firstName} {userData.lastName}</span>
-              </li>
-              <li
-                className="dropdown-item"
-                style={{
-                  wordBreak: "break-word",
-                  whiteSpace:"normal",
-                }}
-              >
-                <span className="email">{userData.email}</span>
-              </li>
-              <li className="dropdown-item" onClick={(e)=>{handleLogout(e)}}>
-                <span className="logout">Logout</span>
-              </li>
-            </ul>
+              <ul className="dropdown-menu " aria-labelledby="profileDropDown">
+                <li className="dropdown-item " >
+                  <span className="username">
+                    {userData.firstName} {userData.lastName} <br />
+                  </span>
+                  <span style={{color:"#28519E",fontStyle:"italic",fontSize:"14px"}}>
+                    {userData.deployed?"Occupied":"On Bench"}
+                  </span>
+                </li>
+                <li 
+                  className="dropdown-item "
+                  style={{
+                    wordBreak: "break-word",
+                    whiteSpace: "normal",
+                  }}
+                >
+                  <span className="email">{userData.email}</span>
+                </li>
+                <li
+                  className="dropdown-item logout-hover"
+                  onClick={(e) => {
+                    handleLogout(e);
+                  }}
+                >
+                  <span className="logout">Logout</span>
+                </li>
+              </ul>
+            </div>
+
+            <span className="ms-2 mt-2" style={{ color: "#000" }}>
+              <BsChevronDown />
+            </span>
           </div>
         </nav>
       </div>

@@ -18,7 +18,6 @@ import EmptyGraph from "./EmptyStates/EmptyGraph/EmptyGraph";
 const Dashboard = (props) => {
   const [currPage, setCurrPage] = useState("dashboard");
   const [dashNav, setDashNav] = useState("dashboard");
-console.log("This is i'm getting from dashboard", props.sendDataToDashboard)
   const changePage = (type) => {
     setDashNav(type);
     setCurrPage(type);

@@ -407,8 +407,8 @@ const DailyTaskTracker = () => {
           <div className="d-flex align-items-center justify-content-end dtt-gap ">
 
             <p className="dtt-timer" >{formatTime(elapsedTime)}</p>
-            <div className="d-flex align-items-center justify-content-center iconGap ">
-            <p>
+            <div className="d-flex align-items-center justify-content-center iconGap  ">
+            <p className="pointer">
               {isRunning && !isPaused ? (
                 <Pause
                 onClick={handlePause}
@@ -438,7 +438,7 @@ const DailyTaskTracker = () => {
                 // </button>
               )}
             </p>
-            <p>
+            <p className="pointer">
               {stopBtnDisabled ? (<StopD/>) :
               (<Stop
                 // disabled={isRunning ? stopBtnDisabled : btnDisabled}

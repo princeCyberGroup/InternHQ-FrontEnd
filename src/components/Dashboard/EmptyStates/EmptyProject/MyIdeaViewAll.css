@@ -3,6 +3,12 @@
    justify-content: center;
     align-items: center;
 }
+.empty-project{
+    height: 63%;
+    display: flex;
+    justify-content: center;
+     align-items: center;   
+}
 
 .empty-view-text {
     font-style: normal;

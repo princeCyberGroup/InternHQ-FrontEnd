@@ -56,6 +56,7 @@ const DailyUpdateTable = (props) => {
       });
   };
 
+  //Function to handle read more
   const handleReadMore = (item) => {
     setSelectedItem(item);
     setShowModal(true);
@@ -125,11 +126,7 @@ const DailyUpdateTable = (props) => {
     return convertedTime;
   };
 
-  console.log( convertTime(
-    "18:16:59"
-  ) +
-  " - " +
-  convertTime("18:17:06"))
+  console.log(convertTime("18:16:59") + " - " + convertTime("18:17:06"));
 
   const handleFiltersChange = () => {
     const getFilterItems = (items, searchValue) => {
@@ -228,18 +225,26 @@ const DailyUpdateTable = (props) => {
                         />
                       </td>
                       <td>
-                        <LearningTypeDropDown
-                          dropdownfunc={(
-                            dropdownFilterValue //Getting the value for dropdownFilterValue from LearningTypeDropDown Component
-                          ) => setDropdownFilterValue(dropdownFilterValue)}
-                        />
+                        {arrayCurrentResults?.length === 0 ? (
+                          <div></div>
+                        ) : (
+                          <LearningTypeDropDown
+                            dropdownfunc={(
+                              dropdownFilterValue //Getting the value for dropdownFilterValue from LearningTypeDropDown Component
+                            ) => setDropdownFilterValue(dropdownFilterValue)}
+                          />
+                        )}
                       </td>
                       <td>
-                        <SearchBar
-                          searchfunc={(searchFilterValue) =>
-                            setSearchFilterValue(searchFilterValue)
-                          } //Getting the value for searchFilterValue from SearchBar Component
-                        />
+                        {arrayCurrentResults?.length === 0 ? (
+                          <div></div>
+                        ) : (
+                          <SearchBar
+                            searchfunc={(searchFilterValue) =>
+                              setSearchFilterValue(searchFilterValue)
+                            } //Getting the value for searchFilterValue from SearchBar Component
+                          />
+                        )}
                       </td>
                       <td></td>
                       <td></td>
@@ -259,7 +264,7 @@ const DailyUpdateTable = (props) => {
                         const tooltipClassName =
                           isLastTooltip || isSecondLastTooltip;
                         const activityLength = item.activityTime.length; //To calculate length of activityTime array that i'm getting from backend
-                        
+
                         return (
                           <tr key={index}>
                             <td>{arrayStartIndex + index + 1}</td>
@@ -288,16 +293,16 @@ const DailyUpdateTable = (props) => {
                                 // firstActivity={`${convertTime(item.activityTime[0].startedAt)} - ${convertTime(item.activityTime[0].endedAt)}`}
                                 firstActivity={
                                   activityLength >= 1
-                                    ? convertTime(item.activityTime[0].startedAt) +
-                                    " - " +
-                                    convertTime(item.activityTime[0].endedAt)
+                                    ? item.activityTime[0].startedAt +
+                                      " - " +
+                                      item.activityTime[0].endedAt
                                     : ""
                                 }
                                 secondActivity={
                                   activityLength >= 2
-                                    ? convertTime(item.activityTime[1].startedAt) +
+                                    ? item.activityTime[1].startedAt +
                                       " - " +
-                                      convertTime(item.activityTime[1].endedAt)
+                                      item.activityTime[1].endedAt
                                     : ""
                                 }
                                 thirdActivity={
@@ -379,29 +384,6 @@ const DailyUpdateTable = (props) => {
                           ></Form.Control>
                         </Form.Group>
                       </Modal.Body>
-                      <Modal.Footer>
-                        <div className="d-flex justify-content-between align-items-center w-100">
-                          <span className="text-danger">{timeLeftmessage}</span>
-                          <div>
-                            <Button
-                              variant="outline-primary"
-                              onClick={() => setShowModal(false)}
-                            >
-                              Cancel
-                            </Button>
-                            <Button
-                              className="ms-2"
-                              variant="primary"
-                              disabled={modalSaveFlag}
-                              onClick={() => {
-                                setShowModal(false);
-                              }}
-                            >
-                              Save
-                            </Button>
-                          </div>
-                        </div>
-                      </Modal.Footer>
                     </Modal>
                   </tbody>
                   <tfoot>

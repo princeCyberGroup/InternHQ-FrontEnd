@@ -32,10 +32,7 @@ export const NewNotifications = () => {
       const response = await fetch(
         "https://cg-interns-hq.azurewebsites.net/getNotification"
       );
-
       const data = await response.json();
-     
-
       setNotifications(data.response);
       setIsLoading(false);
     } catch (error) {
@@ -63,7 +60,8 @@ export const NewNotifications = () => {
                 <div className="image-wrapper mt-1">
                   <div className="image-box">
                     <img
-                      key={user.user_id}
+                    key={user.userId}
+
                       src={user.techImage}
                       width={32}
                       alt=""
@@ -71,11 +69,11 @@ export const NewNotifications = () => {
                   </div>
                 </div>
                 <div className="text-wrapper mt-3">
-                  <p key={user.user_id} className="m-0">
+                  <p key={user.userId} className="m-0">
                     <b>{user.firstName} {user.lastName}</b> has achieved <b>{user.level}</b>
                     <b> skill </b> on <b>{user.techName}</b>
                   </p>
-                  <p className="m-0 date-wrapper"> 02-06-2023</p>
+                  <p className="m-0 date-wrapper">{user.examDate} </p>
                 </div>
               </div>
             </>
