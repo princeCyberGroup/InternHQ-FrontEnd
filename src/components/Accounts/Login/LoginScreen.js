@@ -48,9 +48,7 @@ const LoginScreen = () => {
         password,
       })
       .then((response) => {
-        console.log(response.data);
-        console.log("success", response.data.success);
-        // localStorage.setItem("token", response.data.token);
+        console.log("data2:",response.data);
         localStorage.setItem("login", true);
         const res = {
           token: response.data.token,
@@ -58,10 +56,8 @@ const LoginScreen = () => {
           userId: response.data.userId,
           firstName: response.data.firstName,
           lastName: response.data.lastName,
+          deployed:response.data.isDeployed
         };
-         firstNaming = (response.data.firstName);
-         console.log(firstNaming, "HEre lies this")
-        console.log(res, "This is res that have been set");
         localStorage.setItem("userData", JSON.stringify(res));
         // const res = {
         //   token:response.data.token,

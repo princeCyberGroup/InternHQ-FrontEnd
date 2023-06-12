@@ -41,6 +41,7 @@ const DailyTaskTracker = () => {
 
   const[firstCount,setFirstCount] = useState(true);
   const [commentLength, setCommentLength] = useState(comments.length);
+  const [pauseClickCount, setPauseClickCount] = useState(0);
 
   const navigate = useNavigate();
 
@@ -248,11 +249,18 @@ const DailyTaskTracker = () => {
     // localStorage.removeItem("topic");
   };
 
+  // const handlePause = () => {
+  //   sendPauseDataToBackend();
+  //   setIsPaused(true);
+  //   // setComDisabled(false);
+  // }
   const handlePause = () => {
-    sendPauseDataToBackend();
-    setIsPaused(true);
-    // setComDisabled(false);
-  }
+    if (pauseClickCount < 4) {
+      sendPauseDataToBackend();
+      setPauseClickCount(prevCount => prevCount + 1);
+      setIsPaused(true);
+    }
+  };
 
   const handleStart = () => {
     // setComDisabled(false);
@@ -261,6 +269,17 @@ const DailyTaskTracker = () => {
     // setStartTime(Date.now());
     // setElapsedTime(0);
     // setStopBtnDisabled(true);
+    
+    // if (learningType === "CG Learning Videos") {
+    //   window.location.href = "https://jwt.io/"; // Replace with the desired URL
+    //   return; // Exit the function to prevent further execution
+    // }
+    if (learningType === "CG Learning Videos" && firstCount) {
+      const newTab = window.open("https://cgu.cginfinity.com/login/", "_blank");
+      if (newTab) {
+        newTab.focus();
+      }
+    }
 
     if(firstCount){
       sendStartDataToBackend();
@@ -407,11 +426,12 @@ const DailyTaskTracker = () => {
           <div className="d-flex align-items-center justify-content-end dtt-gap ">
 
             <p className="dtt-timer" >{formatTime(elapsedTime)}</p>
-            <div className="d-flex align-items-center justify-content-center iconGap ">
-            <p>
+            <div className="d-flex align-items-center justify-content-center iconGap  ">
+            <p className="pointer">
               {isRunning && !isPaused ? (
                 <Pause
                 onClick={handlePause}
+                disabled={pauseClickCount >= 4}
                 // onClick={() => setIsPaused(true)} // Pause the timer
                 />
                 // <button
@@ -438,7 +458,7 @@ const DailyTaskTracker = () => {
                 // </button>
               )}
             </p>
-            <p>
+            <p className="pointer">
               {stopBtnDisabled ? (<StopD/>) :
               (<Stop
                 // disabled={isRunning ? stopBtnDisabled : btnDisabled}

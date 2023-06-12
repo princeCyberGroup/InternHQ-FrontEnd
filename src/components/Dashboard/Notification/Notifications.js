@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import "./Notification.css";
 import NotificationContentSkeleton from "./NotificationContentSkeleton";
+import EmptyNotification from "../EmptyStates/EmptyNoti/EmptyNoti"
 // import angular from '../Notification/angular.svg';
 
 export const NotificationComponent = () => {
@@ -32,10 +33,7 @@ export const NewNotifications = () => {
       const response = await fetch(
         "https://cg-interns-hq.azurewebsites.net/getNotification"
       );
-
       const data = await response.json();
-      console.log(data)
-
       setNotifications(data.response);
       setIsLoading(false);
     } catch (error) {
@@ -44,18 +42,17 @@ export const NewNotifications = () => {
   };
 
   return (
-    <div className="">
-      {" "}
-      {/* Notification parent */}
+    <>
       {isLoading ? (
-        <div>
+        <>
           <NotificationContentSkeleton />
           <NotificationContentSkeleton />
           <NotificationContentSkeleton />
           <NotificationContentSkeleton />
           <NotificationContentSkeleton />
-        </div>
+        </>
       ) : (
+        notifications.length == 0 ? <EmptyNotification/> :
         notifications.map((user) => {
           return (
             <>
@@ -76,13 +73,13 @@ export const NewNotifications = () => {
                     <b>{user.firstName} {user.lastName}</b> has achieved <b>{user.level}</b>
                     <b> skill </b> on <b>{user.techName}</b>
                   </p>
-                  <p className="m-0 date-wrapper">{user.date} </p>
+                  <p className="m-0 date-wrapper">{user.examDate} </p>
                 </div>
               </div>
             </>
           );
         })
       )}
-    </div>
+    </>
   );
 };

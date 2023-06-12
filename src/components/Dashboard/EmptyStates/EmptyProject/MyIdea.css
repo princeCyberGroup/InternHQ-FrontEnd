@@ -1,9 +1,8 @@
 .empty-idea {
-    padding: 0px;
-    gap: 4px;
-    background: #FFFFFF;
-    border-radius: 8px;
-    height: 109px;
+    height: 54%;
+    display: flex;
+    justify-content: center;
+     align-items: center;   
 }
 .empty-image{
     margin-top: 42.81px;
