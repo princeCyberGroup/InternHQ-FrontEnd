@@ -1,7 +1,6 @@
 import React from "react";
 import BadRequestImage from "../../Assets/BadRequestImage.png";
-import BadRequestTextImage from "../../Assets/BadRequestTextImage.png";
-import Header from "../Header";
+import Header from "../Header/Header";
 import { useNavigate } from "react-router-dom";
 
 const BadRequest = () => {

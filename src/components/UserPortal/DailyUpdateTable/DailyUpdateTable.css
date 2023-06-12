@@ -1,0 +1,159 @@
+.daily-update-table-container {
+  background-color: #fbfbfb;
+  font-family: 'Roboto';
+  height: 100vh;
+  padding-left: 3.5rem;
+  padding-right: 3.5rem;
+}
+
+.custom-modal {
+  background-color: red;
+}
+
+.daily-update-heading {
+  font-weight: 700;
+  font-size: 1.25rem;
+  line-height: 1.465rem;
+  color: #343435;
+  font-style: normal;
+  padding-right: 0;
+  padding-top: 0.5rem;
+}
+
+.daily-update-nav-bar {
+  font-weight: 400;
+  font-size: 0.875rem;
+  line-height: 2rem;
+  padding-top: 1.25rem;
+  padding-right: 0;
+}
+
+.table-striped > tbody > tr:nth-child(odd) > td {
+  background-color: #f7f7f7;
+}
+
+.daily-update-table-style {
+  box-shadow: 0rem 0.25rem 1.25rem rgba(40, 52, 73, 0.15);
+}
+.table {
+  margin: 0;
+  padding: 0;
+}
+
+.table > thead {
+  background-color: #e4eaee;
+}
+
+.column-id {
+  width: 2.563rem;
+}
+
+.column-date {
+  width: 8.813rem;
+}
+
+.column-learning {
+  width: 13.3rem;
+}
+
+.column-topic {
+  width: 10rem;
+}
+
+.column-comment {
+  width: 16rem;
+}
+
+.column-duration {
+  width: 11.125rem;
+}
+
+.search-bar-input {
+  background-image: url("../../../Assets/search.svg");
+  background-position: right 0.625rem center;
+  background-repeat: no-repeat;
+  width: 10rem;
+  padding: 0.305rem 0.5rem;
+  border: 0.063rem solid #e9eceb;
+  border-radius: 0.25rem;
+}
+
+.date-picker-style {
+  padding: 0.305rem 0.5rem;
+  border: 0.063rem solid #e9eceb;
+  border-radius: 0.25rem;
+  background: #ffffff;
+  width: 8.625rem;
+}
+
+.pos-6 {
+  position: relative;
+  left: -0.7rem;
+}
+
+.modal-90w {
+  width: 32.75rem;
+  max-height: 22.5rem;
+  font-size: 0.813rem;
+}
+
+.f-bold {
+  font-weight: 500;
+}
+
+.active .pagination-styling {
+  background-color: rgba(40, 81, 158, 0.08);
+  color: #28519e;
+  border-color: #28519e;
+}
+.pagination-styling {
+  color: #23262b;
+  font-weight: 500;
+}
+.modal-comment:disabled {
+  background-color: #ffffff;
+}
+
+.image-tooltip-container {
+  position: relative;
+  display: inline;
+  margin-left: 2.9rem;
+}
+
+.tooltip {
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translate(-95%, 9%);
+  background-color: #fff;
+  color: #343435;
+  padding: 16px 16px 0 16px;
+  border: 1px solid #e9eceb;
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  border-radius: 4px;
+  opacity: 0.9;
+  width: 10.26rem;
+  height: 200px;
+}
+
+.tooltip-head {
+  font-family: "Roboto";
+  font-weight: 600;
+  margin-bottom: 16px;
+  font-size: 15px;
+  line-height: 16px;
+}
+
+.tooltip-body {
+  font-family: "Roboto";
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 16px;
+  margin-bottom: 16px;
+}
+
+.tooltip-above {
+  bottom: 100%;
+  top: auto;
+  transform: translate(-95%, -9%);
+}
