@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import "./Notification.css";
 import NotificationContentSkeleton from "./NotificationContentSkeleton";
+import EmptyNotification from "../EmptyStates/EmptyNoti/EmptyNoti"
 // import angular from '../Notification/angular.svg';
 
 export const NotificationComponent = () => {
@@ -41,18 +42,17 @@ export const NewNotifications = () => {
   };
 
   return (
-    <div className="">
-      {" "}
-      {/* Notification parent */}
+    <>
       {isLoading ? (
-        <div>
+        <>
           <NotificationContentSkeleton />
           <NotificationContentSkeleton />
           <NotificationContentSkeleton />
           <NotificationContentSkeleton />
           <NotificationContentSkeleton />
-        </div>
+        </>
       ) : (
+        notifications.length == 0 ? <EmptyNotification/> :
         notifications.map((user) => {
           return (
             <>
@@ -80,6 +80,6 @@ export const NewNotifications = () => {
           );
         })
       )}
-    </div>
+    </>
   );
 };

@@ -9,7 +9,7 @@ const ImageTooltip = ({ src, alt, tooltipHead, firstActivity, secondActivity, th
   };
 
   const handleMouseLeave = () => {
-    setShowTooltip(false);//false
+    setShowTooltip(false);
   };
   return (
     <div className="image-tooltip-container">
@@ -20,7 +20,7 @@ const ImageTooltip = ({ src, alt, tooltipHead, firstActivity, secondActivity, th
         onMouseLeave={handleMouseLeave}
       />
       {showTooltip && (
-        <div className={styleClass ? "tooltip last-tooltip" : "tooltip"}>
+        <div className={styleClass ? "tooltip tooltip-above" : "tooltip"}>
           <div className="tooltip-head">{tooltipHead}</div>
           <div className="tooltip-body">{firstActivity}</div>
           <div className="tooltip-body">{secondActivity}</div>
