@@ -9,7 +9,7 @@ export const ProjectDetail = ({ data, indexNumber }) => {
       <p className="project-detail-technology-used mb-0">Technology Used:</p>
 
       <div className="project-detail-technology-badges">
-        {data[indexNumber].technology.map((tech) => {
+        {data[indexNumber].technology.map && data[indexNumber].technology.map((tech) => {
           if (tech != null) {
             return <p className="technology-badge me-1"> {tech} </p>;
           }
@@ -30,14 +30,14 @@ export const ProjectDetail = ({ data, indexNumber }) => {
       </p>
       <p className="members fw-bold">Members:</p>
             <div className="project-detail-technology-badges">
-                {data[indexNumber].technologyNames.map((tech) => {
+                {data[indexNumber].technologyNames && data[indexNumber].technologyNames.map((tech) => {
                     if (tech != null){
                     return <p className="technology-badge me-1"> {tech} </p>
                     }
                 })}
             </div>
       <div className="members-name project-members text-center">
-        {data[indexNumber].members.length > 4 ? (
+        {data[indexNumber].members && data[indexNumber].members.length > 4 ? (
           data[indexNumber].members.map((curElem, index) => {
             if (curElem != null) {
               const nameParts = curElem.split(" ");

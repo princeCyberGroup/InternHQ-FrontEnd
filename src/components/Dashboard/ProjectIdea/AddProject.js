@@ -112,11 +112,9 @@ export const AddProject = ({ projectApiDataa }) => {
 
   const isObjectEmpty = (object) => {
     if (object.member1.length > 0) {
-      console.log("value", object.member1.length > 0);
       setMemberNames(object);
       return;
     } else {
-      console.log("No Value");
       return setMemberNames("");
     }
   };

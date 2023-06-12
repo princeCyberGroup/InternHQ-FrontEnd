@@ -9,13 +9,13 @@ import TechDropDown from "./TechDropDown";
 export const AddNewIdea = ({ projectDescript }) => {
   const navigate = useNavigate();
   const [first, ...rest] = projectDescript;
-  console.log(...rest)
+  // console.log(...rest)
   const [projName, setProjName] = useState("");
   const [projDescription, setProjDescription] = useState("");
 //  const [selectedOptions, setSelectedOptions] = useState([]);
 //  const [technologyNames, setTechnologyNames] = useState([]);
   // const [userId, setUserId] = useState("30");
-  const [counter, setCounter] = useState(1);
+  // const [counter, setCounter] = useState(1);
   const [textInput, setTextInput] = useState("");
   const [memberNames, setMemberNames] = useState({});
   // const [techNames, seTechNames] = useState({});
@@ -103,9 +103,9 @@ export const AddNewIdea = ({ projectDescript }) => {
   //   }
   // };
 
-  const handleClick = async (e) => {
+  const handleClick =  (e) => {
     e.preventDefault();
-    const data = { projectDescript };
+    // const data = { projectDescript };
     console.log("PD",projDescription)
     navigate("/project-idea-projects", { state: projectDescript });
   };
@@ -174,9 +174,9 @@ export const AddNewIdea = ({ projectDescript }) => {
             </div>
             <button
               className="view-all fw-bold"
-              onClick={(e) => {
-                handleClick(e);
-              }}
+              onClick={(e)=>
+                handleClick(e)
+              }
             >
               View All
             </button>

@@ -40,7 +40,7 @@ export const ViewAll = () => {
                             <p className="me-2 add-your-project">Add Project</p></button>
                     </div>
                 </div>
-                 {details.length === 0 ? (
+                 {details && details.length === 0 ? (
                     <EmptyProjectState/>
                  ):
                  ( <div className="all-project-idea-wrapper entire-component ms-0" style={{ overFlowY: "scroll" }}>

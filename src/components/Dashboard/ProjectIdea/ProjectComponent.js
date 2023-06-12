@@ -24,7 +24,7 @@ export const AddNewProjectComponent = () => {
 
       setProjectData(response.data.response);
     } catch (error) {
-      // console.log(error.response?.data);
+      console.log("Error ",error.response?.data);
       // console.log(error.response?.data.msg);
     }
   };
