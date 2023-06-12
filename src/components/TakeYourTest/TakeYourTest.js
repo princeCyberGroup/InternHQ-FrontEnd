@@ -160,7 +160,7 @@ const TakeYourTest = () => {
     const handleKeyDown = (event) => {
         if (event.key === "Escape" || event.key === "F11") {
             event.disabled = true 
-            console.log(event);
+            // console.log(event);
         }
     };
     let submitQuesData;
@@ -189,7 +189,7 @@ const TakeYourTest = () => {
             });
             submitQuesData = await response.json();
             setScore(submitQuesData.totalScore);
-            console.log(submitQuesData);
+            // console.log(submitQuesData);
 
         } catch (error) {
             console.log(error);

@@ -54,7 +54,7 @@ const TakeTest = ({ test }) => {
         handleFiltersChange();
       }, [searchFilterValue])
 
-      console.log(tests);
+    //   console.log(tests);
     //   getFilterItems(tests,searchFilterValue);
     const navigate = useNavigate();
      const location = useLocation();

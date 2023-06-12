@@ -40,9 +40,9 @@ const DailyUpdateTable = (props) => {
   var parsedObject = JSON.parse(storedObject);
   var userId = parsedObject.userId;
 
-  const data = localStorage.getItem('userData');
-  const parsedData = JSON.parse(data);
-  const userId = parsedData.userId;
+  // const data = localStorage.getItem('userData');
+  // const parsedData = JSON.parse(data);
+  // const usersId = parsedData.userId;
   const fetchData = async () => {
     await fetch(
       `https://cg-interns-hq.azurewebsites.net/getDailyTaskTrackerRecords?userId=${userId}`
@@ -384,7 +384,7 @@ const DailyUpdateTable = (props) => {
                       </Modal.Body>
                       <Modal.Footer>
                         <div className="d-flex justify-content-between align-items-center w-100">
-                          <span className="text-danger">{timeLeftmessage}</span>
+                          {/* <span className="text-danger">{timeLeftmessage}</span> */}
                           <div>
                             <Button
                               variant="outline-primary"
