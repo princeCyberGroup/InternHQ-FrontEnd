@@ -15,10 +15,10 @@ import EmptyGraph from "./EmptyStates/EmptyGraph/EmptyGraph";
 
 
 
-const Dashboard = () => {
+const Dashboard = (props) => {
   const [currPage, setCurrPage] = useState("dashboard");
   const [dashNav, setDashNav] = useState("dashboard");
-
+console.log("This is i'm getting from dashboard", props.sendDataToDashboard)
   const changePage = (type) => {
     console.log("working");
     setDashNav(type);
@@ -47,10 +47,10 @@ const Dashboard = () => {
             </div>
             <div className="mt-2 das-card-wrapper-row2">
               <div className="" style={{height:"376px"}}>
-                <DashboardGraph />
+                <DashboardGraph sendDataToGraph={props.sendDataToDashboard}/>
                 {/* <EmptyGraph/> */}
               </div>
-              <div className="mt-2" style={{height:"378px"}}>
+              <div className="mt-2" style={{height:"378px", width: "23.65rem"}}>
                 <NotificationComponent />
                    {/* <EmptyNoti/>*/}
               </div>

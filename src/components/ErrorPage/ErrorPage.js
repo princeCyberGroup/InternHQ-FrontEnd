@@ -1,11 +1,12 @@
 import React from "react";
 import ErrorImage from "../../Assets/ErrorImage.png";
 import "./ErrorPage.css";
-import { useLocation, useParams } from "react-router-dom";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 
 const ErrorPage = () => {
   // const params = useParams();
   const location = useLocation();
+  const navigate = useNavigate();
   console.log(location)
   // let errorCode = params["*"];
   // if(errorCode != '*')
@@ -71,7 +72,7 @@ const ErrorPage = () => {
           </div>
           <div className="row">
             <div className="col">
-              <button className="border-0 error-btn mt-3 ms-2">Back to home</button>
+              <button className="border-0 error-btn mt-3 ms-2" onClick={() => {navigate("/dashboard")}}>Back to home</button>
             </div>
           </div>
         </div>

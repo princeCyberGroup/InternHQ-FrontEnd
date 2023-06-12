@@ -107,7 +107,7 @@ const ForgotPasswordOtpScreen = () => {
                 // data-bs-interval="4000"
                 // data-interval="false" //Remove it
               >
-                <div className="carousel-indicators">
+                <div className="carousel-indicators" style={{marginBottom: "2.5rem"}}>
                   <button
                     data-bs-target="#carouselExampleIndicators"
                     data-bs-slide-to="0"
