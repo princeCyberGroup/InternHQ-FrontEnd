@@ -29,7 +29,13 @@ export const ProjectDetail = ({ data, indexNumber }) => {
           : "No Link Provided"}
       </p>
       <p className="members fw-bold">Members:</p>
-
+            <div className="project-detail-technology-badges">
+                {data[indexNumber].technologyNames.map((tech) => {
+                    if (tech != null){
+                    return <p className="technology-badge me-1"> {tech} </p>
+                    }
+                })}
+            </div>
       <div className="members-name project-members text-center">
         {data[indexNumber].members.length > 4 ? (
           data[indexNumber].members.map((curElem, index) => {
@@ -38,7 +44,6 @@ export const ProjectDetail = ({ data, indexNumber }) => {
               const initials =
                 nameParts[0][0].toUpperCase() +
                 nameParts[nameParts.length - 1][0].toUpperCase();
-
               return (
                 <div className="project-idea-members" key={index}>
                   <p className="name-of-members">{initials}</p>

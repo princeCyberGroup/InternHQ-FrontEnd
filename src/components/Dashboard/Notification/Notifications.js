@@ -33,9 +33,7 @@ export const NewNotifications = () => {
       const response = await fetch(
         "https://cg-interns-hq.azurewebsites.net/getNotification"
       );
-
       const data = await response.json();
-
       setNotifications(data.response);
       setIsLoading(false);
     } catch (error) {
