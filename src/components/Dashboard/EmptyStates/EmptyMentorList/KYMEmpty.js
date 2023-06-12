@@ -2,7 +2,7 @@ import "./KYMEmpty.css";
 import { ReactComponent as NoMentor } from "./KYM Empty.svg";
 
 
-export const KYMEmpty = () => {
+const KYMEmpty = () => {
 
 
 
@@ -27,3 +27,5 @@ export const KYMEmpty = () => {
     </>
   );
 };
+
+export default KYMEmpty;
