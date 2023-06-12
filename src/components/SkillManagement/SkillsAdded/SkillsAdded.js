@@ -79,7 +79,7 @@ const SkillsAdded = () => {
                 {/* ///////////// */}
                 <div className={`col d-flex flex-column ${DataUsed.examLevels[0] ? "block" : "grey"}`}>
                 <div  className="my-spacing">
-                  { DataUsed.examScores[0]>8 ?  <img
+                  { DataUsed.examScores[0]>=8 ?  <img
                     src="https://pixlok.com/wp-content/uploads/2021/07/Rating-SVG-Icon-s9fd.png"
                     height={"20px"}
                     width={"20px"}
@@ -101,7 +101,7 @@ const SkillsAdded = () => {
                 
                 <div className={`col d-flex flex-column ${DataUsed.examLevels[1] ? "block" : "grey"}`}>
                 <div  className="my-spacing">
-                  { DataUsed.examScores[1]>8 ?  <img
+                  { DataUsed.examScores[1]>=8 ?  <img
                     src="https://pixlok.com/wp-content/uploads/2021/07/Rating-SVG-Icon-s9fd.png"
                     height={"20px"}
                     width={"20px"}
@@ -129,7 +129,7 @@ const SkillsAdded = () => {
                   }}
                   >
                  <div  className="my-spacing">
-                  { DataUsed.examScores[2]>8 ?  <img
+                  { DataUsed.examScores[2]>=8 ?  <img
                     src="https://pixlok.com/wp-content/uploads/2021/07/Rating-SVG-Icon-s9fd.png"
                     height={"20px"}
                     width={"20px"}
@@ -151,7 +151,7 @@ const SkillsAdded = () => {
               
                 <div className={`col d-flex flex-column ${DataUsed.examLevels[3] ? "block" : "grey"}`}>
                 <div  className="my-spacing">
-                  { DataUsed.examScores[3]>8 ?  <img
+                  { DataUsed.examScores[3]>=8 ?  <img
                     src="https://pixlok.com/wp-content/uploads/2021/07/Rating-SVG-Icon-s9fd.png"
                     height={"20px"}
                     width={"20px"}
