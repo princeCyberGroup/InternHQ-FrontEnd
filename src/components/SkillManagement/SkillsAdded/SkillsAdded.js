@@ -1,4 +1,5 @@
 import React, { useEffect } from "react";
+import { EmptySkillsAdded } from "./EmptySkillsAdded/EmptySkillsAdded";
 import "./SkillsAdded.css";
 import { useState, createContext } from "react";
 import { all } from "axios";
@@ -9,18 +10,38 @@ import { ReactComponent as Star } from "../../../Assets/Star.svg";
 
 const SkillsAdded = () => {
 
-  const [allData, setAllData] = useState([]);
+ 
+  var storedObject = localStorage.getItem('userData');
+  var parsedObject = JSON.parse(storedObject);
+  var userId = parsedObject.userId;
 
-  useEffect(() => {
-    fetchData();
-  }, []);
+  // useEffect(() => {
+  //   fetchData();
+  // }, []);
+
+    const [isLoading, setIsLoading] = useState(true);
+    const [allData, setAllData] = useState([]);
+    useEffect(() => {
+       setTimeout(() => {
+        return setIsLoading(false);
+       }, 2000);
+        fetchData()
+    }, []);
+    // useEffect(() => {
+    //   setTimeout(() => {
+    //     fetchData();
+    //   }, 3000);
+    // }, []);
+   ;
 
   const fetchData = async () => {
     try {
-      const response = await fetch("https://cg-interns-hq.azurewebsites.net/skillAdded?userId=44");
+      //const response = await fetch(`https://cg-interns-hq.azurewebsites.net/skillAdded?userId=41`);
+       const response = await fetch(`https://cg-interns-hq.azurewebsites.net/skillAdded?userId=${userId}`);
       const data = await response.json();
 
       setAllData(data.response);
+      
     } catch (error) {
       console.log(error);
     }
@@ -33,11 +54,18 @@ const SkillsAdded = () => {
       </div>
 
       {/* //main card  */}
-      {allData.map(DataUsed => (
+      <div>
+      {allData.length === 0 ? (
+        <div>
+          <EmptySkillsAdded />
+        </div>
+      ) : (
+
+      allData.map(DataUsed => (
         <div className="card" style={{ width: "288px" }}>
           <div
             class="card-body p-0"
-            style={{ maxHeight: "730px", overflow: "auto" }}
+            style={{ maxHeight: "602px", overflow: "auto" }}
           >
             <div className="row cards">
               <div className="col-12 d-flex mainImg">
@@ -147,9 +175,13 @@ const SkillsAdded = () => {
             </div>
           </div>
         </div>
-      ))}
+      ))
+      )
+                  }
+      </div>
     </>
   );
-};
+
+}
 
 export default SkillsAdded;

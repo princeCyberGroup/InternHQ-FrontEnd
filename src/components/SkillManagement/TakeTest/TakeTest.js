@@ -13,10 +13,12 @@ export const TestContext = createContext();
 
 const TakeTest = ({ test }) => {
     const [activeButton, setActiveButton] = useState("all");
-    const [searchQuery, setSearchQuery] = useState("");
+    // const [searchQuery, setSearchQuery] = useState("");
     const [tests, setTests] = useState([]);
+    const [originalTests, setOriginalTests] = useState([]);
     const [allData, setAllData] = useState([]);
     const [data , setdata ]= useState();
+    const [ searchFilterValue,  setSearchFilterValue] =useState("");
     useEffect(() => {
         fetchTests();
     }, [])
@@ -26,14 +28,34 @@ const TakeTest = ({ test }) => {
             const data = await response.json();
             setAllData(data);
             setTests(data);
+            setOriginalTests(data);
         }
         catch (e) {
             console.error('Error fetching exam details:', e);
         }
     };
-    const handleSearch = (event) => {
-        setSearchQuery(event.target.value);
-    };
+    
+    const handleFiltersChange = () => {
+        const getFilterItems = (items, searchValue) => {
+            if (searchValue) {
+              return items.filter((item) =>
+                item.techName?.toLowerCase().includes(searchValue.toLowerCase())
+              );
+            }
+            return items;
+      
+          };
+          const filters = getFilterItems(originalTests, searchFilterValue);
+          setTests(filters);
+    }
+    
+    //   setTests(getFilterItems)
+      useEffect(() => {
+        handleFiltersChange();
+      }, [searchFilterValue])
+
+      console.log(tests);
+    //   getFilterItems(tests,searchFilterValue);
     const navigate = useNavigate();
      const location = useLocation();
 
@@ -113,9 +135,12 @@ const TakeTest = ({ test }) => {
                         <input
                             className="sea"
                             type="text"
-                            value={searchQuery}
-                            onChange={handleSearch}
+                            value={searchFilterValue}
                             placeholder="Search"
+                            onChange={(event) => {
+                                event.preventDefault();
+                                setSearchFilterValue(event.target.value)
+                            }}
                         />
                     </div>
                 </div>
@@ -123,10 +148,10 @@ const TakeTest = ({ test }) => {
                     class="card-body p-0"
                     style={{ maxHeight: "50rem", overflow: "auto" }}
                 >
-                    <div className="row cards">
+                    <div className="row cards main-card-inside"   style={{ maxHeight: "470px", overflow: "auto" }}>
                         <div className="row d-flex justify-content-evenly">
 
-                            {tests.map(test => (
+                            {tests?.map(test => (
                                 <div className='exam'>
                                     <div class="card outer-card">
                                         <div class="d-flex align-items-center">
