@@ -10,7 +10,9 @@ import Congo from "../SkillManagement/Modals/Congo.js";
 import Sorry from "../SkillManagement/Modals/Sorry.js";
 
 const TakeYourTest = () => {
-
+    var storedObject = localStorage.getItem('userData');
+    var parsedObject = JSON.parse(storedObject);
+    var userId = parsedObject.userId;
     // const { examId } = useParams();
     const [testsData, setTestsData] = useState([]);
     const [allData, setAllData] = useState([]);
@@ -158,7 +160,7 @@ const TakeYourTest = () => {
     const handleKeyDown = (event) => {
         if (event.key === "Escape" || event.key === "F11") {
             event.disabled = true 
-            console.log(event);
+            // console.log(event);
         }
     };
     let submitQuesData;
@@ -178,7 +180,7 @@ const TakeYourTest = () => {
                 },
                 body: JSON.stringify({
 
-                    "userId": 30,
+                    "userId": userId,
                     "technology": techName,
                     "level":level,
                     "optRequest": mappedAnswers
@@ -187,6 +189,7 @@ const TakeYourTest = () => {
             });
             submitQuesData = await response.json();
             setScore(submitQuesData.totalScore);
+            // console.log(submitQuesData);
 
         } catch (error) {
             console.log(error);
