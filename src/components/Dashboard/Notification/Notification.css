@@ -1,7 +1,7 @@
 .notification-card {
     position: relative;
     top: -3rem;
-    /* height: 464px; */
+    height: 464px;
     /* max-height: 29.43rem;
     overflow-y: scroll; */
 }

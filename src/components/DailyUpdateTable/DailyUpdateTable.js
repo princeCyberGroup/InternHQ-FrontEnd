@@ -201,7 +201,7 @@ const DailyUpdateTable = (props) => {
           </div>
           <div className="mb-3">
             <div className="col-12 daily-update-table-style p-0">
-              <div className="table-responsive">
+              <div className="table-responsive" style={{overflow: "visible"}}>
                 <table id="example" className="table table-striped">
                   <thead>
                     <tr>
@@ -225,31 +225,23 @@ const DailyUpdateTable = (props) => {
                         />
                       </td>
                       <td>
-                        {arrayCurrentResults?.length === 0 ? (
-                          <div></div>
-                        ) : (
-                          <LearningTypeDropDown
-                            dropdownfunc={(
-                              dropdownFilterValue //Getting the value for dropdownFilterValue from LearningTypeDropDown Component
-                            ) => setDropdownFilterValue(dropdownFilterValue)}
-                          />
-                        )}
+                        <LearningTypeDropDown
+                          dropdownfunc={(
+                            dropdownFilterValue //Getting the value for dropdownFilterValue from LearningTypeDropDown Component
+                          ) => setDropdownFilterValue(dropdownFilterValue)}
+                        />
                       </td>
                       <td>
-                        {arrayCurrentResults?.length === 0 ? (
-                          <div></div>
-                        ) : (
-                          <SearchBar
-                            searchfunc={(searchFilterValue) =>
-                              setSearchFilterValue(searchFilterValue)
-                            } //Getting the value for searchFilterValue from SearchBar Component
-                          />
-                        )}
+                        <SearchBar
+                          searchfunc={(searchFilterValue) =>
+                            setSearchFilterValue(searchFilterValue)
+                          } //Getting the value for searchFilterValue from SearchBar Component
+                        />
                       </td>
                       <td></td>
                       <td></td>
                     </tr>
-                    {arrayCurrentResults?.length === 0 ? (
+                    {arrayCurrentResults == undefined  || arrayCurrentResults?.length === 0? (
                       <tr>
                         <td colSpan={6}>
                           <EmptyDailyUpdateTable />
@@ -293,37 +285,37 @@ const DailyUpdateTable = (props) => {
                                 // firstActivity={`${convertTime(item.activityTime[0].startedAt)} - ${convertTime(item.activityTime[0].endedAt)}`}
                                 firstActivity={
                                   activityLength >= 1
-                                    ? item.activityTime[0].startedAt +
+                                    ? convertTime(item.activityTime[0].startedAt) +
                                       " - " +
-                                      item.activityTime[0].endedAt
+                                      convertTime(item.activityTime[0].endedAt)
                                     : ""
                                 }
                                 secondActivity={
                                   activityLength >= 2
-                                    ? item.activityTime[1].startedAt +
+                                    ? convertTime(item.activityTime[1].startedAt) +
                                       " - " +
-                                      item.activityTime[1].endedAt
+                                      convertTime(item.activityTime[1].endedAt)
                                     : ""
                                 }
                                 thirdActivity={
                                   activityLength >= 3
-                                    ? item.activityTime[0].startedAt +
+                                    ? convertTime(item.activityTime[0].startedAt) +
                                       " - " +
-                                      item.activityTime[0].endedAt
+                                      convertTime(item.activityTime[0].endedAt)
                                     : ""
                                 }
                                 fourthActivity={
                                   activityLength >= 4
-                                    ? item.activityTime[0].startedAt +
+                                    ? convertTime(item.activityTime[0].startedAt) +
                                       " - " +
-                                      item.activityTime[0].endedAt
+                                      convertTime(item.activityTime[0].endedAt)
                                     : ""
                                 }
                                 fifthActivity={
                                   activityLength >= 5
-                                    ? item.activityTime[0].startedAt +
+                                    ? convertTime(item.activityTime[0].startedAt) +
                                       " - " +
-                                      item.activityTime[0].endedAt
+                                      convertTime(item.activityTime[0].endedAt)
                                     : ""
                                 }
                                 // tooltipBody="10:45 AM - 11:05 AM\n12:05 AM - 12:25 AM\n02:05 AM - 02:45 AM\n05:00 AM - 06:10 AM"
