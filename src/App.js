@@ -1,13 +1,5 @@
 import React, { useState } from "react";
-import {
-  BrowserRouter as Router,
-  Routes,
-  Route,
-  useLocation,
-  useNavigate,
-  Link,
-} from "react-router-dom";
-import Dashboard from "./components/Dashboard/dashboard";
+import {Routes,Route,useLocation,useNavigate} from "react-router-dom";
 import LoginScreen from "./components/Accounts/Login/LoginScreen";
 import SignUpScreen from "./components/Accounts/SignUp/SignUpScreen";
 import RegistrationSuccessfulScreen from "./components/Accounts/SignUp/RegistrationSuccessfulScreen";
@@ -16,16 +8,15 @@ import ForgotPasswordScreen from "./components/Accounts/ForgotPassword/ForgotPas
 import ForgotPasswordOtpScreen from "./components/Accounts/Otp/ForgotPasswordOtpScreen";
 import CreateNewPasswordScreen from "./components/Accounts/ForgotPassword/CreateNewPasswordScreen";
 import PasswordChangedScreen from "./components/Accounts/ForgotPassword/PasswordChangedSuccessfulScreen";
-import { ViewAll } from "./components/Dashboard/ProjectIdea/ViewAllComponent/ViewAll";
+
+import Dashboard from "./components/UserPortal/Dashboard/Dashboard";
+import  ViewAllProjects  from "./components/UserPortal/Dashboard/ProjectIdea/Project/ViewAllProject/ViewAllProjects";
 import AuthGuard from "./components/AuthGuard";
-import TakeYourTest from "./components/TakeYourTest/TakeYourTest";
-import DailyUpdateTable from "./components/DailyUpdateTable/DailyUpdateTable";
-import SkillManagement from "./components/SkillManagement/SkillManagement";
-import { ViewProjectIdeas } from "./components/Dashboard/ProjectIdea/ViewAllProjectIdea/ViewAllProjectIdea";
-import ErrorPage from "./components/ErrorPage/ErrorPage";
-// import CustomRoute from "./components/CustomRoute";
-import TakeTest from "./components/SkillManagement/TakeTest/TakeTest";
-import { AddNewIdea } from "./components/Dashboard/ProjectIdea/AddNewIdea";
+import TakeYourTest from "./components/UserPortal/SkillManagement/TakeYourTest/TakeYourTest";
+import DailyUpdateTable from "./components/UserPortal/DailyUpdateTable/DailyUpdateTable";
+import SkillManagement from "./components/UserPortal/SkillManagement/SkillManagement";
+import  ViewAllIdeas  from "./components/UserPortal/Dashboard/ProjectIdea/Idea/ViewAllIdea/ViewAllIdeas";
+import TakeTest from "./components/UserPortal/SkillManagement/TakeTest/TakeTest";
 import BadRequest from "./components/ErrorPage/BadRequest";
 function App() {
   const location = useLocation();
@@ -113,12 +104,10 @@ const handleDataFromDailyUpdate = (data) => {
         <Route element={<AuthGuard />}>
           <Route path="/dashboard" element={<Dashboard sendDataToDashboard={dataFromDailyUpdate}/>} />
           <Route path="/daily-update" element={<DailyUpdateTable sendDataToDailyUpdate={handleDataFromDailyUpdate}/>} />
-          <Route path="/all-projects" element={<ViewAll />} />
-          <Route path="/project-idea-projects" element={<ViewProjectIdeas/>}/>
-          {/* <Route path={encodeUrl("/all-projects")} element={<ViewAll />} /> */}
+          <Route path="/all-projects" element={<ViewAllProjects />} />
+          <Route path="/project-idea-projects" element={<ViewAllIdeas/>}/>
           <Route path="/skill-management" element={<SkillManagement />} />
-          <Route exact path="/TakeTest" component={<TakeTest />} />
-          <Route path="/take-test" element={<TakeYourTest />} />
+          <Route exact path="/take-test" component={<TakeTest />} />
           <Route path="/take-your-test" element={<TakeYourTest />} />
         </Route>
 
