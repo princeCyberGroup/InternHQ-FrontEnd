@@ -104,7 +104,6 @@ function App() {
           {/* <Route path={encodeUrl("/dashboard")} element={<Dashboard />} /> */}
           {/* Protected Routes here */}
           <Route element={<AuthGuard />}>
-            <div>
               <Route
                 path="/dashboard"
                 element={
@@ -124,7 +123,6 @@ function App() {
               <Route path="/skill-management" element={<SkillManagement />} />
               <Route exact path="/take-test" component={<TakeTest />} />
               <Route path="/take-your-test" element={<TakeYourTest />} />
-            </div>
           </Route>
           <Route path="*" element={<BadRequest />} />
         </Routes>
