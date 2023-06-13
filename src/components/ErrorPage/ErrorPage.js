@@ -1,10 +1,9 @@
 import React from "react";
 import ErrorImage from "../../Assets/ErrorImage.png";
 import "./ErrorPage.css";
-import { useLocation, useNavigate, useParams } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 
 const ErrorPage = () => {
-  // const params = useParams();
   const location = useLocation();
   const navigate = useNavigate();
   console.log(location)

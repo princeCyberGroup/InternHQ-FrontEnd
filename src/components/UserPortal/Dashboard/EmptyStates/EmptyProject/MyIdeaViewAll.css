@@ -1,0 +1,29 @@
+.empty-idea-image {
+   display: flex;
+   justify-content: center;
+    align-items: center;
+}
+.empty-project{
+    height: 63%;
+    display: flex;
+    justify-content: center;
+     align-items: center;   
+}
+
+.empty-view-text {
+    font-style: normal;
+    font-weight: 600;
+    font-size: 1.25rem;
+    line-height: 1.438rem;
+    color: #343435;
+    padding-top: 1.5rem;
+}
+
+.idea-share {
+    font-style: normal;
+    font-weight: 400;
+    font-size: 1rem;
+    line-height: 1.188rem;
+    color: #343435;
+    padding-top: 0.625rem;
+}
