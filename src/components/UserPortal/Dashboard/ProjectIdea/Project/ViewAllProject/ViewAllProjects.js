@@ -1,15 +1,18 @@
-import React, { useState } from "react";
-import { useLocation } from "react-router-dom";
+import React, { useState,useContext, useEffect } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
 import ProjectDetail from "../../ViewDetails/ProjectDetail";
 import Header from "../../../../../Header/Header";
 import EmptyProjectState from "../../../EmptyStates/EmptyProject/Project";
 import DetailsLeft from "../../ViewDetails/DetailsLeft";
+import { UserContext } from "../../../../../../Context/Context";
 
 const ViewAllProjects = () => {
+  const {idea,setIdea,project,setProject}=useContext(UserContext);
   const [projectIndex, setProjectIndex] = useState(0);
   const location = useLocation();
-  const details = location.state;
+  const details = project;
+  
 
   const handelIndex = (index) => {
     setProjectIndex(index);

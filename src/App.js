@@ -20,6 +20,7 @@ import TakeTest from "./components/UserPortal/SkillManagement/TakeTest/TakeTest"
 import BadRequest from "./components/ErrorPage/BadRequest";
 import Context from "./Context/Context";
 function App() {
+
   const location = useLocation();
   const navigate = useNavigate();
 
