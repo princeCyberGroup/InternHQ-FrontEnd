@@ -6,7 +6,7 @@ import "./Idea/AddNewIdea.css";
 import "./Project/AddProject.css";
 import axios from "axios";
 
-export const AddNewProjectComponent = () => {
+const ProjectComponent = () => {
   const [pActive, setPActive] = useState(true);
   const [projectData, setProjectData] = useState([]);
   const [projectApiData, setProjectApiData] = useState();
@@ -75,3 +75,4 @@ export const AddNewProjectComponent = () => {
     </>
   );
 };
+export default ProjectComponent;

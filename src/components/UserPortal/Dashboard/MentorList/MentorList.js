@@ -2,10 +2,8 @@ import { useState, useEffect,useContext } from "react";
 import "./mentorlist.css";
 import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
-import { UserContext } from "../../../../Context/Context";
 
-export const MentorComponent = () => {
-  const obj=useContext(UserContext)
+const MentorComponent = () => {
   const [mentors, setMentors] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   useEffect(() => {
@@ -145,3 +143,5 @@ export const MentorComponent = () => {
     </>
   );
 };
+
+export default MentorComponent;
