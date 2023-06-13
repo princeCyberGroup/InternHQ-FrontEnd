@@ -18,6 +18,7 @@ import SkillManagement from "./components/UserPortal/SkillManagement/SkillManage
 import  ViewAllIdeas  from "./components/UserPortal/Dashboard/ProjectIdea/Idea/ViewAllIdea/ViewAllIdeas";
 import TakeTest from "./components/UserPortal/SkillManagement/TakeTest/TakeTest";
 import BadRequest from "./components/ErrorPage/BadRequest";
+import Context from "./Context/Context";
 function App() {
   const location = useLocation();
   const navigate = useNavigate();
@@ -85,6 +86,7 @@ const handleDataFromDailyUpdate = (data) => {
 
 
   return (
+    <Context>
     <div className="App">
       {/* <Router> */}
       <Routes>
@@ -110,13 +112,14 @@ const handleDataFromDailyUpdate = (data) => {
           <Route exact path="/take-test" component={<TakeTest />} />
           <Route path="/take-your-test" element={<TakeYourTest />} />
         </Route>
-
         {/* </Route> */}
 
         <Route path="*" element={<BadRequest />} />
       </Routes>
       {/* </Router> */}
     </div>
+    </Context>
+
   );
 }
 
