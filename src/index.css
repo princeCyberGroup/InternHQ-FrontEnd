@@ -5,3 +5,6 @@
 body{
     font-family: roboto;
 }
+.pointer{
+cursor: pointer;
+}
