@@ -20,6 +20,7 @@ import TakeTest from "./components/UserPortal/SkillManagement/TakeTest/TakeTest"
 import BadRequest from "./components/ErrorPage/BadRequest";
 import Context from "./Context/Context";
 function App() {
+
   const location = useLocation();
   const navigate = useNavigate();
 
@@ -75,13 +76,6 @@ function App() {
   const handleDataFromDailyUpdate = (data) => {
     setDataFromDailyUpdate(data);
   };
-  // console.log(dataFromDailyUpdate, "This is data from daily update")
-
-  // // Example usage
-  // const timeString = '2 hrs 00 min';
-  // const result = convertTimeStringToNumber(timeString);
-  // console.log(result, "This is result"); // Output: 1.5
-
   return (
     <Context>
       <div className="App">
@@ -104,30 +98,31 @@ function App() {
           {/* <Route path={encodeUrl("/dashboard")} element={<Dashboard />} /> */}
           {/* Protected Routes here */}
           <Route element={<AuthGuard />}>
-            
-              <Route
-                path="/dashboard"
-                element={
-                  <Dashboard sendDataToDashboard={dataFromDailyUpdate} />
-                }
-              />
-              <Route
-                path="/daily-update"
-                element={
-                  <DailyUpdateTable
-                    sendDataToDailyUpdate={handleDataFromDailyUpdate}
-                  />
-                }
-              />
-              <Route path="/all-projects" element={<ViewAllProjects />} />
-              <Route path="/project-idea-projects" element={<ViewAllIdeas />} />
-              <Route path="/skill-management" element={<SkillManagement />} />
-              <Route exact path="/take-test" component={<TakeTest />} />
-              <Route path="/take-your-test" element={<TakeYourTest />} />
-            
+
+            <Route
+              path="/dashboard"
+              element={<Dashboard sendDataToDashboard={dataFromDailyUpdate} />}
+            />
+            <Route
+              path="/daily-update"
+              element={
+                <DailyUpdateTable
+                  sendDataToDailyUpdate={handleDataFromDailyUpdate}
+                />
+              }
+            />
+            <Route path="/all-projects" element={<ViewAllProjects />} />
+            <Route path="/project-idea-projects" element={<ViewAllIdeas />} />
+            <Route path="/skill-management" element={<SkillManagement />} />
+            <Route exact path="/take-test" component={<TakeTest />} />
+            <Route path="/take-your-test" element={<TakeYourTest />} />
+
           </Route>
+          {/* </Route> */}
+
           <Route path="*" element={<BadRequest />} />
         </Routes>
+        {/* </Router> */}
       </div>
     </Context>
   );

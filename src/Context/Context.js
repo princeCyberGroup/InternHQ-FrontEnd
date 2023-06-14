@@ -1,7 +1,6 @@
 import React, { useState, useEffect, createContext } from "react";
 
 export const UserContext = createContext();
-
 const Context = (props) => {
   const [score, setScore] = useState(0);
   const [isRunning, setIsRunning] = useState(false);
@@ -11,7 +10,8 @@ const Context = (props) => {
   );
   const [projectApiData, setProjectApiData] = useState();
   const [startTime, setStartTime] = useState( localStorage.getItem("startTime") ? parseInt(localStorage.getItem("startTime")) : null);
-
+   const [idea, setIdea] = useState([]);
+  const [project, setProject] = useState([])
 
 
 
@@ -52,10 +52,9 @@ const Context = (props) => {
 
   return (
     <>
-      <UserContext.Provider value={{ score, setScore,isRunning, setIsRunning,isPaused, setIsPaused, elapsedTime, setElapsedTime, projectApiData, setProjectApiData,startTime, setStartTime }}>
+      <UserContext.Provider value={{ score, setScore,isRunning, setIsRunning,isPaused, setIsPaused, elapsedTime, setElapsedTime, projectApiData, setProjectApiData,startTime, setStartTime, ,idea,setIdea,project,setProject }}>
         {props.children}
       </UserContext.Provider>
-
     </>
   );
 };

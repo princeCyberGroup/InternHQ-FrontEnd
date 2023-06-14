@@ -1,18 +1,19 @@
-import React, { useState } from "react";
+import React, { useState,useContext} from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import "./ViewAllIdea.css";
 import Header from "../../../../../Header/Header";
 import EmptyIdea from "../../../EmptyStates/EmptyProject/MyIdeaViewAll";
 import DetailsLeft from "../../ViewDetails/DetailsLeft";
 import ProjectDetail from "../../ViewDetails/ProjectDetail";
+import { UserContext } from "../../../../../../Context/Context";
 
 const ViewAllIdeas = () => {
-  const [projectIndex, setProjectIndex] = useState(0);
-
-  const navigate = useNavigate();
+  const {idea,setIdea,project,setProject}=useContext(UserContext)
+  
   const location = useLocation();
-  const details = location.state;
-  //   console.log(details)
+  const details = idea;
+  
+  const [projectIndex, setProjectIndex] = useState(0);
   const handelIndex = (index) => {
     setProjectIndex(index);
   };
@@ -37,7 +38,7 @@ const ViewAllIdeas = () => {
           </div>
         </div>
 
-        {details.length === 0 ? (
+        {idea.length === 0 ? (
           <EmptyIdea />
         ) : (
           <div
@@ -45,10 +46,10 @@ const ViewAllIdeas = () => {
             style={{ overFlowY: "scroll" }}
           >
             <div className="">
-              <DetailsLeft data={details} projectDetails={handelIndex} />
+              <DetailsLeft data={idea} projectDetails={handelIndex} />
             </div>
             <div className="project-detail">
-              <ProjectDetail data={details} indexNumber={projectIndex} />
+              <ProjectDetail data={idea} indexNumber={projectIndex} />
             </div>
           </div>
         )}
