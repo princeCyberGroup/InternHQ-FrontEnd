@@ -12,7 +12,7 @@ const DetailsLeft = (props) => {
   return (
     <div className="all-project-names pt-3">
       <div className="child-wrapper">
-        {props.data.map((user, index) => {
+        {props.data?.map((user, index) => {
           const isBorder = index === selectedIdx;
           return (
             <div
