@@ -1,6 +1,6 @@
-import AddNewIdea from "./Idea/AddNewIdea";
+import  AddNewIdea  from "./Idea/AddNewIdea";
 import React, { useEffect, useState, useContext } from "react";
-import AddProject from "./Project/AddProject";
+import AddProject  from "./Project/AddProject";
 import "./ProjectComponent.css";
 import "./Idea/AddNewIdea.css";
 import "./Project/AddProject.css";
@@ -12,7 +12,6 @@ const ProjectComponent = () => {
   const [pActive, setPActive] = useState(true);
   // const [projectData, setProjectData] = useState([]);
   // const [projectApiData, setProjectApiData] = useState();
-
   const storedObject = localStorage.getItem("userData");
   const parsedObject = JSON.parse(storedObject);
   const userId = parsedObject.userId;
