@@ -115,7 +115,7 @@ function App() {
             <Route path="/skill-management" element={<SkillManagement />} />
             <Route exact path="/take-test" component={<TakeTest />} />
             <Route path="/take-your-test" element={<TakeYourTest />} />
-          </Route>
+         </Route>
           {/* </Route> */}
 
           <Route path="*" element={<BadRequest />} />
