@@ -18,12 +18,7 @@ const ViewAllProjects = () => {
    const navigate = useNavigate();
   
   
-  const {idea,setIdea,project,setProject}=useContext(UserContext);
-  const [projectIndex, setProjectIndex] = useState(0);
-  const location = useLocation();
-  const details = project;
-  
-   
+  const {idea,setIdea,project,setProject}=useContext(UserContext);   
   const [selectedOptions, setSelectedOptions] = useState([]);
   
   const techDataComingFrmChild = (data) => {
@@ -39,7 +34,6 @@ const ViewAllProjects = () => {
   const [technologyNames, setTechnologyNames] = useState([]);
   const [projectLink, setProjectLink] = useState("");
   const [hostedLink, setHostedLink] = useState("");
-  // const [selectedOptions, setSelectedOptions] = useState([]);
   const [counter, setCounter] = useState(1);
   const [textInput, setTextInput] = useState("");
   const [memberNames, setMemberNames] = useState({});

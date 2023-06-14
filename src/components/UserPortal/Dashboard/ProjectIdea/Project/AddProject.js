@@ -24,11 +24,6 @@ const AddProject = ({ projectApiDataa }) => {
   const [desError, setDesError] = useState("");
   const [projLinkError, setProjLinkError] = useState("");
   const [technologyError, setTechnologyError] = useState("");
-  const [tech, setTech] = useState({});
-  const techDataComingFrmChild = (data) => {
-    return setTech(data);
-  };
-
   const handleProjectNameChange = (event) => {
     const name = event.target.value;
     setProjName(name);
