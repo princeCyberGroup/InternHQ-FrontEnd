@@ -112,13 +112,16 @@ const TakeYourTest = () => {
   };
 
   const fetchTests = async () => {
+    let Quesdata
     try {
       const response = await fetch(
         `https://cg-interns-hq.azurewebsites.net/getAllQuestions?examId=${examId}`
       );
-      const Quesdata = await response.json();
+      Quesdata = await response.json();
       setAllQuesData(Quesdata);
-      setTestsQues(Quesdata);
+      setTestsQues(Quesdata.questions);
+      localStorage.setItem("questionToken",Quesdata.token)
+      console.log(Quesdata)
     } catch (e) {
       console.log(e);
     }
@@ -174,27 +177,30 @@ const TakeYourTest = () => {
           choosenOpt: selectedAnswer,
         })
       );
-
       const response = await fetch(
         "https://cg-interns-hq.azurewebsites.net/submitAnswer",
         {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
+            Authorization:localStorage.getItem("questionToken")
           },
           body: JSON.stringify({
             userId: userId,
             technology: techName,
             level: level,
-            optRequest: mappedAnswers.splice(0, 10),
+            optRequest: mappedAnswers.splice(0, mappedAnswers.length-1),
           }),
         }
       );
       submitQuesData = await response.json();
+      console.log(submitQuesData)
       setScore(submitQuesData.totalScore);
-      // console.log(submitQuesData);
     } catch (error) {
       console.log(error);
+    }
+    finally{
+       localStorage.removeItem("questionToken");
     }
   };
 

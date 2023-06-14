@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState,useEffect,useContext} from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import "./ViewAllIdea.css";
 import Header from "../../../../../Header/Header";
@@ -8,10 +8,11 @@ import ProjectDetail from "../../ViewDetails/ProjectDetail";
 import { ReactComponent as ExpandMore } from "../../../../../../Assets/expand_more.svg";
 import TechDropDown from "../../TechDropDown";
 import axios from "axios";
+import { UserContext } from "../../../../../../Context/Context";
 
 const ViewAllIdeas = () => {
+  const {idea,setIdea,project,setProject}=useContext(UserContext)
   const navigate = useNavigate();
-  // const [first, ...rest] = projectDescript;
   const [projectIndex, setProjectIndex] = useState(0);
   const [projNameError, setProjNameError] = useState("");
   const [projDescriptionError, setProjDescriptionError] = useState("");
@@ -21,11 +22,7 @@ const ViewAllIdeas = () => {
   const [dropDown, setDropDown] = useState(false);
   const [textInput, setTextInput] = useState("");
   const [memberNames, setMemberNames] = useState({});
-
-
-  const location = useLocation();
-  const details = location.state;
-  //   console.log(details)
+  
   const handelIndex = (index) => {
     setProjectIndex(index);
   };
@@ -306,8 +303,7 @@ const ViewAllIdeas = () => {
             </div>
           </div>
         </div>
-
-        {details?.length === 0 ? (
+       {idea.length === 0 ? (
           <EmptyIdea />
         ) : (
           <div
@@ -315,21 +311,13 @@ const ViewAllIdeas = () => {
             style={{ overFlowY: "scroll" }}
           >
             <div className="">
-              <DetailsLeft data={details} projectDetails={handelIndex} />
+              <DetailsLeft data={idea} projectDetails={handelIndex} />
             </div>
             <div className="project-detail">
-              <ProjectDetail data={details} indexNumber={projectIndex} />
+              <ProjectDetail data={idea} indexNumber={projectIndex} />
             </div>
           </div>
         )}
-        {/* <div className="all-project-idea-wrapper entire-component ms-0" style={{ overFlowY: "scroll" }}>
-                <div >
-                    <ProjectNames data={details} projectDetails={handelIndex} />
-                </div>
-                <div className="project-detail" >
-                    <ProjectDescription data={details} indexNumber={projectIndex} />
-                </div>
-            </div> */}
       </div>
     </>
   );
