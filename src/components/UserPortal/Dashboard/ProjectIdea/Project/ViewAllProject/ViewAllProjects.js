@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import axios from "axios";
 import { useLocation, useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
@@ -6,8 +6,8 @@ import ProjectDetail from "../../ViewDetails/ProjectDetail";
 import Header from "../../../../../Header/Header";
 import EmptyProjectState from "../../../EmptyStates/EmptyProject/Project";
 import DetailsLeft from "../../ViewDetails/DetailsLeft";
+import { UserContext } from "../../../../../../Context/Context";
 import TechDropDown from "../../TechDropDown";
-
 import EmptyProjectView from "../../../EmptyStates/EmptyProject/ProjectViewAll";
 import { ReactComponent as ExpandMore } from "../../../../../../Assets/expand_more.svg";
 
@@ -16,37 +16,20 @@ const ViewAllProjects = () => {
   const [dropDown, setDropDown] = useState(false);
   const [tech, setTech] = useState({});
    const navigate = useNavigate();
+  
+  
+  const {idea,setIdea,project,setProject}=useContext(UserContext);
+  const [projectIndex, setProjectIndex] = useState(0);
+  const location = useLocation();
+  const details = project;
+  
    
   const [selectedOptions, setSelectedOptions] = useState([]);
-  // const options = [
-  //   { value: 'ReactJs', label: 'ReactJs' },
-  //   { value: 'TypeScript', label: 'TypeScript' },
-  //   { value: '.Net', label: 'DotNet' },
-  //   { value: 'Angular', label: 'Angular' },
-  //   { value: 'Salesforce', label: 'Salesforce' },
-  //   { value: 'NodeJS', label: 'NodeJs' },
-
-  // ];
-
+  
   const techDataComingFrmChild = (data) => {
     return setTech(data);
   };
   
-
-
-  // const handleOptionClick = (value) => {
-  //   const selectedOptionIndex = selectedOptions.indexOf(value);
-  //   if (selectedOptionIndex > -1) {
-  //     // Option is already selected, remove it from the array
-  //     const updatedOptions = [...selectedOptions];
-  //     updatedOptions.splice(selectedOptionIndex, 1);
-  //     setSelectedOptions(updatedOptions);
-  //   } else {
-  //     // Option is not selected, add it to the array
-  //     setSelectedOptions([...selectedOptions, value]);
-  //   }
-  // };
-
   const [projectIndex, setProjectIndex] = useState(0);
   const location = useLocation();
   const details = location.state;
@@ -108,31 +91,6 @@ const ViewAllProjects = () => {
   const handleInputChange = (event) => {
     setTextInput(event.target.value);
   };
-
-  // const handleOptionClick = (event) => {
-  //   const { value } = event.currentTarget.dataset;
-  //   const isChecked = event.currentTarget.querySelector("input").checked;
-
-  //   if (isChecked) {
-  //     var optionObject = `tech${counter}`;
-  //     technologyNames.push(value);
-  //     setSelectedOptions((prevSelectedOptions) => [
-  //       ...prevSelectedOptions,
-  //       optionObject,
-  //     ]);
-  //     setCounter((prevCounter) => prevCounter + 1);
-  //   } else {
-  //     setSelectedOptions((prevSelectedOptions) =>
-  //       prevSelectedOptions.filter(
-  //         (option) => Object.values(option)[0] !== value
-  //       )
-  //     );
-  //     setTechnologyNames((prevTechnologyNames) =>
-  //       prevTechnologyNames.filter((technology) => technology !== value)
-  //     );
-  //   }
-  // };
-
 
   const clear = () => {
     setTextInput("");
@@ -204,7 +162,6 @@ const ViewAllProjects = () => {
     });
     isObjectEmpty(membersObj);
   }, [textInput]);
-
 
   const handelIndex = (index) => {
     setProjectIndex(index);
