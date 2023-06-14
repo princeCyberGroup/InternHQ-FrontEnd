@@ -7,7 +7,7 @@ import { ReactComponent as ExpandMore } from "../../../../../Assets/expand_more.
 import TechDropDown from "../TechDropDown";
 import { UserContext } from "../../../../../Context/Context";
 
-const AddNewIdea = ({}) => {
+const AddNewIdea = () => {
   const { idea } = useContext(UserContext);
   const navigate = useNavigate();
   const [first, ...rest] = idea;
