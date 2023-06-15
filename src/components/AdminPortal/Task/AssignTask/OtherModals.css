@@ -1,0 +1,331 @@
+.form-title-names {
+  font-style: normal;
+
+  font-weight: 400;
+
+  font-size: 13px;
+
+  line-height: 15px;
+
+  color: #343435;
+
+  display: flex;
+}
+
+.modalheading-text {
+  font-style: normal;
+
+  font-weight: 600;
+
+  font-size: 16px;
+
+  line-height: 32px;
+
+  color: #1e1e1e;
+}
+
+.modal-save-button {
+  background: #28519e;
+
+  border-radius: 0.25rem;
+
+  width: 92px;
+
+  color: #ffffff;
+}
+
+.modal-save-button:hover {
+  background: #28519e;
+
+  width: 92px;
+
+  color: #ffffff;
+}
+
+.modal-cancel-button {
+  width: 92px;
+
+  border: 1px solid #28519e;
+
+  border-radius: 0.25rem;
+}
+
+.modal-cancel-button:hover {
+  width: 92px;
+
+  border: 1px solid #28519e;
+
+  border-radius: 0.25rem;
+}
+
+.select-all-text {
+  font-style: normal;
+
+  font-weight: 400;
+
+  font-size: 13px;
+
+  line-height: 15px;
+
+  color: #343435;
+}
+
+.upload-csv-text {
+  background: rgba(40, 81, 158, 0.08);
+
+  border: 1px dashed rgba(37, 114, 204, 0.7);
+
+  border-radius: 12px;
+}
+
+.color-table {
+  background: #002c3f;
+
+  color: #ffffff;
+}
+
+.manage-skill-table-style {
+  box-shadow: 0rem 0.25rem 1.25rem rgba(40, 52, 73, 0.15);
+}
+
+.manage-skill-test-heading {
+  font-style: normal;
+
+  font-weight: 600;
+
+  font-size: 20px;
+
+  line-height: 23px;
+
+  color: #343435;
+}
+
+.manage-skill-test-nav-bar {
+  font-style: normal;
+
+  font-weight: 400;
+
+  font-size: 14px;
+
+  line-height: 16px;
+
+  color: #343435;
+
+  margin-top: 18px;
+}
+
+.manage-skill-test-container {
+  background-color: #fbfbfb;
+
+  height: 100vh;
+
+  padding-left: 3.5rem;
+
+  padding-right: 3.5rem;
+}
+
+.column-technology {
+  width: 316px;
+
+  text-align: left;
+
+  font-family: "Roboto";
+
+  font-style: normal;
+
+  font-weight: 600;
+
+  font-size: 12px;
+
+  line-height: 20px;
+}
+
+.levels-colums {
+  width: 190px;
+
+  text-align: left;
+
+  font-style: normal;
+
+  font-weight: 500;
+
+  font-size: 13px;
+
+  line-height: 15px;
+
+  text-align: left;
+}
+
+.column-questions {
+  width: 204px;
+
+  text-align: left;
+
+  font-style: normal;
+
+  font-weight: 500;
+
+  font-size: 13px;
+
+  line-height: 15px;
+
+  text-align: center;
+}
+
+.column-uploaded-on {
+  width: 250px;
+
+  font-style: normal;
+
+  font-weight: 500;
+
+  font-size: 13px;
+
+  line-height: 15px;
+
+  text-align: center;
+}
+
+.column-actions {
+  width: 208px;
+
+  font-style: normal;
+
+  font-weight: 500;
+
+  font-size: 13px;
+
+  line-height: 15px;
+
+  text-align: center;
+}
+
+.technology-rows {
+  font-style: normal;
+
+  font-weight: 400;
+
+  font-size: 14px;
+
+  line-height: 16px;
+
+  text-align: left;
+
+  color: #343435;
+}
+
+.levels-row {
+  font-style: normal;
+
+  font-weight: 400;
+
+  font-size: 14px;
+
+  line-height: 16px;
+
+  text-align: left;
+
+  color: #343435;
+}
+
+.questions-row {
+  font-style: normal;
+
+  font-weight: 400;
+
+  font-size: 14px;
+
+  line-height: 16px;
+
+  color: #343435;
+}
+
+.uploaded-on-row {
+  font-style: normal;
+
+  font-weight: 400;
+
+  font-size: 13px;
+
+  line-height: 15px;
+
+  color: #23262b;
+}
+
+.color-of-radio {
+  border-color: #28519e;
+}
+
+.drag-drop-text {
+  font-size: 14px;
+}
+
+.save-text-field:hover {
+  background: #28519e;
+
+  color: #ffffff;
+}
+
+.expand-more {
+  border: none;
+
+  background: none;
+
+  padding-right: 0px;
+
+  padding-left: 1.5rem;
+}
+
+.custom-input {
+  border-bottom: none;
+
+  background: none;
+}
+
+.input-with-button {
+  display: flex;
+
+  align-items: center;
+
+  border-bottom: none;
+}
+
+.select-drop-down-style {
+  padding: 8px;
+
+  gap: 29px;
+
+  width: 228px;
+
+  height: 40px;
+
+  border-radius: 4px;
+}
+
+.add-new-skill-test-button {
+  display: flex;
+
+  flex-direction: row;
+
+  justify-content: center;
+
+  align-items: center;
+
+  padding: 20px 16px;
+
+  gap: 8px;
+
+  width: 189.77px;
+
+  height: 40px;
+
+  background: #28519e;
+
+  border-radius: 4px;
+
+  flex: none;
+
+  order: 1;
+
+  flex-grow: 0;
+}

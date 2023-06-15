@@ -1,9 +1,23 @@
 import React, { useState, useEffect } from "react";
+import axios from "axios";
 
 const TechDropDown = (props) => {
   const [counter, setCounter] = useState(1);
-  const [technologyNames] = useState([]);
-  const [techNames, seTechNames] = useState({});
+  const [technologyNames, setTechnolotyNames] = useState([]);
+  const [techNames, setTechNames] = useState({});
+  const [allTech, setAllTech] = useState();
+
+  useEffect(() => {
+    //this api call is for admin portal
+    axios
+      .get(`https://cg-interns-hq.azurewebsites.net/getAllTechnology`)
+      .then((response) => {
+        setAllTech(response.data);
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  }, []);
 
   const handleOptionClick = (event) => {
     // console.log(event)
@@ -40,24 +54,29 @@ const TechDropDown = (props) => {
   };
   return (
     <>
-      <div
-        class="form-check small"
-        onClick={(e) => {
-          handleOptionClick(e);
-        }}
-        data-value="NodeJS"
-      >
-        <label class="form-check-label" for="nodeJs">
-          Node Js
-        </label>
-        <input
-          class="form-check-input"
-          type="checkbox"
-          value="ytch"
-          id="nodeJs"
-        />
-      </div>
-      <div
+      {allTech?.response.map((value, index) => {
+            return (
+              <div
+                key={index}
+                class="form-check small"
+                onClick={(e) => {
+                  handleOptionClick(e);
+                }}
+                data-value={value.techName}
+              >
+                <label class="form-check-label" for="nodeJs">
+                  {value?.techName}
+                </label>
+                <input
+                  class="form-check-input"
+                  type="checkbox"
+                  value="ytch"
+                  id="nodeJs"
+                />
+              </div>
+            );
+          })}
+      {/* <div
         class="form-check small"
         onClick={(e) => {
           handleOptionClick(e);
@@ -107,7 +126,7 @@ const TechDropDown = (props) => {
           value="ytch"
           id="DotNet"
         />
-      </div>
+      </div> */}
     </>
   );
 };

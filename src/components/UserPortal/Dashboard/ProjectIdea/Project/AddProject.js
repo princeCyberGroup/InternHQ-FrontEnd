@@ -12,11 +12,8 @@ const AddProject = () => {
   const [first, ...rest] = project;
   const [projName, setProjName] = useState("");
   const [projDescription, setProjDescription] = useState("");
-  const [technologyNames, setTechnologyNames] = useState([]);
   const [projectLink, setProjectLink] = useState("");
   const [hostedLink, setHostedLink] = useState("");
-  const [selectedOptions, setSelectedOptions] = useState([]);
-  const [counter, setCounter] = useState(1);
   const [textInput, setTextInput] = useState("");
   const [memberNames, setMemberNames] = useState({});
   const [techNames, seTechNames] = useState({});
@@ -24,9 +21,7 @@ const AddProject = () => {
   const [error, setError] = useState(true);
   const [desError, setDesError] = useState("");
   const [projLinkError, setProjLinkError] = useState("");
-  const [technologyError, setTechnologyError] = useState("");
   const [tech, setTech] = useState({});
-
 
   const handleProjectNameChange = (event) => {
     const name = event.target.value;
@@ -63,7 +58,6 @@ const AddProject = () => {
     setProjDescription("");
     setProjectLink("");
     setHostedLink("");
-    setTechnologyNames({});
     setDropDown(false);
   };
   const handleProjectLinkChange = (event) => {

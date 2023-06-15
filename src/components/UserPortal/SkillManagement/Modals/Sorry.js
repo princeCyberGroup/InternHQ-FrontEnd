@@ -1,35 +1,23 @@
-import React from "react";
+import React, { useEffect, useState, useContext } from "react";
 import { ReactComponent as Sor } from "../../../../Assets/EmojiSorry.svg";
-import "./Sorry.css"
-import { useEffect } from "react";
-import { useState } from "react";
+import "./Sorry.css";
+import { UserContext } from "../../../../Context/Context";
 
-const Sorry = ({scoreValue} ) => {
- // const location =useLocation()
- const [isloading, setIsloading]=useState()
- 
- useEffect(()=>{
-  setTimeout(() => {
-    return setIsloading(true) 
- }, 5000);
- },[])
+const Sorry = () => {
+  const { score, setScore } = useContext(UserContext);
 
+  const onClickHandler = () => {
+    setScore(-1);
+  };
   return (
-    <div
-      className="modal fade"
-      id="sorryModal"
-      tabIndex="-1"
-      aria-labelledby="exampleModalLabel"
-      aria-hidden="true"
-    >
-      <div className="modal-dialog modal-dialog-centered">
-        <div className="modal-content srSize">
+    <div>
+      <div className="sorry-parent-wrapper">
+        <div className="sorry-child-wrapper">
           <div className="row crossBtn">
-            <button
+          <button
               type="button"
               className="btn-close"
-              data-bs-dismiss="modal"
-              aria-label="Close"
+              onClick={onClickHandler}
             ></button>
           </div>
           <div className="row sEmoji">
@@ -42,7 +30,7 @@ const Sorry = ({scoreValue} ) => {
             <p>Your Score</p>
           </div>
           <div className="row s3">
-            <p>{scoreValue}/10</p>
+            <p>{score}/10</p>
           </div>
           <div className="row s4">
             <p>
@@ -51,10 +39,12 @@ const Sorry = ({scoreValue} ) => {
             </p>
           </div>
           <div className="row Scontinue">
+            <button type="button" className="sorry-view-result-btn">
+              View Result
+            </button>
             <button
               type="button"
               className="continueBtn"
-              data-bs-dismiss="modal"
             >
               Continue
             </button>

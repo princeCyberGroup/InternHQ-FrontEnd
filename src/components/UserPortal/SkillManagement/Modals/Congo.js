@@ -1,26 +1,23 @@
-import React,{useContext} from "react";
+import React, { useContext } from "react";
 import { ReactComponent as Cong } from "../../../../Assets/Group 7Congrats.svg";
 //import { useLocation } from 'react-router-dom';
 import "./Congo.css";
 import { UserContext } from "../../../../Context/Context";
+// import {ReactComponent as Close} from "../../../../Assets/close.svg";
 const Congo = () => {
-  const {score} =useContext(UserContext);
+  const { score, setScore } = useContext(UserContext);
+  const onClickHandler = () => {
+    setScore(-1);
+  };
   return (
-    <div
-      className="modal fade"
-      id="congoModal123"
-      tabIndex="-1"
-      aria-labelledby="exampleModalLabel"
-      aria-hidden="true"
-    >
-      <div className="modal-dialog modal-dialog-centered">
-        <div className="modal-content mSize">
+    <div>
+      <div className="parent-wrapper">
+        <div className="child-wrapper">
           <div className="row crossBtn">
             <button
               type="button"
               className="btn-close"
-              data-bs-dismiss="modal"
-              aria-label="Close"
+              onClick={onClickHandler}
             ></button>
           </div>
           <div className="row cStar">
@@ -34,7 +31,6 @@ const Congo = () => {
           </div>
           <div className="row c3">
             <p>{score}/10</p>
-
           </div>
           <div className="row c4">
             <p>
@@ -43,10 +39,13 @@ const Congo = () => {
             </p>
           </div>
           <div className="row Ccontinue">
+            <button type="button" className="view-result-btn">
+              View Result
+            </button>
             <button
               type="button"
               className="continueBtn"
-              data-bs-dismiss="modal"
+              onClick={onClickHandler}
             >
               Continue
             </button>

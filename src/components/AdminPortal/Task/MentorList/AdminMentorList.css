@@ -1,0 +1,155 @@
+.mentor-card{
+    display: flex;
+flex-direction: column;
+align-items: center;
+padding: 16px;
+gap: 16px;
+isolation: isolate;
+width: 396px;
+/* height: 698px; */
+
+background: #FFFFFF;
+/* Shadow */
+
+box-shadow: 0px 4px 20px rgba(40, 52, 73, 0.15);
+border-radius: 8px;
+}
+
+.mentor-wrapper {
+    box-sizing: border-box;
+
+    /* Auto layout */
+    
+    display: flex;
+    flex-direction: row;
+    /* justify-content: space-between; */
+    /* align-items: center; */
+
+    /* height: 59px; */
+    
+    /* Primary/White */
+    
+
+}
+.mentor-head{
+    box-sizing: border-box;
+
+    /* Auto layout */
+    
+    display: flex;
+    flex-direction: column;
+    /* justify-content: space-between; */
+    /* align-items: center; */
+    padding: 8px 12px;
+    gap: 8px;
+    margin-bottom: 8px;
+    width: 380px;
+    /* height: 59px; */
+    
+    /* Primary/White */
+    
+    background: #FFFFFF;
+    /* Secondary/Light Gray */
+    
+    border: 1px solid #E9ECEB;
+    border-radius: 4px;
+}
+
+.image-wrapper1 {
+
+    width: 2rem;
+    height: 2rem;
+    justify-content: space-between;
+}
+
+.text-wrapper1 {
+    font-style: normal;
+    margin-left: 0.5rem;
+    font-size: 0.8rem;
+    color: #343435;
+    padding-left: 0.5rem;
+    width: 18.06rem;
+}
+
+.pos-wrapper {
+    font-style: normal;
+    font-weight: 400;
+    padding-top: 0.25rem;
+    font-size: 13px;
+    line-height: 16px;
+    color: #8E8E92;
+}
+
+.image-box1 img{
+  width: 38px;
+  height: 40px;
+  background: #E9ECEB;
+  border-radius: 18px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.arrow-wrapper1{
+    display: flex;
+    flex-direction: row;
+}
+
+.arrow-wrapper1 button{
+    margin-right: 1rem;
+    display: flex;
+flex-direction: row;
+justify-content: center;
+align-items: center;
+padding: 6px;
+/* gap: 6px; */
+
+width: 82px;
+height: 27px;
+
+/* Other/Red */
+color: white;
+background: #E03E2D;
+border-radius: 4px;
+
+}
+.arrow-wrapper1 p{
+    margin: 0;
+    width: 47px;
+height: 15px;
+
+font-family: 'Roboto';
+font-style: normal;
+font-weight: 400;
+font-size: 13px;
+line-height: 15px;
+
+
+
+color: #FFFFFF;
+}
+
+.technology p{
+    width: 66px;
+    height: 14px;
+    margin-bottom: 0.5rem;
+    font-family: 'Roboto';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 12px;
+    line-height: 14px;
+    /* identical to box height */
+    
+    
+    /* Primary/Gray */
+    
+    color: #343435;
+}
+
+.tech-badge {
+    color: #343435;
+    font-size: 0.75rem;
+    background-color: #E9ECEB;
+    margin-right: 5px;
+}
+
