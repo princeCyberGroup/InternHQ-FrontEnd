@@ -13,31 +13,38 @@ import BreadCrumbs from "../../../../../BreadCrumbs/BreadCrumbs";
 
 const ViewAllProjects = () => {
   const { project } = useContext(UserContext);
-
+  const [first, ...rest] = projectApiDataa;
+  
+  const [tech, setTech] = useState({});
   const [dropDown, setDropDown] = useState(false);
   const [projName, setProjName] = useState("");
   const [projDescription, setProjDescription] = useState("");
   const [projectLink, setProjectLink] = useState("");
   const [hostedLink, setHostedLink] = useState("");
-  // const [selectedOptions, setSelectedOptions] = useState([]);
-  const [counter, setCounter] = useState(1);
   const [textInput, setTextInput] = useState("");
   const [memberNames, setMemberNames] = useState({});
   const [techNames, seTechNames] = useState({});
-  // const [dropDown, setDropDown] = useState(false);
   const [error, setError] = useState("");
   const [desError, setDesError] = useState("");
   const [projLinkError, setProjLinkError] = useState("");
+  const [technologyError, setTechnologyError] = useState("");
+  const [projectIndex, setProjectIndex] = useState(0);
 
-  const [tech, setTech] = useState({});
+  const details = project;
   const navigate = useNavigate();
+  
+  const techDataComingFrmChild = (data) => {
+    return setTech(data);
+  };
+  const AddProject = ({ projectApiDataa }) => {
+    const navigate = useNavigate();
+  }
 
   const [projectIndex, setProjectIndex] = useState(0);
   const details = project;
   const techDataComingFrmChild = (data) => {
     return setTech(data);
   };
-
   const handleProjectNameChange = (event) => {
     const name = event.target.value;
     setProjName(name);
@@ -56,7 +63,6 @@ const ViewAllProjects = () => {
       setDesError("");
     }
   };
-
   const handleInputChange = (event) => {
     setTextInput(event.target.value);
   };
@@ -103,7 +109,6 @@ const ViewAllProjects = () => {
         technologyNames: techNames,
         memberNames: memberNames,
       })
-      .then((res) => {})
       .catch((err) => {
         console.log(err);
       });
@@ -120,7 +125,6 @@ const ViewAllProjects = () => {
     texts.forEach((text, index) => {
       membersObj[`member${index + 1}`] = text;
     });
-
     isObjectEmpty(membersObj);
   }, [textInput]);
 
@@ -221,7 +225,6 @@ const ViewAllProjects = () => {
                         rows={3}
                       ></textarea>
                     </div>
-
                     <div className="mb-3">
                       <label
                         htmlFor="technology-used"
@@ -269,7 +272,6 @@ const ViewAllProjects = () => {
                         {/* </div> */}
                       </div>
                     </div>
-
                     {/* //project Link open  */}
                     <div class="mb-3">
                       <label
@@ -326,9 +328,7 @@ const ViewAllProjects = () => {
                     {/* //Member close */}
                   </form>
                 </div>
-
                 {/* //Applied Modal from addProject.js 482 -> 730 */}
-
                 <div class="modal-footer">
                   <button
                     type="button"
@@ -366,14 +366,6 @@ const ViewAllProjects = () => {
             </div>
           </div>
         )}
-        {/* <div className="all-project-idea-wrapper entire-component ms-0" style={{ overFlowY: "scroll" }}>
-                    <div >
-                        <ProjectIdeas data={details} projectDetails={handelIndex} />
-                    </div>
-                    <div className="project-detail" >
-                        <ProjectDetail data={details} indexNumber={projectIndex} />
-                    </div>
-                </div> */}
       </div>
     </>
   );

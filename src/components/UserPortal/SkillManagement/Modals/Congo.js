@@ -5,16 +5,17 @@ import "./Congo.css";
 import { UserContext } from "../../../../Context/Context";
 const Congo = () => {
   const {score} =useContext(UserContext);
+  console.log("congo is called");
   return (
     <div
-      className="modal fade"
-      id="congoModal123"
-      tabIndex="-1"
-      aria-labelledby="exampleModalLabel"
-      aria-hidden="true"
+      // className="modal fade"
+      // id="congoModal123"
+      // tabIndex="-1"
+      // aria-labelledby="exampleModalLabel"
+      // aria-hidden="true"
     >
-      <div className="modal-dialog modal-dialog-centered">
-        <div className="modal-content mSize">
+      <div>
+        <div>
           <div className="row crossBtn">
             <button
               type="button"

@@ -1,19 +1,14 @@
-import React from "react";
+import React,{ useEffect,useState,useContext }  from "react";
 import { ReactComponent as Sor } from "../../../../Assets/EmojiSorry.svg";
 import "./Sorry.css"
-import { useEffect } from "react";
-import { useState } from "react";
+import { UserContext } from "../../../../Context/Context";
 
-const Sorry = ({scoreValue} ) => {
+const Sorry = ( ) => {
+const {score} = useContext(UserContext);
+console.log("sorry is called");
+
  // const location =useLocation()
- const [isloading, setIsloading]=useState()
- 
- useEffect(()=>{
-  setTimeout(() => {
-    return setIsloading(true) 
- }, 5000);
- },[])
-
+// console.log(score);
   return (
     <div
       className="modal fade"
@@ -42,7 +37,7 @@ const Sorry = ({scoreValue} ) => {
             <p>Your Score</p>
           </div>
           <div className="row s3">
-            <p>{scoreValue}/10</p>
+            <p>{score}/10</p>
           </div>
           <div className="row s4">
             <p>
