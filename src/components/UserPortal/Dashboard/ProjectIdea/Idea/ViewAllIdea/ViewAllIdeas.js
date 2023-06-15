@@ -16,7 +16,6 @@ const ViewAllIdeas = () => {
   const [projectIndex, setProjectIndex] = useState(0);
   const handelIndex = (index) => {
     // alert(index)
-    console.log(index)
     setProjectIndex(index);
   };
 
