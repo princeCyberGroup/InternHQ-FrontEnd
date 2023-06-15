@@ -11,7 +11,7 @@
     border: 1px solid #E9ECEB;
     border-radius: 4px;
     flex: none;
-    margin-left: 4px;
+    /* margin-left: 4px; */
     order: 0;
     align-self: stretch;
     flex-grow: 0;

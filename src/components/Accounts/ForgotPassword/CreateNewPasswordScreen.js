@@ -16,8 +16,8 @@ const CreateNewPasswordScreen = () => {
   const [isPasswordValid, setIsPasswordValid] = useState(false);
   const [confirmPassword, setConfirmPassword] = useState("");
   const [isConfirmPasswordValid, setIsConfirmPasswordValid] = useState(false);
-  const [showNewPassword, setShowNewPassword] = useState(false);
-  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+  const [showNewPassword, setShowNewPassword] = useState(true);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(true);
 
   const [isPasswordSame, setIsPasswordSame] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
@@ -246,7 +246,7 @@ const CreateNewPasswordScreen = () => {
                     <div className="input-group">
                     <input
                       className="input-fields"
-                      type={showNewPassword ? "text" : "password"}
+                      type={showNewPassword ? "password" : "text"}
                       id="exampleInputEmail1"
                       placeholder="Enter New Password"
                       value={newPassword}
@@ -284,7 +284,7 @@ const CreateNewPasswordScreen = () => {
                     <div className="input-group">
                     <input
                       className="input-fields"
-                      type={showConfirmPassword ? "text" : "password"}
+                      type={showConfirmPassword ? "password" : "text"}
                       id="exampleInputPassword1"
                       placeholder="Enter Confirm Password"
                       value={confirmPassword}

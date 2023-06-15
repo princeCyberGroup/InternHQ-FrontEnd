@@ -10,9 +10,8 @@ import EmptyProjectView from "../../../EmptyStates/EmptyProject/ProjectViewAll";
 import { ReactComponent as ExpandMore } from "../../../../../../Assets/expand_more.svg";
 import BreadCrumbs from "../../../../../BreadCrumbs/BreadCrumbs";
 
-const ViewAllProjects = () => {
+const ViewAllProjects = () => {  
   const { project } = useContext(UserContext);  
-  const [tech, setTech] = useState({});
   const [dropDown, setDropDown] = useState(false);
   const [projName, setProjName] = useState("");
   const [projDescription, setProjDescription] = useState("");
@@ -25,6 +24,7 @@ const ViewAllProjects = () => {
   const [desError, setDesError] = useState("");
   const [projLinkError, setProjLinkError] = useState("");
   const [projectIndex, setProjectIndex] = useState(0);
+  const [tech, setTech] = useState({});
 
   const details = project;
   
