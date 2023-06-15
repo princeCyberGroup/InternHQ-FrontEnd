@@ -113,7 +113,7 @@ function App() {
               }
             />
             <Route path="/all-projects" element={<ViewAllProjects />} />
-            <Route path="/project-idea-projects" element={<ViewAllIdeas />} />
+            <Route path="/project-idea" element={<ViewAllIdeas />} />
             <Route path="/skill-management" element={<SkillManagement />} />
             <Route exact path="/take-test" component={<TakeTest />} />
             <Route path="/take-your-test" element={<TakeYourTest />} />

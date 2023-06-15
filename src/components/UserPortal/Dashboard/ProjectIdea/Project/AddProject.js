@@ -10,7 +10,6 @@ const AddProject = () => {
   const {project} =useContext(UserContext);
   const navigate = useNavigate();
   const [first, ...rest] = project;
-  const [tech, setTech] = useState({});
   const [projName, setProjName] = useState("");
   const [projDescription, setProjDescription] = useState("");
   const [technologyNames, setTechnologyNames] = useState([]);
@@ -27,9 +26,7 @@ const AddProject = () => {
   const [projLinkError, setProjLinkError] = useState("");
   const [technologyError, setTechnologyError] = useState("");
   const [tech, setTech] = useState({});
-  const techDataComingFrmChild = (data) => {
-    return setTech(data);
-  };
+
 
   const handleProjectNameChange = (event) => {
     const name = event.target.value;
@@ -51,23 +48,6 @@ const AddProject = () => {
   };
   const techDataComingFrmChild = (data) => {
     return setTech(data);
-  };
-  //     const link = event.target.value;
-  //     setProjectLink(link);
-  //     if (!link) {
-  //         setProjLinkError('Project link is required');
-  //     } else {
-  //         setProjLinkError('');
-  //     }
-  // };
-  const handleTechnologyChange = (event) => {
-    const technology = event.target.value;
-    setTechnologyNames(technology);
-    if (!technology) {
-      setTechnologyError("Technology is required");
-    } else {
-      setTechnologyError("");
-    }
   };
   const handleInputChange = (event) => {
     setTextInput(event.target.value);

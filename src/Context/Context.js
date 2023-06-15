@@ -52,7 +52,7 @@ const Context = (props) => {
 
   return (
     <>
-      <UserContext.Provider value={{ score, setScore,isRunning, setIsRunning,isPaused, setIsPaused, elapsedTime, setElapsedTime, projectApiData, setProjectApiData,startTime, setStartTime, ,idea,setIdea,project,setProject }}>
+      <UserContext.Provider value={{ score, setScore,isRunning, setIsRunning,isPaused, setIsPaused, elapsedTime, setElapsedTime, projectApiData, setProjectApiData,startTime, setStartTime,idea,setIdea,project,setProject }}>
         {props.children}
       </UserContext.Provider>
     </>
