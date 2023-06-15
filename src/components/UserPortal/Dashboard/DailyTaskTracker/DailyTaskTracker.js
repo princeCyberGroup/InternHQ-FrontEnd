@@ -43,6 +43,30 @@ const DailyTaskTracker = () => {
 
   const navigate = useNavigate();
 
+  const handleBeforeUnload = (e) => {
+    if (isRunning) {
+      // Cancel the event
+      e.preventDefault();
+
+      // Chrome requires the returnValue property to be set
+      e.returnValue = "You have an active timer. Are you sure you want to leave this page?";
+      // let leaving= confirm("You have an active timer. Are you sure you want to leave this page?");
+      // leaving?return confirmationMessage:"";
+      // Show the confirmation dialog
+    }
+  };
+
+  useEffect(() => {
+    window.addEventListener("beforeunload", handleBeforeUnload);
+
+    return () => {
+      window.removeEventListener("beforeunload", handleBeforeUnload);
+    };
+  }, []);
+
+
+
+
 
 
   useEffect(() => {

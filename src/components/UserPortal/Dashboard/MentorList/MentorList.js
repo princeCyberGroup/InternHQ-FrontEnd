@@ -107,13 +107,13 @@ export const MentorComponent = () => {
                     >
                       <div>
                         <img
-                          src={mentor.image_url} // Replace with mentor image URL from API response
+                          src={mentor.imageUrl} // Replace with mentor image URL from API response
                           className="d-block rounded-circle"
                           alt="Mentor"
                         />
                         <div className="mentor-text">
                           <p className="card-text fs">
-                            <b>{mentor.mentor_name}</b>
+                            <b>{mentor.mentorName}</b>
                             {/* Replace with mentor name from API response */}
                           </p>
                           <p className="role-fs">{mentor.designation}</p>

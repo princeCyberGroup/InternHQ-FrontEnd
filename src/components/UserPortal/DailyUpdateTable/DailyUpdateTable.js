@@ -120,7 +120,7 @@ const DailyUpdateTable = (props) => {
     return convertedTime;
   };
 
-  console.log(convertTime("18:16:59") + " - " + convertTime("18:17:06"));
+  // console.log(convertTime("18:16:59") + " - " + convertTime("18:17:06"));
 
   const handleFiltersChange = () => {
     const getFilterItems = (items, searchValue) => {
