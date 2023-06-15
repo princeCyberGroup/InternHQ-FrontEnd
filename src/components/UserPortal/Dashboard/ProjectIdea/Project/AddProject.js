@@ -1,21 +1,19 @@
 import axios from "axios";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext} from "react";
 import { useNavigate, Link } from "react-router-dom";
 import EmptyProjectView from "../../EmptyStates/EmptyProject/ProjectViewAll";
 import { ReactComponent as ExpandMore } from "../../../../../Assets/expand_more.svg";
 import TechDropDown from "../TechDropDown";
+import { UserContext } from "../../../../../Context/Context";
 
-const AddProject = ({ projectApiDataa }) => {
+const AddProject = () => {
+  const {project} =useContext(UserContext);
   const navigate = useNavigate();
-  const [first, ...rest] = projectApiDataa;
-  const [tech, setTech] = useState({});
+  const [first, ...rest] = project;
   const [projName, setProjName] = useState("");
   const [projDescription, setProjDescription] = useState("");
-  const [technologyNames, setTechnologyNames] = useState([]);
   const [projectLink, setProjectLink] = useState("");
   const [hostedLink, setHostedLink] = useState("");
-  const [selectedOptions, setSelectedOptions] = useState([]);
-  const [counter, setCounter] = useState(1);
   const [textInput, setTextInput] = useState("");
   const [memberNames, setMemberNames] = useState({});
   const [techNames, seTechNames] = useState({});
@@ -23,7 +21,8 @@ const AddProject = ({ projectApiDataa }) => {
   const [error, setError] = useState(true);
   const [desError, setDesError] = useState("");
   const [projLinkError, setProjLinkError] = useState("");
-  const [technologyError, setTechnologyError] = useState("");
+  const [tech, setTech] = useState({});
+
   const handleProjectNameChange = (event) => {
     const name = event.target.value;
     setProjName(name);
@@ -45,31 +44,13 @@ const AddProject = ({ projectApiDataa }) => {
   const techDataComingFrmChild = (data) => {
     return setTech(data);
   };
-  //     const link = event.target.value;
-  //     setProjectLink(link);
-  //     if (!link) {
-  //         setProjLinkError('Project link is required');
-  //     } else {
-  //         setProjLinkError('');
-  //     }
-  // };
-  const handleTechnologyChange = (event) => {
-    const technology = event.target.value;
-    setTechnologyNames(technology);
-    if (!technology) {
-      setTechnologyError("Technology is required");
-    } else {
-      setTechnologyError("");
-    }
-  };
   const handleInputChange = (event) => {
     setTextInput(event.target.value);
   };
 
   const handleClick = async (e) => {
     e.preventDefault();
-    const data = { projectApiDataa };
-    navigate("/all-projects", { state: projectApiDataa });
+    navigate("/all-projects");
   };
   const clear = () => {
     setTextInput("");
@@ -77,7 +58,6 @@ const AddProject = ({ projectApiDataa }) => {
     setProjDescription("");
     setProjectLink("");
     setHostedLink("");
-    setTechnologyNames({});
     setDropDown(false);
   };
   const handleProjectLinkChange = (event) => {
@@ -170,7 +150,7 @@ const AddProject = ({ projectApiDataa }) => {
             </button>
           </div>
         </div>
-        {projectApiDataa.length === 0 ? (
+        {project.length === 0 ? (
           <EmptyProjectView />
         ) : (
           <div className="project-recipe-row pb-3">

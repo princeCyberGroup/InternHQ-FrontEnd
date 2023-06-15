@@ -22,8 +22,8 @@ const Reporttable = ({ tableData }) => {
   };
 
   return (
-    <div className="container-fluid">
-      <table className="table" cellPadding="0" cellSpacing="0">
+    <div className="container-fluid container-table">
+      <table className="table-report" cellPadding="0" cellSpacing="0">
         <thead>
           <tr>
             <th style={{ width: "20.375rem" }}>Name</th>

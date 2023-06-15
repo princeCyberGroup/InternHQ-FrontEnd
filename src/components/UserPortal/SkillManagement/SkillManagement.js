@@ -6,27 +6,28 @@ import Header from "../../Header/Header";
 import { UserContext } from "../../../Context/Context";
 import Congo from "../SkillManagement/Modals/Congo";
 import Sorry from "../SkillManagement/Modals/Sorry";
+import BreadCrumbs from "../../BreadCrumbs/BreadCrumbs";
+
 const SkillManagement = () => {
   const { score } = useContext(UserContext);
-  console.log(score);
   return (
     <>
       <Header />
       <>
+        {/* <Sorry /> */}
+
         {score == -1 ? "" : score >= 8 ? <Congo /> : <Sorry />}
         <div className="mainDiv">
           <div class="container-fluid ">
             <div className="row">
               <div className="col-12">
-                <div className="SM-nav-bar">
-                  <div className="textfornow">
-                    Dashboard &gt; Skill Management
-                  </div>
+                <div className="SM-breadcrumbs">
+                  <BreadCrumbs />
                 </div>
               </div>
             </div>
             <div class="row mt-3">
-              <div class=" col-md-9 p-0 " style={{ width: "930px" }}>
+              <div class=" col-md-9 p-0 " style={{ width: "58.125rem" }}>
                 <TakeTest />
               </div>
               <div class=" col-md-3 p-0 skill-added-card">
@@ -39,5 +40,4 @@ const SkillManagement = () => {
     </>
   );
 };
-
 export default SkillManagement;
