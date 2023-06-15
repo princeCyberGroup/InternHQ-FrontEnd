@@ -3,8 +3,8 @@ import App from "./App";
 import ReactDOM from "react-dom/client";
 import { BrowserRouter as Router } from 'react-router-dom';
 import './index.css'
-import '../node_modules/bootstrap/dist/js/bootstrap'
-import '../node_modules/bootstrap/js/dist/popover'
+// import '../node_modules/bootstrap/dist/js/bootstrap'
+// import '../node_modules/bootstrap/js/dist/popover'
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
