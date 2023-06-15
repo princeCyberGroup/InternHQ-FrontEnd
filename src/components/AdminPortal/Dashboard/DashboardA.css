@@ -1,0 +1,103 @@
+.about{
+margin-left: 80px;
+width: 200px;
+height: 19px;
+margin-top: 20px;
+
+font-family: 'Roboto';
+font-style: normal;
+font-weight: 600;
+font-size: 16px;
+line-height: 19px;
+color: #002C3F;
+
+flex: none;
+order: 0;
+flex-grow: 0;
+}
+
+.four-cards{
+display: flex;
+margin-top: 10px;
+margin-left: 80px;
+padding-left: 10px;
+align-items: flex-start;
+width: 183.3px;
+height: 72px;
+background: #FFFFFF;
+box-shadow: 0px 4px 20px rgba(40, 52, 73, 0.15);
+border-radius: 8px;
+flex: none;
+}
+
+
+.main-div{
+    /* display: flex; */
+    /* justify-content: space-evenly; */
+    justify-content: start;
+}
+/* ////////////////////////////////////////////// */
+.this-week{
+    /* margin-top: 20px; */
+    /* width: 0px; */
+}
+
+.associate-consultant-heading{
+/* width: 154px;
+height: 19px; */
+left: 0px;
+top: 4.5px;
+font-family: 'Roboto';
+font-style: normal;
+font-weight: 600;
+font-size: 16px;
+line-height: 19px;
+color: #002C3F;
+}
+
+.upload-list button{
+    display: flex;
+flex-direction: row;
+justify-content: center;
+align-items: center;
+padding: 8px;
+gap: 12px;
+
+width: 404px;
+height: 36px;
+
+/* Blue */
+color:white;
+background: #28519E;
+border-radius: 4px;
+}
+
+
+.about-associate{
+    margin-top: 20px;
+    margin-bottom: 15px;
+width: 154px;
+height: 19px;
+left: 0px;
+top: 4.5px;
+
+font-family: 'Roboto';
+font-style: normal;
+font-weight: 600;
+font-size: 16px;
+line-height: 19px;
+color: #002C3F;
+}
+.associate-card{
+display: flex;
+flex-direction: column;
+align-items: center;
+padding: 16px;
+gap: 16px;
+isolation: isolate;
+width: 406px;
+height: 388px;
+background: #FFFFFF;
+box-shadow: 0px 4px 20px rgba(40, 52, 73, 0.15);
+border-radius: 8px;
+}

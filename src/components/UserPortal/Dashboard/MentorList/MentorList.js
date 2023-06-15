@@ -1,9 +1,9 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect,useContext } from "react";
 import "./mentorlist.css";
 import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
 
-export const MentorComponent = () => {
+const MentorComponent = () => {
   const [mentors, setMentors] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   useEffect(() => {
@@ -114,17 +114,17 @@ export const MentorComponent = () => {
                             <b>{mentor.mentorName}</b>{" "}
                             {/* Replace with mentor name from API response */}
                           </p>
-                          <p className="role-fs">{mentor.designation}</p>{" "}
+                          <p className="role-fs">{mentor.designation}</p>
                           {/* Replace with mentor position from API response */}
                           <div className="row">
                             <div className=" flex">
+                              {/* {console.log(mentor.skills[0].length <8 && mentor.skills[1].length <8? "true"+mentor.skills[0]: mentor.skills )} */}
                               {mentor.skills.map((skill, skillIndex) => (
                                 <span
                                   key={skillIndex}
                                   className="badge badge-color"
                                 >
-                                  {skill.toUpperCase()}{" "}
-                                  {/* Replace with mentor skills from API response */}
+                                   {skill.toUpperCase()} {/*Replace with mentorskills from API response */}
                                 </span>
                               ))}
                             </div>
@@ -143,3 +143,5 @@ export const MentorComponent = () => {
     </>
   );
 };
+
+export default MentorComponent;

@@ -1,29 +1,25 @@
 import "./AddNewIdea.css";
 import { useNavigate } from "react-router-dom";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import axios from "axios";
 import EmptyProject from "../../EmptyStates/EmptyProject/MyIdea";
 import { ReactComponent as ExpandMore } from "../../../../../Assets/expand_more.svg";
 import TechDropDown from "../TechDropDown";
+import { UserContext } from "../../../../../Context/Context";
 
-const AddNewIdea = ({ projectDescript }) => {
+const AddNewIdea = () => {
+  const { idea } = useContext(UserContext);
   const navigate = useNavigate();
-  const [first, ...rest] = projectDescript;
-  // console.log(...rest)
+  const [first, ...rest] = idea;
   const [projName, setProjName] = useState("");
   const [projDescription, setProjDescription] = useState("");
-  //  const [selectedOptions, setSelectedOptions] = useState([]);
-  //  const [technologyNames, setTechnologyNames] = useState([]);
-  // const [userId, setUserId] = useState("30");
-  // const [counter, setCounter] = useState(1);
   const [textInput, setTextInput] = useState("");
   const [memberNames, setMemberNames] = useState({});
-  // const [techNames, seTechNames] = useState({});
   const [tech, setTech] = useState({});
   const [dropDown, setDropDown] = useState(false);
   const [projNameError, setProjNameError] = useState("");
   const [projDescriptionError, setProjDescriptionError] = useState("");
-
+  const [error, setError]=useState(true);
   const handleClickClear = (event) => {
     event.preventDefault();
     setTextInput("");
@@ -105,9 +101,7 @@ const AddNewIdea = ({ projectDescript }) => {
 
   const handleClick = (e) => {
     e.preventDefault();
-    // const data = { projectDescript };
-    console.log("PD", projDescription);
-    navigate("/project-idea-projects", { state: projectDescript });
+    navigate("/project-idea");
   };
   const isObjectEmpty = (object) => {
     if (object.member1.length > 0) {
@@ -124,24 +118,35 @@ const AddNewIdea = ({ projectDescript }) => {
     var storedObject = localStorage.getItem("userData");
     var parsedObject = JSON.parse(storedObject);
     var userId = parsedObject.userId;
-    await axios
-      .post("https://cg-interns-hq.azurewebsites.net/projectIdea", {
-        projName,
-        projDescription,
-        userId,
-        technologyNames: tech,
-        memberNames: memberNames,
-      })
-      .then((res) => {
-        console.log("print", res.data);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-    setTextInput("");
-    setProjName("");
-    setProjDescription("");
-    setDropDown(false);
+    if (
+      projName.length === 0 &&
+      projDescription.length < 2 && tech
+    ) {
+      alert("Please fill in the required details");
+      setError(true)
+    } else {
+      await axios
+        .post("https://cg-interns-hq.azurewebsites.net/projectIdea", {
+          projName,
+          projDescription,
+          userId,
+          technologyNames: tech,
+          memberNames: memberNames,
+        })
+        .then((res) => {
+          console.log("print", res.data);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+        setTextInput("");
+        setProjName("");
+        setProjDescription("");
+        setDropDown(false);
+        setError(false)
+    }
+
+
   };
 
   useEffect(() => {
@@ -180,7 +185,7 @@ const AddNewIdea = ({ projectDescript }) => {
             </button>
           </div>
         </div>
-        {projectDescript.length === 0 ? (
+        {idea.length === 0 ? (
           <EmptyProject />
         ) : (
           <div className="recipe-row">
@@ -300,7 +305,7 @@ const AddNewIdea = ({ projectDescript }) => {
                     value={projDescription}
                     id="project-description"
                     placeholder="Write Here.."
-                    onChange={handleChangeProjDescriptionError}
+                    onChange={(e)=>handleChangeProjDescriptionError(e)}
                     rows={3}
                   ></textarea>
                 </div>
@@ -313,7 +318,14 @@ const AddNewIdea = ({ projectDescript }) => {
                   >
                     Technology Used <span style={{ color: "red" }}>*</span>
                   </label>
-                  <div className="container border p-0">
+                  <div
+                    className="container border p-0"
+                    style={{
+                      borderRadius: "5px",
+                      border: "1px solid #ced4da",
+                      lineHeight: "1px",
+                    }}
+                  >
                     <div className="input-with-button">
                       <button
                         type="button"
@@ -347,24 +359,6 @@ const AddNewIdea = ({ projectDescript }) => {
                         <TechDropDown
                           techDataComingChild={techDataComingFrmChild}
                         />
-                        {/* <div
-                          class="form-check small"
-                          onClick={(e)=>{handleOptionClick(e)}}
-                          data-value="NodeJS"
-                        >
-                          <label
-                            class="form-check-label"
-                            for="nodeJs"
-                          >
-                            Node Js 
-                          </label>
-                          <input
-                            class="form-check-input"
-                            type="checkbox"
-                            value="ytch"
-                            id="nodeJs"
-                          />
-                        </div> */}
                       </ul>
                     </div>
                     {/* </div> */}
@@ -400,8 +394,8 @@ const AddNewIdea = ({ projectDescript }) => {
               <button
                 type="button"
                 className="btn save-button"
-                data-bs-dismiss="modal"
-                onClick={handleSubmit}
+                data-bs-dismiss={error?"":"modal"}
+                onClick={(e)=>{handleSubmit(e)}}
               >
                 <span className="save-text"> Save </span>
               </button>
