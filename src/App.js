@@ -99,6 +99,7 @@ function App() {
           {/* <Route path={encodeUrl("/dashboard")} element={<Dashboard />} /> */}
           {/* Protected Routes here */}
           <Route element={<AuthGuard />}>
+
             <Route
               path="/dashboard"
               element={<Dashboard sendDataToDashboard={dataFromDailyUpdate} />}

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect,useContext } from "react";
 import "./DailyTaskTracker.css";
 import { ReactComponent as Tick } from "../../../../Assets/tick.svg";
 import axios from "axios";
@@ -8,6 +8,10 @@ import { ReactComponent as Stop} from "../../../../Assets/time trackingstop.svg"
 import { ReactComponent as StopD} from "../../../../Assets/time trackingStopDisabled.svg"
 import { ReactComponent as PlayD} from "../../../../Assets/time trackingStartDisabled.svg"
 import { useNavigate } from "react-router";
+import { UserContext } from "../../../../Context/Context";
+import TopicSelect from "./TopicSelect";
+
+
 
 const learningTypeOptions = [
   "CG Learning Videos",
@@ -15,21 +19,16 @@ const learningTypeOptions = [
   "Mentor Assigned Task",
   "Project",
 ];
-const topics = ["React", "Angular", "C# .Net", "AWS", "Azure", "JavaScript", "Salesforce"];
+
 
 const MAX_COMMENT_LENGTH = 150;
+
 const DailyTaskTracker = () => {
+  const {isRunning, setIsRunning, isPaused, setIsPaused, elapsedTime, setElapsedTime,startTime, setStartTime}=useContext(UserContext);
+  
   const [learningType, setLearningType] = useState(localStorage.getItem("learningType") || "");
   const [topicName, setTopicName] = useState(localStorage.getItem("topicName") || "");
-  const [isRunning, setIsRunning] = useState( localStorage.getItem("isRunning") || false);
-  const [startTime, setStartTime] = useState( localStorage.getItem("startTime") ? parseInt(localStorage.getItem("startTime")) : null);
-  // const [elapsedTime, setElapsedTime] =  useState(() => {
-  //   const storedElapsedTime = localStorage.getItem("elapsedTime");
-  //   return storedElapsedTime && parseInt(storedElapsedTime) !== 0
-  //     ? parseInt(storedElapsedTime)
-  //     : 0;
-  // });
-  const [elapsedTime, setElapsedTime] = useState( localStorage.getItem("elapsedTime") || 0)
+  // const [startTime, setStartTime] = useState( localStorage.getItem("startTime") ? parseInt(localStorage.getItem("startTime")) : null);
   const [comments, setComments] = useState(localStorage.getItem("comments") || "");
   const [comDisabled, setComDisabled] = useState(true);
   const [disabled, setDisabled] = useState(false);
@@ -37,7 +36,6 @@ const DailyTaskTracker = () => {
   const [stopBtnDisabled, setStopBtnDisabled] = useState(true);
   const [resetSelect, setResetSelect] = useState(false);
 
-  const [isPaused, setIsPaused] = useState(false);
 
   const[firstCount,setFirstCount] = useState(true);
   const [commentLength, setCommentLength] = useState(comments.length);
@@ -45,48 +43,6 @@ const DailyTaskTracker = () => {
 
   const navigate = useNavigate();
 
-  // useEffect(() => {
-  //   let interval;
-  //   if (isRunning) {
-  //     interval = setInterval(() => {
-  //       setElapsedTime(Date.now() - startTime);
-  //     }, 1);
-  //   }
-  //   return () => clearInterval(interval);
-  // }, [isRunning, startTime]);
-
-  // useEffect(() => {
-  //   let interval;
-  //   if (isRunning && !isPaused) {
-  //     interval = setInterval(() => {
-  //       setElapsedTime(Date.now() - startTime);
-  //     }, 1000);
-  //   }
-  //   return () => clearInterval(interval);
-  // }, [isRunning, isPaused, startTime]);
-
-
-
-  useEffect(() => {
-    let interval;
-    let timerInterval;
-  
-    if (isRunning) {
-      if (isPaused) {
-        clearInterval(timerInterval);
-      } else {
-        const timerStartTime = Date.now() - elapsedTime;
-        timerInterval = setInterval(() => {
-          setElapsedTime(Date.now() - timerStartTime);
-        }, 1000);
-      }
-    }
-  
-    return () => {
-      clearInterval(interval);
-      clearInterval(timerInterval);
-    };
-  }, [isRunning, isPaused, elapsedTime]);
 
 
   useEffect(() => {
@@ -104,24 +60,11 @@ const DailyTaskTracker = () => {
     }
   }, [comments]);
 
-  // useEffect(() => {
-  //   const disabledState = localStorage.getItem('disabled');
-  //   if (disabledState === 'true') {
-  //     setDisabled(true);
-  //   }
-  // }, []);
-
-  // useEffect(() => {
-  //   const isRunningState = localStorage.getItem('isRunning');
-  //   if (isRunningState === 'true') {
-  //     setIsRunning(true);
-  //   }
-  // }, []);
 
   useEffect(() => {
     const storedData = localStorage.getItem('taskData');
     if (storedData) {
-      const { isRunning, disabled, comDisabled, learningType, topicName, comments, startTime, elapsedTime, isPaused} = JSON.parse(storedData);
+      const { isRunning, disabled, comDisabled, learningType, topicName, comments, startTime, isPaused, pauseClickCount, firstCount} = JSON.parse(storedData);
       setIsRunning(isRunning);
       setDisabled(disabled);
       setComDisabled(comDisabled)
@@ -129,27 +72,23 @@ const DailyTaskTracker = () => {
       setTopicName(topicName);
       setComments(comments);
       setStartTime(startTime);
-      setElapsedTime(elapsedTime);
+      // setElapsedTime(elapsedTime);
       setIsPaused(isPaused);
+      setPauseClickCount(pauseClickCount);
+      setFirstCount(firstCount);
     }
   }, []);
 
   useEffect(() => {
-    const taskData = JSON.stringify({ isRunning, disabled, comDisabled, learningType, topicName, comments, startTime, elapsedTime, isPaused });
+    const taskData = JSON.stringify({ isRunning, disabled, comDisabled, learningType, topicName, comments, startTime, elapsedTime, isPaused, pauseClickCount, firstCount });
     localStorage.setItem('taskData', taskData);
-  }, [isRunning, disabled, comDisabled, learningType, topicName, comments, startTime, elapsedTime, isPaused]);
+  }, [isRunning, startTime, elapsedTime, isPaused, comments]);
 
-  // useEffect(() => {
-  //   const selectedLearningType = localStorage.getItem("selectedLearningType");
-  //   if (selectedLearningType) {
-  //     setLearningType(selectedLearningType);
-  //   }
-  // }
+
   
   var storedObject = localStorage.getItem('userData');
   var parsedObject = JSON.parse(storedObject);
   var userId = parsedObject.userId;
-  // console.log(userId);
   const sendStartDataToBackend = async () => {
     try {
       const response = await axios.post("https://cg-interns-hq.azurewebsites.net/dailyTaskTrackerStartCheck", {
@@ -161,7 +100,6 @@ const DailyTaskTracker = () => {
       console.log(response.data.token);
       console.log("Start Data sent to backend:", response.data);
     } catch (error) {
-      // console.log(error.response.status)
       navigate({
         pathname:"/error",
         search:`statusCode=${error.response.status}`
@@ -182,10 +120,6 @@ const DailyTaskTracker = () => {
       })
       console.log("Pause Data sent to backend:", response.data);
     } catch (error) {
-      // navigate({
-      //   pathname:"/error",
-      //   search:`statusCode=${error.response.status}`
-      // })
       console.error("Error sending pause data to backend:", error);
     }
   };
@@ -200,6 +134,7 @@ const DailyTaskTracker = () => {
         Authorization:`Bearer ${token}`,
       }});
       console.log("Stop Data sent to backend:", response.data);
+
     } catch (error) {
       navigate({
         pathname:"/error",
@@ -208,9 +143,7 @@ const DailyTaskTracker = () => {
       console.error("Error sending stop data to backend:", error);
     }
     finally{
-
       localStorage.removeItem('taskData');
-
       localStorage.removeItem('DTT-token');
 
     }
@@ -218,7 +151,6 @@ const DailyTaskTracker = () => {
 
 
   const handleStop = () => {
-    //A function for sending data to backend
     sendStopDataToBackend();
 
     setFirstCount(true);
@@ -239,41 +171,23 @@ const DailyTaskTracker = () => {
     setComments("");
     setLearningType("");
     setTopicName("");
-    // localStorage.clear();
-
-
-    // localStorage.removeItem('isRunning'); // Remove the isRunning state from local storage
-    // localStorage.removeItem('disabled'); // Remove the disabled state from local storage
-    // localStorage.removeItem("startTime");
-    // localStorage.removeItem("learningType");
-    // localStorage.removeItem("topic");
+    setPauseClickCount(0);
   };
 
-  // const handlePause = () => {
-  //   sendPauseDataToBackend();
-  //   setIsPaused(true);
-  //   // setComDisabled(false);
-  // }
+
   const handlePause = () => {
     if (pauseClickCount < 4) {
       sendPauseDataToBackend();
       setPauseClickCount(prevCount => prevCount + 1);
       setIsPaused(true);
     }
+    else{
+    window.alert("You have exceeded the maximum pause limit!");
+    }
   };
 
   const handleStart = () => {
-    // setComDisabled(false);
-    // setDisabled(true);
-    // setIsRunning(true);
-    // setStartTime(Date.now());
-    // setElapsedTime(0);
-    // setStopBtnDisabled(true);
-    
-    // if (learningType === "CG Learning Videos") {
-    //   window.location.href = "https://jwt.io/"; // Replace with the desired URL
-    //   return; // Exit the function to prevent further execution
-    // }
+
     if (learningType === "CG Learning Videos" && firstCount) {
       const newTab = window.open("https://cgu.cginfinity.com/login/", "_blank");
       if (newTab) {
@@ -291,14 +205,11 @@ const DailyTaskTracker = () => {
 
     setComDisabled(false);
     setDisabled(true);
-    // setStopBtnDisabled(true);
   
     if (isRunning) {
       setIsPaused(!isPaused);
-      // setComDisabled(true);
     } else {
       if (isPaused) {
-        // setComDisabled(false);
         const timerStartTime = Date.now() - elapsedTime;
         setStartTime(Date.now() - elapsedTime);
         const timerInterval = setInterval(() => {
@@ -308,19 +219,12 @@ const DailyTaskTracker = () => {
         setIsRunning(true);
         setIsPaused(false);
       } else {
-        // setComDisabled(false);
         setStartTime(Date.now());
         setIsRunning(true);
         setElapsedTime(0);
       }
     }
 
-
-    // localStorage.setItem('isRunning', true); // Store the isRunning state in local storage
-    // localStorage.setItem('disabled', true);
-    // localStorage.setItem("learningType", learningType);
-    // localStorage.setItem("topic", topic);
-    // localStorage.setItem("startTime", Date.now().toString());
 
 
   };
@@ -351,7 +255,6 @@ const DailyTaskTracker = () => {
 
   return (
     <>
-      {/* <div className="tracker border p-0"> */}
         <div className="tracker border card-body p-0">
           <div className="border-bottom ">
             <h5 className="card-title dtt-hfs ">Daily Task Tracker</h5>
@@ -381,30 +284,17 @@ const DailyTaskTracker = () => {
             </select>
           </div>
 
-          <div>
-            <label htmlFor="topic" className="form-label dtt-t">
-              Topic <span style={{ color: 'red' }}>*</span>
-            </label>
-            <select
-              key={resetSelect ? "topicReset" : "topicName"}
-              disabled={disabled}
-              className="form-select dtt-selector"
-              id="topic"
-              aria-label=""
-              value={topicName}
-              onChange={(e) => onTopicChange(e)}
-              defaultValue=""
-            >
-              <option value="" hidden>
-                Select Topic
-              </option>
-              {topics.map((option) => (
-                <option className="dtt-opns" key={option} value={option}>
-                  {option}
-                </option>
-              ))}
-            </select>
+            <div>
+            <TopicSelect
+            disabled={disabled}
+            resetSelect={resetSelect}
+            // value={topicName}
+            learningType={learningType}
+            topicName={topicName}
+            onChange={(e) => onTopicChange(e)} />
+
           </div>
+
           <div>
             <label htmlFor="comments" className="form-label dtt-t">
               Comments <span style={{ color: 'red' }}>*</span> <span style={{ color: 'grey' }}>(Minimum 150 Characters)</span>
@@ -415,7 +305,7 @@ const DailyTaskTracker = () => {
               id="comments"
               className="form-control dtt-text"
               value={comments}
-              onChange={onCommentsChange}
+              onChange={(e) => onCommentsChange(e)}
               disabled={comDisabled} // Add the disabled attribute
             ></textarea>
             <span className="charLen" style={{ color: 'grey',display:"flex",justifyContent:"flex-end", marginRight:"1rem" }}>{commentLength}/{MAX_COMMENT_LENGTH}</span>
@@ -426,57 +316,30 @@ const DailyTaskTracker = () => {
           <div className="d-flex align-items-center justify-content-end dtt-gap ">
 
             <p className="dtt-timer" >{formatTime(elapsedTime)}</p>
-            <div className="d-flex align-items-center justify-content-center iconGap  ">
-            <p className="pointer">
+            <div className="d-flex align-items-center justify-content-center iconGap ">
+            <p>
               {isRunning && !isPaused ? (
                 <Pause
                 onClick={handlePause}
                 disabled={pauseClickCount >= 4}
-                // onClick={() => setIsPaused(true)} // Pause the timer
                 />
-                // <button
-                //   // disabled={isRunning ? stopBtnDisabled : btnDisabled}
-                //   className="dtt-button-pause"
-                //   // data-bs-toggle="modal"
-                //   // data-bs-target="#exampleModal1"
-                //   // onClick={handlePause}
-                // >
-                //   Pause
-                // </button>
               ) : (
                 btnDisabled ? <PlayD/> :
                 <Play
-                // disabled={isRunning ? stopBtnDisabled : btnDisabled}
                 onClick={btnDisabled ? null : handleStart}
                 />
-                // <button
-                //   disabled={isRunning ? stopBtnDisabled : btnDisabled}
-                //   className="dtt-button-start"
-                //   onClick={handleStart}
-                // >
-                //   Start
-                // </button>
               )}
             </p>
-            <p className="pointer">
+            <p>
               {stopBtnDisabled ? (<StopD/>) :
               (<Stop
-                // disabled={isRunning ? stopBtnDisabled : btnDisabled}
                 data-bs-toggle="modal"
                 data-bs-target="#exampleModal1"
                 onClick={stopBtnDisabled ? null : handleStop}
               />
               )}
               
-            {/* <button
-                  disabled={isRunning ? stopBtnDisabled : btnDisabled}
-                  className="dtt-button-stop"
-                  data-bs-toggle="modal"
-                  data-bs-target="#exampleModal1"
-                  onClick={handleStop}
-                >
-                  Stop
-                </button> */}
+            
             </p>
             </div>
 
@@ -527,9 +390,11 @@ const DailyTaskTracker = () => {
             </div>
           </div>
         </div>
-      {/* </div> */}
     </>
   );
 };
 
 export default DailyTaskTracker;
+
+
+

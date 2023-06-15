@@ -26,6 +26,10 @@ const AddProject = () => {
   const [desError, setDesError] = useState("");
   const [projLinkError, setProjLinkError] = useState("");
   const [technologyError, setTechnologyError] = useState("");
+  const [tech, setTech] = useState({});
+  const techDataComingFrmChild = (data) => {
+    return setTech(data);
+  };
 
   const handleProjectNameChange = (event) => {
     const name = event.target.value;
@@ -147,6 +151,7 @@ const AddProject = () => {
 
   return (
     <>
+    {/* //component div 171 -233 */}
       <div className="card-body pb-0">
         <div className="project-card-text-row">
           <p className="project-card-text">
@@ -209,6 +214,7 @@ const AddProject = () => {
           </p>
         </div>
       </div>
+      {/* //modal div 234-759  */}
       <div
         class="modal fade"
         id="exampleModal"
