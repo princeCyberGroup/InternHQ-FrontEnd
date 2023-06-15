@@ -11,7 +11,7 @@ export default function Status({data}) {
         <>
         <div className='row first-row'>
                 <div className='col-6'>
-                  <div className='four-cards' style={{ marginLeft: '80px' }}>
+                  <div className='four-cards'>
                     <div style={{display:"flex",flexDirection:"column",marginTop:"10px"}}><TotalIcon />
                     <div style={{display:"flex",flexDirection:"row",marginTop:"12px"}}>
                       <p className="count">{data.totalUsers}</p>
@@ -21,7 +21,7 @@ export default function Status({data}) {
                   </div>
                 </div>
                 <div className='col-6'>
-                  <div className='four-cards' style={{ marginLeft: '80px' }}>
+                  <div className='four-cards' >
                     <div style={{display:"flex",flexDirection:"column",marginTop:"10px"}}><ActiveIcon />
                     <div style={{display:"flex",flexDirection:"row",marginTop:"12px"}}>
                       <p className="count">{data.totalActive}</p>
@@ -33,7 +33,7 @@ export default function Status({data}) {
               </div>
               <div className='row second-row'>
               <div className='col-6'>
-                  <div className='four-cards' style={{ marginLeft: '80px' }}>
+                  <div className='four-cards' >
                     <div style={{display:"flex",flexDirection:"column",marginTop:"10px"}}><InActiveIcon />
                     <div style={{display:"flex",flexDirection:"row",marginTop:"12px"}}>
                       <p className="count">{data.totalInactive}</p>
@@ -43,7 +43,7 @@ export default function Status({data}) {
                   </div>
                 </div>
                 <div className='col-6'>
-                  <div className='four-cards' style={{ marginLeft: '80px' }}>
+                  <div className='four-cards'>
                     <div style={{display:"flex",flexDirection:"column",marginTop:"10px"}}><OnProject />
                     <div style={{display:"flex",flexDirection:"row",marginTop:"12px"}}>
                       <p className="count">{data.totalInactive}</p>

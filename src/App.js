@@ -19,6 +19,9 @@ import ViewAllIdeas from "./components/UserPortal/Dashboard/ProjectIdea/Idea/Vie
 import TakeTest from "./components/UserPortal/SkillManagement/TakeTest/TakeTest";
 import BadRequest from "./components/ErrorPage/BadRequest";
 import Context from "./Context/Context";
+
+// admin import 
+import Report from "./components/AdminPortal/Report/Report"; 
 import Task from "./components/AdminPortal/Task/Task";
 import DashboardA from './components/AdminPortal/Dashboard/DashboardA'
 
@@ -121,15 +124,16 @@ function App() {
             <Route exact path="/take-test" component={<TakeTest />} />
             <Route path="/take-your-test" element={<TakeYourTest />} />
             <Route path="/project-idea-projects" element={<ViewAllIdeas />} />
-
-            
-            <Route path="/admin-dashboard" element={<DashboardA/>} />
-            <Route path="/assign-task" element={<Task />} />
-              
           </Route>
-          {/* </Route> */}
 
+
+          {/* admin routes */}
+          <Route path="/admin/report" element={<Report />} />
+           <Route path="/admin-dashboard" element={<DashboardA/>} />
+           <Route path="/assign-task" element={<Task />} />
+              
           <Route path="*" element={<BadRequest />} />
+
         </Routes>
         {/* </Router> */}
       </div>

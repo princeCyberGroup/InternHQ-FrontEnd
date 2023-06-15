@@ -1,106 +1,138 @@
 /* Congo MODAL */
 
-.mSize{
-    width: 464px;
+.parent-wrapper {
+  position: absolute;
+  height: 100vh;
+  width: 100vw;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 1;
+  top: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.child-wrapper {
+  background-color: #ffffff;
+  width: 464px;
+}
+
+.mSize {
+  width: 464px;
 }
 
 .crossBtn {
-    display: flex;
-    justify-content: flex-end;
-    margin-right: 0.563rem;
-    margin-top: 0.813rem;
-    color: #232122;
-  }
-  
-  .cStar {
-    margin-top: 0.813rem;
-  }
-  
-  .c1 p {
-    margin: 0%;
-    display: flex;
-    justify-content: center;
-    margin-top: 1rem;
-    font-family: "Roboto";
-    font-style: normal;
-    font-weight: 600;
-    font-size: 1.25rem;
-    line-height: 150%;
-    color: #28519e;
-  }
-  
-  .c2 p {
-    margin: 0%;
-    padding: 0;
-    display: flex;
-    justify-content: center;
-    margin-top: 1rem;
-    font-family: "Roboto";
-    font-style: normal;
-    font-weight: 400;
-    font-size: 1rem;
-    line-height: 19px;
-    color: #565555;
-  }
+  display: flex;
+  justify-content: flex-end;
+  margin-right: 0.563rem;
+  margin-top: 0.813rem;
+  color: #232122;
+}
 
-  .c3 p {
-    display: flex;
-    justify-content: center;
-    margin-top: 9px;
-    font-family: 'Inter';
-    font-style: normal;
-    font-weight: 700;
-    font-size: 20px;
-    line-height: 24px;
-    text-align: center;
+.cStar {
+  margin-top: 0.813rem;
+}
 
-    /* Primary/Blue */
+.c1 p {
+  margin: 0%;
+  display: flex;
+  justify-content: center;
+  margin-top: 1rem;
+  font-family: "Roboto";
+  font-style: normal;
+  font-weight: 600;
+  font-size: 1.25rem;
+  line-height: 150%;
+  color: #28519e;
+}
 
-    color: #28519E;
-  }
+.c2 p {
+  margin: 0%;
+  padding: 0;
+  display: flex;
+  justify-content: center;
+  margin-top: 1rem;
+  font-family: "Roboto";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 1rem;
+  line-height: 19px;
+  color: #565555;
+}
 
-  .c4{
-    display: flex;
-    justify-content: center;
-  }
-  .c4 p {
-    width: 331px;
-    padding: 0%;
-    font-family: 'Roboto';
-    font-style: normal;
-    font-weight: 400;
-    font-size: 16px;
-    line-height: 150%;
-    /* or 24px */
+.c3 p {
+  display: flex;
+  justify-content: center;
+  margin-top: 9px;
+  font-family: "Inter";
+  font-style: normal;
+  font-weight: 700;
+  font-size: 20px;
+  line-height: 24px;
+  text-align: center;
 
+  /* Primary/Blue */
 
-    text-align: center;
+  color: #28519e;
+}
 
-    /* Gray */
+.c4 {
+  display: flex;
+  justify-content: center;
+}
+.c4 p {
+  width: 331px;
+  padding: 0%;
+  font-family: "Roboto";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 150%;
+  /* or 24px */
 
-    color: #565555;
-  }
+  text-align: center;
 
-  .Ccontinue {
-    margin-top: 12px;
-    margin-bottom: 2rem;
-    display: flex;
-    justify-content: center;
-  }
-  .continueBtn {
-    font-family: "Roboto";
-    font-style: normal;
-    font-weight: 600;
-    font-size: 0.875rem;
-    line-height: 1.25rem;
-    text-align: center;
-    color: #ffffff;
-    display: flex;
-    justify-content: center;
-    padding: 0.625rem 1rem;
-    gap: 0.625rem;
-    width: 5.56rem;
-    background: #28519e;
-    border: none;
-    border-radius: 4px;
-  }
+  /* Gray */
+
+  color: #565555;
+}
+
+.Ccontinue {
+  margin-top: 12px;
+  margin-bottom: 2rem;
+  display: flex;
+  justify-content: center;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+.continue-btn {
+  font-family: "Roboto";
+  font-style: normal;
+  font-weight: 600;
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+  text-align: center;
+  color: #ffffff;
+  display: flex;
+  justify-content: center;
+  padding: 0.625rem 1rem;
+  gap: 0.625rem;
+  width: 5.56rem;
+  background: #28519e;
+  border: none;
+  border-radius: 4px;
+}
+
+.view-result-btn {
+  border: 1px solid #28519e;
+  border-radius: 4px;
+  width: auto;
+  padding: 0.625rem 1rem;
+  font-family: "Roboto";
+  font-style: normal;
+  font-weight: 600;
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+  box-sizing: border-box;
+  color: #28519e;
+}

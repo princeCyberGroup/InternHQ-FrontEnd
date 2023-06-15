@@ -10,14 +10,11 @@ import BreadCrumbs from "../../BreadCrumbs/BreadCrumbs";
 
 const SkillManagement = () => {
   const { score } = useContext(UserContext);
-  console.log(score);
   return (
     <>
       <Header />
       <>
-        {/* <Sorry /> */}
-
-        {/* {score == -1 ? "" : (score >= 0 ? <Congo /> : <Sorry />)} */}
+        {score == -1 ? "" : score >= 8 ? <Congo /> : <Sorry />}
         <div className="mainDiv">
           <div class="container-fluid ">
             <div className="row">

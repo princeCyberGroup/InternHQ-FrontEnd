@@ -1,24 +1,12 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 
-const TechDropDown = (props) => {
+const Selectlevel = (props) => {
   const [counter, setCounter] = useState(1);
   const [technologyNames, setTechnolotyNames] = useState([]);
   const [techNames, setTechNames] = useState({});
   const [allTech, setAllTech] = useState();
-
-  useEffect(() => {
-    //this api call is for admin portal
-    axios
-      .get(`https://cg-interns-hq.azurewebsites.net/getAllTechnology`)
-      .then((response) => {
-        setAllTech(response.data);
-      })
-      .catch((error) => {
-        console.error(error);
-      });
-  }, []);
-
+  const levels = ["Beginner", "Intermediate", "Advance"];
   const handleOptionClick = (event) => {
     // console.log(event)
     const { value } = event.currentTarget.dataset;
@@ -46,7 +34,6 @@ const TechDropDown = (props) => {
         if (techNames[`tech${index + 1}`] === value) {
           const t = delete techNames[`tech${index + 1}`];
           setCounter((prevCounter) => prevCounter - 1);
-          console.log(t);
         }
       });
     }
@@ -54,7 +41,7 @@ const TechDropDown = (props) => {
   };
   return (
     <>
-      {allTech?.response.map((value, index) => {
+      {levels.map((value, index) => {
             return (
               <div
                 key={index}
@@ -62,10 +49,10 @@ const TechDropDown = (props) => {
                 onClick={(e) => {
                   handleOptionClick(e);
                 }}
-                data-value={value.techName}
+                data-value={value}
               >
                 <label class="form-check-label" for="nodeJs">
-                  {value?.techName}
+                  {value}
                 </label>
                 <input
                   class="form-check-input"
@@ -76,59 +63,8 @@ const TechDropDown = (props) => {
               </div>
             );
           })}
-      {/* <div
-        class="form-check small"
-        onClick={(e) => {
-          handleOptionClick(e);
-        }}
-        data-value="ReactJs"
-      >
-        <label class="form-check-label" for="react">
-          React Js
-        </label>
-        <input
-          class="form-check-input"
-          type="checkbox"
-          value="ytch"
-          id="react"
-        />
-      </div>
-      <div
-        class="form-check small"
-        onClick={(e) => {
-          handleOptionClick(e);
-        }}
-        data-value="Angular"
-      >
-        <label class="form-check-label" for="angular">
-          Angular Js
-        </label>
-        <input
-          class="form-check-input"
-          type="checkbox"
-          value="ytch"
-          id="angular"
-        />
-      </div>
-      <div
-        class="form-check small"
-        onClick={(e) => {
-          handleOptionClick(e);
-        }}
-        data-value="DotNet"
-      >
-        <label class="form-check-label" for="DotNet">
-          DotNet
-        </label>
-        <input
-          class="form-check-input"
-          type="checkbox"
-          value="ytch"
-          id="DotNet"
-        />
-      </div> */}
     </>
   );
 };
 
-export default TechDropDown;
+export default Selectlevel;
