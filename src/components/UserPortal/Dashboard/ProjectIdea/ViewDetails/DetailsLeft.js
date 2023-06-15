@@ -3,7 +3,7 @@ import { ReactComponent as Arrow } from "../../../../../Assets/arrow_forward_ios
 import { UserContext } from "../../../../../Context/Context";
 
 const DetailsLeft = (props) => {
-  const {idea,setIdea,project,setProject}=useContext(UserContext)
+  // const {idea,setIdea,project,setProject}=useContext(UserContext)
   const [isBorder, setIsBorder] = useState(false);
   const [selectedIdx, setSelectedIdx] = useState(0);
   const truncate = (str, maxLength) => {
@@ -14,7 +14,7 @@ const DetailsLeft = (props) => {
   return (
     <div className="all-project-names pt-3">
       <div className="child-wrapper">
-        {props.data.map((user, index) => {
+        {props.data?.map((user, index) => {
           const isBorder = index === selectedIdx;
           return (
             <div
@@ -24,7 +24,7 @@ const DetailsLeft = (props) => {
               }
               key={index}
               onClick={() => {
-                props.data.projectDetails(index);
+                props.projectDetails(index);
                 setSelectedIdx(index);
                 setIsBorder(true);
               }}

@@ -81,6 +81,7 @@ function App() {
   return (
     <Context>
       <div className="App">
+      
         {/* <Router> */}
         <Routes>
           <Route path="/" element={<LoginScreen />} />
@@ -100,6 +101,7 @@ function App() {
           {/* <Route path={encodeUrl("/dashboard")} element={<Dashboard />} /> */}
           {/* Protected Routes here */}
           <Route element={<AuthGuard />}>
+
             <Route
               path="/dashboard"
               element={<Dashboard sendDataToDashboard={dataFromDailyUpdate} />}
@@ -113,7 +115,7 @@ function App() {
               }
             />
             <Route path="/all-projects" element={<ViewAllProjects />} />
-            <Route path="/project-idea-projects" element={<ViewAllIdeas />} />
+            <Route path="/project-idea" element={<ViewAllIdeas />} />
             <Route path="/skill-management" element={<SkillManagement />} />
             <Route exact path="/take-test" component={<TakeTest />} />
             <Route path="/take-your-test" element={<TakeYourTest />} />

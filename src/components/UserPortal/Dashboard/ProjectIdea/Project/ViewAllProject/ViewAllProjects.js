@@ -1,7 +1,6 @@
-import React, { useEffect, useState, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import axios from "axios";
-import { useLocation, useNavigate } from "react-router-dom";
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import ProjectDetail from "../../ViewDetails/ProjectDetail";
 import Header from "../../../../../Header/Header";
 import EmptyProjectState from "../../../EmptyStates/EmptyProject/Project";
@@ -10,14 +9,16 @@ import { UserContext } from "../../../../../../Context/Context";
 import TechDropDown from "../../TechDropDown";
 import EmptyProjectView from "../../../EmptyStates/EmptyProject/ProjectViewAll";
 import { ReactComponent as ExpandMore } from "../../../../../../Assets/expand_more.svg";
+import BreadCrumbs from "../../../../../BreadCrumbs/BreadCrumbs";
 
 const ViewAllProjects = () => {
   const { project } = useContext(UserContext);
+  const [first, ...rest] = projectApiDataa;
+  
   const [tech, setTech] = useState({});
   const [dropDown, setDropDown] = useState(false);
   const [projName, setProjName] = useState("");
   const [projDescription, setProjDescription] = useState("");
-  const [technologyNames, setTechnologyNames] = useState([]);
   const [projectLink, setProjectLink] = useState("");
   const [hostedLink, setHostedLink] = useState("");
   const [textInput, setTextInput] = useState("");
@@ -30,14 +31,20 @@ const ViewAllProjects = () => {
   const [projectIndex, setProjectIndex] = useState(0);
 
   const details = project;
-
+  const navigate = useNavigate();
+  
   const techDataComingFrmChild = (data) => {
     return setTech(data);
   };
   const AddProject = ({ projectApiDataa }) => {
     const navigate = useNavigate();
-    const [first, ...rest] = projectApiDataa;
   }
+
+  const [projectIndex, setProjectIndex] = useState(0);
+  const details = project;
+  const techDataComingFrmChild = (data) => {
+    return setTech(data);
+  };
   const handleProjectNameChange = (event) => {
     const name = event.target.value;
     setProjName(name);
@@ -56,15 +63,6 @@ const ViewAllProjects = () => {
       setDesError("");
     }
   };
-  const handleTechnologyChange = (event) => {
-    const technology = event.target.value;
-    setTechnologyNames(technology);
-    if (!technology) {
-      setTechnologyError("Technology is required");
-    } else {
-      setTechnologyError("");
-    }
-  };
   const handleInputChange = (event) => {
     setTextInput(event.target.value);
   };
@@ -75,7 +73,6 @@ const ViewAllProjects = () => {
     setProjDescription("");
     setProjectLink("");
     setHostedLink("");
-    setTechnologyNames({});
     setDropDown(false);
   };
   const handleProjectLinkChange = (event) => {
@@ -100,9 +97,7 @@ const ViewAllProjects = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     var storedObject = localStorage.getItem("userData");
-
     var parsedObject = JSON.parse(storedObject);
-
     var userId = parsedObject.userId;
     axios
       .post("https://cg-interns-hq.azurewebsites.net/Project", {
@@ -113,9 +108,6 @@ const ViewAllProjects = () => {
         hostedLink,
         technologyNames: techNames,
         memberNames: memberNames,
-      })
-      .then((res) => {
-
       })
       .catch((err) => {
         console.log(err);
@@ -133,43 +125,19 @@ const ViewAllProjects = () => {
     texts.forEach((text, index) => {
       membersObj[`member${index + 1}`] = text;
     });
-
-    // technologyNames.forEach((curElem, index) => {
-    //   techNames[`tech${index + 1}`] = curElem;
-    // });
     isObjectEmpty(membersObj);
   }, [textInput]);
 
   const handelIndex = (index) => {
     setProjectIndex(index);
-
   };
   return (
     <>
       <Header />
       <div className="container page-color">
-        <nav
-          style={{ "--bs-breadcrumb-divider: '>';": "" }}
-          aria-label="breadcrumb"
-        >
-          <ol class="breadcrumb">
-            <li className="breadcrumb-item header-text ps-0">
-              {" "}
-              <Link
-                className="view-all fw-bold"
-                to={{ pathname: "/dashboard" }}
-              >
-                Dashboard
-              </Link>
-            </li>
-            <li
-              className="breadcrumb-item active header-text"
-              aria-current="page"
-            >
-              Project
-            </li>
-          </ol>
-        </nav>
+        <div className="view-all-nav-bar pt-4">
+          <BreadCrumbs />
+        </div>
 
         <div className="d-flex justify-content-between">
           <div className="d-flex">
@@ -177,9 +145,12 @@ const ViewAllProjects = () => {
           </div>
 
           <div className="mr-3">
-            <button type="button" className="add-your-project-wrapper me-0"
+            <button
+              type="button"
+              className="add-your-project-wrapper me-0"
               data-bs-toggle="modal"
-              data-bs-target="#xampleModal">
+              data-bs-target="#xampleModal"
+            >
               <p className="me-2 add-your-project">Add Project</p>
             </button>
             {/* ///modal 221 - 487 */}
@@ -211,7 +182,10 @@ const ViewAllProjects = () => {
                 <div class="modal-body">
                   <form>
                     <div class="mb-3">
-                      <label for="project-name" class="col-form-label title-text">
+                      <label
+                        for="project-name"
+                        class="col-form-label title-text"
+                      >
                         Project Name<span style={{ color: "red" }}>*</span>{" "}
                         {error && (
                           <span style={{ color: "red", fontSize: "11px" }}>
@@ -234,7 +208,8 @@ const ViewAllProjects = () => {
                         for="project-description"
                         class="col-form-label title-text"
                       >
-                        Project Description<span style={{ color: "red" }}>*</span>{" "}
+                        Project Description
+                        <span style={{ color: "red" }}>*</span>{" "}
                         {desError && (
                           <span style={{ color: "red", fontSize: "11px" }}>
                             ({desError})
@@ -250,8 +225,6 @@ const ViewAllProjects = () => {
                         rows={3}
                       ></textarea>
                     </div>
-
-
                     <div className="mb-3">
                       <label
                         htmlFor="technology-used"
@@ -299,12 +272,12 @@ const ViewAllProjects = () => {
                         {/* </div> */}
                       </div>
                     </div>
-
-
-
                     {/* //project Link open  */}
                     <div class="mb-3">
-                      <label for="Project Link" class="col-form-label title-text">
+                      <label
+                        for="Project Link"
+                        class="col-form-label title-text"
+                      >
                         Project Link<span style={{ color: "red" }}>*</span>{" "}
                         {projLinkError && (
                           <span style={{ color: "red", fontSize: "11px" }}>
@@ -355,6 +328,7 @@ const ViewAllProjects = () => {
                     {/* //Member close */}
                   </form>
                 </div>
+                {/* //Applied Modal from addProject.js 482 -> 730 */}
                 <div class="modal-footer">
                   <button
                     type="button"
@@ -398,4 +372,3 @@ const ViewAllProjects = () => {
 };
 
 export default ViewAllProjects;
-

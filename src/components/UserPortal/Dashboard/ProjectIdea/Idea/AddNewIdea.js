@@ -101,9 +101,7 @@ const AddNewIdea = () => {
 
   const handleClick = (e) => {
     e.preventDefault();
-    // const data = { projectDescript };
-    console.log("PD", idea);
-    navigate("/project-idea-projects");
+    navigate("/project-idea");
   };
   const isObjectEmpty = (object) => {
     if (object.member1.length > 0) {
