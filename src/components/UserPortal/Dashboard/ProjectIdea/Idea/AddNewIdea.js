@@ -7,7 +7,7 @@ import { ReactComponent as ExpandMore } from "../../../../../Assets/expand_more.
 import TechDropDown from "../TechDropDown";
 import { UserContext } from "../../../../../Context/Context";
 
-const AddNewIdea = ({}) => {
+const AddNewIdea = () => {
   const { idea } = useContext(UserContext);
   const navigate = useNavigate();
   const [first, ...rest] = idea;
@@ -101,9 +101,7 @@ const AddNewIdea = ({}) => {
 
   const handleClick = (e) => {
     e.preventDefault();
-    // const data = { projectDescript };
-    console.log("PD", idea);
-    navigate("/project-idea-projects");
+    navigate("/project-idea");
   };
   const isObjectEmpty = (object) => {
     if (object.member1.length > 0) {

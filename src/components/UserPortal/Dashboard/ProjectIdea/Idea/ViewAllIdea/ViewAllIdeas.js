@@ -9,10 +9,13 @@ import { ReactComponent as ExpandMore } from "../../../../../../Assets/expand_mo
 import TechDropDown from "../../TechDropDown";
 import axios from "axios";
 import { UserContext } from "../../../../../../Context/Context";
+import BreadCrumbs from "../../../../../BreadCrumbs/BreadCrumbs";
 
 const ViewAllIdeas = () => {
-  const {idea,setIdea,project,setProject}=useContext(UserContext)
-  const navigate = useNavigate();
+  const { idea, setIdea, project, setProject } = useContext(UserContext);
+
+  const location = useLocation();
+  const details = idea;
   const [projectIndex, setProjectIndex] = useState(0);
   const [projNameError, setProjNameError] = useState("");
   const [projDescriptionError, setProjDescriptionError] = useState("");
@@ -111,8 +114,9 @@ const ViewAllIdeas = () => {
       <Header />
       <div className="container page-color">
         <div className="view-all-nav-bar pt-4">
-          <p>Dashboard &gt; MyIdea</p>
+          <BreadCrumbs />
         </div>
+
         <div className="d-flex justify-content-between">
           <div className="d-flex">
             <p className="sub-text ps-0">My Idea</p>
