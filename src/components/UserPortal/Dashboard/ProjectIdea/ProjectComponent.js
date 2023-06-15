@@ -8,7 +8,7 @@ import axios from "axios";
 import { UserContext } from "../../../../Context/Context";
 
 const ProjectComponent = () => {
-  const { idea, setIdea, project, setProject } = useContext(UserContext);
+  const { setIdea, setProject } = useContext(UserContext);
   const [pActive, setPActive] = useState(true);
   // const [projectData, setProjectData] = useState([]);
   // const [projectApiData, setProjectApiData] = useState();
@@ -69,9 +69,9 @@ const ProjectComponent = () => {
           </div>
         </div>
         {pActive ? (
-          <AddNewIdea projectDescript={idea} />
+          <AddNewIdea />
         ) : (
-          <AddProject projectApiDataa={project} />
+          <AddProject />
         )}
       </div>
     </>
