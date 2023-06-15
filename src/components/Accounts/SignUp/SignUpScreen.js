@@ -218,7 +218,7 @@ const SignUpScreen = () => {
                       Email ID
                     </label>
                     <input
-                      className="input-fields"
+                      className="input-login"
                       type="email"
                       id="exampleInputEmail1"
                       value={email}
@@ -244,7 +244,7 @@ const SignUpScreen = () => {
                     </label>
                     <div className="input-group">
                     <input
-                      className="input-fields"
+                      className="input-login"
                       type={showPassword ? "password" : "text"}
                       id="exampleInputPassword1"
                       placeholder="Enter Your Password"
