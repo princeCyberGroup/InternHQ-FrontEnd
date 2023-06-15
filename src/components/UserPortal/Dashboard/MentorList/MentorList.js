@@ -111,7 +111,7 @@ const MentorComponent = () => {
                         />
                         <div className="mentor-text">
                           <p className="card-text fs">
-                            <b>{mentor.mentorName}</b>
+                            <b>{mentor.mentorName}</b>{" "}
                             {/* Replace with mentor name from API response */}
                           </p>
                           <p className="role-fs">{mentor.designation}</p>

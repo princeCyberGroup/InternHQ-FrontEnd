@@ -1,0 +1,67 @@
+.activeBtn.active {
+  background-color: #002c3f;
+  color: #fff;
+}
+.activeBtn:hover {
+  background-color: #002c3f;
+  color: #fff;
+}
+.profile-Image {
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: 50%;
+}
+.margin {
+  margin-right: 3rem;
+  cursor: pointer;
+}
+.border-Side {
+  border-left: 3px solid #002c3f;
+  margin-left: 20px;
+  border-radius: 2px 2px 2px 2px;
+}
+.nav-bg {
+  margin-left: 38px;
+  background-color: #f9fafb;
+  border: 1px solid #f2f4f7;
+  border-radius: 4px;
+}
+.dropdown-item:hover{
+    background-color: transparent;
+    color: #000;
+} 
+.logout-hover:hover{
+    background-color: rgba(40, 52, 73, 0.15);
+    ;
+}
+.background-set {
+  background-color: #b8dde1;
+  height: 2.5rem;
+  width: 2.5rem;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.dropdown-menu[aria-labelledby="profileDropDown"] {
+  position: absolute;
+  left: -13.7rem;
+  top: 3rem;
+  width: 17.5rem;
+}
+span.username {
+  font-size: 16px;
+  font-weight: 700;
+}
+span.email {
+  font-size: 14px;
+  font-weight: 500;
+  word-break: "break-word" !important;
+  white-space: "normal" !important;
+}
+span.logout {
+  font-size: 14px;
+  font-weight: 600;
+  margin-top: 1.5rem;
+  color: #f82c44;
+}
