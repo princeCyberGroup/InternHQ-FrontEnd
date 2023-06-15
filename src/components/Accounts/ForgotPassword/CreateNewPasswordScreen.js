@@ -245,7 +245,7 @@ const CreateNewPasswordScreen = () => {
                     </label>
                     <div className="input-group">
                     <input
-                      className="input-fields"
+                      className="input-login"
                       type={showNewPassword ? "password" : "text"}
                       id="exampleInputEmail1"
                       placeholder="Enter New Password"
@@ -283,7 +283,7 @@ const CreateNewPasswordScreen = () => {
                     </label>
                     <div className="input-group">
                     <input
-                      className="input-fields"
+                      className="input-login"
                       type={showConfirmPassword ? "password" : "text"}
                       id="exampleInputPassword1"
                       placeholder="Enter Confirm Password"

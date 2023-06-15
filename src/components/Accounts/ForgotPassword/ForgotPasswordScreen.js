@@ -227,7 +227,7 @@ const ForgotPasswordScreen = () => {
                     Email ID
                   </label>
                   <input
-                  className="input-fields"
+                  className="input-login"
                     type="email"
                     id="exampleInputEmail1"
                     value={email}
