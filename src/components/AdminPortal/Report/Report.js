@@ -1,9 +1,176 @@
-import React from 'react'
-
+import React, { useState, useEffect } from "react";
+import "./Report.css";
+import { ReactComponent as Filter } from "../../../Assets/Filter.svg";
+import TechDropDown from "../../UserPortal/Dashboard/ProjectIdea/TechDropDown";
+import { ReactComponent as ExpandMore } from "../../../Assets/expand_more.svg";
+import Reporttable from "./Reporttable";
+import { Dummydata } from "./Dummydata";
+import Selectlevel from "./Selectlevel";
 const Report = () => {
-  return (
-    <div>Report</div>
-  )
-}
+  //data
+  const [tech, setTech] = useState({});
+  const [level, setLevel] = useState({});
+  const [dropDownTech, setDropDownTech] = useState(false);
+  const [dropDownLevel, setDropDownLevel] = useState(false);
+  const [tableData, setTableData] = useState(Dummydata);
+  const [orgTableData, setOrgTableData] = useState(Dummydata);
+  const [query, setQuery] = useState("");
 
-export default Report
+  //functions
+  const dataComingFrmLevel = (data) => {
+    setLevel(data);
+  };
+  const techDataComingFrmTech = (data) => {
+    setTech(data);
+  };
+
+  useEffect(() => {
+    handleFiltersChange();
+  }, [tech, level, query, techDataComingFrmTech]);
+
+
+  const handleFiltersChange = () => {
+    const getFilterItems = (items, query) => {
+      if (query != "") {
+        return items.filter((item) =>
+          `${item.firstName} ${item.lastName}`
+            .toLowerCase()
+            .includes(query.toLowerCase())
+        );
+      }
+      return items;
+    };
+
+    // const getfilterTech = (items, tech) => {
+    //   if (Object.keys(tech).length !== 0) {
+    //     const filteredData = items.filter((person) => {
+    //       const personSkills = Object.keys(person.skills);
+    //       console.log("this is personal skills", personSkills);
+    //       return personSkills.some((skill) => tech[skill]);
+    //     });
+    //     console.log("filterred table", filteredData);
+    //     return filteredData;
+    //   }
+    //   return items;
+    // };
+
+    const filterItems = getFilterItems(orgTableData, query);
+    // const filterTech = getfilterTech(filterItems, tech);
+    // const filterLevel = getFilterLevel(filterTech, level);
+    setTableData(filterItems);
+    // console.log(filterDate)
+  };
+
+  
+  console.log("this is data", level);
+  return (
+    <div className="report-parent-wrapper">
+      <div className="report-child-wrapper">
+        <div className="report-header">Report</div>
+        <div className="report-filter-wrapper ">
+          <div className="report-search">
+            <div className="search-icon" />
+            <input
+              type="text"
+              className="report-input-bar"
+              placeholder="Search Associate Consultant"
+              value={query}
+              onChange={(e) => setQuery(e.target.value)}
+            />
+          </div>
+          <div className="inner-filter">
+            <div className="report-filter">
+              <Filter /> Filter:
+            </div>
+            <div className=" report-drop-down-tech">
+              <div className="inner-drop-down-tech">
+                <div className="input-with-button-tech">
+                  <button
+                    type="button"
+                    className="button-for-dropdown-tech"
+                    onClick={() => {
+                      setDropDownTech(!dropDownTech);
+                    }}
+                  >
+                    <input
+                      type="text"
+                      className="custom-input-tech"
+                      value={Object.values(tech)}
+                      placeholder="Select Technology"
+                      disabled
+                    />
+                  </button>
+                  <button
+                    className="expand-more-tech"
+                    type="button"
+                    onClick={() => {
+                      setDropDownTech(!dropDownTech);
+                    }}
+                  >
+                    <ExpandMore />
+                  </button>
+                </div>
+                <div
+                  className="data-display-tech"
+                  style={{
+                    display: dropDownTech ? "" : "none",
+                    top: "1.938rem",
+                  }}
+                >
+                  <TechDropDown techDataComingChild={techDataComingFrmTech} />
+                </div>
+              </div>
+            </div>
+            <div className=" report-drop-down-level">
+              <div className="inner-drop-down-level">
+                <div className="input-with-button-level">
+                  <button
+                    type="button"
+                    className="button-for-dropdown-level"
+                    onClick={() => {
+                      setDropDownLevel(!dropDownLevel);
+                    }}
+                  >
+                    <input
+                      type="text"
+                      className="custom-input-level"
+                      value={Object.values(level)}
+                      placeholder="Select level"
+                      disabled
+                    />
+                  </button>
+                  <button
+                    className="expand-more-level"
+                    type="button"
+                    onClick={() => {
+                      setDropDownLevel(!dropDownLevel);
+                    }}
+                  >
+                    <ExpandMore />
+                  </button>
+                </div>
+                <div
+                  className="data-display-tech"
+                  style={{
+                    display: dropDownLevel ? "" : "none",
+                    top: "1.938rem",
+                  }}
+                >
+                  <Selectlevel
+                    techDataComingChild={dataComingFrmLevel}
+                    // arrayData={level}
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div className="report-table-wrapper ">
+          <Reporttable tableData={tableData} />
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default Report;

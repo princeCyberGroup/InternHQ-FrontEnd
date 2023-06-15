@@ -27,11 +27,10 @@ export default function AssociateConsultant(props) {
                             <div className='row'>
                                 <div className='col frame'>
                                     <p style={{ display: "flex", justifyContent: "center", alignItems: "center", marginTop: "15px" }}>VS</p>
-
                                 </div>
                                 <div className='col'>
                                     <div className='frame-text'>{userData.name}</div>
-                                    <div className='frame-id'>{userData.userId}</div>
+                                    <div className='frame-id'>{userData.intId}</div>
                                 </div>
                             </div>
                         </div>

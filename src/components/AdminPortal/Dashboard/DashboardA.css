@@ -1,5 +1,5 @@
 .about{
-margin-left: 80px;
+/* margin-left: 80px; */
 width: 200px;
 height: 19px;
 margin-top: 20px;
@@ -19,7 +19,7 @@ flex-grow: 0;
 .four-cards{
 display: flex;
 margin-top: 10px;
-margin-left: 80px;
+
 padding-left: 10px;
 align-items: flex-start;
 width: 183.3px;
