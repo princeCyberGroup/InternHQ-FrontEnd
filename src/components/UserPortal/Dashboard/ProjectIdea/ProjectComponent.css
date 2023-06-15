@@ -36,10 +36,12 @@
   align-items: center;
   justify-content: center;
   padding: 1rem 2.5rem;
+  cursor: pointer;
 }
 
 .project-btn {
   width: 10.5rem;
+  cursor: pointer;
   border-radius: 0px 8px 0px 0px;
   padding: 1rem 3.65rem;
   background: #ffffff;

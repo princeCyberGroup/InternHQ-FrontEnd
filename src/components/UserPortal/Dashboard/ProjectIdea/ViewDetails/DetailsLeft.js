@@ -1,9 +1,11 @@
-import React, { useState } from "react";
+import React, { useState,useContext } from "react";
 import { ReactComponent as Arrow } from "../../../../../Assets/arrow_forward_iosarrow.svg";
+import { UserContext } from "../../../../../Context/Context";
+
 const DetailsLeft = (props) => {
+  // const {idea,setIdea,project,setProject}=useContext(UserContext)
   const [isBorder, setIsBorder] = useState(false);
   const [selectedIdx, setSelectedIdx] = useState(0);
-
   const truncate = (str, maxLength) => {
     if (str.length > maxLength) return str.slice(0, maxLength) + "...";
     else return str;
@@ -12,7 +14,7 @@ const DetailsLeft = (props) => {
   return (
     <div className="all-project-names pt-3">
       <div className="child-wrapper">
-        {props.data.map((user, index) => {
+        {props.data?.map((user, index) => {
           const isBorder = index === selectedIdx;
           return (
             <div

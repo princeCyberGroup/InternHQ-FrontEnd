@@ -1,19 +1,21 @@
-import React from "react";
+import React,{useContext} from "react";
 import { ReactComponent as Cong } from "../../../../Assets/Group 7Congrats.svg";
 //import { useLocation } from 'react-router-dom';
 import "./Congo.css";
-
-const Congo = ({scoreValue}) => {
+import { UserContext } from "../../../../Context/Context";
+const Congo = () => {
+  const {score} =useContext(UserContext);
+  console.log("congo is called");
   return (
     <div
-      className="modal fade"
-      id="congoModal123"
-      tabIndex="-1"
-      aria-labelledby="exampleModalLabel"
-      aria-hidden="true"
+      // className="modal fade"
+      // id="congoModal123"
+      // tabIndex="-1"
+      // aria-labelledby="exampleModalLabel"
+      // aria-hidden="true"
     >
-      <div className="modal-dialog modal-dialog-centered">
-        <div className="modal-content mSize">
+      <div>
+        <div>
           <div className="row crossBtn">
             <button
               type="button"
@@ -32,7 +34,7 @@ const Congo = ({scoreValue}) => {
             <p>Your Score</p>
           </div>
           <div className="row c3">
-            <p>{scoreValue}/10</p>
+            <p>{score}/10</p>
 
           </div>
           <div className="row c4">

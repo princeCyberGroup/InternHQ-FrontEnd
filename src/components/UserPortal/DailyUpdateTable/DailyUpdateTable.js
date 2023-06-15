@@ -8,6 +8,7 @@ import EmptyDailyUpdateTable from "./EmptyDailyUpdateTable";
 import Header from "../../Header/Header";
 import DurationClock from "../../../Assets/DurationClock.svg";
 import ImageTooltip from "./ImageTooltip";
+import BreadCrumbs from "../../BreadCrumbs/BreadCrumbs";
 
 const DailyUpdateTable = (props) => {
   const [tableData, setTableData] = useState([]);
@@ -179,7 +180,7 @@ const DailyUpdateTable = (props) => {
           <div className="row ">
             <div className="col-12">
               <div className="daily-update-nav-bar">
-                <p>Dashboard &gt; Daily Update</p>
+               <BreadCrumbs />
               </div>
             </div>
           </div>
