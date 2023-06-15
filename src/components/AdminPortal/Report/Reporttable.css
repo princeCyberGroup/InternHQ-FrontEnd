@@ -1,0 +1,138 @@
+.container-fluid {
+  padding: 0;
+}
+.report-table {
+  width: 100%;
+  border: 1px solid;
+}
+.table th,
+.table td {
+  padding: 0.5rem;
+}
+.table td {
+  align-items: center;
+  vertical-align: middle;
+}
+.table th {
+  background-color: #002c3f;
+  color: white;
+}
+.table td:first-child {
+  display: flex;
+  align-items: center;
+}
+.table .circle {
+  border-radius: 50%;
+  width: 2.375rem;
+  height: 2.375rem;
+  background-color: #97c0c5;
+  margin-right: 0.5rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family: "Roboto";
+  font-style: normal;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 16px;
+  text-align: center;
+  color: #ffffff;
+}
+.tech-tags {
+  display: flex;
+  border-radius: 2px;
+  gap: 8px;
+}
+.tech-tags .tag-tech {
+  background: #f4f6f5;
+  border: 1px solid #b2b2b3;
+  border-radius: 4px;
+  padding: 6px;
+  display: flex;
+  gap: 4px;
+}
+.tech-tags .all-tech {
+  font-family: "Roboto";
+  font-style: normal;
+  font-weight: 600;
+  font-size: 14px;
+  line-height: 14px;
+  color: #ffffff;
+  padding: 6px 8px;
+  cursor: pointer;
+  background: #28519e;
+  border-radius: 2px;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+.skills {
+  display: flex;
+  align-items: center;
+  font-family: "Roboto";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 16px;
+  color: #343435;
+  text-align: center;
+}
+.duration {
+  font-family: "Roboto";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 14px;
+  color: #343435;
+}
+.dot {
+  width: 4px;
+  height: 4px;
+  background-color: #343435;
+  border-radius: 50%;
+}
+.table .tag {
+  background-color: #343435;
+  color: white;
+  padding: 0.25rem 0.5rem;
+  margin-right: 0.5rem;
+}
+.table .skills {
+  color: #343435;
+}
+.table tbody tr {
+  box-shadow: 0px 4px 20px rgba(40, 52, 73, 0.15);
+  margin-top: 8px;
+}
+.name-column {
+  display: flex;
+  gap: 14px;
+}
+.name-column .tags {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.name-column .tags .tag1 {
+  font-family: "Roboto";
+  font-style: normal;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 19px;
+  color: #28519e;
+}
+.name-column .tags .tag2 {
+  font-family: "Roboto";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 12px;
+  line-height: 14px;
+  color: #343435;
+}
+.no-data-body{
+  position: relative;
+}
+.no-data-body{
+  position: absolute;
+}

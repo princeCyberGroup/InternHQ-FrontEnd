@@ -1,30 +1,23 @@
-import React,{ useEffect,useState,useContext }  from "react";
+import React, { useEffect, useState, useContext } from "react";
 import { ReactComponent as Sor } from "../../../../Assets/EmojiSorry.svg";
-import "./Sorry.css"
+import "./Sorry.css";
 import { UserContext } from "../../../../Context/Context";
 
-const Sorry = ( ) => {
-const {score} = useContext(UserContext);
-console.log("sorry is called");
+const Sorry = () => {
+  const { score, setScore } = useContext(UserContext);
 
- // const location =useLocation()
-// console.log(score);
+  const onClickHandler = () => {
+    setScore(-1);
+  };
   return (
-    <div
-      className="modal fade"
-      id="sorryModal"
-      tabIndex="-1"
-      aria-labelledby="exampleModalLabel"
-      aria-hidden="true"
-    >
-      <div className="modal-dialog modal-dialog-centered">
-        <div className="modal-content srSize">
+    <div>
+      <div className="sorry-parent-wrapper">
+        <div className="sorry-child-wrapper">
           <div className="row crossBtn">
-            <button
+          <button
               type="button"
               className="btn-close"
-              data-bs-dismiss="modal"
-              aria-label="Close"
+              onClick={onClickHandler}
             ></button>
           </div>
           <div className="row sEmoji">
@@ -46,10 +39,12 @@ console.log("sorry is called");
             </p>
           </div>
           <div className="row Scontinue">
+            <button type="button" className="sorry-view-result-btn">
+              View Result
+            </button>
             <button
               type="button"
               className="continueBtn"
-              data-bs-dismiss="modal"
             >
               Continue
             </button>

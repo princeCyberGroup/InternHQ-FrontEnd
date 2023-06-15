@@ -19,6 +19,11 @@ import ViewAllIdeas from "./components/UserPortal/Dashboard/ProjectIdea/Idea/Vie
 import TakeTest from "./components/UserPortal/SkillManagement/TakeTest/TakeTest";
 import BadRequest from "./components/ErrorPage/BadRequest";
 import Context from "./Context/Context";
+
+// admin import 
+import Report from "./components/AdminPortal/Report/Report"; 
+
+
 function App() {
 
   const location = useLocation();
@@ -116,9 +121,12 @@ function App() {
             <Route exact path="/take-test" component={<TakeTest />} />
             <Route path="/take-your-test" element={<TakeYourTest />} />
           </Route>
-          {/* </Route> */}
 
           <Route path="*" element={<BadRequest />} />
+
+
+          {/* admin routes */}
+          <Route path="/admin/report" element={<Report />} />
         </Routes>
         {/* </Router> */}
       </div>
