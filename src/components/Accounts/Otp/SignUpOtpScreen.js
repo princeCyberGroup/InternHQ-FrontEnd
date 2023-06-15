@@ -234,7 +234,7 @@ const SignUpOtpScreen = () => {
               <form onSubmit={handleSubmit}>
                 <div className="d-flex flex-column">
                   <input
-                  className="input-fields"
+                  className="input-login"
                     type="text"
                     pattern="\d*" // Used the "pattern" attribute to enforce digits only
                     value={value}

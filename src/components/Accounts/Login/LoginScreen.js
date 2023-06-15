@@ -279,7 +279,7 @@ const LoginScreen = () => {
                     {/* <div className="password-input-container"> */}
                     <div className="input-group">
                     <input
-                      className="input-fields"
+                      className="input-login"
                       type={showPassword ? "password" : "text"}
                       id="exampleInputPassword1"
                       placeholder="Enter Your Password"
