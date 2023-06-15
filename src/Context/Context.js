@@ -9,12 +9,13 @@ const Context = (props) => {
     parseInt(localStorage.getItem("elapsedTimeMain")) || 0
   );
   const [projectApiData, setProjectApiData] = useState();
-  const [startTime, setStartTime] = useState( localStorage.getItem("startTime") ? parseInt(localStorage.getItem("startTime")) : null);
-   const [idea, setIdea] = useState([]);
-  const [project, setProject] = useState([])
-
-
-
+  const [startTime, setStartTime] = useState(
+    localStorage.getItem("startTime")
+      ? parseInt(localStorage.getItem("startTime"))
+      : null
+  );
+  const [idea, setIdea] = useState([]);
+  const [project, setProject] = useState([]);
   useEffect(() => {
     let interval;
     let timerStartTime;
@@ -27,7 +28,10 @@ const Context = (props) => {
         interval = setInterval(() => {
           const currentElapsedTime = Date.now() - timerStartTime;
           setElapsedTime(currentElapsedTime);
-          localStorage.setItem("elapsedTimeMain", currentElapsedTime.toString());
+          localStorage.setItem(
+            "elapsedTimeMain",
+            currentElapsedTime.toString()
+          );
         }, 1000);
       }
     }
@@ -52,7 +56,26 @@ const Context = (props) => {
 
   return (
     <>
-      <UserContext.Provider value={{ score, setScore,isRunning, setIsRunning,isPaused, setIsPaused, elapsedTime, setElapsedTime, projectApiData, setProjectApiData,startTime, setStartTime,idea,setIdea,project,setProject }}>
+      <UserContext.Provider
+        value={{
+          score,
+          setScore,
+          isRunning,
+          setIsRunning,
+          isPaused,
+          setIsPaused,
+          elapsedTime,
+          setElapsedTime,
+          projectApiData,
+          setProjectApiData,
+          startTime,
+          setStartTime,
+          idea,
+          setIdea,
+          project,
+          setProject,
+        }}
+      >
         {props.children}
       </UserContext.Provider>
     </>

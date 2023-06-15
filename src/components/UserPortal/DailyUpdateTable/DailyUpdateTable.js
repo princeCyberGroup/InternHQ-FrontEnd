@@ -120,7 +120,6 @@ const DailyUpdateTable = (props) => {
     const convertedTime = `${hour}:${minute} ${meridiem}`;
     return convertedTime;
   };
-
   const handleFiltersChange = () => {
     const getFilterItems = (items, searchValue) => {
       if (searchValue) {
