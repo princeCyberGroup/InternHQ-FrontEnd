@@ -24,6 +24,7 @@ const ViewAllIdeas = () => {
   const [memberNames, setMemberNames] = useState({});
   
   const handelIndex = (index) => {
+    // alert(index)
     setProjectIndex(index);
   };
   const handleClickClear = (event) => {

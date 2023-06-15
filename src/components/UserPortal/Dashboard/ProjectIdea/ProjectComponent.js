@@ -8,7 +8,7 @@ import axios from "axios";
 import { UserContext } from "../../../../Context/Context";
 
 const ProjectComponent = () => {
-  const { idea, setIdea, project, setProject } = useContext(UserContext);
+  const { setIdea, setProject } = useContext(UserContext);
   const [pActive, setPActive] = useState(true);
   // const [projectData, setProjectData] = useState([]);
   // const [projectApiData, setProjectApiData] = useState();
@@ -46,10 +46,10 @@ const ProjectComponent = () => {
     <>
       <div className="card whole-card-wrapper px-0">
         <div className="border-bottom">
-          <div className="card-title dtt-hfs-abc m-0 d-flex  d-flex justify-content-center align-item-center ">
+          <div className="card-title dtt-hfs-abc m-0 d-flex  d-flex justify-content-center align-item-center">
             <div
               className={
-                "project-idea-btn pe-auto" + (pActive ? " p-active" : "")
+                "project-idea-btn " + (pActive ? " p-active" : "")
               }
               onClick={() => {
                 setPActive(true);
@@ -58,7 +58,7 @@ const ProjectComponent = () => {
               <button className="btn-1 p-0">My Idea</button>
             </div>
             <div
-              className={"project-btn pe-auto" + (pActive ? " " : " p-active")}
+              className={"project-btn" + (pActive ? " " : " p-active")}
               onClick={() => {
                 setPActive(false);
               }}
@@ -68,9 +68,9 @@ const ProjectComponent = () => {
           </div>
         </div>
         {pActive ? (
-          <AddNewIdea projectDescript={idea} />
+          <AddNewIdea />
         ) : (
-          <AddProject projectApiDataa={project} />
+          <AddProject />
         )}
       </div>
     </>
