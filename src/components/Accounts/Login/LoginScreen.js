@@ -17,7 +17,7 @@ const LoginScreen = () => {
   const [isEmailValid, setIsEmailValid] = useState(false);
   const [password, setPassword] = useState("");
   const [isPasswordValid, setIsPasswordValid] = useState(true);
-  const [showPassword, setShowPassword] = useState(false);
+  const [showPassword, setShowPassword] = useState(true);
 
   const [incorrectemail, setIncorrectemail] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
@@ -280,7 +280,7 @@ const LoginScreen = () => {
                     <div className="input-group">
                     <input
                       className="input-fields"
-                      type={showPassword ? "text" : "password"}
+                      type={showPassword ? "password" : "text"}
                       id="exampleInputPassword1"
                       placeholder="Enter Your Password"
                       value={password}
