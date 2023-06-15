@@ -3,8 +3,13 @@ import { Link, NavLink, useNavigate } from "react-router-dom";
 import { BsChevronDown } from "react-icons/bs";
 import { ReactComponent as CGlogo } from "../../Assets/CG-Logo (1) 1CGlogo.svg";
 import "./Header.css";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faBell } from "@fortawesome/free-solid-svg-icons";
+import "../UserPortal/Dashboard/Notification/Notification.css";
 const Header = () => {
   // localStorage.setItem("userData",{"email":"prinec.kumar@cginfinity.com","userId":43,"firstName":"Prince","lastName":"kumar"})
+  const [hasNewNotification, setHasNewNotification] = useState(true);
+
   const [userData, setUserData] = useState(
     JSON.parse(localStorage.getItem("userData"))
   );
@@ -13,6 +18,9 @@ const Header = () => {
     e.preventDefault();
     localStorage.clear("userData");
     navigate("/");
+  };
+  const handleNotificationClick = () => {
+    setHasNewNotification(!hasNewNotification);
   };
   return (
     <>
@@ -50,6 +58,136 @@ const Header = () => {
                 </NavLink>
               </li>
             </ul>
+          </div>
+          <div
+            style={{
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+            }}
+          >
+            <FontAwesomeIcon
+              icon={faBell}
+              shake={hasNewNotification}
+              size="lg"
+              onClick={handleNotificationClick}
+              style={{
+                color: "#002c3f",
+                cursor: "pointer",
+                marginRight: "2rem",
+                // position: "relative",
+                // top: "5px",
+              }}
+            />
+            {hasNewNotification ? (
+                <div
+                  style={{
+                    backgroundColor: "red",
+                    width: "8px",
+                    height: "8px",
+                    borderRadius: "50%",
+                    position: "absolute",
+                    right: "141px",
+                    top: "21px",
+                    border: "1px solid white",
+                  }}
+                ></div>
+            ) : (<div
+              class="card"
+              style={{
+                position: "absolute",
+                right: "1.5rem",
+                top: "3.4rem",
+                zIndex: 4,
+                maxWidth: "21rem",
+                boxShadow: "0px 4px 20px rgba(40, 52, 73, 0.15)",
+                borderRadius: "8px",
+              }}
+            >
+              <div class="card-body">
+                <div className="border-bottom ">
+                  <h5
+                    class="card-title"
+                    style={{
+                      fontFamily: "Roboto",
+                      fontWeight: 600,
+                      fontSize: "1rem",
+                      lineHeight: "1.18rem",
+                      color: "#343435",
+                    }}
+                  >
+                    Mentor Assigned Task
+                  </h5>
+                </div>
+                <div style={{maxHeight: "17.9rem", overflowY: "scroll"}}>
+                  <div
+                    style={{
+                      padding: "16px 0px",
+                      borderBottom: "1px solid #E9ECEB",
+                    }}
+                  >
+                    <div className="text-wrapper ps-0">
+                      <p class="card-text">
+                        <b>Lagnesh</b> has assigned you{" "}
+                        <b>Full Stack Engineering Project</b> task
+                      </p>
+                    </div>
+                  </div>
+                  <div
+                    style={{
+                      padding: "16px 0px",
+                      borderBottom: "1px solid #E9ECEB",
+                    }}
+                  >
+                    <div className="text-wrapper ps-0">
+                      <p class="card-text">
+                        <b>Lagnesh</b> has assigned you{" "}
+                        <b>Full Stack Engineering Project</b> task
+                      </p>
+                    </div>
+                  </div>
+                  <div
+                    style={{
+                      padding: "16px 0px",
+                      borderBottom: "1px solid #E9ECEB",
+                    }}
+                  >
+                    <div className="text-wrapper ps-0">
+                      <p class="card-text">
+                        <b>Lagnesh</b> has assigned you{" "}
+                        <b>Full Stack Engineering Project</b> task
+                      </p>
+                    </div>
+                  </div>
+                  <div
+                    style={{
+                      padding: "16px 0px",
+                      borderBottom: "1px solid #E9ECEB",
+                    }}
+                  >
+                    <div className="text-wrapper ps-0">
+                      <p class="card-text">
+                        <b>Lagnesh</b> has assigned you{" "}
+                        <b>Full Stack Engineering Project</b> task
+                      </p>
+                    </div>
+                  </div>
+                  <div
+                    style={{
+                      padding: "16px 0px",
+                      borderBottom: "1px solid #E9ECEB",
+                    }}
+                  >
+                    <div className="text-wrapper ps-0">
+                      <p class="card-text">
+                        <b>Lagnesh</b> has assigned you{" "}
+                        <b>Full Stack Engineering Project</b> task
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>)}
           </div>
           <div
             className="d-flex margin"

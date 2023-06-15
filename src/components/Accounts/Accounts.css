@@ -35,15 +35,16 @@
   margin: 2.25rem 4.688rem 1.25rem 4.688rem;
 }
 
-input {
+.input-login {
   border: none;
   border-bottom: 0.063rem solid #b2b2b3;
   width: 25.438rem;
   font-size: 0.938rem;
   line-height: 2.563rem;
+  max-width: 100%;
 }
 
-input:focus {
+.input-login:focus {
   outline: none;
 }
 
@@ -171,9 +172,6 @@ a:hover {
   font-size: 0.80rem;
 }
 
-.input-fields {
-  max-width: 100%;
-}
 
 .password-toggle-button {
   position: absolute;
