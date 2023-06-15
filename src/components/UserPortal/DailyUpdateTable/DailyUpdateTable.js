@@ -120,13 +120,10 @@ const DailyUpdateTable = (props) => {
     const convertedTime = `${hour}:${minute} ${meridiem}`;
     return convertedTime;
   };
-
-  // console.log(convertTime("18:16:59") + " - " + convertTime("18:17:06"));
-
   const handleFiltersChange = () => {
     const getFilterItems = (items, searchValue) => {
       if (searchValue) {
-        return items.filter((item) =>
+        return items?.filter((item) =>
           item.topicName.toLowerCase().includes(searchValue.toLowerCase())
         );
       }
@@ -136,7 +133,7 @@ const DailyUpdateTable = (props) => {
 
     const filterDropDown = (items, dropDownValue, tableArr) => {
       if (dropDownValue && dropDownValue !== "Select learning type") {
-        return items.filter((item) => item.learning === dropDownValue);
+        return items?.filter((item) => item.learning === dropDownValue);
       }
 
       return items;
@@ -147,7 +144,7 @@ const DailyUpdateTable = (props) => {
         const dateObject = new Date(dateFilterValue);
         const year = dateObject.getFullYear();
         const month = dateObject.getMonth() + 1;
-        return items.filter((item) => {
+        return items?.filter((item) => {
           const tempDateString = item.startDate;
           const tempDateArr = tempDateString.split("-");
           return (

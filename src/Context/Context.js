@@ -16,7 +16,6 @@ const Context = (props) => {
   );
   const [idea, setIdea] = useState([]);
   const [project, setProject] = useState([]);
-
   useEffect(() => {
     let interval;
     let timerStartTime;

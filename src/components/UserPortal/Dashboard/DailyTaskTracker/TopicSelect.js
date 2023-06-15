@@ -106,9 +106,11 @@ const TopicSelect = (props) => {
               defaultValue=""
             >
               <option value="" disabled hidden>
-                Select Topic
+                Select Project
               </option>
-              {arr.map((topic, index) => (
+              {arr.length===0 ? (<option value="default" disabled >
+                No Project Added
+              </option>) : arr?.map((topic, index) => (
                 <option className="dtt-opns" key={index} value={topic}>
                   {topic}
                 </option>
