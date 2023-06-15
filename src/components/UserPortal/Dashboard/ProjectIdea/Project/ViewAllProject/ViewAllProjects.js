@@ -1,6 +1,5 @@
 import React, { useState, useContext, useEffect } from "react";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
 import ProjectDetail from "../../ViewDetails/ProjectDetail";
 import Header from "../../../../../Header/Header";
 import EmptyProjectState from "../../../EmptyStates/EmptyProject/Project";
@@ -12,9 +11,7 @@ import { ReactComponent as ExpandMore } from "../../../../../../Assets/expand_mo
 import BreadCrumbs from "../../../../../BreadCrumbs/BreadCrumbs";
 
 const ViewAllProjects = () => {
-  const { project } = useContext(UserContext);
-  const [first, ...rest] = projectApiDataa;
-  
+  const { project } = useContext(UserContext);  
   const [tech, setTech] = useState({});
   const [dropDown, setDropDown] = useState(false);
   const [projName, setProjName] = useState("");
@@ -27,24 +24,14 @@ const ViewAllProjects = () => {
   const [error, setError] = useState("");
   const [desError, setDesError] = useState("");
   const [projLinkError, setProjLinkError] = useState("");
-  const [technologyError, setTechnologyError] = useState("");
   const [projectIndex, setProjectIndex] = useState(0);
 
   const details = project;
-  const navigate = useNavigate();
   
   const techDataComingFrmChild = (data) => {
     return setTech(data);
   };
-  const AddProject = ({ projectApiDataa }) => {
-    const navigate = useNavigate();
-  }
 
-  const [projectIndex, setProjectIndex] = useState(0);
-  const details = project;
-  const techDataComingFrmChild = (data) => {
-    return setTech(data);
-  };
   const handleProjectNameChange = (event) => {
     const name = event.target.value;
     setProjName(name);
@@ -351,18 +338,18 @@ const ViewAllProjects = () => {
             </div>
           </div>
         </div>
-        {details && details.length === 0 ? (
-          <EmptyProjectState />
+        {project && project.length === 0 ? (
+          <EmptyProjectView />
         ) : (
           <div
             className="all-project-idea-wrapper entire-component ms-0"
             style={{ overFlowY: "scroll" }}
           >
             <div>
-              <DetailsLeft data={details} projectDetails={handelIndex} />
+              <DetailsLeft data={project} projectDetails={handelIndex} />
             </div>
             <div className="project-detail">
-              <ProjectDetail data={details} indexNumber={projectIndex} />
+              <ProjectDetail data={project} indexNumber={projectIndex} />
             </div>
           </div>
         )}
