@@ -47,10 +47,10 @@ const ProjectComponent = () => {
     <>
       <div className="card whole-card-wrapper px-0">
         <div className="border-bottom">
-          <div className="card-title dtt-hfs-abc m-0 d-flex  d-flex justify-content-center align-item-center ">
+          <div className="card-title dtt-hfs-abc m-0 d-flex  d-flex justify-content-center align-item-center">
             <div
               className={
-                "project-idea-btn pe-auto" + (pActive ? " p-active" : "")
+                "project-idea-btn " + (pActive ? " p-active" : "")
               }
               onClick={() => {
                 setPActive(true);
@@ -59,7 +59,7 @@ const ProjectComponent = () => {
               <button className="btn-1 p-0">My Idea</button>
             </div>
             <div
-              className={"project-btn pe-auto" + (pActive ? " " : " p-active")}
+              className={"project-btn" + (pActive ? " " : " p-active")}
               onClick={() => {
                 setPActive(false);
               }}
