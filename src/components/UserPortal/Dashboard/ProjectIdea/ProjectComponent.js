@@ -7,24 +7,22 @@ import "./Project/AddProject.css";
 import axios from "axios";
 import { UserContext } from "../../../../Context/Context";
 
-export const AddNewProjectComponent = () => {
+const ProjectComponent = () => {
+  const { idea, setIdea, project, setProject } = useContext(UserContext);
   const [pActive, setPActive] = useState(true);
-  const [projectData, setProjectData] = useState([]);
+  // const [projectData, setProjectData] = useState([]);
   // const [projectApiData, setProjectApiData] = useState();
-  const {projectApiData,setProjectApiData}=useContext(UserContext);
   const storedObject = localStorage.getItem("userData");
   const parsedObject = JSON.parse(storedObject);
   const userId = parsedObject.userId;
-  
+
   const MyIdeaComponent = async () => {
     try {
-      const response = await axios.get(
-        `https://cg-interns-hq.azurewebsites.net/getProjectIdea?userId=${userId}`
-      );
+      const response = await axios.get(`https://cg-interns-hq.azurewebsites.net/getProjectIdea?userId=${userId}`);
 
-      setProjectData(response.data.response);
+      setIdea(response.data.response);
     } catch (error) {
-      console.log("Error ",error.response?.data);
+      console.log("Error ", error.response?.data);
       // console.log(error.response?.data.msg);
     }
   };
@@ -34,7 +32,7 @@ export const AddNewProjectComponent = () => {
         `https://cg-interns-hq.azurewebsites.net/getProject?userId=${userId}`
       );
 
-      setProjectApiData(response.data.response);
+      setProject(response.data.response);
     } catch (error) {
       // console.log(error.response?.data);
       // console.log(error.response?.data.msg);
@@ -50,7 +48,9 @@ export const AddNewProjectComponent = () => {
         <div className="border-bottom">
           <div className="card-title dtt-hfs-abc m-0 d-flex  d-flex justify-content-center align-item-center ">
             <div
-              className={"project-idea-btn pe-auto" + (pActive ? " p-active" : "")}
+              className={
+                "project-idea-btn pe-auto" + (pActive ? " p-active" : "")
+              }
               onClick={() => {
                 setPActive(true);
               }}
@@ -68,11 +68,12 @@ export const AddNewProjectComponent = () => {
           </div>
         </div>
         {pActive ? (
-          <AddNewIdea projectDescript={projectData} />
+          <AddNewIdea projectDescript={idea} />
         ) : (
-          <AddProject projectApiDataa={projectApiData} />
+          <AddProject projectApiDataa={project} />
         )}
       </div>
     </>
   );
 };
+export default ProjectComponent;

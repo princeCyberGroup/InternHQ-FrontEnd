@@ -123,6 +123,10 @@ function App() {
 
             <Route path="/assign-task" element={<Task />} />
             {/* <Route path="/admin-dashboard" element={<DashboardA/>} /> */}
+            <Route path="/project-idea-projects" element={<ViewAllIdeas />} />
+            <Route path="/skill-management" element={<SkillManagement />} />
+            <Route exact path="/take-test" component={<TakeTest />} />
+            <Route path="/take-your-test" element={<TakeYourTest />} />
           </Route>
           {/* </Route> */}
 

@@ -1,7 +1,6 @@
 import React, { useState, useEffect, createContext } from "react";
 
 export const UserContext = createContext();
-
 const Context = (props) => {
   const [score, setScore] = useState(0);
   const [isRunning, setIsRunning] = useState(false);
@@ -15,7 +14,8 @@ const Context = (props) => {
       ? parseInt(localStorage.getItem("startTime"))
       : null
   );
-
+  const [idea, setIdea] = useState([]);
+  const [project, setProject] = useState([]);
   useEffect(() => {
     let interval;
     let timerStartTime;
@@ -70,6 +70,10 @@ const Context = (props) => {
           setProjectApiData,
           startTime,
           setStartTime,
+          idea,
+          setIdea,
+          project,
+          setProject,
         }}
       >
         {props.children}
