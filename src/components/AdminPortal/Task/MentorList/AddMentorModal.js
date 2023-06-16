@@ -14,19 +14,12 @@ export const AddMentorModal = () => {
   const navigate = useNavigate();
 
   const [mentorName, setMentorName] = useState("");
-
   const [skills, setSkills] = useState([]);
-
   const [emailId, setEmailId] = useState("");
-
   const [isValidEmail, setIsValidEmail] = useState(true);
-
   const [designation, setDesignation] = useState("");
-
   const [imageUrl, setImageUrl] = useState("");
-
   const [error, setError] = useState("true");
-
   const [isCleared, setIsCleared] = useState(false);
 
   const position = [
@@ -87,45 +80,71 @@ export const AddMentorModal = () => {
   };
 
   const handleFormSubmit = async (e) => {
-    if (mentorName.length == 0 && emailId.length < 2) {
+    e.preventDefault();
+  
+    if (mentorName.length === 0 && emailId.length < 2) {
       alert("Please fill out all the fields");
-
       setError(true);
-    } else {
-      await axios
-        .post("https://cg-interns-hq.azurewebsites.net/uploadMentorDetails", {
-          mentorName,
-
-          emailId,
-
-          imageUrl,
-
-          designation,
-
-          skills,
-        })
-        .then((res) => {
-          console.log("print", res.data);
-        })
-        .catch((err) => {
-          console.log(err);
-        });
-
+      return;
+    }
+  
+    try {
+      await axios.post("https://cg-interns-hq.azurewebsites.net/postMentorDetails", {
+        mentorName,
+        emailId,
+        imageUrl,
+        designation,
+        skills,
+      });
+  
       setSkills([]);
-
       setMentorName("");
-
       setEmailId("");
-
       setImageUrl("");
-
       setDesignation("");
-
-      e.preventDefault();
-
       setError(false);
+  
+      if (!error) {
+        const closeButton = document.querySelector("#addMentorModal .btn-close");
+        closeButton.click();
+      }
+    } catch (err) {
+      console.log(err);
     }
   };
+  
+  // const handleFormSubmit = async (e) => {
+  //   if (mentorName.length == 0 && emailId.length < 2) {
+  //     alert("Please fill out all the fields");
+
+  //     setError(true);
+  //   } else {
+  //     await axios
+  //       .post("https://cg-interns-hq.azurewebsites.net/postMentorDetails", {
+  //         mentorName,
+  //         emailId,
+  //         imageUrl,
+  //         designation,
+  //         skills,
+  //       })
+  //       .then((res) => {
+  //         console.log("print", res.data);
+  //       })
+  //       .catch((err) => {
+  //         console.log(err);
+  //       });
+
+  //     setSkills([]);
+  //     setMentorName("");
+  //     setEmailId("");
+  //     setImageUrl("");
+  //     setDesignation("");
+  //     e.preventDefault();
+  //     setError(false);
+
+      
+  //   }
+  // };
 
   const handleSkillTest = (e) => {
     e.preventDefault();

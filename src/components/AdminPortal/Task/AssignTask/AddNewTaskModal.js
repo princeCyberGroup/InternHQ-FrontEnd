@@ -1,51 +1,72 @@
 import "./OtherModals.css";
 
 import React, { useState } from "react";
+import axios from "axios";
 
 export const AddNewTask = () => {
   const [error, setError] = useState(true);
-  const [taskTitle, setTaskTitle] = useState("");
-  const [description, setDescription] = useState("");
-  const [technologyTag, setTechnologyTag] = useState("");
-  const [assignedTo, setAssignedTo] = useState("");
+  const [taskName, setTaskName] = useState("");
+  const [taskDescription, setTaskDescription] = useState("");
+  const [taskTech, setTaskTech] = useState([]);
+  const [taskUsers, setTaskUsers] = useState([]);
 
   const handleClickClear = (e) => {
     e.preventDefault();
-    setTaskTitle("");
-    setDescription("");
-    setTechnologyTag("");
-    setAssignedTo("");
+    setTaskName("");
+    setTaskDescription("");
+    setTaskTech("");
+    setTaskUsers("");
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async(e) => {
     e.preventDefault();
 
-    if (taskTitle.length === 0 && description.length < 2) {
+    if (taskName.length === 0 && taskDescription.length < 2) {
       alert("Please fill out the necessary fields");
       setError(true);
     } else {
-      setTaskTitle("");
-      setDescription("");
-      setTechnologyTag("");
-      setAssignedTo("");
+      await axios
+        .post("https://cg-interns-hq.azurewebsites.net/addNewTask", {
+          taskName,
+
+          taskDescription,
+
+          taskTech,
+
+          taskUsers,
+
+          
+        })
+        .then((res) => {
+          console.log("print", res.data);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+
+
+      setTaskName("");
+      setTaskDescription("");
+      setTaskTech([]);
+      setTaskUsers([]);
       setError(false);
     }
   };
 
   const handleTaskTitle = (e) => {
-    setTaskTitle(e.target.value);
+    setTaskName(e.target.value);
   };
 
   const handleDescription = (e) => {
-    setDescription(e.target.value);
+    setTaskDescription(e.target.value);
   };
 
   const handleTechnologyTag = (e) => {
-    setTechnologyTag(e.target.value);
+    setTaskTech(e.target.value);
   };
 
   const handleAssignedTo = (e) => {
-    setAssignedTo(e.target.value);
+    setTaskUsers(e.target.value);
   };
 
   return (
@@ -97,7 +118,7 @@ export const AddNewTask = () => {
                     class="form-control"
                     id="task-title"
                     placeholder="Enter task name"
-                    value={taskTitle}
+                    value={taskName}
                     onChange={(e) => handleTaskTitle(e)}
                   />
                 </div>
@@ -115,7 +136,7 @@ export const AddNewTask = () => {
                     id="description"
                     rows={3}
                     placeholder="Enter description"
-                    value={description}
+                    value={taskDescription}
                     onChange={(e) => handleDescription(e)}
                   ></textarea>
                 </div>
@@ -133,7 +154,7 @@ export const AddNewTask = () => {
                     class="form-control"
                     id="technology-tag"
                     placeholder="Add technology tag"
-                    value={technologyTag}
+                    value={taskTech}
                     onChange={(e) => handleTechnologyTag(e)}
                   />
                 </div>
@@ -151,7 +172,7 @@ export const AddNewTask = () => {
                     class="form-control"
                     id="assigned-to"
                     placeholder="Select Associate Consultant"
-                    value={assignedTo}
+                    value={taskUsers}
                     onChange={(e) => handleAssignedTo(e)}
                   />
                 </div>

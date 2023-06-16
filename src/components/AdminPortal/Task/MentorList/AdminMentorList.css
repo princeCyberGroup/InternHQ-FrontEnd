@@ -95,25 +95,23 @@ border-radius: 8px;
     flex-direction: row;
 }
 
-.arrow-wrapper1 button{
+/* .arrow-wrapper1 button{
     margin-right: 1rem;
     display: flex;
 flex-direction: row;
 justify-content: center;
 align-items: center;
 padding: 6px;
-/* gap: 6px; */
 
 width: 82px;
 height: 27px;
 
-/* Other/Red */
 color: white;
 background: #E03E2D;
 border-radius: 4px;
 
-}
-.arrow-wrapper1 p{
+} */
+/* .arrow-wrapper1 p{
     margin: 0;
     width: 47px;
 height: 15px;
@@ -127,7 +125,7 @@ line-height: 15px;
 
 
 color: #FFFFFF;
-}
+} */
 
 .technology p{
     width: 66px;
@@ -151,5 +149,25 @@ color: #FFFFFF;
     font-size: 0.75rem;
     background-color: #E9ECEB;
     margin-right: 5px;
+}
+
+.remove-btn{
+    margin-right: 1rem;
+    display: flex;
+flex-direction: row;
+justify-content: center;
+align-items: center;
+padding: 6px;
+gap: 6px;
+border:none;
+width: 82px;
+height: 27px;
+color: white;
+background: #E03E2D;
+border-radius: 4px;
+font-family: 'Roboto';
+font-style: normal;
+font-weight: 400;
+font-size: 13px;
 }
 
