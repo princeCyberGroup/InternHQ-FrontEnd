@@ -38,6 +38,7 @@ flex-grow: 0;
 .upload-list {
     box-sizing: border-box;
 margin-top: 10px;
+margin-left: 1rem;
 /* margin-right: 30px; */
 
 

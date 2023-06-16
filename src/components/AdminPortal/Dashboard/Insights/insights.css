@@ -15,6 +15,9 @@
     order: 0;
     flex-grow: 0;
 }
+.main-div-insight{
+   
+}
 
 .insights {
     display: flex;
@@ -26,7 +29,7 @@
     margin-top: 10px;
 
     width: 344px;
-    height: 730px;
+    height: 687px;
 
     background: #FFFFFF;
 
@@ -46,6 +49,7 @@
     border-radius: 6px;
 }
 
+/* ///inside content */
 .div-insights {
     box-sizing: border-box;
     display: flex;
@@ -73,8 +77,8 @@
     color: #262626;
 }
 .number-of-test{
-    margin-top: 10px;
-    width: 260px;
+ margin-top: 10px;
+ width: 260px;
 height: 9px;
 font-family: 'Roboto';
 font-style: normal;
@@ -83,10 +87,24 @@ font-size: 14px;
 line-height: 14px;
 leading-trim: both;
 text-edge: cap;
-/* text-align: center; */
 color: #343435;
 flex: none;
 order: 1;
 flex-grow: 0;
 
+}
+.image-div img {
+    display: flex;
+    margin-top: 10px;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    padding: 0px;
+    gap: 7.27px;
+    width: 17.14px;
+    height: 20px;
+    border-radius: 28.1818px;
+    flex: none;
+    order: 0;
+    flex-grow: 0;
 }

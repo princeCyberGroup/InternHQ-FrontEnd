@@ -1,4 +1,5 @@
 .associate-consultant {
+
     box-sizing: border-box;
     display: flex;
     flex-direction: row;
@@ -50,7 +51,7 @@ line-height: 16px;
 color: #343435;
 }
 .frame-id{
-width: 42px;
+width: 60px;
 height: 14px;
 font-family: 'Roboto';
 font-style: normal;
@@ -61,4 +62,21 @@ color: #343435;
 flex: none;
 order: 1;
 flex-grow: 0;
+}
+.associate-card{
+    height: 372px;
+    margin-left: 10px;
+ display: flex;
+flex-direction: column;
+align-items: center;
+padding: 16px;
+gap: 16px;
+isolation: isolate;
+
+
+background: #FFFFFF;
+/* Shadow */
+
+box-shadow: 0px 4px 20px rgba(40, 52, 73, 0.15);
+border-radius: 8px;
 }
