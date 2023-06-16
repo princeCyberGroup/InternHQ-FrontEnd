@@ -15,7 +15,7 @@ const SignUpScreen = () => {
   const [isEmailValid, setIsEmailValid] = useState(false);
   const [password, setPassword] = useState("");
   const [isPasswordValid, setIsPasswordValid] = useState(false);
-  const [showPassword, setShowPassword] = useState(false);
+  const [showPassword, setShowPassword] = useState(true);
 
   const [incorrectemail, setIncorrectemail] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
@@ -218,7 +218,7 @@ const SignUpScreen = () => {
                       Email ID
                     </label>
                     <input
-                      className="input-fields"
+                      className="input-login"
                       type="email"
                       id="exampleInputEmail1"
                       value={email}
@@ -244,8 +244,8 @@ const SignUpScreen = () => {
                     </label>
                     <div className="input-group">
                     <input
-                      className="input-fields"
-                      type={showPassword ? "text" : "password"}
+                      className="input-login"
+                      type={showPassword ? "password" : "text"}
                       id="exampleInputPassword1"
                       placeholder="Enter Your Password"
                       value={password}

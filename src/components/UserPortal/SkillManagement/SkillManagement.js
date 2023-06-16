@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext,useEffect } from "react";
 import "./skillmanagement.css";
 import TakeTest from "./TakeTest/TakeTest";
 import SkillsAdded from "./SkillsAdded/SkillsAdded";
@@ -7,15 +7,12 @@ import { UserContext } from "../../../Context/Context";
 import Congo from "../SkillManagement/Modals/Congo";
 import Sorry from "../SkillManagement/Modals/Sorry";
 import BreadCrumbs from "../../BreadCrumbs/BreadCrumbs";
-
 const SkillManagement = () => {
   const { score } = useContext(UserContext);
   return (
     <>
       <Header />
       <>
-        {/* <Sorry /> */}
-
         {score == -1 ? "" : score >= 8 ? <Congo /> : <Sorry />}
         <div className="mainDiv">
           <div class="container-fluid ">

@@ -14,7 +14,13 @@
     color: #343435;
 
 }
+.custom-input{
+    background-color: none;
+    border: none;
+    width: 25rem;
+    padding: 0.5rem;
 
+}
 .view-all {
     background-color: transparent;
     border: none;
