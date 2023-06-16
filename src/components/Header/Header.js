@@ -57,6 +57,21 @@ const Header = () => {
                   Skill Management<span></span>
                 </NavLink>
               </li>
+              {/* <li className="nav-item">
+                <NavLink to="/assign-task" className="btn activeBtn ">
+                  Assign Task<span></span>
+                </NavLink>
+              </li>
+              <li className="nav-item">
+                <NavLink to="/admin-dashboard" className="btn activeBtn ">
+                  Admin Dashboard<span></span>
+                </NavLink>
+              </li>
+              <li className="nav-item">
+                <NavLink to="/admin/report" className="btn activeBtn ">
+                  Report<span></span>
+                </NavLink>
+              </li> */}
             </ul>
           </div>
           <div

@@ -6,7 +6,7 @@ import { UserContext } from "../../../../Context/Context";
 const Sorry = () => {
   const { score, setScore } = useContext(UserContext);
 
-  const onClickHandler = () => {
+  const continueHandler = () => {
     setScore(-1);
   };
   return (
@@ -17,7 +17,7 @@ const Sorry = () => {
           <button
               type="button"
               className="btn-close"
-              onClick={onClickHandler}
+              onClick={continueHandler}
             ></button>
           </div>
           <div className="row sEmoji">
@@ -45,6 +45,7 @@ const Sorry = () => {
             <button
               type="button"
               className="continueBtn"
+              onClick={continueHandler}
             >
               Continue
             </button>

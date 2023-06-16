@@ -206,6 +206,7 @@ p.card-textt {
 }
 
 .cancel-button {
+    padding: 0.25rem;
     background: none;
     color: #28519E;
     border: 1px solid #28519E;
