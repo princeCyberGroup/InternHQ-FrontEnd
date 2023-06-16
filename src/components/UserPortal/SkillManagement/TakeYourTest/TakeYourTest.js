@@ -189,7 +189,7 @@ const TakeYourTest = () => {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
-            Authorization: localStorage.getItem("questionToken")
+            Authorization: `Bearer ${localStorage.getItem("questionToken")}`
           },
           body: JSON.stringify({
             userId: userId,
