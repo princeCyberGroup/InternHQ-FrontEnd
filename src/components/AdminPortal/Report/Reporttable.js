@@ -4,22 +4,11 @@ import "./Reporttable.css";
 import { ReactComponent as Advance } from "../../../Assets/advance.svg";
 import { ReactComponent as Beginner } from "../../../Assets/beginner.svg";
 import { ReactComponent as Intermediate } from "../../../Assets/intermediate.svg";
+import { Data } from "./Fetcheddataobject";
 
 const Reporttable = ({ tableData }) => {
   //data
   let objectCount = 0;
-
-  const data = {
-    ID: "useId",
-    FN: "firstName",
-    LN: "lastName",
-    INTID: "internId",
-    SKILLS: "skills",
-    BC: "beginnerCount",
-    IC: "intermediateCount",
-    AC: "advanceCount",
-    D: "durationOfInternship",
-  };
 
   return (
     <div className="container-fluid container-table">
@@ -41,20 +30,20 @@ const Reporttable = ({ tableData }) => {
                   <td>
                     <div className="name-column">
                       <div className="circle">
-                        {val[data.FN].toUpperCase().slice(0, 1)}
-                        {val[data.LN].toUpperCase().slice(0, 1)}
+                        {val[Data.FN].toUpperCase().slice(0, 1)}
+                        {val[Data.LN].toUpperCase().slice(0, 1)}
                       </div>
                       <div className="tags">
-                        <div className="tag1">{`${val[data.FN]} ${
-                          val[data.LN]
+                        <div className="tag1">{`${val[Data.FN]} ${
+                          val[Data.LN]
                         }`}</div>
-                        <div className="tag2">{val[data.INTID]}</div>
+                        <div className="tag2">{val[Data.INTID]}</div>
                       </div>
                     </div>
                   </td>
                   <td>
                     <div className="tags tech-tags">
-                      {Object?.keys(val[data.SKILLS]).map((key) => {
+                      {Object?.keys(val[Data.SKILLS]).map((key) => {
                         objectKeyCount++;
                         if (objectCount > 2) {
                           objectCount = 0;
@@ -67,9 +56,9 @@ const Reporttable = ({ tableData }) => {
                             <span>{key}</span>
                             {/* svg */}
                             <div>
-                              {val[data.SKILLS][key] == "Beginner" ? (
+                              {val[Data.SKILLS][key] == "Beginner" ? (
                                 <Beginner />
-                              ) : val[data.SKILLS][key] == "Intermediate" ? (
+                              ) : val[Data.SKILLS][key] == "Intermediate" ? (
                                 <Intermediate />
                               ) : (
                                 <Advance />
@@ -92,14 +81,14 @@ const Reporttable = ({ tableData }) => {
                   </td>
                   <td className="skills-wrapper">
                     <span className="skills">
-                      {val[data.BC]} Beginner &nbsp; <span className="dot" />{" "}
-                      &nbsp; {val[data.IC]} Intermediata &nbsp;{" "}
-                      <span className="dot" /> &nbsp; {val[data.AC]} Advanced
+                      {val[Data.BC]} Beginner &nbsp; <span className="dot" />{" "}
+                      &nbsp; {val[Data.IC]} Intermediata &nbsp;{" "}
+                      <span className="dot" /> &nbsp; {val[Data.AC]} Advanced
                     </span>
                   </td>
                   <td>
                     <span className="duration">
-                      {val[data.D]} {val[data.D] <= 1 ? "month" : "months"}
+                      {val[Data.D]} {val[Data.D] <= 1 ? "month" : "months"}
                     </span>
                   </td>
                 </tr>
@@ -109,9 +98,7 @@ const Reporttable = ({ tableData }) => {
         ) : (
           <tbody className="no-data-body">
             <tr>
-              <td> 
-              No Data
-              </td>
+              <td>No Data</td>
             </tr>
           </tbody>
         )}

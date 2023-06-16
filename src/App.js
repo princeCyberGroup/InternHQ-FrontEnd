@@ -24,6 +24,7 @@ import Context from "./Context/Context";
 import Report from "./components/AdminPortal/Report/Report"; 
 import Task from "./components/AdminPortal/Task/Task";
 import DashboardA from './components/AdminPortal/Dashboard/DashboardA'
+import Detailedreport from "./components/AdminPortal/Report/Detailedreport/Detailedreport";
 
 function App() {
 
@@ -129,6 +130,7 @@ function App() {
 
           {/* admin routes */}
           <Route path="/admin/report" element={<Report />} />
+          <Route path="/admin/report/:id" element={<Detailedreport />} />
            <Route path="/admin-dashboard" element={<DashboardA/>} />
            <Route path="/assign-task" element={<Task />} />
               

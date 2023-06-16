@@ -1,0 +1,145 @@
+::-webkit-scrollbar {
+  display: block;
+}
+::-webkit-scrollbar-thumb {
+  background-color: #888;
+  border-radius: 25rem;
+}
+
+@media (min-width: 768px) {
+  ::-webkit-scrollbar {
+    display: none;
+  }
+}
+.detailedrep-parent-wrapper {
+  min-width: 1280px;
+  margin-top: 16px;
+  width: 100vw;
+  height: calc(100vh - 40px);
+  display: flex;
+  box-sizing: border-box;
+  justify-content: center;
+  overflow-x: hidden;
+}
+.detailedrep-child-wrapper {
+  display: flex;
+  flex-direction: column;
+  max-width: 1280px;
+  min-width: 1280px;
+  overflow-x: hidden;
+  border: 1px solid;
+}
+.detailrep-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 2.25rem;
+  margin-bottom: 0.75rem;
+}
+.detailrep-breadcrum {
+  font-family: "Roboto";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 16px;
+  color: #343435;
+  height: inherit;
+  display: flex;
+  align-items: center;
+  gap: 0.688rem;
+}
+.report-download {
+  font-family: "Roboto";
+  font-style: normal;
+  font-weight: 600;
+  font-size: 16px;
+  line-height: 19px;
+  text-align: center;
+  color: #28519e;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+}
+.detailrep-user-info {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  margin-bottom: 1.5rem;
+}
+.detailrep-user-info .use-info {
+  font-family: "Roboto";
+  font-style: normal;
+  font-weight: 600;
+  font-size: 16px;
+  line-height: 19px;
+  color: #002c3f;
+}
+.info-detail {
+  display: flex;
+  justify-content: space-between;
+  box-shadow: 0px 4px 20px rgba(40, 52, 73, 0.15);
+  border-radius: 4px;
+  font-family: "Roboto";
+  font-style: normal;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 19px;
+  color: #343435;
+  padding: 1rem;
+}
+.user-name {
+  display: flex;
+  gap: 0.5rem;
+}
+.other-info {
+  display: flex;
+  gap: 1rem;
+}
+.icon-pair {
+  display: flex;
+  gap: 0.5rem;
+  font-family: "Roboto";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 16px;
+  color: #343435;
+}
+.det-dot {
+  width: 0.5rem;
+  height: 0.5rem;
+  background-color: #c2c2c2;
+  border-radius: 50%;
+}
+.detailrep-second-child {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+  border: 1px solid;
+}
+.detailrep-second-child .detail-child {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  border: 1px solid;
+}
+.skills-achieved,
+.most-skill-hr,
+.project-details {
+  box-shadow: 0px 4px 20px rgba(40, 52, 73, 0.15);
+  border-radius: 8px;
+  height: 274px;
+}
+/* .skills-achieved {
+  width: 340px;
+  height: 274px;
+}
+.most-skill-hr {
+  width: 398px;
+  height: 274px;
+}
+.project-details {
+  width: 398px;
+  height: 274px;
+} */
