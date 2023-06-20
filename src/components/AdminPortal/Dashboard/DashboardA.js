@@ -11,11 +11,8 @@ import Status from './Status/Status';
 import TopTech from './TopTech/topTech';
 import AssociateConsultant from './associateConsultant/associateConsultant';
 import Insights from './Insights/insights';
-import { UserContext } from '../../../Context/Context';
 
 const DashboardA = () => {
-  const { navigateTo} = useContext(UserContext);
-  console.log("this is the value of navigateTo in admin", navigateTo);
   const [StatusData, setStatusData] = useState([]);
   const [acData, setAcData] = useState([]);
   useEffect(() => {

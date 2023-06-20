@@ -1,5 +1,11 @@
 import React, { useState } from "react";
-import { Routes, Route, useLocation, useNavigate } from "react-router-dom";
+import {
+  Routes,
+  Route,
+  useLocation,
+  useNavigate,
+  useSearchParams,
+} from "react-router-dom";
 import LoginScreen from "./components/Accounts/Login/LoginScreen";
 import SignUpScreen from "./components/Accounts/SignUp/SignUpScreen";
 import RegistrationSuccessfulScreen from "./components/Accounts/SignUp/RegistrationSuccessfulScreen";
@@ -32,6 +38,8 @@ import MentorAuthGuard from "./components/MentorAuthGuard";
 function App() {
   const location = useLocation();
   const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
+  const userId = searchParams.get("userId");
 
   // const encodeUrl = (url) => {
   //   const encodeUrlFromBase = {
@@ -129,15 +137,18 @@ function App() {
 
           {/* admin routes */}
           <Route element={<AdminAuthGuard />}>
-            <Route path="/admin-dashboard" element={<DashboardA />} />
-            <Route path="/admin/report" element={<Report />} />
-            <Route path="/admin/report/:userId" element={<Detailedreport />} />
-            <Route path="/assign-task" element={<Task />} />
+          <Route path="/admin-dashboard" element={<DashboardA />} />
+          <Route path="/admin/reports" element={<Report />} />
+          <Route
+            path={`/admin/report`}
+            element={<Detailedreport detailId={userId} />}
+          />
+          <Route path="/assign-task" element={<Task />} />
           </Route>
 
           {/* mentor routes */}
           <Route element={<MentorAuthGuard />}>
-          <Route path="/mentor-dashboard" element={<MentorDashboard />} />
+            <Route path="/mentor-dashboard" element={<MentorDashboard />} />
           </Route>
 
           <Route path="*" element={<BadRequest />} />

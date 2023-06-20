@@ -23,7 +23,8 @@ export const Data = {
 };
 
 export const ApiObj = {
-  IN: "internName",
+  FN: "firstName",
+  LN: "lastName",
   IID:"internId",
   EID:"email",
   PN:"contactNumber",

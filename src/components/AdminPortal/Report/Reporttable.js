@@ -13,7 +13,8 @@ const Reporttable = ({ tableData }) => {
   const navigate = useNavigate();
   //funciton
   const handleOnclick = (index)=>{
-    navigate(`/admin/report/userId?id=${tableData[index][Data.ID]}`);
+    // navigate(`/admin/report/userId?id=${tableData[index][Data.ID]}`);
+    navigate(`/admin/report?userId=${tableData[index][Data.ID]}`);
   }
 
   return (
