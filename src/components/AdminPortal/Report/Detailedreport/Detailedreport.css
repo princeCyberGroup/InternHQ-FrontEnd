@@ -1,16 +1,16 @@
-::-webkit-scrollbar {
+/* .detailedrep-parent-wrapper::-webkit-scrollbar {
   display: block;
 }
-::-webkit-scrollbar-thumb {
+.detailedrep-parent-wrapper::-webkit-scrollbar-thumb {
   background-color: #888;
   border-radius: 25rem;
 }
 
 @media (min-width: 768px) {
-  ::-webkit-scrollbar {
+  .detailedrep-parent-wrapper::-webkit-scrollbar {
     display: none;
   }
-}
+} */
 .detailedrep-parent-wrapper {
   min-width: 1280px;
   margin-top: 16px;
@@ -27,7 +27,6 @@
   max-width: 1280px;
   min-width: 1280px;
   overflow-x: hidden;
-  border: 1px solid;
 }
 .detailrep-header {
   display: flex;
@@ -66,6 +65,7 @@
   flex-direction: column;
   gap: 0.75rem;
   margin-bottom: 1.5rem;
+  padding: 0 0.5rem;
 }
 .detailrep-user-info .use-info {
   font-family: "Roboto";
@@ -94,6 +94,7 @@
 }
 .other-info {
   display: flex;
+  align-items: center;
   gap: 1rem;
 }
 .icon-pair {
@@ -114,15 +115,14 @@
 }
 .detailrep-second-child {
   display: flex;
-  gap: 1rem;
+  /* gap: 1rem; */
+  justify-content: space-around;
   margin-bottom: 1.5rem;
-  border: 1px solid;
 }
 .detailrep-second-child .detail-child {
   display: flex;
   flex-direction: column;
   gap: 0.75rem;
-  border: 1px solid;
 }
 .skills-achieved,
 .most-skill-hr,
@@ -130,6 +130,14 @@
   box-shadow: 0px 4px 20px rgba(40, 52, 73, 0.15);
   border-radius: 8px;
   height: 274px;
+}
+.most-skill-hr{
+  border:1px solid ;
+  width: 394px;
+  height: 274px;
+}
+.project-details{
+  padding: 0.5rem 0.25rem 0.5rem 0;
 }
 /* .skills-achieved {
   width: 340px;

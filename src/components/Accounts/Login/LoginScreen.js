@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
 import "../Accounts.css";
@@ -6,11 +6,13 @@ import Cginfinitylogo from "../../../Assets/Cginfinitylogo.png";
 import CarouselImage1 from "../../../Assets/CarouselImage1.svg";
 import CarouselImage2 from "../../../Assets/CarouselImage2.svg";
 import CarouselImage3 from "../../../Assets/CarouselImage3.svg";
+import { UserContext } from "../../../Context/Context";
 import "bootstrap-icons/font/bootstrap-icons.css";
 import { bottom } from "@popperjs/core";
 
 const LoginScreen = () => {
   const navigate = useNavigate();
+  const { navigateTo } = useContext(UserContext);
   // const [activeIndex, setActiveIndex] = useState(0); //For carousel
 
   const [email, setEmail] = useState("");
@@ -48,7 +50,6 @@ const LoginScreen = () => {
         password,
       })
       .then((response) => {
-        console.log("data2:",response.data);
         localStorage.setItem("login", true);
         const res = {
           token: response.data.token,
@@ -56,7 +57,8 @@ const LoginScreen = () => {
           userId: response.data.userId,
           firstName: response.data.firstName,
           lastName: response.data.lastName,
-          deployed:response.data.isDeployed
+          deployed: response.data.isDeployed,
+          userType: response.data.userType,
         };
         localStorage.setItem("userData", JSON.stringify(res));
         // const res = {
@@ -76,7 +78,14 @@ const LoginScreen = () => {
         // localStorage.setItem('userData', JSON.stringify(res));
         // setAuth({ email, password, token });
         setIsLoading(false);
-        navigate("/dashboard");
+        navigateTo = res.userType.toLowerCase();
+        navigate(
+          res.userType.toLowerCase() === "u"
+            ? "/dashboard"
+            : res.userType.toLowerCase() === "a"
+            ? "/admin-dashboard"
+            : "/mentor-dashboard"
+        );
         localStorage.setItem("token");
       })
       .catch((error) => {
@@ -86,7 +95,7 @@ const LoginScreen = () => {
         console.log(error.response?.data);
         // console.log(error.response.data);
         // console.log(error.response?.data.msg);
-        console.log(error.response.data.status);
+        // console.log(error.response.data.status);
 
         // localStorage.setItem("login",false);
         if (error.response?.data.msg === "Error: Email does not exist") {
@@ -108,15 +117,20 @@ const LoginScreen = () => {
 
   useEffect(() => {
     let login = localStorage.getItem("login");
-    if (login) {
-      navigate("/dashboard");
+    console.log("value of authguard in login", navigateTo);
+    if (login && navigateTo !== "") {
+      navigateTo === "u"
+        ? navigate("/dashboard")
+        : navigateTo === "a"
+        ? navigate("/admin-dashboard")
+        : navigate("/mentor-dashboard");
     }
     // const interval = setInterval(() => {
     //   setActiveIndex((prevIndex) => (prevIndex + 1) % 3);
     // }, 3000); //Make it 1000
 
     // return () => {
-    //   clearInterval(interval);
+    //   setNavigateTo();
     // };
   }, []);
   return (
@@ -278,18 +292,18 @@ const LoginScreen = () => {
                     </label>
                     {/* <div className="password-input-container"> */}
                     <div className="input-group">
-                    <input
-                      className="input-login"
-                      type={showPassword ? "password" : "text"}
-                      id="exampleInputPassword1"
-                      placeholder="Enter Your Password"
-                      value={password}
-                      required
-                      onChange={handlePasswordChange}
-                    />
+                      <input
+                        className="input-login"
+                        type={showPassword ? "password" : "text"}
+                        id="exampleInputPassword1"
+                        placeholder="Enter Your Password"
+                        value={password}
+                        required
+                        onChange={handlePasswordChange}
+                      />
                       <button
                         className="btn password-toggle-button"
-                        style={{border: "none"}}
+                        style={{ border: "none" }}
                         type="button"
                         onClick={handleTogglePasswordVisibility}
                       >

@@ -1,4 +1,4 @@
-::-webkit-scrollbar {
+/* ::-webkit-scrollbar {
   display: block;
 }
 ::-webkit-scrollbar-thumb {
@@ -10,8 +10,7 @@
   ::-webkit-scrollbar {
     display: none;
   }
-}
-
+} */
 .report-parent-wrapper {
   min-width: 1280px;
   margin-top: 16px;
@@ -151,8 +150,8 @@
   box-shadow: 0px 4px 20px rgba(40, 52, 73, 0.15);
   border-radius: 4px;
   padding-left: 0.875rem;
-  border: 1px solid;
   overflow-y: scroll;
+  z-index: 1;
 }
 .report-drop-down-level {
   height: 1.938rem;
@@ -213,6 +212,9 @@
   border-radius: 4px;
   padding-left: 0.875rem;
 }
-.report-table-wrapper{
+.report-table-wrapper {
   overflow: auto;
+}
+.report-table-tr {
+  padding: 0.625rem 0.75rem;
 }
