@@ -15,6 +15,8 @@ const SignUpOtpScreen = () => {
   const navigate = useNavigate();
   // const [activeIndex, setActiveIndex] = useState(0); //For carousel
   const [value, setValue] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
+
 
   const handleChange = (event) => {
     const inputValue = event.target.value;
@@ -28,7 +30,7 @@ const SignUpOtpScreen = () => {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    
+    setIsLoading(true);
 
     const token = localStorage.getItem("token");
     const email = localStorage.getItem("email");
@@ -59,12 +61,20 @@ const SignUpOtpScreen = () => {
         // localStorage.setItem("token", response.data.token);
         localStorage.setItem('userData', JSON.stringify(res));
         // setAuth({ email, password, token });
+        setIsLoading(false);
         navigate("/success");
         console.log(response.data);
         localStorage.setItem("token");
       })
       .catch((error) => {
         console.log(error.response.data);
+        setIsLoading(false);
+        if(error.response?.data.statusCode == 400) {
+          navigate('/error?statusCode=400')
+        } 
+         if(error.response?.data.statusCode == 500) {
+          navigate('/error?statusCode=500')
+        } 
       });
     console.log(otp);
   }
@@ -244,9 +254,19 @@ const SignUpOtpScreen = () => {
                 </div>
                 <button
                   class="btn btn-warning border-0 sign-up-btn mt-3"
-                  disabled={value.length < 6}
+                  disabled={value.length < 6 || isLoading}
                 >
-                  Verify
+
+                  {isLoading ? (
+                    <div
+                      className="spinner-border spinner-border-sm text-light"
+                      role="status"
+                    >
+                      <span className="visually-hidden">Loading...</span>
+                    </div>
+                  ) : (
+                    "Verify"
+                  )}
                 </button>
               </form>
             </div>

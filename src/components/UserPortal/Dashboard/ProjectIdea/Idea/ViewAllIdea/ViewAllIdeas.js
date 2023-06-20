@@ -244,24 +244,6 @@ const ViewAllIdeas = () => {
                             <TechDropDown
                               techDataComingChild={techDataComingFrmChild}
                             />
-                            {/* <div
-                          class="form-check small"
-                          onClick={(e)=>{handleOptionClick(e)}}
-                          data-value="NodeJS"
-                        >
-                          <label
-                            class="form-check-label"
-                            for="nodeJs"
-                          >
-                            Node Js 
-                          </label>
-                          <input
-                            class="form-check-input"
-                            type="checkbox"
-                            value="ytch"
-                            id="nodeJs"
-                          />
-                        </div> */}
                           </ul>
                         </div>
                         {/* </div> */}

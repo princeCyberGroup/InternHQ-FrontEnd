@@ -311,59 +311,53 @@ const AddNewIdea = () => {
                 </div>
 
                 <div className="mb-3">
-                  <label
-                    htmlFor="technology-used"
-                    className="col-form-label title-text"
-                    required
-                  >
-                    Technology Used <span style={{ color: "red" }}>*</span>
-                  </label>
-                  <div
-                    className="container border p-0"
-                    style={{
-                      borderRadius: "5px",
-                      border: "1px solid #ced4da",
-                      lineHeight: "1px",
-                    }}
-                  >
-                    <div className="input-with-button">
-                      <button
-                        type="button"
-                        className="button-for-dropdown"
-                        onClick={() => {
-                          setDropDown(!dropDown);
-                        }}
+                      <label
+                        htmlFor="technology-used"
+                        className="col-form-label title-text"
+                        required
                       >
-                        <input
-                          type="text"
-                          className="custom-input"
-                          value={Object.values(tech)}
-                          disabled
-                        />
-                      </button>
-                      <button
-                        type="button"
-                        className="expand-more"
-                        onClick={() => {
-                          setDropDown(!dropDown);
-                        }}
-                      >
-                        <ExpandMore />
-                      </button>
+                        Technology Used <span style={{ color: "red" }}>*</span>
+                      </label>
+                      <div className="container border p-0">
+                        <div className="input-with-button">
+                          <button
+                            type="button"
+                            className="button-for-dropdown"
+                            onClick={() => {
+                              setDropDown(!dropDown);
+                            }}
+                          >
+                            <input
+                              type="text"
+                              className="custom-input"
+                              value={Object.values(tech)}
+                              disabled
+                            />
+                          </button>
+                          <button
+                            type="button"
+                            className="expand-more"
+                            onClick={() => {
+                              setDropDown(!dropDown);
+                            }}
+                          >
+                            <ExpandMore />
+                          </button>
+                        </div>
+                        <div>
+                          <ul
+                            style={{ display: dropDown ? "" : "none" }}
+                            className="ul-styling"
+                          >
+                            <TechDropDown
+                              techDataComingChild={techDataComingFrmChild}
+                            />
+                          </ul>
+                        </div>
+                        {/* </div> */}
+                      </div>
                     </div>
-                    <div>
-                      <ul
-                        style={{ display: dropDown ? "" : "none" }}
-                        className="ul-styling"
-                      >
-                        <TechDropDown
-                          techDataComingChild={techDataComingFrmChild}
-                        />
-                      </ul>
-                    </div>
-                    {/* </div> */}
-                  </div>
-                </div>
+
 
                 <div className="mb-3">
                   <label
