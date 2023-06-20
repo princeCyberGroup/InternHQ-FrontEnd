@@ -127,6 +127,15 @@ border-radius: 4px;
     position: relative;
   }
 
+.assigned-to {
+    display: flex;
+    flex-direction: row;
+    /* justify-content: space-between; */
+    /* justify-content: flex-start;
+    position: relative;
+    left: 0.6rem; */
+}
+
   /* .dropdown {
     position: relative;
     display: inline-block;
@@ -153,3 +162,4 @@ border-radius: 4px;
   .options li:hover {
     background-color: rgb(168, 218, 236);
   } */
+

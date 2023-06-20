@@ -1,11 +1,18 @@
 import React, { useEffect } from "react";
-import { useState, createContext } from "react";
+import{ useContext } from "react";
+import { useState, createContext  } from "react";
+import { ReactComponent as LeftToRetake } from "./svgs/leftToReatake.svg";
+import { ReactComponent as Completed } from "./svgs/Testcompleted.svg";
+import { ReactComponent as Bronze } from "./svgs/Star-bronze.svg";
+import { ReactComponent as Silver } from "./svgs/Star-silver.svg";
+import { ReactComponent as Gold } from "./svgs/Star-gold.svg";
 // import logo from '../../../Assets/image 13.png';
 import "./TakeTest.css";
 import { BsClock } from "react-icons/bs";
 import { MdOutlineBallot } from "react-icons/md";
 import Button from 'react-bootstrap/Button';
 import { Link, useLocation, useNavigate } from "react-router-dom";
+import { UserContext } from "../../../../Context/Context";
 
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 
@@ -13,6 +20,8 @@ export const TestContext = createContext();
 
 const TakeTest = ({ test }) => {
     const [activeButton, setActiveButton] = useState("all");
+    const { score } = useContext(UserContext);
+    const [daysDifference, setDaysDifference] = useState(calculateDaysDifference());
     // const [searchQuery, setSearchQuery] = useState("");
     const [tests, setTests] = useState([]);
     const [originalTests, setOriginalTests] = useState([]);
@@ -74,6 +83,39 @@ const TakeTest = ({ test }) => {
     const clickCont =()=>{
         navigate("/take-your-test", { state: data });
     }
+    function calculateDaysDifference() {
+        const currentDate = new Date();
+        const twoDaysAgo = new Date();
+        twoDaysAgo.setDate(twoDaysAgo.getDate() - 2);
+        return Math.floor(
+          (currentDate.getTime() - twoDaysAgo.getTime()) / (1000 * 60 * 60 * 24)
+        );
+      }
+      let statusDiv;
+  if (score > 8) {
+    statusDiv = (
+      <div className="statusOfTEstCompleted">
+        <Completed />
+      </div>
+    );
+  } else if (daysDifference >= 2) {
+    statusDiv = (
+      <div className="statusOftest">
+        <LeftToRetake />
+      </div>
+    );
+  }
+  let LevelComponent;
+
+if (tests.level === "Beginner") {
+  LevelComponent =( <div> <Bronze /></div> );
+} else if (tests.level === "Intermediate") {
+  LevelComponent = <Silver />;
+} else if (tests.level === "Advanced") {
+  LevelComponent = <Gold />;
+}
+  
+    
     return (
         <> <div className="TTheading">
             <p>Take The Test</p>
@@ -112,6 +154,7 @@ const TakeTest = ({ test }) => {
                         <button
                             className="btn-nav p-0"
                             onClick={() => {
+
                                 setActiveButton("inter");
                                 setTests(allData.filter(tests => tests.level === 'Intermediate'));
                             }}
@@ -148,12 +191,17 @@ const TakeTest = ({ test }) => {
                     class="card-body p-0"
                     style={{ maxHeight: "50rem", overflow: "auto" }}
                 >
-                    <div className="row cards main-card-inside"   style={{ maxHeight: "470px", overflow: "auto" }}>
+                    <div className="row cards main-card-inside"  style={{ maxHeight: "470px", overflow: "auto" }}>
                         <div className="row d-flex justify-content-evenly">
 
                             {tests?.map(test => (
                                 <div className='exam'>
+            
                                     <div class="card outer-card">
+                                    {/* <div className="statusOftest"> <LeftToRetake />  </div> */}
+                                    {/* <div className="statusOfTEstCompleted"> <Completed />  </div> */}
+                                     {/* {statusDiv} */}
+
                                         <div class="d-flex align-items-center">
                                             <div class="ml-3 w-100">
                                                 <div className="d-flex justify-content-start ">
@@ -162,7 +210,9 @@ const TakeTest = ({ test }) => {
                                                     </div>
                                                     <div >
                                                         <div className="Category_box justify-content-center">
+                                                            
                                                             <span className="Category" >{test.level}</span>
+                                                            {LevelComponent}
                                                         </div>
                                                         <div className=" About_box justify-content-center">
                                                             <span className="About">{test.examName}</span>
@@ -179,7 +229,6 @@ const TakeTest = ({ test }) => {
                                                             <BsClock style={{ marginRight: "5px" }} />{test.examDuration} mins</div>
                                                     </div>
                                                     <div class="d-flex flex-column">
-
                                                         <Button 
                                                          onClick={() => clickHandler(
                                                             test.examId,
@@ -189,7 +238,6 @@ const TakeTest = ({ test }) => {
                                                             test.techName,
                                                             test.level)}
                                                              className='btnclick' data-bs-toggle="modal" data-bs-target="#staticBackdrop" >Start Test</Button>
-                                                        {/* </Link>{' '} */}
                                                     </div>
                                                     <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
                                                         <div class="modal-dialog modal-dialog-centered">
@@ -207,12 +255,9 @@ const TakeTest = ({ test }) => {
                                                                 </div>
                                                                 <div class="modal-footer">
                                                                     <button type="button" class="btn btn-outline-primary" data-bs-dismiss="modal">Cancel</button>
-                                                                    {/* <Link key={test.examId} to={`/take-your-test`}> */}
                                                                     <button type="button"
                                                                         onClick={() => clickCont()}
-                                                                        // onClick={() => { clickHandler(test.examId,test.examName,test.examDuration,test.numberOfQuestion,test.techName,test.level) }} 
                                                                         data-bs-dismiss="modal" class="btn btn-primary">Continue</button>
-                                                                    {/* </Link> */}
                                                                 </div>
                                                             </div>
                                                         </div>
