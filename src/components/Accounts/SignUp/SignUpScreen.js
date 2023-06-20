@@ -15,7 +15,7 @@ const SignUpScreen = () => {
   const [isEmailValid, setIsEmailValid] = useState(false);
   const [password, setPassword] = useState("");
   const [isPasswordValid, setIsPasswordValid] = useState(false);
-  const [showPassword, setShowPassword] = useState(false);
+  const [showPassword, setShowPassword] = useState(true);
 
   const [incorrectemail, setIncorrectemail] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
@@ -60,11 +60,18 @@ const SignUpScreen = () => {
       .catch((error) => {
         console.log("Inside Catch")
         console.log(error.response?.data);
+        
         if (error.response?.data.msg == "Error: User Already Exists!") {
           setIsEmailValid(false);
           setIncorrectemail(true);
         }
         setIsLoading(false);
+        if(error.response?.data.statusCode == 400) {
+          navigate('/error?statusCode=400')
+        } 
+         if(error.response?.data.statusCode == 500) {
+          navigate('/error?statusCode=500')
+        } 
       });
     console.log(email);
     console.log(`password: ${password} (hidden visible only on backend)`);
@@ -112,12 +119,12 @@ const SignUpScreen = () => {
               </div>
               <div
                 id="carouselExampleIndicators"
-                className="carousel slide"
+                className="carousel slide mt-3"
                 data-bs-ride="carousel"
                 // data-bs-interval="4000"
                 // data-interval="false" //Remove it
               >
-                <div className="carousel-indicators" style={{marginBottom: "2.5rem"}}>
+                <div className="carousel-indicators">
                   <button
                     data-bs-target="#carouselExampleIndicators"
                     data-bs-slide-to="0"
@@ -218,7 +225,7 @@ const SignUpScreen = () => {
                       Email ID
                     </label>
                     <input
-                      className="input-fields"
+                      className="input-login"
                       type="email"
                       id="exampleInputEmail1"
                       value={email}
@@ -244,8 +251,8 @@ const SignUpScreen = () => {
                     </label>
                     <div className="input-group">
                     <input
-                      className="input-fields"
-                      type={showPassword ? "text" : "password"}
+                      className="input-login"
+                      type={showPassword ? "password" : "text"}
                       id="exampleInputPassword1"
                       placeholder="Enter Your Password"
                       value={password}

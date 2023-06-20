@@ -54,6 +54,12 @@ const ForgotPasswordScreen = () => {
       }
       console.log(error.response?.data[0].response)
       setIsLoading(false);
+      if(error.response?.data.statusCode == 400) {
+        navigate('/error?statusCode=400')
+      } 
+       if(error.response?.data.statusCode == 500) {
+        navigate('/error?statusCode=500')
+      } 
     });
     
   };
@@ -100,12 +106,12 @@ const ForgotPasswordScreen = () => {
               </div>
               <div
                 id="carouselExampleIndicators"
-                className="carousel slide"
+                className="carousel slide mt-3"
                 data-bs-ride="carousel"
                 // data-bs-interval="4000"
                 // data-interval="false" //Remove it
               >
-                <div className="carousel-indicators" style={{marginBottom: "2.5rem"}}>
+                <div className="carousel-indicators">
                   <button
                     data-bs-target="#carouselExampleIndicators"
                     data-bs-slide-to="0"
@@ -227,7 +233,7 @@ const ForgotPasswordScreen = () => {
                     Email ID
                   </label>
                   <input
-                  className="input-fields"
+                  className="input-login"
                     type="email"
                     id="exampleInputEmail1"
                     value={email}

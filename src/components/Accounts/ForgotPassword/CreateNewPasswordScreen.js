@@ -16,8 +16,8 @@ const CreateNewPasswordScreen = () => {
   const [isPasswordValid, setIsPasswordValid] = useState(false);
   const [confirmPassword, setConfirmPassword] = useState("");
   const [isConfirmPasswordValid, setIsConfirmPasswordValid] = useState(false);
-  const [showNewPassword, setShowNewPassword] = useState(false);
-  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+  const [showNewPassword, setShowNewPassword] = useState(true);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(true);
 
   const [isPasswordSame, setIsPasswordSame] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
@@ -88,6 +88,12 @@ const CreateNewPasswordScreen = () => {
         console.log(error.response?.data);
         setIsPasswordSame(true);
         setIsLoading(false);
+        if(error.response?.data.statusCode == 400) {
+          navigate('/error?statusCode=400')
+        } 
+        if(error.response?.data.statusCode == 500) {
+          navigate('/error?statusCode=500')
+        }
         // console.log(error.response?.data.msg);
       });
     // console.log(newPassword);
@@ -139,12 +145,12 @@ const CreateNewPasswordScreen = () => {
               </div>
               <div
                 id="carouselExampleIndicators"
-                className="carousel slide"
+                className="carousel slide mt-3"
                 data-bs-ride="carousel"
                 // data-bs-interval="4000"
                 // data-interval="false" //Remove it
               >
-                <div className="carousel-indicators" style={{marginBottom: "2.5rem"}}>
+                <div className="carousel-indicators">
                   <button
                     data-bs-target="#carouselExampleIndicators"
                     data-bs-slide-to="0"
@@ -245,8 +251,8 @@ const CreateNewPasswordScreen = () => {
                     </label>
                     <div className="input-group">
                     <input
-                      className="input-fields"
-                      type={showNewPassword ? "text" : "password"}
+                      className="input-login"
+                      type={showNewPassword ? "password" : "text"}
                       id="exampleInputEmail1"
                       placeholder="Enter New Password"
                       value={newPassword}
@@ -283,8 +289,8 @@ const CreateNewPasswordScreen = () => {
                     </label>
                     <div className="input-group">
                     <input
-                      className="input-fields"
-                      type={showConfirmPassword ? "text" : "password"}
+                      className="input-login"
+                      type={showConfirmPassword ? "password" : "text"}
                       id="exampleInputPassword1"
                       placeholder="Enter Confirm Password"
                       value={confirmPassword}

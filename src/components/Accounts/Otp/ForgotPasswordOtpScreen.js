@@ -55,6 +55,12 @@ const ForgotPasswordOtpScreen = () => {
         console.log(error.response.data);
         setIsOtpValid(true)
         setIsLoading(false);
+        if(error.response?.data.statusCode == 400) {
+          navigate('/error?statusCode=400')
+        } 
+         if(error.response?.data.statusCode == 500) {
+          navigate('/error?statusCode=500')
+        } 
       });
     console.log(otp);
     
@@ -102,12 +108,12 @@ const ForgotPasswordOtpScreen = () => {
               </div>
               <div
                 id="carouselExampleIndicators"
-                className="carousel slide "
+                className="carousel slide mt-3"
                 data-bs-ride="carousel"
                 // data-bs-interval="4000"
                 // data-interval="false" //Remove it
               >
-                <div className="carousel-indicators" style={{marginBottom: "2.5rem"}}>
+                <div className="carousel-indicators">
                   <button
                     data-bs-target="#carouselExampleIndicators"
                     data-bs-slide-to="0"
@@ -223,7 +229,7 @@ const ForgotPasswordOtpScreen = () => {
               <form onSubmit={handleSubmit}>
                 <div className="d-flex flex-column">
                   <input
-                  className="input-fields"
+                  className="input-login"
                     type="text"
                     pattern="\d*" // Used the "pattern" attribute to enforce digits only
                     value={value}

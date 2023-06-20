@@ -20,15 +20,11 @@ const TopicSelect = (props) => {
     const {projectApiData,setProjectApiData}=useContext(UserContext);
   const { onChange, disabled, resetSelect, learningType, topicName } = props;
   const [topics, setTopics] = useState([]);
+  const [myProjects, setMyProjects]=useState();
 
-    if(projectApiData){
-    var arr =[];
-    for (var i=0; i<projectApiData.length; i++){
-        arr.push(projectApiData[i].projectNames)
-    }
-   
-}
+
   useEffect(() => {
+    Projects();
     fetchTopics();
   }, []);
 
@@ -40,6 +36,22 @@ const TopicSelect = (props) => {
       setTopics(response.data.response);
     } catch (error) {
       console.error("Error fetching topics:", error);
+    }
+  };
+
+
+const storedObject = localStorage.getItem("userData");
+  const parsedObject = JSON.parse(storedObject);
+  const userId = parsedObject.userId;
+  const Projects = async () => {
+    try {
+      const response = await axios.get(
+        `https://cg-interns-hq.azurewebsites.net/getProject?userId=${userId}`
+      );
+
+      setMyProjects(response.data.response);
+    } catch (error) {
+      console.error("Error fetching projects:", error);
     }
   };
 
@@ -106,11 +118,13 @@ const TopicSelect = (props) => {
               defaultValue=""
             >
               <option value="" disabled hidden>
-                Select Topic
+                Select Project
               </option>
-              {arr.map((topic, index) => (
+              {myProjects?.length===0 ? (<option value="default" disabled >
+                No Project Added
+              </option>) : myProjects?.map((topic, index) => (
                 <option className="dtt-opns" key={index} value={topic}>
-                  {topic}
+                  {topic.projectNames}
                 </option>
               ))}
             </select>

@@ -17,8 +17,16 @@ import DailyUpdateTable from "./components/UserPortal/DailyUpdateTable/DailyUpda
 import SkillManagement from "./components/UserPortal/SkillManagement/SkillManagement";
 import ViewAllIdeas from "./components/UserPortal/Dashboard/ProjectIdea/Idea/ViewAllIdea/ViewAllIdeas";
 import TakeTest from "./components/UserPortal/SkillManagement/TakeTest/TakeTest";
-import BadRequest from "./components/ErrorPage/BadRequest";
 import Context from "./Context/Context";
+
+// admin import 
+import Report from "./components/AdminPortal/Report/Report"; 
+import Task from "./components/AdminPortal/Task/Task";
+import DashboardA from './components/AdminPortal/Dashboard/DashboardA'
+import Error_400 from "./components/ErrorPage/Error_400";
+import Error_500 from "./components/ErrorPage/Error_500";
+import Error_404 from "./components/ErrorPage/Error_404";
+
 function App() {
 
   const location = useLocation();
@@ -117,10 +125,18 @@ function App() {
             <Route path="/skill-management" element={<SkillManagement />} />
             <Route exact path="/take-test" component={<TakeTest />} />
             <Route path="/take-your-test" element={<TakeYourTest />} />
+            <Route path="/project-idea-projects" element={<ViewAllIdeas />} />
           </Route>
-          {/* </Route> */}
 
-          <Route path="*" element={<BadRequest />} />
+
+          {/* admin routes */}
+          <Route path="/admin/report" element={<Report />} />
+           <Route path="/admin-dashboard" element={<DashboardA/>} />
+           <Route path="/assign-task" element={<Task />} />
+              <Route path="/error?statusCode=400" element={<Error_400 />}/>
+              <Route path="/error?statusCode=500" element={<Error_500 />}/>
+          <Route path="*" element={<Error_404 />} />
+
         </Routes>
         {/* </Router> */}
       </div>

@@ -1,6 +1,5 @@
 import React, { useState, useContext, useEffect } from "react";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
 import ProjectDetail from "../../ViewDetails/ProjectDetail";
 import Header from "../../../../../Header/Header";
 import EmptyProjectState from "../../../EmptyStates/EmptyProject/Project";
@@ -11,29 +10,24 @@ import EmptyProjectView from "../../../EmptyStates/EmptyProject/ProjectViewAll";
 import { ReactComponent as ExpandMore } from "../../../../../../Assets/expand_more.svg";
 import BreadCrumbs from "../../../../../BreadCrumbs/BreadCrumbs";
 
-const ViewAllProjects = () => {
-  const { project } = useContext(UserContext);
-
+const ViewAllProjects = () => {  
+  const { project } = useContext(UserContext);  
   const [dropDown, setDropDown] = useState(false);
   const [projName, setProjName] = useState("");
   const [projDescription, setProjDescription] = useState("");
   const [projectLink, setProjectLink] = useState("");
   const [hostedLink, setHostedLink] = useState("");
-  // const [selectedOptions, setSelectedOptions] = useState([]);
-  const [counter, setCounter] = useState(1);
   const [textInput, setTextInput] = useState("");
   const [memberNames, setMemberNames] = useState({});
   const [techNames, seTechNames] = useState({});
-  // const [dropDown, setDropDown] = useState(false);
   const [error, setError] = useState("");
   const [desError, setDesError] = useState("");
   const [projLinkError, setProjLinkError] = useState("");
-
-  const [tech, setTech] = useState({});
-  const navigate = useNavigate();
-
   const [projectIndex, setProjectIndex] = useState(0);
+  const [tech, setTech] = useState({});
+
   const details = project;
+  
   const techDataComingFrmChild = (data) => {
     return setTech(data);
   };
@@ -56,7 +50,6 @@ const ViewAllProjects = () => {
       setDesError("");
     }
   };
-
   const handleInputChange = (event) => {
     setTextInput(event.target.value);
   };
@@ -103,7 +96,6 @@ const ViewAllProjects = () => {
         technologyNames: techNames,
         memberNames: memberNames,
       })
-      .then((res) => {})
       .catch((err) => {
         console.log(err);
       });
@@ -120,7 +112,6 @@ const ViewAllProjects = () => {
     texts.forEach((text, index) => {
       membersObj[`member${index + 1}`] = text;
     });
-
     isObjectEmpty(membersObj);
   }, [textInput]);
 
@@ -221,7 +212,6 @@ const ViewAllProjects = () => {
                         rows={3}
                       ></textarea>
                     </div>
-
                     <div className="mb-3">
                       <label
                         htmlFor="technology-used"
@@ -269,7 +259,6 @@ const ViewAllProjects = () => {
                         {/* </div> */}
                       </div>
                     </div>
-
                     {/* //project Link open  */}
                     <div class="mb-3">
                       <label
@@ -326,9 +315,7 @@ const ViewAllProjects = () => {
                     {/* //Member close */}
                   </form>
                 </div>
-
                 {/* //Applied Modal from addProject.js 482 -> 730 */}
-
                 <div class="modal-footer">
                   <button
                     type="button"
@@ -351,29 +338,21 @@ const ViewAllProjects = () => {
             </div>
           </div>
         </div>
-        {details && details.length === 0 ? (
-          <EmptyProjectState />
+        {project && project.length === 0 ? (
+          <EmptyProjectView />
         ) : (
           <div
             className="all-project-idea-wrapper entire-component ms-0"
             style={{ overFlowY: "scroll" }}
           >
             <div>
-              <DetailsLeft data={details} projectDetails={handelIndex} />
+              <DetailsLeft data={project} projectDetails={handelIndex} />
             </div>
             <div className="project-detail">
-              <ProjectDetail data={details} indexNumber={projectIndex} />
+              <ProjectDetail data={project} indexNumber={projectIndex} />
             </div>
           </div>
         )}
-        {/* <div className="all-project-idea-wrapper entire-component ms-0" style={{ overFlowY: "scroll" }}>
-                    <div >
-                        <ProjectIdeas data={details} projectDetails={handelIndex} />
-                    </div>
-                    <div className="project-detail" >
-                        <ProjectDetail data={details} indexNumber={projectIndex} />
-                    </div>
-                </div> */}
       </div>
     </>
   );

@@ -12,11 +12,8 @@ const AddProject = () => {
   const [first, ...rest] = project;
   const [projName, setProjName] = useState("");
   const [projDescription, setProjDescription] = useState("");
-  const [technologyNames, setTechnologyNames] = useState([]);
   const [projectLink, setProjectLink] = useState("");
   const [hostedLink, setHostedLink] = useState("");
-  const [selectedOptions, setSelectedOptions] = useState([]);
-  const [counter, setCounter] = useState(1);
   const [textInput, setTextInput] = useState("");
   const [memberNames, setMemberNames] = useState({});
   const [techNames, seTechNames] = useState({});
@@ -24,9 +21,7 @@ const AddProject = () => {
   const [error, setError] = useState(true);
   const [desError, setDesError] = useState("");
   const [projLinkError, setProjLinkError] = useState("");
-  const [technologyError, setTechnologyError] = useState("");
   const [tech, setTech] = useState({});
-
 
   const handleProjectNameChange = (event) => {
     const name = event.target.value;
@@ -63,7 +58,6 @@ const AddProject = () => {
     setProjDescription("");
     setProjectLink("");
     setHostedLink("");
-    setTechnologyNames({});
     setDropDown(false);
   };
   const handleProjectLinkChange = (event) => {
@@ -263,59 +257,53 @@ const AddProject = () => {
                   ></textarea>
                 </div>
                 <div className="mb-3">
-                  <label
-                    htmlFor="technology-used"
-                    className="col-form-label title-text"
-                    required
-                  >
-                    Technology Used <span style={{ color: "red" }}>*</span>
-                  </label>
-                  <div
-                    className="container border p-0"
-                    style={{
-                      borderRadius: "5px",
-                      border: "1px solid #ced4da",
-                      lineHeight: "1px",
-                    }}
-                  >
-                    <div className="">
-                      <button
-                        type="button"
-                        className="button-for-dropdown"
-                        onClick={() => {
-                          setDropDown(!dropDown);
-                        }}
+                      <label
+                        htmlFor="technology-used"
+                        className="col-form-label title-text"
+                        required
                       >
-                        <input
-                          type="text"
-                          className="custom-input"
-                          value={Object.values(tech)}
-                          disabled
-                        />
-                      </button>
-                      <button
-                        type="button"
-                        className="expand-more"
-                        onClick={() => {
-                          setDropDown(!dropDown);
-                        }}
-                      >
-                        <ExpandMore />
-                      </button>
+                        Technology Used <span style={{ color: "red" }}>*</span>
+                      </label>
+                      <div className="container border p-0">
+                        <div className="input-with-button">
+                          <button
+                            type="button"
+                            className="button-for-dropdown"
+                            onClick={() => {
+                              setDropDown(!dropDown);
+                            }}
+                          >
+                            <input
+                              type="text"
+                              className="custom-input"
+                              value={Object.values(tech)}
+                              disabled
+                            />
+                          </button>
+                          <button
+                            type="button"
+                            className="expand-more"
+                            onClick={() => {
+                              setDropDown(!dropDown);
+                            }}
+                          >
+                            <ExpandMore />
+                          </button>
+                        </div>
+                        <div>
+                          <ul
+                            style={{ display: dropDown ? "" : "none" }}
+                            className="ul-styling"
+                          >
+                            <TechDropDown
+                              techDataComingChild={techDataComingFrmChild}
+                            />
+                          </ul>
+                        </div>
+                        {/* </div> */}
+                      </div>
                     </div>
-                    <div>
-                      <ul
-                        style={{ display: dropDown ? "" : "none" }}
-                        className="ul-styling"
-                      >
-                        <TechDropDown
-                          techDataComingChild={techDataComingFrmChild}
-                        />
-                      </ul>
-                    </div>
-                    {/* </div> */}
-                  </div>
-                </div>
+
                 <div class="mb-3">
                   <label for="Project Link" class="col-form-label title-text">
                     Project Link<span style={{ color: "red" }}>*</span>{" "}

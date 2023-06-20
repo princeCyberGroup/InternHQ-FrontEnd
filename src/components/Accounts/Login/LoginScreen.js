@@ -17,7 +17,7 @@ const LoginScreen = () => {
   const [isEmailValid, setIsEmailValid] = useState(false);
   const [password, setPassword] = useState("");
   const [isPasswordValid, setIsPasswordValid] = useState(true);
-  const [showPassword, setShowPassword] = useState(false);
+  const [showPassword, setShowPassword] = useState(true);
 
   const [incorrectemail, setIncorrectemail] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
@@ -96,7 +96,12 @@ const LoginScreen = () => {
           setIsPasswordValid(false);
         }
         setIsLoading(false);
-
+        if(error.response?.data.statusCode == 400) {
+          navigate('/error?statusCode=400')
+        } 
+         if(error.response?.data.statusCode == 500) {
+          navigate('/error?statusCode=500')
+        }
         // navigate(`/error?statusCode=${error.response?.data.statusCode}`);
       });
     // console.log(email);
@@ -147,12 +152,12 @@ const LoginScreen = () => {
               </div>
               <div
                 id="carouselExampleIndicators"
-                className="carousel slide "
+                className="carousel slide mt-3"
                 data-bs-ride="carousel"
                 // data-bs-interval="4000"
                 // data-interval="false" //Remove it
               >
-                <div className="carousel-indicators" style={{marginBottom: "2.5rem"}}>
+                <div className="carousel-indicators">
                   <button
                     data-bs-target="#carouselExampleIndicators"
                     data-bs-slide-to="0"
@@ -252,7 +257,7 @@ const LoginScreen = () => {
                       Email ID
                     </label>
                     <input
-                      className="input-fields"
+                      className="input-login"
                       type="email"
                       id="exampleInputEmail1"
                       value={email}
@@ -279,8 +284,8 @@ const LoginScreen = () => {
                     {/* <div className="password-input-container"> */}
                     <div className="input-group">
                     <input
-                      className="input-fields"
-                      type={showPassword ? "text" : "password"}
+                      className="input-login"
+                      type={showPassword ? "password" : "text"}
                       id="exampleInputPassword1"
                       placeholder="Enter Your Password"
                       value={password}
