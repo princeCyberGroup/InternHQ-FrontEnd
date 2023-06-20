@@ -1,29 +1,35 @@
-@import url('https://fonts.googleapis.com/css2?family=Lexend+Deca:wght@400;500;700&display=swap');
-.error-page-body {
-  font-family: "Lexend Deca";
-  color: #343435;
-}
+@import url("https://fonts.googleapis.com/css2?family=Lexend+Deca:wght@500;700&display=swap");
 
 .error-heading {
+  font-family: "Lexend Deca";
   font-weight: 700;
-  font-size: 100px;
-  line-height: 125px;
+  font-size: 38px;
+  line-height: 136.5%;
+  color: #28519e;
 }
 
-.error-description {
-  font-weight: 400;
-  font-size: 30px;
-  line-height: 38px;
-  /* width: 100%; */
+.error-desc {
+  font-family: "Lexend Deca";
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 136.5%;
+  color: #6d6d6d;
+  margin-top: 7px;
 }
 
 .error-btn {
   padding: 12px 24px;
-  width: 171px;
   background: #28519e;
   border-radius: 4px;
-  height: 47px;
+  font-family: "Lexend Deca";
+  font-weight: 500;
   font-size: 18px;
   line-height: 22px;
-  color: #FFFFFF;
+  color: #ffffff;
+  margin-top: 7px;
+}
+
+.error-btn:hover {
+    color: #ffffff;
+    background: #28519e;
 }

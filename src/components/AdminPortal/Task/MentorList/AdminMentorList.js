@@ -105,8 +105,8 @@ const MentorList = () => {
                       <p className="m-0 pos-wrapper">{user.designation} </p>
                     </div>
                     <div className="arrow-wrapper1">
-                      <button>
-                        <p>Remove</p>
+                      <button className="remove-btn">
+                        Remove
                       </button>
                       <span
                         onClick={() => handleExpand(user.mentorId)}
@@ -135,12 +135,13 @@ const MentorList = () => {
                     </div>
                   )}
                 </div>
-                <AddMentorModal isOpen={modalOpen} onClose={handleCloseModal} />
+                
               </>
             );
           })}
         </div>
       </div>
+      <AddMentorModal isOpen={modalOpen} onClose={handleCloseModal} />
     </>
   );
 };

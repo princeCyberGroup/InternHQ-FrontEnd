@@ -93,6 +93,13 @@ const LoginScreen = () => {
           setIsPasswordValid(false);
         }
         setIsLoading(false);
+        if(error.response?.data.statusCode == 400) {
+          navigate('/error?statusCode=400')
+        } 
+         if(error.response?.data.statusCode == 500) {
+          navigate('/error?statusCode=500')
+        }
+        // navigate(`/error?statusCode=${error.response?.data.statusCode}`);
       });
   };
   useEffect(() => {
