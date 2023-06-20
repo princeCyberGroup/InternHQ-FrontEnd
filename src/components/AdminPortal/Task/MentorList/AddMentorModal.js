@@ -5,11 +5,13 @@ import { useNavigate } from "react-router-dom";
 import uploadImage from "../../../../Assets/VectorUpload.svg";
 import { ReactComponent as AlertImage } from "../../../../Assets/Vectoralert.svg";
 import { ReactComponent as CameraIcon } from "../../../../Assets/Cameracamera.svg";
+import { ReactComponent as ExpandMore } from "../../../../Assets/expand_more.svg";
+import TechDropDown from "../../../UserPortal/Dashboard/ProjectIdea/TechDropDown";
 import { storage } from "../config/firebase";
 
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 
-export const AddMentorModal = () => {
+export const AddMentorModal = ({ isOpen, onClose, onAddMentor }) => {
   // console.log(props);
   const navigate = useNavigate();
 
@@ -21,6 +23,8 @@ export const AddMentorModal = () => {
   const [imageUrl, setImageUrl] = useState("");
   const [error, setError] = useState("true");
   const [isCleared, setIsCleared] = useState(false);
+  const [dropDown, setDropDown] = useState(false);
+  const [tech, setTech] = useState({});
 
   const position = [
     "Principal 1",
@@ -40,16 +44,17 @@ export const AddMentorModal = () => {
 
   const handleClickClear = () => {
     setMentorName("");
-
     setEmailId("");
-
     setDesignation("");
-
     setImageUrl("");
-
     setSkills([]);
-
     setIsCleared(true);
+    setTech({});
+    const checkboxes = document.querySelectorAll(".tech-checkbox");
+  checkboxes.forEach((checkbox) => {
+    checkbox.checked = false;
+  });
+
   };
 
   const handleImageUpload = (data) => {
@@ -71,12 +76,22 @@ export const AddMentorModal = () => {
     });
   };
 
-  const handleSkillsChange = (event) => {
-    const selectedSkills = event.target.value
-      .split(",")
-      .map((skill) => skill.trim());
+  // const handleSkillsChange = (event) => {
+  //   const selectedSkills = event.target.value
+  //     .split(",")
+  //     .map((skill) => skill.trim());
 
+  //   setSkills(selectedSkills);
+  // };
+  
+  const handleSkillsChange = (event) => {
+    const selectedSkills = Array.from(event.target.selectedOptions, (option) => option.value.trim());
     setSkills(selectedSkills);
+  };
+  
+  const techDataComingFrmChild = (data) => {
+    return setTech(data);
+    
   };
 
   const handleFormSubmit = async (e) => {
@@ -94,8 +109,9 @@ export const AddMentorModal = () => {
         emailId,
         imageUrl,
         designation,
-        skills,
+        skills:Object.values(tech)
       });
+      onAddMentor({ mentorName, emailId, imageUrl, designation, skills });
   
       setSkills([]);
       setMentorName("");
@@ -103,6 +119,8 @@ export const AddMentorModal = () => {
       setImageUrl("");
       setDesignation("");
       setError(false);
+      setTech({});
+      onClose();
   
       if (!error) {
         const closeButton = document.querySelector("#addMentorModal .btn-close");
@@ -329,14 +347,45 @@ export const AddMentorModal = () => {
                       Technology Tags<span style={{ color: "red" }}>*</span>
                     </label>
 
-                    <input
-                      type="text"
-                      className="form-control"
-                      id="project-name"
-                      placeholder="Add Technology Tags"
-                      value={skills.join(",")}
-                      onChange={handleSkillsChange}
-                    />
+                    <div className="container border p-0">
+                        <div className="input-with-button">
+                          <button
+                            type="button"
+                            className="button-for-dropdown"
+                            onClick={() => {
+                              setDropDown(!dropDown);
+                            }}
+                          >
+                            <input
+                              type="text"
+                              className="custom-input"
+                              onChange={(e) => handleSkillsChange(e)}
+                              value={Object.values(tech)}
+                              disabled
+                            />
+                          </button>
+                          <button
+                            type="button"
+                            className="expand-more"
+                            onClick={() => {
+                              setDropDown(!dropDown);
+                            }}
+                          >
+                            <ExpandMore />
+                          </button>
+                        </div>
+                        <div>
+                          <ul
+                            style={{ display: dropDown ? "" : "none" }}
+                            className="ul-styling"
+                          >
+                            <TechDropDown
+                              techDataComingChild={techDataComingFrmChild}
+                            />
+                          </ul>
+                        </div>
+                        {/* </div> */}
+                      </div>
                   </div>
                 </form>
               </div>
@@ -355,7 +404,7 @@ export const AddMentorModal = () => {
               <button
                 type="button"
                 class="btn save-button fw-bold"
-                data-bs-dismiss={error ? "" : "modal"}
+                {...(!error && { "data-bs-dismiss": "modal" })}
                 onClick={handleFormSubmit}
               >
                 <span className="save-text">Save</span>
