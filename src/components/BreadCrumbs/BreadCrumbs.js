@@ -27,7 +27,7 @@ const BreadCrumbs = () => {
     }
   return (
     <div className="crumb">
-      <Link to="/dashboard" className="crumb-parent">DashBoard</Link> <Chevron /> {capital()}
+      <Link to="/dashboard" className="crumb-parent">Dashboard</Link> <Chevron /> {capital()}
     </div>
   );
 };

@@ -54,6 +54,12 @@ const ForgotPasswordScreen = () => {
       }
       console.log(error.response?.data[0].response)
       setIsLoading(false);
+      if(error.response?.data.statusCode == 400) {
+        navigate('/error?statusCode=400')
+      } 
+       if(error.response?.data.statusCode == 500) {
+        navigate('/error?statusCode=500')
+      } 
     });
     
   };

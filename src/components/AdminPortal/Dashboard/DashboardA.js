@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {useContext} from 'react'
 import Card from 'react-bootstrap/Card';
 import '../Dashboard/DashboardA.css';
 import HeaderAdmin from '../Header/HeaderAdmin'
@@ -12,7 +12,6 @@ import TopTech from './TopTech/topTech';
 import AssociateConsultant from './associateConsultant/associateConsultant';
 import Insights from './Insights/insights';
 import { ReactComponent as Right } from "./Assets/right.svg";
-
 
 const DashboardA = () => {
   const [StatusData, setStatusData] = useState([]);
