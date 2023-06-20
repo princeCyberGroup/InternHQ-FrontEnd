@@ -6,28 +6,41 @@ import { ReactComponent as ExpandMore } from "../../../Assets/expand_more.svg";
 import Reporttable from "./Reporttable";
 import { Dummydata } from "./Dummydata";
 import Selectlevel from "./Selectlevel";
+import axios from "axios";
 const Report = () => {
   //data
   const [tech, setTech] = useState({});
   const [level, setLevel] = useState({});
   const [dropDownTech, setDropDownTech] = useState(false);
   const [dropDownLevel, setDropDownLevel] = useState(false);
-  const [tableData, setTableData] = useState(Dummydata);
+  const [tableData, setTableData] = useState();
   const [orgTableData, setOrgTableData] = useState(Dummydata);
   const [query, setQuery] = useState("");
 
   //functions
+  // useEffect(()=>{
+  //   fetchData();
+  // },[])
+  // const fetchData = async () => {
+  //   try {
+  //     const response = await axios.get(`https://cg-interns-hq.azurewebsites.net/getuserInfo`);
+  //     setOrgTableData(response.data.response);
+  //   } catch (error) {
+  //     console.error('Error fetching data:', error);
+  //   }
+  // };
+
+
   const dataComingFrmLevel = (data) => {
     setLevel(data);
   };
   const techDataComingFrmTech = (data) => {
     setTech(data);
+    console.log("tech funciton ran and the data is ", tech);
   };
-
   useEffect(() => {
     handleFiltersChange();
-  }, [tech, level, query, techDataComingFrmTech]);
-
+  }, [query, dropDownTech, dropDownLevel]);
 
   const handleFiltersChange = () => {
     const getFilterItems = (items, query) => {
@@ -41,28 +54,40 @@ const Report = () => {
       return items;
     };
 
-    // const getfilterTech = (items, tech) => {
-    //   if (Object.keys(tech).length !== 0) {
-    //     const filteredData = items.filter((person) => {
-    //       const personSkills = Object.keys(person.skills);
-    //       console.log("this is personal skills", personSkills);
-    //       return personSkills.some((skill) => tech[skill]);
-    //     });
-    //     console.log("filterred table", filteredData);
-    //     return filteredData;
-    //   }
-    //   return items;
-    // };
+    const getfilterTech = (items, tech) => {
+      if (Object.keys(tech).length > 0) {
+        const filteredData = items.filter((person) => {
+          const personSkills = Object.keys(person.skills);
+          return personSkills.some((element) =>
+            Object.values(tech).includes(element)
+          );
+        });
+        return filteredData;
+      }
+      return items;
+    };
+
+    const getFilterLevel = (items, level) => {
+      if (Object.keys(level).length > 0) {
+        const filteredData = items.filter((person) => {
+          const personSkills = Object.values(person.skills);
+          console.log("personal skills",personSkills);
+          return personSkills.some((element) =>
+            Object.values(level).includes(element)
+          );
+        });
+        console.log("filterred table for level", filteredData);
+        return filteredData;
+      }
+      return items;
+    };
 
     const filterItems = getFilterItems(orgTableData, query);
-    // const filterTech = getfilterTech(filterItems, tech);
-    // const filterLevel = getFilterLevel(filterTech, level);
-    setTableData(filterItems);
-    // console.log(filterDate)
+    const filterTech = getfilterTech(filterItems, tech);
+    const filterLevel = getFilterLevel(filterTech, level);
+    setTableData(filterLevel);
   };
 
-  
-  console.log("this is data", level);
   return (
     <div className="report-parent-wrapper">
       <div className="report-child-wrapper">
@@ -110,15 +135,16 @@ const Report = () => {
                     <ExpandMore />
                   </button>
                 </div>
-                <div
-                  className="data-display-tech"
-                  style={{
-                    display: dropDownTech ? "" : "none",
-                    top: "1.938rem",
-                  }}
-                >
-                  <TechDropDown techDataComingChild={techDataComingFrmTech} />
-                </div>
+                {dropDownTech && (
+                  <div
+                    className="data-display-tech"
+                    style={{
+                      top: "1.938rem",
+                    }}
+                  >
+                    <TechDropDown techDataComingChild={techDataComingFrmTech} />
+                  </div>
+                )}
               </div>
             </div>
             <div className=" report-drop-down-level">
@@ -149,18 +175,16 @@ const Report = () => {
                     <ExpandMore />
                   </button>
                 </div>
-                <div
-                  className="data-display-tech"
-                  style={{
-                    display: dropDownLevel ? "" : "none",
-                    top: "1.938rem",
-                  }}
-                >
-                  <Selectlevel
-                    techDataComingChild={dataComingFrmLevel}
-                    // arrayData={level}
-                  />
-                </div>
+                {dropDownLevel && (
+                  <div
+                    className="data-display-tech"
+                    style={{
+                      top: "1.938rem",
+                    }}
+                  >
+                    <Selectlevel techDataComingChild={dataComingFrmLevel} />
+                  </div>
+                )}
               </div>
             </div>
           </div>
