@@ -46,7 +46,7 @@ export default function Status({data}) {
                   <div className='four-cards'>
                     <div style={{display:"flex",flexDirection:"column",marginTop:"10px"}}><OnProject />
                     <div style={{display:"flex",flexDirection:"row",marginTop:"12px"}}>
-                      <p className="count">{data.totalInactive}</p>
+                      <p className="count">{data.onProject}</p>
                       <p className='status d-flex justify-content-center'style={{marginLeft:"10px"}}>On Project</p>
                     </div>
                     </div>
