@@ -11,6 +11,8 @@ import Status from './Status/Status';
 import TopTech from './TopTech/topTech';
 import AssociateConsultant from './associateConsultant/associateConsultant';
 import Insights from './Insights/insights';
+import { ReactComponent as Right } from "./Assets/right.svg";
+
 
 const DashboardA = () => {
   const [StatusData, setStatusData] = useState([]);
@@ -49,7 +51,7 @@ const DashboardA = () => {
           <div className='row'>
             {/* style={{maxWidth : "1280px"}} */}
             <div className='col-8'style={{marginLeft: "0px"}}>
-              <div className='about'>Manage Consultant</div>
+              <div className='about'>Manage Consultant <Right style={{marginBottom:"2px"}} /></div>
 
               <div className='row div-card-upload'>
                 <div className='col-8 outer-row-info'>

@@ -1,21 +1,16 @@
-.associate-consultant {
+.associate-consultant-mapped-card {
 
     box-sizing: border-box;
     display: flex;
-    flex-direction: row;
-    align-items: center;
+    
+ 
     padding: 8px 12px;
-    gap: 8px;
+  
     width: 364px;
-    height: 52px;
     background: #FFFFFF;
     border: 1px solid #E9ECEB;
     border-radius: 4px;
-    flex: none;
-    /* margin-left: 4px; */
-    order: 0;
-    align-self: stretch;
-    flex-grow: 0;
+    
 }
 
 .search-associate {
@@ -79,4 +74,30 @@ background: #FFFFFF;
 
 box-shadow: 0px 4px 20px rgba(40, 52, 73, 0.15);
 border-radius: 8px;
+}
+.dropdown-associate{
+
+}
+.drop-arrow{
+margin-left: 150px;
+}
+
+.tech-div-badge{
+    display: flex;
+flex-direction: row;
+align-items: center;
+padding: 6px;
+gap: 4px;
+
+width: 85.53px;
+height: 24px;
+
+background: #F4F6F5;
+/* Secondary/Gray */
+
+border: 1px solid #B2B2B3;
+border-radius: 2px;
+}
+.tech-div-badge-text{
+    
 }

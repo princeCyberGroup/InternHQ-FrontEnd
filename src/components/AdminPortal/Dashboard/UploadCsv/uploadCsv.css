@@ -1,22 +1,17 @@
 
 .div-card-upload{
-    width: 600;
+
 }
 .upload-csv-box{
  display: flex;
 flex-direction: row;
 justify-content: center;
 align-items: center;
-padding: 8px;
 gap: 12px;
 width: 404px;
 height: 36px;
 background: #28519E;
 border-radius: 4px;
-flex: none;
-order: 1;
-align-self: stretch;
-flex-grow: 0;
 }
 .outer-row-info{
 width: 400px;
@@ -36,25 +31,22 @@ order: 1;
 flex-grow: 0;
 }
 .upload-list {
+    margin-top: 11px;
+    margin-left: 8px;
     box-sizing: border-box;
-margin-top: 10px;
-margin-left: 1rem;
-/* margin-right: 30px; */
-
-
     display: flex;
     flex-direction: column;
     align-items: flex-start;
-    width: 424px;
+    /* //need a change  */
+    width: 430px;
     height: 152px;
-
     background: #EAEEF6;
-
-    border: 1px dashed #28519E;
-    border-radius: 4px;
-
+    
+    border: 1px solid #28519E;
+    border-radius: 8px;
     flex: none;
-    order: 4;
+    order: 1;
+    align-self: stretch;
     flex-grow: 0;
 }
 .upload-bullets{
@@ -76,3 +68,19 @@ margin-left: 1rem;
 .number-of-tests{
     
 }
+
+.upload-list button {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    padding: 8px;
+    width: 404px;
+    height: 36px;
+    color: white;
+    background: #28519e;
+    border-radius: 4px;
+    border-color: #28519E;
+    border: none;
+    
+  }
