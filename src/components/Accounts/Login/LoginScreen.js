@@ -57,6 +57,7 @@ const LoginScreen = () => {
           lastName: response.data.lastName,
           deployed: response.data.isDeployed,
           randomString: response.data.randomString,
+          designation: response.data.designation,
         };
         localStorage.setItem("userData", JSON.stringify(res));
         // const res = {

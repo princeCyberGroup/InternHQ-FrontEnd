@@ -1,4 +1,4 @@
-import React, { createContext, useState, useEffect } from "react";
+import React, { createContext, useEffect, useState } from "react";
 import "./Detailedreport.css";
 import { Link, useNavigate, useSearchParams } from "react-router-dom";
 import { ReactComponent as Chevron } from "../../../../Assets/Vectorchevron.svg";
@@ -19,34 +19,31 @@ import PieChart from "./PieChart";
 
 export const DetailedProvider = createContext();
 
-const Detailedreport = ({ detailId }) => {
+const Detailedreport = () => {
   //data
   const navigate = useNavigate();
-  // const { userId } = useParams();
-  // const params = new URLSearchParams(window.location.search);
-  // console.log(params);
-  // const idVal = params.get("id");
-  // const [searchParams] = useSearchParams();
-  // const userdId = searchParams.get('userId');
-  const [data, setData] = useState({});
+  const [data, setData] = useState([]);
+  const idVal = parseInt(sessionStorage.getItem("detailId"));
   //functions
-  useEffect(() => {
-    fetchData();
-  }, []);
   const fetchData = async () => {
     try {
       const response = await axios.get(
-        `https://cg-interns-hq.azurewebsites.net/getAllDetailsOfIntern?userId=${detailId}`
+        `https://cg-interns-hq.azurewebsites.net/getAllDetailsOfIntern?userId=${idVal}`
       );
-      // console.log(response);
-      console.log(response.data.userDetails);
-      setData(response.data.userDetails);
+      setData(response.data?.userDetails);
     } catch (error) {
-      console.error("Error fetching data:", error);
       navigate("/pagenotfound");
     }
   };
+  useEffect(() => {
+    fetchData()
+  }, [])
+  
+
+
+  // console.log("this is idVal", idVal);
   return (
+    <>
     <DetailedProvider.Provider
       value={{
         data,
@@ -56,7 +53,7 @@ const Detailedreport = ({ detailId }) => {
         <div className="detailedrep-child-wrapper">
           <div className="detailrep-header">
             <div className="detailrep-breadcrum">
-              <Link to="/admin/report" className="crumb-parent">
+              <Link to="/admin/reports" className="crumb-parent">
                 Report
               </Link>
               <Chevron />
@@ -84,7 +81,7 @@ const Detailedreport = ({ detailId }) => {
               <div className="other-info">
                 <div className="icon-pair">
                   <Profile />
-                  <span>{data[ApiObj.IID]}</span>
+                  <span>{data.internId}</span>
                 </div>
                 <div className="det-dot" />
                 <div className="icon-pair">
@@ -125,11 +122,12 @@ const Detailedreport = ({ detailId }) => {
             </div>
           </div>
           <div className="detailrep-table">
-            <DailyUpdateTableSection userId={detailId} />
+            <DailyUpdateTableSection userId={idVal} />
           </div>
         </div>
       </div>
     </DetailedProvider.Provider>
+    </>
   );
 };
 
