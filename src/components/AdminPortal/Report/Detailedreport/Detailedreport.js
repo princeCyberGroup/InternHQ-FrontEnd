@@ -1,6 +1,6 @@
-import React, { createContext, useState, useEffect } from "react";
+import React, { createContext, useEffect, useState } from "react";
 import "./Detailedreport.css";
-import { Link, useParams } from "react-router-dom";
+import { Link, useNavigate, useSearchParams } from "react-router-dom";
 import { ReactComponent as Chevron } from "../../../../Assets/Vectorchevron.svg";
 import { ReactComponent as Download } from "../../../../Assets/Download.svg";
 import { ReactComponent as DownloadPdf } from "../../../../Assets/DownloadPDF.svg";
@@ -21,25 +21,29 @@ export const DetailedProvider = createContext();
 
 const Detailedreport = () => {
   //data
-  const { userId } = useParams();
-  const params = new URLSearchParams(window.location.search);
-  const idVal = params.get("id");
-  const [data, setData] = useState(Detailreportdata);
+  const navigate = useNavigate();
+  const [data, setData] = useState([]);
+  const idVal = parseInt(sessionStorage.getItem("detailId"));
   //functions
-  useEffect(() => {
-    fetchData();
-  }, []);
   const fetchData = async () => {
     try {
       const response = await axios.get(
         `https://cg-interns-hq.azurewebsites.net/getAllDetailsOfIntern?userId=${idVal}`
       );
-      setData(response.data);
+      setData(response.data?.userDetails);
     } catch (error) {
-      console.error("Error fetching data:", error);
+      navigate("/pagenotfound");
     }
   };
+  useEffect(() => {
+    fetchData()
+  }, [])
+  
+
+
+  // console.log("this is idVal", idVal);
   return (
+    <>
     <DetailedProvider.Provider
       value={{
         data,
@@ -49,7 +53,7 @@ const Detailedreport = () => {
         <div className="detailedrep-child-wrapper">
           <div className="detailrep-header">
             <div className="detailrep-breadcrum">
-              <Link to="/admin/report" className="crumb-parent">
+              <Link to="/admin/reports" className="crumb-parent">
                 Report
               </Link>
               <Chevron />
@@ -72,17 +76,17 @@ const Detailedreport = () => {
             <div className="info-detail">
               <div className="user-name">
                 <Usercircle />
-                <span>{data[ApiObj.IN]}</span>
+                <span>{`${data[ApiObj.FN]} ${data[ApiObj.LN]}`}</span>
               </div>
               <div className="other-info">
                 <div className="icon-pair">
                   <Profile />
-                  <span>{data[ApiObj.IID]}</span>
+                  <span>{data.internId}</span>
                 </div>
                 <div className="det-dot" />
                 <div className="icon-pair">
                   <Clock />
-                  <span>{data[ApiObj.DOI]}</span>
+                  <span>{`${data[ApiObj.DOI]} months`}</span>
                 </div>
                 <div className="det-dot" />
                 <div className="icon-pair">
@@ -101,7 +105,7 @@ const Detailedreport = () => {
             <div className="detail-child spent-hours">
               <span>Most Spent Hours</span>
               <div className="most-skill-hr">
-              <PieChart />
+                <PieChart />
               </div>
             </div>
             <div className="detail-child">
@@ -123,6 +127,7 @@ const Detailedreport = () => {
         </div>
       </div>
     </DetailedProvider.Provider>
+    </>
   );
 };
 

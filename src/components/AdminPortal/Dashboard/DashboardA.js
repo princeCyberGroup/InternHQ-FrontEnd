@@ -13,6 +13,7 @@ import AssociateConsultant from './associateConsultant/associateConsultant';
 import Insights from './Insights/insights';
 import { ReactComponent as Right } from "./Assets/right.svg";
 
+
 const DashboardA = () => {
   const [StatusData, setStatusData] = useState([]);
   const [acData, setAcData] = useState([]);

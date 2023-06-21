@@ -7,18 +7,19 @@
       rgba(0, 7, 45, 0.46) 112.65%
     ),
     #ffffff;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .pos {
   /* transform: translate(0,calc(100vh - 90vh)); */
   margin: 0 auto;
 }
+
 
 .cglogoimg {
   margin: 1.3rem 0 0 0;
@@ -37,11 +38,10 @@
 
 .input-login {
   border: none;
-  border-bottom: 0.063rem solid #b2b2b3;
-  width: 25.438rem;
+  width: -webkit-fill-available;
   font-size: 0.938rem;
   line-height: 2.563rem;
-  max-width: 100%;
+  /* max-width: 100%; */
 }
 
 .input-login:focus {
@@ -78,7 +78,7 @@
 }
 
 .sign-up-btn {
-  width:95%;
+  width: 95%;
   position: relative;
   top: 1.688rem;
   margin-bottom: 1.313rem;
@@ -169,11 +169,17 @@ a:hover {
 
 .sign-up-warning {
   color: red;
-  font-size: 0.80rem;
+  font-size: 0.8rem;
 }
 
-
 .password-toggle-button {
-  position: absolute;
-    right: 32px;
+  background:none;
+}
+.pass-input-div{
+  display: flex;
+  justify-content: space-between;
+}
+.div-input {
+  border-bottom: 0.063rem solid #b2b2b3;
+  width: inherit;
 }

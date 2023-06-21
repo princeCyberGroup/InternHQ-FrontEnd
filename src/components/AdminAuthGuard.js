@@ -1,27 +1,21 @@
-import React, { useEffect, useState, useContext } from "react";
+import React, { useEffect, useState } from "react";
 import { Navigate, Outlet, useLocation, useNavigate } from "react-router-dom";
-import { UserContext } from "../Context/Context";
 
 const AdminAuthGuard = () => {
-  const { navigateTo } = useContext(UserContext);
-  console.log("this is the value of navigateto", navigateTo);
   const navigate = useNavigate();
   const location = useLocation();
-  console.log("this is the value of location", location);
+  const str = JSON.parse(localStorage.getItem("userData")).randomString;
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const handleAuth = () => {
     if (localStorage.getItem("login")) {
       if (localStorage.getItem("login") === "false") {
-        // setNavigateTo("");
         navigate("/");
         setIsAuthenticated(false);
       } else {
-        // setNavigateTo("u");
-        navigate(location.pathname);
+        str === "07495d" ? navigate("/dashboard") : (str === "cb8715" ? navigate(location.pathname) : navigate("/mentor-dashboard"));
         setIsAuthenticated(true);
       } 
     } else {
-      // setNavigateTo("");
       navigate("/");
       setIsAuthenticated(false);
     }
