@@ -50,7 +50,7 @@ const Detailedreport = () => {
         data,
       }}
     >
-       <div className="" style={{ marginBottom: "3rem" }}>
+       <div className="" style={{ marginBottom: "5rem" }}>
         <Header />
       </div>
       <div className="detailedrep-parent-wrapper">

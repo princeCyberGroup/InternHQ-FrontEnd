@@ -144,7 +144,7 @@ function App() {
           <Route element={<AdminAuthGuard />}>
             <Route path="/admin/dashboard" element={<DashboardA />} />
             <Route path="/admin/reports" element={<Report />} />
-            <Route path="/admin/report/:userId" element={<Detailedreport />} />
+            <Route path="/admin/report" element={<Detailedreport />} />
             <Route path="/admin/assign-task" element={<Task />} />
             {/* <Route path="/admin/skill-test" element={<SkillTest />} /> */}
           </Route>

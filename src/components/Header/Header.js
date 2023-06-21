@@ -245,7 +245,7 @@ const Header = () => {
                     {userData.firstName} {userData.lastName} <br />
                   </span>
                   <span className="deployed-status">
-                    {userData.deployed ? "Occupied" : "On Bench"}
+                    {userData.designation.toLowerCase() ==="user"?userData.deployed ? "Occupied" : "On Bench":""}
                   </span>
                 </li>
                 <li

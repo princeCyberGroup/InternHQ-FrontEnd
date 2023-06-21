@@ -81,8 +81,8 @@ const LoginScreen = () => {
         str === "07495d"
           ? navigate("/dashboard")
           : str === "cb8715"
-          ? navigate("/admin-dashboard")
-          : navigate("/mentor-dashboard");
+          ? navigate("/admin/dashboard")
+          : navigate("/mentor/dashboard");
         localStorage.setItem("token");
       })
       .catch((error) => {
@@ -111,7 +111,7 @@ const LoginScreen = () => {
       str === "07495d"
         ? navigate("/dashboard")
         : str === "cb8715"
-        ? navigate("/admin-dashboard")
+        ? navigate("/admin/dashboard")
         : navigate("/mentor-dashboard");
     }
 
