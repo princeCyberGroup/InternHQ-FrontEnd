@@ -1,7 +1,10 @@
 import { ReactComponent as CloudImage } from "../Assets/Cloud.svg";
 import FileUploadButton from "../UploadCsv/DragandDropFile";
 import React, { useState } from "react";
+import {CSVReader} from '../UploadCsv/DragandDropFile';
 import './Modals.css';
+import axios from "axios";
+
 
 export const AddNewSkillTest = () => {
     const [technology, setTechnology] = useState("");
@@ -14,6 +17,13 @@ export const AddNewSkillTest = () => {
     const [intermediateChecked, setIntermediateChecked] = useState(false);
     const [advancedChecked, setAdvancedChecked] = useState(false);
     const [datatosend, setdatatosend] = useState([]);
+
+
+
+    //  const handleData = (data) =>{
+    //     console.log(data)
+    //  }
+
 
     const handleChangeTechnology = (e) => {
         setTechnology(e.target.value);
@@ -41,6 +51,7 @@ export const AddNewSkillTest = () => {
     }
 
     const handleSubmit = async (e) => {
+        e.preventDefault();
         if (technology.length == 0 && name.length < 2) {
             alert("Please fill out the necessary details");
             console.log("inside error");
@@ -52,58 +63,39 @@ export const AddNewSkillTest = () => {
         //     console.log("inside error");
         //     return;
         // }
-        let submitQuesData;
-            try {
-                
-                const api = "https://cg-interns-hq.azurewebsites.net/questions";
-                const response = await fetch(api, {
-                    method: "POST",
+      
+        try {
+            let response = await axios.post(`https://cg-interns-hq.azurewebsites.net/questions?technology=${technology}&level=${level}&examName=${name}&noOfQuestion=${question}&examDuration=${duration}`,
+                {
                     headers: {
-                        "Content-Type": "application/json",
-                        Authorization: `Bearer ${localStorage.getItem("questionToken")}`
-                    },
-                    body: JSON.stringify({
-                        examName: name,
-                        technology:technology,
-                        level:level,
-                        examDuration:duration,
-                        noOfQuestion:question ,
-                    })
-                });
-                submitQuesData = await response.json();
-      console.log(submitQuesData);
-      console.log(response);
+                        'Content-Type': 'multipart/form-data'
+                    }
+                },
+            );
+            console.log(response)
+        }
+        catch (e) {
+            console.log(e);
+        }
+        setTechnology("");
+        setName("");
+        setLevel("");
+        setQuestion("");
+        setDuration("");
+        document.getElementById("flexRadioDefault1").checked = false;
+        setBeginnerChecked(false);
+        setIntermediateChecked(false);
+        setAdvancedChecked(false);
 
-
-                if (response.ok) {
-                    console.log("Form submitted successfully");
-                    setTechnology("");
-                    setName("");
-                    setLevel("");
-                    setQuestion("");
-                    setDuration("");
-                    setBeginnerChecked(false);
-                    setIntermediateChecked(false);
-                    setAdvancedChecked(false);
-                } else {
-                    console.log("Failed to submit the form");
-                }
-            } catch (error) {
-                console.log(error);
-            } finally {
-                localStorage.removeItem("questionToken");
-            }
-
-        
     }
 
 
 
-    console.log(name);
-    console.log(technology);
-    console.log(level);
-    console.log(duration);
-    console.log(question);
+    // console.log(name);
+    // console.log(technology);
+    // console.log(level);
+    // console.log(duration);
+    // console.log(question);
 
     return (
         <div>
@@ -166,7 +158,7 @@ export const AddNewSkillTest = () => {
                                             or click to select a file from your computer</span>
                                     </div>
                                     <div className="mb-4" style={{ marginLeft: "120px" }}>
-                                        <FileUploadButton />
+                                        {/* <FileUploadButton /> */}
                                     </div>
                                 </div>
                                 <div className="d-flex justify-content-between">
@@ -205,9 +197,9 @@ export const AddNewSkillTest = () => {
                                 data-bs-dismiss="modal"
                                 onClick={(e) => handleClickClear(e)}>
                                 <span className="cancel-text">Cancel</span></button>
-                            <button type="button" className="btn save-button" 
-                            data-bs-dismiss={"modal" ? false : true}>
-                                <span className="save-text" onClick={handleSubmit}>
+                            <button type="button" className="btn save-button"
+                                data-bs-dismiss={"modal" ? false : true}>
+                                <span className="save-text" onClick={(e) => { handleSubmit(e) }}>
                                     Save
                                 </span>
                             </button>

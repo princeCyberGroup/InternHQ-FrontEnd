@@ -70,12 +70,12 @@ export default function AssociateConsultant(props) {
                             <div className="technology">
 
                                 <p className='tech'>Technology:</p>
-                                {userData.techNames.map((skill, skillIndex) => (
+                                {userData && userData.techNames && userData.techNames.map((skill, skillIndex) => (
                                     <span
                                         key={skillIndex}
                                         className="tech-badge"
                                     >
-                                        {skill.toUpperCase()} {/*Replace with mentorskills from API response */}
+                                        {skill && skill.toUpperCase() } 
                                     </span>
                                 ))}
                             </div>
@@ -93,7 +93,7 @@ export default function AssociateConsultant(props) {
             }}>
                 <div className='about-associate'>Associate Consultant</div>
 
-                <div className=' associate-card  ' style={{ maxHeight: "375px", overflow: "auto" }}>
+                <div className=' associate-card  ' style={{ maxHeight: "370px", overflow: "auto" }}>
                     <div>
                         <input
                             className="search-associate "

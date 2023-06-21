@@ -1,16 +1,18 @@
 import React, { useState, useRef } from "react";
 // import {ReactComponent as RemoveButton} from "../../Assets/Close.svg";
-// import './Modals.css';
+
 
 const CSVReader = () => {
   const [file, setFile] = useState(null);
   const [progress, setProgress] = useState(0);
   const fileInputRef = useRef(null);
 
+
   const handleDrop = (e) => {
     e.preventDefault();
     const droppedFile = e.dataTransfer.files[0];
     handleFileChange(droppedFile);
+    
   };
 
   const handleDragOver = (e) => {
@@ -71,6 +73,7 @@ const CSVReader = () => {
           accept=".csv"
           style={{ display: "none" }}
         />
+          {console.log(fileInputRef)}
         <button type="button" onClick={handleBrowseClick} className="csv-upload-button">Browse from your computer</button>
       </div>
       {file && (

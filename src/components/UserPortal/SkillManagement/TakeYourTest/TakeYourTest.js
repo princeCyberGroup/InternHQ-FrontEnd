@@ -4,6 +4,8 @@ import "./TakeYourTest.css";
 import { useNavigate ,useLocation } from "react-router-dom";
 
 import { UserContext } from "../../../../Context/Context";
+import { BsCheckLg } from "react-icons/bs";
+import { responsivePropType } from "react-bootstrap/esm/createUtilityClasses";
 
 const TakeYourTest = () => {
 
@@ -38,14 +40,7 @@ const TakeYourTest = () => {
     navigate("/skill-Management");
     setFullscreen(false);
   };
-  // useEffect(() => {
-  //   if (scoreUpdated) {
-  //     console.log("Value of score after fetching the data", score);
-  //   }
-  // }, [score, scoreUpdated]);
-  // useEffect(()=>{
-  //     // console.log("this is the data from takeyourtest site", data);
-  // },[]);
+
   useEffect(() => {
     if (fullscreen) {
       enterFullscreen();
@@ -81,34 +76,46 @@ const TakeYourTest = () => {
     }
   };
 
+
+  const handleKeyDown = (event) => {
+    event.preventDefault();
+    
+    if (event.key === "Escape" || event.key === "F11") {
+      event.disabled = true;
+    }
+  };
+
   const [time, setTime] = useState(0);
   //main use effect
-  useEffect(() => {
-    fetchTests();
-    handleAnswerSelect();
-    setFullscreen(true);
+  let timer;
+
+  const startTimer = () => {
     const examDurationInSeconds = parseInt(examDuration) * 60;
     setTime(examDurationInSeconds);
-    const timer = setInterval(() => {
+    timer = setInterval(() => {
       setTime((prevTime) => {
         if (prevTime > 0) {
           return prevTime - 1;
         } else {
           clearInterval(timer);
-          // submitQuiz();
-          return 0;
+          submitTest();
+          window.alert("Time's up!");
+          clickHandler();
+     
         }
       });
     }, 1000);
-
-    console.log(userAnswers);
-
+  };
+  
+  useEffect(() => {
+    fetchTests();
+    handleAnswerSelect();
+    setFullscreen(true);
+    startTimer();
     return () => {
       clearInterval(timer);
-      exitFullscreen();
-      // window.removeEventListener("keydown", handleKeyDown);
     };
-  }, [score]);
+  }, []);
 
   const formatTime = (time) => {
     const minutes = Math.floor(time / 60);
@@ -117,7 +124,6 @@ const TakeYourTest = () => {
       .toString()
       .padStart(2, "0")}`;
   };
-
   const fetchTests = async () => {
     let Quesdata
     try {
@@ -128,19 +134,15 @@ const TakeYourTest = () => {
       setAllQuesData(Quesdata);
       setTestsQues(Quesdata.questions);
       localStorage.setItem("questionToken", Quesdata.token)
-      console.log(Quesdata)
     } catch (e) {
       console.log(e);
     }
   };
-
   const handleAnswerSelect = (questionId, selectedAnswer) => {
     setUserAnswers((prevAnswers) => ({
       ...prevAnswers,
       [questionId]: selectedAnswer,
     }));
-
-    //setUserAnswers(prevAnswers => [...prevAnswers,{"qId":[questionId], "choosenOpt": selectedAnswer}])
     setActiveRadioButtons(getActiveRadioCount());
   };
 
@@ -160,18 +162,6 @@ const TakeYourTest = () => {
     radioButton.addEventListener("change", () => { });
   });
 
-  // const submitQuiz = () => {
-  //   // setFullscreen(false);
-  //   // setSubmitted(true);
-  //   // clickHandler();
-  // };
-
-  const handleKeyDown = (event) => {
-    if (event.key === "Escape" || event.key === "F11") {
-      event.disabled = true;
-      // console.log(event);
-    }
-  };
   let submitQuesData;
   const api = "https://cg-interns-hq.azurewebsites.net/submitAnswer";
   const submitTest = async () => {
@@ -182,57 +172,32 @@ const TakeYourTest = () => {
           qId: parseInt(questionId),
           choosenOpt: selectedAnswer,
         })
-      );
-      const response = await fetch(
-       api ,
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${localStorage.getItem("questionToken")}`
-          },
-          body: JSON.stringify({
-            userId: userId,
-            technology: techName,
-            level: level,
-            optRequest: mappedAnswers.splice(0, mappedAnswers.length - 1),
-          }),
-        }
-      );
-      submitQuesData = await response.json();
-      // console.log("this is the total score coming",typeof submitQuesData.totalScore)
-      // console.log(score);
-       setScore(submitQuesData.totalScore);
-      // setScore(submitQuesData.totalScore, () => {
-      //   console.log("inside setScore");
-      //   setScoreUpdated(true); // Set the flag after the score state has been updated
-      // });
-      // console.log("value of score after fetching the data", score);
-
-    } catch (error) {
+        );
+        const response = await fetch(
+          api ,
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${localStorage.getItem("questionToken")}`
+            },
+            body: JSON.stringify({
+              userId: userId,
+              technology: techName,
+              level: level,
+              optRequest: mappedAnswers.splice(0, mappedAnswers.length - 1),
+            }),
+          }
+          );
+          submitQuesData = await response.json();
+          setScore(submitQuesData.totalScore);
+        } catch (error) {
       console.log(error);
     }
     finally {
       localStorage.removeItem("questionToken");
     }
   };
-
-  const checkAnswers = () => {
-    
-  }
-
-  const modalTarget = () => {
-    const a = "#congoModal123";
-    const b = "#sorryModal";
-    if (score >= 6) {
-      return a;
-    } else {
-      return b;
-    }
-  };
-
-  const Targetm = modalTarget();
-
   const renderQuestions = () => {
     return (
       <div>
@@ -270,12 +235,6 @@ const TakeYourTest = () => {
             class="btn btn-outline-primary"
             data-bs-toggle="modal"
             data-bs-target="#staticBackdrop"
-            // onClick={() => {
-            //   // submitQuiz();
-            //   setFullscreen(false);
-            //   submitTest();
-            //   clickHandler();
-            // }}
           >
             Submit Quiz
           </button>
@@ -314,12 +273,10 @@ const TakeYourTest = () => {
                 <button
                   type="button"
                   onClick={() => {
-                    // submitQuiz();
                     setFullscreen(false);
                     submitTest();
                     clickHandler();
                   }}
-                  
                   className="btn btn-primary"
                   data-bs-dismiss="modal"
                 >
@@ -329,8 +286,7 @@ const TakeYourTest = () => {
             </div>
           </div>
         </div>
-        {/* <Congo />
-        <Sorry /> */}
+
       </div>
     );
   };

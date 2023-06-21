@@ -3,9 +3,9 @@ import{ useContext } from "react";
 import { useState, createContext  } from "react";
 import { ReactComponent as LeftToRetake } from "./svgs/leftToReatake.svg";
 import { ReactComponent as Completed } from "./svgs/Testcompleted.svg";
-import { ReactComponent as Bronze } from "./svgs/Star-bronze.svg";
-import { ReactComponent as Silver } from "./svgs/Star-silver.svg";
-import { ReactComponent as Gold } from "./svgs/Star-gold.svg";
+import { ReactComponent as GoldStarOri } from "../../../../Assets/Star-Icon-gold-ori.svg";
+import { ReactComponent as SilverStarOri } from "../../../../Assets/Star-Icon-silver-ori.svg";
+import { ReactComponent as BronzeStarOri } from "../../../../Assets/Star-Icon-bronze-ori.svg";
 // import logo from '../../../Assets/image 13.png';
 import "./TakeTest.css";
 import { BsClock } from "react-icons/bs";
@@ -106,13 +106,12 @@ const TakeTest = ({ test }) => {
     );
   }
   let LevelComponent;
-
 if (tests.level === "Beginner") {
-  LevelComponent =( <div> <Bronze /></div> );
+  LevelComponent =  <BronzeStarOri /> ;
 } else if (tests.level === "Intermediate") {
-  LevelComponent = <Silver />;
+  LevelComponent = <SilverStarOri />;
 } else if (tests.level === "Advanced") {
-  LevelComponent = <Gold />;
+  LevelComponent = <GoldStarOri/>;
 }
   
     
@@ -211,11 +210,12 @@ if (tests.level === "Beginner") {
                                                     <div >
                                                         <div className="Category_box justify-content-center">
                                                             
-                                                            <span className="Category" >{test.level}</span>
+                                                            <span className="Category" >{test.level}{test.level==="Beginner" ?
+                                                            <BronzeStarOri style={{marginLeft :"5px"}}/>: (test.level==="Intermediate"? <SilverStarOri style={{marginLeft :"5px"}}/>:(test.level==="Advanced"?<GoldStarOri />: null))} </span>
                                                             {LevelComponent}
                                                         </div>
                                                         <div className=" About_box justify-content-center">
-                                                            <span className="About">{test.examName}</span>
+                                                            <span className="About">{test.examName} </span>
                                                         </div>
                                                     </div>
                                                 </div>
