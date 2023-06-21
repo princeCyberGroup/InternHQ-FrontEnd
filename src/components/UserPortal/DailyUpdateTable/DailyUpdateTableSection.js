@@ -8,7 +8,11 @@ import EmptyDailyUpdateTable from "./EmptyDailyUpdateTable";
 import DurationClock from "../../../Assets/DurationClock.svg";
 import ImageTooltip from "./ImageTooltip";
 
-const DailyUpdateTableSection = (props) => {
+const DailyUpdateTableSection = () => {
+  
+  var storedObject = localStorage.getItem("userData");
+  var parsedObject = JSON.parse(storedObject);
+  var userId = parsedObject.userId;
     //data
     const [tableData, setTableData] = useState([]);
   const [originalTableData, setOriginalTableData] = useState([]);
@@ -21,14 +25,10 @@ const DailyUpdateTableSection = (props) => {
   const [selectedItem, setSelectedItem] = useState(null);
   const [modalSaveFlag, setModalSaveFlag] = useState(true);
 
-  //function
-  useEffect(() => {
-    fetchData();
-  }, []);
 
   const fetchData = async () => {
     await fetch(
-      `https://cg-interns-hq.azurewebsites.net/getDailyTaskTrackerRecords?userId=${props.userId}`
+      `https://cg-interns-hq.azurewebsites.net/getDailyTaskTrackerRecords?userId=${userId}`
     )
       .then((response) => {
         return response.json();
@@ -36,11 +36,14 @@ const DailyUpdateTableSection = (props) => {
       .then(async (data) => {
         setTableData(data.response);
         setOriginalTableData(data.response);
-        props.sendDataToDailyUpdate(data.response);
-        // console.log(data.response);
-        // setLoading(false);
+        // props.sendDataToDailyUpdate(data.response);    ?why
       });
   };
+
+  //function
+  useEffect(() => {
+    fetchData();
+  }, []);
 
   //Function to handle read more
   const handleReadMore = (item) => {

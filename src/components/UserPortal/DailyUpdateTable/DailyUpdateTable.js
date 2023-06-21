@@ -43,7 +43,7 @@ const DailyUpdateTable = (props) => {
               </div>
             </div>
           </div>
-          <DailyUpdateTableSection userId = {userId}/>
+          <DailyUpdateTableSection/>
         </div>
       </div>
     </>

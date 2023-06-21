@@ -13,74 +13,13 @@ import {
 import "./graph.css";
 import { Link } from "react-router-dom";
 
-const dataMonthly = [
-  {
-    name: "Week 1",
-    val: 40,
-    // Project: weeklyTotalHours[0].totalProjectHours,
-    // "Task by Mentor": weeklyTotalHours[0].totalMentorAssignedTaskHours,
-    // "Self Learning": weeklyTotalHours[0].totalSelfLearningHours,
-    // "CG Learning Video": weeklyTotalHours[0].totalCGLearningVideoHours,
-    // Idle: (40 - (weeklyTotalHours[0].totalProjectHours+weeklyTotalHours[0].totalMentorAssignedTaskHours+weeklyTotalHours[0].totalSelfLearningHours+weeklyTotalHours[0].totalCGLearningVideoHours)),
-    // amt: 2400,
-  },
-  {
-    name: "Week 2",
-    // Project: weeklyTotalHours[1].totalProjectHours,
-    // "Task by Mentor": weeklyTotalHours[1].totalMentorAssignedTaskHours,
-    // "Self Learning": weeklyTotalHours[1].totalSelfLearningHours,
-    // "CG Learning Video": weeklyTotalHours[1].totalCGLearningVideoHours,
-    // Idle: (40 - (weeklyTotalHours[1].totalProjectHours+weeklyTotalHours[1].totalMentorAssignedTaskHours+weeklyTotalHours[1].totalSelfLearningHours+weeklyTotalHours[1].totalCGLearningVideoHours)),
-    // amt: 2210,
-  },
-  {
-    name: "Week 3",
-    // Project: weeklyTotalHours[2].totalProjectHours,
-    // "Task by Mentor": weeklyTotalHours[2].totalMentorAssignedTaskHours,
-    // "Self Learning": weeklyTotalHours[2].totalSelfLearningHours,
-    // "CG Learning Video": weeklyTotalHours[2].totalCGLearningVideoHours,
-    // Idle: (40 - (weeklyTotalHours[2].totalProjectHours+weeklyTotalHours[2].totalMentorAssignedTaskHours+weeklyTotalHours[2].totalSelfLearningHours+weeklyTotalHours[2].totalCGLearningVideoHours)),
-    // amt: 2290,
-  },
-  {
-    name: "Week 4",
-    // Project: weeklyTotalHours[3].totalProjectHours,
-    // "Task by Mentor": weeklyTotalHours[3].totalMentorAssignedTaskHours,
-    // "Self Learning": weeklyTotalHours[3].totalSelfLearningHours,
-    // "CG Learning Video": weeklyTotalHours[3].totalCGLearningVideoHours,
-    // Idle: (40 - (weeklyTotalHours[3].totalProjectHours+weeklyTotalHours[3].totalMentorAssignedTaskHours+weeklyTotalHours[3].totalSelfLearningHours+weeklyTotalHours[3].totalCGLearningVideoHours)),
-    // amt: 2000,
-  },
-  {
-    name: "Week 5",
-    // Project: weeklyTotalHours[4].totalProjectHours,
-    // "Task by Mentor": weeklyTotalHours[4].totalMentorAssignedTaskHours,
-    // "Self Learning": weeklyTotalHours[4].totalSelfLearningHours,
-    // "CG Learning Video": weeklyTotalHours[4].totalCGLearningVideoHours,
-    // Idle: (40 - (weeklyTotalHours[4].totalProjectHours+weeklyTotalHours[4].totalMentorAssignedTaskHours+weeklyTotalHours[4].totalSelfLearningHours+weeklyTotalHours[4].totalCGLearningVideoHours)),
-    // amt: 2000,
-  },
-];
-
-export default function DashboardGraph(props) {
-  // const graphDataFromDailyUpdate = props.sendDataToGraph
-  // function convertTimeStringToNumber(timeString) {
-  //   const [hoursPart, minutesPart] = timeString.split(' hrs ');
-  //   const hours = parseInt(hoursPart, 10);
-  //   // console.log(hours, "This is hours")
-  //   const minutes = parseInt(minutesPart, 10) || 0;
-  //   // console.log(minutes, "This is minutes")
-  //   const decimalHours = hours + (minutes / 60);
-  //   return decimalHours;
-  // }
+export default function DashboardGraph() {
   const [graphType, setGraphType] = useState("daily");
   const [tableData, setTableData] = useState([]);
-  const [currentMonth, setCurrentMonth] = useState(new Date().getMonth()); //start from hereeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
+  const [currentMonth, setCurrentMonth] = useState(new Date().getMonth());
 
   useEffect(() => {
-    // setLoading(true);
     fetchData();
-    // loading?"":
   }, []);
   const setGraphData = (type) => {
     setGraphType(type);
@@ -97,7 +36,6 @@ export default function DashboardGraph(props) {
           <li>
             <Link
               className="dropdown-item pe-0"
-              // href="#"
               style={{ paddingLeft: "8px", fontSize: "14px" }}
             >
               This Week
@@ -147,7 +85,6 @@ export default function DashboardGraph(props) {
       })
       .then(async (data) => {
         setTableData(data.response);
-        // Get the start and end dates of the current week
       });
   };
 
@@ -179,10 +116,6 @@ export default function DashboardGraph(props) {
     const regex = /(\d+)\s*hrs\s*(\d+)\s*min/;
     const matches = timeString.match(regex);
 
-    // if (!matches) {
-    //   throw new Error("Invalid time string format");
-    // }
-
     const hours = parseInt(matches[1]);
     const minutes = parseInt(matches[2]);
     const totalMinutes = hours * 60 + minutes;
@@ -192,15 +125,9 @@ export default function DashboardGraph(props) {
 
   // Get the start and end dates of the current month
   const currentDateForMonth = new Date();
-  // const currentMonth = currentDateForMonth.getMonth(); // Remove from here
-  // console.log(currentMonth, "currentMonth")
   const currentYear = currentDateForMonth.getFullYear();
-  // console.log(currentYear, "currentYear")
   const currentMonthStart = new Date(currentYear, currentMonth, 1);
-  // console.log(currentMonthStart, "currentMonthStart")
   const currentMonthEnd = new Date(currentYear, currentMonth + 1, 0);
-  // console.log(currentMonthEnd, "currentMonthEnd")
-
   // Initialize an array to hold the total hours for each week
   const weeklyTotalHours = [];
 
@@ -213,8 +140,6 @@ export default function DashboardGraph(props) {
     return firstSunday;
   }
   const firstSundayOfThisMonth = getFirstSunday(currentYear, currentMonth);
-  // console.log(firstSundayOfThisMonth)
-  // let weekEndDate = new Date(firstSundayOfThisMonth);
   let weekEndDate = new Date(currentMonthStart);
   weekEndDate.setDate(firstSundayOfThisMonth);
   console.log(weekEndDate, "weekEnddate");
@@ -224,11 +149,6 @@ export default function DashboardGraph(props) {
     // Filter task records for the current week
     const currentWeekTaskRecords = tableData?.filter((record) => {
       let recordDate = new Date(record.startDate);
-      // recordDate = recordDate.getDate();
-      // console.log(recordDate, "This is the recorderd date")
-      // console.log(weekStartDate, "This is the week start date")
-      // console.log(weekEndDate, "This is the week end date")
-      // console.log(recordDate >= weekStartDate.getDate() && recordDate <= weekEndDate.getDate())
       return recordDate >= weekStartDate && recordDate <= weekEndDate;
     });
 
@@ -261,18 +181,6 @@ export default function DashboardGraph(props) {
     weekStartDate.setDate(weekEndDate.getDate() + 1); // Set start date to 3 days after the previous end date
     weekEndDate.setDate(weekStartDate.getDate() + 6); // Set end date to 4 days after the new start date
   }
-
-  // Print the weekly total hours
-  // weeklyTotalHours.forEach((week, index) => {
-  //   console.log(`Week ${index + 1}`);
-  //   console.log("Start Date:", week.weekStartDate);
-  //   console.log("End Date:", week.weekEndDate);
-  //   console.log("Total Project Hours:", week.projectHours);
-  //   console.log("Total CG Learning Video Hours:", week.cgLearningHours);
-  //   console.log("Total Self Learning Hours:", week.selfLearningHours);
-  //   console.log("Total Mentor Assigned Task Hours:", week.mentorHours);
-  // });
-  // console.log(weeklyTotalHours);
 
   const dataMonthly = [
     {
@@ -511,50 +419,6 @@ export default function DashboardGraph(props) {
       // amt: 2000,
     },
   ];
-
-  // const currentDate = new Date();
-  //   const currentWeekStart = (currentDate.getDate() - currentDate.getDay()) + 1;
-  //   console.log(currentWeekStart, "This is week start")
-  //   const currentWeekEnd = currentWeekStart + 4;
-  //   console.log(currentWeekEnd, "This is week end")
-  //   const currentWeekStartDate = new Date(currentDate.setDate(currentWeekStart));
-  //   console.log(currentWeekStartDate, "currentWeekStartDate")
-  //   const currentWeekEndDate = new Date(currentDate.setDate(currentWeekEnd));
-
-  //   // Filter task records for the current week
-  //   const currentWeekTaskRecords = tableData.filter(record => {
-  //     let recordDate = new Date(record.startDate);
-  //     recordDate = recordDate.getDate();
-  //     // console.log(recordDate, "RecordDAte")
-  //     // console.log(currentWeekStartDate.getDate(), "Week start data")
-  //     // console.log(currentWeekEndDate.getDate(), "Week end data")
-  //     // console.log(recordDate.getDate(), "recordDAte")
-  //     console.log(recordDate >= currentWeekStartDate.getDate() && recordDate <= currentWeekEndDate.getDate())
-  //     return recordDate >= currentWeekStartDate.getDate() && recordDate <= currentWeekEndDate.getDate();
-  //   });
-  //   console.log(currentWeekTaskRecords, "currentWeekTaskRecords")
-
-  //   // Calculate the total hours for each category
-  //   let totalProjectHours = 0;
-  //   let totalCGLearningVideoHours = 0;
-  //   let totalSelfLearningHours = 0;
-  //   let totalMentorAssignedTaskHours = 0;
-
-  //   currentWeekTaskRecords.forEach(record => {
-  //     let hours = record.totalTime;
-  //     hours = getHoursFromString(hours);
-  //     if(record.learning == "CG Learning Videos") {
-  //       console.log("Inside CG one")
-  //       totalCGLearningVideoHours += hours}
-  //     else if(record.learning == "Self Learning") totalSelfLearningHours += hours;
-  //     else if(record.learning == "Mentor Assigned Task") totalMentorAssignedTaskHours += hours;
-  //     else totalProjectHours += hours
-  //   });
-  //    // Print the total hours for each category
-  //    console.log("Total Project Hours:", totalProjectHours);
-  //    console.log("Total CG Learning Video Hours:", totalCGLearningVideoHours);
-  //    console.log("Total Self Learning Hours:", totalSelfLearningHours);
-  //    console.log("Total Mentor Assigned Task Hours:", totalMentorAssignedTaskHours);
 
   const formatPercentage = (tickItem) => `${tickItem}%`;
 
