@@ -1,0 +1,22 @@
+.dropdown-button {
+  width: 123px;
+  font-size: 14px;
+  border: 1px solid #b2b2b3;
+  border-radius: 4px;
+  padding-left: 8px;
+}
+
+.dropdown-button::after {
+  margin-left: 1rem;
+}
+.dropdown-button:hover {
+  border: 1px solid #b2b2b3;
+}
+.parent-wrapper {
+  width: 394px;
+  height: 274px;
+  /* border: 1px solid black; */
+}
+
+/* width: 394px;
+ height: 274px; */

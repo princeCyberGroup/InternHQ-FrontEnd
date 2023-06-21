@@ -8,10 +8,12 @@ import MentorComponent from "./MentorList/MentorList";
 import "./dashboard.css";
 import Header from "../../Header/Header";
 
-const Dashboard = (props) => {
+const Dashboard = () => {
   return (
     <>
+    <div className="" style={{marginBottom:"5rem"}}>
       <Header />
+    </div>
 
       <div className="responsiveness">
         <>
@@ -30,7 +32,7 @@ const Dashboard = (props) => {
             </div>
             <div className="mt-2 das-card-wrapper-row2">
               <div className="" style={{ height: "376px" }}>
-                <DashboardGraph sendDataToGraph={props.sendDataToDashboard} />
+                <DashboardGraph/>
                 {/* <EmptyGraph/> */}
               </div>
               <div

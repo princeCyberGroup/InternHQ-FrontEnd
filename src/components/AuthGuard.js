@@ -1,44 +1,31 @@
 import React, { useEffect, useState } from "react";
-import { Link, Navigate, Outlet, useLocation, useNavigate } from "react-router-dom";
+import { Navigate, Outlet, useLocation, useNavigate } from "react-router-dom";
 
 const AuthGuard = () => {
   const navigate = useNavigate();
-  const location =useLocation();
-  // console.log(location)
+  const location = useLocation();
+  const str = JSON.parse(localStorage.getItem("userData")).randomString;
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const handleAuth = () => {
     if (localStorage.getItem("login")) {
-      if (localStorage.getItem("login") === "true") {
-        navigate(location.pathname)
-        setIsAuthenticated(true);
-        // navigate({
-        //     pathname:path
-        // });
-        // console.log("first", isAuthenticated);
-        // return true;
-      } else {
+      if (localStorage.getItem("login") === "false") {
         navigate("/");
-
         setIsAuthenticated(false);
-        // console.log("2first", isAuthenticated);
-        // return false;
-      }
+      } else {
+        console.log("this is user auth", str);
+        str === "07495d" ? navigate(location.pathname) : (str === "cb8715" ? navigate("/admin/dashboard") : navigate("/mentor/dashboard"));
+        setIsAuthenticated(true);
+      } 
     } else {
       navigate("/");
-
-      //   console.log("3first", isAuthenticated);
       setIsAuthenticated(false);
-
-      // return false;
     }
   };
   useEffect(() => {
     handleAuth();
-    // const storedAuth = localStorage.getItem("login") == "true" ? true : false;
-    // storedAuth = localStorage.getItem("login") == "false" ? false : true;
   }, [isAuthenticated]);
 
-  return isAuthenticated ? <Outlet/> : <Navigate to="/"/>;
+  return isAuthenticated ? <Outlet /> : <Navigate to="/" />;
 };
 
 export default AuthGuard;

@@ -1,0 +1,109 @@
+.text-added-successfull {
+    color: #198754;
+    font-family: 'Roboto';
+    font-style: normal;
+    font-weight: 600;
+    font-size: 20px;
+    line-height: 150%;
+    display: flex;
+    align-items: center;
+    text-align: center;
+    flex-direction: column;
+}
+
+.ok-button {
+    padding: 10px 16px;
+    gap: 10px;
+    width: 85px;
+    background: #28519E;
+    border-radius: 4px;
+    margin-bottom: 2rem;
+   
+}
+
+.ok-button:hover {
+    background: #28519E;
+   
+}
+
+.ok-text {
+    font-family: 'Roboto';
+    font-style: normal;
+    font-weight: 600;
+    font-size: 14px;
+    line-height: 20px;
+    text-align: center;
+    color: #FFFFFF;
+}
+
+
+
+.no-cancel-button {
+    width: 136.5px;
+    height: 40px;
+    padding: 10px 1rem;
+    background: #FFFFFF;
+    border: 1px solid #28519E;
+    border-radius: 4px;
+    margin-bottom: 2rem;
+}
+
+.no-cancel-button:hover {
+    background: #FFFFFF;
+    border: 1px solid #28519E;
+}
+
+.yes-delete-button {
+    padding: 10px 16px;
+    gap: 10px;
+    width: 136.5px;
+    height: 40px;
+    background: #F82C44;
+    border-radius: 4px;
+    margin-bottom: 2rem;
+    margin-left: 1rem;
+}
+
+.yes-delete-button:hover {
+    background: #F82C44;
+}
+
+.delete-task-text {
+    font-family: 'Roboto';
+    font-style: normal;
+    font-weight: 600;
+    font-size: 20px;
+    line-height: 150%;
+    text-align: center;
+    color: #F82C44;
+}
+
+.some-text-styling {
+    font-family: 'Roboto';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 20px;
+    text-align: center;
+    color: #565555;
+}
+
+.no-cancel-text {
+    font-family: 'Roboto';
+    font-style: normal;
+    font-weight: 600;
+    font-size: 14px;
+    line-height: 20px;
+    text-align: center;
+    color: #28519E;
+}
+
+.yes-delete-text {
+    font-family: 'Roboto';
+    font-style: normal;
+    font-weight: 600;
+    font-size: 14px;
+    line-height: 20px;
+    text-align: center;
+    color: #FFFFFF;
+}

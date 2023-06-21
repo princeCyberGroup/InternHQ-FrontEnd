@@ -26,13 +26,12 @@
   border: 1px solid #f2f4f7;
   border-radius: 4px;
 }
-.dropdown-item:hover{
-    background-color: transparent;
-    color: #000;
-} 
-.logout-hover:hover{
-    background-color: rgba(40, 52, 73, 0.15);
-    ;
+.dropdown-item:hover {
+  background-color: transparent;
+  color: #000;
+}
+.logout-hover:hover {
+  background-color: rgba(40, 52, 73, 0.15);
 }
 .background-set {
   background-color: #b8dde1;
@@ -64,4 +63,10 @@ span.logout {
   font-weight: 600;
   margin-top: 1.5rem;
   color: #f82c44;
+}
+
+.deployed-status {
+  color: #28519e;
+  font-style: italic;
+  font-size: 14px;
 }
