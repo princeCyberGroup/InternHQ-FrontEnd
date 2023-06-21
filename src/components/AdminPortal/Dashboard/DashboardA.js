@@ -11,12 +11,16 @@ import Status from './Status/Status';
 import TopTech from './TopTech/topTech';
 import AssociateConsultant from './associateConsultant/associateConsultant';
 import Insights from './Insights/insights';
+import { ReactComponent as Right } from "./Assets/right.svg";
+
 
 const DashboardA = () => {
   const [StatusData, setStatusData] = useState([]);
   const [acData, setAcData] = useState([]);
+  const [insights , setInsights] = useState([]);
   useEffect(() => {
     fetchData();
+    InsightData();
   }, []);
 
   const fetchData = async () => {
@@ -25,8 +29,16 @@ const DashboardA = () => {
       const rsp = await response.json();
       setStatusData(rsp)
       setAcData(rsp.response);
-      // console.log(rsp.response);
-      // console.log("data:",rsp.da);
+    } catch (e) {
+      console.log(e);
+    }
+  };
+  const InsightData = async () => {
+    try {
+      const response = await fetch(`https://cg-interns-hq.azurewebsites.net/getInsights`);
+      const insData = await response.json();
+      setInsights(insData.response);
+      console.log(insData);
     } catch (e) {
       console.log(e);
     }
@@ -38,8 +50,8 @@ const DashboardA = () => {
         <>
           <div className='row'>
             {/* style={{maxWidth : "1280px"}} */}
-            <div className='col-8'>
-              <div className='about'>Manage Consultant</div>
+            <div className='col-8'style={{marginLeft: "0px"}}>
+              <div className='about'>Manage Consultant <Right style={{marginBottom:"2px"}} /></div>
 
               <div className='row div-card-upload'>
                 <div className='col-8 outer-row-info'>
@@ -50,7 +62,7 @@ const DashboardA = () => {
                 </div>
               </div>
               <ManageSkillSet data={StatusData} />
-              <div className='main-div d-flex '>
+              <div className='row main-div d-flex'>
                 <div className='col-3' >
                   <TopTech />
                 </div>
@@ -60,7 +72,7 @@ const DashboardA = () => {
               </div>
             </div>
             {/* //insights */}
-            <Insights />
+            <Insights data={insights}/>
 
           </div>
           </>

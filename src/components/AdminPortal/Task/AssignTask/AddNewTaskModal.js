@@ -1,24 +1,82 @@
 import "./OtherModals.css";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
+import { ReactComponent as ExpandMore } from "../../../../Assets/expand_more.svg";
+import TechnologyDropDown from "./TechnologyDropdown(Admin)";
+import UsersDropdown from "./UsersDropdown";
 
-export const AddNewTask = () => {
+// const interns=["Prince Kumar","Nikhil Sharma","Karan Sharma","Kishan Sah","Pankaj Kumar","Varun Sharma","Samridhi Gupta"];
+
+export const AddNewTask = ({ task, onClose }) => {
   const [error, setError] = useState(true);
   const [taskName, setTaskName] = useState("");
   const [taskDescription, setTaskDescription] = useState("");
   const [taskTech, setTaskTech] = useState([]);
   const [taskUsers, setTaskUsers] = useState([]);
+  const [dropDown, setDropDown] = useState(false);
+  const [usersDropDown, setUsersDropDown] = useState(false);
+  const [tech, setTech] = useState({});
+  const [users, setUsers] = useState({});
+  const [selectAllUsers, setSelectAllUsers] = useState(false);
+  const [taskTechIds, setTaskTechIds] = useState([]);
+  const [taskUserIds, setTaskUserIds] = useState([]);
+  const [selectedUserIds, setSelectedUserIds] = useState([]);
+  const [selectedUsers, setSelectedUsers] = useState([]);
+  const [selectedTechIds, setSelectedTechIds] = useState([]);
+  const [technologyNames, setTechnolotyNames] = useState([]);
+
+  useEffect(() => {
+    if (task) {
+      setTaskName(task.taskName);
+      setTaskDescription(task.taskDescription);
+      // setTaskTech(task.taskTech);
+      // setTaskUsers(task.taskUsers);
+      setSelectedTechIds(task.selectedTechIds);
+      setSelectedUserIds(task.selectedUserIds);
+    }
+  }, [task]);
 
   const handleClickClear = (e) => {
     e.preventDefault();
+    console.log(selectedUserIds);
+    console.log(selectedTechIds);
+
     setTaskName("");
     setTaskDescription("");
-    setTaskTech("");
-    setTaskUsers("");
+    setSelectedTechIds([]);
+    setSelectedUserIds([]);
+    setTechnolotyNames([]);
+    setSelectedUsers([]);
+    // setTaskTech([]);
+    // setTaskUsers([]);
+    setTech({});
+    setUsers({});
+
+    const userCheckboxes = document.querySelectorAll(".user-checkbox");
+    userCheckboxes.forEach((checkbox) => {
+      checkbox.checked = false;
+    });
+
+    // Reset TechDropDown component state
+    const checkboxes = document.querySelectorAll(".tech-checkbox");
+    checkboxes.forEach((checkbox) => {
+      checkbox.checked = false;
+    });
+  };
+  const techDataComingFrmChild = (data) => {
+    setTech(data);
+    // setTaskTechIds(data.techId);
+
   };
 
-  const handleSubmit = async(e) => {
+  const usersDataComingFrmChild = (data) => {
+    setUsers(data);
+    // setTaskUserIds(data.userId);
+    // console.log(taskUserIds);
+  };
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
     if (taskName.length === 0 && taskDescription.length < 2) {
@@ -31,11 +89,8 @@ export const AddNewTask = () => {
 
           taskDescription,
 
-          taskTech,
-
-          taskUsers,
-
-          
+          taskTech: selectedTechIds, // Send the array of tech IDs
+          taskUsers: selectedUserIds, // Send the array of user IDs
         })
         .then((res) => {
           console.log("print", res.data);
@@ -44,12 +99,27 @@ export const AddNewTask = () => {
           console.log(err);
         });
 
-
+      setError(false);
       setTaskName("");
       setTaskDescription("");
-      setTaskTech([]);
-      setTaskUsers([]);
-      setError(false);
+      setSelectedTechIds([]);
+      setSelectedUserIds([]);
+      setTechnolotyNames([]);
+      setSelectedUsers([]);
+      // setTaskTech([]);
+      // setTaskUsers([]);
+      setTech({});
+      setUsers({});
+
+      const userCheckboxes = document.querySelectorAll(".user-checkbox");
+      userCheckboxes.forEach((checkbox) => {
+        checkbox.checked = false;
+      });
+      // Reset TechDropDown component state
+      const checkboxes = document.querySelectorAll(".tech-checkbox");
+      checkboxes.forEach((checkbox) => {
+        checkbox.checked = false;
+      });
     }
   };
 
@@ -61,9 +131,9 @@ export const AddNewTask = () => {
     setTaskDescription(e.target.value);
   };
 
-  const handleTechnologyTag = (e) => {
-    setTaskTech(e.target.value);
-  };
+  // const handleTechnologyTag = (e) => {
+  //   setTaskTech(e.target.value);
+  // };
 
   const handleAssignedTo = (e) => {
     setTaskUsers(e.target.value);
@@ -149,14 +219,47 @@ export const AddNewTask = () => {
                     Technology Tag<span style={{ color: "red" }}>*</span>
                   </label>
 
-                  <input
-                    type="text"
-                    class="form-control"
-                    id="technology-tag"
-                    placeholder="Add technology tag"
-                    value={taskTech}
-                    onChange={(e) => handleTechnologyTag(e)}
-                  />
+                  <div className="container border p-0">
+                    <div className="input-with-button">
+                      <button
+                        type="button"
+                        className="button-for-dropdown"
+                        onClick={() => {
+                          setDropDown(!dropDown);
+                        }}
+                      >
+                        <input
+                          type="text"
+                          className="custom-input"
+                          value={Object.values(tech)}
+                          disabled
+                        />
+                      </button>
+                      <button
+                        type="button"
+                        className="expand-more"
+                        onClick={() => {
+                          setDropDown(!dropDown);
+                        }}
+                      >
+                        <ExpandMore />
+                      </button>
+                    </div>
+                    <div>
+                      <ul
+                        style={{ display: dropDown ? "" : "none" }}
+                        className="ul-styling"
+                      >
+                        <TechnologyDropDown
+                          techDataComingChild={techDataComingFrmChild}
+                          setSelectedTechIds={setSelectedTechIds}
+                          setTechnolotyNames={setTechnolotyNames}
+                          technologyNames={technologyNames}
+                        />
+                      </ul>
+                    </div>
+                    {/* </div> */}
+                  </div>
                 </div>
 
                 <div class="mb-3">
@@ -167,14 +270,56 @@ export const AddNewTask = () => {
                     Assigned To<span style={{ color: "red" }}>*</span>
                   </label>
 
-                  <input
+                  <div className="container border p-0">
+                    <div className="input-with-button">
+                      <button
+                        type="button"
+                        className="button-for-dropdown"
+                        onClick={() => {
+                          setUsersDropDown(!usersDropDown);
+                        }}
+                      >
+                        <input
+                          type="text"
+                          className="custom-input"
+                          value={Object.values(users)}
+                          disabled
+                        />
+                      </button>
+                      <button
+                        type="button"
+                        className="expand-more"
+                        onClick={() => {
+                          setUsersDropDown(!usersDropDown);
+                        }}
+                      >
+                        <ExpandMore />
+                      </button>
+                    </div>
+                    <div>
+                      <ul
+                        style={{ display: usersDropDown ? "" : "none" }}
+                        className="ul-styling"
+                      >
+                        <UsersDropdown
+                          usersDataComingChild={usersDataComingFrmChild}
+                          selectAllUsers={selectAllUsers}
+                          setSelectedUserIds={setSelectedUserIds}
+                          setSelectedUsers={setSelectedUsers}
+                          selectedUsers={selectedUsers}
+                        />
+                      </ul>
+                    </div>
+                    {/* </div> */}
+                  </div>
+                  {/* <input
                     type="text"
                     class="form-control"
                     id="assigned-to"
                     placeholder="Select Associate Consultant"
                     value={taskUsers}
                     onChange={(e) => handleAssignedTo(e)}
-                  />
+                  /> */}
                 </div>
 
                 <div className="d-flex align-items-center justify-content-between">
@@ -188,6 +333,8 @@ export const AddNewTask = () => {
                       type="checkbox"
                       role="switch"
                       id="flexSwitchCheckDefault"
+                      checked={selectAllUsers}
+                      onChange={(e) => setSelectAllUsers(e.target.checked)}
                     />
                   </div>
                 </div>
@@ -207,7 +354,8 @@ export const AddNewTask = () => {
               <button
                 type="button"
                 class="btn modal-save-button"
-                data-bs-dismiss={error? "":"modal"}
+                data-bs-dismiss={error ? "" : "modal"}
+                data-bs-target="#addTaskModal"
               >
                 <span
                   className="save-text-field"

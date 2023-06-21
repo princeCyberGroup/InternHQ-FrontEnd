@@ -1,19 +1,82 @@
 import React, { useState, useEffect } from "react";
 import { ReactComponent as DownArrow } from "../../../../Assets/chevron-downdown-arrow.svg";
 import { ReactComponent as UpArrow } from "../../../../Assets/chevron-upUpArrow.svg";
+import { ReactComponent as UserPlus } from "../../../../Assets/AddUserPlus.svg";
+import { ReactComponent as UserSlash } from "../../../../Assets/user-slashUserSlash.svg";
+import { ReactComponent as Plus } from "../../../../Assets/+plusbtn.svg";
 import "./AdminMentorList.css";
 import { AddMentorModal } from "./AddMentorModal";
+import axios from "axios";
 
 const MentorList = () => {
   const [expandedMentor, setExpandedMentor] = useState(null);
   const [mentor, setMentor] = useState([]);
-  const [modalOpen, setModalOpen] = useState(false);
+  // const [modalOpen, setModalOpen] = useState(false);
+  
 
   useEffect(() => {
     // setMentors(MentorData);
     // Fetch mentors data from the API
     fetchMentorList();
   }, []);
+
+  const removeMentor = async (mentorId) => {
+    try {
+      await axios.post("https://cg-interns-hq.azurewebsites.net/removeMentor", {
+        mentorId: mentorId,
+        isAssigned: "Remove",
+
+      });  
+      setMentor(prevMentor =>
+        prevMentor.map(mentor => {
+          if (mentor.mentorId === mentorId) {
+            return { ...mentor, isActive: false };
+          }
+          return mentor;
+        })
+      );
+    } catch (err) {
+      console.log(err);
+    }
+  }
+  const assignMentor = async (mentorId) => {
+    try {
+      await axios.post("https://cg-interns-hq.azurewebsites.net/removeMentor", {
+        mentorId: mentorId,
+        isAssigned: "Assign",
+      });  
+      setMentor(prevMentor =>
+        prevMentor.map(mentor => {
+          if (mentor.mentorId === mentorId) {
+            return { ...mentor, isActive: true };
+          }
+          return mentor;
+        })
+      );
+    } catch (err) {
+      console.log(err);
+    }
+  }
+  // const addMentor = (newMentor) => {
+  //   // Update the mentor list after adding a new mentor
+  //   setMentor(prevMentor => [...prevMentor, newMentor]);
+  // };
+  const addMentor = async (newMentor) => {
+    try {
+      // Assign the mentor immediately after adding
+      // await assignMentor(newMentor.mentorId);
+  
+      // Update the mentor list after adding a new mentor
+      setMentor(prevMentor => [...prevMentor, newMentor]);
+    } catch (err) {
+      console.log(err);
+    }
+    finally{
+        fetchMentorList();  
+    }
+
+  };
+  
 
   const fetchMentorList = async () => {
     try {
@@ -23,8 +86,8 @@ const MentorList = () => {
       );
 
       const data = await response.json();
-
-      setMentor(data.response);
+      const mentors = [...data.activeMentors, ...data.inActiveMentors];
+      setMentor(mentors);
       // console.log(isLoading, "Fetched data");
     } catch (error) {
       // console.log("Error occurred while fetching mentors:", error);
@@ -39,14 +102,14 @@ const MentorList = () => {
     }
   };
 
-  const handleAddMentor = (e) => {
-    e.preventDefault();
-    setModalOpen(true);
-  };
+  // const handleAddMentor = (e) => {
+  //   e.preventDefault();
+  //   setModalOpen(true);
+  // };
 
-  const handleCloseModal = () => {
-    setModalOpen(false);
-  };
+  // const handleCloseModal = () => {
+  //   setModalOpen(false);
+  // };
 
   return (
     <>
@@ -62,27 +125,26 @@ const MentorList = () => {
         <button
           style={{ marginRight: "8px" }}
           type="button"
-          class="btn add-mentor-button"
+          class="add-mentor-button"
           data-bs-toggle="modal"
           data-bs-target="#addMentorModal"
-          onClick={(e)=>{handleAddMentor(e)}}
         >
+          <Plus/>
           Add Mentor
         </button>
-
       </div>
 
       {/* //main card  */}
 
       <div
         className="card mentor-card"
-        style={{ maxHeight: "40rem", overflow: "auto", width: "420px" }}
+        style={{ maxHeight: "90vh", width: "420px",overflow: "auto" }}
       >
         <div
           className="card-body p-0"
-          style={{ maxHeight: "640px", overflow: "auto" }}
+          // style={{ maxHeight: "640px", overflow: "auto" }}
         >
-          {mentor.map((user) => {
+          {mentor?.map((user) => {
             return (
               <>
                 <div key={user.mentorId} className="card mentor-head">
@@ -105,6 +167,24 @@ const MentorList = () => {
                       <p className="m-0 pos-wrapper">{user.designation} </p>
                     </div>
                     <div className="arrow-wrapper1">
+                      {user.isActive ? (
+                        <button className="remove-btn" onClick={() => removeMentor(user.mentorId)}><UserSlash/>Remove</button>
+                      ) : user.isActive === false ? (
+                        <button className="assign-btn" onClick={() => assignMentor(user.mentorId)}><UserPlus/>Assign</button>
+                      ) : null}
+                      <span
+                        onClick={() => handleExpand(user.mentorId)}
+                        className="expand-arrow"
+                      >
+                        {expandedMentor === user.mentorId ? (
+                          <UpArrow />
+                        ) : (
+                          <DownArrow />
+                        )}
+                      </span>
+                    </div>
+
+                    {/* <div className="arrow-wrapper1">
                       <button className="remove-btn">
                         Remove
                       </button>
@@ -118,7 +198,7 @@ const MentorList = () => {
                           <DownArrow />
                         )}
                       </span>
-                    </div>
+                    </div> */}
                   </div>
                   {expandedMentor === user.mentorId && (
                     <div className="row mt-2">
@@ -135,13 +215,15 @@ const MentorList = () => {
                     </div>
                   )}
                 </div>
-                
               </>
             );
           })}
         </div>
       </div>
-      <AddMentorModal isOpen={modalOpen} onClose={handleCloseModal} />
+      <AddMentorModal 
+      // isOpen={modalOpen} onClose={handleCloseModal} 
+      onAddMentor={addMentor}
+      />
     </>
   );
 };
