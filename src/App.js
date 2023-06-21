@@ -37,6 +37,7 @@ import Error_400 from "./components/ErrorPage/Error_400";
 import Error_500 from "./components/ErrorPage/Error_500";
 import Error_404 from "./components/ErrorPage/Error_404";
 import  PieChart  from "./components/AdminPortal/Report/Detailedreport/PieChart";
+import ManageSkillSet from "./components/AdminPortal/Dashboard/ManageSkillSet/manageSkillSet";
 
 function App() {
   const location = useLocation();
@@ -143,6 +144,7 @@ function App() {
           {/* Admin routes */}
           <Route element={<AdminAuthGuard />}>
             <Route path="/admin-dashboard" element={<DashboardA />} />
+            <Route path="/admin/skill-test" element={<ManageSkillSet />} />
             <Route path="/admin/reports" element={<Report />} />
             <Route
               path={`/admin/report`}
