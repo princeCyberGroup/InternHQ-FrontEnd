@@ -12,7 +12,7 @@ import BreadCrumbs from "../../BreadCrumbs/BreadCrumbs";
 import DailyUpdateTableSection from "./DailyUpdateTableSection";
 
 const DailyUpdateTable = (props) => {
-    // const sendDataToParent = () => {
+  // const sendDataToParent = () => {
   //   const data = "Hello World From Daily Update Component";
   //   props.sendData(data);
   // }
@@ -25,13 +25,15 @@ const DailyUpdateTable = (props) => {
 
   return (
     <>
-      <Header />
+      <div className="" style={{ marginBottom: "3rem" }}>
+        <Header />
+      </div>
       <div className="container-fluid daily-update-table-container d-flex flex-column">
         <div className="daily-update-table-wrapper ">
           <div className="row ">
             <div className="col-12">
               <div className="daily-update-nav-bar">
-               <BreadCrumbs />
+                <BreadCrumbs />
               </div>
             </div>
           </div>
@@ -43,7 +45,7 @@ const DailyUpdateTable = (props) => {
               </div>
             </div>
           </div>
-          <DailyUpdateTableSection/>
+          <DailyUpdateTableSection />
         </div>
       </div>
     </>

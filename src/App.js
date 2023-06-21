@@ -132,10 +132,11 @@ function App() {
 
           {/* Admin routes */}
           <Route element={<AdminAuthGuard />}>
-            <Route path="/admin-dashboard" element={<DashboardA />} />
-            <Route path="/admin/report" element={<Report />} />
+            <Route path="/admin/dashboard" element={<DashboardA />} />
+            <Route path="/admin/reports" element={<Report />} />
             <Route path="/admin/report/:userId" element={<Detailedreport />} />
-            <Route path="/assign-task" element={<Task />} />
+            <Route path="/admin/assign-task" element={<Task />} />
+            {/* <Route path="/admin/skill-test" element={<SkillTest />} /> */}
           </Route>
 
           {/* Mentor routes */}
