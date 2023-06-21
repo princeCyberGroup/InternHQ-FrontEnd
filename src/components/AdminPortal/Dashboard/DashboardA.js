@@ -14,6 +14,7 @@ import Insights from './Insights/insights';
 import { ReactComponent as Right } from "./Assets/right.svg";
 import Header from '../../Header/Header';
 
+
 const DashboardA = () => {
   const [StatusData, setStatusData] = useState([]);
   const [acData, setAcData] = useState([]);
