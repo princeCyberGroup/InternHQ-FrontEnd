@@ -96,6 +96,8 @@ const TakeYourTest = () => {
         } else {
           clearInterval(timer);
           // submitQuiz();
+          clickHandler();
+          submitTest();
           return 0;
         }
       });
