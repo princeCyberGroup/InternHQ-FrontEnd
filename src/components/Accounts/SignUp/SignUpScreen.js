@@ -19,6 +19,7 @@ const SignUpScreen = () => {
 
   const [incorrectemail, setIncorrectemail] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const [errorMsg, setErrorMsg] = useState("");
 
   const handleEmailChange = (event) => {
     const { value } = event.target;
@@ -61,9 +62,10 @@ const SignUpScreen = () => {
         console.log("Inside Catch")
         console.log(error.response?.data);
         
-        if (error.response?.data.msg == "Error: User Already Exists!") {
+        if (error.response?.data.msg) {
           setIsEmailValid(false);
           setIncorrectemail(true);
+          setErrorMsg(error.response?.data.msg)
         }
         setIsLoading(false);
         if(error.response?.data.statusCode == 400) {
@@ -224,7 +226,8 @@ const SignUpScreen = () => {
                     >
                       Email ID
                     </label>
-                    <input
+                    <div className="div-input">
+                      <input
                       className="input-login"
                       type="email"
                       id="exampleInputEmail1"
@@ -233,10 +236,12 @@ const SignUpScreen = () => {
                       placeholder="Enter Your Email ID"
                       required
                     />
+                    </div>
+                    
                     {!isEmailValid && email && (
                       <span className="sign-up-warning">
                         {incorrectemail
-                          ? "User Already Exists!"
+                          ? errorMsg
                           : "Please make use of CG-Infinity email only"}
                       </span>
                     )}
@@ -250,7 +255,8 @@ const SignUpScreen = () => {
                       Password
                     </label>
                     <div className="input-group">
-                    <input
+                      <div className="div-input pass-input-div">
+                        <input
                       className="input-login"
                       type={showPassword ? "password" : "text"}
                       id="exampleInputPassword1"
@@ -271,6 +277,8 @@ const SignUpScreen = () => {
                           <i className="bi bi-eye-slash"></i>
                         )}
                       </button>
+                      </div>
+                    
                     </div>
                     {!isPasswordValid && password && (
                       <span className="sign-up-warning">
@@ -284,6 +292,7 @@ const SignUpScreen = () => {
                 <button
                   type="submit"
                   className="btn btn-warning border-0 sign-up-btn"
+                  style={{width:"inherit"}}
                   disabled={!isEmailValid || !isPasswordValid || isLoading}
                 >
                   {isLoading ? (

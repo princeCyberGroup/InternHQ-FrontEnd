@@ -48,7 +48,7 @@ const LoginScreen = () => {
         password,
       })
       .then((response) => {
-        console.log("data2:",response.data);
+        console.log("data2:", response.data);
         localStorage.setItem("login", true);
         const res = {
           token: response.data.token,
@@ -56,7 +56,7 @@ const LoginScreen = () => {
           userId: response.data.userId,
           firstName: response.data.firstName,
           lastName: response.data.lastName,
-          deployed:response.data.isDeployed
+          deployed: response.data.isDeployed,
         };
         localStorage.setItem("userData", JSON.stringify(res));
         // const res = {
@@ -96,11 +96,11 @@ const LoginScreen = () => {
           setIsPasswordValid(false);
         }
         setIsLoading(false);
-        if(error.response?.data.statusCode == 400) {
-          navigate('/error?statusCode=400')
-        } 
-         if(error.response?.data.statusCode == 500) {
-          navigate('/error?statusCode=500')
+        if (error.response?.data.statusCode == 400) {
+          navigate("/error?statusCode=400");
+        }
+        if (error.response?.data.statusCode == 500) {
+          navigate("/error?statusCode=500");
         }
         // navigate(`/error?statusCode=${error.response?.data.statusCode}`);
       });
@@ -256,15 +256,18 @@ const LoginScreen = () => {
                     >
                       Email ID
                     </label>
-                    <input
-                      className="input-login"
-                      type="email"
-                      id="exampleInputEmail1"
-                      value={email}
-                      onChange={handleEmailChange}
-                      placeholder="Enter Your Email ID"
-                      required
-                    />
+                    <div className="div-input">
+                      <input
+                        className="input-login"
+                        type="email"
+                        id="exampleInputEmail1"
+                        value={email}
+                        onChange={handleEmailChange}
+                        placeholder="Enter Your Email ID"
+                        required
+                      />
+                    </div>
+
                     {!isEmailValid && email && (
                       <span className="sign-up-warning">
                         {incorrectemail
@@ -283,27 +286,29 @@ const LoginScreen = () => {
                     </label>
                     {/* <div className="password-input-container"> */}
                     <div className="input-group">
-                    <input
-                      className="input-login"
-                      type={showPassword ? "password" : "text"}
-                      id="exampleInputPassword1"
-                      placeholder="Enter Your Password"
-                      value={password}
-                      required
-                      onChange={handlePasswordChange}
-                    />
-                      <button
-                        className="btn password-toggle-button"
-                        style={{border: "none"}}
-                        type="button"
-                        onClick={handleTogglePasswordVisibility}
-                      >
-                        {showPassword ? (
-                          <i className="bi bi-eye"></i>
-                        ) : (
-                          <i className="bi bi-eye-slash"></i>
-                        )}
-                      </button>
+                      <div className="div-input pass-input-div">
+                        <input
+                          className="input-login"
+                          type={showPassword ? "password" : "text"}
+                          id="exampleInputPassword1"
+                          placeholder="Enter Your Password"
+                          value={password}
+                          required
+                          onChange={handlePasswordChange}
+                        />
+                        <button
+                          className="btn password-toggle-button"
+                          style={{ border: "none" }}
+                          type="button"
+                          onClick={handleTogglePasswordVisibility}
+                        >
+                          {showPassword ? (
+                            <i className="bi bi-eye"></i>
+                          ) : (
+                            <i className="bi bi-eye-slash"></i>
+                          )}
+                        </button>
+                      </div>
                     </div>
                     {!isPasswordValid && password && (
                       <span className="sign-up-warning">
@@ -342,6 +347,7 @@ const LoginScreen = () => {
                 <button
                   type="submit"
                   className="btn btn-warning border-0 sign-up-btn mt-3"
+                  style={{ width: "inherit" }}
                   disabled={!isEmailValid || isLoading}
                 >
                   {isLoading ? (

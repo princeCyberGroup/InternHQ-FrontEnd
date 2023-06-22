@@ -45,7 +45,7 @@
     /* align-items: center;
     justify-content: center; */
     /* padding: 16px 0px; */
-    gap: 16px;
+    /* gap: 16px; */
 
     /* position: absolute; */
     width: 862px;
@@ -239,5 +239,8 @@
     margin-left: 60px;
 }
 .main-card-inside{
- box-shadow: 0px 4px 10px rgba(66, 76, 97, 0.15);   
+ /* box-shadow: 0px 4px 10px rgba(66, 76, 97, 0.15);    */
+ margin: 0 0 1rem 0;
+ max-height: calc(100vh - 30vh);
+ overflow-y: scroll;
 }

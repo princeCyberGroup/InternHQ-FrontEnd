@@ -7,81 +7,18 @@ import {
   CartesianGrid,
   Legend,
   Tooltip,
-  Label,
-  LabelList,
 } from "recharts";
 import "./graph.css";
 import { Link } from "react-router-dom";
 
-const dataMonthly = [
-  {
-    name: "Week 1",
-    val: 40,
-    // Project: weeklyTotalHours[0].totalProjectHours,
-    // "Task by Mentor": weeklyTotalHours[0].totalMentorAssignedTaskHours,
-    // "Self Learning": weeklyTotalHours[0].totalSelfLearningHours,
-    // "CG Learning Video": weeklyTotalHours[0].totalCGLearningVideoHours,
-    // Idle: (40 - (weeklyTotalHours[0].totalProjectHours+weeklyTotalHours[0].totalMentorAssignedTaskHours+weeklyTotalHours[0].totalSelfLearningHours+weeklyTotalHours[0].totalCGLearningVideoHours)),
-    // amt: 2400,
-  },
-  {
-    name: "Week 2",
-    // Project: weeklyTotalHours[1].totalProjectHours,
-    // "Task by Mentor": weeklyTotalHours[1].totalMentorAssignedTaskHours,
-    // "Self Learning": weeklyTotalHours[1].totalSelfLearningHours,
-    // "CG Learning Video": weeklyTotalHours[1].totalCGLearningVideoHours,
-    // Idle: (40 - (weeklyTotalHours[1].totalProjectHours+weeklyTotalHours[1].totalMentorAssignedTaskHours+weeklyTotalHours[1].totalSelfLearningHours+weeklyTotalHours[1].totalCGLearningVideoHours)),
-    // amt: 2210,
-  },
-  {
-    name: "Week 3",
-    // Project: weeklyTotalHours[2].totalProjectHours,
-    // "Task by Mentor": weeklyTotalHours[2].totalMentorAssignedTaskHours,
-    // "Self Learning": weeklyTotalHours[2].totalSelfLearningHours,
-    // "CG Learning Video": weeklyTotalHours[2].totalCGLearningVideoHours,
-    // Idle: (40 - (weeklyTotalHours[2].totalProjectHours+weeklyTotalHours[2].totalMentorAssignedTaskHours+weeklyTotalHours[2].totalSelfLearningHours+weeklyTotalHours[2].totalCGLearningVideoHours)),
-    // amt: 2290,
-  },
-  {
-    name: "Week 4",
-    // Project: weeklyTotalHours[3].totalProjectHours,
-    // "Task by Mentor": weeklyTotalHours[3].totalMentorAssignedTaskHours,
-    // "Self Learning": weeklyTotalHours[3].totalSelfLearningHours,
-    // "CG Learning Video": weeklyTotalHours[3].totalCGLearningVideoHours,
-    // Idle: (40 - (weeklyTotalHours[3].totalProjectHours+weeklyTotalHours[3].totalMentorAssignedTaskHours+weeklyTotalHours[3].totalSelfLearningHours+weeklyTotalHours[3].totalCGLearningVideoHours)),
-    // amt: 2000,
-  },
-  {
-    name: "Week 5",
-    // Project: weeklyTotalHours[4].totalProjectHours,
-    // "Task by Mentor": weeklyTotalHours[4].totalMentorAssignedTaskHours,
-    // "Self Learning": weeklyTotalHours[4].totalSelfLearningHours,
-    // "CG Learning Video": weeklyTotalHours[4].totalCGLearningVideoHours,
-    // Idle: (40 - (weeklyTotalHours[4].totalProjectHours+weeklyTotalHours[4].totalMentorAssignedTaskHours+weeklyTotalHours[4].totalSelfLearningHours+weeklyTotalHours[4].totalCGLearningVideoHours)),
-    // amt: 2000,
-  },
-];
-
-export default function DashboardGraph(props) {
-  // const graphDataFromDailyUpdate = props.sendDataToGraph
-  // function convertTimeStringToNumber(timeString) {
-  //   const [hoursPart, minutesPart] = timeString.split(' hrs ');
-  //   const hours = parseInt(hoursPart, 10);
-  //   // console.log(hours, "This is hours")
-  //   const minutes = parseInt(minutesPart, 10) || 0;
-  //   // console.log(minutes, "This is minutes")
-  //   const decimalHours = hours + (minutes / 60);
-  //   return decimalHours;
-  // }
+export default function DashboardGraph() {
   const [graphType, setGraphType] = useState("daily");
   const [tableData, setTableData] = useState([]);
-  const [currentMonth, setCurrentMonth] = useState(new Date().getMonth()); //start from hereeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
-
+  const [currentMonth, setCurrentMonth] = useState(new Date().getMonth());
   useEffect(() => {
-    // setLoading(true);
     fetchData();
-    // loading?"":
   }, []);
+
   const setGraphData = (type) => {
     setGraphType(type);
   };
@@ -97,7 +34,6 @@ export default function DashboardGraph(props) {
           <li>
             <Link
               className="dropdown-item pe-0"
-              // href="#"
               style={{ paddingLeft: "8px", fontSize: "14px" }}
             >
               This Week
@@ -147,7 +83,6 @@ export default function DashboardGraph(props) {
       })
       .then(async (data) => {
         setTableData(data.response);
-        // Get the start and end dates of the current week
       });
   };
 
@@ -172,17 +107,10 @@ export default function DashboardGraph(props) {
     }
   }
 
-  // console.log(tableData);
-
   function convertToPercentageMonthly(timeString) {
     // 40 hrs 00 min ==> 100 and 20 hrs 00 min ==> 50
     const regex = /(\d+)\s*hrs\s*(\d+)\s*min/;
     const matches = timeString.match(regex);
-
-    // if (!matches) {
-    //   throw new Error("Invalid time string format");
-    // }
-
     const hours = parseInt(matches[1]);
     const minutes = parseInt(matches[2]);
     const totalMinutes = hours * 60 + minutes;
@@ -190,21 +118,14 @@ export default function DashboardGraph(props) {
     return Number.isInteger(percentage) ? percentage : percentage.toFixed(2);
   }
 
-  // Get the start and end dates of the current month
+  // Getting the start and end dates of the current month
   const currentDateForMonth = new Date();
-  // const currentMonth = currentDateForMonth.getMonth(); // Remove from here
-  // console.log(currentMonth, "currentMonth")
   const currentYear = currentDateForMonth.getFullYear();
-  // console.log(currentYear, "currentYear")
   const currentMonthStart = new Date(currentYear, currentMonth, 1);
-  // console.log(currentMonthStart, "currentMonthStart")
-  const currentMonthEnd = new Date(currentYear, currentMonth + 1, 0);
-  // console.log(currentMonthEnd, "currentMonthEnd")
 
-  // Initialize an array to hold the total hours for each week
+  // Initializing an array to hold the total hours for each week
   const weeklyTotalHours = [];
-
-  // Calculate the start and end dates for each week in the month
+  // Calculating the start and end dates for each week in the month
   let weekStartDate = new Date(currentMonthStart);
   console.log(weekStartDate, "weekstartdate");
   function getFirstSunday(year, month) {
@@ -213,8 +134,6 @@ export default function DashboardGraph(props) {
     return firstSunday;
   }
   const firstSundayOfThisMonth = getFirstSunday(currentYear, currentMonth);
-  // console.log(firstSundayOfThisMonth)
-  // let weekEndDate = new Date(firstSundayOfThisMonth);
   let weekEndDate = new Date(currentMonthStart);
   weekEndDate.setDate(firstSundayOfThisMonth);
   console.log(weekEndDate, "weekEnddate");
@@ -224,11 +143,6 @@ export default function DashboardGraph(props) {
     // Filter task records for the current week
     const currentWeekTaskRecords = tableData?.filter((record) => {
       let recordDate = new Date(record.startDate);
-      // recordDate = recordDate.getDate();
-      // console.log(recordDate, "This is the recorderd date")
-      // console.log(weekStartDate, "This is the week start date")
-      // console.log(weekEndDate, "This is the week end date")
-      // console.log(recordDate >= weekStartDate.getDate() && recordDate <= weekEndDate.getDate())
       return recordDate >= weekStartDate && recordDate <= weekEndDate;
     });
 
@@ -262,34 +176,22 @@ export default function DashboardGraph(props) {
     weekEndDate.setDate(weekStartDate.getDate() + 6); // Set end date to 4 days after the new start date
   }
 
-  // Print the weekly total hours
-  // weeklyTotalHours.forEach((week, index) => {
-  //   console.log(`Week ${index + 1}`);
-  //   console.log("Start Date:", week.weekStartDate);
-  //   console.log("End Date:", week.weekEndDate);
-  //   console.log("Total Project Hours:", week.projectHours);
-  //   console.log("Total CG Learning Video Hours:", week.cgLearningHours);
-  //   console.log("Total Self Learning Hours:", week.selfLearningHours);
-  //   console.log("Total Mentor Assigned Task Hours:", week.mentorHours);
-  // });
-  // console.log(weeklyTotalHours);
-
   const dataMonthly = [
     {
       name: "Week 1",
-      Project: convertToPercentageMonthly(
+      Project: weeklyTotalHours[0].projectHours === 0 ? "0" : convertToPercentageMonthly(
         convertDecimalToHours(weeklyTotalHours[0].projectHours)
       ),
-      "Task by Mentor": convertToPercentageMonthly(
+      "Task by Mentor": weeklyTotalHours[0].mentorHours === 0 ? "0" : convertToPercentageMonthly(
         convertDecimalToHours(weeklyTotalHours[0].mentorHours)
       ),
-      "Self Learning": convertToPercentage(
+      "Self Learning": weeklyTotalHours[0].selfLearningHours === 0 ? "0" : convertToPercentage(
         convertDecimalToHours(weeklyTotalHours[0].selfLearningHours)
       ),
-      "CG Learning Video": convertToPercentageMonthly(
+      "CG Learning Video": weeklyTotalHours[0].cgLearningHours === 0 ? "0" : convertToPercentageMonthly(
         convertDecimalToHours(weeklyTotalHours[0].cgLearningHours)
       ),
-      Idle: Number.isInteger(
+      Idle:  weeklyTotalHours[0].projectHours === 0 && weeklyTotalHours[0].mentorHours === 0 && weeklyTotalHours[0].cgLearningHours === 0 && weeklyTotalHours[0].selfLearningHours === 0 ? "0" : Number.isInteger(
         100 -
           convertToPercentageMonthly(
             convertDecimalToHours(
@@ -320,23 +222,22 @@ export default function DashboardGraph(props) {
               )
             )
           ).toFixed(2),
-      // amt: 2400,
     },
     {
       name: "Week 2",
-      Project: convertToPercentageMonthly(
+      Project: weeklyTotalHours[1].projectHours === 0 ? "0" : convertToPercentageMonthly(
         convertDecimalToHours(weeklyTotalHours[1].projectHours)
       ),
-      "Task by Mentor": convertToPercentageMonthly(
+      "Task by Mentor": weeklyTotalHours[1].mentorHours === 0 ? "0" : convertToPercentageMonthly(
         convertDecimalToHours(weeklyTotalHours[1].mentorHours)
       ),
-      "Self Learning": convertToPercentageMonthly(
+      "Self Learning": weeklyTotalHours[1].selfLearningHours === 0 ? "0" : convertToPercentageMonthly(
         convertDecimalToHours(weeklyTotalHours[1].selfLearningHours)
       ),
-      "CG Learning Video": convertToPercentageMonthly(
+      "CG Learning Video": weeklyTotalHours[1].cgLearningHours === 0 ? "0" : convertToPercentageMonthly(
         convertDecimalToHours(weeklyTotalHours[1].cgLearningHours)
       ),
-      Idle: Number.isInteger(
+      Idle:  weeklyTotalHours[1].projectHours === 0 && weeklyTotalHours[1].mentorHours === 0 && weeklyTotalHours[1].cgLearningHours === 0 && weeklyTotalHours[1].selfLearningHours === 0 ? "0" : Number.isInteger(
         100 -
           convertToPercentageMonthly(
             convertDecimalToHours(
@@ -367,23 +268,22 @@ export default function DashboardGraph(props) {
               )
             )
           ).toFixed(2),
-      // amt: 2210,
     },
     {
       name: "Week 3",
-      Project: convertToPercentageMonthly(
+      Project: weeklyTotalHours[2].projectHours === 0 ? "0" : convertToPercentageMonthly(
         convertDecimalToHours(weeklyTotalHours[2].projectHours)
       ),
-      "Task by Mentor": convertToPercentageMonthly(
+      "Task by Mentor": weeklyTotalHours[2].mentorHours === 0 ? "0" : convertToPercentageMonthly(
         convertDecimalToHours(weeklyTotalHours[2].mentorHours)
       ),
-      "Self Learning": convertToPercentageMonthly(
+      "Self Learning": weeklyTotalHours[2].selfLearningHours === 0 ? "0" : convertToPercentageMonthly(
         convertDecimalToHours(weeklyTotalHours[2].selfLearningHours)
       ),
-      "CG Learning Video": convertToPercentageMonthly(
+      "CG Learning Video": weeklyTotalHours[2].cgLearningHours === 0 ? "0" : convertToPercentageMonthly(
         convertDecimalToHours(weeklyTotalHours[2].cgLearningHours)
       ),
-      Idle: Number.isInteger(
+      Idle:  weeklyTotalHours[2].projectHours === 0 && weeklyTotalHours[2].mentorHours === 0 && weeklyTotalHours[2].cgLearningHours === 0 && weeklyTotalHours[2].selfLearningHours === 0 ? "0" : Number.isInteger(
         100 -
           convertToPercentageMonthly(
             convertDecimalToHours(
@@ -414,23 +314,22 @@ export default function DashboardGraph(props) {
               )
             )
           ).toFixed(2),
-      // amt: 2290,
     },
     {
       name: "Week 4",
-      Project: convertToPercentageMonthly(
+      Project: weeklyTotalHours[3].projectHours === 0 ? "0" : convertToPercentageMonthly(
         convertDecimalToHours(weeklyTotalHours[3].projectHours)
       ),
-      "Task by Mentor": convertToPercentageMonthly(
+      "Task by Mentor": weeklyTotalHours[3].mentorHours === 0 ? "0" : convertToPercentageMonthly(
         convertDecimalToHours(weeklyTotalHours[3].mentorHours)
       ),
-      "Self Learning": convertToPercentageMonthly(
+      "Self Learning": weeklyTotalHours[3].selfLearningHours === 0 ? "0" : convertToPercentageMonthly(
         convertDecimalToHours(weeklyTotalHours[3].selfLearningHours)
       ),
-      "CG Learning Video": convertToPercentageMonthly(
+      "CG Learning Video": weeklyTotalHours[3].cgLearningHours === 0 ? "0" : convertToPercentageMonthly(
         convertDecimalToHours(weeklyTotalHours[3].cgLearningHours)
       ),
-      Idle: Number.isInteger(
+      Idle: weeklyTotalHours[3].projectHours === 0 && weeklyTotalHours[3].mentorHours === 0 && weeklyTotalHours[3].cgLearningHours === 0 && weeklyTotalHours[3].selfLearningHours === 0 ? "0" : Number.isInteger(
         100 -
           convertToPercentageMonthly(
             convertDecimalToHours(
@@ -461,23 +360,22 @@ export default function DashboardGraph(props) {
               )
             )
           ).toFixed(2),
-      // amt: 2000,
     },
     {
       name: "Week 5",
-      Project: convertToPercentageMonthly(
+      Project: weeklyTotalHours[4].projectHours === 0 ? "0" : convertToPercentageMonthly(
         convertDecimalToHours(weeklyTotalHours[4].projectHours)
       ),
-      "Task by Mentor": convertToPercentageMonthly(
+      "Task by Mentor": weeklyTotalHours[4].mentorHours === 0 ? "0" : convertToPercentageMonthly(
         convertDecimalToHours(weeklyTotalHours[4].mentorHours)
       ),
-      "Self Learning": convertToPercentageMonthly(
+      "Self Learning": weeklyTotalHours[4].selfLearningHours === 0 ? "0" : convertToPercentageMonthly(
         convertDecimalToHours(weeklyTotalHours[4].selfLearningHours)
       ),
-      "CG Learning Video": convertToPercentageMonthly(
+      "CG Learning Video": weeklyTotalHours[4].cgLearningHours === 0 ? "0" : convertToPercentageMonthly(
         convertDecimalToHours(weeklyTotalHours[4].cgLearningHours)
       ),
-      Idle: Number.isInteger(
+      Idle:  weeklyTotalHours[4].projectHours === 0 && weeklyTotalHours[4].mentorHours === 0 && weeklyTotalHours[4].cgLearningHours === 0 && weeklyTotalHours[4].selfLearningHours === 0 ? "0" : Number.isInteger(
         100 -
           convertToPercentageMonthly(
             convertDecimalToHours(
@@ -508,53 +406,8 @@ export default function DashboardGraph(props) {
               )
             )
           ).toFixed(2),
-      // amt: 2000,
     },
   ];
-
-  // const currentDate = new Date();
-  //   const currentWeekStart = (currentDate.getDate() - currentDate.getDay()) + 1;
-  //   console.log(currentWeekStart, "This is week start")
-  //   const currentWeekEnd = currentWeekStart + 4;
-  //   console.log(currentWeekEnd, "This is week end")
-  //   const currentWeekStartDate = new Date(currentDate.setDate(currentWeekStart));
-  //   console.log(currentWeekStartDate, "currentWeekStartDate")
-  //   const currentWeekEndDate = new Date(currentDate.setDate(currentWeekEnd));
-
-  //   // Filter task records for the current week
-  //   const currentWeekTaskRecords = tableData.filter(record => {
-  //     let recordDate = new Date(record.startDate);
-  //     recordDate = recordDate.getDate();
-  //     // console.log(recordDate, "RecordDAte")
-  //     // console.log(currentWeekStartDate.getDate(), "Week start data")
-  //     // console.log(currentWeekEndDate.getDate(), "Week end data")
-  //     // console.log(recordDate.getDate(), "recordDAte")
-  //     console.log(recordDate >= currentWeekStartDate.getDate() && recordDate <= currentWeekEndDate.getDate())
-  //     return recordDate >= currentWeekStartDate.getDate() && recordDate <= currentWeekEndDate.getDate();
-  //   });
-  //   console.log(currentWeekTaskRecords, "currentWeekTaskRecords")
-
-  //   // Calculate the total hours for each category
-  //   let totalProjectHours = 0;
-  //   let totalCGLearningVideoHours = 0;
-  //   let totalSelfLearningHours = 0;
-  //   let totalMentorAssignedTaskHours = 0;
-
-  //   currentWeekTaskRecords.forEach(record => {
-  //     let hours = record.totalTime;
-  //     hours = getHoursFromString(hours);
-  //     if(record.learning == "CG Learning Videos") {
-  //       console.log("Inside CG one")
-  //       totalCGLearningVideoHours += hours}
-  //     else if(record.learning == "Self Learning") totalSelfLearningHours += hours;
-  //     else if(record.learning == "Mentor Assigned Task") totalMentorAssignedTaskHours += hours;
-  //     else totalProjectHours += hours
-  //   });
-  //    // Print the total hours for each category
-  //    console.log("Total Project Hours:", totalProjectHours);
-  //    console.log("Total CG Learning Video Hours:", totalCGLearningVideoHours);
-  //    console.log("Total Self Learning Hours:", totalSelfLearningHours);
-  //    console.log("Total Mentor Assigned Task Hours:", totalMentorAssignedTaskHours);
 
   const formatPercentage = (tickItem) => `${tickItem}%`;
 
@@ -567,7 +420,6 @@ export default function DashboardGraph(props) {
 
     return Number.isInteger(percentage) ? percentage : percentage.toFixed(2); // Returning the percentage with 2 decimal places if it is not integer
   }
-  // console.log(convertToPercentage("40 hrs 00 min"))
 
   function convertHoursToDecimal(hoursString) {
     const regex = /(\d+)\s*hrs\s*(\d+)\s*min/;
@@ -580,7 +432,6 @@ export default function DashboardGraph(props) {
       return decimalHours;
     }
   }
-  // console.log(convertHoursToDecimal("8hrs 00 min"), "This is logging");
 
   function convertDecimalToHours(decimalHours) {
     const hours = Math.floor(decimalHours);
@@ -590,7 +441,6 @@ export default function DashboardGraph(props) {
 
     return hoursString + " " + minutesString;
   }
-  // console.log(convertDecimalToHours(40), "decimal to hours");
 
   const currentDate = new Date();
   // Calculating the start date (Monday) of the current week
@@ -636,7 +486,6 @@ export default function DashboardGraph(props) {
     else if (record.learning === "Mentor Assigned Task")
       totalHoursByDay[dayOfWeek].mentorHours += hours;
     else totalHoursByDay[dayOfWeek].projectHours += hours;
-    // console.log(totalHoursByDay, dayOfWeek);
   });
 
   const data = [
@@ -644,31 +493,31 @@ export default function DashboardGraph(props) {
       name: "Mon",
       Project:
         totalHoursByDay.Monday?.projectHours === undefined
-          ? ""
+          ? "0"
           : convertToPercentage(
               convertDecimalToHours(totalHoursByDay.Monday?.projectHours)
             ),
       "Task by Mentor":
         totalHoursByDay.Monday?.mentorHours === undefined
-          ? ""
+          ? "0"
           : convertToPercentage(
               convertDecimalToHours(totalHoursByDay.Monday?.mentorHours)
             ),
       "Self Learning":
         totalHoursByDay.Monday?.selfLearningHours === undefined
-          ? ""
+          ? "0"
           : convertToPercentage(
               convertDecimalToHours(totalHoursByDay.Monday?.selfLearningHours)
             ),
       "CG Learning Video":
         totalHoursByDay.Monday?.cgLearningHours === undefined
-          ? ""
+          ? "0"
           : convertToPercentage(
               convertDecimalToHours(totalHoursByDay.Monday?.cgLearningHours)
             ),
       Idle:
-        totalHoursByDay.Monday?.mentorHours === undefined
-          ? ""
+        totalHoursByDay.Monday === undefined
+          ? "0"
           : Number.isInteger(
               100 -
                 convertToPercentage(
@@ -700,37 +549,36 @@ export default function DashboardGraph(props) {
                 )
               )
             ).toFixed(2),
-      // amt: 2400,
     },
     {
       name: "Tues",
       Project:
         totalHoursByDay.Tuesday?.projectHours === undefined
-          ? ""
+          ? "0"
           : convertToPercentage(
               convertDecimalToHours(totalHoursByDay.Tuesday?.projectHours)
             ),
       "Task by Mentor":
         totalHoursByDay.Tuesday?.mentorHours === undefined
-          ? ""
+          ? "0"
           : convertToPercentage(
               convertDecimalToHours(totalHoursByDay.Tuesday?.mentorHours)
             ),
       "Self Learning":
         totalHoursByDay.Tuesday?.selfLearningHours === undefined
-          ? ""
+          ? "0"
           : convertToPercentage(
               convertDecimalToHours(totalHoursByDay.Tuesday?.selfLearningHours)
             ),
       "CG Learning Video":
         totalHoursByDay.Tuesday?.cgLearningHours === undefined
-          ? ""
+          ? "0"
           : convertToPercentage(
               convertDecimalToHours(totalHoursByDay.Tuesday?.cgLearningHours)
             ),
       Idle:
-        totalHoursByDay.Tuesday?.mentorHours === undefined
-          ? ""
+        totalHoursByDay.Tuesday === undefined
+          ? "0"
           : Number.isInteger(
               100 -
                 convertToPercentage(
@@ -762,25 +610,24 @@ export default function DashboardGraph(props) {
                 )
               )
             ).toFixed(2),
-      // amt: 2400,
     },
     {
       name: "Wed",
       Project:
         totalHoursByDay.Wednesday?.projectHours === undefined
-          ? ""
+          ? "0"
           : convertToPercentage(
               convertDecimalToHours(totalHoursByDay.Wednesday?.projectHours)
             ),
       "Task by Mentor":
         totalHoursByDay.Wednesday?.mentorHours === undefined
-          ? ""
+          ? "0"
           : convertToPercentage(
               convertDecimalToHours(totalHoursByDay.Wednesday?.mentorHours)
             ),
       "Self Learning":
         totalHoursByDay.Wednesday?.selfLearningHours === undefined
-          ? ""
+          ? "0"
           : convertToPercentage(
               convertDecimalToHours(
                 totalHoursByDay.Wednesday?.selfLearningHours
@@ -788,13 +635,13 @@ export default function DashboardGraph(props) {
             ),
       "CG Learning Video":
         totalHoursByDay.Wednesday?.cgLearningHours === undefined
-          ? ""
+          ? "0"
           : convertToPercentage(
               convertDecimalToHours(totalHoursByDay.Wednesday?.cgLearningHours)
             ),
       Idle:
-        totalHoursByDay.Wednesday?.mentorHours === undefined
-          ? ""
+        totalHoursByDay.Wednesday === undefined
+          ? "0"
           : Number.isInteger(
               100 -
                 convertToPercentage(
@@ -826,37 +673,36 @@ export default function DashboardGraph(props) {
                 )
               )
             ).toFixed(2),
-      // amt: 2400,
     },
     {
       name: "Thu",
       Project:
         totalHoursByDay.Thursday?.projectHours === undefined
-          ? ""
+          ? "0"
           : convertToPercentage(
               convertDecimalToHours(totalHoursByDay.Thursday?.projectHours)
             ),
       "Task by Mentor":
         totalHoursByDay.Thursday?.mentorHours === undefined
-          ? ""
+          ? "0"
           : convertToPercentage(
               convertDecimalToHours(totalHoursByDay.Thursday?.mentorHours)
             ),
       "Self Learning":
         totalHoursByDay.Thursday?.selfLearningHours === undefined
-          ? ""
+          ? "0"
           : convertToPercentage(
               convertDecimalToHours(totalHoursByDay.Thursday?.selfLearningHours)
             ),
       "CG Learning Video":
         totalHoursByDay.Thursday?.cgLearningHours === undefined
-          ? ""
+          ? "0"
           : convertToPercentage(
               convertDecimalToHours(totalHoursByDay.Thursday?.cgLearningHours)
             ),
       Idle:
-        totalHoursByDay.Thursday?.mentorHours === undefined
-          ? ""
+        totalHoursByDay.Thursday === undefined
+          ? "0"
           : Number.isInteger(
               100 -
                 convertToPercentage(
@@ -888,37 +734,36 @@ export default function DashboardGraph(props) {
                 )
               )
             ).toFixed(2),
-      // amt: 2400,
     },
     {
       name: "Fri",
       Project:
         totalHoursByDay.Friday?.projectHours === undefined
-          ? ""
+          ? "0"
           : convertToPercentage(
               convertDecimalToHours(totalHoursByDay.Friday?.projectHours)
             ),
       "Task by Mentor":
         totalHoursByDay.Friday?.mentorHours === undefined
-          ? ""
+          ? "0"
           : convertToPercentage(
               convertDecimalToHours(totalHoursByDay.Friday?.mentorHours)
             ),
       "Self Learning":
         totalHoursByDay.Friday?.selfLearningHours === undefined
-          ? ""
+          ? "0"
           : convertToPercentage(
               convertDecimalToHours(totalHoursByDay.Friday?.selfLearningHours)
             ),
       "CG Learning Video":
         totalHoursByDay.Friday?.cgLearningHours === undefined
-          ? ""
+          ? "0"
           : convertToPercentage(
               convertDecimalToHours(totalHoursByDay.Friday?.cgLearningHours)
             ),
       Idle:
-        totalHoursByDay.Friday?.mentorHours === undefined
-          ? ""
+        totalHoursByDay.Friday === undefined
+          ? "0"
           : Number.isInteger(
               100 -
                 convertToPercentage(
@@ -950,7 +795,6 @@ export default function DashboardGraph(props) {
                 )
               )
             ).toFixed(2),
-      // amt: 2400,
     },
   ];
 
