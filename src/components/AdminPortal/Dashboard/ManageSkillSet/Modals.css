@@ -58,7 +58,7 @@
     padding: 24px 0px;
     gap: 16px;
     width: 460px;
-    height: 250px;
+    height: 15rem;
     background: rgba(40, 81, 158, 0.08);
     border: 1px dashed rgba(37, 114, 204, 0.7);
     border-radius: 12px;
@@ -287,3 +287,35 @@
     color: #FFFFFF;
 } */
 
+.form-check{
+
+}
+.form-check-input{
+
+}
+.add-new-skill-test-btn{
+    padding: 0.625rem 1.5rem 0.6875rem 1.5rem;
+justify-content: center;
+align-items: center;
+gap: 0.625rem;
+border-radius: 4px;
+background: #28519E;
+border: 0px;
+color: white;
+}
+
+.progress-indicator-status{
+    justify-content: space-between;
+    margin-top: 1rem;
+display: flex;
+padding: 0rem 0.5rem;
+height:2.5rem ;
+width: 28.8rem;
+align-items: center;
+gap: 1rem;
+flex: 1 0 0;
+align-self: stretch;
+border-radius: 4px;
+border: 1px solid var(--secondary-gray, #B2B2B3);
+background: var(--primary-white, #FFF);
+}

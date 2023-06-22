@@ -1,6 +1,6 @@
 import React, { useState, useRef } from "react";
 import { ReactComponent as CloudImage } from "../Assets/Cloud.svg";
-import FileUploadButton from "./DragandDropFile";
+import { ReactComponent as CloseBtn } from "../../../../Assets/Close-admin.svg"
 // import CSVReader from "./DragandDropFile";
 
 
@@ -13,27 +13,30 @@ export const UploadCsv = () => {
     const handleCancelClick = (e) => {
         e.preventDefault();
         setSelectedFile(null);
+        setFile(null);
+        handleRemoveFile()
     };
 
-    const handleSaveClick = (e) => {
+    const handleSaveClick = async(e) => {
         e.preventDefault();
-        if (selectedFile) {
-            const formData = new FormData();
-            formData.append("file", selectedFile);
-
-
-            axios
-                .post("your-api-endpoint", formData)
-                .then((response) => {
-                    // Handle the response from the backend
-                    console.log(response.data);
-                })
-                .catch((error) => {
-                    // Handle the error
-                    console.log(error);
+      
+        const formData = new FormData();
+        formData.append('file', file);
+        try {
+            const response = await axios.post(`https://cg-interns-hq.azurewebsites.net/associateConsultantDetails`
+                , formData
+                , {
+                    headers: {
+                        'Content-Type': 'multipart/form-data',
+                        'Content-Disposition': 'form-data; name="file"; filename="example.csv"'
+                    }
                 });
+            console.log(response);
+            // Reset form inputs
+        
+        } catch (error) {
+            console.log(error);
         }
-        console.log("filename:", selectedFile);
     };
 
 
@@ -144,41 +147,34 @@ export const UploadCsv = () => {
                                                 {console.log(fileInputRef)}
                                                 <button type="button" onClick={handleBrowseClick} className="csv-upload-button">Browse from your computer</button>
                                             </div>
-                                            {file && (
-                                                <div style={{ marginLeft: "150px", marginTop: "10px" }} className="d-flex align-items-center">
-                                                    <div >{file.name}</div>
-                                                    {/* <button type="button" onClick={handleRemoveFile} className="border-0"><RemoveButton/></button> */}
-                                                </div>
-                                            )}
-                                            {progress > 0 && (
-                                                <progress style={{ marginLeft: "115px", marginTop: "5px" }} max="100" value={progress}></progress>
-                                            )}
+                                           
                                         </div>
+
                                     </div>
                                 </div>
+                                <div className="progress-indicator-status"> {file && (
+                                    <div style={{ marginLeft: "90px", marginTop: "10px", position: "relative" }} className="d-flex align-items-center">
+                                        <div >{file.name}</div>
+
+                                    </div>
+                                )}
+                                    {progress > 0 && (
+                                        <progress style={{ marginLeft: "45px", marginTop: "5px" }} max="100" value={progress}></progress>
+                                       
+                                    )}
+                                    <div style={{position: "absolute", right: "28px"}}>
+                                    {/* <CloseBtn /> */}
+                                    </div>
+                                    </div>    
                             </form>
                             <div className="saveCancel border-top-0 pb-0 row ">
-
-                                {/* <button
-                                    type="button"
-                                    className="btn cancel-button fw-bold"
-                                    data-bs-dismiss="modal"
-                                    onClick={(e) => handleCancelClick(e)}
-                                >
-                                    <span className="cancel-text">Cancel</span>
-                                </button>
-                                <button
-                                    type="button"
-                                    className="btn save-button"
-                                    data-bs-dismiss="modal"
-                                    onClick={(e) => handleSaveClick(e)}
-                                >
-                                    <span className="save-text">Save</span>
-                                </button> */}
                                 <div class="row mt-3 d-flex justify-content-end">
-                                    <button style={{width:"8rem"}} data-bs-dismiss="modal">Cancel</button>
+                                    <button style={{width:"8rem"}} data-bs-dismiss="modal"
+                                      onClick={(e) =>
+                                        handleCancelClick(e) }>Cancel</button>
                                     <button style={{width:"8rem",marginLeft:"10px"}}
-                                        onClick={(e) => handleSaveClick(e)}
+                                        onClick={(e) => handleSaveClick(e)
+                                           }
                                         data-bs-dismiss="modal">Save</button>
                                 </div>
                             </div>

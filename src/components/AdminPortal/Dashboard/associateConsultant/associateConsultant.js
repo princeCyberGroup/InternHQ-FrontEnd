@@ -91,7 +91,7 @@ export default function AssociateConsultant(props) {
             <div style={{
                 marginLeft: "194px"
             }}>
-                <div className='about-associate'>Associate Consultant</div>
+                <div className='about-associate' style={{marginLeft:"15px"}}>Associate Consultant</div>
 
                 <div className=' associate-card  ' style={{ maxHeight: "370px", overflow: "auto" }}>
                     <div>

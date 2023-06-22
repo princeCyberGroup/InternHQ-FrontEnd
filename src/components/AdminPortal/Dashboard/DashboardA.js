@@ -38,7 +38,6 @@ const DashboardA = () => {
       const response = await fetch(`https://cg-interns-hq.azurewebsites.net/getInsights`);
       const insData = await response.json();
       setInsights(insData.response);
-      console.log(insData);
     } catch (e) {
       console.log(e);
     }
