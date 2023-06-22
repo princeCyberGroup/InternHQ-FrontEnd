@@ -32,7 +32,7 @@ const HeaderAdmin = () => {
           <div className="collapse navbar-collapse border-Side" id="navbarNav">
             <ul className="navbar-nav nav-bg">
               <li className="nav-item ">
-                <NavLink to="/admin-dashboard" className="btn activeBtn">
+                <NavLink to="/admin/dashboard" className="btn activeBtn">
                   Dashboard<span></span>
                 </NavLink>
               </li>

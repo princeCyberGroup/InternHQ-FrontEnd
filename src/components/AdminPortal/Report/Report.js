@@ -7,36 +7,38 @@ import Reporttable from "./Reporttable";
 import { Dummydata } from "./Dummydata";
 import Selectlevel from "./Selectlevel";
 import axios from "axios";
+import Header from "../../Header/Header";
 const Report = () => {
   //data
   const [tech, setTech] = useState({});
   const [level, setLevel] = useState({});
   const [dropDownTech, setDropDownTech] = useState(false);
   const [dropDownLevel, setDropDownLevel] = useState(false);
-  const [tableData, setTableData] = useState();
-  const [orgTableData, setOrgTableData] = useState(Dummydata);
+  const [tableData, setTableData] = useState([]);
+  const [orgTableData, setOrgTableData] = useState([]);
   const [query, setQuery] = useState("");
 
   //functions
-  // useEffect(()=>{
-  //   fetchData();
-  // },[])
-  // const fetchData = async () => {
-  //   try {
-  //     const response = await axios.get(`https://cg-interns-hq.azurewebsites.net/getuserInfo`);
-  //     setOrgTableData(response.data.response);
-  //   } catch (error) {
-  //     console.error('Error fetching data:', error);
-  //   }
-  // };
-
+  useEffect(() => {
+    fetchData();
+  }, []);
+  const fetchData = async () => {
+    try {
+      const response = await axios.get(
+        `https://cg-interns-hq.azurewebsites.net/getuserReport`
+      );
+      setOrgTableData(response.data.response);
+      setTableData(response.data.response);
+    } catch (error) {
+      console.error("Error fetching data:", error);
+    }
+  };
 
   const dataComingFrmLevel = (data) => {
     setLevel(data);
   };
   const techDataComingFrmTech = (data) => {
     setTech(data);
-    console.log("tech funciton ran and the data is ", tech);
   };
   useEffect(() => {
     handleFiltersChange();
@@ -55,41 +57,43 @@ const Report = () => {
     };
 
     const getfilterTech = (items, tech) => {
-      if (Object.keys(tech).length > 0) {
-        const filteredData = items.filter((person) => {
-          const personSkills = Object.keys(person.skills);
-          return personSkills.some((element) =>
-            Object.values(tech).includes(element)
-          );
+      if (Object.keys(tech)?.length > 0) {
+        const filteredData = items?.filter((data) => {
+          return data?.techNames?.some((element) => {
+            return Object.values(tech)?.includes(element);
+          });
         });
         return filteredData;
       }
       return items;
     };
 
-    const getFilterLevel = (items, level) => {
-      if (Object.keys(level).length > 0) {
-        const filteredData = items.filter((person) => {
-          const personSkills = Object.values(person.skills);
-          console.log("personal skills",personSkills);
-          return personSkills.some((element) =>
-            Object.values(level).includes(element)
-          );
-        });
-        console.log("filterred table for level", filteredData);
-        return filteredData;
-      }
-      return items;
-    };
+    // const getFilterLevel = (items, level) => {
+    //   if (Object.keys(level).length > 0) {
+    //     const filteredData = items.filter((person) => {
+    //       const personSkills = Object.values(person.skills);
+    //       console.log("personal skills",personSkills);
+    //       return personSkills.some((element) =>
+    //         Object.values(level).includes(element)
+    //       );
+    //     });
+    //     return filteredData;
+    //   }
+    //   return items;
+    // };
 
     const filterItems = getFilterItems(orgTableData, query);
     const filterTech = getfilterTech(filterItems, tech);
-    const filterLevel = getFilterLevel(filterTech, level);
-    setTableData(filterLevel);
+    // const filterLevel = getFilterLevel(filterTech, level);
+    setTableData(filterTech);
   };
 
   return (
-    <div className="report-parent-wrapper">
+    <>
+     <div className="" style={{ marginBottom: "5rem" }}>
+        <Header />
+      </div>
+      <div className="report-parent-wrapper">
       <div className="report-child-wrapper">
         <div className="report-header">Report</div>
         <div className="report-filter-wrapper ">
@@ -194,6 +198,7 @@ const Report = () => {
         </div>
       </div>
     </div>
+    </>
   );
 };
 

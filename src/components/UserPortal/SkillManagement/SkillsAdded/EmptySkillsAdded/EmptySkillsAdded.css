@@ -1,10 +1,26 @@
-.vector{
-    background: #E9ECEB;
-     position: absolute;
-    width: 300px;
-    height: 604.5px;
-    top: 165px;
-    background: #FFFFFF;
-    box-shadow: 0px 0px 0px rgba(66, 76, 97, 0.15);
-    /* border-radius: 8px; */
+.empty-skill-body {
+  height: calc(100vh - 22.8vh);
+  box-shadow: 0px 4px 10px rgba(66, 76, 97, 0.15);
+  border-radius: 8px;
+}
+
+.empty-skill-heading {
+  font-family: "Roboto";
+  margin-top: 16px;
+  margin-bottom: 16px;
+  font-style: normal;
+  font-weight: 700;
+  font-size: 20px;
+  line-height: 23px;
+  color: #343435;
+}
+
+.empty-skill-desc {
+  font-family: "Roboto";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 19px;
+  text-align: center;
+  color: #343435;
 }
