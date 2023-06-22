@@ -163,7 +163,7 @@ const PieChart = () => {
   let totalCgHours = 0;
   let totalSelfHours = 0;
   let totalMentorHours = 0;
-  monthlyRecords.forEach((record) => {
+  monthlyRecords?.forEach((record) => {
     let formattedTotalTime = convertHoursToDecimal(record.totalTime);
     if (record.learning === "Project") {
       totalProjectHours += formattedTotalTime;
@@ -290,13 +290,7 @@ const PieChart = () => {
     maintainAspectRatio: false,
   };
 
-  let c = document.getElementById("myCanvas");
-  console.log(c);
-  let ctx = c?.getContext("2d");
-  console.log("ctx", ctx);
-  ctx?.beginPath();
-  ctx?.arc(95, 50, 40, 0, 2 * Math.PI);
-  ctx?.stroke();
+
   return (
     <div className="container" style={{ height: "inherit" }}>
       <div className="row">
@@ -329,7 +323,7 @@ const PieChart = () => {
             </ul>
           </div>
           <div>
-            {monthlyRecords.length === 0 ? (
+            {monthlyRecords === undefined || monthlyRecords.length === 0 ? (
               <div className="no-data-div">
                 <img className="no-data-img" src={NoData} alt="No Data" />
                 <h1

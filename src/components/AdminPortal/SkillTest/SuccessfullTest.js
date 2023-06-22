@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-// import {ReactComponent as SuccessfullVector} from "../../Assets/VectorSucessfull.svg";
+import {ReactComponent as SuccessfullVector} from "../Dashboard/Assets/VectorSucessfull.svg";
 import "./Successfull.css";
 const SuccessfullTest = () => {
     const [isOpen, setIsOpen] = useState(true);
@@ -23,7 +23,7 @@ const SuccessfullTest = () => {
             ></button>
           </div>
           <div className="">
-          {/* <SuccessfullVector/> */}
+          <SuccessfullVector/>
           </div>
           <div className="successfull-text mt-3">
             New Skill Set Test <br/>
@@ -37,7 +37,6 @@ const SuccessfullTest = () => {
           </div>
        
       </div>
-
   );
 };
 
