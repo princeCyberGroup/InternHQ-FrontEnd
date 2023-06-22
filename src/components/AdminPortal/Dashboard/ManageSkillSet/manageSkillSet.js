@@ -11,12 +11,12 @@ export default function ManageSkillSet({ data }) {
     <>
       <div className='about'>Manage Skill Set <Right style={{marginBottom:"2px"}} /></div>
       <div className='row' style={{ width: "838px" }}>
-        <div className='add-new-skill-test col-3'
+        <button className='add-new-skill-test col-3'
             data-bs-toggle="modal" 
             data-bs-target="#newSkillModal">
           <Add /> &nbsp; Add New Skill Test
        
-        </div>
+        </button>
         
         <div className='beg-int-advance col-5 d-flex'>
   <div className='col-4'>

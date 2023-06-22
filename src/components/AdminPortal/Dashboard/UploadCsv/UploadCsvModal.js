@@ -164,7 +164,12 @@ export const UploadCsv = () => {
                                     )}
                                     <div style={{position: "absolute", right: "28px"}}>
                                     {/* <CloseBtn /> */}
+                                    
                                     </div>
+                                    <div className=""
+                                    onClick={()=>{handleRemoveFile()}}><CloseBtn /> </div>
+                                    
+                                   
                                     </div>    
                             </form>
                             <div className="saveCancel border-top-0 pb-0 row ">

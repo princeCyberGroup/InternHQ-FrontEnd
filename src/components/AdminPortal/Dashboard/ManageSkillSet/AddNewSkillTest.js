@@ -1,15 +1,18 @@
 import { ReactComponent as CloudImage } from "../Assets/Cloud.svg";
 import { ReactComponent as CloseBtn } from "../../../../Assets/Close-admin.svg"
 import React, { useState, useRef } from "react";
+import  {useHistory}  from 'react-router-dom';
 import './Modals.css';
 import axios from "axios";
 import { Button } from "bootstrap";
+import { useNavigate } from 'react-router-dom';
 // import { Link } from "react-router-dom";
 
 
 export const AddNewSkillTest = () => {
     const [technology, setTechnology] = useState("");
     const [name, setName] = useState("");
+    const navigate = useNavigate();
 
     const [question, setQuestion] = useState("");
     const [duration, setDuration] = useState("");
@@ -128,6 +131,7 @@ export const AddNewSkillTest = () => {
             setBeginnerChecked(false);
             setIntermediateChecked(false);
             setAdvancedChecked(false);
+            navigate('/admin-dashboard');
         } catch (error) {
             console.log(error);
         }
@@ -193,7 +197,7 @@ export const AddNewSkillTest = () => {
                                                 type="radio"
                                                 name="options"
                                                 value="Advance"
-                                                checked={level === 'Advanced'}
+                                                checked={level === 'Advance'}
                                                 onChange={handleOptionChange}
                                             />
                                             Advance
@@ -245,11 +249,9 @@ export const AddNewSkillTest = () => {
                                         <progress style={{ marginLeft: "45px", marginTop: "5px" }} max="100" value={progress}></progress>
                                        
                                     )}
-                                     <CloseBtn /> 
-                                    <div style={{position: "absolute", right: "28px"}}>
-                                   
-                                    </div>
-                                  
+                                    <div className=""
+                                    onClick={()=>{handleRemoveFile()}}><CloseBtn /> </div>
+                                    
                                     </div>         
                                     
                                     </div>
