@@ -1,16 +1,12 @@
 .associate-consultant-mapped-card {
-
     box-sizing: border-box;
     display: flex;
-    
- 
     padding: 8px 12px;
-  
     width: 364px;
     background: #FFFFFF;
     border: 1px solid #E9ECEB;
     border-radius: 4px;
-    
+    /* cursor: pointer; */
 }
 
 .search-associate {

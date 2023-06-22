@@ -1,21 +1,28 @@
 .about {
   /* margin-left: 80px; */
-  width: 200px;
+  display: flex;
+  gap: 4.3rem;
+  align-items: center;
+  width: fit-content;
   height: 19px;
   margin-top: 20px;
-
+  flex: none;
+  order: 0;
+  flex-grow: 0;
+}
+.about-div,
+.about-link {
+  text-decoration: none;
   font-family: "Roboto";
   font-style: normal;
   font-weight: 600;
   font-size: 16px;
   line-height: 19px;
   color: #002c3f;
-
-  flex: none;
-  order: 0;
-  flex-grow: 0;
 }
-
+.about-link {
+  cursor: pointer;
+}
 .four-cards {
   display: flex;
   margin-top: 10px;
@@ -53,8 +60,6 @@ height: 19px; */
   line-height: 19px;
   color: #002c3f;
 }
-
-
 
 .about-associate {
   margin-top: 20px;

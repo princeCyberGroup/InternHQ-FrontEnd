@@ -1,5 +1,5 @@
 import React, { useEffect,useState} from "react";
-import { EmptySkillsAdded } from "./EmptySkillsAdded/EmptySkillsAdded";
+import EmptySkillsAdded  from "./EmptySkillsAdded/EmptySkillsAdded";
 import { ReactComponent as GoldStar } from "./assetsSkillManagment/Star-Icon-gold.svg";
 import { ReactComponent as SilverStar } from "./assetsSkillManagment/Star-Icon-silver.svg";
 import { ReactComponent as BronzeStar } from "./assetsSkillManagment/Star-Icon-bronze.svg";
