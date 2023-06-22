@@ -17,16 +17,21 @@ import DailyUpdateTable from "./components/UserPortal/DailyUpdateTable/DailyUpda
 import SkillManagement from "./components/UserPortal/SkillManagement/SkillManagement";
 import ViewAllIdeas from "./components/UserPortal/Dashboard/ProjectIdea/Idea/ViewAllIdea/ViewAllIdeas";
 import TakeTest from "./components/UserPortal/SkillManagement/TakeTest/TakeTest";
-import BadRequest from "./components/ErrorPage/BadRequest";
 import Context from "./Context/Context";
 
-// admin import 
-import Report from "./components/AdminPortal/Report/Report"; 
+// admin import
+import Report from "./components/AdminPortal/Report/Report";
 import Task from "./components/AdminPortal/Task/Task";
-import DashboardA from './components/AdminPortal/Dashboard/DashboardA'
+import DashboardA from "./components/AdminPortal/Dashboard/DashboardA";
+import Detailedreport from "./components/AdminPortal/Report/Detailedreport/Detailedreport";
+import MentorDashboard from "./components/MentorPortal/MentorDashboard";
+import AdminAuthGuard from "./components/AdminAuthGuard";
+import MentorAuthGuard from "./components/MentorAuthGuard";
+import Error_400 from "./components/ErrorPage/Error_400";
+import Error_500 from "./components/ErrorPage/Error_500";
+import Error_404 from "./components/ErrorPage/Error_404";
 
 function App() {
-
   const location = useLocation();
   const navigate = useNavigate();
 
@@ -85,7 +90,6 @@ function App() {
   return (
     <Context>
       <div className="App">
-      
         {/* <Router> */}
         <Routes>
           <Route path="/" element={<LoginScreen />} />
@@ -103,9 +107,9 @@ function App() {
           />
           <Route path="/change-success" element={<PasswordChangedScreen />} />
           {/* <Route path={encodeUrl("/dashboard")} element={<Dashboard />} /> */}
-          {/* Protected Routes here */}
+          
+          {/* User Protected Routes here */}
           <Route element={<AuthGuard />}>
-
             <Route
               path="/dashboard"
               element={<Dashboard sendDataToDashboard={dataFromDailyUpdate} />}
@@ -126,14 +130,22 @@ function App() {
             <Route path="/project-idea-projects" element={<ViewAllIdeas />} />
           </Route>
 
+          {/* Admin routes */}
+          <Route element={<AdminAuthGuard />}>
+            <Route path="/admin-dashboard" element={<DashboardA />} />
+            <Route path="/admin/report" element={<Report />} />
+            <Route path="/admin/report/:userId" element={<Detailedreport />} />
+            <Route path="/assign-task" element={<Task />} />
+          </Route>
 
-          {/* admin routes */}
-          <Route path="/admin/report" element={<Report />} />
-           <Route path="/admin-dashboard" element={<DashboardA/>} />
-           <Route path="/assign-task" element={<Task />} />
-              
-          <Route path="*" element={<BadRequest />} />
-
+          {/* Mentor routes */}
+          <Route element={<MentorAuthGuard />}>
+          <Route path="/mentor-dashboard" element={<MentorDashboard />} />
+          </Route>
+          
+          <Route path="/error?statusCode=400" element={<Error_400 />}/>
+          <Route path="/error?statusCode=500" element={<Error_500 />}/>
+          <Route path="*" element={<Error_404 />} />
         </Routes>
         {/* </Router> */}
       </div>

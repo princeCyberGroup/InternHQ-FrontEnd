@@ -1,44 +1,68 @@
-import React, { useEffect, useState } from "react";
-import { Link, Navigate, Outlet, useLocation, useNavigate } from "react-router-dom";
+// import React, { useEffect, useState } from "react";
+// import { Navigate, Outlet, useLocation, useNavigate } from "react-router-dom";
+
+// const AuthGuard = () => {
+//   const navigate = useNavigate();
+//   const location = useLocation();
+//   console.log("this is the value of location",location)
+//   const [isAuthenticated, setIsAuthenticated] = useState(false);
+//   const handleAuth = () => {
+//     if (localStorage.getItem("login")) {
+//       if (localStorage.getItem("login") === "true") {
+//         navigate(location.pathname)
+//         setIsAuthenticated(true);
+//       } else {
+//         navigate("/");
+//         setIsAuthenticated(false);
+//       }
+//     } else {
+//       navigate("/");
+//       setIsAuthenticated(false);
+//     }
+//   };
+//   useEffect(() => {
+//     handleAuth();
+//   }, [isAuthenticated]);
+
+//   return isAuthenticated ? <Outlet/> : <Navigate to="/"/>;
+// };
+
+// export default AuthGuard;
+
+import React, { useEffect, useState, useContext } from "react";
+import { Navigate, Outlet, useLocation, useNavigate } from "react-router-dom";
+import { UserContext } from "../Context/Context";
 
 const AuthGuard = () => {
+  const { navigateTo } = useContext(UserContext);
+  console.log("this is the value of navigateto", navigateTo);
   const navigate = useNavigate();
-  const location =useLocation();
-  // console.log(location)
+  const location = useLocation();
+  console.log("this is the value of location", location);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const handleAuth = () => {
     if (localStorage.getItem("login")) {
-      if (localStorage.getItem("login") === "true") {
-        navigate(location.pathname)
-        setIsAuthenticated(true);
-        // navigate({
-        //     pathname:path
-        // });
-        // console.log("first", isAuthenticated);
-        // return true;
-      } else {
+      if (localStorage.getItem("login") === "false") {
+        // setNavigateTo("");
         navigate("/");
-
         setIsAuthenticated(false);
-        // console.log("2first", isAuthenticated);
-        // return false;
-      }
+      } else {
+        // setNavigateTo("u");
+        console.log("navigateTo value in user auth", navigateTo);
+        navigate(location.pathname);
+        setIsAuthenticated(true);
+      } 
     } else {
+      // setNavigateTo("");
       navigate("/");
-
-      //   console.log("3first", isAuthenticated);
       setIsAuthenticated(false);
-
-      // return false;
     }
   };
   useEffect(() => {
     handleAuth();
-    // const storedAuth = localStorage.getItem("login") == "true" ? true : false;
-    // storedAuth = localStorage.getItem("login") == "false" ? false : true;
   }, [isAuthenticated]);
 
-  return isAuthenticated ? <Outlet/> : <Navigate to="/"/>;
+  return isAuthenticated ? <Outlet /> : <Navigate to="/" />;
 };
 
 export default AuthGuard;

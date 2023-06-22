@@ -60,11 +60,18 @@ const SignUpScreen = () => {
       .catch((error) => {
         console.log("Inside Catch")
         console.log(error.response?.data);
+        
         if (error.response?.data.msg == "Error: User Already Exists!") {
           setIsEmailValid(false);
           setIncorrectemail(true);
         }
         setIsLoading(false);
+        if(error.response?.data.statusCode == 400) {
+          navigate('/error?statusCode=400')
+        } 
+         if(error.response?.data.statusCode == 500) {
+          navigate('/error?statusCode=500')
+        } 
       });
     console.log(email);
     console.log(`password: ${password} (hidden visible only on backend)`);

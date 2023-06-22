@@ -19,6 +19,7 @@ const AddProject = () => {
   const [techNames, seTechNames] = useState({});
   const [dropDown, setDropDown] = useState(false);
   const [error, setError] = useState(true);
+  const [projNameError, setProjNameError] = useState("");
   const [desError, setDesError] = useState("");
   const [projLinkError, setProjLinkError] = useState("");
   const [tech, setTech] = useState({});
@@ -27,9 +28,9 @@ const AddProject = () => {
     const name = event.target.value;
     setProjName(name);
     if (!name) {
-      setError("Project name is required");
+      setProjNameError("Project name is required");
     } else {
-      setError("");
+      setProjNameError("");
     }
   };
   const handleProjectDescriptionChange = (event) => {
@@ -59,6 +60,9 @@ const AddProject = () => {
     setProjectLink("");
     setHostedLink("");
     setDropDown(false);
+    setProjNameError("");
+    setDesError("");
+    setProjLinkError("");
   };
   const handleProjectLinkChange = (event) => {
     const link = event.target.value;
@@ -218,9 +222,9 @@ const AddProject = () => {
                 <div class="mb-3">
                   <label for="project-name" class="col-form-label title-text">
                     Project Name<span style={{ color: "red" }}>*</span>{" "}
-                    {error && (
+                    {projNameError && (
                       <span style={{ color: "red", fontSize: "11px" }}>
-                        ({error})
+                        ({projNameError})
                       </span>
                     )}
                   </label>
