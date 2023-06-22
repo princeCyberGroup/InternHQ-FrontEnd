@@ -79,7 +79,7 @@ const MentorComponent = () => {
               data-bs-ride="carousel"
             >
               <div className="carousel-indicators KYM" style={{}}>
-                {mentors.map((mentor, index) => (
+                {mentors?.map((mentor, index) => (
                   <button
                     key={index}
                     type="button"
@@ -93,7 +93,7 @@ const MentorComponent = () => {
               </div>
 
               <div className="carousel-inner crousal-set " role="listbox">
-                {mentors.map((mentor, index) => (
+                {mentors?.map((mentor, index) => (
                   <div
                     key={index}
                     className={`carousel-item carousel-styling ${

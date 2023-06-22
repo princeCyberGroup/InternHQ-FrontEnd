@@ -36,15 +36,23 @@
   margin: 2.25rem 4.688rem 1.25rem 4.688rem;
 }
 
-.input-login {
+/* .input-login {
   border: none;
   width: -webkit-fill-available;
+  font-size: 0.938rem;
+  line-height: 2.563rem;
+  max-width: 100%;
+} */
+
+.input-login {
+  border: none;
+  width: 428.58px;
   font-size: 0.938rem;
   line-height: 2.563rem;
   /* max-width: 100%; */
 }
 
-.input-login:focus {
+.input-loginHow :focus {
   outline: none;
 }
 
@@ -173,7 +181,7 @@ a:hover {
 }
 
 .password-toggle-button {
-  background:none;
+  background: none;
 }
 .pass-input-div{
   display: flex;
@@ -181,5 +189,5 @@ a:hover {
 }
 .div-input {
   border-bottom: 0.063rem solid #b2b2b3;
-  width: inherit;
+  width: 428.58px;
 }

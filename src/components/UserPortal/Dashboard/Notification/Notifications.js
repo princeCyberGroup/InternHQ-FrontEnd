@@ -9,7 +9,7 @@ export const NotificationComponent = () => {
     <div className=" notification-card card">
       {/* <div className="card-header-notification">Notifications</div> */}
       <div className="border-bottom ">
-        <h5 className="card-title dtt-hfs ">Notifications</h5>
+        <h5 className="card-title dtt-hfs ">Skill Alerts</h5>
       </div>
       <div className="abc">
         <NewNotifications />

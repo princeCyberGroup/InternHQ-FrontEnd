@@ -19,6 +19,7 @@ const SignUpScreen = () => {
 
   const [incorrectemail, setIncorrectemail] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const [errorMsg, setErrorMsg] = useState("");
 
   const handleEmailChange = (event) => {
     const { value } = event.target;
@@ -61,9 +62,10 @@ const SignUpScreen = () => {
         console.log("Inside Catch");
         console.log(error.response?.data);
         
-        if (error.response?.data.msg == "Error: User Already Exists!") {
+        if (error.response?.data.msg) {
           setIsEmailValid(false);
           setIncorrectemail(true);
+          setErrorMsg(error.response?.data.msg)
         }
         setIsLoading(false);
         if(error.response?.data.statusCode == 400) {
@@ -230,19 +232,19 @@ const SignUpScreen = () => {
                     </label>
                     <div className="div-input">
                       <input
-                        className="input-login"
-                        type="email"
-                        id="exampleInputEmail1"
-                        value={email}
-                        onChange={handleEmailChange}
-                        placeholder="Enter Your Email ID"
-                        required
-                      />
+                      className="input-login"
+                      type="email"
+                      id="exampleInputEmail1"
+                      value={email}
+                      onChange={handleEmailChange}
+                      placeholder="Enter Your Email ID"
+                      required
+                    />
                     </div>
                     {!isEmailValid && email && (
                       <span className="sign-up-warning">
                         {incorrectemail
-                          ? "User Already Exists!"
+                          ? errorMsg
                           : "Please make use of CG-Infinity email only"}
                       </span>
                     )}
@@ -258,26 +260,26 @@ const SignUpScreen = () => {
                     <div className="input-group">
                       <div className="div-input pass-input-div">
                         <input
-                          className="input-login"
-                          type={showPassword ? "password" : "text"}
-                          id="exampleInputPassword1"
-                          placeholder="Enter Your Password"
-                          value={password}
-                          required
-                          onChange={handlePasswordChange}
-                        />
-                        <button
-                          className="btn password-toggle-button"
-                          style={{ border: "none" }}
-                          type="button"
-                          onClick={handleTogglePasswordVisibility}
-                        >
-                          {showPassword ? (
-                            <i className="bi bi-eye"></i>
-                          ) : (
-                            <i className="bi bi-eye-slash"></i>
-                          )}
-                        </button>
+                      className="input-login"
+                      type={showPassword ? "password" : "text"}
+                      id="exampleInputPassword1"
+                      placeholder="Enter Your Password"
+                      value={password}
+                      required
+                      onChange={handlePasswordChange}
+                    />
+                     <button
+                        className="btn password-toggle-button"
+                        style={{border: "none"}}
+                        type="button"
+                        onClick={handleTogglePasswordVisibility}
+                      >
+                        {showPassword ? (
+                          <i className="bi bi-eye"></i>
+                        ) : (
+                          <i className="bi bi-eye-slash"></i>
+                        )}
+                      </button>
                       </div>
                     </div>
                     {!isPasswordValid && password && (

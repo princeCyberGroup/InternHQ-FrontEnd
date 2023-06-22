@@ -228,6 +228,7 @@ const ForgotPasswordOtpScreen = () => {
               </p>
               <form onSubmit={handleSubmit}>
                 <div className="d-flex flex-column">
+                  <div className="div-input">
                   <input
                   className="input-login"
                     type="text"
@@ -236,6 +237,8 @@ const ForgotPasswordOtpScreen = () => {
                     onChange={handleChange}
                     placeholder="Code"
                   />
+                  </div>
+                  
                   {isOtpValid && otp && (
                     <span className="sign-up-warning">
                       Invalid OTP
