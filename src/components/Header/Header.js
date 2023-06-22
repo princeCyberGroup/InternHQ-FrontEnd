@@ -18,7 +18,7 @@ const Header = () => {
   };
   return (
     <>
-      <div>
+      <div style={{ position: "fixed", top: "0", zIndex: "99", width: "100%" }}>
         <nav
           className="navbar navbar-expand-lg navbar-light  border-bottom"
           style={{ backgroundColor: "#FFFFFF" }}
@@ -33,42 +33,72 @@ const Header = () => {
             </div>
           </NavLink>
           <div className="collapse navbar-collapse border-Side" id="navbarNav">
-            <ul className="navbar-nav nav-bg">
-              <li className="nav-item ">
-                <NavLink to="/dashboard" className="btn activeBtn">
-                  Dashboard<span></span>
-                </NavLink>
-              </li>
+            {userData.randomString === "07495d" ? (
+              // user */
+              <ul className="navbar-nav nav-bg">
+                <li className="nav-item ">
+                  <NavLink to="/dashboard" className="btn activeBtn">
+                    Dashboard
+                  </NavLink>
+                </li>
 
-              <li className="nav-item mx-2">
-                <NavLink to="/daily-Update" className="btn activeBtn">
-                  Daily Update<span></span>
-                </NavLink>
-              </li>
+                <li className="nav-item mx-2">
+                  <NavLink to="/daily-Update" className="btn activeBtn">
+                    Daily Update
+                  </NavLink>
+                </li>
 
-              <li className="nav-item">
-                <NavLink to="/skill-Management" className="btn activeBtn ">
-                  Skill Management<span></span>
-                </NavLink>
-              </li>
-              {/* <li className="nav-item">
-                <NavLink to="/assign-task" className="btn activeBtn ">
-                  Assign Task<span></span>
-                </NavLink>
-              </li>
-              <li className="nav-item">
-                <NavLink to="/admin-dashboard" className="btn activeBtn ">
-                  Admin Dashboard<span></span>
-                </NavLink>
-              </li>
-              <li className="nav-item">
-                <NavLink to="/admin/report" className="btn activeBtn ">
-                  Report<span></span>
-                </NavLink>
-              </li> */}
-            </ul>
+                <li className="nav-item">
+                  <NavLink to="/skill-Management" className="btn activeBtn ">
+                    Skill Management
+                  </NavLink>
+                </li>
+              </ul>
+            ) : (
+              // Admin */
+              <ul className="navbar-nav nav-bg">
+                <li className="nav-item ">
+                  <NavLink to="/admin/dashboard" className="btn activeBtn">
+                    Dashboard
+                  </NavLink>
+                </li>
+
+                <li className="nav-item mx-2">
+                  <NavLink to="/admin/assign-task" className="btn activeBtn">
+                    Assign Task
+                  </NavLink>
+                </li>
+
+                <li className="nav-item">
+                  <NavLink to="/admin/skill-test" className="btn activeBtn ">
+                    Skill Test
+                  </NavLink>
+                </li>
+                <li className="nav-item">
+                  <NavLink to="/admin/reports" className="btn activeBtn ">
+                    Report
+                  </NavLink>
+                </li>
+                <li className="nav-item"  onClick={(e) => {
+                      e.preventDefault();
+                      alert("Developement is in progress");
+                      navigate("/")
+                    }}>
+                  <NavLink
+                    to="/admin/logs"
+                    className="btn activeBtn "
+                  >
+                    Logs
+                  </NavLink>
+                </li>
+              </ul>
+            )}
           </div>
+          
+          <div>
           <MentorAssignedAlerts/>
+          </div>
+
           <div
             className="d-flex margin"
             data-bs-toggle="dropdown"
@@ -76,11 +106,6 @@ const Header = () => {
           >
             <div className="dropdown  background-set">
               <Link id="profileDropDown" className="text-decoration-none ">
-                {/* <img
-                src="https://m.media-amazon.com/images/M/MV5BYjhiNjBlODctY2ZiOC00YjVlLWFlNzAtNTVhNzM1YjI1NzMxXkEyXkFqcGdeQXVyMjQxNTE1MDA@._V1_.jpg"
-                alt="profile-Image"
-                className="profile-Image"
-              /> */}
                 {userData.firstName.toUpperCase().slice(0, 1)}
                 {userData.lastName.toUpperCase().slice(0, 1)}
               </Link>
@@ -91,14 +116,8 @@ const Header = () => {
                   <span className="username">
                     {userData.firstName} {userData.lastName} <br />
                   </span>
-                  <span
-                    style={{
-                      color: "#28519E",
-                      fontStyle: "italic",
-                      fontSize: "14px",
-                    }}
-                  >
-                    {userData.deployed ? "Occupied" : "On Bench"}
+                  <span className="deployed-status">
+                    {userData.designation.toLowerCase() ==="user"?userData.deployed ? "Occupied" : "On Bench":""}
                   </span>
                 </li>
                 <li

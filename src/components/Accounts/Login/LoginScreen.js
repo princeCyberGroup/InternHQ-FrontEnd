@@ -57,6 +57,8 @@ const LoginScreen = () => {
           firstName: response.data.firstName,
           lastName: response.data.lastName,
           deployed: response.data.isDeployed,
+          randomString: response.data.randomString,
+          designation: response.data.designation,
         };
         localStorage.setItem("userData", JSON.stringify(res));
         // const res = {
@@ -76,19 +78,16 @@ const LoginScreen = () => {
         // localStorage.setItem('userData', JSON.stringify(res));
         // setAuth({ email, password, token });
         setIsLoading(false);
-        navigate("/dashboard");
+        let str = res.randomString.toLowerCase();
+        str === "07495d"
+          ? navigate("/dashboard")
+          : str === "cb8715"
+          ? navigate("/admin/dashboard")
+          : navigate("/mentor/dashboard");
         localStorage.setItem("token");
       })
       .catch((error) => {
-        // if(error.response?.data.statusCode == 400) {
-        //   navigate(`/error?statusCode=${error.response?.data.statusCode}`)
-        // }
         console.log(error.response?.data);
-        // console.log(error.response.data);
-        // console.log(error.response?.data.msg);
-        console.log(error.response.data.status);
-
-        // localStorage.setItem("login",false);
         if (error.response?.data.msg === "Error: Email does not exist") {
           setIsEmailValid(false);
           setIncorrectemail(true);
@@ -104,24 +103,25 @@ const LoginScreen = () => {
         }
         // navigate(`/error?statusCode=${error.response?.data.statusCode}`);
       });
-    // console.log(email);
-    // console.log(`password: ${password} (hidden visible only on backend)`);
   };
-  // const handleSlideChange = (index) => {
-  //   setActiveIndex(index);
-  // };
-
   useEffect(() => {
     let login = localStorage.getItem("login");
-    if (login) {
-      navigate("/dashboard");
+    let userData = localStorage.getItem("userData");
+    if (login && userData) {
+      let str = JSON.parse(userData).randomString;
+      str === "07495d"
+        ? navigate("/dashboard")
+        : str === "cb8715"
+        ? navigate("/admin/dashboard")
+        : navigate("/mentor-dashboard");
     }
+
     // const interval = setInterval(() => {
     //   setActiveIndex((prevIndex) => (prevIndex + 1) % 3);
     // }, 3000); //Make it 1000
 
     // return () => {
-    //   clearInterval(interval);
+    //   setNavigateTo();
     // };
   }, []);
   return (
@@ -267,7 +267,6 @@ const LoginScreen = () => {
                         required
                       />
                     </div>
-
                     {!isEmailValid && email && (
                       <span className="sign-up-warning">
                         {incorrectemail

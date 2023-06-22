@@ -1,5 +1,11 @@
 import React, { useEffect } from "react";
-import { useState, createContext } from "react";
+import{ useContext } from "react";
+import { useState, createContext  } from "react";
+import { ReactComponent as LeftToRetake } from "./svgs/leftToReatake.svg";
+import { ReactComponent as Completed } from "./svgs/Testcompleted.svg";
+import { ReactComponent as Bronze } from "./svgs/Star-bronze.svg";
+import { ReactComponent as Silver } from "./svgs/Star-silver.svg";
+import { ReactComponent as Gold } from "./svgs/Star-gold.svg";
 // import logo from '../../../Assets/image 13.png';
 import "./TakeTest.css";
 import { BsClock } from "react-icons/bs";
@@ -7,12 +13,16 @@ import { MdOutlineBallot } from "react-icons/md";
 import Button from "react-bootstrap/Button";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import { UserContext } from "../../../../Context/Context";
 import TakeTestSkeleton from "./TakeTestSkeleton";
 
 export const TestContext = createContext();
 
 const TakeTest = ({ test }) => {
   const [activeButton, setActiveButton] = useState("all");
+    const { score } = useContext(UserContext);
+    const [daysDifference, setDaysDifference] = useState(calculateDaysDifference());
+  
   // const [searchQuery, setSearchQuery] = useState("");
   const [tests, setTests] = useState([]);
   const [originalTests, setOriginalTests] = useState([]);
@@ -34,12 +44,11 @@ const TakeTest = ({ test }) => {
       setAllData(data);
       setTests(data);
       setOriginalTests(data);
-        setIsLoading(false);
+      setIsLoading(false);
     } catch (e) {
       console.error("Error fetching exam details:", e);
     }
   };
-
   const handleFiltersChange = () => {
     const getFilterItems = (items, searchValue) => {
       if (searchValue) {
@@ -84,6 +93,39 @@ const TakeTest = ({ test }) => {
   const clickCont = () => {
     navigate("/take-your-test", { state: data });
   };
+  
+      function calculateDaysDifference() {
+        const currentDate = new Date();
+        const twoDaysAgo = new Date();
+        twoDaysAgo.setDate(twoDaysAgo.getDate() - 2);
+        return Math.floor(
+          (currentDate.getTime() - twoDaysAgo.getTime()) / (1000 * 60 * 60 * 24)
+        );
+      }
+      let statusDiv;
+  if (score > 8) {
+    statusDiv = (
+      <div className="statusOfTEstCompleted">
+        <Completed />
+      </div>
+    );
+  } else if (daysDifference >= 2) {
+    statusDiv = (
+      <div className="statusOftest">
+        <LeftToRetake />
+      </div>
+    );
+  }
+  let LevelComponent;
+
+if (tests.level === "Beginner") {
+  LevelComponent =( <div> <Bronze /></div> );
+} else if (tests.level === "Intermediate") {
+  LevelComponent = <Silver />;
+} else if (tests.level === "Advanced") {
+  LevelComponent = <Gold />;
+}
+  
   return (
     <>
       <div className="TTheading">

@@ -15,6 +15,7 @@ export default function DashboardGraph() {
   const [graphType, setGraphType] = useState("daily");
   const [tableData, setTableData] = useState([]);
   const [currentMonth, setCurrentMonth] = useState(new Date().getMonth());
+
   useEffect(() => {
     fetchData();
   }, []);

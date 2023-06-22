@@ -21,7 +21,6 @@ const DailyUpdateTableSection = (props) => {
   const [selectedItem, setSelectedItem] = useState(null);
   const [modalSaveFlag, setModalSaveFlag] = useState(true);
 
-  //function
   useEffect(() => {
     fetchData();
   }, []);

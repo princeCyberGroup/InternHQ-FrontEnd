@@ -26,6 +26,8 @@ const AddNewIdea = () => {
     setProjName("");
     setProjDescription("");
     setDropDown(false);
+    setProjNameError("");
+    setProjDescriptionError("");
   };
   const handleChangeProjNameError = (event) => {
     event.preventDefault();

@@ -1,5 +1,8 @@
-import React, { useEffect, useState } from "react";
-import EmptySkillsAdded from "./EmptySkillsAdded/EmptySkillsAdded";
+import React, { useEffect,useState} from "react";
+import { EmptySkillsAdded } from "./EmptySkillsAdded/EmptySkillsAdded";
+import { ReactComponent as GoldStar } from "./assetsSkillManagment/Star-Icon-gold.svg";
+import { ReactComponent as SilverStar } from "./assetsSkillManagment/Star-Icon-silver.svg";
+import { ReactComponent as BronzeStar } from "./assetsSkillManagment/Star-Icon-bronze.svg";
 import "./SkillsAdded.css";
 // import nonActiveimageStar from '../Assets/nonActiveimageStar.png';
 import { ReactComponent as EmptyStar } from "../../../../Assets/emptystar.svg";
@@ -64,12 +67,9 @@ const SkillsAdded = () => {
                     >
                       <div className="my-spacing">
                         {DataUsed.examScores[0] >= 8 ? (
-                          <img
-                            src="https://pixlok.com/wp-content/uploads/2021/07/Rating-SVG-Icon-s9fd.png"
-                            height={"20px"}
-                            width={"20px"}
-                            alt=""
-                          />
+                          // <GoldStar />
+                          // <SilverStar />
+                          <BronzeStar style={{ fontSize: '50px' }} />
                         ) : (
                           <EmptyStar />
                         )}
@@ -94,12 +94,9 @@ const SkillsAdded = () => {
                     >
                       <div className="my-spacing">
                         {DataUsed.examScores[1] >= 8 ? (
-                          <img
-                            src="https://pixlok.com/wp-content/uploads/2021/07/Rating-SVG-Icon-s9fd.png"
-                            height={"20px"}
-                            width={"20px"}
-                            alt=""
-                          />
+                          // <GoldStar />
+                          // <SilverStar />
+                          <SilverStar style={{ fontSize: '50px' }} />
                         ) : (
                           <EmptyStar />
                         )}
@@ -130,12 +127,7 @@ const SkillsAdded = () => {
                     >
                       <div className="my-spacing">
                         {DataUsed.examScores[2] >= 8 ? (
-                          <img
-                            src="https://pixlok.com/wp-content/uploads/2021/07/Rating-SVG-Icon-s9fd.png"
-                            height={"20px"}
-                            width={"20px"}
-                            alt=""
-                          />
+                          <GoldStar style={{ fontSize: '50px' }} />
                         ) : (
                           <EmptyStar />
                         )}
@@ -160,12 +152,7 @@ const SkillsAdded = () => {
                     >
                       <div className="my-spacing">
                         {DataUsed.examScores[3] >= 8 ? (
-                          <img
-                            src="https://pixlok.com/wp-content/uploads/2021/07/Rating-SVG-Icon-s9fd.png"
-                            height={"20px"}
-                            width={"20px"}
-                            alt=""
-                          />
+                           <GoldStar style={{ fontSize: '50px' }} />
                         ) : (
                           <EmptyStar />
                         )}

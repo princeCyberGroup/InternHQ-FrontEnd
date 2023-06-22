@@ -1,4 +1,4 @@
-import { useState, useEffect,useContext } from "react";
+import { useState, useEffect, useContext } from "react";
 import "./mentorlist.css";
 import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
@@ -22,8 +22,9 @@ const MentorComponent = () => {
       );
 
       const data = await response.json();
-
-      setMentors(data.response);
+      const activeMentors = data.activeMentors;
+      console.log(activeMentors);
+      setMentors(activeMentors);
       setIsLoading(false);
       // console.log(isLoading, "Fetched data");
     } catch (error) {
@@ -66,7 +67,7 @@ const MentorComponent = () => {
                     <Skeleton width={260} />
                   </p>
                   <p className="badge badge-color">
-                    <Skeleton width={260}/>
+                    <Skeleton width={260} />
                   </p>
                 </div>
               </div>
@@ -104,11 +105,26 @@ const MentorComponent = () => {
                       style={{ width: "329px", height: "236px" }}
                     >
                       <div>
-                        <img
+                        {/* <img
                           src={mentor.imageUrl} // Replace with mentor image URL from API response
                           className="d-block rounded-circle"
                           alt="Mentor"
-                        />
+                        /> */}
+                        {mentor.imageUrl ? (
+                          <img
+                            src={mentor.imageUrl}
+                            className="d-block rounded-circle"
+                            alt="Mentor"
+                          />
+                        ) : (
+                          <div className="mentor-img">
+                            <p style={{fontSize:"2rem",marginTop:"15px"}}>
+                              {mentor.mentorName.split(" ")
+                            .map((name) => name.charAt(0).toUpperCase())
+                            .join("")}
+                            </p>
+                          </div>
+                        )}
                         <div className="mentor-text">
                           <p className="card-text fs">
                             <b>{mentor.mentorName}</b>{" "}
@@ -124,7 +140,8 @@ const MentorComponent = () => {
                                   key={skillIndex}
                                   className="badge badge-color"
                                 >
-                                   {skill.toUpperCase()} {/*Replace with mentorskills from API response */}
+                                  {skill.toUpperCase()}{" "}
+                                  {/*Replace with mentorskills from API response */}
                                 </span>
                               ))}
                             </div>

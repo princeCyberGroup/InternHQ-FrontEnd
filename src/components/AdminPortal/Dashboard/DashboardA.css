@@ -54,22 +54,7 @@ height: 19px; */
   color: #002c3f;
 }
 
-.upload-list button {
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  align-items: center;
-  padding: 8px;
-  gap: 12px;
 
-  width: 404px;
-  height: 36px;
-
-  /* Blue */
-  color: white;
-  background: #28519e;
-  border-radius: 4px;
-}
 
 .about-associate {
   margin-top: 20px;
