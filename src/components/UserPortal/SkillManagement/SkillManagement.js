@@ -11,7 +11,7 @@ const SkillManagement = () => {
   const { score } = useContext(UserContext);
   return (
     <>
-      <div className="" style={{ marginBottom: "5rem" }}>
+      <div className="" style={{ marginBottom: "3rem" }}>
         <Header />
       </div>
       <>
