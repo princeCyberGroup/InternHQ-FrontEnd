@@ -35,7 +35,7 @@ export default function DashboardGraph() {
           <li>
             <Link
               className="dropdown-item pe-0"
-              style={{ paddingLeft: "8px", fontSize: "14px" }}
+              style={{ paddingLeft: "0.5rem", fontSize: "0.875rem" }}
             >
               This Week
             </Link>
@@ -62,7 +62,7 @@ export default function DashboardGraph() {
           <Link
             className="dropdown-item pe-0"
             href="#"
-            style={{ paddingLeft: "8px", fontSize: "14px" }}
+            style={{ paddingLeft: "0.5rem", fontSize: "0.875rem" }}
             onClick={() => handleMonthClick(index)}
           >
             {month}
@@ -178,40 +178,48 @@ export default function DashboardGraph() {
   const dataMonthly = [
     {
       name: "Week 1",
-      Project: weeklyTotalHours[0].projectHours === 0 ? "0" : convertToPercentageMonthly(
-        convertDecimalToHours(weeklyTotalHours[0].projectHours)
-      ),
-      "Task by Mentor": weeklyTotalHours[0].mentorHours === 0 ? "0" : convertToPercentageMonthly(
-        convertDecimalToHours(weeklyTotalHours[0].mentorHours)
-      ),
-      "Self Learning": weeklyTotalHours[0].selfLearningHours === 0 ? "0" : convertToPercentage(
-        convertDecimalToHours(weeklyTotalHours[0].selfLearningHours)
-      ),
-      "CG Learning Video": weeklyTotalHours[0].cgLearningHours === 0 ? "0" : convertToPercentageMonthly(
-        convertDecimalToHours(weeklyTotalHours[0].cgLearningHours)
-      ),
-      Idle:  weeklyTotalHours[0].projectHours === 0 && weeklyTotalHours[0].mentorHours === 0 && weeklyTotalHours[0].cgLearningHours === 0 && weeklyTotalHours[0].selfLearningHours === 0 ? "0" : Number.isInteger(
-        100 -
-          convertToPercentageMonthly(
-            convertDecimalToHours(
-              weeklyTotalHours[0].projectHours +
-                weeklyTotalHours[0].mentorHours +
-                weeklyTotalHours[0].selfLearningHours +
-                weeklyTotalHours[0].cgLearningHours
+      Project:
+        weeklyTotalHours[0].projectHours === 0
+          ? "0"
+          : convertToPercentageMonthly(
+              convertDecimalToHours(weeklyTotalHours[0].projectHours)
+            ),
+      "Task by Mentor":
+        weeklyTotalHours[0].mentorHours === 0
+          ? "0"
+          : convertToPercentageMonthly(
+              convertDecimalToHours(weeklyTotalHours[0].mentorHours)
+            ),
+      "Self Learning":
+        weeklyTotalHours[0].selfLearningHours === 0
+          ? "0"
+          : convertToPercentage(
+              convertDecimalToHours(weeklyTotalHours[0].selfLearningHours)
+            ),
+      "CG Learning Video":
+        weeklyTotalHours[0].cgLearningHours === 0
+          ? "0"
+          : convertToPercentageMonthly(
+              convertDecimalToHours(weeklyTotalHours[0].cgLearningHours)
+            ),
+      Idle:
+        weeklyTotalHours[0].projectHours === 0 &&
+        weeklyTotalHours[0].mentorHours === 0 &&
+        weeklyTotalHours[0].cgLearningHours === 0 &&
+        weeklyTotalHours[0].selfLearningHours === 0
+          ? "0"
+          : Number.isInteger(
+              100 -
+                convertToPercentageMonthly(
+                  convertDecimalToHours(
+                    weeklyTotalHours[0].projectHours +
+                      weeklyTotalHours[0].mentorHours +
+                      weeklyTotalHours[0].selfLearningHours +
+                      weeklyTotalHours[0].cgLearningHours
+                  )
+                )
             )
-          )
-      )
-        ? 100 -
-          convertToPercentageMonthly(
-            convertDecimalToHours(
-              weeklyTotalHours[0].projectHours +
-                weeklyTotalHours[0].mentorHours +
-                weeklyTotalHours[0].selfLearningHours +
-                weeklyTotalHours[0].cgLearningHours
-            )
-          )
-        : (
-            100 -
+          ? 100 -
             convertToPercentageMonthly(
               convertDecimalToHours(
                 weeklyTotalHours[0].projectHours +
@@ -220,44 +228,62 @@ export default function DashboardGraph() {
                   weeklyTotalHours[0].cgLearningHours
               )
             )
-          ).toFixed(2),
+          : (
+              100 -
+              convertToPercentageMonthly(
+                convertDecimalToHours(
+                  weeklyTotalHours[0].projectHours +
+                    weeklyTotalHours[0].mentorHours +
+                    weeklyTotalHours[0].selfLearningHours +
+                    weeklyTotalHours[0].cgLearningHours
+                )
+              )
+            ).toFixed(2),
     },
     {
       name: "Week 2",
-      Project: weeklyTotalHours[1].projectHours === 0 ? "0" : convertToPercentageMonthly(
-        convertDecimalToHours(weeklyTotalHours[1].projectHours)
-      ),
-      "Task by Mentor": weeklyTotalHours[1].mentorHours === 0 ? "0" : convertToPercentageMonthly(
-        convertDecimalToHours(weeklyTotalHours[1].mentorHours)
-      ),
-      "Self Learning": weeklyTotalHours[1].selfLearningHours === 0 ? "0" : convertToPercentageMonthly(
-        convertDecimalToHours(weeklyTotalHours[1].selfLearningHours)
-      ),
-      "CG Learning Video": weeklyTotalHours[1].cgLearningHours === 0 ? "0" : convertToPercentageMonthly(
-        convertDecimalToHours(weeklyTotalHours[1].cgLearningHours)
-      ),
-      Idle:  weeklyTotalHours[1].projectHours === 0 && weeklyTotalHours[1].mentorHours === 0 && weeklyTotalHours[1].cgLearningHours === 0 && weeklyTotalHours[1].selfLearningHours === 0 ? "0" : Number.isInteger(
-        100 -
-          convertToPercentageMonthly(
-            convertDecimalToHours(
-              weeklyTotalHours[1].projectHours +
-                weeklyTotalHours[1].mentorHours +
-                weeklyTotalHours[1].selfLearningHours +
-                weeklyTotalHours[1].cgLearningHours
+      Project:
+        weeklyTotalHours[1].projectHours === 0
+          ? "0"
+          : convertToPercentageMonthly(
+              convertDecimalToHours(weeklyTotalHours[1].projectHours)
+            ),
+      "Task by Mentor":
+        weeklyTotalHours[1].mentorHours === 0
+          ? "0"
+          : convertToPercentageMonthly(
+              convertDecimalToHours(weeklyTotalHours[1].mentorHours)
+            ),
+      "Self Learning":
+        weeklyTotalHours[1].selfLearningHours === 0
+          ? "0"
+          : convertToPercentageMonthly(
+              convertDecimalToHours(weeklyTotalHours[1].selfLearningHours)
+            ),
+      "CG Learning Video":
+        weeklyTotalHours[1].cgLearningHours === 0
+          ? "0"
+          : convertToPercentageMonthly(
+              convertDecimalToHours(weeklyTotalHours[1].cgLearningHours)
+            ),
+      Idle:
+        weeklyTotalHours[1].projectHours === 0 &&
+        weeklyTotalHours[1].mentorHours === 0 &&
+        weeklyTotalHours[1].cgLearningHours === 0 &&
+        weeklyTotalHours[1].selfLearningHours === 0
+          ? "0"
+          : Number.isInteger(
+              100 -
+                convertToPercentageMonthly(
+                  convertDecimalToHours(
+                    weeklyTotalHours[1].projectHours +
+                      weeklyTotalHours[1].mentorHours +
+                      weeklyTotalHours[1].selfLearningHours +
+                      weeklyTotalHours[1].cgLearningHours
+                  )
+                )
             )
-          )
-      )
-        ? 100 -
-          convertToPercentageMonthly(
-            convertDecimalToHours(
-              weeklyTotalHours[1].projectHours +
-                weeklyTotalHours[1].mentorHours +
-                weeklyTotalHours[1].selfLearningHours +
-                weeklyTotalHours[1].cgLearningHours
-            )
-          )
-        : (
-            100 -
+          ? 100 -
             convertToPercentageMonthly(
               convertDecimalToHours(
                 weeklyTotalHours[1].projectHours +
@@ -266,44 +292,62 @@ export default function DashboardGraph() {
                   weeklyTotalHours[1].cgLearningHours
               )
             )
-          ).toFixed(2),
+          : (
+              100 -
+              convertToPercentageMonthly(
+                convertDecimalToHours(
+                  weeklyTotalHours[1].projectHours +
+                    weeklyTotalHours[1].mentorHours +
+                    weeklyTotalHours[1].selfLearningHours +
+                    weeklyTotalHours[1].cgLearningHours
+                )
+              )
+            ).toFixed(2),
     },
     {
       name: "Week 3",
-      Project: weeklyTotalHours[2].projectHours === 0 ? "0" : convertToPercentageMonthly(
-        convertDecimalToHours(weeklyTotalHours[2].projectHours)
-      ),
-      "Task by Mentor": weeklyTotalHours[2].mentorHours === 0 ? "0" : convertToPercentageMonthly(
-        convertDecimalToHours(weeklyTotalHours[2].mentorHours)
-      ),
-      "Self Learning": weeklyTotalHours[2].selfLearningHours === 0 ? "0" : convertToPercentageMonthly(
-        convertDecimalToHours(weeklyTotalHours[2].selfLearningHours)
-      ),
-      "CG Learning Video": weeklyTotalHours[2].cgLearningHours === 0 ? "0" : convertToPercentageMonthly(
-        convertDecimalToHours(weeklyTotalHours[2].cgLearningHours)
-      ),
-      Idle:  weeklyTotalHours[2].projectHours === 0 && weeklyTotalHours[2].mentorHours === 0 && weeklyTotalHours[2].cgLearningHours === 0 && weeklyTotalHours[2].selfLearningHours === 0 ? "0" : Number.isInteger(
-        100 -
-          convertToPercentageMonthly(
-            convertDecimalToHours(
-              weeklyTotalHours[2].projectHours +
-                weeklyTotalHours[2].mentorHours +
-                weeklyTotalHours[2].selfLearningHours +
-                weeklyTotalHours[2].cgLearningHours
+      Project:
+        weeklyTotalHours[2].projectHours === 0
+          ? "0"
+          : convertToPercentageMonthly(
+              convertDecimalToHours(weeklyTotalHours[2].projectHours)
+            ),
+      "Task by Mentor":
+        weeklyTotalHours[2].mentorHours === 0
+          ? "0"
+          : convertToPercentageMonthly(
+              convertDecimalToHours(weeklyTotalHours[2].mentorHours)
+            ),
+      "Self Learning":
+        weeklyTotalHours[2].selfLearningHours === 0
+          ? "0"
+          : convertToPercentageMonthly(
+              convertDecimalToHours(weeklyTotalHours[2].selfLearningHours)
+            ),
+      "CG Learning Video":
+        weeklyTotalHours[2].cgLearningHours === 0
+          ? "0"
+          : convertToPercentageMonthly(
+              convertDecimalToHours(weeklyTotalHours[2].cgLearningHours)
+            ),
+      Idle:
+        weeklyTotalHours[2].projectHours === 0 &&
+        weeklyTotalHours[2].mentorHours === 0 &&
+        weeklyTotalHours[2].cgLearningHours === 0 &&
+        weeklyTotalHours[2].selfLearningHours === 0
+          ? "0"
+          : Number.isInteger(
+              100 -
+                convertToPercentageMonthly(
+                  convertDecimalToHours(
+                    weeklyTotalHours[2].projectHours +
+                      weeklyTotalHours[2].mentorHours +
+                      weeklyTotalHours[2].selfLearningHours +
+                      weeklyTotalHours[2].cgLearningHours
+                  )
+                )
             )
-          )
-      )
-        ? 100 -
-          convertToPercentageMonthly(
-            convertDecimalToHours(
-              weeklyTotalHours[2].projectHours +
-                weeklyTotalHours[2].mentorHours +
-                weeklyTotalHours[2].selfLearningHours +
-                weeklyTotalHours[2].cgLearningHours
-            )
-          )
-        : (
-            100 -
+          ? 100 -
             convertToPercentageMonthly(
               convertDecimalToHours(
                 weeklyTotalHours[2].projectHours +
@@ -312,44 +356,62 @@ export default function DashboardGraph() {
                   weeklyTotalHours[2].cgLearningHours
               )
             )
-          ).toFixed(2),
+          : (
+              100 -
+              convertToPercentageMonthly(
+                convertDecimalToHours(
+                  weeklyTotalHours[2].projectHours +
+                    weeklyTotalHours[2].mentorHours +
+                    weeklyTotalHours[2].selfLearningHours +
+                    weeklyTotalHours[2].cgLearningHours
+                )
+              )
+            ).toFixed(2),
     },
     {
       name: "Week 4",
-      Project: weeklyTotalHours[3].projectHours === 0 ? "0" : convertToPercentageMonthly(
-        convertDecimalToHours(weeklyTotalHours[3].projectHours)
-      ),
-      "Task by Mentor": weeklyTotalHours[3].mentorHours === 0 ? "0" : convertToPercentageMonthly(
-        convertDecimalToHours(weeklyTotalHours[3].mentorHours)
-      ),
-      "Self Learning": weeklyTotalHours[3].selfLearningHours === 0 ? "0" : convertToPercentageMonthly(
-        convertDecimalToHours(weeklyTotalHours[3].selfLearningHours)
-      ),
-      "CG Learning Video": weeklyTotalHours[3].cgLearningHours === 0 ? "0" : convertToPercentageMonthly(
-        convertDecimalToHours(weeklyTotalHours[3].cgLearningHours)
-      ),
-      Idle: weeklyTotalHours[3].projectHours === 0 && weeklyTotalHours[3].mentorHours === 0 && weeklyTotalHours[3].cgLearningHours === 0 && weeklyTotalHours[3].selfLearningHours === 0 ? "0" : Number.isInteger(
-        100 -
-          convertToPercentageMonthly(
-            convertDecimalToHours(
-              weeklyTotalHours[3].projectHours +
-                weeklyTotalHours[3].mentorHours +
-                weeklyTotalHours[3].selfLearningHours +
-                weeklyTotalHours[3].cgLearningHours
+      Project:
+        weeklyTotalHours[3].projectHours === 0
+          ? "0"
+          : convertToPercentageMonthly(
+              convertDecimalToHours(weeklyTotalHours[3].projectHours)
+            ),
+      "Task by Mentor":
+        weeklyTotalHours[3].mentorHours === 0
+          ? "0"
+          : convertToPercentageMonthly(
+              convertDecimalToHours(weeklyTotalHours[3].mentorHours)
+            ),
+      "Self Learning":
+        weeklyTotalHours[3].selfLearningHours === 0
+          ? "0"
+          : convertToPercentageMonthly(
+              convertDecimalToHours(weeklyTotalHours[3].selfLearningHours)
+            ),
+      "CG Learning Video":
+        weeklyTotalHours[3].cgLearningHours === 0
+          ? "0"
+          : convertToPercentageMonthly(
+              convertDecimalToHours(weeklyTotalHours[3].cgLearningHours)
+            ),
+      Idle:
+        weeklyTotalHours[3].projectHours === 0 &&
+        weeklyTotalHours[3].mentorHours === 0 &&
+        weeklyTotalHours[3].cgLearningHours === 0 &&
+        weeklyTotalHours[3].selfLearningHours === 0
+          ? "0"
+          : Number.isInteger(
+              100 -
+                convertToPercentageMonthly(
+                  convertDecimalToHours(
+                    weeklyTotalHours[3].projectHours +
+                      weeklyTotalHours[3].mentorHours +
+                      weeklyTotalHours[3].selfLearningHours +
+                      weeklyTotalHours[3].cgLearningHours
+                  )
+                )
             )
-          )
-      )
-        ? 100 -
-          convertToPercentageMonthly(
-            convertDecimalToHours(
-              weeklyTotalHours[3].projectHours +
-                weeklyTotalHours[3].mentorHours +
-                weeklyTotalHours[3].selfLearningHours +
-                weeklyTotalHours[3].cgLearningHours
-            )
-          )
-        : (
-            100 -
+          ? 100 -
             convertToPercentageMonthly(
               convertDecimalToHours(
                 weeklyTotalHours[3].projectHours +
@@ -358,44 +420,62 @@ export default function DashboardGraph() {
                   weeklyTotalHours[3].cgLearningHours
               )
             )
-          ).toFixed(2),
+          : (
+              100 -
+              convertToPercentageMonthly(
+                convertDecimalToHours(
+                  weeklyTotalHours[3].projectHours +
+                    weeklyTotalHours[3].mentorHours +
+                    weeklyTotalHours[3].selfLearningHours +
+                    weeklyTotalHours[3].cgLearningHours
+                )
+              )
+            ).toFixed(2),
     },
     {
       name: "Week 5",
-      Project: weeklyTotalHours[4].projectHours === 0 ? "0" : convertToPercentageMonthly(
-        convertDecimalToHours(weeklyTotalHours[4].projectHours)
-      ),
-      "Task by Mentor": weeklyTotalHours[4].mentorHours === 0 ? "0" : convertToPercentageMonthly(
-        convertDecimalToHours(weeklyTotalHours[4].mentorHours)
-      ),
-      "Self Learning": weeklyTotalHours[4].selfLearningHours === 0 ? "0" : convertToPercentageMonthly(
-        convertDecimalToHours(weeklyTotalHours[4].selfLearningHours)
-      ),
-      "CG Learning Video": weeklyTotalHours[4].cgLearningHours === 0 ? "0" : convertToPercentageMonthly(
-        convertDecimalToHours(weeklyTotalHours[4].cgLearningHours)
-      ),
-      Idle:  weeklyTotalHours[4].projectHours === 0 && weeklyTotalHours[4].mentorHours === 0 && weeklyTotalHours[4].cgLearningHours === 0 && weeklyTotalHours[4].selfLearningHours === 0 ? "0" : Number.isInteger(
-        100 -
-          convertToPercentageMonthly(
-            convertDecimalToHours(
-              weeklyTotalHours[4].projectHours +
-                weeklyTotalHours[4].mentorHours +
-                weeklyTotalHours[4].selfLearningHours +
-                weeklyTotalHours[4].cgLearningHours
+      Project:
+        weeklyTotalHours[4].projectHours === 0
+          ? "0"
+          : convertToPercentageMonthly(
+              convertDecimalToHours(weeklyTotalHours[4].projectHours)
+            ),
+      "Task by Mentor":
+        weeklyTotalHours[4].mentorHours === 0
+          ? "0"
+          : convertToPercentageMonthly(
+              convertDecimalToHours(weeklyTotalHours[4].mentorHours)
+            ),
+      "Self Learning":
+        weeklyTotalHours[4].selfLearningHours === 0
+          ? "0"
+          : convertToPercentageMonthly(
+              convertDecimalToHours(weeklyTotalHours[4].selfLearningHours)
+            ),
+      "CG Learning Video":
+        weeklyTotalHours[4].cgLearningHours === 0
+          ? "0"
+          : convertToPercentageMonthly(
+              convertDecimalToHours(weeklyTotalHours[4].cgLearningHours)
+            ),
+      Idle:
+        weeklyTotalHours[4].projectHours === 0 &&
+        weeklyTotalHours[4].mentorHours === 0 &&
+        weeklyTotalHours[4].cgLearningHours === 0 &&
+        weeklyTotalHours[4].selfLearningHours === 0
+          ? "0"
+          : Number.isInteger(
+              100 -
+                convertToPercentageMonthly(
+                  convertDecimalToHours(
+                    weeklyTotalHours[4].projectHours +
+                      weeklyTotalHours[4].mentorHours +
+                      weeklyTotalHours[4].selfLearningHours +
+                      weeklyTotalHours[4].cgLearningHours
+                  )
+                )
             )
-          )
-      )
-        ? 100 -
-          convertToPercentageMonthly(
-            convertDecimalToHours(
-              weeklyTotalHours[4].projectHours +
-                weeklyTotalHours[4].mentorHours +
-                weeklyTotalHours[4].selfLearningHours +
-                weeklyTotalHours[4].cgLearningHours
-            )
-          )
-        : (
-            100 -
+          ? 100 -
             convertToPercentageMonthly(
               convertDecimalToHours(
                 weeklyTotalHours[4].projectHours +
@@ -404,7 +484,17 @@ export default function DashboardGraph() {
                   weeklyTotalHours[4].cgLearningHours
               )
             )
-          ).toFixed(2),
+          : (
+              100 -
+              convertToPercentageMonthly(
+                convertDecimalToHours(
+                  weeklyTotalHours[4].projectHours +
+                    weeklyTotalHours[4].mentorHours +
+                    weeklyTotalHours[4].selfLearningHours +
+                    weeklyTotalHours[4].cgLearningHours
+                )
+              )
+            ).toFixed(2),
     },
   ];
 
@@ -803,7 +893,7 @@ export default function DashboardGraph() {
       <div className="card text-center report">
         <div
           className="card-header bg-white pt-0 pb-0"
-          style={{ paddingRight: "22px" }}
+          style={{ paddingRight: "1.375rem" }}
         >
           <div className="d-flex justify-content-between">
             <div className="btn-group" role="group">
@@ -811,7 +901,11 @@ export default function DashboardGraph() {
                 className={`daily center ${
                   active ? "card-heading-active" : "border-bottom-0"
                 }`}
-                style={{width: "105px", display: "flex", justifyContent: "center" }}
+                style={{
+                  width: "6.563rem",
+                  display: "flex",
+                  justifyContent: "center",
+                }}
                 onClick={() => {
                   setGraphData("daily");
                   setActive(true);
@@ -824,7 +918,9 @@ export default function DashboardGraph() {
                   active ? "border-bottom-0" : "card-heading-active"
                 }`}
                 style={{
-                  width: "125px", display: "flex", justifyContent: "center"
+                  width: "7.813rem",
+                  display: "flex",
+                  justifyContent: "center",
                 }}
                 onClick={() => {
                   setGraphData("monthly");
@@ -852,9 +948,9 @@ export default function DashboardGraph() {
               <ul
                 className="dropdown-menu"
                 style={{
-                  width: "123px",
+                  width: "7.688rem",
                   "--bs-dropdown-min-width": 0,
-                  borderRadius: "4px",
+                  borderRadius: "0.25rem",
                 }}
               >
                 <DropdownItems />
@@ -866,7 +962,7 @@ export default function DashboardGraph() {
           <BarChart
             width={700}
             height={350}
-            style={{ fontSize: "15px", position: "relative", left: "0.5rem" }}
+            style={{ fontSize: "0.938rem", position: "relative", left: "0.5rem" }}
             data={graphType === "daily" ? data : dataMonthly}
             margin={{
               top: 10,
@@ -877,10 +973,9 @@ export default function DashboardGraph() {
             layout="vertical"
           >
             <Tooltip
-              wrapperStyle={{ backgroundColor: "#ccc", fontSize: "13px" }}
-              // itemStyle={{fontSize: "18px"}}
+              wrapperStyle={{ backgroundColor: "#ccc", fontSize: "0.813rem" }}
               itemStyle={{ textAlign: "left" }}
-              labelStyle={{ fontSize: "14px", fontWeight: "600" }}
+              labelStyle={{ fontSize: "0.875rem", fontWeight: "600" }}
               formatter={(value) => formatTooltipLabel(value)}
               labelFormatter={(label) =>
                 label === "Wed"

@@ -101,15 +101,10 @@ const ViewAllIdeas = () => {
       membersObj[`member${index + 1}`] = text;
     });
 
-    // technologyNames.forEach((curElem, index) => {
-    //   techNames[`tech${index + 1}`] = curElem;
-    // });
-
     isObjectEmpty(membersObj);
   }, [textInput, tech]);
 
   return (
-    // <div>working</div>
     <>
       <Header />
       <div className="container page-color">
@@ -246,7 +241,6 @@ const ViewAllIdeas = () => {
                             />
                           </ul>
                         </div>
-                        {/* </div> */}
                       </div>
                     </div>
 

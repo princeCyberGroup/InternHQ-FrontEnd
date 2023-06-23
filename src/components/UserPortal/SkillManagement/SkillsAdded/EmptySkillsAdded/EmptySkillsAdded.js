@@ -8,7 +8,7 @@ const EmptySkillsAdded = () => {
       <div className="row">
         <div className="col">
           <div className="card">
-            <div className="card-body empty-skill-body d-flex justify-content-center flex-column align-items-center">
+            <div className="card-body empty-skill-body d-flex justify-content-center flex-column align-items-center pb-0">
               <div className="row">
                 <div className="col">
                   <SkillAddedEmpty />

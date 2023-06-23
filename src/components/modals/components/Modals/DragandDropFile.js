@@ -31,7 +31,7 @@ const FileUploadButton = () => {
     reader.onload = (event) => {
       const fileString = event.target.result;
       // Perform further processing or send the fileString to the backend
-      console.log(fileString);
+      // console.log(fileString);
     };
     reader.readAsText(file);
   };

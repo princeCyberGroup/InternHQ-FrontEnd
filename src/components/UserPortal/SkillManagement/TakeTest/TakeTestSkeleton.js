@@ -4,21 +4,30 @@ import "react-loading-skeleton/dist/skeleton.css";
 
 const TakeTestSkeleton = () => {
   return (
-    <div className="exam p-0">
+    <div className="exam">
       <div class="card outer-card">
         <div class="d-flex align-items-center">
           <div class="ml-3 w-100">
             <div className="d-flex justify-content-start ">
-              <div className="imagespace p-0">
+              <div
+                className="p-0"
+                style={{
+                  marginTop: "17px",
+                  marginLeft: "20px",
+                  padding: "2.5px 5px",
+                  gap: "8px",
+                  marginRight: "12px",
+                }}
+              >
                 <Skeleton width={54} height={54} />
               </div>
               <div>
-                {/* <div className="Category_box justify-content-center"> */}
-                <Skeleton highlightColor="#B8DDE1" width={80} height={19} />
-                {/* </div> */}
+                <div className="" style={{ marginTop: "17px" }}>
+                  <Skeleton highlightColor="#B8DDE1" width={80} height={19} />
+                </div>
                 <div className=" About_box justify-content-center">
                   <span className="About">
-                    <Skeleton width={180} />
+                    <Skeleton width={280} />
                   </span>
                 </div>
               </div>
@@ -37,7 +46,7 @@ const TakeTestSkeleton = () => {
               <div class="d-flex flex-column">
                 <Skeleton
                   highlightColor="#28519E"
-                  width={165}
+                  width={150}
                   height={36}
                   style={{ padding: "10px 12px" }}
                 />

@@ -102,7 +102,7 @@ const TakeYourTest = () => {
           submitTest();
           window.alert("Time's up!");
           clickHandler();
-           return 0;
+     
         }
       });
     }, 1000);
@@ -173,26 +173,26 @@ const TakeYourTest = () => {
           qId: parseInt(questionId),
           choosenOpt: selectedAnswer,
         })
-      );
-      const response = await fetch(
-       api ,
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${localStorage.getItem("questionToken")}`
-          },
-          body: JSON.stringify({
-            userId: userId,
-            technology: techName,
-            level: level,
-            optRequest: mappedAnswers.splice(0, mappedAnswers.length - 1),
-          }),
-        }
-      );
-      submitQuesData = await response.json();
-       setScore(submitQuesData.scorePercentage);
-    } catch (error) {
+        );
+        const response = await fetch(
+          api ,
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${localStorage.getItem("questionToken")}`
+            },
+            body: JSON.stringify({
+              userId: userId,
+              technology: techName,
+              level: level,
+              optRequest: mappedAnswers.splice(0, mappedAnswers.length - 1),
+            }),
+          }
+          );
+          submitQuesData = await response.json();
+          setScore(submitQuesData.scorePercentage);
+        } catch (error) {
       console.log(error);
     }
     finally {

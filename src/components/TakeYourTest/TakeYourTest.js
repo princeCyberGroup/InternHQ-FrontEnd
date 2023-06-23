@@ -37,7 +37,7 @@ const TakeYourTest = () => {
         exitFullscreen();
     };
     // useEffect(()=>{
-    //     // console.log("this is the data from takeyourtest site", data);
+    // console.log("this is the data from takeyourtest site", data);
     // },[]);
     useEffect(() => {
         if (fullscreen) {

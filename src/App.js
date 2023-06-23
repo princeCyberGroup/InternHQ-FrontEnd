@@ -44,55 +44,6 @@ function App() {
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
   const userId = searchParams.get("userId");
-
-  // const encodeUrl = (url) => {
-  //   const encodeUrlFromBase = {
-  //     0: "L2Rhc2hib2FyZA==",
-  //     1: "L2RhaWx5LVVwZGF0ZQ==",
-  //     2: "L2FsbC1wcm9qZWN0cw==",
-  //     3: "L3NraWxsLU1hbmFnZW1lbnQ=",
-  //     4: "L3ZhcnVu",
-  //   };
-  //   const encode= location.pathname;
-  //   if (!encode.includes("/L3") || !encode.includes("/L2") ) {
-  //     switch (encode) {
-  //       case "/dashboard":
-  //         console.log(encode);
-
-  //         <Link to="/L2Rhc2hib2FyZA==" />
-  //         // console.log(n)
-  //         break;
-
-  //       case "/daily-Update":
-  //         navigate(`${encodeUrlFromBase[1]}`)
-  //         break;
-
-  //       case "/all-projects":
-  //         navigate(`${encodeUrlFromBase[2]}`);
-  //         break;
-
-  //       case "/skill-Management":
-  //         navigate(`${encodeUrlFromBase[3]}`);
-  //         break;
-
-  //       case "/varun":
-  //         navigate(`${encodeUrlFromBase[4]}`);
-  //         break;
-
-  //       default: navigate("*")
-  //     }
-  //   }
-  //   // console.log("location: ",encode);
-
-  //   const encodeUrl = btoa(url);
-  //   return encodeUrl;
-  // };
-
-  // const decodeUrl = (encodedUrl) => {
-  //   const decodedUrl = decodeURIComponent(encodedUrl);
-  //   // console.log(atob(decodedUrl), "decoded");
-  //   return atob(decodedUrl);
-  // };
   const [dataFromDailyUpdate, setDataFromDailyUpdate] = useState("");
   const handleDataFromDailyUpdate = (data) => {
     setDataFromDailyUpdate(data);
@@ -100,7 +51,6 @@ function App() {
   return (
     <Context>
       <div className="App">
-        {/* <Router> */}
         <Routes>
           <Route path="/piechart" element={<PieChart />} />
           <Route path="/" element={<LoginScreen />} />
@@ -117,7 +67,6 @@ function App() {
             element={<CreateNewPasswordScreen />}
           />
           <Route path="/change-success" element={<PasswordChangedScreen />} />
-          {/* <Route path={encodeUrl("/dashboard")} element={<Dashboard />} /> */}
 
           {/* User Protected Routes here */}
           <Route element={<AuthGuard />}>
@@ -148,7 +97,7 @@ function App() {
             <Route path="/admin/report" element={<Detailedreport />} />
             <Route path="/admin/assign-task" element={<Task />} />
             <Route path="/admin/skill-test" element={<ManageSkillTest />} />
-
+              
           </Route>
 
           {/* Mentor routes */}
@@ -160,7 +109,6 @@ function App() {
           <Route path="/error?statusCode=500" element={<Error_500 />} />
           <Route path="*" element={<Error_404 />} />
         </Routes>
-        {/* </Router> */}
       </div>
     </Context>
   );

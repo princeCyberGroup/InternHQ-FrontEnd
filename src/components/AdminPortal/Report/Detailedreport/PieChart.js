@@ -1,14 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from "chart.js";
 import { Pie } from "react-chartjs-2";
-// import PieChartData from "./PieChartData";
 import { Link } from "react-router-dom";
 import "./PieChart.css";
-// import pieChartData from "./PieChartData";
 import NoData from "../../../../Assets/NoData.svg";
-
-// width: 394px;
-// height: 274px;
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 
@@ -74,7 +69,6 @@ const PieChart = () => {
   };
 
   const fetchData = async () => {
-    // debugger;
     await fetch(
       `https://cg-interns-hq.azurewebsites.net/getDailyTaskTrackerRecords?userId=${piechartId}`
     )
@@ -218,13 +212,9 @@ const PieChart = () => {
         ).toFixed(2),
   };
 
-  // console.log(techPercentages);
-
   data.labels = Object.keys(techPercentages).map((techName) => techName);
-  // console.log(data.labels, "This labels");
 
   const legendValues = Object.values(techPercentages);
-  // console.log(legendValues, "LEgends");
   const newValue = legendValues.map((val) => (val > 0 ? val : 0));
   data.datasets[0].data = newValue;
 
@@ -235,7 +225,6 @@ const PieChart = () => {
         position: "right",
         align: "middle",
         labels: {
-          // usePointStyle: true,
           boxWidth: 17,
           boxHeight: 17,
           padding: 16,
@@ -263,7 +252,6 @@ const PieChart = () => {
                   lineDash: dataset.borderDash,
                   lineDashOffset: dataset.borderDashOffset,
                   lineJoin: dataset.borderJoinStyle,
-                  // lineWidth: dataset.borderWidth,
                   strokeStyle: "#fff",
                   pointStyle: dataset.pointStyle,
                   rotation: dataset.rotation,

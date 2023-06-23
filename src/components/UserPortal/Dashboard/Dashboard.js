@@ -31,13 +31,13 @@ const Dashboard = () => {
               </div>
             </div>
             <div className="mt-2 das-card-wrapper-row2">
-              <div className="" style={{ height: "376px" }}>
+              <div className="" style={{ height: "23.5rem" }}>
                 <DashboardGraph/>
                 {/* <EmptyGraph/> */}
               </div>
               <div
                 className="mt-2"
-                style={{ height: "378px", width: "23.65rem" }}
+                style={{ height: "23.625rem", width: "23.65rem" }}
               >
                 <NotificationComponent />
                 {/* <EmptyNoti/>*/}

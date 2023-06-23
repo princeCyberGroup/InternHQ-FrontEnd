@@ -1,15 +1,16 @@
+
 import React, { useState, useRef } from "react";
 import { ReactComponent as CloudImage } from "../../../../Assets/Cloud.svg";
 import { ReactComponent as CloseBtn } from "../../../../Assets/Close-admin.svg"
-// import CSVReader from "./DragandDropFile";
-
-
 import '../ManageSkillSet/Modals.css';
 import axios from "axios";
 
 export const UploadCsv = () => {
-    const [selectedFile, setSelectedFile] = useState(null);
-
+  const [selectedFile, setSelectedFile] = useState(null);
+    const [file, setFile] = useState(null);
+    const [progress, setProgress] = useState(0);
+    const fileInputRef = useRef(null);
+  
     const handleCancelClick = (e) => {
         e.preventDefault();
         setSelectedFile(null);
@@ -38,14 +39,6 @@ export const UploadCsv = () => {
             console.log(error);
         }
     };
-
-
-
-    const [file, setFile] = useState(null);
-    const [progress, setProgress] = useState(0);
-    const fileInputRef = useRef(null);
-
-
     const handleDrop = (e) => {
         e.preventDefault();
         const droppedFile = e.dataTransfer.files[0];
@@ -183,10 +176,32 @@ export const UploadCsv = () => {
                                         data-bs-dismiss="modal">Save</button>
                                 </div>
                             </div>
-                        </div>
+                        {/* </div>
                     </div>
-                </div>
+                </div> */}
+              {/* </form> */}
+              <div className="modal-footer border-top-0 pb-0">
+                <button
+                  type="button"
+                  className="btn cancel-button fw-bold"
+                  data-bs-dismiss="modal"
+                  onClick={(e) => handleCancelClick(e)}
+                >
+                  <span className="cancel-text">Cancel</span>
+                </button>
+                <button
+                  type="button"
+                  className="btn save-button"
+                  data-bs-dismiss="modal"
+                  onClick={(e) => handleSaveClick(e)}
+                >
+                  <span className="save-text">Save</span>
+                </button>
+              </div>
             </div>
+          </div>
         </div>
-    )
-}
+      </div>
+    </div>
+  );
+};

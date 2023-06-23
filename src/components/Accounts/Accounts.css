@@ -46,13 +46,13 @@
 
 .input-login {
   border: none;
-  width: 428.58px;
+  width: 26.786rem;
   font-size: 0.938rem;
   line-height: 2.563rem;
   /* max-width: 100%; */
 }
 
-.input-loginHow :focus {
+.input-login:focus {
   outline: none;
 }
 
@@ -189,5 +189,5 @@ a:hover {
 }
 .div-input {
   border-bottom: 0.063rem solid #b2b2b3;
-  width: 428.58px;
+  width: 26.786rem;
 }

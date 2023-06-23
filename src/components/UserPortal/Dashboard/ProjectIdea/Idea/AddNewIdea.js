@@ -111,7 +111,6 @@ const AddNewIdea = () => {
     texts.forEach((text, index) => {
       membersObj[`member${index + 1}`] = text;
     });
-
     isObjectEmpty(membersObj);
   }, [textInput, tech]);
   return (
