@@ -168,7 +168,7 @@ export const AddNewSkillTest = () => {
 
 
                                     <div className="form-check">
-                                        <label style={{ marginLeft: "5px" }}>
+                                        <label style={{ marginLeft: "0.313rem" }}>
                                             <input
                                                 class="form-check-input color-of-radio"
                                                 type="radio"
@@ -179,7 +179,7 @@ export const AddNewSkillTest = () => {
                                             />
                                             Beginner
                                         </label>
-                                        <label style={{ marginLeft: "50px" }}>
+                                        <label style={{ marginLeft: "3.125rem" }}>
                                             <input
                                                 class="form-check-input color-of-radio"
                                                 type="radio"
@@ -190,7 +190,7 @@ export const AddNewSkillTest = () => {
                                             />
                                             Intermediate
                                         </label>
-                                        <label style={{ marginLeft: "50px" }}>
+                                        <label style={{ marginLeft: "3.125rem" }}>
                                             <input
                                                 class="form-check-input color-of-radio"
                                                 type="radio"
@@ -239,13 +239,13 @@ export const AddNewSkillTest = () => {
                                 </div>
                                 <div>
                                 <div className="progress-indicator-status"> {file && (
-                                    <div style={{ marginLeft: "90px", marginTop: "10px", position: "relative" }} className="d-flex align-items-center">
+                                    <div style={{ marginLeft: "5.625rem", marginTop: "0.625rem", position: "relative" }} className="d-flex align-items-center">
                                         <div >{file.name}</div>
 
                                     </div>
                                 )}
                                     {progress > 0 && (
-                                        <progress style={{ marginLeft: "45px", marginTop: "5px" }} max="100" value={progress}></progress>
+                                        <progress style={{ marginLeft: "2.813rem", marginTop: "0.313rem" }} max="100" value={progress}></progress>
                                        
                                     )}
                                     <div className=""

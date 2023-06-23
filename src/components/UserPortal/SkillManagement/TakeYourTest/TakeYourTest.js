@@ -318,7 +318,7 @@ const TakeYourTest = () => {
             </div>
           </div>
           <div className="ques.card ">
-            <div className="card insidecard" style={{ width: "1220px" }}>
+            <div className="card insidecard" style={{ width: "76.25rem" }}>
               {fullscreen && !submitted && <div> {renderQuestions()} </div>}
             </div>
           </div>

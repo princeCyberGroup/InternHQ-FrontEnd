@@ -216,7 +216,6 @@ const TakeTest = ({ test }) => {
           >
             <div
               className="row cards main-card-inside"
-            //   style={{ maxHeight: "470px", overflow: "auto" }}
             >
               <div className="row d-flex justify-content-evenly ">
                 {tests?.map((test) => (
@@ -229,8 +228,8 @@ const TakeTest = ({ test }) => {
                               <img
                                 src={test.techImageLink}
                                 class="imageLogo"
-                                width="30px"
-                                height="35px"
+                                width="1.875rem"
+                                height="2.188rem"
                               />
                             </div>
                             <div>
@@ -248,14 +247,14 @@ const TakeTest = ({ test }) => {
                             <div class="d-flex flex-column justify-content-center noOfQues">
                               <div class="articles d-flex justify-content-center">
                                 <MdOutlineBallot
-                                  style={{ marginRight: "5px" }}
+                                  style={{ marginRight: "0.313rem" }}
                                 />
                                 {test.numberOfQuestion} Questions
                               </div>
                             </div>
                             <div class="d-flex flex-column justify-content-center testTime">
                               <div class="articles d-flex justify-content-center ">
-                                <BsClock style={{ marginRight: "5px" }} />
+                                <BsClock style={{ marginRight: "0.313rem" }} />
                                 {test.examDuration} mins
                               </div>
                             </div>

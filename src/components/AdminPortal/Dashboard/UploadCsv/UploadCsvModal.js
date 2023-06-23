@@ -115,7 +115,7 @@ export const UploadCsv = () => {
                                         To add a new batch of associate consultants, please upload the CSV file.
                                         <br></br>
                                         The CSV file should contain the following information:
-                                        <div style={{ marginLeft: "10px", marginTop: "10px" }}>
+                                        <div style={{ marginLeft: "0.625rem", marginTop: "0.625rem" }}>
                                             <li className="fw-bold">First & Last Name of Associate Consultant</li>
                                             <li className="fw-bold">Corresponding IDs</li>
                                             <li className="fw-bold">Duration of their Internship</li>
@@ -153,16 +153,16 @@ export const UploadCsv = () => {
                                     </div>
                                 </div>
                                 <div className="progress-indicator-status"> {file && (
-                                    <div style={{ marginLeft: "90px", marginTop: "10px", position: "relative" }} className="d-flex align-items-center">
+                                    <div style={{ marginLeft: "5.625rem", marginTop: "0.625rem", position: "relative" }} className="d-flex align-items-center">
                                         <div >{file.name}</div>
 
                                     </div>
                                 )}
                                     {progress > 0 && (
-                                        <progress style={{ marginLeft: "45px", marginTop: "5px" }} max="100" value={progress}></progress>
+                                        <progress style={{ marginLeft: "2.813rem", marginTop: "0.313rem" }} max="100" value={progress}></progress>
                                        
                                     )}
-                                    <div style={{position: "absolute", right: "28px"}}>
+                                    <div style={{position: "absolute", right: "21.75rem"}}>
                                     {/* <CloseBtn /> */}
                                     
                                     </div>
@@ -177,7 +177,7 @@ export const UploadCsv = () => {
                                     <button style={{width:"8rem"}} data-bs-dismiss="modal"
                                       onClick={(e) =>
                                         handleCancelClick(e) }>Cancel</button>
-                                    <button style={{width:"8rem",marginLeft:"10px"}}
+                                    <button style={{width:"8rem",marginLeft:"0.625rem"}}
                                         onClick={(e) => handleSaveClick(e)
                                            }
                                         data-bs-dismiss="modal">Save</button>

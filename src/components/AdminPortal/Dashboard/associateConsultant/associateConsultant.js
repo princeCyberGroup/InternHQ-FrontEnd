@@ -63,7 +63,7 @@ export default function AssociateConsultant(props) {
                   display: "flex",
                   justifyContent: "center",
                   alignItems: "center",
-                  marginTop: "15px",
+                  marginTop: "0.938rem",
                 }}
               >
                 {initials}
@@ -80,7 +80,7 @@ export default function AssociateConsultant(props) {
             </div>
             <div className=" col-4">
               <span
-                style={{ marginLeft: "150px", cursor: "pointer" }}
+                style={{ marginLeft: "9.375rem", cursor: "pointer" }}
                 onClick={() => handleExpand(userData.intId)}
                 className="expand-arrow"
               >
@@ -115,16 +115,18 @@ export default function AssociateConsultant(props) {
     <>
       <div
         style={{
-          marginLeft: "194px",
+          marginLeft: "12.125rem",
         }}
       >
-        <div className="about-associate" style={{ marginLeft: "15px" }}>
+        <div className="about-associate" style={{ marginLeft: "0.938rem" }}>
           Associate Consultant
         </div>
 
         <div
+
+        ///change here 
           className=" associate-card  "
-          style={{ maxHeight: "370px", overflow: "auto" }}
+          style={{ maxHeight: "23.125", overflow: "auto" }}
         >
           <div>
             <input

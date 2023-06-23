@@ -51,8 +51,7 @@ const DashboardA = () => {
       <div className="responsiveness">
         <>
           <div className="row">
-            {/* style={{maxWidth : "1280px"}} */}
-            <div className="col-8" style={{ marginLeft: "0px" }}>
+            <div className="col-8" >
               <div className="about">
                 <Link to="/admin/reports" className="about-link">
                   Manage Consultant <Right style={{ marginBottom: "2px" }} />
@@ -78,7 +77,9 @@ const DashboardA = () => {
               </div>
             </div>
             {/* //insights */}
+            <div className="col-4 ">
             <Insights data={insights} />
+            </div>
           </div>
         </>
       </div>

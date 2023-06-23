@@ -4,8 +4,8 @@
   gap: 4.3rem;
   align-items: center;
   width: fit-content;
-  height: 19px;
-  margin-top: 20px;
+  height: 1.188rem; /* 19px / 16px */
+  margin-top: 1.25rem; 
   flex: none;
   order: 0;
   flex-grow: 0;
@@ -16,8 +16,8 @@
   font-family: "Roboto";
   font-style: normal;
   font-weight: 600;
-  font-size: 16px;
-  line-height: 19px;
+  font-size: 1rem; /* 16px / 16px */
+  line-height: 1.188rem;
   color: #002c3f;
 }
 .about-link {
@@ -25,15 +25,14 @@
 }
 .four-cards {
   display: flex;
-  margin-top: 10px;
-
-  padding-left: 10px;
+  margin-top: 0.625rem; /* 10px / 16px */
+  padding-left: 0.625rem;
   align-items: flex-start;
-  width: 183.3px;
-  height: 72px;
+  width: 11.456rem; /* 183.3px / 16px */
+  height: 4.5rem; 
   background: #ffffff;
-  box-shadow: 0px 4px 20px rgba(40, 52, 73, 0.15);
-  border-radius: 8px;
+  box-shadow: 0px 0.25rem 1.25rem rgba(40, 52, 73, 0.15); /* 4px / 16px, 20px / 16px */
+  border-radius: 0.5rem;
   flex: none;
 }
 
@@ -43,49 +42,45 @@
   justify-content: start;
 }
 /* ////////////////////////////////////////////// */
-.this-week {
-  /* margin-top: 20px; */
-  /* width: 0px; */
-}
 
 .associate-consultant-heading {
   /* width: 154px;
 height: 19px; */
-  left: 0px;
-  top: 4.5px;
+left: 0px;
+top: 0.281rem;
   font-family: "Roboto";
   font-style: normal;
   font-weight: 600;
-  font-size: 16px;
-  line-height: 19px;
+  font-size: 1rem; /* 16px / 16px */
+  line-height: 1.188rem; 
   color: #002c3f;
 }
 
 .about-associate {
-  margin-top: 25px;
-  margin-bottom: 7px;
-  width: 154px;
-  height: 19px;
+  margin-top: 1.563rem; /* 25px / 16px */
+  margin-bottom: 0.438rem; 
+  width: 9.625rem; /* 154px / 16px */
+  height: 1.188rem; /* 19px / 16px */
   left: 0px;
-  top: 4.5px;
+  top: 0.281rem;
 
   font-family: "Roboto";
   font-style: normal;
   font-weight: 600;
-  font-size: 16px;
-  line-height: 19px;
+  font-size: 1rem; /* 16px / 16px */
+  line-height: 1.188rem;
   color: #002c3f;
 }
 .associate-card {
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 16px;
-  gap: 16px;
+  padding: 1rem; /* 16px / 16px */
+  gap: 1rem; 
   isolation: isolate;
-  width: 406px;
-  height: 388px;
+  width: 25.375rem; /* 406px / 16px */
+  height: 24.25rem; 
   background: #ffffff;
-  box-shadow: 0px 4px 20px rgba(40, 52, 73, 0.15);
-  border-radius: 8px;
+  box-shadow: 0px 0.25rem 1.25rem rgba(40, 52, 73, 0.15); /* 4px / 16px, 20px / 16px */
+  border-radius: 0.5rem; 
 }
