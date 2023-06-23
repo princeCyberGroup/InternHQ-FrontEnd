@@ -13,10 +13,11 @@
 .delete-task-wrapper{
     height: 100vh;
     width: 100vw;
-    max-width: 1280px;
+    /* max-width: 1280px; */
     background: #7d7d7d73;
     position: absolute;
     top: 0;
+    left: 0;
     z-index: 3;
     display: flex;
     justify-content: center;

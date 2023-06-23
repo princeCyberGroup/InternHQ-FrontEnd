@@ -20,7 +20,6 @@ const TechDropDown = (props) => {
   }, []);
 
   const handleOptionClick = (event) => {
-    // console.log(event)
     const { value } = event.currentTarget.dataset;
     const isChecked = event.currentTarget.querySelector("input").checked;
     if (isChecked && !technologyNames.includes(value)) {
@@ -40,7 +39,7 @@ const TechDropDown = (props) => {
         if (techNames[`tech${index + 1}`] === value) {
           const t = delete techNames[`tech${index + 1}`];
           setCounter((prevCounter) => prevCounter - 1);
-          console.log(t);
+          // console.log(t);
         }
       });
     }
@@ -62,7 +61,7 @@ const TechDropDown = (props) => {
               {value?.techName}
             </label>
             <input
-              class="form-check-input"
+              class="form-check-input techDrop"
               type="checkbox"
               value="ytch"
               id="nodeJs"
