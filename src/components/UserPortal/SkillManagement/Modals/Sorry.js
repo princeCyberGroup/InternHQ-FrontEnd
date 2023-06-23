@@ -30,7 +30,7 @@ const Sorry = () => {
             <p>Your Score</p>
           </div>
           <div className="row s3">
-            <p>{score}/10</p>
+            <p>{score}/100</p>
           </div>
           <div className="row s4">
             <p>

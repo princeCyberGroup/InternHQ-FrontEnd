@@ -15,7 +15,7 @@ const SkillManagement = () => {
         <Header />
       </div>
       <>
-        {score == -1 ? "" : score >= 8 ? <Congo /> : <Sorry />}
+        {score == -1 ? "" : score >= 80 ? <Congo /> : <Sorry />}
         <div className="mainDiv">
           <div class="container-fluid ">
             <div className="row">

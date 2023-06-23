@@ -10,35 +10,22 @@
     margin-left: auto;
     margin-right: auto;
 }
-.delete-task-wrapper{
-    height: 100vh;
-    width: 100vw;
-    /* max-width: 1280px; */
-    background: #7d7d7d73;
-    position: absolute;
-    top: 0;
-    left: 0;
-    z-index: 3;
-    display: flex;
-    justify-content: center;
 
-}
 .pp-popup-wrapper {
-    /* padding: 0px; */
-    /* gap: 8px; */
+    padding: 0px;
+    gap: 8px;
+    position: relative;
     width: 464px;
-    height: 282px;
+    height: 242px;
     background: #FFFFFF;
     box-shadow: 0px 4px 20px rgba(40, 52, 73, 0.15);
     border-radius: 4px;
-    margin: auto;
-    /* margin-left: auto;
-    margin-right: auto; */
+    margin-left: auto;
+    margin-right: auto;
 }
 
 .pp-cross-btn {
-    
-    float: right;
+    margin-left: 441px;
 }
 
 .successfull-text {

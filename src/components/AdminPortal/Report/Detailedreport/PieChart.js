@@ -21,7 +21,7 @@ const PieChart = () => {
     labels: [],
     datasets: [
       {
-        radius: "158%",
+        radius: "90%",
         label: "Total Hours",
         data: [],
         backgroundColor: [
@@ -73,13 +73,10 @@ const PieChart = () => {
     ));
   };
 
-
-
   const fetchData = async () => {
     // debugger;
     await fetch(
-      // `https://cg-interns-hq.azurewebsites.net/getDailyTaskTrackerRecords?userId=${piechartId}` 
-      `https://cg-interns-hq.azurewebsites.net/getDailyTaskTrackerRecords?userId=${36}` 
+      `https://cg-interns-hq.azurewebsites.net/getDailyTaskTrackerRecords?userId=${piechartId}`
     )
       .then((response) => {
         return response.json();
@@ -166,7 +163,7 @@ const PieChart = () => {
   let totalCgHours = 0;
   let totalSelfHours = 0;
   let totalMentorHours = 0;
-  monthlyRecords.forEach((record) => {
+  monthlyRecords?.forEach((record) => {
     let formattedTotalTime = convertHoursToDecimal(record.totalTime);
     if (record.learning === "Project") {
       totalProjectHours += formattedTotalTime;
@@ -182,7 +179,7 @@ const PieChart = () => {
   totalCgHours = convertDecimalToHours(totalCgHours);
   totalSelfHours = convertDecimalToHours(totalSelfHours);
   totalMentorHours = convertDecimalToHours(totalMentorHours);
-  
+
   const techPercentages = {
     Project: parseFloat(convertToPercentageMonthly(totalProjectHours)),
     "CG Learning Video": parseFloat(convertToPercentageMonthly(totalCgHours)),
@@ -236,18 +233,23 @@ const PieChart = () => {
       legend: {
         display: true,
         position: "right",
+        align: "middle",
         labels: {
           // usePointStyle: true,
           boxWidth: 17,
           boxHeight: 17,
-          // pointStyle: 'cross',
-          // boxWidth: 12,
-
+          padding: 16,
+          font: {
+            family: "Roboto",
+            style: "normal",
+            weight: "bold", 
+            size: 12,
+            lineHeight: 16,
+          },
           generateLabels: (chart) => {
             const data = chart.data;
             if (data.labels.length && data.datasets.length) {
               return data.labels.map((label, i) => {
-                console.log("this is lable", label)
                 const dataset = data.datasets[0];
                 const value = legendValues[i];
                 return {
@@ -284,21 +286,22 @@ const PieChart = () => {
         },
       },
     },
+    responsive: true,
+    maintainAspectRatio: false,
   };
 
+
   return (
-    <div className="container" style={{ border:"1px solid black" }}>
+    <div className="container" style={{ height: "inherit" }}>
       <div className="row">
-        <div
-          className="col"
-          style={{
-            boxShadow: "0px 4px 20px rgba(40, 52, 73, 0.15)",
-            borderRadius: "8px",
-          }}
-        >
+        <div style={{ padding: "0", margin: "0" }}>
           <div
             className="dropdown"
-            style={{ marginBottom: "0.594rem" }}
+            style={{
+              marginLeft: "1rem",
+              marginTop: "0.594rem",
+              marginBottom: "0.594rem",
+            }}
           >
             <button
               className="btn dropdown-toggle dropdown-button"
@@ -320,9 +323,9 @@ const PieChart = () => {
             </ul>
           </div>
           <div>
-            {monthlyRecords.length === 0 ? (
-              <div className="d-flex justify-content-center align-items-center flex-column" style={{ minHeight: "476px" }}>
-                <img src={NoData} alt="No Data" />
+            {monthlyRecords === undefined || monthlyRecords.length === 0 ? (
+              <div className="no-data-div">
+                <img className="no-data-img" src={NoData} alt="No Data" />
                 <h1
                   style={{
                     fontFamily: "'Roboto'",
@@ -335,8 +338,14 @@ const PieChart = () => {
                 </h1>
               </div>
             ) : (
-              <div style={{border:"1px solid", width:"394px",height:"274px"}}>
-              <Pie data={data} options={options} style={{border:"1px solid red" }} />
+              <div
+                style={{
+                  width: "394px",
+                  height: "220px",
+                  // position: "absolute",
+                }}
+              >
+                <Pie data={data} options={options} width={158} height={158} />
               </div>
             )}
           </div>

@@ -22,7 +22,7 @@ const Task = () => {
             </div>
             <div
               class=" col-md-4 p-0 skill-added-card"
-              style={{ height: "100vh" }}
+              // style={{ height: "100vh" }}
             >
               <MentorList />
             </div>

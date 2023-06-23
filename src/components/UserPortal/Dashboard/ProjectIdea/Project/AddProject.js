@@ -63,6 +63,7 @@ const AddProject = () => {
     setProjNameError("");
     setDesError("");
     setProjLinkError("");
+    setTech({});
   };
   const handleProjectLinkChange = (event) => {
     const link = event.target.value;
@@ -114,6 +115,7 @@ const AddProject = () => {
       setProjectLink("");
       setHostedLink("");
       setError(false);
+      setTech({});
     }
   };
 

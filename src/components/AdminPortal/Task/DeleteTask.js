@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { ReactComponent as DeleteVector } from "../../../Assets/VectordeleteTsk.svg";
 import "./Successfull.css";
 import axios from "axios";
-const DeleteTask = ({taskId,setIsOpen, setShowDeleteTask}) => {
+const DeleteTask = ({taskId,setIsOpen, setShowDeleteTask, setTaskVersion}) => {
   // const [isOpen, setIsOpen] = useState(false);
   // const [onDelete,setOnDelete] = useState(false);
 
@@ -24,6 +24,7 @@ const DeleteTask = ({taskId,setIsOpen, setShowDeleteTask}) => {
           if (res.data.taskId===taskId) {
             setIsOpen(false);
             setShowDeleteTask(false)
+            setTaskVersion((prevVersion) => prevVersion + 1);
           }
 
           // Update the state after successful deletion

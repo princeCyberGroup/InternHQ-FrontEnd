@@ -1,10 +1,9 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-// import "../ProjectIdea/TechDropDown.css";
 
 const TechDropDown = (props) => {
+  
   const [techOptions, setTechOptions] = useState([]);
-  // const [technologyNames, setTechnolotyNames] = useState([]);
 
   useEffect(() => {
     const fetchTechOptions = async () => {
@@ -17,32 +16,35 @@ const TechDropDown = (props) => {
         console.error(error);
       }
     };
-
     fetchTechOptions();
+    
   }, []);
 
   const handleOptionClick = (event) => {
     const { value, id } = event.currentTarget.dataset;
     const isChecked = event.currentTarget.querySelector("input").checked;
-
+  
     if (value === "Select all") {
       if (isChecked) {
-        props.setTechnolotyNames(techOptions)
+        props.setTechnologyNames(techOptions);
         props.setSelectedTechIds(techOptions.map((tech) => tech.techId));
       } else {
-        props.setTechnolotyNames([]);
+        props.setTechnologyNames([]);
         props.setSelectedTechIds([]);
       }
     } else {
       if (isChecked) {
-        props.setTechnolotyNames((prevSelectedTech) => [
+        props.setTechnologyNames((prevSelectedTech) => [
           ...prevSelectedTech,
           { techName: value },
         ]);
-        props.setSelectedTechIds((prevSelectedTechIds) => [...prevSelectedTechIds, id]);
+        props.setSelectedTechIds((prevSelectedTechIds) => [
+          ...prevSelectedTechIds,
+          id,
+        ]);
       } else {
-        props.setTechnolotyNames((prevSelectedTech) =>
-        prevSelectedTech.filter((techName) => techName !== value)
+        props.setTechnologyNames((prevSelectedTech) =>
+          prevSelectedTech.filter((techName) => techName.techName !== value)
         );
         props.setSelectedTechIds((prevSelectedTechIds) =>
           prevSelectedTechIds.filter((techId) => techId !== id)
@@ -50,6 +52,7 @@ const TechDropDown = (props) => {
       }
     }
   };
+  
 
   useEffect(() => {
     if (props.technologyNames) {
@@ -59,10 +62,6 @@ const TechDropDown = (props) => {
   }, [props.technologyNames]);
   
 
-  // useEffect(() => {
-  //   const selectedTechNames = props.technologyNames.map((tech) => tech.techName);
-  //   props.techDataComingChild(selectedTechNames);
-  // }, [props.technologyNames]);
 
   return (
     <div className="drop-tech">
@@ -85,6 +84,7 @@ const TechDropDown = (props) => {
             type="checkbox"
             value={tech.techName}
             id={tech.techId}
+
           />
         </div>
       ))}
