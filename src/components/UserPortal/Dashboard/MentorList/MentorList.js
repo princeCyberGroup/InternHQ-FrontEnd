@@ -22,8 +22,7 @@ const MentorComponent = () => {
       );
 
       const data = await response.json();
-      const activeMentors = data.activeMentors;
-      console.log(activeMentors);
+      const activeMentors = data.activeMentors
       setMentors(activeMentors);
       setIsLoading(false);
       // console.log(isLoading, "Fetched data");
@@ -79,7 +78,7 @@ const MentorComponent = () => {
               data-bs-ride="carousel"
             >
               <div className="carousel-indicators KYM" style={{}}>
-                {mentors.map((mentor, index) => (
+                {mentors?.map((mentor, index) => (
                   <button
                     key={index}
                     type="button"
@@ -93,7 +92,7 @@ const MentorComponent = () => {
               </div>
 
               <div className="carousel-inner crousal-set " role="listbox">
-                {mentors.map((mentor, index) => (
+                {mentors?.map((mentor, index) => (
                   <div
                     key={index}
                     className={`carousel-item carousel-styling ${

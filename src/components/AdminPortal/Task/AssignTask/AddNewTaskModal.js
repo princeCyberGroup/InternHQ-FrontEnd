@@ -6,7 +6,6 @@ import { ReactComponent as ExpandMore } from "../../../../Assets/expand_more.svg
 import TechnologyDropDown from "./TechnologyDropdown(Admin)";
 import UsersDropdown from "./UsersDropdown";
 
-
 export const AddNewTask = ({ onAddClose }) => {
   const [error, setError] = useState(true);
   const [taskName, setTaskName] = useState("");
@@ -25,9 +24,7 @@ export const AddNewTask = ({ onAddClose }) => {
   const [selectedTechIds, setSelectedTechIds] = useState([]);
   const [technologyNames, setTechnologyNames] = useState([]);
 
-
-
-  const handleClickClear = (e) => {
+ const handleClickClear = (e) => {
     e.preventDefault();
 
     onAddClose();
@@ -58,7 +55,6 @@ export const AddNewTask = ({ onAddClose }) => {
 
   const usersDataComingFrmChild = (data) => {
     setUsers(data);
-
   };
 
   const handleSubmit = async (e) => {
@@ -67,7 +63,8 @@ export const AddNewTask = ({ onAddClose }) => {
     var storedObject = JSON.parse(localStorage.getItem("userData"));
     var userId = storedObject.userId;
     var assignedByDesignation = storedObject.designation;
-    var assignedByfullName = storedObject.firstName + ' ' + storedObject.lastName;
+    var assignedByfullName =
+      storedObject.firstName + " " + storedObject.lastName;
 
     if (error) {
       alert("Please fill out the necessary fields");
@@ -98,7 +95,6 @@ export const AddNewTask = ({ onAddClose }) => {
       setSelectedUserIds([]);
       setTechnologyNames([]);
       setSelectedUsers([]);
-
       setTech({});
       setUsers({});
       setError(true);
@@ -130,17 +126,12 @@ export const AddNewTask = ({ onAddClose }) => {
     }
     else{setError(false)}
   };
-
-
-
   const handleAssignedTo = (e) => {
     setTaskUsers(e.target.value);
   };
 
   return (
     <div>
-
-
       <div
         class="modal fade"
         id="addTaskModal"
@@ -251,7 +242,6 @@ export const AddNewTask = ({ onAddClose }) => {
                         />
                       </ul>
                     </div>
-                    {/* </div> */}
                   </div>
                 </div>
 
@@ -303,11 +293,8 @@ export const AddNewTask = ({ onAddClose }) => {
                         />
                       </ul>
                     </div>
-                    {/* </div> */}
                   </div>
-                 
                 </div>
-
               </form>
             </div>
 

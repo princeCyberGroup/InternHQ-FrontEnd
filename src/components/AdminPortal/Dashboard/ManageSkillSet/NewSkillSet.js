@@ -1,4 +1,4 @@
-import {ReactComponent as SuccessfullAdd} from "../Assets/VectorSucessfull.svg";
+import {ReactComponent as SuccessfullAdd} from "../../../../Assets/VectorSucessfull.svg";
 import "../UploadCsv/PopUpModals.css";
 
 const NewSkillSet = () =>{

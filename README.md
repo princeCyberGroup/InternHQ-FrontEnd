@@ -1,4 +1,4 @@
-# InternHQ
+# CGI-SkillFinity
 --
 Information
 Before pushing check you username and email in both vs code and github desktop

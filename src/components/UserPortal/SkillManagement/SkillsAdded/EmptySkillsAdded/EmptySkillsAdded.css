@@ -1,10 +1,54 @@
-.vector{
-    background: #E9ECEB;
-     position: absolute;
-    width: 300px;
-    height: 604.5px;
-    top: 165px;
-    background: #FFFFFF;
-    box-shadow: 0px 0px 0px rgba(66, 76, 97, 0.15);
-    /* border-radius: 8px; */
+.empty-skill-body {
+  height: calc(100vh - 22.8vh);
+  box-shadow: 0px 4px 10px rgba(66, 76, 97, 0.15);
+  border-radius: 8px;
+}
+
+.empty-skill-heading {
+  font-family: "Roboto";
+  margin-top: 16px;
+  margin-bottom: 16px;
+  font-style: normal;
+  font-weight: 700;
+  font-size: 20px;
+  line-height: 23px;
+  color: #343435;
+}
+
+.empty-skill-desc {
+  font-family: "Roboto";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 19px;
+  text-align: center;
+  color: #343435;
+}
+
+
+.empty-skill-body {
+  height: calc(100vh - 22.8vh ); /* 22.8vh / 100vh = 3.57rem */
+  box-shadow: 0px 0.25rem 0.625rem rgba(66, 76, 97, 0.15); /* 4px / 16px = 0.25rem, 10px / 16px = 0.625rem */
+  border-radius: 0.5rem; /* 8px / 16px = 0.5rem */
+}
+
+.empty-skill-heading {
+  font-family: "Roboto";
+  margin-top: 1rem; /* 16px / 16px = 1rem */
+  margin-bottom: 1rem; /* 16px / 16px = 1rem */
+  font-style: normal;
+  font-weight: 700;
+  font-size: 1.25rem; /* 20px / 16px = 1.25rem */
+  line-height: 1.4375rem; /* 23px / 16px = 1.4375rem */
+  color: #343435;
+}
+
+.empty-skill-desc {
+  font-family: "Roboto";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 1rem; /* 16px / 16px = 1rem */
+  line-height: 1.1875rem; /* 19px / 16px = 1.1875rem */
+  text-align: center;
+  color: #343435;
 }

@@ -34,10 +34,10 @@ const TakeYourTest = () => {
     const [submitAnswer, setSubmitAnswer] = useState([]);
     const clickHandler = () => {
         navigate("/skill-Management");
-        setFullscreen(false);
+        exitFullscreen();
     };
     // useEffect(()=>{
-    //     // console.log("this is the data from takeyourtest site", data);
+    // console.log("this is the data from takeyourtest site", data);
     // },[]);
     useEffect(() => {
         if (fullscreen) {
@@ -80,7 +80,7 @@ const TakeYourTest = () => {
         fetchTests();
         // fetchTestsForExams();
         handleAnswerSelect();
-        setFullscreen(true);
+        // setFullscreen(true);
         // window.addEventListener("keydown", handleKeyDown);
         const examDurationInSeconds = parseInt(examDuration) * 60;
         setTime(examDurationInSeconds);
@@ -291,7 +291,8 @@ const TakeYourTest = () => {
                                     type="button"
                                     onClick={() => {
                                         submitQuiz();
-                                         setFullscreen(false);
+                                        exitFullscreen();
+                                        fullscreen(false);
                                         clickHandler();
                                         submitTest();
                                     }}

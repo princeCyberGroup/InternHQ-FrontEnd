@@ -12,7 +12,7 @@ import BreadCrumbs from "../../BreadCrumbs/BreadCrumbs";
 import DailyUpdateTableSection from "./DailyUpdateTableSection";
 
 const DailyUpdateTable = (props) => {
-  // const sendDataToParent = () => {
+    // const sendDataToParent = () => {
   //   const data = "Hello World From Daily Update Component";
   //   props.sendData(data);
   // }
@@ -45,7 +45,7 @@ const DailyUpdateTable = (props) => {
               </div>
             </div>
           </div>
-          <DailyUpdateTableSection />
+          < DailyUpdateTableSection userId = {userId} />
         </div>
       </div>
     </>

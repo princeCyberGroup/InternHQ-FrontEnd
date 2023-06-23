@@ -9,12 +9,10 @@ import CarouselImage3 from "../../../Assets/CarouselImage3.svg";
 import BackArrow from "../../../Assets/BackArrow.svg";
 
 const ForgotPasswordOtpScreen = () => {
-
-  const [otp, setOtp] = useState("");
-
   const navigate = useNavigate();
-  // const [activeIndex, setActiveIndex] = useState(0); //For carousel
-  const [value, setValue] = useState('');
+
+  const [value, setValue] = useState("");
+  const [otp, setOtp] = useState("");
   const [isOtpValid, setIsOtpValid] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
 
@@ -24,7 +22,7 @@ const ForgotPasswordOtpScreen = () => {
     if (inputValue.length <= 6 && /^\d*$/.test(inputValue)) {
       setValue(inputValue);
     }
-    if(inputValue.trim().length <= 11) {
+    if (inputValue.trim().length <= 11) {
       setOtp(inputValue.trim());
     }
   };
@@ -45,49 +43,36 @@ const ForgotPasswordOtpScreen = () => {
         }
       )
       .then((response) => {
-        localStorage.setItem("token",response.data.token);
+        localStorage.setItem("token", response.data.token);
         localStorage.setItem("email", email);
         setIsLoading(false);
         navigate("/change-password");
-        console.log(response.data);
       })
       .catch((error) => {
         console.log(error.response.data);
-        setIsOtpValid(true)
+        setIsOtpValid(true);
         setIsLoading(false);
-        if(error.response?.data.statusCode == 400) {
-          navigate('/error?statusCode=400')
-        } 
-         if(error.response?.data.statusCode == 500) {
-          navigate('/error?statusCode=500')
-        } 
+        if (error.response?.data.statusCode == 400) {
+          navigate("/error?statusCode=400");
+        }
+        if (error.response?.data.statusCode == 500) {
+          navigate("/error?statusCode=500");
+        }
       });
-    console.log(otp);
-    
   };
-  // const handleSlideChange = (index) => {
-  //   setActiveIndex(index);
-  // };
 
   useEffect(() => {
     let login = localStorage.getItem("login");
     if (login) {
       navigate("/dashboard");
     }
-    // const interval = setInterval(() => {
-    //   setActiveIndex((prevIndex) => (prevIndex + 1) % 3);
-    // }, 3000); //Make it 1000
-
-    // return () => {
-    //   clearInterval(interval);
-    // };
   }, []);
 
   return (
     <div className="container-fluid login-screen-body ">
       <div className="row pos">
         <div className="d-flex justify-content-center align-items-center flex-row">
-        <div
+          <div
             className="col-md-5"
             style={{
               backgroundColor: "#002C3F",
@@ -104,14 +89,12 @@ const ForgotPasswordOtpScreen = () => {
                 />
               </div>
               <div className="row card-left-heading">
-                <p>Intern HQ</p>
+                <p>CGI SkillFinity</p>
               </div>
               <div
                 id="carouselExampleIndicators"
                 className="carousel slide mt-3"
                 data-bs-ride="carousel"
-                // data-bs-interval="4000"
-                // data-interval="false" //Remove it
               >
                 <div className="carousel-indicators">
                   <button
@@ -120,30 +103,21 @@ const ForgotPasswordOtpScreen = () => {
                     class="active"
                     aria-current="true"
                     aria-label="Slide 1"
-                    // onClick={() => handleSlideChange(0)}
-                    // className={activeIndex === 0 ? "active" : ""}
                   ></button>
                   <button
                     data-bs-target="#carouselExampleIndicators"
                     data-bs-slide-to="1"
                     aria-label="Slide 2"
-                    // onClick={() => handleSlideChange(1)}
-                    // className={activeIndex === 1 ? "active" : ""}
                   ></button>
                   <button
                     data-bs-target="#carouselExampleIndicators"
                     data-bs-slide-to="2"
                     aria-label="Slide 3"
-                    // onClick={() => handleSlideChange(2)}
-                    // className={activeIndex === 2 ? "active" : ""}
                   ></button>
                 </div>
                 <div className="carousel-inner">
                   <div
                     style={{ width: "16.25rem" }}
-                    // className={`carousel-item ${
-                    //   activeIndex === 0 ? "active" : ""
-                    // }`}
                     className="carousel-item active"
                   >
                     <img
@@ -157,13 +131,7 @@ const ForgotPasswordOtpScreen = () => {
                     </p>
                   </div>
 
-                  <div
-                    style={{ width: "16.25rem" }}
-                    // className={`carousel-item ${
-                    //   activeIndex === 1 ? "active" : ""
-                    // }`}
-                    className="carousel-item"
-                  >
+                  <div style={{ width: "16.25rem" }} className="carousel-item">
                     <img
                       src={CarouselImage2}
                       className="d-block "
@@ -174,13 +142,7 @@ const ForgotPasswordOtpScreen = () => {
                       Enhance your skills via assessments
                     </p>
                   </div>
-                  <div
-                    style={{ width: "16.25rem" }}
-                    // className={`carousel-item ${
-                    //   activeIndex === 2 ? "active" : ""
-                    // }`}
-                    className="carousel-item"
-                  >
+                  <div style={{ width: "16.25rem" }} className="carousel-item">
                     <img
                       src={CarouselImage3}
                       className="d-block "
@@ -195,7 +157,10 @@ const ForgotPasswordOtpScreen = () => {
               </div>
             </div>
           </div>
-          <div className="col-md-7 bg-white p-4" style={{ height: "35.125rem" }}>
+          <div
+            className="col-md-7 bg-white p-4"
+            style={{ height: "35.125rem" }}
+          >
             <div className="row ">
               <p className="right-container-heading">Enter Code</p>
             </div>
@@ -223,23 +188,24 @@ const ForgotPasswordOtpScreen = () => {
                   lineHeight: "1.188rem",
                 }}
               >
-                Please type the Six digit code we have sent on your<br/> Microsoft
-                account.
+                Please type the Six digit code we have sent on your
+                <br /> Microsoft account.
               </p>
               <form onSubmit={handleSubmit}>
                 <div className="d-flex flex-column">
-                  <input
-                  className="input-login"
-                    type="text"
-                    pattern="\d*" // Used the "pattern" attribute to enforce digits only
-                    value={value}
-                    onChange={handleChange}
-                    placeholder="Code"
-                  />
+                  <div className="div-input">
+                    <input
+                      className="input-login"
+                      type="text"
+                      pattern="\d*" // Used the "pattern" attribute to enforce digits only
+                      value={value}
+                      onChange={handleChange}
+                      placeholder="Code"
+                    />
+                  </div>
+
                   {isOtpValid && otp && (
-                    <span className="sign-up-warning">
-                      Invalid OTP
-                    </span>
+                    <span className="sign-up-warning">Invalid OTP</span>
                   )}
                 </div>
                 <button
@@ -264,7 +230,6 @@ const ForgotPasswordOtpScreen = () => {
                 Use Another Account
               </Link>
             </div>
-            {/* <div className="bg-white d-flex flex-column justify-content-center align-items-center form-padding"></div> */}
           </div>
         </div>
       </div>

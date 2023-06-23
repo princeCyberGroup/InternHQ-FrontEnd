@@ -30,7 +30,7 @@ const Sorry = () => {
             <p>Your Score</p>
           </div>
           <div className="row s3">
-            <p>{score}/10</p>
+            <p>{score}/100</p>
           </div>
           <div className="row s4">
             <p>
@@ -39,9 +39,9 @@ const Sorry = () => {
             </p>
           </div>
           <div className="row Scontinue">
-            <button type="button" className="sorry-view-result-btn">
+            {/* <button type="button" className="sorry-view-result-btn">
               View Result
-            </button>
+            </button> */}
             <button
               type="button"
               className="continueBtn"

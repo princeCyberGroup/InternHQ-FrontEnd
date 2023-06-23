@@ -1,27 +1,40 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Link, NavLink, useNavigate } from "react-router-dom";
 import { BsChevronDown } from "react-icons/bs";
 import { ReactComponent as CGlogo } from "../../Assets/CG-Logo (1) 1CGlogo.svg";
 import "./Header.css";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faBell } from "@fortawesome/free-solid-svg-icons";
-import "../UserPortal/Dashboard/Notification/Notification.css";
-const Header = () => {
-  // localStorage.setItem("userData",{"email":"prinec.kumar@cginfinity.com","userId":43,"firstName":"Prince","lastName":"kumar"})
-  const [hasNewNotification, setHasNewNotification] = useState(true);
+import MentorAssignedAlerts from "../UserPortal/Dashboard/MentorAssignedAlerts/MentorAssignedAlerts";
 
+const Header = () => {
   const [userData, setUserData] = useState(
     JSON.parse(localStorage.getItem("userData"))
   );
+  const [isTodayDate, setIsTodayDate] = useState(false);
   const navigate = useNavigate();
   const handleLogout = (e) => {
     e.preventDefault();
     localStorage.clear("userData");
     navigate("/");
   };
-  const handleNotificationClick = () => {
-    setHasNewNotification(!hasNewNotification);
+
+  const anotherFunc = (mentorTask) => {
+    const today = new Date();
+    const formattedToday = today.toISOString().split("T")[0];
+
+    const isToday = mentorTask.some((record) => {
+      const assignedDate = record.assignedDate;
+      if (assignedDate === formattedToday) {
+        return true;
+      } else {
+        const previousDate = new Date(today);
+        previousDate.setDate(today.getDate() - 1);
+        const formattedPreviousDate = previousDate.toISOString().split("T")[0];
+        return assignedDate === formattedPreviousDate;
+      }
+    });
+    setIsTodayDate(isToday);
   };
+
   return (
     <>
       <div style={{ position: "fixed", top: "0", zIndex: "99", width: "100%" }}>
@@ -85,15 +98,15 @@ const Header = () => {
                     Report
                   </NavLink>
                 </li>
-                <li className="nav-item"  onClick={(e) => {
-                      e.preventDefault();
-                      alert("Developement is in progress");
-                      navigate("/")
-                    }}>
-                  <NavLink
-                    to="/admin/logs"
-                    className="btn activeBtn "
-                  >
+                <li
+                  className="nav-item"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    alert("Developement is in progress");
+                    navigate("/");
+                  }}
+                >
+                  <NavLink to="/admin/logs" className="btn activeBtn ">
                     Logs
                   </NavLink>
                 </li>
@@ -101,132 +114,10 @@ const Header = () => {
             )}
           </div>
 
-          <div className="d-flex justify-content-center align-item-center">
-            <FontAwesomeIcon
-              icon={faBell}
-              shake={hasNewNotification}
-              size="lg"
-              onClick={handleNotificationClick}
-              style={{
-                color: "#002c3f",
-                cursor: "pointer",
-                marginRight: "2rem",
-                // position: "relative",
-                // top: "5px",
-              }}
-            />
-            {hasNewNotification ? (
-              <div
-                style={{
-                  backgroundColor: "red",
-                  width: "8px",
-                  height: "8px",
-                  borderRadius: "50%",
-                  position: "absolute",
-                  right: "141px",
-                  top: "21px",
-                  border: "1px solid white",
-                }}
-              ></div>
-            ) : (
-              <div
-                class="card"
-                style={{
-                  position: "absolute",
-                  right: "1.5rem",
-                  top: "3.4rem",
-                  zIndex: 4,
-                  maxWidth: "21rem",
-                  boxShadow: "0px 4px 20px rgba(40, 52, 73, 0.15)",
-                  borderRadius: "8px",
-                }}
-              >
-                <div class="card-body">
-                  <div className="border-bottom ">
-                    <h5
-                      class="card-title"
-                      style={{
-                        fontFamily: "Roboto",
-                        fontWeight: 600,
-                        fontSize: "1rem",
-                        lineHeight: "1.18rem",
-                        color: "#343435",
-                      }}
-                    >
-                      Mentor Assigned Task
-                    </h5>
-                  </div>
-                  <div style={{ maxHeight: "17.9rem", overflowY: "scroll" }}>
-                    <div
-                      style={{
-                        padding: "16px 0px",
-                        borderBottom: "1px solid #E9ECEB",
-                      }}
-                    >
-                      <div className="text-wrapper ps-0">
-                        <p class="card-text">
-                          <b>Lagnesh</b> has assigned you{" "}
-                          <b>Full Stack Engineering Project</b> task
-                        </p>
-                      </div>
-                    </div>
-                    <div
-                      style={{
-                        padding: "16px 0px",
-                        borderBottom: "1px solid #E9ECEB",
-                      }}
-                    >
-                      <div className="text-wrapper ps-0">
-                        <p class="card-text">
-                          <b>Lagnesh</b> has assigned you{" "}
-                          <b>Full Stack Engineering Project</b> task
-                        </p>
-                      </div>
-                    </div>
-                    <div
-                      style={{
-                        padding: "16px 0px",
-                        borderBottom: "1px solid #E9ECEB",
-                      }}
-                    >
-                      <div className="text-wrapper ps-0">
-                        <p class="card-text">
-                          <b>Lagnesh</b> has assigned you{" "}
-                          <b>Full Stack Engineering Project</b> task
-                        </p>
-                      </div>
-                    </div>
-                    <div
-                      style={{
-                        padding: "16px 0px",
-                        borderBottom: "1px solid #E9ECEB",
-                      }}
-                    >
-                      <div className="text-wrapper ps-0">
-                        <p class="card-text">
-                          <b>Lagnesh</b> has assigned you{" "}
-                          <b>Full Stack Engineering Project</b> task
-                        </p>
-                      </div>
-                    </div>
-                    <div
-                      style={{
-                        padding: "16px 0px",
-                        borderBottom: "1px solid #E9ECEB",
-                      }}
-                    >
-                      <div className="text-wrapper ps-0">
-                        <p class="card-text">
-                          <b>Lagnesh</b> has assigned you{" "}
-                          <b>Full Stack Engineering Project</b> task
-                        </p>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            )}
+          <div>
+            <MentorAssignedAlerts func={anotherFunc} setState={isTodayDate} />
           </div>
+
           <div
             className="d-flex margin"
             data-bs-toggle="dropdown"
@@ -234,10 +125,9 @@ const Header = () => {
           >
             <div className="dropdown  background-set">
               <Link id="profileDropDown" className="text-decoration-none ">
-                {userData.firstName.toUpperCase().slice(0, 1)}
-                {userData.lastName.toUpperCase().slice(0, 1)}
+                {userData.firstName?.toUpperCase().slice(0, 1)}
+                {userData.lastName?.toUpperCase().slice(0, 1)}
               </Link>
-              {/* <button type="button" class="btn btn-danger">Action</button> */}
 
               <ul className="dropdown-menu " aria-labelledby="profileDropDown">
                 <li className="dropdown-item ">
@@ -245,7 +135,11 @@ const Header = () => {
                     {userData.firstName} {userData.lastName} <br />
                   </span>
                   <span className="deployed-status">
-                    {userData.designation.toLowerCase() ==="user"?userData.deployed ? "Occupied" : "On Bench":""}
+                    {userData.designation.toLowerCase() === "user"
+                      ? userData.deployed
+                        ? "Occupied"
+                        : "On Bench"
+                      : ""}
                   </span>
                 </li>
                 <li

@@ -1,6 +1,6 @@
 import '../Insights/insights.css';
-import { ReactComponent as Bullet } from "../Assets/bullet.svg"
-import { ReactComponent as SearchIcon } from '../Assets/search.svg';
+import { ReactComponent as Bullet } from "../../../../Assets/bullet.svg"
+import { ReactComponent as SearchIcon } from '../../../../Assets/search.svg';
 import React, { useEffect, useState } from "react";
 
 export default function Insights(props) {
@@ -22,7 +22,7 @@ export default function Insights(props) {
     useEffect(() => {
         handleFiltersChange();
     }, [searchFilterValue])
-    
+
     function renderInsights(insights) {
         return (
             <div className='div-insights'>
@@ -40,37 +40,58 @@ export default function Insights(props) {
             </div>
         );
     }
-    
+
 
     return (
-        <>
-            <div className='col-4 main-div-insight ' style={{ maxHeight: "50rem", overflow: "auto" }}>
-                <div className='about-insight col'>Insights</div>
-                <div className=' insights' style={{ maxHeight: "687px", overflow: "auto" }}>
-                    <div>
-                        {/* <div className='search-insights'> */}
-                        {/* <SearchIcon />
-                        <span style={{ marginLeft: "5px" }}>Search</span> */}
-                        <input
-                            className="search-insights"
-                            type="text"
-                            value={searchFilterValue}
-                            placeholder="Search"
-                            onChange={(event) => {
-                                event.preventDefault();
-                                setSearchFilterValue(event.target.value)
-                            }}
-                        />
-                    </div>
-                    {originalTests?.length === 0 ? (
-                        props.data?.map((insights) => renderInsights(insights))
-                    ) : (
-                        originalTests?.map((insights) => renderInsights(insights))
-                    )}
-
+        ///need to change rem one 
+        <div style={{ maxHeight: "46rem", overflowY: "scroll" }}>
+            <div className='about-insight col'>Insights</div>
+            <div className=' insights' style={{ maxHeight: "90vh", overflowY: "scroll" }}>
+                <div>
+                    <input
+                        className="search-insights"
+                        type="text"
+                        value={searchFilterValue}
+                        placeholder="Search"
+                        onChange={(event) => {
+                            event.preventDefault();
+                            setSearchFilterValue(event.target.value)
+                        }}
+                    />
                 </div>
+                {originalTests?.length === 0 ? (
+                    props.data?.map((insights) => renderInsights(insights))
+                ) : (
+                    originalTests?.map((insights) => renderInsights(insights))
+                )}
+                {renderInsights(props.data)}
+                {renderInsights(props.data)}
+                {renderInsights(props.data)}
+                {renderInsights(props.data)}
+                {renderInsights(props.data)}
+                {renderInsights(props.data)}
+                {renderInsights(props.data)}
+                {renderInsights(props.data)}
+                {renderInsights(props.data)}
+                {renderInsights(props.data)}
+                {renderInsights(props.data)}
+                {renderInsights(props.data)}
+                {renderInsights(props.data)}
+                {renderInsights(props.data)}
+                {renderInsights(props.data)}
+                {renderInsights(props.data)}
+                {renderInsights(props.data)}
+                {renderInsights(props.data)}
+                {renderInsights(props.data)}
+                {renderInsights(props.data)}
+                {renderInsights(props.data)}
+                {renderInsights(props.data)}
+                {renderInsights(props.data)}
+                {renderInsights(props.data)}
+                {renderInsights(props.data)}
+                {renderInsights(props.data)}
             </div>
-        </>
+        </div>
     )
 }
 

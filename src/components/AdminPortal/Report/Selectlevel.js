@@ -8,21 +8,14 @@ const Selectlevel = (props) => {
   const [allTech, setAllTech] = useState();
   const levels = ["Beginner", "Intermediate", "Advance"];
   const handleOptionClick = (event) => {
-    // console.log(event)
     const { value } = event.currentTarget.dataset;
     const isChecked = event.currentTarget.querySelector("input").checked;
     if (isChecked && !technologyNames.includes(value)) {
-      //   setSelectedOptions((prevSelectedOptions) => [
-      //     ...prevSelectedOptions,
-      //     optionObject,
-      //   ]);
       technologyNames.push(value);
       technologyNames.forEach((curElem, index) => {
         techNames[`tech${index + 1}`] = curElem;
       });
       setCounter((prevCounter) => prevCounter + 1);
-      //   }
-      //   console.log("data", techNames);
     } else {
       const index = technologyNames.indexOf(value);
       if (index !== -1) {
@@ -42,27 +35,27 @@ const Selectlevel = (props) => {
   return (
     <>
       {levels.map((value, index) => {
-            return (
-              <div
-                key={index}
-                class="form-check small"
-                onClick={(e) => {
-                  handleOptionClick(e);
-                }}
-                data-value={value}
-              >
-                <label class="form-check-label" for="nodeJs">
-                  {value}
-                </label>
-                <input
-                  class="form-check-input"
-                  type="checkbox"
-                  value="ytch"
-                  id="nodeJs"
-                />
-              </div>
-            );
-          })}
+        return (
+          <div
+            key={index}
+            class="form-check small"
+            onClick={(e) => {
+              handleOptionClick(e);
+            }}
+            data-value={value}
+          >
+            <label class="form-check-label" for="nodeJs">
+              {value}
+            </label>
+            <input
+              class="form-check-input"
+              type="checkbox"
+              value="ytch"
+              id="nodeJs"
+            />
+          </div>
+        );
+      })}
     </>
   );
 };
