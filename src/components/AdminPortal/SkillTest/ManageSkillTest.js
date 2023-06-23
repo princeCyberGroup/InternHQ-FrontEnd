@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 import "./Modals.css";
-import { ReactComponent as DeleteStroke } from "../Dashboard/Assets/Delete.svg";
+import { ReactComponent as DeleteStroke } from "../../../Assets/Delete.svg";
 import { AddNewSkillTest } from "./AddNewSkillTest";
-import { ReactComponent as VectorAdd } from "../Dashboard/Assets/Vectoradd.svg";
+import { ReactComponent as VectorAdd } from "../../../Assets/Vectoradd.svg";
 import axios from "axios";
 import { Link } from "react-router-dom";
 

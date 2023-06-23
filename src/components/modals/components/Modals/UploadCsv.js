@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { ReactComponent as CloudImage } from "../../Assets/Cloud.svg";
-import FileUploadButton from "./DragandDropFile";
+// import FileUploadButton from "./DragandDropFile";
 import axios from "axios";
 
 export const UploadCsv = () => {

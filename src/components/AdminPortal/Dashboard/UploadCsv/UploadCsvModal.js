@@ -176,10 +176,10 @@ export const UploadCsv = () => {
                                         data-bs-dismiss="modal">Save</button>
                                 </div>
                             </div>
-                        </div>
+                        {/* </div>
                     </div>
-                </div>
-              </form>
+                </div> */}
+              {/* </form> */}
               <div className="modal-footer border-top-0 pb-0">
                 <button
                   type="button"

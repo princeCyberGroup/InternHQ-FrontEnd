@@ -1,20 +1,30 @@
 import React from "react";
 import { useEffect, useState, useContext } from "react";
 import "./TakeYourTest.css";
-import { useNavigate, useLocation } from "react-router-dom";
+import { useNavigate ,useLocation } from "react-router-dom";
 
 import { UserContext } from "../../../../Context/Context";
 import { BsCheckLg } from "react-icons/bs";
 import { responsivePropType } from "react-bootstrap/esm/createUtilityClasses";
 
 const TakeYourTest = () => {
-  const { score, setScore } = useContext(UserContext);
+
+  // const [score, setScoree] = useState(0);
+  // const { score: contextScore, setScore: setContextScore } = useContext(UserContext);
+
+ const { score, setScore } = useContext(UserContext);
+//  const [scoreUpdated, setScoreUpdated] = useState(false);
+
   var storedObject = localStorage.getItem("userData");
   var parsedObject = JSON.parse(storedObject);
   var userId = parsedObject.userId;
+  // const [testsData, setTestsData] = useState([]);
+  // const [allData, setAllData] = useState([]);
   const navigate = useNavigate();
   const location = useLocation();
   const data = location.state;
+  // const location = useLocation();
+  // const { data } = location.state;
   const { examId, examName, examDuration, numberOfQuestion, techName, level } =
     data;
   const [Ques, setTestsQues] = useState([]);
@@ -22,7 +32,9 @@ const TakeYourTest = () => {
   const [activeRadioButtons, setActiveRadioButtons] = useState();
   const [userAnswers, setUserAnswers] = useState([]);
   const [fullscreen, setFullscreen] = useState(false);
+  // const [score, setScore] = useState(0);
   const [submitted, setSubmitted] = useState(false);
+  // const [submitAnswer, setSubmitAnswer] = useState({});
 
   const clickHandler = () => {
     navigate("/skill-Management");
@@ -75,10 +87,7 @@ const TakeYourTest = () => {
   };
 
   const [time, setTime] = useState(0);
-  useEffect(() => {
-    fetchTests();
-    handleAnswerSelect();
-    setFullscreen(true);  //main use effect
+  //main use effect
   let timer;
 
   const startTimer = () => {
@@ -93,7 +102,7 @@ const TakeYourTest = () => {
           submitTest();
           window.alert("Time's up!");
           clickHandler();
-           return 0;
+     
         }
       });
     }, 1000);
@@ -117,7 +126,7 @@ const TakeYourTest = () => {
       .padStart(2, "0")}`;
   };
   const fetchTests = async () => {
-    let Quesdata;
+    let Quesdata
     try {
       const response = await fetch(
         `https://cg-interns-hq.azurewebsites.net/getAllQuestions?examId=${examId}`
@@ -151,13 +160,9 @@ const TakeYourTest = () => {
   const radioButtons = document.querySelectorAll('input[type="radio"]');
   const activeRadioCount = getActiveRadioCount();
   radioButtons.forEach((radioButton) => {
-    radioButton.addEventListener("change", () => {});
+    radioButton.addEventListener("change", () => { });
   });
-  const handleKeyDown = (event) => {
-    if (event.key === "Escape" || event.key === "F11") {
-      event.disabled = true;
-    }
-  };
+
   let submitQuesData;
   const api = "https://cg-interns-hq.azurewebsites.net/submitAnswer";
   const submitTest = async () => {
@@ -168,25 +173,29 @@ const TakeYourTest = () => {
           qId: parseInt(questionId),
           choosenOpt: selectedAnswer,
         })
-      );
-      const response = await fetch(api, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${localStorage.getItem("questionToken")}`,
-        },
-        body: JSON.stringify({
-          userId: userId,
-          technology: techName,
-          level: level,
-          optRequest: mappedAnswers.splice(0, mappedAnswers.length - 1),
-        }),
-      });
-      submitQuesData = await response.json();
-       setScore(submitQuesData.scorePercentage);
-    } catch (error) {
+        );
+        const response = await fetch(
+          api ,
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${localStorage.getItem("questionToken")}`
+            },
+            body: JSON.stringify({
+              userId: userId,
+              technology: techName,
+              level: level,
+              optRequest: mappedAnswers.splice(0, mappedAnswers.length - 1),
+            }),
+          }
+          );
+          submitQuesData = await response.json();
+          setScore(submitQuesData.scorePercentage);
+        } catch (error) {
       console.log(error);
-    } finally {
+    }
+    finally {
       localStorage.removeItem("questionToken");
     }
   };
@@ -207,6 +216,7 @@ const TakeYourTest = () => {
                   <div className="start-input">
                     <input
                       type="radio"
+                      // id = "select"
                       name={`question_${quest.questionId}`}
                       value={option}
                       onChange={() =>
@@ -245,12 +255,12 @@ const TakeYourTest = () => {
                 <span class="modal-title instruction" id="staticBackdropLabel">
                   Submit Test{" "}
                 </span>
-                <button
-                  type="button"
-                  class="btn-close"
-                  data-bs-dismiss="modal"
-                  aria-label="Close"
-                ></button>
+                  <button
+                    type="button"
+                    class="btn-close"
+                    data-bs-dismiss="modal"
+                    aria-label="Close"
+                  ></button>
               </div>
               <div class="modal-body"> Sure Want to submit the test ? </div>
               <div class="modal-footer">
@@ -278,6 +288,7 @@ const TakeYourTest = () => {
             </div>
           </div>
         </div>
+
       </div>
     );
   };
@@ -301,6 +312,7 @@ const TakeYourTest = () => {
                 <p>{formatTime(time)}</p>
               </div>
               <div className="col-3 active-Radio-Buttons attempted-Ques">
+                {/* Attempted Questions: {activeRadioButtons}/{testDetails.numberOfQuestion} */}
                 Attempted Questions: {activeRadioCount}/{numberOfQuestion}
               </div>
             </div>
