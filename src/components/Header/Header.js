@@ -106,8 +106,8 @@ const Header = () => {
           >
             <div className="dropdown  background-set">
               <Link id="profileDropDown" className="text-decoration-none ">
-                {userData.firstName.toUpperCase().slice(0, 1)}
-                {userData.lastName.toUpperCase().slice(0, 1)}
+                {userData.firstName?.toUpperCase().slice(0, 1)}
+                {userData.lastName?.toUpperCase().slice(0, 1)}
               </Link>
               {/* <button type="button" class="btn btn-danger">Action</button> */}
 
