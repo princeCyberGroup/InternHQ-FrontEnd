@@ -2,25 +2,28 @@ import React, { useState } from "react";
 import { ReactComponent as DeleteVector } from "../../../Assets/VectordeleteTsk.svg";
 import "./Successfull.css";
 import axios from "axios";
-const DeleteTask = ({ taskId, setIsOpen, setShowDeleteTask }) => {
+const DeleteTask = ({taskId,setIsOpen, setShowDeleteTask, setTaskVersion}) => {
+  // const [isOpen, setIsOpen] = useState(false);
+  // const [onDelete,setOnDelete] = useState(false);
   const handleCross = (e) => {
     e.preventDefault();
     setIsOpen(false);
     setShowDeleteTask(false);
   };
-  const confirmDelete = async () => {
-    await axios
-      .post("https://cg-interns-hq.azurewebsites.net/deleteTask", {
-        taskId,
-      })
-      .then((res) => {
-        if (res.data.taskId === taskId) {
-          setIsOpen(false);
-          setShowDeleteTask(false);
-        }
-
-        // Update the state after successful deletion
-        // setTasks(prevTasks => prevTasks.filter(task => task.taskId !== taskId));
+  const confirmDelete = async() => {
+    // setOnDelete(true);
+    // if (onDelete === true) {
+      await axios
+        .post("https://cg-interns-hq.azurewebsites.net/deleteTask", {
+          taskId,
+        })
+        .then((res) => {
+          console.log("print", res.data);
+          if (res.data.taskId===taskId) {
+            setIsOpen(false);
+            setShowDeleteTask(false)
+            setTaskVersion((prevVersion) => prevVersion + 1);
+          }
       })
       .catch((err) => {
         console.log(err);

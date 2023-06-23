@@ -1,11 +1,12 @@
 import React, { useEffect } from "react";
 import { useContext } from "react";
 import { useState, createContext } from "react";
-import { ReactComponent as LeftToRetake } from "./svgs/leftToReatake.svg";
-import { ReactComponent as Completed } from "./svgs/Testcompleted.svg";
-import { ReactComponent as Bronze } from "./svgs/Star-bronze.svg";
-import { ReactComponent as Silver } from "./svgs/Star-silver.svg";
-import { ReactComponent as Gold } from "./svgs/Star-gold.svg";
+import { ReactComponent as LeftToRetake } from "../../../../Assets/leftToReatake.svg";
+import { ReactComponent as Completed } from "../../../../Assets/Testcompleted.svg";
+import { ReactComponent as GoldStarOri } from "../../../../Assets/Star-Icon-gold-ori.svg";
+import { ReactComponent as SilverStarOri } from "../../../../Assets/Star-Icon-silver-ori.svg";
+import { ReactComponent as BronzeStarOri } from "../../../../Assets/Star-Icon-bronze-ori.svg";
+// import logo from '../../../Assets/image 13.png';
 import "./TakeTest.css";
 import { BsClock } from "react-icons/bs";
 import { MdOutlineBallot } from "react-icons/md";
@@ -20,10 +21,10 @@ export const TestContext = createContext();
 const TakeTest = ({ test }) => {
   const [activeButton, setActiveButton] = useState("all");
   const { score } = useContext(UserContext);
-  const [daysDifference, setDaysDifference] = useState(
-    calculateDaysDifference()
-  );
 
+  const [daysDifference, setDaysDifference] = useState(calculateDaysDifference());
+
+  // const [searchQuery, setSearchQuery] = useState("");
   const [tests, setTests] = useState([]);
   const [originalTests, setOriginalTests] = useState([]);
   const [allData, setAllData] = useState([]);
@@ -112,21 +113,6 @@ const TakeTest = ({ test }) => {
       </div>
     );
   }
-  let LevelComponent;
-
-  if (tests.level === "Beginner") {
-    LevelComponent = (
-      <div>
-        {" "}
-        <Bronze />
-      </div>
-    );
-  } else if (tests.level === "Intermediate") {
-    LevelComponent = <Silver />;
-  } else if (tests.level === "Advanced") {
-    LevelComponent = <Gold />;
-  }
-
   return (
     <>
       <div className="TTheading">
@@ -224,13 +210,15 @@ const TakeTest = ({ test }) => {
                               <img
                                 src={test.techImageLink}
                                 class="imageLogo"
-                                width="30px"
-                                height="35px"
+                                width="1.875rem"
+                                height="2.188rem"
                               />
                             </div>
                             <div>
                               <div className="Category_box justify-content-center">
-                                <span className="Category">{test.level}</span>
+                                <span className="Category">{test.level} &nbsp;
+                                  {test.level === "Beginner" ? <BronzeStarOri /> : (test.level === "Intermediate" ? <SilverStarOri /> : (test.level === "Advance" ? <GoldStarOri /> : null))}
+                                </span>
                               </div>
                               <div className=" About_box justify-content-center">
                                 <span className="About">{test.examName}</span>
@@ -241,14 +229,14 @@ const TakeTest = ({ test }) => {
                             <div class="d-flex flex-column justify-content-center noOfQues">
                               <div class="articles d-flex justify-content-center">
                                 <MdOutlineBallot
-                                  style={{ marginRight: "5px" }}
+                                  style={{ marginRight: "0.313rem" }}
                                 />
                                 {test.numberOfQuestion} Questions
                               </div>
                             </div>
                             <div class="d-flex flex-column justify-content-center testTime">
                               <div class="articles d-flex justify-content-center ">
-                                <BsClock style={{ marginRight: "5px" }} />
+                                <BsClock style={{ marginRight: "0.313rem" }} />
                                 {test.examDuration} mins
                               </div>
                             </div>

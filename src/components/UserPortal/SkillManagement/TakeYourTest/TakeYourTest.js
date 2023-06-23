@@ -4,6 +4,8 @@ import "./TakeYourTest.css";
 import { useNavigate, useLocation } from "react-router-dom";
 
 import { UserContext } from "../../../../Context/Context";
+import { BsCheckLg } from "react-icons/bs";
+import { responsivePropType } from "react-bootstrap/esm/createUtilityClasses";
 
 const TakeYourTest = () => {
   const { score, setScore } = useContext(UserContext);
@@ -25,6 +27,7 @@ const TakeYourTest = () => {
   const clickHandler = () => {
     navigate("/skill-Management");
     setFullscreen(false);
+    exitFullscreen();
   };
 
   useEffect(() => {
@@ -62,30 +65,49 @@ const TakeYourTest = () => {
     }
   };
 
-  const [time, setTime] = useState(0);
 
+  const handleKeyDown = (event) => {
+    event.preventDefault();
+    
+    if (event.key === "Escape" || event.key === "F11") {
+      event.disabled = true;
+    }
+  };
+
+  const [time, setTime] = useState(0);
   useEffect(() => {
     fetchTests();
     handleAnswerSelect();
-    setFullscreen(true);
+    setFullscreen(true);  //main use effect
+  let timer;
+
+  const startTimer = () => {
     const examDurationInSeconds = parseInt(examDuration) * 60;
     setTime(examDurationInSeconds);
-    const timer = setInterval(() => {
+    timer = setInterval(() => {
       setTime((prevTime) => {
         if (prevTime > 0) {
           return prevTime - 1;
         } else {
           clearInterval(timer);
-          return 0;
+          submitTest();
+          window.alert("Time's up!");
+          clickHandler();
+           return 0;
         }
       });
     }, 1000);
-
+  };
+  
+  useEffect(() => {
+    fetchTests();
+    handleAnswerSelect();
+    setFullscreen(true);
+    startTimer();
     return () => {
       clearInterval(timer);
-      exitFullscreen();
     };
-  }, [score]);
+  }, []);
 
   const formatTime = (time) => {
     const minutes = Math.floor(time / 60);
@@ -94,7 +116,6 @@ const TakeYourTest = () => {
       .toString()
       .padStart(2, "0")}`;
   };
-
   const fetchTests = async () => {
     let Quesdata;
     try {
@@ -104,18 +125,16 @@ const TakeYourTest = () => {
       Quesdata = await response.json();
       setAllQuesData(Quesdata);
       setTestsQues(Quesdata.questions);
-      localStorage.setItem("questionToken", Quesdata.token);
+      localStorage.setItem("questionToken", Quesdata.token)
     } catch (e) {
       console.log(e);
     }
   };
-
   const handleAnswerSelect = (questionId, selectedAnswer) => {
     setUserAnswers((prevAnswers) => ({
       ...prevAnswers,
       [questionId]: selectedAnswer,
     }));
-
     setActiveRadioButtons(getActiveRadioCount());
   };
 
@@ -134,7 +153,6 @@ const TakeYourTest = () => {
   radioButtons.forEach((radioButton) => {
     radioButton.addEventListener("change", () => {});
   });
-
   const handleKeyDown = (event) => {
     if (event.key === "Escape" || event.key === "F11") {
       event.disabled = true;
@@ -165,28 +183,13 @@ const TakeYourTest = () => {
         }),
       });
       submitQuesData = await response.json();
-      setScore(submitQuesData.totalScore);
+       setScore(submitQuesData.scorePercentage);
     } catch (error) {
       console.log(error);
     } finally {
       localStorage.removeItem("questionToken");
     }
   };
-
-  const checkAnswers = () => {};
-
-  const modalTarget = () => {
-    const a = "#congoModal123";
-    const b = "#sorryModal";
-    if (score >= 6) {
-      return a;
-    } else {
-      return b;
-    }
-  };
-
-  const Targetm = modalTarget();
-
   const renderQuestions = () => {
     return (
       <div>
@@ -262,6 +265,7 @@ const TakeYourTest = () => {
                   type="button"
                   onClick={() => {
                     setFullscreen(false);
+                    exitFullscreen();
                     submitTest();
                     clickHandler();
                   }}
@@ -302,7 +306,7 @@ const TakeYourTest = () => {
             </div>
           </div>
           <div className="ques.card ">
-            <div className="card insidecard" style={{ width: "1220px" }}>
+            <div className="card insidecard" style={{ width: "76.25rem" }}>
               {fullscreen && !submitted && <div> {renderQuestions()} </div>}
             </div>
           </div>

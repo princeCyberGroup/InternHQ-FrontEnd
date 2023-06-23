@@ -133,7 +133,7 @@ const MentorList = () => {
 
       <div
         className="card mentor-card"
-        style={{ maxHeight: "90vh", width: "420px", overflow: "auto" }}
+        style={{ maxHeight: "80vh", width: "420px", overflow: "auto" }}
       >
         <div
           className="card-body p-0"

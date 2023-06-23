@@ -19,7 +19,7 @@ const AddNewIdea = () => {
   const [dropDown, setDropDown] = useState(false);
   const [projNameError, setProjNameError] = useState("");
   const [projDescriptionError, setProjDescriptionError] = useState("");
-  const [error, setError]=useState(true);
+  const [error, setError] = useState(true);
   const handleClickClear = (event) => {
     event.preventDefault();
     setTextInput("");
@@ -28,6 +28,7 @@ const AddNewIdea = () => {
     setDropDown(false);
     setProjNameError("");
     setProjDescriptionError("");
+    setTech({});
   };
   const handleChangeProjNameError = (event) => {
     event.preventDefault();
@@ -58,7 +59,6 @@ const AddNewIdea = () => {
   const handleInputChange = (event) => {
     setTextInput(event.target.value);
   };
-
   const handleClick = (e) => {
     e.preventDefault();
     navigate("/project-idea");
@@ -78,12 +78,9 @@ const AddNewIdea = () => {
     var storedObject = localStorage.getItem("userData");
     var parsedObject = JSON.parse(storedObject);
     var userId = parsedObject.userId;
-    if (
-      projName.length === 0 &&
-      projDescription.length < 2 && tech
-    ) {
+    if (projName.length === 0 && projDescription.length < 2 && tech) {
       alert("Please fill in the required details");
-      setError(true)
+      setError(true);
     } else {
       await axios
         .post("https://cg-interns-hq.azurewebsites.net/projectIdea", {
@@ -94,19 +91,18 @@ const AddNewIdea = () => {
           memberNames: memberNames,
         })
         .then((res) => {
-          console.log("print", res.data);
+          // console.log("print", res.data);
         })
         .catch((err) => {
           console.log(err);
         });
-        setTextInput("");
-        setProjName("");
-        setProjDescription("");
-        setDropDown(false);
-        setError(false)
+      setTextInput("");
+      setProjName("");
+      setProjDescription("");
+      setDropDown(false);
+      setError(false);
+      setTech({});
     }
-
-
   };
 
   useEffect(() => {
@@ -115,7 +111,6 @@ const AddNewIdea = () => {
     texts.forEach((text, index) => {
       membersObj[`member${index + 1}`] = text;
     });
-    
     isObjectEmpty(membersObj);
   }, [textInput, tech]);
   return (
@@ -261,59 +256,58 @@ const AddNewIdea = () => {
                     value={projDescription}
                     id="project-description"
                     placeholder="Write Here.."
-                    onChange={(e)=>handleChangeProjDescriptionError(e)}
+                    onChange={(e) => handleChangeProjDescriptionError(e)}
                     rows={3}
                   ></textarea>
                 </div>
 
                 <div className="mb-3">
-                      <label
-                        htmlFor="technology-used"
-                        className="col-form-label title-text"
-                        required
+                  <label
+                    htmlFor="technology-used"
+                    className="col-form-label title-text"
+                    required
+                  >
+                    Technology Used <span style={{ color: "red" }}>*</span>
+                  </label>
+                  <div className="container border p-0">
+                    <div className="input-with-button">
+                      <button
+                        type="button"
+                        className="button-for-dropdown"
+                        onClick={() => {
+                          setDropDown(!dropDown);
+                        }}
                       >
-                        Technology Used <span style={{ color: "red" }}>*</span>
-                      </label>
-                      <div className="container border p-0">
-                        <div className="input-with-button">
-                          <button
-                            type="button"
-                            className="button-for-dropdown"
-                            onClick={() => {
-                              setDropDown(!dropDown);
-                            }}
-                          >
-                            <input
-                              type="text"
-                              className="custom-input"
-                              value={Object.values(tech)}
-                              disabled
-                            />
-                          </button>
-                          <button
-                            type="button"
-                            className="expand-more"
-                            onClick={() => {
-                              setDropDown(!dropDown);
-                            }}
-                          >
-                            <ExpandMore />
-                          </button>
-                        </div>
-                        <div>
-                          <ul
-                            style={{ display: dropDown ? "" : "none" }}
-                            className="ul-styling"
-                          >
-                            <TechDropDown
-                              techDataComingChild={techDataComingFrmChild}
-                            />
-                          </ul>
-                        </div>
-                        {/* </div> */}
-                      </div>
+                        <input
+                          type="text"
+                          className="custom-input"
+                          value={Object.values(tech)}
+                          disabled
+                        />
+                      </button>
+                      <button
+                        type="button"
+                        className="expand-more"
+                        onClick={() => {
+                          setDropDown(!dropDown);
+                        }}
+                      >
+                        <ExpandMore />
+                      </button>
                     </div>
-
+                    <div>
+                      <ul
+                        style={{ display: dropDown ? "" : "none" }}
+                        className="ul-styling"
+                      >
+                        <TechDropDown
+                          techDataComingChild={techDataComingFrmChild}
+                        />
+                      </ul>
+                    </div>
+                    {/* </div> */}
+                  </div>
+                </div>
 
                 <div className="mb-3">
                   <label
@@ -344,8 +338,10 @@ const AddNewIdea = () => {
               <button
                 type="button"
                 className="btn save-button"
-                data-bs-dismiss={error?"":"modal"}
-                onClick={(e)=>{handleSubmit(e)}}
+                data-bs-dismiss={error ? "" : "modal"}
+                onClick={(e) => {
+                  handleSubmit(e);
+                }}
               >
                 <span className="save-text"> Save </span>
               </button>

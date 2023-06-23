@@ -30,7 +30,7 @@ const Congo = () => {
             <p>Your Score</p>
           </div>
           <div className="row c3">
-            <p>{score}/10</p>
+            <p>{score}/100</p>
           </div>
           <div className="row c4">
             <p>
@@ -39,9 +39,9 @@ const Congo = () => {
             </p>
           </div>
           <div className="row Ccontinue">
-            <button type="button" className="view-result-btn">
+            {/* <button type="button" className="view-result-btn">
               View Result
-            </button>
+            </button> */}
             <button
               type="button"
               className="continueBtn"

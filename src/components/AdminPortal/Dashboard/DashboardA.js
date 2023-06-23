@@ -6,12 +6,12 @@ import { Button } from "bootstrap";
 import Uploadcsv from "./UploadCsv/Uploadcsv";
 import ManageSkillSet from "./ManageSkillSet/manageSkillSet";
 import { useEffect, useState } from "react";
-import { useNavigate, useLocation } from "react-router-dom";
+import { useNavigate, useLocation, Link } from "react-router-dom";
 import Status from "./Status/Status";
 import TopTech from "./TopTech/topTech";
 import AssociateConsultant from "./associateConsultant/associateConsultant";
 import Insights from "./Insights/insights";
-import { ReactComponent as Right } from "./Assets/right.svg";
+import { ReactComponent as Right } from "../../../Assets/right.svg";
 import Header from "../../Header/Header";
 
 const DashboardA = () => {
@@ -54,9 +54,11 @@ const DashboardA = () => {
       <div className="responsiveness">
         <>
           <div className="row">
-            <div className="col-8" style={{ marginLeft: "0px" }}>
+            <div className="col-8" >
               <div className="about">
-                Manage Consultant <Right style={{ marginBottom: "2px" }} />
+                <Link to="/admin/reports" className="about-link">
+                  Manage Consultant <Right style={{ marginBottom: "2px" }} />
+                </Link>
               </div>
 
               <div className="row div-card-upload">
@@ -77,7 +79,10 @@ const DashboardA = () => {
                 </div>
               </div>
             </div>
+            {/* //insights */}
+            <div className="col-4 ">
             <Insights data={insights} />
+            </div>
           </div>
         </>
       </div>

@@ -7,14 +7,14 @@
 }
 
 .assign-task-container p {
-  width: 109px;
-  height: 23px;
+  width: 6.813rem;
+  height: 1.438rem;
 
   font-family: "Roboto";
   font-style: normal;
   font-weight: 600;
-  font-size: 20px;
-  line-height: 23px;
+  font-size: 1.25rem;
+  line-height: 1.438rem;
 
   /* Primary/Gray */
 
@@ -26,13 +26,13 @@
   flex-direction: row;
   justify-content: center;
   align-items: center;
-  padding: 20px 16px;
+  padding: 1.25rem 1rem;
   gap: 8px;
   margin-bottom: 8px;
-  margin-right: 33px;
+  margin-right: 2.068rem;
 
-  width: 157.77px;
-  height: 40px;
+  width: 9.861rem;
+  height: 2.5rem;
   color: white;
   /* Primary/Blue */
 
@@ -44,41 +44,41 @@
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  padding: 16px;
-  gap: 16px;
-  margin-bottom: 24px;
+  padding: 1rem;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
   /* width: 748px; */
   /* height: 239px; */
 
   background: #ffffff;
   /* Shadow */
 
-  box-shadow: 0px 4px 20px rgba(40, 52, 73, 0.15);
+  box-shadow: 0px 4px 1.25rem rgba(40, 52, 73, 0.15);
   border-radius: 8px;
 }
 
 .task-title {
-  width: 56px;
-  height: 15px;
+  width: 3.5rem;
+  height: 0.938rem;
 
   font-family: "Roboto";
   font-style: normal;
   font-weight: 400;
-  font-size: 13px;
-  line-height: 15px;
+  font-size: 0.813rem;
+  line-height: 0.938rem;
 
   color: #6d6d6d;
 }
 
 .task-name {
-  width: 156px;
-  height: 18px;
+  width: 9.75rem;
+  height: 1.125rem;
 
   font-family: "Roboto";
   font-style: normal;
   font-weight: 500;
-  font-size: 15px;
-  line-height: 18px;
+  font-size: 0.938rem;
+  line-height: 1.125rem;
   /* identical to box height */
 
   /* Primary/Blue */
@@ -88,13 +88,13 @@
 
 .card-body h6 {
   /* width: 66px; */
-  height: 15px;
+  height: 0.938rem;
 
   font-family: "Roboto";
   font-style: normal;
   font-weight: 400;
-  font-size: 13px;
-  line-height: 15px;
+  font-size: 0.813rem;
+  line-height: 0.938rem;
 
   color: #6d6d6d;
 }
@@ -102,8 +102,8 @@
   font-family: "Roboto";
   font-style: normal;
   font-weight: 500;
-  font-size: 15px;
-  line-height: 18px;
+  font-size: 0.938rem;
+  line-height: 1.125rem;
 
   /* Primary/Gray */
 
@@ -112,8 +112,8 @@
 
 .dots {
   position: absolute;
-  top: 20px;
-  right: 25px;
+  top: 1.25rem;
+  right: 1.563rem;
 }
 
 .task-card {
@@ -128,44 +128,13 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  box-shadow: 0px 4px 20px rgba(40, 52, 73, 0.15);
+  box-shadow: 0px 4px 1.25rem rgba(40, 52, 73, 0.15);
 }
 
 .assigned-to {
   display: flex;
   flex-direction: row;
-  /* justify-content: space-between; */
-  /* justify-content: flex-start;
-    position: relative;
-    left: 0.6rem; */
 }
-
-/* .dropdown {
-    position: relative;
-    display: inline-block;
-  }
-  
-  .options {
-    position: absolute;
-    top: 25px;
-    left:700px;
-    background-color: #ffffff;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    padding: 0;
-    list-style-type: none;
-    width: 100px;
-  }
-  
-  .options li {
-    padding: 8px 12px;
-    cursor: pointer;
-  }
-  
-  .options li:hover {
-    background-color: rgb(168, 218, 236);
-  } */
 
   /* CSS styles */
 .name-of-members {
@@ -181,7 +150,7 @@
 .full-name {
   display: none;
   position: absolute;
-  top: -20px;
+  top: -1.25rem;
   left: 50%;
   transform: translateX(-50%);
   background-color:transparent;

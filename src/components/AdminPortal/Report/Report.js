@@ -27,8 +27,20 @@ const Report = () => {
       const response = await axios.get(
         `https://cg-interns-hq.azurewebsites.net/getuserReport`
       );
-      setOrgTableData(response.data.response);
-      setTableData(response.data.response);
+      setOrgTableData(
+        response?.data.response
+        // response?.data.response.sort(function (a, b) {
+        //   if (b.techNames === 0) return -1;
+        //   return b?.techNames.length - a?.techNames.length;
+        // })
+      );
+      setTableData(
+        response?.data.response
+        // response?.data.response.sort(function (a, b) {
+        //   if (b.techNames === 0) return -1;
+        //   return b?.techNames.length - a?.techNames.length;
+        // })
+      );
     } catch (error) {
       console.error("Error fetching data:", error);
     }
