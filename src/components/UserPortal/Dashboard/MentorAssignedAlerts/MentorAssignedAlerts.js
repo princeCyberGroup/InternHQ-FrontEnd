@@ -2,13 +2,20 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBell } from "@fortawesome/free-solid-svg-icons";
 import "../Notification/Notification.css";
 import { useEffect, useState } from "react";
-import MentorAssignedAlertsData from "./MentorAssignedAlertsData";
+import { ReactComponent as EmptyMentorAssigned } from "../../../../Assets/EmptyMentorAssigned.svg";
 
-const MentorAssignedAlerts = () => {
-  const [hasNewNotification, setHasNewNotification] = useState(true);
+const MentorAssignedAlerts = (props) => {
+  const [hasNewNotification, setHasNewNotification] = useState(props.setState);
   const [mentorTask, setMentorTask] = useState([]);
+  const [notification, setNotification] = useState(false);
+
+  props.func(mentorTask);
+
   const handleNotificationClick = () => {
-    setHasNewNotification(!hasNewNotification);
+    if (hasNewNotification) {
+      setHasNewNotification(false);
+    }
+    setNotification(!notification);
   };
 
   var storedObject = localStorage.getItem("userData");
@@ -16,8 +23,9 @@ const MentorAssignedAlerts = () => {
   var userId = parsedObject.userId;
 
   useEffect(() => {
+    setHasNewNotification(props.setState);
     fetchData();
-  }, []);
+  }, [props.setState]);
 
   const fetchData = async () => {
     await fetch(
@@ -28,126 +36,195 @@ const MentorAssignedAlerts = () => {
       })
       .then(async (data) => {
         setMentorTask(data.response);
-        // console.log(data.response, "This is response");
+      })
+      .error((e) => {
+        console.log(e);
       });
   };
 
   return (
-    <div
-      style={{
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "center",
-      }}
-    >
-      <FontAwesomeIcon
-        icon={faBell}
-        shake={hasNewNotification}
-        size="lg"
-        onClick={handleNotificationClick}
+    <>
+      <div
         style={{
-          color: "#002c3f",
-          cursor: "pointer",
-          marginRight: "2rem",
-          // position: "relative",
-          // top: "5px",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
         }}
-      />
-      {hasNewNotification ? (
+      >
+        <FontAwesomeIcon
+          icon={faBell}
+          shake={hasNewNotification}
+          size="lg"
+          onClick={handleNotificationClick}
+          style={{
+            color: "#002c3f",
+            cursor: "pointer",
+            marginRight: "2rem",
+          }}
+        />
         <div
           style={{
-            backgroundColor: "red",
-            width: "8px",
-            height: "8px",
+            backgroundColor:hasNewNotification && !notification ? "red" : "",
+            width: "0.5rem",
+            height: "0.5rem",
             borderRadius: "50%",
             position: "absolute",
-            right: "141px",
-            top: "21px",
-            border: "1px solid white",
+            right: "8.813rem",
+            top: "1.313rem",
           }}
         ></div>
-      ) : (
-        <div
-          class="card"
-          // style={{
-          //   position: "absolute",
-          //   right: "1.5rem",
-          //   top: "3.4rem",
-          //   zIndex: 4,
-          //   maxWidth: "21rem",
-          //   boxShadow: "0px 4px 20px rgba(40, 52, 73, 0.15)",
-          //   borderRadius: "8px",
-          // }}
-          style={{
-            position: "absolute",
-            right: "1.5rem",
-            top: "3.8rem",
-            maxWidth: "21rem",
-                 zIndex: 4,
-            boxShadow: "0px 4px 20px rgba(40, 52, 73, 0.15)",
-            borderRadius: "8px",
-          }}
-        >
-          <div class="card-header p-0">
+      </div>
+      <div style={{ display: notification ? "block" : "none" }}>
+        {
+          mentorTask.length!==0 ? (
             <div
-              className="border-bottom p-0"
+              class="card"
               style={{
-                borderRadius: "7px 7px 0 0",
-                position: "sticky",
-                top: "0",
-                zIndex: "3",
-                backgroundColor: "#fff",
+                position: "absolute",
+                right: "1.5rem",
+                top: "3.8rem",
+                width: "21rem",
+                zIndex: 4,
+                boxShadow: "0 0.25rem 1.25rem rgba(40, 52, 73, 0.15)",
+                borderRadius: "0.5rem",
               }}
             >
-              <h5
-                class="card-title p-3 m-0"
-                style={{
-                  fontFamily: "Roboto",
-                  fontWeight: 600,
-                  fontSize: "1rem",
-                  lineHeight: "1.18rem",
-                  color: "#343435",
-                }}
-              >
-                Mentor Assigned Task
-              </h5>
-            </div>
-          </div>
-          <div className="card-body pt-0 pb-0" style={{height:"20rem",overflow:"scroll"}}>
-            {mentorTask.map((data) => {
-              return (
+              <div class="card-header p-0 border-0">
                 <div
-                  className="notification-wrapper px-0"
-                  style={{ width: "18.9rem", alignItems: "center" }}
+                  className="border-bottom p-0"
+                  style={{
+                    borderRadius: "0.438rem 0.438rem 0 0",
+                    position: "sticky",
+                    top: "0",
+                    zIndex: "3",
+                    backgroundColor: "#fff",
+                  }}
                 >
-                  <div
-                    className=""
+                  <h5
+                    class="card-title p-3 m-0"
                     style={{
-                      display: "flex",
-                      justifyContent: "center",
-                      alignItems: "center",
+                      fontFamily: "Roboto",
+                      fontWeight: 600,
+                      fontSize: "1rem",
+                      lineHeight: "1.18rem",
+                      color: "#343435",
                     }}
                   >
-                    <div className="background-set">
-                      {data.firstName.toUpperCase().slice(0, 1)}
-                      {data.lastName.toUpperCase().slice(0, 1)}
+                    Mentor Assigned Task
+                  </h5>
+                </div>
+              </div>
+              <div
+                className="card-body pt-0 pb-0"
+                style={{ height: "20rem", overflow: "scroll" }}
+              >
+                {mentorTask.map((data) => {
+                  return (
+                    <div
+                      className="notification-wrapper px-0"
+                      style={{ width: "18.9rem", alignItems: "center" }}
+                    >
+                      <div
+                        className=""
+                        style={{
+                          display: "flex",
+                          justifyContent: "center",
+                          alignItems: "center",
+                        }}
+                      >
+                        <div className="background-set">
+                          {data.firstName.toUpperCase().slice(0, 1)}
+                          {data.lastName.toUpperCase().slice(0, 1)}
+                        </div>
+                      </div>
+                      <div className="text-wrapper ps-0 ">
+                        <p class="card-text ">
+                          <b>
+                            {data.firstName} {data.lastName}
+                          </b>{" "}
+                          has assigned you <b>{data.taskDescription}</b> task
+                        </p>
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
+            </div>
+          ) : (
+            // empty state
+            <div
+              class="card"
+              style={{
+                position: "absolute",
+                right: "1.5rem",
+                top: "3.8rem",
+                maxWidth: "21rem",
+                zIndex: 4,
+                boxShadow: "0 0.25rem 1.25rem rgba(40, 52, 73, 0.15)",
+                borderRadius: "0.5rem",
+              }}
+            >
+              <div class="card-header p-0 border-0">
+                <div
+                  className="border-bottom p-0"
+                  style={{
+                    borderRadius: "0.438rem 0.438rem 0 0",
+                    position: "sticky",
+                    top: "0",
+                    zIndex: "3",
+                    backgroundColor: "#fff",
+                  }}
+                >
+                  <h5
+                    class="card-title p-3 m-0"
+                    style={{
+                      fontFamily: "Roboto",
+                      fontWeight: 600,
+                      fontSize: "1rem",
+                      lineHeight: "1.18rem",
+                      color: "#343435",
+                    }}
+                  >
+                    Mentor Assigned Task
+                  </h5>
+                </div>
+              </div>
+              <div
+                className="card-body d-flex justify-content-center align-items-center"
+                style={{ height: "20rem" }}
+              >
+                <div className="row">
+                  <div className="row">
+                    <div className="col d-flex justify-content-center">
+                      <EmptyMentorAssigned />
                     </div>
                   </div>
-                  <div className="text-wrapper ps-0">
-                    <p class="card-text">
-                      <b>
-                        {data.firstName} {data.lastName}
-                      </b>{" "}
-                      has assigned you <b>{data.taskDescription}</b> task
-                    </p>
+                  <div className="row">
+                    <div className="col">
+                      <h2
+                        className="text-center"
+                        style={{
+                          fontFamily: "'Roboto'",
+                          marginTop: "0.75rem",
+                          fontStyle: "normal",
+                          width: "18.9rem",
+                          fontWeight: 600,
+                          fontSize: "1.25rem",
+                          lineHeight: "1.438rem",
+                          color: "#343435",
+                        }}
+                      >
+                        No Notifications
+                      </h2>
+                    </div>
                   </div>
                 </div>
-              );
-            })}
-          </div>
-        </div>
-      )}
-    </div>
+              </div>
+            </div>
+          )
+        }
+      </div>
+    </>
   );
 };
 

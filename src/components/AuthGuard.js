@@ -12,7 +12,6 @@ const AuthGuard = () => {
         navigate("/");
         setIsAuthenticated(false);
       } else {
-        console.log("this is user auth", str);
         str === "07495d" ? navigate(location.pathname) : (str === "cb8715" ? navigate("/admin/dashboard") : navigate("/mentor/dashboard"));
         setIsAuthenticated(true);
       } 

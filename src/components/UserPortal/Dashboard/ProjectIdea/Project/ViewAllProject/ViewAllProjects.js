@@ -140,7 +140,6 @@ const ViewAllProjects = () => {
             >
               <p className="me-2 add-your-project">Add Project</p>
             </button>
-            {/* ///modal 221 - 487 */}
           </div>
           <div
             class="modal fade"
@@ -256,10 +255,8 @@ const ViewAllProjects = () => {
                             />
                           </ul>
                         </div>
-                        {/* </div> */}
                       </div>
                     </div>
-                    {/* //project Link open  */}
                     <div class="mb-3">
                       <label
                         for="Project Link"
@@ -279,8 +276,6 @@ const ViewAllProjects = () => {
                         onChange={handleProjectLinkChange}
                       />
                     </div>
-                    {/* //project Link close  */}
-                    {/* //Hosted open  */}
                     <div class="mb-3">
                       <label
                         for="Hosted Link(Optional)"
@@ -295,8 +290,6 @@ const ViewAllProjects = () => {
                         onChange={(event) => setHostedLink(event.target.value)}
                       />
                     </div>
-                    {/* //hosted close  */}
-                    {/* //Member open  */}
                     <div class="mb-3">
                       <label
                         for="Members(Optional)"
@@ -312,10 +305,8 @@ const ViewAllProjects = () => {
                         onChange={handleInputChange}
                       />
                     </div>
-                    {/* //Member close */}
                   </form>
                 </div>
-                {/* //Applied Modal from addProject.js 482 -> 730 */}
                 <div class="modal-footer">
                   <button
                     type="button"

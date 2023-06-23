@@ -1,5 +1,5 @@
 import { ReactComponent as CloudImage } from "../../Assets/Cloud.svg";
-import FileUploadButton from "./DragandDropFile";
+// import FileUploadButton from "./DragandDropFile";
 import { ReactComponent as DropDown } from "../../Assets/dropdown.svg";
 import React, { useState } from "react";
 

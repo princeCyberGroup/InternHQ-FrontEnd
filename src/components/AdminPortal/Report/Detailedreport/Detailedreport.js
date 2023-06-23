@@ -38,100 +38,96 @@ const Detailedreport = () => {
   };
   useEffect(() => {
     fetchData();
-    console.log('object');
-  }, [])
-  
+  }, []);
 
-
-  // console.log("this is idVal", idVal);
   return (
     <>
-    <DetailedProvider.Provider
-      value={{
-        data,
-      }}
-    >
-       <div className="" style={{ marginBottom: "5rem" }}>
-        <Header />
-      </div>
-      <div className="detailedrep-parent-wrapper">
-        <div className="detailedrep-child-wrapper">
-          <div className="detailrep-header">
-            <div className="detailrep-breadcrum">
-              <Link to="/admin/reports" className="crumb-parent">
-                Report
-              </Link>
-              <Chevron />
-              <span>User Information</span>
-            </div>
-            <div className="report-download">
-              <span>Download</span>
-              <div>
-                <Download />
+      <DetailedProvider.Provider
+        value={{
+          data,
+        }}
+      >
+        <div className="" style={{ marginBottom: "5rem" }}>
+          <Header />
+        </div>
+        <div className="detailedrep-parent-wrapper">
+          <div className="detailedrep-child-wrapper">
+            <div className="detailrep-header">
+              <div className="detailrep-breadcrum">
+                <Link to="/admin/reports" className="crumb-parent">
+                  Report
+                </Link>
+                <Chevron />
+                <span>User Information</span>
               </div>
-              <div>
-                <DownloadPdf />
-              </div>
-            </div>
-          </div>
-          <div className="detailrep-user-info">
-            <div className="use-info">
-              <span>User Information</span>
-            </div>
-            <div className="info-detail">
-              <div className="user-name">
-                <Usercircle />
-                <span>{`${data[ApiObj.FN]} ${data[ApiObj.LN]}`}</span>
-              </div>
-              <div className="other-info">
-                <div className="icon-pair">
-                  <Profile />
-                  <span>{data.internId}</span>
+              <div className="report-download">
+                <span>Download</span>
+                <div>
+                  <Download />
                 </div>
-                <div className="det-dot" />
-                <div className="icon-pair">
-                  <Clock />
-                  <span>{`${data[ApiObj.DOI]} months`}</span>
-                </div>
-                <div className="det-dot" />
-                <div className="icon-pair">
-                  <Mail />
-                  <span>{data[ApiObj.EID]}</span>
-                </div>
-                <div className="det-dot" />
-                <div className="icon-pair">
-                  <Call />
-                  <span>{data[ApiObj.PN]}</span>
+                <div>
+                  <DownloadPdf />
                 </div>
               </div>
             </div>
-          </div>
-          <div className="detailrep-second-child">
-            <div className="detail-child spent-hours">
-              <span>Most Spent Hours</span>
-              <div className="most-skill-hr">
-                <PieChart />
+            <div className="detailrep-user-info">
+              <div className="use-info">
+                <span>User Information</span>
+              </div>
+              <div className="info-detail">
+                <div className="user-name">
+                  <Usercircle />
+                  <span>{`${data[ApiObj.FN]} ${data[ApiObj.LN]}`}</span>
+                </div>
+                <div className="other-info">
+                  <div className="icon-pair">
+                    <Profile />
+                    <span>{data.internId}</span>
+                  </div>
+                  <div className="det-dot" />
+                  <div className="icon-pair">
+                    <Clock />
+                    <span>{`${data[ApiObj.DOI]} months`}</span>
+                  </div>
+                  <div className="det-dot" />
+                  <div className="icon-pair">
+                    <Mail />
+                    <span>{data[ApiObj.EID]}</span>
+                  </div>
+                  <div className="det-dot" />
+                  <div className="icon-pair">
+                    <Call />
+                    <span>{data[ApiObj.PN]}</span>
+                  </div>
+                </div>
               </div>
             </div>
-            <div className="detail-child">
-              <span>Skills Achieved</span>
-              <div className="skills-achieved">
-                <Skillsachieved />
+            <div className="detailrep-second-child">
+              <div className="detail-child spent-hours">
+                <span>Most Spent Hours</span>
+                <div className="most-skill-hr">
+                  <PieChart />
+                </div>
+              </div>
+              <div className="detail-child">
+                <span>Skills Achieved</span>
+                <div className="skills-achieved">
+                  <Skillsachieved />
+                </div>
+              </div>
+              <div className="detail-child">
+                <span>Project Details</span>
+                <div className="project-details">
+                  <ProjectList />
+                </div>
               </div>
             </div>
-            <div className="detail-child">
-              <span>Project Details</span>
-              <div className="project-details">
-                <ProjectList />
-              </div>
+            <div className="detailrep-table">
+              <DailyUpdateTableSection userId={idVal} />
             </div>
-          </div>
-          <div className="detailrep-table">
-            <DailyUpdateTableSection userId={idVal} />
           </div>
         </div>
-      </div>
-    </DetailedProvider.Provider>
+      </DetailedProvider.Provider>
     </>
   );
 };
