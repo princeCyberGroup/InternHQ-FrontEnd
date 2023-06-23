@@ -120,7 +120,7 @@ const MentorList = () => {
         <button
           style={{ marginRight: "8px" }}
           type="button"
-          class="add-mentor-button"
+          className="add-mentor-button"
           data-bs-toggle="modal"
           data-bs-target="#addMentorModal"
         >

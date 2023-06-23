@@ -167,14 +167,14 @@ export const AddMentorModal = ({ isOpen, onClose, onAddMentor }) => {
   };
 
   return (
-    <div class="">
+    <div className="">
 
 
 
       <div
 
 
-        class="modal fade"
+        className="modal fade"
         id="addMentorModal"
         tabindex="-1"
         aria-labelledby="skillModalLabel"
@@ -183,16 +183,16 @@ export const AddMentorModal = ({ isOpen, onClose, onAddMentor }) => {
         data-bs-keyboard="false" 
 
       >
-        <div class="modal-dialog">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h5 class="modal-title modalheading-text" id="mentorAddmodal">
+        <div className="modal-dialog">
+          <div className="modal-content">
+            <div className="modal-header">
+              <h5 className="modal-title modalheading-text" id="mentorAddmodal">
                 Add Mentor
               </h5>
 
               <button
                 type="button"
-                class="btn-close"
+                className="btn-close"
                 data-bs-dismiss="modal"
                 aria-label="Close"
                 onClick={handleClickClear}
@@ -213,7 +213,7 @@ export const AddMentorModal = ({ isOpen, onClose, onAddMentor }) => {
                   </div>
 
                   <div>
-                    <label for="fileUpload" class="file-upload btn btn-block">
+                    <label for="fileUpload" className="file-upload btn btn-block">
                       <CameraIcon />
                       <span className="upload-image-text fw-bold">
                         Upload Image
@@ -230,7 +230,7 @@ export const AddMentorModal = ({ isOpen, onClose, onAddMentor }) => {
                 </div>
 
                 <div
-                  class="alert alert-info mb-0 image-alert box-for-alert-message"
+                  className="alert alert-info mb-0 image-alert box-for-alert-message"
                   role="alert"
                 >
                   <AlertImage />{" "}
@@ -359,10 +359,10 @@ export const AddMentorModal = ({ isOpen, onClose, onAddMentor }) => {
               </div>
             </div>
 
-            <div class="modal-footer border-top-0">
+            <div className="modal-footer border-top-0">
               <button
                 type="button"
-                class="btn cancel-button fw-bold"
+                className="btn cancel-button fw-bold"
                 data-bs-dismiss="modal"
                 onClick={handleClickClear}
               >
@@ -371,7 +371,7 @@ export const AddMentorModal = ({ isOpen, onClose, onAddMentor }) => {
 
               <button
                 type="button"
-                class="btn save-button fw-bold"
+                className="btn save-button fw-bold"
                 data-bs-dismiss={error?"":"modal"}
                 onClick={handleFormSubmit}
               >

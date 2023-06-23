@@ -42,27 +42,27 @@ export const AddNewTask = () => {
     }
     return (
         <div>
-            <button type="button" class="btn" data-bs-toggle="modal" data-bs-target="#skillModal">Add New Task</button>
-            <div class="modal fade" id="skillModal" tabindex="-1" aria-labelledby="skillModalLabel" aria-hidden="true">
-                <div class="modal-dialog">
-                    <div class="modal-content">
-                        <div class="modal-header border-bottom-1">
-                            <h5 class="modal-title modalheading-text" id="skillModalLabel">Add New Task</h5>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" onClick={(e) => handleClickClear(e)}></button>
+            <button type="button" className="btn" data-bs-toggle="modal" data-bs-target="#skillModal">Add New Task</button>
+            <div className="modal fade" id="skillModal" tabindex="-1" aria-labelledby="skillModalLabel" aria-hidden="true">
+                <div className="modal-dialog">
+                    <div className="modal-content">
+                        <div className="modal-header border-bottom-1">
+                            <h5 className="modal-title modalheading-text" id="skillModalLabel">Add New Task</h5>
+                            <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close" onClick={(e) => handleClickClear(e)}></button>
 
                         </div>
-                        <div class="modal-body">
+                        <div className="modal-body">
                             <form>
-                                <div class="mb-3">
+                                <div className="mb-3">
                                     <label htmlFor="task-title" className="col-form-label form-title-names">
                                         Task Title<span style={{ color: 'red' }}>*</span>
                                     </label>
-                                    <input type="text" class="form-control" id="task-title" placeholder="Enter task name" value={taskTitle} onChange={ (e) => handleTaskTitle(e)} />
+                                    <input type="text" className="form-control" id="task-title" placeholder="Enter task name" value={taskTitle} onChange={ (e) => handleTaskTitle(e)} />
                                 </div>
-                                <div class="mb-3">
-                                    <label htmlFor="description" class="col-form-label form-title-names">Description<span style={{ color: 'red' }}>*</span></label>
+                                <div className="mb-3">
+                                    <label htmlFor="description" className="col-form-label form-title-names">Description<span style={{ color: 'red' }}>*</span></label>
                                     <textarea
-                                        class="form-control"
+                                        className="form-control"
                                         id="description"
                                         rows={3}
                                         placeholder="Enter description"
@@ -71,30 +71,30 @@ export const AddNewTask = () => {
                                     >
                                     </textarea>
                                 </div>
-                                <div class="mb-3">
-                                    <label for="technology-tag" class="col-form-label form-title-names">Technology Tag<span style={{ color: 'red' }}>*</span></label>
-                                    <input type="text" class="form-control" id="technology-tag" placeholder="Add technology tag"
+                                <div className="mb-3">
+                                    <label for="technology-tag" className="col-form-label form-title-names">Technology Tag<span style={{ color: 'red' }}>*</span></label>
+                                    <input type="text" className="form-control" id="technology-tag" placeholder="Add technology tag"
                                     value={technologyTag} onChange={ (e) => handleTechnologyTag(e)} />
                                 </div>
-                                <div class="mb-3">
-                                    <label for="assigned-to" class="col-form-label form-title-names">Assigned To<span style={{ color: 'red' }}>*</span></label>
-                                    <input type="text" class="form-control" id="assigned-to" placeholder="Select Associate Consultant" value={assignedTo} onChange={(e) => handleAssignedTo(e)} />
+                                <div className="mb-3">
+                                    <label for="assigned-to" className="col-form-label form-title-names">Assigned To<span style={{ color: 'red' }}>*</span></label>
+                                    <input type="text" className="form-control" id="assigned-to" placeholder="Select Associate Consultant" value={assignedTo} onChange={(e) => handleAssignedTo(e)} />
                                 </div>
 
                                 <div className="d-flex align-items-center justify-content-between">
                                    
-                                        <label class="form-check-label" for="flexSwitchCheckDefault">Select all Associate Consultant</label>
-                                        <div class="form-check form-switch">
-                                        <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckDefault" />
+                                        <label className="form-check-label" for="flexSwitchCheckDefault">Select all Associate Consultant</label>
+                                        <div className="form-check form-switch">
+                                        <input className="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckDefault" />
                                     </div>
 
                                 </div>
                             </form>
 
                         </div>
-                        <div class="modal-footer border-top-0">
-                            <button type="button" class="btn modal-cancel-button fw-bold" data-bs-dismiss="modal" onClick={(e) => handleClickClear(e)}><span className="cancel-text">Cancel</span></button>
-                            <button type="button" class="btn modal-save-button" data-bs-dismiss={"modal" ? false : true}><span className="save-text-field" onClick={(e)=>handleSubmit(e)}>Save</span></button>
+                        <div className="modal-footer border-top-0">
+                            <button type="button" className="btn modal-cancel-button fw-bold" data-bs-dismiss="modal" onClick={(e) => handleClickClear(e)}><span className="cancel-text">Cancel</span></button>
+                            <button type="button" className="btn modal-save-button" data-bs-dismiss={"modal" ? false : true}><span className="save-text-field" onClick={(e)=>handleSubmit(e)}>Save</span></button>
                         </div>
                     </div>
                 </div>

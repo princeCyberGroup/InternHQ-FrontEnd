@@ -11,7 +11,7 @@ export default function ManageSkillSet({ data }) {
   return (
     <>
       <div className="about">
-        <Link to="/admin/skill-task" className="about-link">
+        <Link to="/admin/skill-test" className="about-link">
           Manage Skill Set <Right style={{ marginBottom: "2px" }} />
         </Link>
         <div className="about-div">Total Test Taken</div>

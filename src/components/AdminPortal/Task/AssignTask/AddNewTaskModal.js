@@ -133,7 +133,7 @@ export const AddNewTask = ({ onAddClose }) => {
   return (
     <div>
       <div
-        class="modal fade"
+        className="modal fade"
         id="addTaskModal"
         data-bs-backdrop="static"
         tabindex="-1"
@@ -141,25 +141,25 @@ export const AddNewTask = ({ onAddClose }) => {
         aria-labelledby="staticBackdropLabel" 
         aria-hidden="true"
       >
-        <div class="modal-dialog">
-          <div class="modal-content">
-            <div class="modal-header border-bottom-1">
-              <h5 class="modal-title modalheading-text" id="skillModalLabel">
+        <div className="modal-dialog">
+          <div className="modal-content">
+            <div className="modal-header border-bottom-1">
+              <h5 className="modal-title modalheading-text" id="skillModalLabel">
               Add New Task
               </h5>
 
               <button
                 type="button"
-                class="btn-close"
+                className="btn-close"
                 data-bs-dismiss="modal"
                 aria-label="Close"
                 onClick={(e) => handleClickClear(e)}
               ></button>
             </div>
 
-            <div class="modal-body">
+            <div className="modal-body">
               <form>
-                <div class="mb-3">
+                <div className="mb-3">
                   <label
                     htmlFor="task-title"
                     className="col-form-label form-title-names"
@@ -169,7 +169,7 @@ export const AddNewTask = ({ onAddClose }) => {
 
                   <input
                     type="text"
-                    class="form-control"
+                    className="form-control"
                     id="task-title"
                     placeholder="Enter task name"
                     value={taskName}
@@ -177,16 +177,16 @@ export const AddNewTask = ({ onAddClose }) => {
                   />
                 </div>
 
-                <div class="mb-3">
+                <div className="mb-3">
                   <label
                     htmlFor="description"
-                    class="col-form-label form-title-names"
+                    className="col-form-label form-title-names"
                   >
                     Description<span style={{ color: "red" }}>*</span>
                   </label>
 
                   <textarea
-                    class="form-control"
+                    className="form-control"
                     id="description"
                     rows={3}
                     placeholder="Enter description"
@@ -195,10 +195,10 @@ export const AddNewTask = ({ onAddClose }) => {
                   ></textarea>
                 </div>
 
-                <div class="mb-3">
+                <div className="mb-3">
                   <label
                     for="technology-tag"
-                    class="col-form-label form-title-names"
+                    className="col-form-label form-title-names"
                   >
                     Technology Tag<span style={{ color: "red" }}>*</span>
                   </label>
@@ -245,10 +245,10 @@ export const AddNewTask = ({ onAddClose }) => {
                   </div>
                 </div>
 
-                <div class="mb-3">
+                <div className="mb-3">
                   <label
                     for="assigned-to"
-                    class="col-form-label form-title-names"
+                    className="col-form-label form-title-names"
                   >
                     Assigned To<span style={{ color: "red" }}>*</span>
                   </label>
@@ -298,10 +298,10 @@ export const AddNewTask = ({ onAddClose }) => {
               </form>
             </div>
 
-            <div class="modal-footer border-top-0">
+            <div className="modal-footer border-top-0">
               <button
                 type="button"
-                class="btn modal-cancel-button fw-bold"
+                className="btn modal-cancel-button fw-bold"
                 data-bs-dismiss="modal"
                 onClick={(e) => handleClickClear(e)}
               >
@@ -310,7 +310,7 @@ export const AddNewTask = ({ onAddClose }) => {
 
               <button
                 type="button"
-                class="btn modal-save-button"
+                className="btn modal-save-button"
                 data-bs-dismiss={!error ? 'modal': ''  }
                 data-bs-target="#addTaskModal"
                 onClick={(e) => handleSubmit(e)}

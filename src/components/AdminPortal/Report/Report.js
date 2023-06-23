@@ -40,7 +40,7 @@ const Report = () => {
         //   if (b.techNames === 0) return -1;
         //   return b?.techNames.length - a?.techNames.length;
         // })
-      );
+        );
     } catch (error) {
       console.error("Error fetching data:", error);
     }

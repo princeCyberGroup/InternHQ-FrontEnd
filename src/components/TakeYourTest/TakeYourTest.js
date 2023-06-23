@@ -245,9 +245,9 @@ const TakeYourTest = () => {
                         </div>
                     </div>
                 ))}
-                <div class="d-flex flex-column submit-button">
+                <div className="d-flex flex-column submit-button">
                     <button
-                        class="btn btn-outline-primary"
+                        className="btn btn-outline-primary"
                         data-bs-toggle="modal"
                         data-bs-target="#staticBackdrop"
                     >
@@ -255,7 +255,7 @@ const TakeYourTest = () => {
                     </button>
                 </div>
                 <div
-                    class="modal fade"
+                    className="modal fade"
                     id="staticBackdrop"
                     data-bs-backdrop="static"
                     data-bs-keyboard="false"
@@ -263,26 +263,26 @@ const TakeYourTest = () => {
                     aria-labelledby="staticBackdropLabel"
                     aria-hidden="true"
                 >
-                    <div class="modal-dialog modal-dialog-centered">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <span class="modal-title instruction" id="staticBackdropLabel">
+                    <div className="modal-dialog modal-dialog-centered">
+                        <div className="modal-content">
+                            <div className="modal-header">
+                                <span className="modal-title instruction" id="staticBackdropLabel">
                                     Submit Test{" "}
                                 </span>
                                 {submitted && (
                                     <button
                                         type="button"
-                                        class="btn-close"
+                                        className="btn-close"
                                         data-bs-dismiss="modal"
                                         aria-label="Close"
                                     ></button>
                                 )}
                             </div>
-                            <div class="modal-body"> Sure Want to submit the test ? </div>
-                            <div class="modal-footer">
+                            <div className="modal-body"> Sure Want to submit the test ? </div>
+                            <div className="modal-footer">
                                 <button
                                     type="button"
-                                    class="btn btn-outline-danger"
+                                    className="btn btn-outline-danger"
                                     data-bs-dismiss="modal"
                                 >
                                     Cancel
@@ -315,7 +315,7 @@ const TakeYourTest = () => {
     return (
         <>
             <div className="resp">
-                <div class="container-fluid ">
+                <div className="container-fluid ">
                     <div className="row">
                     </div>
                     <div className="row testhHeading-and-Timer-Div">

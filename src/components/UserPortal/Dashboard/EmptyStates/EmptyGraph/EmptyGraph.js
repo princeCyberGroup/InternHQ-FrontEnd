@@ -4,8 +4,8 @@ import { ReactComponent as NoGraph } from "../../../../../Assets/Group 3EmpGraph
 const EmptyGraph = () => {
   return (
     <>
-      <div class="report p-3">
-        <div class="card-body">
+      <div className="report p-3">
+        <div className="card-body">
           <div
             className="col-12 d-flex justify-content-center"
             style={{ marginTop: "70px" }}

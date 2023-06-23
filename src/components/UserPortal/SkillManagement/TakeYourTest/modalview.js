@@ -4,7 +4,7 @@ export default function ModalView (){
     return (
         <>
           <div
-          class="modal fade"
+          className="modal fade"
           id="staticBackdrop"
           data-bs-backdrop="static"
           data-bs-keyboard="false"
@@ -12,24 +12,24 @@ export default function ModalView (){
           aria-labelledby="staticBackdropLabel"
           aria-hidden="true"
         >
-          <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content">
-              <div class="modal-header">
-                <span class="modal-title instruction" id="staticBackdropLabel">
+          <div className="modal-dialog modal-dialog-centered">
+            <div className="modal-content">
+              <div className="modal-header">
+                <span className="modal-title instruction" id="staticBackdropLabel">
                  Time is up {" "}
                 </span>
                   <button
                     type="button"
-                    class="btn-close"
+                    className="btn-close"
                     data-bs-dismiss="modal"
                     aria-label="Close"
                   ></button>
               </div>
-              <div class="modal-body">  TimeOut  </div>
-              <div class="modal-footer">
+              <div className="modal-body">  TimeOut  </div>
+              <div className="modal-footer">
                 <button
                   type="button"
-                  class="btn btn-outline-danger"
+                  className="btn btn-outline-danger"
                   data-bs-dismiss="modal"
                 >
                   Cancel

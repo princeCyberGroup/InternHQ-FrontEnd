@@ -130,35 +130,35 @@ export const AddNewSkillTest = () => {
             setBeginnerChecked(false);
             setIntermediateChecked(false);
             setAdvancedChecked(false);
-            navigate('/admin-dashboard');
+            navigate('/admin/dashboard');
         } catch (error) {
             console.log(error);
         }
     };
     return (
         <div>
-            <div class="modal fade" id="newSkillModal" tabindex="-1" aria-labelledby="newSkillModalLabel" aria-hidden="true">
-                <div class="modal-dialog">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title modalheading-text" id="newSkillModalLabel">Add New Skill Test</h5>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            <div className="modal fade" id="newSkillModal" tabindex="-1" aria-labelledby="newSkillModalLabel" aria-hidden="true">
+                <div className="modal-dialog">
+                    <div className="modal-content">
+                        <div className="modal-header">
+                            <h5 className="modal-title modalheading-text" id="newSkillModalLabel">Add New Skill Test</h5>
+                            <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close" style={{fontSize:"1rem"}}></button>
                         </div>
-                        <div class="modal-body">
+                        <div className="modal-body">
                             <form>
-                                <div class="mb-3">
+                                <div className="mb-3">
                                     <label htmlFor="technology" className="col-form-label form-title-names">
                                         Technology<span style={{ color: 'red' }}>*</span>
                                     </label>
-                                    <input type="text" class="form-control" id="technology" placeholder="Select Technology"
+                                    <input type="text" className="form-control" id="technology" placeholder="Select Technology"
                                         onChange={(e) => handleChangeTechnology(e)}
                                         value={technology} />
                                 </div>
-                                <div class="mb-3">
+                                <div className="mb-3">
                                     <label htmlFor="name" className="col-form-label form-title-names">
                                         Name<span style={{ color: 'red' }}>*</span>
                                     </label>
-                                    <input type="text" class="form-control" id="name" placeholder="Add Name"
+                                    <input type="text" className="form-control" id="name" placeholder="Add Name"
                                         onChange={(e) => handleChangeName(e)}
                                         value={name}
                                     />
@@ -167,10 +167,10 @@ export const AddNewSkillTest = () => {
                                 <div className="d-flex">
 
 
-                                    <div className="form-check">
+                                    <div className="form-check small fw-normal">
                                         <label style={{ marginLeft: "0.313rem" }}>
                                             <input
-                                                class="form-check-input color-of-radio"
+                                                className="form-check-input color-of-radio"
                                                 type="radio"
                                                 name="options"
                                                 value="Beginner"
@@ -181,7 +181,7 @@ export const AddNewSkillTest = () => {
                                         </label>
                                         <label style={{ marginLeft: "3.125rem" }}>
                                             <input
-                                                class="form-check-input color-of-radio"
+                                                className="form-check-input color-of-radio"
                                                 type="radio"
                                                 name="options"
                                                 value="Intermediate"
@@ -192,7 +192,7 @@ export const AddNewSkillTest = () => {
                                         </label>
                                         <label style={{ marginLeft: "3.125rem" }}>
                                             <input
-                                                class="form-check-input color-of-radio"
+                                                className="form-check-input color-of-radio"
                                                 type="radio"
                                                 name="options"
                                                 value="Advance"
@@ -286,7 +286,7 @@ export const AddNewSkillTest = () => {
                             </form>
                         </div>
                         <div className="modal-footer border-top-0">
-                            <button type="button" class="btn cancel-button fw-bold"
+                            <button type="button" className="btn cancel-button fw-bold"
                                 data-bs-dismiss="modal"
                                 onClick={(e) => handleClickClear(e)}>
                                 <span className="cancel-text">Cancel</span></button>
