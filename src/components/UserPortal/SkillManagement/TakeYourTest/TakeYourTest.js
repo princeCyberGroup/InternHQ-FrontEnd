@@ -204,7 +204,7 @@ const TakeYourTest = () => {
       submitQuesData = await response.json();
       // console.log("this is the total score coming",typeof submitQuesData.totalScore)
       // console.log(score);
-       setScore(submitQuesData.totalScore);
+       setScore(submitQuesData.scorePercentage);
       // setScore(submitQuesData.totalScore, () => {
       //   console.log("inside setScore");
       //   setScoreUpdated(true); // Set the flag after the score state has been updated

@@ -35,10 +35,8 @@ import { UserContext } from "../Context/Context";
 
 const AuthGuard = () => {
   const { navigateTo } = useContext(UserContext);
-  console.log("this is the value of navigateto", navigateTo);
   const navigate = useNavigate();
   const location = useLocation();
-  console.log("this is the value of location", location);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const handleAuth = () => {
     if (localStorage.getItem("login")) {
@@ -48,7 +46,6 @@ const AuthGuard = () => {
         setIsAuthenticated(false);
       } else {
         // setNavigateTo("u");
-        console.log("navigateTo value in user auth", navigateTo);
         navigate(location.pathname);
         setIsAuthenticated(true);
       } 

@@ -122,7 +122,6 @@ const LoginScreen = () => {
 
   useEffect(() => {
     let login = localStorage.getItem("login");
-    console.log("value of authguard in login", navigateTo);
     if (login && navigateTo !== "") {
       navigateTo === "u"
         ? navigate("/dashboard")
@@ -140,9 +139,6 @@ const LoginScreen = () => {
   }, []);
   return (
     <div className="container-fluid login-screen-body ">
-      {/* {console.log(btoa("sign-up"))}
-      {console.log(encodeURIComponent("c2lnbi11cA=="))}
-      {console.log(atob("c2lnbi11cA=="))} */}
       <div className="row pos">
         <div className="d-flex justify-content-center  align-items-center flex-row">
           <div
@@ -162,7 +158,7 @@ const LoginScreen = () => {
                 />
               </div>
               <div className="row card-left-heading">
-                <p>Intern HQ</p>
+                <p>CGI SkillFinity</p>
               </div>
               <div
                 id="carouselExampleIndicators"

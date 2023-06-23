@@ -30,7 +30,7 @@ const Congo = () => {
             <p>Your Score</p>
           </div>
           <div className="row c3">
-            <p>{score}/10</p>
+            <p>{score}/100</p>
           </div>
           <div className="row c4">
             <p>

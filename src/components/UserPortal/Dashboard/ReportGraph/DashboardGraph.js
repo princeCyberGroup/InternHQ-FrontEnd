@@ -206,7 +206,6 @@ export default function DashboardGraph(props) {
 
   // Calculate the start and end dates for each week in the month
   let weekStartDate = new Date(currentMonthStart);
-  console.log(weekStartDate, "weekstartdate");
   function getFirstSunday(year, month) {
     const firstDayOfMonth = new Date(year, month, 1);
     const firstSunday = 1 + ((7 - firstDayOfMonth.getDay()) % 7);
@@ -217,7 +216,6 @@ export default function DashboardGraph(props) {
   // let weekEndDate = new Date(firstSundayOfThisMonth);
   let weekEndDate = new Date(currentMonthStart);
   weekEndDate.setDate(firstSundayOfThisMonth);
-  console.log(weekEndDate, "weekEnddate");
 
   // Iterate over each week in the month
   for (let i = 0; i < 5; i++) {

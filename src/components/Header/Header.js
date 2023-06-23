@@ -216,8 +216,8 @@ const Header = () => {
                 alt="profile-Image"
                 className="profile-Image"
               /> */}
-                {userData.firstName.toUpperCase().slice(0, 1)}
-                {userData.lastName.toUpperCase().slice(0, 1)}
+                {userData.firstName?.toUpperCase().slice(0, 1)}
+                {userData.lastName?.toUpperCase().slice(0, 1)}
               </Link>
               {/* <button type="button" class="btn btn-danger">Action</button> */}
 

@@ -119,7 +119,7 @@ const SignUpOtpScreen = () => {
                 />
               </div>
               <div className="row card-left-heading">
-                <p>Intern HQ</p>
+                <p>CGI SkillFinity</p>
               </div>
               <div
                 id="carouselExampleIndicators"
