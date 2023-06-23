@@ -12,11 +12,11 @@ const Reporttable = ({ tableData }) => {
   let objectCount = 0;
   const navigate = useNavigate();
   //funciton
-  const handleOnclick = (index)=>{
+  const handleOnclick = (index) => {
     // navigate(`/admin/report/userId?id=${tableData[index][Data.ID]}`);
     sessionStorage.setItem("detailId", tableData[index][Data.ID]);
     navigate(`/admin/report?userId=${tableData[index][Data.ID]}`);
-  }
+  };
 
   return (
     <div className="container-fluid container-table">
@@ -34,19 +34,22 @@ const Reporttable = ({ tableData }) => {
             {tableData?.map((val, ind) => {
               let objectKeyCount = 0;
               return (
-                <tr className="report-table-tr" key={ind}
-                onClick={()=>{
-                  handleOnclick(ind);
-                  }}>
+                <tr
+                  className="report-table-tr"
+                  key={ind}
+                  onClick={() => {
+                    handleOnclick(ind);
+                  }}
+                >
                   <td style={{ width: "20.375rem" }}>
                     <div className="name-column">
                       <div className="circle">
-                        {val?.[Data.FN].toUpperCase().slice(0, 1)}
-                        {val?.[Data.LN].toUpperCase().slice(0, 1)}
+                        {val?.[Data.FN]?.toUpperCase().slice(0, 1)}
+                        {val?.[Data.LN]?.toUpperCase().slice(0, 1)}
                       </div>
                       <div className="tags">
                         <div className="tag1">{`${val?.[Data.FN]} ${
-                          val?.[Data.LN]
+                          val?.[Data.LN] === null ? "" : val?.[Data.LN]
                         }`}</div>
                         <div className="tag2">{val?.[Data.INTID]}</div>
                       </div>
@@ -54,16 +57,19 @@ const Reporttable = ({ tableData }) => {
                   </td>
                   <td style={{ width: "20.875rem" }}>
                     <div className="tech-tags">
-                      {val?.[Data.TN].map((value, index) => {
+                      {val?.[Data.TN]?.map((value, index) => {
                         objectKeyCount++;
-                        {/* if (objectCount > 3) {
+                        {
+                          /* if (objectCount > 3) {
                           objectCount = 0;
                           return;
                         } else {
                           objectCount++;
-                        } */}
-                        return (
-                          value === null ? <div key={index}></div> :
+                        } */
+                        }
+                        return value === null ? (
+                          <div key={index}></div>
+                        ) : (
                           <div key={index} className="tag-tech">
                             <span>{value}</span>
                             <div>
@@ -88,16 +94,18 @@ const Reporttable = ({ tableData }) => {
                   <td style={{ width: "20.375rem" }}>
                     <div className="skills-wrapper">
                       <span className="skills">
-                        {val?.[Data.BC]} Beginner &nbsp; <span className="dot" />{" "}
-                        &nbsp; {val?.[Data.IC]} Intermediate &nbsp;{" "}
-                        <span className="dot" /> &nbsp; {val?.[Data.AC]} Advanced
+                        {val?.[Data.BC]} Beginner &nbsp;{" "}
+                        <span className="dot" /> &nbsp; {val?.[Data.IC]}{" "}
+                        Intermediate &nbsp; <span className="dot" /> &nbsp;{" "}
+                        {val?.[Data.AC]} Advanced
                       </span>
                     </div>
                   </td>
                   <td style={{ width: "11.375rem" }}>
                     <div className="duration">
                       <span>
-                        {val?.[Data.D]} {val?.[Data.D] <= 1 ? "month" : "months"}
+                        {val?.[Data.D]}{" "}
+                        {val?.[Data.D] <= 1 ? "month" : "months"}
                       </span>
                     </div>
                   </td>

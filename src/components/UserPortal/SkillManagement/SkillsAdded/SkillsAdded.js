@@ -1,5 +1,5 @@
-import React, { useEffect,useState} from "react";
-import { EmptySkillsAdded } from "./EmptySkillsAdded/EmptySkillsAdded";
+import React, { useEffect, useState } from "react";
+import EmptySkillsAdded from "./EmptySkillsAdded/EmptySkillsAdded";
 import { ReactComponent as GoldStar } from "./assetsSkillManagment/Star-Icon-gold.svg";
 import { ReactComponent as SilverStar } from "./assetsSkillManagment/Star-Icon-silver.svg";
 import { ReactComponent as BronzeStar } from "./assetsSkillManagment/Star-Icon-bronze.svg";
@@ -45,13 +45,13 @@ const SkillsAdded = () => {
       {/* //main card  */}
       <div>
         {allData.length === 0 ? (
-          <EmptySkillsAdded/>
+          <EmptySkillsAdded />
         ) : (
           allData.map((DataUsed) => (
             <div className="card" style={{ width: "288px" }}>
               <div
                 class="card-body p-0"
-                style={{ maxHeight:"calc(100vh - 30vh)", overflow: "auto" }}
+                style={{ maxHeight: "calc(100vh - 30vh)", overflow: "auto" }}
               >
                 <div className="row cards">
                   <div className="col-12 d-flex mainImg">
@@ -69,7 +69,7 @@ const SkillsAdded = () => {
                         {DataUsed.examScores[0] >= 8 ? (
                           // <GoldStar />
                           // <SilverStar />
-                          <BronzeStar style={{ fontSize: '50px' }} />
+                          <BronzeStar style={{ fontSize: "50px" }} />
                         ) : (
                           <EmptyStar />
                         )}
@@ -96,7 +96,7 @@ const SkillsAdded = () => {
                         {DataUsed.examScores[1] >= 8 ? (
                           // <GoldStar />
                           // <SilverStar />
-                          <SilverStar style={{ fontSize: '50px' }} />
+                          <SilverStar style={{ fontSize: "50px" }} />
                         ) : (
                           <EmptyStar />
                         )}
@@ -127,7 +127,7 @@ const SkillsAdded = () => {
                     >
                       <div className="my-spacing">
                         {DataUsed.examScores[2] >= 8 ? (
-                          <GoldStar style={{ fontSize: '50px' }} />
+                          <GoldStar style={{ fontSize: "50px" }} />
                         ) : (
                           <EmptyStar />
                         )}
@@ -152,7 +152,7 @@ const SkillsAdded = () => {
                     >
                       <div className="my-spacing">
                         {DataUsed.examScores[3] >= 8 ? (
-                           <GoldStar style={{ fontSize: '50px' }} />
+                          <GoldStar style={{ fontSize: "50px" }} />
                         ) : (
                           <EmptyStar />
                         )}

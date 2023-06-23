@@ -37,7 +37,8 @@ const Detailedreport = () => {
     }
   };
   useEffect(() => {
-    fetchData()
+    fetchData();
+    console.log('object');
   }, [])
   
 
