@@ -1,57 +1,24 @@
-import "./OtherModals.css";
-
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { ReactComponent as ExpandMore } from "../../../../Assets/expand_more.svg";
 import TechnologyDropDown from "./TechnologyDropdown(Admin)";
 import UsersDropdown from "./UsersDropdown";
+import { ReactComponent as ExpandMore } from "../../../../Assets/expand_more.svg";
 
+export const EditTaskModal = ({ task, onEditClose, technology, assignedTo, editedTask,taskName,setTaskName, taskDescription,setTaskDescription }) => {
 
-export const AddNewTask = ({ onAddClose }) => {
-  const [error, setError] = useState(true);
-  const [taskName, setTaskName] = useState("");
-  const [taskDescription, setTaskDescription] = useState("");
-  const [taskTech, setTaskTech] = useState([]);
-  const [taskUsers, setTaskUsers] = useState([]);
   const [dropDown, setDropDown] = useState(false);
   const [usersDropDown, setUsersDropDown] = useState(false);
   const [tech, setTech] = useState({});
   const [users, setUsers] = useState({});
-  const [selectAllUsers, setSelectAllUsers] = useState(false);
-  const [taskTechIds, setTaskTechIds] = useState([]);
-  const [taskUserIds, setTaskUserIds] = useState([]);
   const [selectedUserIds, setSelectedUserIds] = useState([]);
   const [selectedUsers, setSelectedUsers] = useState([]);
   const [selectedTechIds, setSelectedTechIds] = useState([]);
   const [technologyNames, setTechnologyNames] = useState([]);
+  const [selectAllUsers, setSelectAllUsers] = useState(false);
+  const [error, setError] = useState(false);
 
 
 
-  const handleClickClear = (e) => {
-    e.preventDefault();
-
-    onAddClose();
-    setTaskName("");
-    setTaskDescription("");
-    setSelectedTechIds([]);
-    setSelectedUserIds([]);
-    setTechnologyNames([]);
-    setSelectedUsers([]);
-    setTech({});
-    setUsers({});
-
-    const userCheckboxes = document.querySelectorAll(".user-checkbox");
-    userCheckboxes.forEach((checkbox) => {
-      checkbox.checked = false;
-    });
-
-    // Reset TechDropDown component state
-    const checkboxes = document.querySelectorAll(".tech-checkbox");
-    checkboxes.forEach((checkbox) => {
-      checkbox.checked = false;
-    });
-
-  };
   const techDataComingFrmChild = (data) => {
     setTech(data);
   };
@@ -60,147 +27,119 @@ export const AddNewTask = ({ onAddClose }) => {
     setUsers(data);
 
   };
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-
-    var storedObject = JSON.parse(localStorage.getItem("userData"));
-    var userId = storedObject.userId;
-    var assignedByDesignation = storedObject.designation;
-    var assignedByfullName = storedObject.firstName + ' ' + storedObject.lastName;
-
-    if (error) {
-      alert("Please fill out the necessary fields");
-    } else {
-
-
-      await axios
-        .post("https://cg-interns-hq.azurewebsites.net/addNewTask", {
-          taskName,
-
-          taskDescription,
-
-          taskTech: selectedTechIds, // Send the array of tech IDs
-          taskUsers: selectedUserIds, // Send the array of user IDs
-          assignedBy: userId,
-        })
-        .then((res) => {
-          console.log("print", res.data);
-          onAddClose();
-        })
-        .catch((err) => {
-          console.log(err);
-        });
-
-      setTaskName("");
-      setTaskDescription("");
-      setSelectedTechIds([]);
-      setSelectedUserIds([]);
-      setTechnologyNames([]);
-      setSelectedUsers([]);
-
-      setTech({});
-      setUsers({});
-      setError(true);
-
-      const userCheckboxes = document.querySelectorAll(".user-checkbox");
-      userCheckboxes.forEach((checkbox) => {
-        checkbox.checked = false;
-      });
-      // Reset TechDropDown component state
-      const checkboxes = document.querySelectorAll(".tech-checkbox");
-      checkboxes.forEach((checkbox) => {
-        checkbox.checked = false;
-      });
-    }
-  };
+  const handleOnEditClose = () => {
+    onEditClose();
+  }
 
   const handleTaskTitle = (e) => {
     setTaskName(e.target.value);
-    if (taskName.length === 0) {
-      setError(true);
-    }
-    else{setError(false)}
+
+    if (e.target.value.length > 0) {
+        setError(false);
+      }
+      else{setError(true)}
   };
 
   const handleDescription = (e) => {
     setTaskDescription(e.target.value);
-    if (taskDescription.length < 2) {
-      setError(true);
-    }
-    else{setError(false)}
+    if (e.target.value.length > 2) {
+        setError(false);
+      }
+      else{setError(true)}
   };
 
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    
+    if (error) {
+        alert("Please fill out the necessary fields");
+      } else {
+    try {
+      await axios.post(
+        `https://cg-interns-hq.azurewebsites.net/editTask`,
+        {
+            taskId:task.taskId,
+            taskName:taskName,
+            taskDescription:taskDescription,
+            taskTech:selectedTechIds,
+            taskUsers:selectedUserIds
+        }
+      );
 
+      // Handle success, update the task or display a success message
+      console.log("Task updated successfully");
+      onEditClose();
+    } catch (error) {
+      console.log("Error updating task:", error);
+      // Handle error, display an error message or show an error notification
+    }
+}
 
-  const handleAssignedTo = (e) => {
-    setTaskUsers(e.target.value);
   };
 
   return (
     <div>
-
-
       <div
-        class="modal fade"
-        id="addTaskModal"
+        className="modal fade"
+        id="editTaskModal"
         data-bs-backdrop="static"
-        tabindex="-1"
-        data-bs-keyboard="false" 
-        aria-labelledby="staticBackdropLabel" 
+        tabIndex="-1"
+        aria-labelledby="editTaskModalLabel"
         aria-hidden="true"
       >
-        <div class="modal-dialog">
-          <div class="modal-content">
-            <div class="modal-header border-bottom-1">
-              <h5 class="modal-title modalheading-text" id="skillModalLabel">
-              Add New Task
+        <div className="modal-dialog">
+          <div className="modal-content">
+            <div className="modal-header border-bottom-1">
+              <h5
+                className="modal-title modalheading-text"
+                id="editTaskModalLabel"
+              >
+                Edit Task
               </h5>
-
               <button
                 type="button"
-                class="btn-close"
+                className="btn-close"
                 data-bs-dismiss="modal"
                 aria-label="Close"
-                onClick={(e) => handleClickClear(e)}
+                onClick={onEditClose}
               ></button>
             </div>
 
-            <div class="modal-body">
+            <div className="modal-body">
               <form>
-                <div class="mb-3">
+                {/* Task Title */}
+                <div className="mb-3">
                   <label
-                    htmlFor="task-title"
+                    htmlFor="edit-task-title"
                     className="col-form-label form-title-names"
                   >
                     Task Title<span style={{ color: "red" }}>*</span>
                   </label>
-
                   <input
                     type="text"
-                    class="form-control"
-                    id="task-title"
+                    className="form-control"
+                    id="edit-task-title"
                     placeholder="Enter task name"
                     value={taskName}
-                    onChange={(e) => handleTaskTitle(e)}
+                    onChange={handleTaskTitle}
                   />
                 </div>
 
-                <div class="mb-3">
+                {/* Description */}
+                <div className="mb-3">
                   <label
-                    htmlFor="description"
-                    class="col-form-label form-title-names"
+                    htmlFor="edit-description"
+                    className="col-form-label form-title-names"
                   >
                     Description<span style={{ color: "red" }}>*</span>
                   </label>
-
                   <textarea
-                    class="form-control"
-                    id="description"
+                    className="form-control"
+                    id="edit-description"
                     rows={3}
                     placeholder="Enter description"
                     value={taskDescription}
-                    onChange={(e) => handleDescription(e)}
+                    onChange={handleDescription}
                   ></textarea>
                 </div>
 
@@ -224,7 +163,7 @@ export const AddNewTask = ({ onAddClose }) => {
                         <input
                           type="text"
                           className="custom-input"
-                          value={Object.values(tech)}
+                          value={ (Object.values(tech).length === 0 ? null : Object.values(tech)) || editedTask?.technology}
                           disabled
                         />
                       </button>
@@ -248,6 +187,7 @@ export const AddNewTask = ({ onAddClose }) => {
                           setSelectedTechIds={setSelectedTechIds}
                           setTechnologyNames={setTechnologyNames}
                           technologyNames={technologyNames}
+                          selectedTech = {editedTask?.technology}
                         />
                       </ul>
                     </div>
@@ -275,7 +215,7 @@ export const AddNewTask = ({ onAddClose }) => {
                         <input
                           type="text"
                           className="custom-input"
-                          value={Object.values(users)}
+                          value={ (Object.values(users).length === 0 ? null : Object.values(users)) || editedTask?.name}
                           disabled
                         />
                       </button>
@@ -303,37 +243,29 @@ export const AddNewTask = ({ onAddClose }) => {
                         />
                       </ul>
                     </div>
-                    {/* </div> */}
                   </div>
-                 
                 </div>
-
               </form>
             </div>
 
-            <div class="modal-footer border-top-0">
+            <div className="modal-footer border-top-0">
               <button
                 type="button"
-                class="btn modal-cancel-button fw-bold"
+                className="btn modal-cancel-button fw-bold"
                 data-bs-dismiss="modal"
-                onClick={(e) => handleClickClear(e)}
+                onClick={handleOnEditClose}
               >
                 <span className="cancel-text">Cancel</span>
               </button>
 
               <button
                 type="button"
-                class="btn modal-save-button"
+                className="btn modal-save-button"
+                data-bs-target ="#editTaskModal"
                 data-bs-dismiss={!error ? 'modal': ''  }
-                data-bs-target="#addTaskModal"
-                onClick={(e) => handleSubmit(e)}
+                onClick={handleSubmit}
               >
-                <span
-                  className="save-text-field"
-                  
-                >
-                  Save
-                </span>
+                <span className="save-text-field">Save</span>
               </button>
             </div>
           </div>
