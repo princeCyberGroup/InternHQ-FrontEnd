@@ -1,8 +1,8 @@
-import React, { useEffect,useState} from "react";
-import { EmptySkillsAdded } from "./EmptySkillsAdded/EmptySkillsAdded";
-import { ReactComponent as GoldStar } from "./assetsSkillManagment/Star-Icon-gold.svg";
-import { ReactComponent as SilverStar } from "./assetsSkillManagment/Star-Icon-silver.svg";
-import { ReactComponent as BronzeStar } from "./assetsSkillManagment/Star-Icon-bronze.svg";
+import React, { useEffect, useState } from "react";
+import EmptySkillsAdded from "./EmptySkillsAdded/EmptySkillsAdded";
+import { ReactComponent as GoldStar } from "../../../../Assets/Star-Icon-gold.svg";
+import { ReactComponent as SilverStar } from "../../../../Assets/Star-Icon-silver.svg";
+import { ReactComponent as BronzeStar } from "../../../../Assets/Star-Icon-bronze.svg";
 import "./SkillsAdded.css";
 // import nonActiveimageStar from '../Assets/nonActiveimageStar.png';
 import { ReactComponent as EmptyStar } from "../../../../Assets/emptystar.svg";
@@ -45,15 +45,13 @@ const SkillsAdded = () => {
       {/* //main card  */}
       <div>
         {allData.length === 0 ? (
-          <div>
-            <EmptySkillsAdded />
-          </div>
+          <EmptySkillsAdded />
         ) : (
           allData.map((DataUsed) => (
-            <div className="card" style={{ width: "288px" }}>
+            <div className="card" style={{ width: "18rem" }}>
               <div
-                class="card-body p-0"
-                style={{ maxHeight: "602px", overflow: "auto" }}
+                className="card-body p-0"
+                style={{ maxHeight: "calc(100vh - 30vh)", overflow: "auto" }}
               >
                 <div className="row cards">
                   <div className="col-12 d-flex mainImg">
@@ -71,7 +69,7 @@ const SkillsAdded = () => {
                         {DataUsed.examScores[0] >= 8 ? (
                           // <GoldStar />
                           // <SilverStar />
-                          <BronzeStar style={{ fontSize: '50px' }} />
+                          <BronzeStar style={{ fontSize: '3.125rem' }} />
                         ) : (
                           <EmptyStar />
                         )}
@@ -98,7 +96,7 @@ const SkillsAdded = () => {
                         {DataUsed.examScores[1] >= 8 ? (
                           // <GoldStar />
                           // <SilverStar />
-                          <SilverStar style={{ fontSize: '50px' }} />
+                          <SilverStar style={{ fontSize: '3.125rem' }} />
                         ) : (
                           <EmptyStar />
                         )}
@@ -129,7 +127,7 @@ const SkillsAdded = () => {
                     >
                       <div className="my-spacing">
                         {DataUsed.examScores[2] >= 8 ? (
-                          <GoldStar style={{ fontSize: '50px' }} />
+                          <GoldStar style={{ fontSize: '3.125rem' }} />
                         ) : (
                           <EmptyStar />
                         )}
@@ -154,7 +152,7 @@ const SkillsAdded = () => {
                     >
                       <div className="my-spacing">
                         {DataUsed.examScores[3] >= 8 ? (
-                           <GoldStar style={{ fontSize: '50px' }} />
+                           <GoldStar style={{ fontSize: '3.125rem' }} />
                         ) : (
                           <EmptyStar />
                         )}

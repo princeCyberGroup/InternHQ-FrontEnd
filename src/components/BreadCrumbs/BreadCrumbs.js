@@ -8,7 +8,7 @@ const BreadCrumbs = () => {
   let currentLink = "";
   const crumbs = location.pathname;
 
-  const crumbName=crumbs.split("/").filter((crumbs) => crumbs !== "")
+  const crumbName=crumbs.split(/[\/-]/).filter((crumbs) => crumbs !== "")
     .map((crumb) => {
       currentLink = +`>${crumb}`;
       return (

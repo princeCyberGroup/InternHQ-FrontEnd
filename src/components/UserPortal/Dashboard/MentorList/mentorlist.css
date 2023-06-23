@@ -26,6 +26,17 @@ div.KYM {
     width: 80px;
     margin: auto;
 }
+.mentor-img{
+    width: 80px;
+  height: 80px;
+  margin: auto;
+  border-radius: 50%;
+  background-color: #E9ECEB;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  /* box-shadow: 0px 4px 20px rgba(40, 52, 73, 0.15); */
+}
 .badge-color {
     color: #343435;
     font-size: 0.75rem;

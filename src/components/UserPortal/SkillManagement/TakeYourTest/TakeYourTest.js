@@ -4,6 +4,8 @@ import "./TakeYourTest.css";
 import { useNavigate ,useLocation } from "react-router-dom";
 
 import { UserContext } from "../../../../Context/Context";
+import { BsCheckLg } from "react-icons/bs";
+import { responsivePropType } from "react-bootstrap/esm/createUtilityClasses";
 
 const TakeYourTest = () => {
 
@@ -37,15 +39,9 @@ const TakeYourTest = () => {
   const clickHandler = () => {
     navigate("/skill-Management");
     setFullscreen(false);
+    exitFullscreen();
   };
-  // useEffect(() => {
-  //   if (scoreUpdated) {
-  //     console.log("Value of score after fetching the data", score);
-  //   }
-  // }, [score, scoreUpdated]);
-  // useEffect(()=>{
-  //     // console.log("this is the data from takeyourtest site", data);
-  // },[]);
+
   useEffect(() => {
     if (fullscreen) {
       enterFullscreen();
@@ -81,34 +77,46 @@ const TakeYourTest = () => {
     }
   };
 
+
+  const handleKeyDown = (event) => {
+    event.preventDefault();
+    
+    if (event.key === "Escape" || event.key === "F11") {
+      event.disabled = true;
+    }
+  };
+
   const [time, setTime] = useState(0);
   //main use effect
-  useEffect(() => {
-    fetchTests();
-    handleAnswerSelect();
-    setFullscreen(true);
+  let timer;
+
+  const startTimer = () => {
     const examDurationInSeconds = parseInt(examDuration) * 60;
     setTime(examDurationInSeconds);
-    const timer = setInterval(() => {
+    timer = setInterval(() => {
       setTime((prevTime) => {
         if (prevTime > 0) {
           return prevTime - 1;
         } else {
           clearInterval(timer);
-          // submitQuiz();
-          return 0;
+          submitTest();
+          window.alert("Time's up!");
+          clickHandler();
+     
         }
       });
     }, 1000);
-
-    console.log(userAnswers);
-
+  };
+  
+  useEffect(() => {
+    fetchTests();
+    handleAnswerSelect();
+    setFullscreen(true);
+    startTimer();
     return () => {
       clearInterval(timer);
-      exitFullscreen();
-      // window.removeEventListener("keydown", handleKeyDown);
     };
-  }, [score]);
+  }, []);
 
   const formatTime = (time) => {
     const minutes = Math.floor(time / 60);
@@ -117,7 +125,6 @@ const TakeYourTest = () => {
       .toString()
       .padStart(2, "0")}`;
   };
-
   const fetchTests = async () => {
     let Quesdata
     try {
@@ -128,19 +135,15 @@ const TakeYourTest = () => {
       setAllQuesData(Quesdata);
       setTestsQues(Quesdata.questions);
       localStorage.setItem("questionToken", Quesdata.token)
-      console.log(Quesdata)
     } catch (e) {
       console.log(e);
     }
   };
-
   const handleAnswerSelect = (questionId, selectedAnswer) => {
     setUserAnswers((prevAnswers) => ({
       ...prevAnswers,
       [questionId]: selectedAnswer,
     }));
-
-    //setUserAnswers(prevAnswers => [...prevAnswers,{"qId":[questionId], "choosenOpt": selectedAnswer}])
     setActiveRadioButtons(getActiveRadioCount());
   };
 
@@ -160,18 +163,6 @@ const TakeYourTest = () => {
     radioButton.addEventListener("change", () => { });
   });
 
-  // const submitQuiz = () => {
-  //   // setFullscreen(false);
-  //   // setSubmitted(true);
-  //   // clickHandler();
-  // };
-
-  const handleKeyDown = (event) => {
-    if (event.key === "Escape" || event.key === "F11") {
-      event.disabled = true;
-      // console.log(event);
-    }
-  };
   let submitQuesData;
   const api = "https://cg-interns-hq.azurewebsites.net/submitAnswer";
   const submitTest = async () => {
@@ -182,57 +173,32 @@ const TakeYourTest = () => {
           qId: parseInt(questionId),
           choosenOpt: selectedAnswer,
         })
-      );
-      const response = await fetch(
-       api ,
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${localStorage.getItem("questionToken")}`
-          },
-          body: JSON.stringify({
-            userId: userId,
-            technology: techName,
-            level: level,
-            optRequest: mappedAnswers.splice(0, mappedAnswers.length - 1),
-          }),
-        }
-      );
-      submitQuesData = await response.json();
-      // console.log("this is the total score coming",typeof submitQuesData.totalScore)
-      // console.log(score);
-       setScore(submitQuesData.totalScore);
-      // setScore(submitQuesData.totalScore, () => {
-      //   console.log("inside setScore");
-      //   setScoreUpdated(true); // Set the flag after the score state has been updated
-      // });
-      // console.log("value of score after fetching the data", score);
-
-    } catch (error) {
+        );
+        const response = await fetch(
+          api ,
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${localStorage.getItem("questionToken")}`
+            },
+            body: JSON.stringify({
+              userId: userId,
+              technology: techName,
+              level: level,
+              optRequest: mappedAnswers.splice(0, mappedAnswers.length - 1),
+            }),
+          }
+          );
+          submitQuesData = await response.json();
+          setScore(submitQuesData.scorePercentage);
+        } catch (error) {
       console.log(error);
     }
     finally {
       localStorage.removeItem("questionToken");
     }
   };
-
-  const checkAnswers = () => {
-    
-  }
-
-  const modalTarget = () => {
-    const a = "#congoModal123";
-    const b = "#sorryModal";
-    if (score >= 6) {
-      return a;
-    } else {
-      return b;
-    }
-  };
-
-  const Targetm = modalTarget();
-
   const renderQuestions = () => {
     return (
       <div>
@@ -265,23 +231,17 @@ const TakeYourTest = () => {
             </div>
           </div>
         ))}
-        <div class="d-flex flex-column submit-button">
+        <div className="d-flex flex-column submit-button">
           <button
-            class="btn btn-outline-primary"
+            className="btn btn-outline-primary"
             data-bs-toggle="modal"
             data-bs-target="#staticBackdrop"
-            // onClick={() => {
-            //   // submitQuiz();
-            //   setFullscreen(false);
-            //   submitTest();
-            //   clickHandler();
-            // }}
           >
             Submit Quiz
           </button>
         </div>
         <div
-          class="modal fade"
+          className="modal fade"
           id="staticBackdrop"
           data-bs-backdrop="static"
           data-bs-keyboard="false"
@@ -289,24 +249,24 @@ const TakeYourTest = () => {
           aria-labelledby="staticBackdropLabel"
           aria-hidden="true"
         >
-          <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content">
-              <div class="modal-header">
-                <span class="modal-title instruction" id="staticBackdropLabel">
+          <div className="modal-dialog modal-dialog-centered">
+            <div className="modal-content">
+              <div className="modal-header">
+                <span className="modal-title instruction" id="staticBackdropLabel">
                   Submit Test{" "}
                 </span>
                   <button
                     type="button"
-                    class="btn-close"
+                    className="btn-close"
                     data-bs-dismiss="modal"
                     aria-label="Close"
                   ></button>
               </div>
-              <div class="modal-body"> Sure Want to submit the test ? </div>
-              <div class="modal-footer">
+              <div className="modal-body"> Sure Want to submit the test ? </div>
+              <div className="modal-footer">
                 <button
                   type="button"
-                  class="btn btn-outline-danger"
+                  className="btn btn-outline-danger"
                   data-bs-dismiss="modal"
                 >
                   Cancel
@@ -314,12 +274,11 @@ const TakeYourTest = () => {
                 <button
                   type="button"
                   onClick={() => {
-                    // submitQuiz();
                     setFullscreen(false);
+                    exitFullscreen();
                     submitTest();
                     clickHandler();
                   }}
-                  
                   className="btn btn-primary"
                   data-bs-dismiss="modal"
                 >
@@ -329,15 +288,14 @@ const TakeYourTest = () => {
             </div>
           </div>
         </div>
-        {/* <Congo />
-        <Sorry /> */}
+
       </div>
     );
   };
   return (
     <>
       <div className="resp">
-        <div class="container-fluid ">
+        <div className="container-fluid ">
           <div className="row"></div>
           <div className="row testhHeading-and-Timer-Div">
             <div className="col-3">
@@ -360,7 +318,7 @@ const TakeYourTest = () => {
             </div>
           </div>
           <div className="ques.card ">
-            <div className="card insidecard" style={{ width: "1220px" }}>
+            <div className="card insidecard" style={{ width: "76.25rem" }}>
               {fullscreen && !submitted && <div> {renderQuestions()} </div>}
             </div>
           </div>

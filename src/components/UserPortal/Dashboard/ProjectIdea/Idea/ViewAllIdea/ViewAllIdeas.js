@@ -101,10 +101,6 @@ const ViewAllIdeas = () => {
       membersObj[`member${index + 1}`] = text;
     });
 
-    // technologyNames.forEach((curElem, index) => {
-    //   techNames[`tech${index + 1}`] = curElem;
-    // });
-
     isObjectEmpty(membersObj);
   }, [textInput, tech]);
 
@@ -246,7 +242,6 @@ const ViewAllIdeas = () => {
                             />
                           </ul>
                         </div>
-                        {/* </div> */}
                       </div>
                     </div>
 

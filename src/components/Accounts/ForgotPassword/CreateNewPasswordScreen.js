@@ -10,7 +10,6 @@ import InfoIcon from "../../../Assets/InfoIcon.svg";
 
 const CreateNewPasswordScreen = () => {
   const navigate = useNavigate();
-  // const [activeIndex, setActiveIndex] = useState(0); //For carousel
 
   const [newPassword, setPassword] = useState("");
   const [isPasswordValid, setIsPasswordValid] = useState(false);
@@ -48,14 +47,10 @@ const CreateNewPasswordScreen = () => {
     setShowConfirmPassword(!showConfirmPassword);
   };
 
-
-
   const handleSubmit = async (event) => {
     event.preventDefault();
     setIsLoading(true);
     const token = localStorage.getItem("token");
-    // const password = localStorage.getItem("password");
-    // const confirmPassword = localStorage.getItem("confirmPassword");
 
     await axios
       .post(
@@ -80,51 +75,31 @@ const CreateNewPasswordScreen = () => {
         localStorage.setItem("Data", JSON.stringify(res));
         setIsLoading(false);
         navigate("/change-success");
-        console.log("Data", response);
-        console.log("Data2", res);
-        // console.log(response.data.message);
       })
       .catch((error) => {
-        console.log(error.response?.data);
         setIsPasswordSame(true);
         setIsLoading(false);
-        if(error.response?.data.statusCode == 400) {
-          navigate('/error?statusCode=400')
-        } 
-        if(error.response?.data.statusCode == 500) {
-          navigate('/error?statusCode=500')
+        if (error.response?.data.statusCode == 400) {
+          navigate("/error?statusCode=400");
         }
-        // console.log(error.response?.data.msg);
+        if (error.response?.data.statusCode == 500) {
+          navigate("/error?statusCode=500");
+        }
       });
-    // console.log(newPassword);
-    // console.log(
-    // `confirm password: ${confirmPassword} (hidden visible only on backend)`
-    // confirmPassword
-    // );
   };
-  // const handleSlideChange = (index) => {
-  //   setActiveIndex(index);
-  // };
 
   useEffect(() => {
     let login = localStorage.getItem("login");
     if (login) {
       navigate("/dashboard");
     }
-    // const interval = setInterval(() => {
-    //   setActiveIndex((prevIndex) => (prevIndex + 1) % 3);
-    // }, 3000); //Make it 1000
-
-    // return () => {
-    //   clearInterval(interval);
-    // };
   }, []);
 
   return (
     <div className="container-fluid login-screen-body ">
       <div className="row pos">
         <div className="d-flex justify-content-center align-items-center flex-row">
-        <div
+          <div
             className="col-md-5"
             style={{
               backgroundColor: "#002C3F",
@@ -141,7 +116,7 @@ const CreateNewPasswordScreen = () => {
                 />
               </div>
               <div className="row card-left-heading">
-                <p>Intern HQ</p>
+                <p>CGI SkillFinity</p>
               </div>
               <div
                 id="carouselExampleIndicators"
@@ -154,7 +129,7 @@ const CreateNewPasswordScreen = () => {
                   <button
                     data-bs-target="#carouselExampleIndicators"
                     data-bs-slide-to="0"
-                    class="active"
+                    className="active"
                     aria-current="true"
                     aria-label="Slide 1"
                     // onClick={() => handleSlideChange(0)}
@@ -250,29 +225,30 @@ const CreateNewPasswordScreen = () => {
                       New Password
                     </label>
                     <div className="input-group">
-                    <input
-                      className="input-login"
-                      type={showNewPassword ? "password" : "text"}
-                      id="exampleInputEmail1"
-                      placeholder="Enter New Password"
-                      value={newPassword}
-                      onChange={handlePasswordChange}
-                      required
-                    />
-                    <button
-                        className="btn password-toggle-button"
-                        style={{border: "none"}}
-                        type="button"
-                        onClick={handleToggleNewPasswordVisibility}
-                      >
-                       
-                        {showNewPassword ? (
-                          <i className="bi bi-eye"></i>
-                        ) : (
-                          <i className="bi bi-eye-slash"></i>
-                        )}
-                      </button>
+                      <div className="div-input pass-input-div">
+                        <input
+                          className="input-login"
+                          type={showNewPassword ? "password" : "text"}
+                          id="exampleInputEmail1"
+                          placeholder="Enter New Password"
+                          value={newPassword}
+                          onChange={handlePasswordChange}
+                          required
+                        />
+                        <button
+                          className="btn password-toggle-button"
+                          style={{ border: "none" }}
+                          type="button"
+                          onClick={handleToggleNewPasswordVisibility}
+                        >
+                          {showNewPassword ? (
+                            <i className="bi bi-eye"></i>
+                          ) : (
+                            <i className="bi bi-eye-slash"></i>
+                          )}
+                        </button>
                       </div>
+                    </div>
                     {!isPasswordValid && newPassword && (
                       <span className="sign-up-warning ms-2">
                         To proceed, please provide a password as a requirement.
@@ -288,37 +264,37 @@ const CreateNewPasswordScreen = () => {
                       Confirm Password
                     </label>
                     <div className="input-group">
-                    <input
-                      className="input-login"
-                      type={showConfirmPassword ? "password" : "text"}
-                      id="exampleInputPassword1"
-                      placeholder="Enter Confirm Password"
-                      value={confirmPassword}
-                      onChange={handleConfirmPasswordChange}
-                      required
-                    />
-                    <button
-                        className="btn password-toggle-button"
-                        style={{border: "none"}}
-                        type="button"
-                        onClick={handleToggleConfirmPasswordVisibility}
-                      >
-                        {showConfirmPassword ? (
-                          <i className="bi bi-eye"></i>
-                        ) : (
-                          <i className="bi bi-eye-slash"></i>
-                        )}
-                      </button>
+                      <div className="div-input pass-input-div">
+                        <input
+                          className="input-login"
+                          type={showConfirmPassword ? "password" : "text"}
+                          id="exampleInputPassword1"
+                          placeholder="Enter Confirm Password"
+                          value={confirmPassword}
+                          onChange={handleConfirmPasswordChange}
+                          required
+                        />
+                        <button
+                          className="btn password-toggle-button"
+                          style={{ border: "none" }}
+                          type="button"
+                          onClick={handleToggleConfirmPasswordVisibility}
+                        >
+                          {showConfirmPassword ? (
+                            <i className="bi bi-eye"></i>
+                          ) : (
+                            <i className="bi bi-eye-slash"></i>
+                          )}
+                        </button>
                       </div>
+                    </div>
                     {!isConfirmPasswordValid && confirmPassword && (
-                      <span className="sign-up-warning ms-2">
-                        {isPasswordSame
-                          ? ""
-                          : "Passwords are not matching"}
+                      <span className="sign-up-warning">
+                        {isPasswordSame ? "" : "Passwords are not matching"}
                       </span>
                     )}
                     {isPasswordSame && (
-                      <span className="sign-up-warning ms-2">
+                      <span className="sign-up-warning">
                         {isPasswordSame
                           ? "New password cannot be same as the old password"
                           : ""}
@@ -329,7 +305,7 @@ const CreateNewPasswordScreen = () => {
                 <div
                   className="row"
                   style={{
-                    width: "25.438rem",
+                    width: "26.786rem",
                     background: "rgba(184, 221, 225, 0.54)",
                     borderRadius: "0.25rem",
                     padding: "0.313rem",
@@ -376,7 +352,6 @@ const CreateNewPasswordScreen = () => {
                 </button>
               </form>
             </div>
-            {/* <div className="bg-white d-flex flex-column justify-content-center align-items-center form-padding"></div> */}
           </div>
         </div>
       </div>

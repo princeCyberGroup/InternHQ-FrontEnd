@@ -1,103 +1,98 @@
 .associate-consultant-mapped-card {
-
-    box-sizing: border-box;
-    display: flex;
-    
- 
-    padding: 8px 12px;
-  
-    width: 364px;
-    background: #FFFFFF;
-    border: 1px solid #E9ECEB;
-    border-radius: 4px;
-    
+  box-sizing: border-box;
+  display: flex;
+  padding: 0.5rem 0.75rem; /* Converted from 8px 12px */
+  width: 22.75rem; /* Converted from 364px */
+  background: #ffffff;
+  border: 0.0625rem solid #e9eceb; /* Converted from 1px */
+  border-radius: 0.25rem; /* Converted from 4px */
+  cursor: pointer;
 }
 
 .search-associate {
-    box-sizing: border-box;
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    padding: 0px 16px;
-    width: 364px;
-    height: 40px;
-    background: #FFFFFF;
-    border: 1px solid #B2B2B3;
-    border-radius: 4px;
+  box-sizing: border-box;
+  padding: 0rem 0.5rem; /* Converted from 0px 16px */
+  width: 21.75rem; /* Converted from 364px */
+  height: 2.5rem; /* Converted from 40px */
+  border-radius: 30%;
+  border: none;
+  outline: none;
 }
-.frame{
-    display: flex;
-    margin-left: 0.5rem;
-    align-items: center;
-    justify-content: center;
-    width: 36px;
-    height: 36px;
-    background: #B8DDE1;
-    border-radius: 100%;
+.search-associate:hover,
+.search-associate:focus {
+  outline: none;
 }
-.frame-text{
-width: 140px;
-height: 20px;
-font-family: 'Roboto';
-font-style: normal;
-font-weight: 700;
-font-size: 14px;
-line-height: 16px;
-color: #343435;
-}
-.frame-id{
-width: 60px;
-height: 14px;
-font-family: 'Roboto';
-font-style: normal;
-font-weight: 400;
-font-size: 14px;
-line-height: 14px;
-color: #343435;
-flex: none;
-order: 1;
-flex-grow: 0;
-}
-.associate-card{
-    height: 372px;
-    margin-left: 10px;
- display: flex;
-flex-direction: column;
-align-items: center;
-padding: 16px;
-gap: 16px;
-isolation: isolate;
-
-
-background: #FFFFFF;
-/* Shadow */
-
-box-shadow: 0px 4px 20px rgba(40, 52, 73, 0.15);
-border-radius: 8px;
-}
-.dropdown-associate{
-
-}
-.drop-arrow{
-margin-left: 150px;
+.frame {
+  display: flex;
+  margin-left: 0.5rem;
+  align-items: center;
+  justify-content: center;
+  width: 2.25rem; /* Converted from 36px */
+  height: 2.25rem; /* Converted from 36px */
+  background: #b8dde1;
+  border-radius: 100%;
 }
 
-.tech-div-badge{
-    display: flex;
-flex-direction: row;
-align-items: center;
-padding: 6px;
-gap: 4px;
-
-width: 85.53px;
-height: 24px;
-
-background: #F4F6F5;
-/* Secondary/Gray */
-
-border: 1px solid #B2B2B3;
-border-radius: 2px;
+.frame-text {
+  width: 8.75rem; /* Converted from 140px */
+  height: 1.25rem; /* Converted from 20px */
+  font-family: "Roboto";
+  font-style: normal;
+  font-weight: 700;
+  font-size: 0.875rem; /* Converted from 14px */
+  line-height: 1rem; /* Converted from 16px */
+  color: #343435;
 }
-.tech-div-badge-text{
-    
+
+.frame-id {
+  width: 3.75rem; /* Converted from 60px */
+  height: 0.875rem; /* Converted from 14px */
+  font-family: "Roboto";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 0.875rem; /* Converted from 14px */
+  line-height: 0.875rem; /* Converted from 14px */
+  color: #343435;
+  flex: none;
+  order: 1;
+  flex-grow: 0;
+}
+
+.associate-card {
+  height: 23.25rem; /* Converted from 372px */
+  margin-left: 0.625rem; /* Converted from 10px */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 1rem;
+  gap: 1rem;
+  isolation: isolate;
+  background: #ffffff;
+  /* Shadow */
+  box-shadow: 0rem 0.25rem 1.25rem rgba(40, 52, 73, 0.15); /* Converted from 0px 4px 20px */
+  border-radius: 0.5rem; /* Converted from 8px */
+}
+
+.dropdown-associate {
+}
+
+.drop-arrow {
+  margin-left: 9.375rem; /* Converted from 150px */
+}
+
+.tech-div-badge {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding: 0.375rem; /* Converted from 6px */
+  gap: 0.25rem; /* Converted from 4px */
+  width: 5.345313rem; /* Converted from 85.53px */
+  height: 1.5rem; /* Converted from 24px */
+  background: #f4f6f5;
+  /* Secondary/Gray */
+  border: 0.0625rem solid #b2b2b3; /* Converted from 1px */
+  border-radius: 0.125rem; /* Converted from 2px */
+}
+
+.tech-div-badge-text {
 }

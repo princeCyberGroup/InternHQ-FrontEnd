@@ -17,6 +17,13 @@
   height: 274px;
   /* border: 1px solid black; */
 }
+.no-data-div{
+  height: 220px;
+  text-align: center;
+}
+.no-data-img{
+  height: 166px;
+}
 
 /* width: 394px;
  height: 274px; */
