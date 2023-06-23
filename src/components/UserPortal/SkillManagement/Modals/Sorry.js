@@ -39,9 +39,9 @@ const Sorry = () => {
             </p>
           </div>
           <div className="row Scontinue">
-            <button type="button" className="sorry-view-result-btn">
+            {/* <button type="button" className="sorry-view-result-btn">
               View Result
-            </button>
+            </button> */}
             <button
               type="button"
               className="continueBtn"

@@ -9,7 +9,7 @@ export const data = {
   labels: [],
   datasets: [
     {
-      radius: "50%",
+      radius: "70%",
       label: "Total Numbers",
       data: [],
       backgroundColor: ["#28519E", "#3B82F6", "#99CC00", "#E23237", "#FFB81C"],

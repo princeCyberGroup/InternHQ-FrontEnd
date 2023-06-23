@@ -1,17 +1,14 @@
-import React, { useContext } from "react";
-import Card from "react-bootstrap/Card";
+import React from "react";
 import "../Dashboard/DashboardA.css";
-import HeaderAdmin from "../Header/HeaderAdmin";
-import { Button } from "bootstrap";
 import Uploadcsv from "./UploadCsv/Uploadcsv";
 import ManageSkillSet from "./ManageSkillSet/manageSkillSet";
 import { useEffect, useState } from "react";
-import { useNavigate, useLocation, Link } from "react-router-dom";
+import { Link } from "react-router-dom";
 import Status from "./Status/Status";
 import TopTech from "./TopTech/topTech";
 import AssociateConsultant from "./associateConsultant/associateConsultant";
 import Insights from "./Insights/insights";
-import { ReactComponent as Right } from "./Assets/right.svg";
+import { ReactComponent as Right } from "../../../Assets/right.svg";
 import Header from "../../Header/Header";
 
 const DashboardA = () => {

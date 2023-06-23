@@ -1,5 +1,5 @@
 import React, { useState, useRef } from "react";
-import { ReactComponent as CloudImage } from "../Assets/Cloud.svg";
+import { ReactComponent as CloudImage } from "../../../../Assets/Cloud.svg";
 import { ReactComponent as CloseBtn } from "../../../../Assets/Close-admin.svg"
 // import CSVReader from "./DragandDropFile";
 
@@ -31,7 +31,7 @@ export const UploadCsv = () => {
                         'Content-Disposition': 'form-data; name="file"; filename="example.csv"'
                     }
                 });
-            console.log(response);
+            // console.log(response);
             // Reset form inputs
         
         } catch (error) {
@@ -144,7 +144,7 @@ export const UploadCsv = () => {
                                                     accept=".csv"
                                                     style={{ display: "none" }}
                                                 />
-                                                {console.log(fileInputRef)}
+                                                {/* {console.log(fileInputRef)} */}
                                                 <button type="button" onClick={handleBrowseClick} className="csv-upload-button">Browse from your computer</button>
                                             </div>
                                            

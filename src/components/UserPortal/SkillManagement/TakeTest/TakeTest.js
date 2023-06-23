@@ -1,8 +1,8 @@
 import React, { useEffect } from "react";
-import{ useContext } from "react";
-import { useState, createContext  } from "react";
-import { ReactComponent as LeftToRetake } from "./svgs/leftToReatake.svg";
-import { ReactComponent as Completed } from "./svgs/Testcompleted.svg";
+import { useContext } from "react";
+import { useState, createContext } from "react";
+import { ReactComponent as LeftToRetake } from "../../../../Assets/leftToReatake.svg";
+import { ReactComponent as Completed } from "../../../../Assets/Testcompleted.svg";
 import { ReactComponent as GoldStarOri } from "../../../../Assets/Star-Icon-gold-ori.svg";
 import { ReactComponent as SilverStarOri } from "../../../../Assets/Star-Icon-silver-ori.svg";
 import { ReactComponent as BronzeStarOri } from "../../../../Assets/Star-Icon-bronze-ori.svg";
@@ -20,9 +20,9 @@ export const TestContext = createContext();
 
 const TakeTest = ({ test }) => {
   const [activeButton, setActiveButton] = useState("all");
-    const { score } = useContext(UserContext);
-    const [daysDifference, setDaysDifference] = useState(calculateDaysDifference());
-  
+  const { score } = useContext(UserContext);
+  const [daysDifference, setDaysDifference] = useState(calculateDaysDifference());
+
   // const [searchQuery, setSearchQuery] = useState("");
   const [tests, setTests] = useState([]);
   const [originalTests, setOriginalTests] = useState([]);
@@ -93,16 +93,16 @@ const TakeTest = ({ test }) => {
   const clickCont = () => {
     navigate("/take-your-test", { state: data });
   };
-  
-      function calculateDaysDifference() {
-        const currentDate = new Date();
-        const twoDaysAgo = new Date();
-        twoDaysAgo.setDate(twoDaysAgo.getDate() - 2);
-        return Math.floor(
-          (currentDate.getTime() - twoDaysAgo.getTime()) / (1000 * 60 * 60 * 24)
-        );
-      }
-      let statusDiv;
+
+  function calculateDaysDifference() {
+    const currentDate = new Date();
+    const twoDaysAgo = new Date();
+    twoDaysAgo.setDate(twoDaysAgo.getDate() - 2);
+    return Math.floor(
+      (currentDate.getTime() - twoDaysAgo.getTime()) / (1000 * 60 * 60 * 24)
+    );
+  }
+  let statusDiv;
   if (score > 8) {
     statusDiv = (
       <div className="statusOfTEstCompleted">
@@ -116,15 +116,6 @@ const TakeTest = ({ test }) => {
       </div>
     );
   }
-  let LevelComponent;
-if (tests.level === "Beginner") {
-  LevelComponent =  <BronzeStarOri /> ;
-} else if (tests.level === "Intermediate") {
-  LevelComponent = <SilverStarOri />;
-} else if (tests.level === "Advanced") {
-  LevelComponent = <GoldStarOri/>;
-}
-  
   return (
     <>
       <div className="TTheading">
@@ -146,9 +137,8 @@ if (tests.level === "Beginner") {
             </button>
           </div>
           <div
-            className={`nav-btn ${
-              activeButton === "beginner" ? "activated" : ""
-            }`}
+            className={`nav-btn ${activeButton === "beginner" ? "activated" : ""
+              }`}
           >
             <button
               className="btn-nav p-0"
@@ -176,15 +166,14 @@ if (tests.level === "Beginner") {
             </button>
           </div>
           <div
-            className={`nav-btn ${
-              activeButton === "advanced" ? "activated" : ""
-            }`}
+            className={`nav-btn ${activeButton === "advanced" ? "activated" : ""
+              }`}
           >
             <button
               className="btn-nav p-0"
               onClick={() => {
-                setActiveButton("advanced");
-                setTests(tests.filter((tests) => tests.level === "Advanced"));
+                setActiveButton("advance");
+                setTests(tests.filter((tests) => tests.level === "Advance"));
               }}
             >
               Advanced
@@ -223,11 +212,11 @@ if (tests.level === "Beginner") {
         ) : (
           <div
             class="card-body p-0"
-            // style={{ maxHeight: "50rem", overflow: "auto" }}
+          // style={{ maxHeight: "50rem", overflow: "auto" }}
           >
             <div
               className="row cards main-card-inside"
-              //   style={{ maxHeight: "470px", overflow: "auto" }}
+            //   style={{ maxHeight: "470px", overflow: "auto" }}
             >
               <div className="row d-flex justify-content-evenly ">
                 {tests?.map((test) => (
@@ -246,7 +235,9 @@ if (tests.level === "Beginner") {
                             </div>
                             <div>
                               <div className="Category_box justify-content-center">
-                                <span className="Category">{test.level}</span>
+                                <span className="Category">{test.level} &nbsp;
+                                  {test.level === "Beginner" ? <BronzeStarOri /> : (test.level === "Intermediate" ? <SilverStarOri /> : (test.level === "Advance" ? <GoldStarOri /> : null))}
+                                </span>
                               </div>
                               <div className=" About_box justify-content-center">
                                 <span className="About">{test.examName}</span>

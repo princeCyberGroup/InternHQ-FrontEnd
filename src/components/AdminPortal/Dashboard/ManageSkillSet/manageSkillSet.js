@@ -1,7 +1,7 @@
 import "../ManageSkillSet/manageSkillSet.css";
 import React from "react";
-import { ReactComponent as Add } from "../Assets/add.svg";
-import { ReactComponent as Right } from "../Assets/right.svg";
+import { ReactComponent as Add } from "../../../../Assets/add.svg";
+import { ReactComponent as Right } from "../../../../Assets/right.svg";
 import { AddNewSkillTest } from "./AddNewSkillTest";
 import "../ManageSkillSet/Modals.css";
 import { Link } from "react-router-dom";

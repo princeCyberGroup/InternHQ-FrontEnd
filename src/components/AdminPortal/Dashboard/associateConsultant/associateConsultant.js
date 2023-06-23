@@ -1,9 +1,7 @@
 import "../associateConsultant/associateConsultant.css";
 import React, { useState, useEffect } from "react";
-import { ReactComponent as DownArrow } from "../Assets/chevron-down.svg";
-import { ReactComponent as UpArrow } from "../Assets/chevron-up.svg";
-import { ReactComponent as SearchIcon } from "../Assets/search.svg";
-import { ReactComponent as ArrowDown } from "../Assets/chevron-down.svg";
+import { ReactComponent as DownArrow } from "../../../../Assets/chevron-down.svg";
+import { ReactComponent as UpArrow } from "../../../../Assets/chevron-up.svg";
 import { useNavigate } from "react-router-dom";
 
 function getInitials(name) {

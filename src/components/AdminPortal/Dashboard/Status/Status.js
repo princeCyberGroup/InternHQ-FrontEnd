@@ -1,8 +1,8 @@
 import React from 'react';
-import { ReactComponent as TotalIcon } from "../Assets/total.svg"
-import { ReactComponent as ActiveIcon } from "../Assets/active.svg"
-import { ReactComponent as InActiveIcon } from "../Assets/inactive.svg"
-import { ReactComponent as OnProject } from "../Assets/onProject.svg"
+import { ReactComponent as TotalIcon } from "../../../../Assets/total.svg"
+import { ReactComponent as ActiveIcon } from "../../../../Assets/active.svg"
+import { ReactComponent as InActiveIcon } from "../../../../Assets/inactive.svg"
+import { ReactComponent as OnProject } from "../../../../Assets/onProject.svg"
 
 import '../Status/status.css'
 export default function Status({data}) {

@@ -39,6 +39,7 @@ const TakeYourTest = () => {
   const clickHandler = () => {
     navigate("/skill-Management");
     setFullscreen(false);
+    exitFullscreen();
   };
 
   useEffect(() => {
@@ -274,6 +275,7 @@ const TakeYourTest = () => {
                   type="button"
                   onClick={() => {
                     setFullscreen(false);
+                    exitFullscreen();
                     submitTest();
                     clickHandler();
                   }}

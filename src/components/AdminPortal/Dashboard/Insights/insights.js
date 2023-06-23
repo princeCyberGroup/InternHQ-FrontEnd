@@ -1,6 +1,6 @@
 import '../Insights/insights.css';
-import { ReactComponent as Bullet } from "../Assets/bullet.svg"
-import { ReactComponent as SearchIcon } from '../Assets/search.svg';
+import { ReactComponent as Bullet } from "../../../../Assets/bullet.svg"
+import { ReactComponent as SearchIcon } from '../../../../Assets/search.svg';
 import React, { useEffect, useState } from "react";
 
 export default function Insights(props) {

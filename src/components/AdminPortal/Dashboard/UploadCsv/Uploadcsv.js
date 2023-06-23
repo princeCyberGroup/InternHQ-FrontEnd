@@ -1,5 +1,5 @@
 import '../UploadCsv/uploadCsv.css'
-import { ReactComponent as UploadCsvv } from "../Assets/upload.svg"
+import { ReactComponent as UploadCsvv } from "../../../../Assets/upload.svg"
 import { UploadCsv } from '../UploadCsv/UploadCsvModal';
 export default function Uploadcsv() {
   return (

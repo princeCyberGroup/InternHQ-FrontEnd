@@ -1,7 +1,6 @@
-import { ReactComponent as CloudImage } from "../Assets/Cloud.svg";
+import { ReactComponent as CloudImage } from "../../../../Assets/Cloud.svg";
 import { ReactComponent as CloseBtn } from "../../../../Assets/Close-admin.svg"
 import React, { useState, useRef } from "react";
-import  {useHistory}  from 'react-router-dom';
 import './Modals.css';
 import axios from "axios";
 import { Button } from "bootstrap";
@@ -120,7 +119,7 @@ export const AddNewSkillTest = () => {
                         'Content-Type': 'multipart/form-data'
                     }
                 });
-            console.log(response);
+            // console.log(response);
             // Reset form inputs
             setTechnology("");
             setName("");
@@ -229,7 +228,7 @@ export const AddNewSkillTest = () => {
                                                     accept=".csv"
                                                     style={{ display: "none" }}
                                                 />
-                                                {console.log(fileInputRef)}
+                                                {/* {console.log(fileInputRef)} */}
                                                 <button type="button" onClick={handleBrowseClick} className="add-new-skill-test-btn">
                                                     Browse from your computer
                                                 </button>
