@@ -56,17 +56,16 @@ const Reporttable = ({ tableData }) => {
                     <div className="tech-tags">
                       {val?.[Data.TN].map((value, index) => {
                         objectKeyCount++;
-                        if (objectCount > 2) {
+                        {/* if (objectCount > 3) {
                           objectCount = 0;
                           return;
                         } else {
                           objectCount++;
-                        }
+                        } */}
                         return (
-                          value === null ? <></> :
+                          value === null ? <div key={index}></div> :
                           <div key={index} className="tag-tech">
                             <span>{value}</span>
-                            {/* svg */}
                             <div>
                               {val?.[Data.L][index] === "Beginner" ? (
                                 <Beginner />

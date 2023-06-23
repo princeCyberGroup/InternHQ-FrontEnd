@@ -37,6 +37,7 @@ import Error_400 from "./components/ErrorPage/Error_400";
 import Error_500 from "./components/ErrorPage/Error_500";
 import Error_404 from "./components/ErrorPage/Error_404";
 import  PieChart  from "./components/AdminPortal/Report/Detailedreport/PieChart";
+import { ManageSkillTest } from "./components/AdminPortal/SkillTest/ManageSkillTest";
 
 function App() {
   const location = useLocation();
@@ -146,7 +147,8 @@ function App() {
             <Route path="/admin/reports" element={<Report />} />
             <Route path="/admin/report" element={<Detailedreport />} />
             <Route path="/admin/assign-task" element={<Task />} />
-            {/* <Route path="/admin/skill-test" element={<SkillTest />} /> */}
+            <Route path="/admin/skill-test" element={<ManageSkillTest />} />
+
           </Route>
 
           {/* Mentor routes */}
