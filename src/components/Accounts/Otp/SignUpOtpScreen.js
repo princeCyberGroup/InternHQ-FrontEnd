@@ -15,11 +15,13 @@ const SignUpOtpScreen = () => {
   const navigate = useNavigate();
   // const [activeIndex, setActiveIndex] = useState(0); //For carousel
   const [value, setValue] = useState('');
+  const [isOtpValid, setIsOtpValid] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
 
 
   const handleChange = (event) => {
     const inputValue = event.target.value;
+    setIsOtpValid(false);
     if (inputValue.length <= 6 && /^\d*$/.test(inputValue)) {
       setValue(inputValue);
     }
@@ -68,6 +70,7 @@ const SignUpOtpScreen = () => {
       })
       .catch((error) => {
         console.log(error.response.data);
+        setIsOtpValid(true)
         setIsLoading(false);
         if(error.response?.data.statusCode == 400) {
           navigate('/error?statusCode=400')
@@ -243,7 +246,8 @@ const SignUpOtpScreen = () => {
               </p>
               <form onSubmit={handleSubmit}>
                 <div className="d-flex flex-column">
-                  <input
+                  <div className="div-input">
+                    <input
                   className="input-login"
                     type="text"
                     pattern="\d*" // Used the "pattern" attribute to enforce digits only
@@ -251,6 +255,12 @@ const SignUpOtpScreen = () => {
                     onChange={handleChange}
                     placeholder="Code"
                   />
+                  </div>
+                  {isOtpValid && otp && (
+                    <span className="sign-up-warning">
+                      Invalid OTP
+                    </span>
+                  )}
                 </div>
                 <button
                   class="btn btn-warning border-0 sign-up-btn mt-3"

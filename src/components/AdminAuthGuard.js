@@ -12,7 +12,7 @@ const AdminAuthGuard = () => {
         navigate("/");
         setIsAuthenticated(false);
       } else {
-        str === "07495d" ? navigate("/dashboard") : (str === "cb8715" ? navigate(location.pathname) : navigate("/mentor-dashboard"));
+        str === "07495d" ? navigate("/dashboard") : (str === "cb8715" ? navigate(location.pathname) : navigate("/mentor/dashboard"));
         setIsAuthenticated(true);
       } 
     } else {

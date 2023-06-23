@@ -20,7 +20,7 @@ export const AddMentorModal = ({ isOpen, onClose, onAddMentor }) => {
   const [emailId, setEmailId] = useState("");
   const [isValidEmail, setIsValidEmail] = useState(true);
   const [designation, setDesignation] = useState("");
-  const [imageUrl, setImageUrl] = useState("");
+  const [imageUrl, setImageUrl] = useState(null);
   const [error, setError] = useState("true");
   const [isCleared, setIsCleared] = useState(false);
   const [dropDown, setDropDown] = useState(false);
@@ -96,6 +96,7 @@ export const AddMentorModal = ({ isOpen, onClose, onAddMentor }) => {
 
   const handleFormSubmit = async (e) => {
     e.preventDefault();
+    
   
     if (mentorName.length === 0 && emailId.length < 2) {
       alert("Please fill out all the fields");
@@ -404,7 +405,8 @@ export const AddMentorModal = ({ isOpen, onClose, onAddMentor }) => {
               <button
                 type="button"
                 class="btn save-button fw-bold"
-                {...(!error && { "data-bs-dismiss": "modal" })}
+                // {...(!error && { "data-bs-dismiss": "modal" })}
+                data-bs-dismiss={error?"":"modal"}
                 onClick={handleFormSubmit}
               >
                 <span className="save-text">Save</span>

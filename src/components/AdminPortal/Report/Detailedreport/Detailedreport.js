@@ -16,6 +16,7 @@ import Skillsachieved from "./Skillsachieved";
 import ProjectList from "./ProjectList";
 import axios from "axios";
 import PieChart from "./PieChart";
+import Header from "../../../Header/Header";
 
 export const DetailedProvider = createContext();
 
@@ -49,6 +50,9 @@ const Detailedreport = () => {
         data,
       }}
     >
+       <div className="" style={{ marginBottom: "5rem" }}>
+        <Header />
+      </div>
       <div className="detailedrep-parent-wrapper">
         <div className="detailedrep-child-wrapper">
           <div className="detailrep-header">

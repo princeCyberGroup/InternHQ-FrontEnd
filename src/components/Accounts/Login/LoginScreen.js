@@ -48,6 +48,7 @@ const LoginScreen = () => {
         password,
       })
       .then((response) => {
+        console.log("data2:", response.data);
         localStorage.setItem("login", true);
         const res = {
           token: response.data.token,
@@ -81,8 +82,8 @@ const LoginScreen = () => {
         str === "07495d"
           ? navigate("/dashboard")
           : str === "cb8715"
-          ? navigate("/admin-dashboard")
-          : navigate("/mentor-dashboard");
+          ? navigate("/admin/dashboard")
+          : navigate("/mentor/dashboard");
         localStorage.setItem("token");
       })
       .catch((error) => {
@@ -94,11 +95,11 @@ const LoginScreen = () => {
           setIsPasswordValid(false);
         }
         setIsLoading(false);
-        if(error.response?.data.statusCode == 400) {
-          navigate('/error?statusCode=400')
-        } 
-         if(error.response?.data.statusCode == 500) {
-          navigate('/error?statusCode=500')
+        if (error.response?.data.statusCode == 400) {
+          navigate("/error?statusCode=400");
+        }
+        if (error.response?.data.statusCode == 500) {
+          navigate("/error?statusCode=500");
         }
         // navigate(`/error?statusCode=${error.response?.data.statusCode}`);
       });
@@ -111,7 +112,7 @@ const LoginScreen = () => {
       str === "07495d"
         ? navigate("/dashboard")
         : str === "cb8715"
-        ? navigate("/admin-dashboard")
+        ? navigate("/admin/dashboard")
         : navigate("/mentor-dashboard");
     }
 
@@ -295,7 +296,7 @@ const LoginScreen = () => {
                           onChange={handlePasswordChange}
                         />
                         <button
-                          className="password-toggle-button"
+                          className="btn password-toggle-button"
                           style={{ border: "none" }}
                           type="button"
                           onClick={handleTogglePasswordVisibility}
@@ -344,8 +345,8 @@ const LoginScreen = () => {
 
                 <button
                   type="submit"
-                  className="btn btn-warning border-0 sign-up-btn mt-3 "
-                  style={{width:"inherit"}}
+                  className="btn btn-warning border-0 sign-up-btn mt-3"
+                  style={{ width: "inherit" }}
                   disabled={!isEmailValid || isLoading}
                 >
                   {isLoading ? (

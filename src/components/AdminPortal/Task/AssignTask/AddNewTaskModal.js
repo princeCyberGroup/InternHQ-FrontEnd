@@ -32,8 +32,12 @@ export const AddNewTask = ({ task, onClose }) => {
       setTaskDescription(task.taskDescription);
       // setTaskTech(task.taskTech);
       // setTaskUsers(task.taskUsers);
+      setTechnolotyNames(task.technologyNames);
       setSelectedTechIds(task.selectedTechIds);
+      setSelectedUsers(task.selectedUsers);
       setSelectedUserIds(task.selectedUserIds);
+      // setTech(task.tech);
+      // setUsers(task.users)
     }
   }, [task]);
 
@@ -67,7 +71,6 @@ export const AddNewTask = ({ task, onClose }) => {
   const techDataComingFrmChild = (data) => {
     setTech(data);
     // setTaskTechIds(data.techId);
-
   };
 
   const usersDataComingFrmChild = (data) => {
@@ -78,6 +81,12 @@ export const AddNewTask = ({ task, onClose }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    console.log("clicked");
+
+    var storedObject = JSON.parse(localStorage.getItem("userData"));
+    var userId = storedObject.userId;
+    var assignedByDesignation = storedObject.designation;
+    var assignedByfullName = storedObject.firstName + ' ' + storedObject.lastName;
 
     if (taskName.length === 0 && taskDescription.length < 2) {
       alert("Please fill out the necessary fields");
@@ -91,6 +100,7 @@ export const AddNewTask = ({ task, onClose }) => {
 
           taskTech: selectedTechIds, // Send the array of tech IDs
           taskUsers: selectedUserIds, // Send the array of user IDs
+          assignedBy: userId,
         })
         .then((res) => {
           console.log("print", res.data);

@@ -13,7 +13,7 @@ const MentorAuthGuard = () => {
         navigate("/");
         setIsAuthenticated(false);
       } else {
-        str === "07495d" ? navigate("/dashboard") : (str === "cb8715" ? navigate("/admin-dashboard") : navigate(location.pathname));
+        str === "07495d" ? navigate("/dashboard") : (str === "cb8715" ? navigate("/admin/dashboard") : navigate(location.pathname));
         setIsAuthenticated(true);
       } 
     } else {

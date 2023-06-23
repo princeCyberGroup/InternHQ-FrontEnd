@@ -7,6 +7,7 @@ import Reporttable from "./Reporttable";
 import { Dummydata } from "./Dummydata";
 import Selectlevel from "./Selectlevel";
 import axios from "axios";
+import Header from "../../Header/Header";
 const Report = () => {
   //data
   const [tech, setTech] = useState({});
@@ -98,7 +99,11 @@ const Report = () => {
   };
 
   return (
-    <div className="report-parent-wrapper">
+    <>
+     <div className="" style={{ marginBottom: "5rem" }}>
+        <Header />
+      </div>
+      <div className="report-parent-wrapper">
       <div className="report-child-wrapper">
         <div className="report-header">Report</div>
         <div className="report-filter-wrapper ">
@@ -203,6 +208,7 @@ const Report = () => {
         </div>
       </div>
     </div>
+    </>
   );
 };
 
