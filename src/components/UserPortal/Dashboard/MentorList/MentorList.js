@@ -23,7 +23,7 @@ const MentorComponent = () => {
 
       const data = await response.json();
       const activeMentors = data.activeMentors;
-      console.log(activeMentors);
+      // console.log(activeMentors);
       setMentors(activeMentors);
       setIsLoading(false);
       // console.log(isLoading, "Fetched data");

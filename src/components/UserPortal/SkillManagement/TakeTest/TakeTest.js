@@ -1,12 +1,11 @@
 import React, { useEffect } from "react";
-import{ useContext } from "react";
-import { useState, createContext  } from "react";
+import { useContext } from "react";
+import { useState, createContext } from "react";
 import { ReactComponent as LeftToRetake } from "./svgs/leftToReatake.svg";
 import { ReactComponent as Completed } from "./svgs/Testcompleted.svg";
 import { ReactComponent as Bronze } from "./svgs/Star-bronze.svg";
 import { ReactComponent as Silver } from "./svgs/Star-silver.svg";
 import { ReactComponent as Gold } from "./svgs/Star-gold.svg";
-// import logo from '../../../Assets/image 13.png';
 import "./TakeTest.css";
 import { BsClock } from "react-icons/bs";
 import { MdOutlineBallot } from "react-icons/md";
@@ -20,10 +19,11 @@ export const TestContext = createContext();
 
 const TakeTest = ({ test }) => {
   const [activeButton, setActiveButton] = useState("all");
-    const { score } = useContext(UserContext);
-    const [daysDifference, setDaysDifference] = useState(calculateDaysDifference());
-  
-  // const [searchQuery, setSearchQuery] = useState("");
+  const { score } = useContext(UserContext);
+  const [daysDifference, setDaysDifference] = useState(
+    calculateDaysDifference()
+  );
+
   const [tests, setTests] = useState([]);
   const [originalTests, setOriginalTests] = useState([]);
   const [allData, setAllData] = useState([]);
@@ -62,13 +62,10 @@ const TakeTest = ({ test }) => {
     setTests(filters);
   };
 
-  //   setTests(getFilterItems)
   useEffect(() => {
     handleFiltersChange();
   }, [searchFilterValue]);
 
-  //   console.log(tests);
-  //   getFilterItems(tests,searchFilterValue);
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -88,21 +85,20 @@ const TakeTest = ({ test }) => {
       techName: techName,
       level: level,
     });
-    // const locationstate=location.state;
   };
   const clickCont = () => {
     navigate("/take-your-test", { state: data });
   };
-  
-      function calculateDaysDifference() {
-        const currentDate = new Date();
-        const twoDaysAgo = new Date();
-        twoDaysAgo.setDate(twoDaysAgo.getDate() - 2);
-        return Math.floor(
-          (currentDate.getTime() - twoDaysAgo.getTime()) / (1000 * 60 * 60 * 24)
-        );
-      }
-      let statusDiv;
+
+  function calculateDaysDifference() {
+    const currentDate = new Date();
+    const twoDaysAgo = new Date();
+    twoDaysAgo.setDate(twoDaysAgo.getDate() - 2);
+    return Math.floor(
+      (currentDate.getTime() - twoDaysAgo.getTime()) / (1000 * 60 * 60 * 24)
+    );
+  }
+  let statusDiv;
   if (score > 8) {
     statusDiv = (
       <div className="statusOfTEstCompleted">
@@ -118,14 +114,19 @@ const TakeTest = ({ test }) => {
   }
   let LevelComponent;
 
-if (tests.level === "Beginner") {
-  LevelComponent =( <div> <Bronze /></div> );
-} else if (tests.level === "Intermediate") {
-  LevelComponent = <Silver />;
-} else if (tests.level === "Advanced") {
-  LevelComponent = <Gold />;
-}
-  
+  if (tests.level === "Beginner") {
+    LevelComponent = (
+      <div>
+        {" "}
+        <Bronze />
+      </div>
+    );
+  } else if (tests.level === "Intermediate") {
+    LevelComponent = <Silver />;
+  } else if (tests.level === "Advanced") {
+    LevelComponent = <Gold />;
+  }
+
   return (
     <>
       <div className="TTheading">
@@ -134,62 +135,50 @@ if (tests.level === "Beginner") {
       <div className="card maincard">
         <div className="card-header-nav mt-1">
           <div
-            className={`nav-btn ${activeButton === "all" ? "activated" : ""}`}
+            className={`nav-btn pointer ${
+              activeButton === "all" ? "activated" : ""
+            }`}
+            onClick={() => {
+              setActiveButton("all");
+              setTests(allData);
+            }}
           >
-            <button
-              className="btn-nav p-0"
-              onClick={() => {
-                setActiveButton("all");
-                setTests(allData);
-              }}
-            >
-              All
-            </button>
+            <button className="btn-nav p-0">All</button>
           </div>
           <div
-            className={`nav-btn ${
+            className={`nav-btn pointer ${
               activeButton === "beginner" ? "activated" : ""
             }`}
+            onClick={() => {
+              setActiveButton("beginner");
+              setTests(allData.filter((tests) => tests.level === "Beginner"));
+            }}
           >
-            <button
-              className="btn-nav p-0"
-              onClick={() => {
-                setActiveButton("beginner");
-                setTests(allData.filter((tests) => tests.level === "Beginner"));
-              }}
-            >
-              Beginner
-            </button>
+            <button className="btn-nav p-0">Beginner</button>
           </div>
           <div
-            className={`nav-btn ${activeButton === "inter" ? "activated" : ""}`}
+            className={`nav-btn pointer ${
+              activeButton === "inter" ? "activated" : ""
+            }`}
+            onClick={() => {
+              setActiveButton("inter");
+              setTests(
+                allData.filter((tests) => tests.level === "Intermediate")
+              );
+            }}
           >
-            <button
-              className="btn-nav p-0"
-              onClick={() => {
-                setActiveButton("inter");
-                setTests(
-                  allData.filter((tests) => tests.level === "Intermediate")
-                );
-              }}
-            >
-              Intermediate
-            </button>
+            <button className="btn-nav p-0">Intermediate</button>
           </div>
           <div
-            className={`nav-btn ${
+            className={`nav-btn pointer ${
               activeButton === "advanced" ? "activated" : ""
             }`}
+            onClick={() => {
+              setActiveButton("advanced");
+              setTests(tests.filter((tests) => tests.level === "Advance"));
+            }}
           >
-            <button
-              className="btn-nav p-0"
-              onClick={() => {
-                setActiveButton("advanced");
-                setTests(tests.filter((tests) => tests.level === "Advanced"));
-              }}
-            >
-              Advanced
-            </button>
+            <button className="btn-nav p-0">Advanced</button>
           </div>
           <div className="search-bar" style={{ margin: "auto" }}>
             <input
@@ -205,9 +194,9 @@ if (tests.level === "Beginner") {
           </div>
         </div>
         {isLoading ? (
-          <div class="card-body  p-0 m-0">
+          <div class="card-body  p-0">
             <div className="row cards main-card-inside ">
-              <div className="row d-flex justify-content-evenly m-0 p-0">
+              <div className="row d-flex justify-content-evenly">
                 <TakeTestSkeleton />
                 <TakeTestSkeleton />
                 <TakeTestSkeleton />
@@ -222,14 +211,8 @@ if (tests.level === "Beginner") {
             </div>
           </div>
         ) : (
-          <div
-            class="card-body p-0"
-            // style={{ maxHeight: "50rem", overflow: "auto" }}
-          >
-            <div
-              className="row cards main-card-inside"
-              //   style={{ maxHeight: "470px", overflow: "auto" }}
-            >
+          <div class="card-body p-0">
+            <div className="row cards main-card-inside">
               <div className="row d-flex justify-content-evenly ">
                 {tests?.map((test) => (
                   <div className="exam">
@@ -287,7 +270,6 @@ if (tests.level === "Beginner") {
                               >
                                 Start Test
                               </Button>
-                              {/* </Link>{' '} */}
                             </div>
                             <div
                               class="modal fade"
@@ -344,17 +326,14 @@ if (tests.level === "Beginner") {
                                     >
                                       Cancel
                                     </button>
-                                    {/* <Link key={test.examId} to={`/take-your-test`}> */}
                                     <button
                                       type="button"
                                       onClick={() => clickCont()}
-                                      // onClick={() => { clickHandler(test.examId,test.examName,test.examDuration,test.numberOfQuestion,test.techName,test.level) }}
                                       data-bs-dismiss="modal"
                                       class="btn btn-primary"
                                     >
                                       Continue
                                     </button>
-                                    {/* </Link> */}
                                   </div>
                                 </div>
                               </div>

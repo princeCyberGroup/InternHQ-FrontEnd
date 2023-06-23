@@ -34,7 +34,7 @@ const MentorList = () => {
         })
       );
     } catch (err) {
-      console.log(err);
+      // console.log(err);
     }
   };
   const assignMentor = async (mentorId) => {
@@ -52,7 +52,7 @@ const MentorList = () => {
         })
       );
     } catch (err) {
-      console.log(err);
+      // console.log(err);
     }
   };
   // const addMentor = (newMentor) => {
@@ -67,7 +67,7 @@ const MentorList = () => {
       // Update the mentor list after adding a new mentor
       setMentor((prevMentor) => [...prevMentor, newMentor]);
     } catch (err) {
-      console.log(err);
+      // console.log(err);
     } finally {
       fetchMentorList();
     }

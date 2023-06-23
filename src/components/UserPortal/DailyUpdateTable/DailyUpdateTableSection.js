@@ -9,8 +9,8 @@ import DurationClock from "../../../Assets/DurationClock.svg";
 import ImageTooltip from "./ImageTooltip";
 
 const DailyUpdateTableSection = (props) => {
-    //data
-    const [tableData, setTableData] = useState([]);
+  //data
+  const [tableData, setTableData] = useState([]);
   const [originalTableData, setOriginalTableData] = useState([]);
   const [searchFilterValue, setSearchFilterValue] = useState("");
   const [dropdownFilterValue, setDropdownFilterValue] = useState("");
@@ -36,8 +36,6 @@ const DailyUpdateTableSection = (props) => {
         setTableData(data.response);
         setOriginalTableData(data.response);
         props.sendDataToDailyUpdate(data.response);
-        // console.log(data.response);
-        // setLoading(false);
       });
   };
 
@@ -154,311 +152,302 @@ const DailyUpdateTableSection = (props) => {
     const filterItems = getFilterItems(filterItemsDropDown, searchFilterValue);
     const filterDate = getFilterDate(filterItems, dateFilterValue);
     setTableData(filterDate);
-    // console.log(filterDate)
   };
 
   useEffect(() => {
     handleFiltersChange();
   }, [dropdownFilterValue, searchFilterValue, dateFilterValue]);
 
-  
   return (
     <div className="mb-3">
-            <div className="col-12 daily-update-table-style p-0">
-              <div className="table-responsive" style={{overflow: "visible"}}>
-                <table id="example" className="table table-striped">
-                  <thead>
-                    <tr>
-                      <th className="column-id">#</th>
-                      <th className="column-date">Date</th>
-                      <th className="column-learning">Learning Type</th>
-                      <th className="column-topic">Topic</th>
-                      <th className="column-comment">Comment</th>
-                      <th className="column-duration">Duration</th>
-                    </tr>
-                  </thead>
-                  <tbody className="align-middle">
-                    <tr>
-                      <td></td>
+      <div className="col-12 daily-update-table-style p-0">
+        <div className="table-responsive" style={{ overflow: "visible" }}>
+          <table id="example" className="table table-striped">
+            <thead>
+              <tr>
+                <th className="column-id">#</th>
+                <th className="column-date">Date</th>
+                <th className="column-learning">Learning Type</th>
+                <th className="column-topic">Topic</th>
+                <th className="column-comment">Comment</th>
+                <th className="column-duration">Duration</th>
+              </tr>
+            </thead>
+            <tbody className="align-middle">
+              <tr>
+                <td></td>
+                <td>
+                  <DatePicker
+                    datefunc={(dateFilterValue) => {
+                      //Getting the value for dateFilterValue from DatePicker Component
+                      setDateFilterValue(dateFilterValue);
+                    }}
+                  />
+                </td>
+                <td>
+                  <LearningTypeDropDown
+                    dropdownfunc={(
+                      dropdownFilterValue //Getting the value for dropdownFilterValue from LearningTypeDropDown Component
+                    ) => setDropdownFilterValue(dropdownFilterValue)}
+                  />
+                </td>
+                <td>
+                  <SearchBar
+                    searchfunc={(searchFilterValue) =>
+                      setSearchFilterValue(searchFilterValue)
+                    } //Getting the value for searchFilterValue from SearchBar Component
+                  />
+                </td>
+                <td></td>
+                <td></td>
+              </tr>
+              {arrayCurrentResults == undefined ||
+              arrayCurrentResults?.length === 0 ? (
+                <tr>
+                  <td colSpan={6}>
+                    <EmptyDailyUpdateTable />
+                  </td>
+                </tr>
+              ) : (
+                arrayCurrentResults?.map((item, index) => {
+                  const isLastTooltip =
+                    index === arrayCurrentResults?.length - 1;
+                  const isSecondLastTooltip =
+                    index === arrayCurrentResults?.length - 2;
+                  const tooltipClassName = isLastTooltip || isSecondLastTooltip;
+                  const activityLength = item.activityTime.length; //To calculate length of activityTime array that i'm getting from backend
+
+                  return (
+                    <tr key={index}>
+                      <td>{arrayStartIndex + index + 1}</td>
+                      <td>{dateFormat(item.startDate)}</td>
+                      <td>{item.learning}</td>
+                      <td>{item.topicName}</td>
                       <td>
-                        <DatePicker
-                          datefunc={(dateFilterValue) => {
-                            //Getting the value for dateFilterValue from DatePicker Component
-                            setDateFilterValue(dateFilterValue);
+                        {truncate(item.comment, 35)}
+                        <span
+                          className="text-decoration-underline"
+                          style={{ color: "#28519E", cursor: "pointer" }}
+                          onClick={() => {
+                            setModalSaveFlag(true);
+                            handleReadMore(item);
                           }}
-                        />
+                        >
+                          Read more
+                        </span>
                       </td>
                       <td>
-                        <LearningTypeDropDown
-                          dropdownfunc={(
-                            dropdownFilterValue //Getting the value for dropdownFilterValue from LearningTypeDropDown Component
-                          ) => setDropdownFilterValue(dropdownFilterValue)}
+                        {item.totalTime}
+                        <ImageTooltip
+                          src={DurationClock}
+                          alt="Clock Icon"
+                          tooltipHead="Activity Time"
+                          firstActivity={
+                            activityLength >= 1
+                              ? convertTime(item.activityTime[0].startedAt) +
+                                " - " +
+                                convertTime(item.activityTime[0].endedAt)
+                              : ""
+                          }
+                          secondActivity={
+                            activityLength >= 2
+                              ? convertTime(item.activityTime[1].startedAt) +
+                                " - " +
+                                convertTime(item.activityTime[1].endedAt)
+                              : ""
+                          }
+                          thirdActivity={
+                            activityLength >= 3
+                              ? convertTime(item.activityTime[0].startedAt) +
+                                " - " +
+                                convertTime(item.activityTime[0].endedAt)
+                              : ""
+                          }
+                          fourthActivity={
+                            activityLength >= 4
+                              ? convertTime(item.activityTime[0].startedAt) +
+                                " - " +
+                                convertTime(item.activityTime[0].endedAt)
+                              : ""
+                          }
+                          fifthActivity={
+                            activityLength >= 5
+                              ? convertTime(item.activityTime[0].startedAt) +
+                                " - " +
+                                convertTime(item.activityTime[0].endedAt)
+                              : ""
+                          }
+                          styleClass={tooltipClassName}
                         />
                       </td>
-                      <td>
-                        <SearchBar
-                          searchfunc={(searchFilterValue) =>
-                            setSearchFilterValue(searchFilterValue)
-                          } //Getting the value for searchFilterValue from SearchBar Component
-                        />
-                      </td>
-                      <td></td>
-                      <td></td>
                     </tr>
-                    {arrayCurrentResults == undefined  || arrayCurrentResults?.length === 0? (
-                      <tr>
-                        <td colSpan={6}>
-                          <EmptyDailyUpdateTable />
-                        </td>
-                      </tr>
-                    ) : (
-                      arrayCurrentResults?.map((item, index) => {
-                        const isLastTooltip =
-                          index === arrayCurrentResults?.length - 1;
-                        const isSecondLastTooltip =
-                          index === arrayCurrentResults?.length - 2;
-                        const tooltipClassName =
-                          isLastTooltip || isSecondLastTooltip;
-                        const activityLength = item.activityTime.length; //To calculate length of activityTime array that i'm getting from backend
+                  );
+                })
+              )}
 
-                        return (
-                          <tr key={index}>
-                            <td>{arrayStartIndex + index + 1}</td>
-                            <td>{dateFormat(item.startDate)}</td>
-                            <td>{item.learning}</td>
-                            <td>{item.topicName}</td>
-                            <td>
-                              {truncate(item.comment, 35)}
-                              <span
-                                className="text-decoration-underline"
-                                style={{ color: "#28519E", cursor: "pointer" }}
-                                onClick={() => {
-                                  setModalSaveFlag(true);
-                                  handleReadMore(item);
-                                }}
-                              >
-                                Read more
-                              </span>
-                            </td>
-                            <td>
-                              {item.totalTime}
-                              <ImageTooltip
-                                src={DurationClock}
-                                alt="Clock Icon"
-                                tooltipHead="Activity Time"
-                                // firstActivity={`${convertTime(item.activityTime[0].startedAt)} - ${convertTime(item.activityTime[0].endedAt)}`}
-                                firstActivity={
-                                  activityLength >= 1
-                                    ? convertTime(item.activityTime[0].startedAt) +
-                                      " - " +
-                                      convertTime(item.activityTime[0].endedAt)
-                                    : ""
-                                }
-                                secondActivity={
-                                  activityLength >= 2
-                                    ? convertTime(item.activityTime[1].startedAt) +
-                                      " - " +
-                                      convertTime(item.activityTime[1].endedAt)
-                                    : ""
-                                }
-                                thirdActivity={
-                                  activityLength >= 3
-                                    ? convertTime(item.activityTime[0].startedAt) +
-                                      " - " +
-                                      convertTime(item.activityTime[0].endedAt)
-                                    : ""
-                                }
-                                fourthActivity={
-                                  activityLength >= 4
-                                    ? convertTime(item.activityTime[0].startedAt) +
-                                      " - " +
-                                      convertTime(item.activityTime[0].endedAt)
-                                    : ""
-                                }
-                                fifthActivity={
-                                  activityLength >= 5
-                                    ? convertTime(item.activityTime[0].startedAt) +
-                                      " - " +
-                                      convertTime(item.activityTime[0].endedAt)
-                                    : ""
-                                }
-                                // tooltipBody="10:45 AM - 11:05 AM\n12:05 AM - 12:25 AM\n02:05 AM - 02:45 AM\n05:00 AM - 06:10 AM"
-                                styleClass={tooltipClassName}
-                              />
-                            </td>
-                          </tr>
-                        );
-                      })
-                    )}
+              <Modal
+                size="lg"
+                dialogClassName="modal-90w"
+                centered
+                show={showModal}
+                onHide={() => setShowModal(false)}
+              >
+                <Modal.Header
+                  closeButton
+                  style={{
+                    borderBottom:
+                      "0.063rem solid var(--bs-modal-header-border-color)",
+                  }}
+                >
+                  <Modal.Title
+                    style={{ fontSize: "1.1rem", fontWeight: "600" }}
+                  >
+                    Daily Update
+                  </Modal.Title>
+                </Modal.Header>
+                <Modal.Body>
+                  <p>
+                    <span>Learning Type:</span>{" "}
+                    <span className="opacity-75">
+                      {selectedItem && selectedItem.learning}
+                    </span>
+                  </p>
+                  <p>
+                    <span>Topic:</span>{" "}
+                    <span className="opacity-75">
+                      {selectedItem && selectedItem.topicName}
+                    </span>
+                  </p>
 
-                    <Modal
-                      size="lg"
-                      dialogClassName="modal-90w"
-                      centered
-                      show={showModal}
-                      onHide={() => setShowModal(false)}
-                    >
-                      <Modal.Header
-                        closeButton
-                        style={{
-                          borderBottom:
-                            "1px solid var(--bs-modal-header-border-color)",
-                        }}
+                  <Form.Group>
+                    <Form.Label>
+                      <span>Comment: </span>
+                    </Form.Label>
+                    <Form.Control
+                      className="opacity-75"
+                      disabled
+                      as="textarea"
+                      style={{ fontSize: "0.813rem" }}
+                      defaultValue={selectedItem && selectedItem.comment}
+                      rows={4}
+                      cols={60}
+                    ></Form.Control>
+                  </Form.Group>
+                </Modal.Body>
+              </Modal>
+            </tbody>
+            <tfoot>
+              <tr>
+                <td className="f-bold" colSpan={2}>
+                  Total Items: {tableData?.length}
+                </td>
+                <td></td>
+                <td></td>
+                <td colSpan={2}>
+                  <div
+                    className="d-flex justify-content-end"
+                    style={{ color: "#706F73" }}
+                  >
+                    <div className="d-flex align-items-center">
+                      <p className="me-2 mb-0" style={{ whiteSpace: "nowrap" }}>
+                        Results per page
+                      </p>
+                      <select
+                        style={{ color: "#706F73" }}
+                        className="form-select m-2"
+                        value={resultsPerPage}
+                        onChange={handleResultsPerPageChange}
                       >
-                        <Modal.Title
-                          style={{ fontSize: "1.1rem", fontWeight: "600" }}
+                        <option value="10">10</option>
+                        <option value="20">20</option>
+                        <option value="30">30</option>
+                      </select>
+                      <ul className="pagination mb-0">
+                        <li
+                          className={`page-item me-1 ${
+                            currentPage === 1 ? "page-item disabled" : ""
+                          }`}
                         >
-                          Daily Update
-                        </Modal.Title>
-                      </Modal.Header>
-                      <Modal.Body>
-                        <p>
-                          <span>Learning Type:</span>{" "}
-                          <span className="opacity-75">
-                            {selectedItem && selectedItem.learning}
-                          </span>
-                        </p>
-                        <p>
-                          <span>Topic:</span>{" "}
-                          <span className="opacity-75">
-                            {selectedItem && selectedItem.topicName}
-                          </span>
-                        </p>
-
-                        <Form.Group>
-                          <Form.Label>
-                            <span>Comment: </span>
-                          </Form.Label>
-                          <Form.Control
-                            className="opacity-75"
-                            disabled
-                            as="textarea"
-                            style={{ fontSize: "0.813rem" }}
-                            defaultValue={selectedItem && selectedItem.comment}
-                            rows={4}
-                            cols={60}
-                          ></Form.Control>
-                        </Form.Group>
-                      </Modal.Body>
-                    </Modal>
-                  </tbody>
-                  <tfoot>
-                    <tr>
-                      <td className="f-bold" colSpan={2}>
-                        Total Items: {tableData?.length}
-                      </td>
-                      <td></td>
-                      <td></td>
-                      <td colSpan={2}>
-                        <div
-                          className="d-flex justify-content-end"
-                          style={{ color: "#706F73" }}
+                          <button
+                            className="page-link"
+                            onClick={handlePrevPageChange}
+                          >
+                            <svg
+                              width="8"
+                              height="14"
+                              viewBox="0 0 8 14"
+                              fill="none"
+                              xmlns="http://www.w3.org/2000/svg"
+                            >
+                              <path
+                                d="M7 1.5L1.5 7L7 12.5"
+                                stroke={
+                                  currentPage === 1 ? "#A4A3A7" : "#28519E"
+                                }
+                                strokeWidth="1.5"
+                              />
+                            </svg>
+                          </button>
+                        </li>
+                        {Array.from(
+                          { length: totalPaginationPages },
+                          (_, i) => i + 1
+                        ).map((page) => (
+                          <li
+                            key={page}
+                            className={`page-item me-1 ${
+                              page === currentPage ? "active" : ""
+                            }`}
+                          >
+                            <button
+                              className="page-link rounded pagination-styling"
+                              onClick={() => handlePageChange(page)}
+                            >
+                              {page}
+                            </button>
+                          </li>
+                        ))}
+                        <li
+                          className={`page-item ${
+                            currentPage === totalPaginationPages
+                              ? "page-item disabled"
+                              : ""
+                          }`}
                         >
-                          <div className="d-flex align-items-center">
-                            <p
-                              className="me-2 mb-0"
-                              style={{ whiteSpace: "nowrap" }}
+                          <button
+                            className="page-link"
+                            onClick={handleNextPageChange}
+                          >
+                            <svg
+                              width="8"
+                              height="14"
+                              viewBox="0 0 8 14"
+                              fill="none"
+                              xmlns="http://www.w3.org/2000/svg"
                             >
-                              Results per page
-                            </p>
-                            <select
-                              style={{ color: "#706F73" }}
-                              className="form-select m-2"
-                              value={resultsPerPage}
-                              onChange={handleResultsPerPageChange}
-                            >
-                              <option value="10">10</option>
-                              <option value="20">20</option>
-                              <option value="30">30</option>
-                            </select>
-                            <ul className="pagination mb-0">
-                              <li
-                                className={`page-item me-1 ${
-                                  currentPage === 1 ? "page-item disabled" : ""
-                                }`}
-                              >
-                                <button
-                                  className="page-link"
-                                  onClick={handlePrevPageChange}
-                                >
-                                  <svg
-                                    width="8"
-                                    height="14"
-                                    viewBox="0 0 8 14"
-                                    fill="none"
-                                    xmlns="http://www.w3.org/2000/svg"
-                                  >
-                                    <path
-                                      d="M7 1.5L1.5 7L7 12.5"
-                                      stroke={
-                                        currentPage === 1
-                                          ? "#A4A3A7"
-                                          : "#28519E"
-                                      }
-                                      strokeWidth="1.5"
-                                    />
-                                  </svg>
-                                </button>
-                              </li>
-                              {Array.from(
-                                { length: totalPaginationPages },
-                                (_, i) => i + 1
-                              ).map((page) => (
-                                <li
-                                  key={page}
-                                  className={`page-item me-1 ${
-                                    page === currentPage ? "active" : ""
-                                  }`}
-                                >
-                                  <button
-                                    className="page-link rounded pagination-styling"
-                                    onClick={() => handlePageChange(page)}
-                                  >
-                                    {page}
-                                  </button>
-                                </li>
-                              ))}
-                              <li
-                                className={`page-item ${
+                              <path
+                                d="M1 12.5L6.5 7L1 1.5"
+                                stroke={
                                   currentPage === totalPaginationPages
-                                    ? "page-item disabled"
-                                    : ""
-                                }`}
-                              >
-                                <button
-                                  className="page-link"
-                                  onClick={handleNextPageChange}
-                                >
-                                  <svg
-                                    width="8"
-                                    height="14"
-                                    viewBox="0 0 8 14"
-                                    fill="none"
-                                    xmlns="http://www.w3.org/2000/svg"
-                                  >
-                                    <path
-                                      d="M1 12.5L6.5 7L1 1.5"
-                                      stroke={
-                                        currentPage === totalPaginationPages
-                                          ? "#A4A3A7"
-                                          : "#28519E"
-                                      }
-                                      strokeWidth="1.5"
-                                    />
-                                  </svg>
-                                </button>
-                              </li>
-                            </ul>
-                          </div>
-                        </div>
-                      </td>
-                    </tr>
-                  </tfoot>
-                </table>
-              </div>
-            </div>
-          </div>
-  )
-}
+                                    ? "#A4A3A7"
+                                    : "#28519E"
+                                }
+                                strokeWidth="1.5"
+                              />
+                            </svg>
+                          </button>
+                        </li>
+                      </ul>
+                    </div>
+                  </div>
+                </td>
+              </tr>
+            </tfoot>
+          </table>
+        </div>
+      </div>
+    </div>
+  );
+};
 
-export default DailyUpdateTableSection
+export default DailyUpdateTableSection;

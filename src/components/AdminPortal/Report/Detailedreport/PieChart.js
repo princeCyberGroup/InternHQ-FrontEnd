@@ -1,14 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from "chart.js";
 import { Pie } from "react-chartjs-2";
-// import PieChartData from "./PieChartData";
 import { Link } from "react-router-dom";
 import "./PieChart.css";
-// import pieChartData from "./PieChartData";
 import NoData from "../../../../Assets/NoData.svg";
-
-// width: 394px;
-// height: 274px;
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 
@@ -73,13 +68,9 @@ const PieChart = () => {
     ));
   };
 
-
-
   const fetchData = async () => {
-    // debugger;
     await fetch(
-      // `https://cg-interns-hq.azurewebsites.net/getDailyTaskTrackerRecords?userId=${piechartId}` 
-      `https://cg-interns-hq.azurewebsites.net/getDailyTaskTrackerRecords?userId=${36}` 
+      `https://cg-interns-hq.azurewebsites.net/getDailyTaskTrackerRecords?userId=${piechartId}`
     )
       .then((response) => {
         return response.json();
@@ -182,7 +173,7 @@ const PieChart = () => {
   totalCgHours = convertDecimalToHours(totalCgHours);
   totalSelfHours = convertDecimalToHours(totalSelfHours);
   totalMentorHours = convertDecimalToHours(totalMentorHours);
-  
+
   const techPercentages = {
     Project: parseFloat(convertToPercentageMonthly(totalProjectHours)),
     "CG Learning Video": parseFloat(convertToPercentageMonthly(totalCgHours)),
@@ -221,13 +212,9 @@ const PieChart = () => {
         ).toFixed(2),
   };
 
-  // console.log(techPercentages);
-
   data.labels = Object.keys(techPercentages).map((techName) => techName);
-  // console.log(data.labels, "This labels");
 
   const legendValues = Object.values(techPercentages);
-  // console.log(legendValues, "LEgends");
   const newValue = legendValues.map((val) => (val > 0 ? val : 0));
   data.datasets[0].data = newValue;
 
@@ -237,17 +224,13 @@ const PieChart = () => {
         display: true,
         position: "right",
         labels: {
-          // usePointStyle: true,
           boxWidth: 17,
           boxHeight: 17,
-          // pointStyle: 'cross',
-          // boxWidth: 12,
 
           generateLabels: (chart) => {
             const data = chart.data;
             if (data.labels.length && data.datasets.length) {
               return data.labels.map((label, i) => {
-                console.log("this is lable", label)
                 const dataset = data.datasets[0];
                 const value = legendValues[i];
                 return {
@@ -261,7 +244,6 @@ const PieChart = () => {
                   lineDash: dataset.borderDash,
                   lineDashOffset: dataset.borderDashOffset,
                   lineJoin: dataset.borderJoinStyle,
-                  // lineWidth: dataset.borderWidth,
                   strokeStyle: "#fff",
                   pointStyle: dataset.pointStyle,
                   rotation: dataset.rotation,
@@ -287,7 +269,7 @@ const PieChart = () => {
   };
 
   return (
-    <div className="container" style={{ border:"1px solid black" }}>
+    <div className="container" style={{ border: "1px solid black" }}>
       <div className="row">
         <div
           className="col"
@@ -296,10 +278,7 @@ const PieChart = () => {
             borderRadius: "8px",
           }}
         >
-          <div
-            className="dropdown"
-            style={{ marginBottom: "0.594rem" }}
-          >
+          <div className="dropdown" style={{ marginBottom: "0.594rem" }}>
             <button
               className="btn dropdown-toggle dropdown-button"
               type="button"
@@ -321,7 +300,10 @@ const PieChart = () => {
           </div>
           <div>
             {monthlyRecords.length === 0 ? (
-              <div className="d-flex justify-content-center align-items-center flex-column" style={{ minHeight: "476px" }}>
+              <div
+                className="d-flex justify-content-center align-items-center flex-column"
+                style={{ minHeight: "476px" }}
+              >
                 <img src={NoData} alt="No Data" />
                 <h1
                   style={{
@@ -335,8 +317,14 @@ const PieChart = () => {
                 </h1>
               </div>
             ) : (
-              <div style={{border:"1px solid", width:"394px",height:"274px"}}>
-              <Pie data={data} options={options} style={{border:"1px solid red" }} />
+              <div
+                style={{ border: "1px solid", width: "394px", height: "274px" }}
+              >
+                <Pie
+                  data={data}
+                  options={options}
+                  style={{ border: "1px solid red" }}
+                />
               </div>
             )}
           </div>

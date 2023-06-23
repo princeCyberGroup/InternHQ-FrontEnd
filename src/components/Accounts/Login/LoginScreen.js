@@ -11,7 +11,6 @@ import { bottom } from "@popperjs/core";
 
 const LoginScreen = () => {
   const navigate = useNavigate();
-  // const [activeIndex, setActiveIndex] = useState(0); //For carousel
 
   const [email, setEmail] = useState("");
   const [isEmailValid, setIsEmailValid] = useState(false);
@@ -48,7 +47,6 @@ const LoginScreen = () => {
         password,
       })
       .then((response) => {
-        console.log("data2:", response.data);
         localStorage.setItem("login", true);
         const res = {
           token: response.data.token,
@@ -61,22 +59,6 @@ const LoginScreen = () => {
           designation: response.data.designation,
         };
         localStorage.setItem("userData", JSON.stringify(res));
-        // const res = {
-        //   token:response.data.token,
-        //   email:response.data.response[0].email,
-        //   id:response.data.response[0].id,
-        //   firstName:response.data.response[0].firstname,
-        //   lastName:response.data.response[0].lastname,
-        //   lastLogin:response.data.response[0].lastlogin
-        // };
-
-        // console.log(response.data.response[0].id);
-        // console.log(response.data)
-        // setCurrentUser(response.data);
-        // const token = response.data.token;
-        // localStorage.setItem("token", response.data.token);
-        // localStorage.setItem('userData', JSON.stringify(res));
-        // setAuth({ email, password, token });
         setIsLoading(false);
         let str = res.randomString.toLowerCase();
         str === "07495d"
@@ -101,7 +83,6 @@ const LoginScreen = () => {
         if (error.response?.data.statusCode == 500) {
           navigate("/error?statusCode=500");
         }
-        // navigate(`/error?statusCode=${error.response?.data.statusCode}`);
       });
   };
   useEffect(() => {
@@ -115,20 +96,9 @@ const LoginScreen = () => {
         ? navigate("/admin/dashboard")
         : navigate("/mentor-dashboard");
     }
-
-    // const interval = setInterval(() => {
-    //   setActiveIndex((prevIndex) => (prevIndex + 1) % 3);
-    // }, 3000); //Make it 1000
-
-    // return () => {
-    //   setNavigateTo();
-    // };
   }, []);
   return (
     <div className="container-fluid login-screen-body ">
-      {/* {console.log(btoa("sign-up"))}
-      {console.log(encodeURIComponent("c2lnbi11cA=="))}
-      {console.log(atob("c2lnbi11cA=="))} */}
       <div className="row pos">
         <div className="d-flex justify-content-center  align-items-center flex-row">
           <div
@@ -154,8 +124,6 @@ const LoginScreen = () => {
                 id="carouselExampleIndicators"
                 className="carousel slide mt-3"
                 data-bs-ride="carousel"
-                // data-bs-interval="4000"
-                // data-interval="false" //Remove it
               >
                 <div className="carousel-indicators">
                   <button
@@ -164,30 +132,21 @@ const LoginScreen = () => {
                     className="active"
                     aria-current="true"
                     aria-label="Slide 1"
-                    // onClick={() => handleSlideChange(0)}
-                    // className={activeIndex === 0 ? "active" : ""}
                   ></button>
                   <button
                     data-bs-target="#carouselExampleIndicators"
                     data-bs-slide-to="1"
                     aria-label="Slide 2"
-                    // onClick={() => handleSlideChange(1)}
-                    // className={activeIndex === 1 ? "active" : ""}
                   ></button>
                   <button
                     data-bs-target="#carouselExampleIndicators"
                     data-bs-slide-to="2"
                     aria-label="Slide 3"
-                    // onClick={() => handleSlideChange(2)}
-                    // className={activeIndex === 2 ? "active" : ""}
                   ></button>
                 </div>
                 <div className="carousel-inner">
                   <div
                     style={{ width: "16.25rem" }}
-                    // className={`carousel-item ${
-                    //   activeIndex === 0 ? "active" : ""
-                    // }`}
                     className="carousel-item active"
                   >
                     <img
@@ -201,13 +160,7 @@ const LoginScreen = () => {
                     </p>
                   </div>
 
-                  <div
-                    style={{ width: "16.25rem" }}
-                    // className={`carousel-item ${
-                    //   activeIndex === 1 ? "active" : ""
-                    // }`}
-                    className="carousel-item"
-                  >
+                  <div style={{ width: "16.25rem" }} className="carousel-item">
                     <img
                       src={CarouselImage2}
                       className="d-block "
@@ -218,13 +171,7 @@ const LoginScreen = () => {
                       Enhance your skills via assessments
                     </p>
                   </div>
-                  <div
-                    style={{ width: "16.25rem" }}
-                    // className={`carousel-item ${
-                    //   activeIndex === 2 ? "active" : ""
-                    // }`}
-                    className="carousel-item"
-                  >
+                  <div style={{ width: "16.25rem" }} className="carousel-item">
                     <img
                       src={CarouselImage3}
                       className="d-block "
@@ -283,7 +230,6 @@ const LoginScreen = () => {
                     >
                       Password
                     </label>
-                    {/* <div className="password-input-container"> */}
                     <div className="input-group">
                       <div className="div-input pass-input-div">
                         <input
@@ -314,32 +260,6 @@ const LoginScreen = () => {
                         Incorrect Password
                       </span>
                     )}
-
-                    {/* <input
-                      className="input-fields"
-                      type={showPassword ? "text" : "password"}
-                      id="exampleInputPassword1"
-                      placeholder="Enter Your Password"
-                      value={password}
-                      required
-                      onChange={handlePasswordChange}
-                    />
-                    <span
-                      className=""
-                      onClick={handleTogglePasswordVisibility}
-                    >
-                      {showPassword ? (
-                        <i className="bi bi-eye-slash"></i>
-                      ) : (
-                        <i className="bi bi-eye"></i>
-                      )}
-                    </span>
-            
-                    {!isPasswordValid && password && (
-                      <span className="sign-up-warning">
-                        Incorrect Password
-                      </span>
-                    )} */}
                   </div>
                 </div>
 

@@ -2,7 +2,7 @@ import React from "react";
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from "chart.js";
 import { Pie } from "react-chartjs-2";
 import PieChartData from "./PieChartData";
-import '../TopTech/topTech.css';
+import "../TopTech/topTech.css";
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 export const data = {
@@ -39,7 +39,6 @@ const PieChart = () => {
 
     return techPercentage;
   };
-  // console.log(calculateTechPercentage(pieChartData));
 
   // Calculate the occurrence of each techName in lowercase
   const techNameOccurrences = PieChartData.reduce((accumulator, item) => {
@@ -55,26 +54,16 @@ const PieChart = () => {
     (techName) => techName.charAt(0).toUpperCase() + techName.slice(1)
   );
   data.datasets[0].data = Object.values(techNameOccurrences);
-  // data.datasets[0].
-  // data.datasets[0].backgroundColor = generateRandomColors();
-  // data.datasets[0].borderColor = "#fff"
-  // data.datasets[0].borderWidth = 5
 
   const options = {
     plugins: {
       legend: {
         display: true,
-        // layout: "vertical",
-        // verticalAlign: "center",
-        // align: "right",
         position: "bottom",
         labels: {
-          // usePointStyle: true,
           boxWidth: 17,
           boxHeight: 17,
-          // pointStyle: 'cross',
-          // boxWidth: 12,
-          
+
           generateLabels: (chart) => {
             const data = chart.data;
             if (data.labels.length && data.datasets.length) {
@@ -93,7 +82,6 @@ const PieChart = () => {
                   lineDash: dataset.borderDash,
                   lineDashOffset: dataset.borderDashOffset,
                   lineJoin: dataset.borderJoinStyle,
-                  // lineWidth: dataset.borderWidth,
                   strokeStyle: "#fff",
                   pointStyle: dataset.pointStyle,
                   rotation: dataset.rotation,

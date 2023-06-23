@@ -6,8 +6,6 @@ import { ReactComponent as ExpandMore } from "../../../../Assets/expand_more.svg
 import TechnologyDropDown from "./TechnologyDropdown(Admin)";
 import UsersDropdown from "./UsersDropdown";
 
-// const interns=["Prince Kumar","Nikhil Sharma","Karan Sharma","Kishan Sah","Pankaj Kumar","Varun Sharma","Samridhi Gupta"];
-
 export const AddNewTask = ({ task, onClose }) => {
   const [error, setError] = useState(true);
   const [taskName, setTaskName] = useState("");
@@ -30,21 +28,15 @@ export const AddNewTask = ({ task, onClose }) => {
     if (task) {
       setTaskName(task.taskName);
       setTaskDescription(task.taskDescription);
-      // setTaskTech(task.taskTech);
-      // setTaskUsers(task.taskUsers);
       setTechnolotyNames(task.technologyNames);
       setSelectedTechIds(task.selectedTechIds);
       setSelectedUsers(task.selectedUsers);
       setSelectedUserIds(task.selectedUserIds);
-      // setTech(task.tech);
-      // setUsers(task.users)
     }
   }, [task]);
 
   const handleClickClear = (e) => {
     e.preventDefault();
-    console.log(selectedUserIds);
-    console.log(selectedTechIds);
 
     setTaskName("");
     setTaskDescription("");
@@ -52,8 +44,6 @@ export const AddNewTask = ({ task, onClose }) => {
     setSelectedUserIds([]);
     setTechnolotyNames([]);
     setSelectedUsers([]);
-    // setTaskTech([]);
-    // setTaskUsers([]);
     setTech({});
     setUsers({});
 
@@ -70,23 +60,20 @@ export const AddNewTask = ({ task, onClose }) => {
   };
   const techDataComingFrmChild = (data) => {
     setTech(data);
-    // setTaskTechIds(data.techId);
   };
 
   const usersDataComingFrmChild = (data) => {
     setUsers(data);
-    // setTaskUserIds(data.userId);
-    // console.log(taskUserIds);
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log("clicked");
 
     var storedObject = JSON.parse(localStorage.getItem("userData"));
     var userId = storedObject.userId;
     var assignedByDesignation = storedObject.designation;
-    var assignedByfullName = storedObject.firstName + ' ' + storedObject.lastName;
+    var assignedByfullName =
+      storedObject.firstName + " " + storedObject.lastName;
 
     if (taskName.length === 0 && taskDescription.length < 2) {
       alert("Please fill out the necessary fields");
@@ -102,9 +89,7 @@ export const AddNewTask = ({ task, onClose }) => {
           taskUsers: selectedUserIds, // Send the array of user IDs
           assignedBy: userId,
         })
-        .then((res) => {
-          console.log("print", res.data);
-        })
+        .then((res) => {})
         .catch((err) => {
           console.log(err);
         });
@@ -116,8 +101,6 @@ export const AddNewTask = ({ task, onClose }) => {
       setSelectedUserIds([]);
       setTechnolotyNames([]);
       setSelectedUsers([]);
-      // setTaskTech([]);
-      // setTaskUsers([]);
       setTech({});
       setUsers({});
 
@@ -141,25 +124,12 @@ export const AddNewTask = ({ task, onClose }) => {
     setTaskDescription(e.target.value);
   };
 
-  // const handleTechnologyTag = (e) => {
-  //   setTaskTech(e.target.value);
-  // };
-
   const handleAssignedTo = (e) => {
     setTaskUsers(e.target.value);
   };
 
   return (
     <div>
-      {/* <button
-        type="button"
-        class="btn"
-        data-bs-toggle="modal"
-        data-bs-target="#skillModal"
-      >
-        Add New Task
-      </button> */}
-
       <div
         class="modal fade"
         id="addTaskModal"
@@ -268,7 +238,6 @@ export const AddNewTask = ({ task, onClose }) => {
                         />
                       </ul>
                     </div>
-                    {/* </div> */}
                   </div>
                 </div>
 
@@ -320,16 +289,7 @@ export const AddNewTask = ({ task, onClose }) => {
                         />
                       </ul>
                     </div>
-                    {/* </div> */}
                   </div>
-                  {/* <input
-                    type="text"
-                    class="form-control"
-                    id="assigned-to"
-                    placeholder="Select Associate Consultant"
-                    value={taskUsers}
-                    onChange={(e) => handleAssignedTo(e)}
-                  /> */}
                 </div>
 
                 <div className="d-flex align-items-center justify-content-between">

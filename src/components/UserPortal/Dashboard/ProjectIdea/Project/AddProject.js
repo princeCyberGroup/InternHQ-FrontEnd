@@ -129,7 +129,6 @@ const AddProject = () => {
 
   return (
     <>
-    {/* //component div 171 -233 */}
       <div className="card-body pb-0">
         <div className="project-card-text-row">
           <p className="project-card-text">
@@ -192,7 +191,6 @@ const AddProject = () => {
           </p>
         </div>
       </div>
-      {/* //modal div 234-759  */}
       <div
         class="modal fade"
         id="exampleModal"
@@ -304,7 +302,6 @@ const AddProject = () => {
                             />
                           </ul>
                         </div>
-                        {/* </div> */}
                       </div>
                     </div>
 

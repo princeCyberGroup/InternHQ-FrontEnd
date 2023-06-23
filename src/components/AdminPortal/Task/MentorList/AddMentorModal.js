@@ -69,7 +69,7 @@ export const AddMentorModal = ({ isOpen, onClose, onAddMentor }) => {
 
     uploadBytes(imageRef, data.target.files[0]).then((snapshot) => {
       getDownloadURL(snapshot.ref).then((url) => {
-        console.log("URL:", url);
+        // console.log("URL:", url);
 
         setImageUrl(url);
       });
@@ -128,7 +128,7 @@ export const AddMentorModal = ({ isOpen, onClose, onAddMentor }) => {
         closeButton.click();
       }
     } catch (err) {
-      console.log(err);
+      // console.log(err);
     }
   };
   

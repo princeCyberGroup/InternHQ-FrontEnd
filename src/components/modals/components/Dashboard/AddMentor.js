@@ -39,7 +39,7 @@ export const AddMentor = () => {
         const imageRef = ref(storage, `userProfilePicture/${data.target.files[0].name}`);
         uploadBytes(imageRef, data.target.files[0]).then((snapshot) => {
             getDownloadURL(snapshot.ref).then((url) => {
-                console.log("URL:", url);
+                // console.log("URL:", url);
                 setImageUrl(url);
             });
         });
@@ -63,9 +63,9 @@ export const AddMentor = () => {
                 designation,
                 skills
             }).then((res) => {
-                console.log("print", res.data);
+                // console.log("print", res.data);
             }).catch((err) => {
-                console.log(err);
+                // console.log(err);
             })
             setSkills([]);
             setMentorName("");

@@ -58,48 +58,6 @@ const AddNewIdea = () => {
   const handleInputChange = (event) => {
     setTextInput(event.target.value);
   };
-  // const handleOptionClick = (event) => {
-  //   event.preventDefault();
-  //   const { value } = event.currentTarget.dataset;
-  //   const isChecked = event.currentTarget.querySelector('input').checked;
-
-  //   if (isChecked) {
-
-  //             var optionObject = `tech${counter}`;
-  //             technologyNames.push(value)
-  //             setSelectedOptions((prevSelectedOptions) => [...prevSelectedOptions, optionObject]);
-  //             setCounter((prevCounter) => prevCounter + 1);
-  //         } else {
-  //             setSelectedOptions((prevSelectedOptions) =>
-  //                 prevSelectedOptions.filter((option) => Object.values(option)[0] !== value)
-  //             );
-  //             setTechnologyNames((prevTechnologyNames) =>
-  //                 prevTechnologyNames.filter((technology) => technology !== value)
-  //             );
-  //         }
-  //     };
-  //     setTextInput(event.target.value);
-  //   };
-  // const handleOptionClick = (event) => {
-  //   const { value } = event.currentTarget.dataset;
-  //   const isChecked = event.currentTarget.querySelector("input").checked;
-
-  //   if (isChecked) {
-  //     var optionObject = `tech${counter}`;
-  //     technologyNames.push(value);
-  //     setSelectedOptions((prevSelectedOptions) => [
-  //       ...prevSelectedOptions,
-  //       optionObject,
-  //     ]);
-  //     setCounter((prevCounter) => prevCounter + 1);
-  //   } else {
-  //     setSelectedOptions((prevSelectedOptions) =>
-  //       prevSelectedOptions.filter(
-  //         (option) => Object.values(option)[0] !== value
-  //       )
-  //     );
-  //   }
-  // };
 
   const handleClick = (e) => {
     e.preventDefault();
@@ -157,11 +115,7 @@ const AddNewIdea = () => {
     texts.forEach((text, index) => {
       membersObj[`member${index + 1}`] = text;
     });
-
-    // technologyNames.forEach((curElem, index) => {
-    //   techNames[`tech${index + 1}`] = curElem;
-    // });
-
+    
     isObjectEmpty(membersObj);
   }, [textInput, tech]);
   return (

@@ -1,8 +1,8 @@
 .report{
-    width: 767px;
-    height:376px !important;
+    width: 47.938rem;
+    height:23.5rem !important;
     background-color: #fff;
-    box-shadow: 0px 4px 20px rgba(40, 52, 73, 0.15);
+    box-shadow: 0 0.25rem 1.25rem rgba(40, 52, 73, 0.15);
    font-family: "Roboto";
  }
 .legend-gap {
@@ -10,30 +10,30 @@
   border: #fff;
 }
 .card-heading {
-  width: 105px;
+  width: 6.563rem;
   font-weight: 600;
-  height: 57px;
+  height: 3.563rem;
   color: #343435;
-  font-size: 15px;
+  font-size: 0.938rem;
   border-radius: 0;
 }
 .card-heading-active {
-  border-bottom: 3px solid #28519e;
+  border-bottom: 0.188rem solid #28519e;
 }
 
 .dropdown-button {
-  width: 123px;
-  font-size: 14px;
-  border: 1px solid #b2b2b3;
-  border-radius: 4px;
-  padding-left: 8px;
+  width: 7.688rem;
+  font-size: 0.875rem;
+  border: 0.063rem solid #b2b2b3;
+  border-radius: 0.25rem;
+  padding-left: 0.5rem;
 }
 
 .dropdown-button::after {
   margin-left: 1rem;
 }
 .dropdown-button:hover {
-  border: 1px solid #b2b2b3;
+  border: 0.063rem solid #b2b2b3;
 }
 
 .recharts-cartesian-grid-horizontal line:first-child,
@@ -43,7 +43,7 @@
 .recharts-wrapper{
   position: relative;
   /* top: -2rem; */
-  height: 330px !important;
+  height: 20.625rem !important;
 }
 .recharts-legend-wrapper {
     position: absolute;
@@ -51,13 +51,13 @@
   }
 .recharts-legend-item-text {
     color: #343435 !important;
-    line-height: 33px;
-    margin-left: 9px;
+    line-height: 2.063rem;
+    margin-left: 0.563rem;
     font-weight: 600;
-    font-size: 14px;
+    font-size: 0.875rem;
 }
 .chart{
-  height: 340px;
+  height: 21.25rem;
   /* position: relative;
   top: 0rem; */
 }
@@ -69,6 +69,6 @@
 p.txt{
   /* text-align: center; */
   margin: 0;
-  font-size: 15px;
+  font-size: 0.938rem;
   font-weight: 500;
 }
