@@ -98,7 +98,7 @@ const UsersDropdown = (props) => {
 
   useEffect(() => {
     if(props.selectedUsers){
-    const selectedUsersNames = props.selectedUsers.map((user) => user.name);
+    const selectedUsersNames = props.selectedUsers?.map((user) => user.name);
     props.usersDataComingChild(selectedUsersNames);
     }
   }, [props.selectedUsers]);
@@ -128,7 +128,7 @@ const UsersDropdown = (props) => {
       <input
         type="text"
         className="custom-input"
-        value={props.selectedUsers.map((user) => user.name).join(", ")}
+        value={props.selectedUsers?.map((user) => user.name).join(", ")}
         disabled
       />
     </div>

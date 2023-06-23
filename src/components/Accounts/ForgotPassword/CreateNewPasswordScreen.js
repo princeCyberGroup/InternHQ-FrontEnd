@@ -250,7 +250,8 @@ const CreateNewPasswordScreen = () => {
                       New Password
                     </label>
                     <div className="input-group">
-                    <input
+                      <div className="div-input pass-input-div">
+                         <input
                       className="input-login"
                       type={showNewPassword ? "password" : "text"}
                       id="exampleInputEmail1"
@@ -273,6 +274,8 @@ const CreateNewPasswordScreen = () => {
                         )}
                       </button>
                       </div>
+                   
+                      </div>
                     {!isPasswordValid && newPassword && (
                       <span className="sign-up-warning ms-2">
                         To proceed, please provide a password as a requirement.
@@ -288,7 +291,8 @@ const CreateNewPasswordScreen = () => {
                       Confirm Password
                     </label>
                     <div className="input-group">
-                    <input
+                      <div className="div-input pass-input-div">
+                        <input
                       className="input-login"
                       type={showConfirmPassword ? "password" : "text"}
                       id="exampleInputPassword1"
@@ -310,15 +314,17 @@ const CreateNewPasswordScreen = () => {
                         )}
                       </button>
                       </div>
+                    
+                      </div>
                     {!isConfirmPasswordValid && confirmPassword && (
-                      <span className="sign-up-warning ms-2">
+                      <span className="sign-up-warning">
                         {isPasswordSame
                           ? ""
                           : "Passwords are not matching"}
                       </span>
                     )}
                     {isPasswordSame && (
-                      <span className="sign-up-warning ms-2">
+                      <span className="sign-up-warning">
                         {isPasswordSame
                           ? "New password cannot be same as the old password"
                           : ""}
@@ -329,7 +335,7 @@ const CreateNewPasswordScreen = () => {
                 <div
                   className="row"
                   style={{
-                    width: "25.438rem",
+                    width: "428.58px",
                     background: "rgba(184, 221, 225, 0.54)",
                     borderRadius: "0.25rem",
                     padding: "0.313rem",

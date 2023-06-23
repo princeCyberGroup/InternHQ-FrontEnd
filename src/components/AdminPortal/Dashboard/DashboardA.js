@@ -12,6 +12,8 @@ import TopTech from './TopTech/topTech';
 import AssociateConsultant from './associateConsultant/associateConsultant';
 import Insights from './Insights/insights';
 import { ReactComponent as Right } from "./Assets/right.svg";
+import Header from '../../Header/Header';
+
 
 const DashboardA = () => {
   const [StatusData, setStatusData] = useState([]);
@@ -44,7 +46,9 @@ const DashboardA = () => {
   };
   return (
     <>
-      <HeaderAdmin />
+     <div className="" style={{ marginBottom: "3rem" }}>
+        <Header />
+      </div>
       <div className="responsiveness">
         <>
           <div className='row'>

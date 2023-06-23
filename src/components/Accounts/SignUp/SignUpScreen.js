@@ -19,6 +19,7 @@ const SignUpScreen = () => {
 
   const [incorrectemail, setIncorrectemail] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const [errorMsg, setErrorMsg] = useState("");
 
   const handleEmailChange = (event) => {
     const { value } = event.target;
@@ -50,7 +51,7 @@ const SignUpScreen = () => {
         password,
       })
       .then((response) => {
-        console.log("Inside then")
+        console.log("Inside then");
         console.log(response.data);
         localStorage.setItem("token", response.data.token);
         localStorage.setItem("email", email);
@@ -58,12 +59,13 @@ const SignUpScreen = () => {
         navigate("/sign-up-verification");
       })
       .catch((error) => {
-        console.log("Inside Catch")
+        console.log("Inside Catch");
         console.log(error.response?.data);
         
-        if (error.response?.data.msg == "Error: User Already Exists!") {
+        if (error.response?.data.msg) {
           setIsEmailValid(false);
           setIncorrectemail(true);
+          setErrorMsg(error.response?.data.msg)
         }
         setIsLoading(false);
         if(error.response?.data.statusCode == 400) {
@@ -208,14 +210,18 @@ const SignUpScreen = () => {
           </div>
           <div
             className="col-md-7 bg-white p-4"
-            style={{ height: "35.125rem" }}
+            style={{ height: "35.125rem",
+            width:"423.969px"}}
           >
             <div className="row ">
               <p className="right-container-heading">Sign Up</p>
             </div>
             <div className="row" style={{ height: "15.625rem" }}>
-              <form onSubmit={(e)=>{
-                handleSubmit(e)}}>
+              <form
+                onSubmit={(e) => {
+                  handleSubmit(e);
+                }}
+              >
                 <div style={{ height: "11.25rem", marginTop: "1rem" }}>
                   <div className="d-flex flex-column">
                     <label
@@ -224,7 +230,8 @@ const SignUpScreen = () => {
                     >
                       Email ID
                     </label>
-                    <input
+                    <div className="div-input">
+                      <input
                       className="input-login"
                       type="email"
                       id="exampleInputEmail1"
@@ -233,10 +240,11 @@ const SignUpScreen = () => {
                       placeholder="Enter Your Email ID"
                       required
                     />
+                    </div>
                     {!isEmailValid && email && (
                       <span className="sign-up-warning">
                         {incorrectemail
-                          ? "User Already Exists!"
+                          ? errorMsg
                           : "Please make use of CG-Infinity email only"}
                       </span>
                     )}
@@ -250,7 +258,8 @@ const SignUpScreen = () => {
                       Password
                     </label>
                     <div className="input-group">
-                    <input
+                      <div className="div-input pass-input-div">
+                        <input
                       className="input-login"
                       type={showPassword ? "password" : "text"}
                       id="exampleInputPassword1"
@@ -271,6 +280,7 @@ const SignUpScreen = () => {
                           <i className="bi bi-eye-slash"></i>
                         )}
                       </button>
+                      </div>
                     </div>
                     {!isPasswordValid && password && (
                       <span className="sign-up-warning">
@@ -284,6 +294,7 @@ const SignUpScreen = () => {
                 <button
                   type="submit"
                   className="btn btn-warning border-0 sign-up-btn"
+                  style={{width:"inherit"}}
                   disabled={!isEmailValid || !isPasswordValid || isLoading}
                 >
                   {isLoading ? (

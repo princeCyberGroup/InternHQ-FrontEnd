@@ -1,4 +1,4 @@
-import React, { useContext,useEffect } from "react";
+import React, { useContext, useEffect } from "react";
 import "./skillmanagement.css";
 import TakeTest from "./TakeTest/TakeTest";
 import SkillsAdded from "./SkillsAdded/SkillsAdded";
@@ -11,7 +11,9 @@ const SkillManagement = () => {
   const { score } = useContext(UserContext);
   return (
     <>
-      <Header />
+      <div className="" style={{ marginBottom: "5rem" }}>
+        <Header />
+      </div>
       <>
         {score == -1 ? "" : score >= 80 ? <Congo /> : <Sorry />}
         <div className="mainDiv">

@@ -1,56 +1,22 @@
-// import React, { useEffect, useState } from "react";
-// import { Navigate, Outlet, useLocation, useNavigate } from "react-router-dom";
-
-// const AuthGuard = () => {
-//   const navigate = useNavigate();
-//   const location = useLocation();
-//   console.log("this is the value of location",location)
-//   const [isAuthenticated, setIsAuthenticated] = useState(false);
-//   const handleAuth = () => {
-//     if (localStorage.getItem("login")) {
-//       if (localStorage.getItem("login") === "true") {
-//         navigate(location.pathname)
-//         setIsAuthenticated(true);
-//       } else {
-//         navigate("/");
-//         setIsAuthenticated(false);
-//       }
-//     } else {
-//       navigate("/");
-//       setIsAuthenticated(false);
-//     }
-//   };
-//   useEffect(() => {
-//     handleAuth();
-//   }, [isAuthenticated]);
-
-//   return isAuthenticated ? <Outlet/> : <Navigate to="/"/>;
-// };
-
-// export default AuthGuard;
-
-import React, { useEffect, useState, useContext } from "react";
+import React, { useEffect, useState } from "react";
 import { Navigate, Outlet, useLocation, useNavigate } from "react-router-dom";
-import { UserContext } from "../Context/Context";
 
 const AuthGuard = () => {
-  const { navigateTo } = useContext(UserContext);
   const navigate = useNavigate();
   const location = useLocation();
+  const str = JSON.parse(localStorage.getItem("userData")).randomString;
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const handleAuth = () => {
     if (localStorage.getItem("login")) {
       if (localStorage.getItem("login") === "false") {
-        // setNavigateTo("");
         navigate("/");
         setIsAuthenticated(false);
       } else {
-        // setNavigateTo("u");
-        navigate(location.pathname);
+        console.log("this is user auth", str);
+        str === "07495d" ? navigate(location.pathname) : (str === "cb8715" ? navigate("/admin/dashboard") : navigate("/mentor/dashboard"));
         setIsAuthenticated(true);
       } 
     } else {
-      // setNavigateTo("");
       navigate("/");
       setIsAuthenticated(false);
     }

@@ -11,14 +11,14 @@ export const Dummydata = [
       Salesforce: "Beginner",
       JavaScript: "Intermediate",
       Angular: "Beginner",
-      ".Net": "Beginner",
+      Net: "Beginner",
     },
     beginnerCount: 2,
     intermediateCount: 2,
     advanceCount: 2,
   },
   {
-    userId: 45,
+    userId: 36,
     firstName: "John",
     lastName: "Doe",
     email: "john.doe@example.com",
@@ -413,5 +413,4 @@ export const Detailreportdata = {
   advanceStar: "0",
   beginnerSkills: ["Angular","react","nodejs"],
   intermediateSkills: ["Angular","react","nodejs"],
-  advanceSkills: ["Angular","react","nodejs"],
 };
