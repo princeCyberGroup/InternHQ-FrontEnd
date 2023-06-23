@@ -1,20 +1,76 @@
-import { ReactComponent as CloudImage } from "../Assets/Cloud.svg";
-import FileUploadButton from "../UploadCsv/DragandDropFile";
-import React, { useState } from "react";
+import { ReactComponent as CloudImage } from "../../../../Assets/Cloud.svg";
+import { ReactComponent as CloseBtn } from "../../../../Assets/Close-admin.svg"
+import React, { useState, useRef } from "react";
 import './Modals.css';
+import axios from "axios";
+import { Button } from "bootstrap";
+import { useNavigate } from 'react-router-dom';
+// import { Link } from "react-router-dom";
+
 
 export const AddNewSkillTest = () => {
     const [technology, setTechnology] = useState("");
     const [name, setName] = useState("");
-    const [level, setLevel] = useState("");
+    const navigate = useNavigate();
+
     const [question, setQuestion] = useState("");
     const [duration, setDuration] = useState("");
-    const [error, setError] = useState(true);
-    const [beginnerChecked, setBeginnerChecked] = useState(false);
-    const [intermediateChecked, setIntermediateChecked] = useState(false);
-    const [advancedChecked, setAdvancedChecked] = useState(false);
-    const [datatosend, setdatatosend] = useState([]);
+    const [setError] = useState(true);
+    const [setBeginnerChecked] = useState(false);
+    const [setIntermediateChecked] = useState(false);
+    const [setAdvancedChecked] = useState(false);
 
+    const [level, setLevel] = useState("");
+    const handleOptionChange = (event) => {
+        const selectedLevel = (event.target.value);
+        setLevel(selectedLevel)
+    };
+    const [file, setFile] = useState(null);
+    const [progress, setProgress] = useState(0);
+    const fileInputRef = useRef(null);
+    const handleDrop = (e) => {
+        e.preventDefault();
+        const droppedFile = e.dataTransfer.files[0];
+        handleFileChange(droppedFile);
+    };
+    const handleDragOver = (e) => {
+        e.preventDefault();
+    };
+    const handleFileChange = (selectedFile) => {
+        setFile(selectedFile);
+        setProgress(0);
+
+        if (selectedFile) {
+            readFileData(selectedFile);
+        }
+    };
+    const readFileData = (file) => {
+        const reader = new FileReader();
+
+        reader.onloadstart = () => {
+            setProgress(0);
+        };
+        reader.onprogress = (e) => {
+            if (e.lengthComputable) {
+                const progressPercent = Math.round((e.loaded / e.total) * 100);
+                setProgress(progressPercent);
+            }
+        };
+        reader.onload = (e) => {
+            const contents = e.target.result;
+            // Process the file data here if needed
+            setProgress(100);
+        };
+        reader.readAsText(file);
+    };
+    const handleRemoveFile = () => {
+        setFile(null);
+        setProgress(0);
+    };
+
+    const handleBrowseClick = () => {
+        fileInputRef.current.click();
+    };
     const handleChangeTechnology = (e) => {
         setTechnology(e.target.value);
     }
@@ -34,80 +90,53 @@ export const AddNewSkillTest = () => {
         setLevel("");
         setQuestion("");
         setDuration("");
-        document.getElementById("flexRadioDefault1").checked = false;
-        setBeginnerChecked(false);
-        setIntermediateChecked(false);
-        setAdvancedChecked(false);
+        setFile(null);
+        handleRemoveFile();
+        // document.getElementById("flexRadioDefault1").checked = false;
+        // setBeginnerChecked(false);
+        // setIntermediateChecked(false);
+        // setAdvancedChecked(false);
     }
-
     const handleSubmit = async (e) => {
-        if (technology.length == 0 && name.length < 2) {
+        e.preventDefault();
+        if (technology.length === 0 || name.length < 2) {
             alert("Please fill out the necessary details");
-            console.log("inside error");
             setError(true);
+            return;
         }
-        console.log("handle submit pressed");
-        // if (technology.trim() === "" || name.trim() === "" || level.trim() === "" || question.trim() === "" || duration.trim() === "") {
-        //     setError(true);
-        //     console.log("inside error");
-        //     return;
-        // }
-        let submitQuesData;
-            try {
-                
-                const api = "https://cg-interns-hq.azurewebsites.net/questions";
-                const response = await fetch(api, {
-                    method: "POST",
+        const formData = new FormData();
+        // formData.append('technology', technology);
+        // formData.append('level', level);
+        // formData.append('name', name);
+        formData.append('file', file);
+        // formData.append('question', question);
+        // formData.append('duration', duration);
+        try {
+            const response = await axios.post(`https://cg-interns-hq.azurewebsites.net/questions?technology=${technology}&level=${level}&examName=${name}&noOfQuestion=${question}&examDuration=${duration}`
+                , formData
+                , {
                     headers: {
-                        "Content-Type": "application/json",
-                        Authorization: `Bearer ${localStorage.getItem("questionToken")}`
-                    },
-                    body: JSON.stringify({
-                        examName: name,
-                        technology:technology,
-                        level:level,
-                        examDuration:duration,
-                        noOfQuestion:question ,
-                    })
+                        'Content-Type': 'multipart/form-data'
+                    }
                 });
-                submitQuesData = await response.json();
-      console.log(submitQuesData);
-      console.log(response);
-
-
-                if (response.ok) {
-                    console.log("Form submitted successfully");
-                    setTechnology("");
-                    setName("");
-                    setLevel("");
-                    setQuestion("");
-                    setDuration("");
-                    setBeginnerChecked(false);
-                    setIntermediateChecked(false);
-                    setAdvancedChecked(false);
-                } else {
-                    console.log("Failed to submit the form");
-                }
-            } catch (error) {
-                console.log(error);
-            } finally {
-                localStorage.removeItem("questionToken");
-            }
-
-        
-    }
-
-
-
-    console.log(name);
-    console.log(technology);
-    console.log(level);
-    console.log(duration);
-    console.log(question);
-
+            // console.log(response);
+            // Reset form inputs
+            setTechnology("");
+            setName("");
+            setLevel("");
+            setQuestion("");
+            setDuration("");
+            document.getElementById("flexRadioDefault1").checked = false;
+            setBeginnerChecked(false);
+            setIntermediateChecked(false);
+            setAdvancedChecked(false);
+            navigate('/admin-dashboard');
+        } catch (error) {
+            console.log(error);
+        }
+    };
     return (
         <div>
-            {/* <button type="button" className="btn" data-bs-toggle="modal" data-bs-target="#newSkillModal">Add New Skill Test</button> */}
             <div class="modal fade" id="newSkillModal" tabindex="-1" aria-labelledby="newSkillModalLabel" aria-hidden="true">
                 <div class="modal-dialog">
                     <div class="modal-content">
@@ -136,28 +165,49 @@ export const AddNewSkillTest = () => {
                                 </div>
                                 <span className="d-flex mb-2 form-title-names">Level<span style={{ color: 'red' }}>*</span></span>
                                 <div className="d-flex">
-                                    <div class="form-check">
-                                        <input class="form-check-input color-of-radio" type="radio" name="flexRadioDefault" id="flexRadioDefault1" value={beginnerChecked} />
-                                        <label class="form-check-label ps-2 pe-3" for="flexRadioDefault1">
+
+
+                                    <div className="form-check">
+                                        <label style={{ marginLeft: "0.313rem" }}>
+                                            <input
+                                                class="form-check-input color-of-radio"
+                                                type="radio"
+                                                name="options"
+                                                value="Beginner"
+                                                checked={level === 'Beginner'}
+                                                onChange={handleOptionChange}
+                                            />
                                             Beginner
                                         </label>
-                                    </div>
-                                    <div class="form-check">
-                                        <input class="form-check-input color-of-radio" type="radio" name="flexRadioDefault" id="flexRadioDefault1" value={intermediateChecked} />
-                                        <label class="form-check-label ps-2 pe-3" for="flexRadioDefault1">
+                                        <label style={{ marginLeft: "3.125rem" }}>
+                                            <input
+                                                class="form-check-input color-of-radio"
+                                                type="radio"
+                                                name="options"
+                                                value="Intermediate"
+                                                checked={level === 'Intermediate'}
+                                                onChange={handleOptionChange}
+                                            />
                                             Intermediate
                                         </label>
-                                    </div>
-                                    <div class="form-check">
-                                        <input class="form-check-input color-of-radio" type="radio" name="flexRadioDefault" id="flexRadioDefault1" value={advancedChecked} />
-                                        <label class="form-check-label ps-2 pe-3" for="flexRadioDefault1">
-                                            Advanced
+                                        <label style={{ marginLeft: "3.125rem" }}>
+                                            <input
+                                                class="form-check-input color-of-radio"
+                                                type="radio"
+                                                name="options"
+                                                value="Advance"
+                                                checked={level === 'Advance'}
+                                                onChange={handleOptionChange}
+                                            />
+                                            Advance
                                         </label>
+
                                     </div>
+
                                 </div>
                                 <span className="d-flex mt-4 mb-3 form-title-names">Upload CSV<span style={{ color: 'red' }}>*</span></span>
                                 <div className="upload-csv-text align-items-center justify-content-center">
-                                    <div className="mb-3 mt-4" style={{ marginLeft: "200px" }}>
+                                    <div className=" mt-4">
                                         <CloudImage />
                                     </div>
                                     <div className="mb-3">
@@ -165,11 +215,46 @@ export const AddNewSkillTest = () => {
                                             Drag and drop here
                                             or click to select a file from your computer</span>
                                     </div>
-                                    <div className="mb-4" style={{ marginLeft: "120px" }}>
-                                        <FileUploadButton />
+                                    <div className="mb-4">
+                                        <div>
+                                            <div
+                                                onDrop={handleDrop}
+                                                onDragOver={handleDragOver}
+                                            >
+                                                <input
+                                                    type="file"
+                                                    ref={fileInputRef}
+                                                    onChange={(e) => handleFileChange(e.target.files[0])}
+                                                    accept=".csv"
+                                                    style={{ display: "none" }}
+                                                />
+                                                {/* {console.log(fileInputRef)} */}
+                                                <button type="button" onClick={handleBrowseClick} className="add-new-skill-test-btn">
+                                                    Browse from your computer
+                                                </button>
+                                            </div>
+
+                                        </div>
                                     </div>
                                 </div>
-                                <div className="d-flex justify-content-between">
+                                <div>
+                                <div className="progress-indicator-status"> {file && (
+                                    <div style={{ marginLeft: "5.625rem", marginTop: "0.625rem", position: "relative" }} className="d-flex align-items-center">
+                                        <div >{file.name}</div>
+
+                                    </div>
+                                )}
+                                    {progress > 0 && (
+                                        <progress style={{ marginLeft: "2.813rem", marginTop: "0.313rem" }} max="100" value={progress}></progress>
+                                       
+                                    )}
+                                    <div className=""
+                                    onClick={()=>{handleRemoveFile()}}><CloseBtn /> </div>
+                                    
+                                    </div>         
+                                    
+                                    </div>
+                                     <div className="d-flex justify-content-between">
                                     <div>
                                         <label htmlFor="questions" className="col-form-label form-title-names">Questions<span style={{ color: 'red' }}>*</span></label>
                                         <select className="form-select select-drop-down-style"
@@ -177,10 +262,10 @@ export const AddNewSkillTest = () => {
                                             value={question}
                                         >
                                             <option value="" hidden>Select Questions</option>
-                                            <option value="option-1">10</option>
-                                            <option value="option-2">15</option>
-                                            <option value="option-3">20</option>
-                                            <option value="option-4">30</option>
+                                            <option value="10">10</option>
+                                            <option value="15">15</option>
+                                            <option value="20">20</option>
+                                            <option value="30">30</option>
                                         </select>
                                     </div>
 
@@ -191,10 +276,10 @@ export const AddNewSkillTest = () => {
                                             value={duration}
                                         >
                                             <option value="" hidden>Select Duration</option>
-                                            <option value="option-1">10 mins</option>
-                                            <option value="option-2">15 mins</option>
-                                            <option value="option-3">20 mins</option>
-                                            <option value="option-4">30 mins</option>
+                                            <option value="10">10 mins</option>
+                                            <option value="15">15 mins</option>
+                                            <option value="20">20 mins</option>
+                                            <option value="30">30 mins</option>
                                         </select>
                                     </div>
                                 </div>
@@ -205,9 +290,9 @@ export const AddNewSkillTest = () => {
                                 data-bs-dismiss="modal"
                                 onClick={(e) => handleClickClear(e)}>
                                 <span className="cancel-text">Cancel</span></button>
-                            <button type="button" className="btn save-button" 
-                            data-bs-dismiss={"modal" ? false : true}>
-                                <span className="save-text" onClick={handleSubmit}>
+                            <button type="button" className="btn save-button"
+                                data-bs-dismiss={"modal" ? false : true}>
+                                <span className="save-text" onClick={(e) => { handleSubmit(e) }}>
                                     Save
                                 </span>
                             </button>

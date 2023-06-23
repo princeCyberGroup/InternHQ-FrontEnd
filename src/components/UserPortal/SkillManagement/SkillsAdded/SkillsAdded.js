@@ -30,7 +30,7 @@ const SkillsAdded = () => {
       );
       const data = await response.json();
 
-      // setAllData(data.response);
+      setAllData(data.response);
     } catch (error) {
       console.log(error);
     }
@@ -48,7 +48,7 @@ const SkillsAdded = () => {
           <EmptySkillsAdded />
         ) : (
           allData.map((DataUsed) => (
-            <div className="card" style={{ width: "288px" }}>
+            <div className="card" style={{ width: "18rem" }}>
               <div
                 class="card-body p-0"
                 style={{ maxHeight: "calc(100vh - 30vh)", overflow: "auto" }}
@@ -69,7 +69,7 @@ const SkillsAdded = () => {
                         {DataUsed.examScores[0] >= 8 ? (
                           // <GoldStar />
                           // <SilverStar />
-                          <BronzeStar style={{ fontSize: "50px" }} />
+                          <BronzeStar style={{ fontSize: '3.125rem' }} />
                         ) : (
                           <EmptyStar />
                         )}
@@ -96,7 +96,7 @@ const SkillsAdded = () => {
                         {DataUsed.examScores[1] >= 8 ? (
                           // <GoldStar />
                           // <SilverStar />
-                          <SilverStar style={{ fontSize: "50px" }} />
+                          <SilverStar style={{ fontSize: '3.125rem' }} />
                         ) : (
                           <EmptyStar />
                         )}
@@ -127,7 +127,7 @@ const SkillsAdded = () => {
                     >
                       <div className="my-spacing">
                         {DataUsed.examScores[2] >= 8 ? (
-                          <GoldStar style={{ fontSize: "50px" }} />
+                          <GoldStar style={{ fontSize: '3.125rem' }} />
                         ) : (
                           <EmptyStar />
                         )}
@@ -152,7 +152,7 @@ const SkillsAdded = () => {
                     >
                       <div className="my-spacing">
                         {DataUsed.examScores[3] >= 8 ? (
-                          <GoldStar style={{ fontSize: "50px" }} />
+                           <GoldStar style={{ fontSize: '3.125rem' }} />
                         ) : (
                           <EmptyStar />
                         )}

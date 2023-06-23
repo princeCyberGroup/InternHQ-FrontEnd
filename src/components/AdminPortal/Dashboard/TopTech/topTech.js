@@ -9,7 +9,7 @@ export const data = {
   labels: [],
   datasets: [
     {
-      radius: "50%",
+      radius: "70%",
       label: "Total Numbers",
       data: [],
       backgroundColor: ["#28519E", "#3B82F6", "#99CC00", "#E23237", "#FFB81C"],
@@ -108,7 +108,7 @@ const PieChart = () => {
   };
 
   return (
-    <div className="container mt-4" style={{ width: "400px" }}>
+    <div className="container mt-4" style={{ width: "25rem" }}>
       <div className="row">
         <div className="col">
           <h2
@@ -116,8 +116,8 @@ const PieChart = () => {
               fontFamily: "Roboto",
               textAlign: "start",
               fontWeight: 600,
-              fontSize: "16px",
-              lineHeight: "19px",
+              fontSize: "1rem",
+              lineHeight: "1.3rem",
               color: "#002C3F",
             }}
           >
@@ -129,8 +129,8 @@ const PieChart = () => {
         <div
           className="col"
           style={{
-            boxShadow: "0px 4px 20px rgba(40, 52, 73, 0.15)",
-            borderRadius: "8px",
+            boxShadow: "0rem 0.25rem 1.25rem rgba(40, 52, 73, 0.15)",
+            borderRadius: "0.5rem",
           }}
         >
           <Pie data={data} options={options} />

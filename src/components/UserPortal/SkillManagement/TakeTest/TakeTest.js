@@ -1,11 +1,11 @@
 import React, { useEffect } from "react";
-import{ useContext } from "react";
-import { useState, createContext  } from "react";
-import { ReactComponent as LeftToRetake } from "./svgs/leftToReatake.svg";
-import { ReactComponent as Completed } from "./svgs/Testcompleted.svg";
-import { ReactComponent as Bronze } from "./svgs/Star-bronze.svg";
-import { ReactComponent as Silver } from "./svgs/Star-silver.svg";
-import { ReactComponent as Gold } from "./svgs/Star-gold.svg";
+import { useContext } from "react";
+import { useState, createContext } from "react";
+import { ReactComponent as LeftToRetake } from "../../../../Assets/leftToReatake.svg";
+import { ReactComponent as Completed } from "../../../../Assets/Testcompleted.svg";
+import { ReactComponent as GoldStarOri } from "../../../../Assets/Star-Icon-gold-ori.svg";
+import { ReactComponent as SilverStarOri } from "../../../../Assets/Star-Icon-silver-ori.svg";
+import { ReactComponent as BronzeStarOri } from "../../../../Assets/Star-Icon-bronze-ori.svg";
 // import logo from '../../../Assets/image 13.png';
 import "./TakeTest.css";
 import { BsClock } from "react-icons/bs";
@@ -20,9 +20,9 @@ export const TestContext = createContext();
 
 const TakeTest = ({ test }) => {
   const [activeButton, setActiveButton] = useState("all");
-    const { score } = useContext(UserContext);
-    const [daysDifference, setDaysDifference] = useState(calculateDaysDifference());
-  
+  const { score } = useContext(UserContext);
+  const [daysDifference, setDaysDifference] = useState(calculateDaysDifference());
+
   // const [searchQuery, setSearchQuery] = useState("");
   const [tests, setTests] = useState([]);
   const [originalTests, setOriginalTests] = useState([]);
@@ -93,16 +93,16 @@ const TakeTest = ({ test }) => {
   const clickCont = () => {
     navigate("/take-your-test", { state: data });
   };
-  
-      function calculateDaysDifference() {
-        const currentDate = new Date();
-        const twoDaysAgo = new Date();
-        twoDaysAgo.setDate(twoDaysAgo.getDate() - 2);
-        return Math.floor(
-          (currentDate.getTime() - twoDaysAgo.getTime()) / (1000 * 60 * 60 * 24)
-        );
-      }
-      let statusDiv;
+
+  function calculateDaysDifference() {
+    const currentDate = new Date();
+    const twoDaysAgo = new Date();
+    twoDaysAgo.setDate(twoDaysAgo.getDate() - 2);
+    return Math.floor(
+      (currentDate.getTime() - twoDaysAgo.getTime()) / (1000 * 60 * 60 * 24)
+    );
+  }
+  let statusDiv;
   if (score > 8) {
     statusDiv = (
       <div className="statusOfTEstCompleted">
@@ -116,16 +116,6 @@ const TakeTest = ({ test }) => {
       </div>
     );
   }
-  let LevelComponent;
-
-if (tests.level === "Beginner") {
-  LevelComponent =( <div> <Bronze /></div> );
-} else if (tests.level === "Intermediate") {
-  LevelComponent = <Silver />;
-} else if (tests.level === "Advanced") {
-  LevelComponent = <Gold />;
-}
-  
   return (
     <>
       <div className="TTheading">
@@ -147,9 +137,8 @@ if (tests.level === "Beginner") {
             </button>
           </div>
           <div
-            className={`nav-btn ${
-              activeButton === "beginner" ? "activated" : ""
-            }`}
+            className={`nav-btn ${activeButton === "beginner" ? "activated" : ""
+              }`}
           >
             <button
               className="btn-nav p-0"
@@ -177,15 +166,14 @@ if (tests.level === "Beginner") {
             </button>
           </div>
           <div
-            className={`nav-btn ${
-              activeButton === "advanced" ? "activated" : ""
-            }`}
+            className={`nav-btn ${activeButton === "advanced" ? "activated" : ""
+              }`}
           >
             <button
               className="btn-nav p-0"
               onClick={() => {
-                setActiveButton("advanced");
-                setTests(tests.filter((tests) => tests.level === "Advanced"));
+                setActiveButton("advance");
+                setTests(tests.filter((tests) => tests.level === "Advance"));
               }}
             >
               Advanced
@@ -224,11 +212,10 @@ if (tests.level === "Beginner") {
         ) : (
           <div
             class="card-body p-0"
-            // style={{ maxHeight: "50rem", overflow: "auto" }}
+          // style={{ maxHeight: "50rem", overflow: "auto" }}
           >
             <div
               className="row cards main-card-inside"
-              //   style={{ maxHeight: "470px", overflow: "auto" }}
             >
               <div className="row d-flex justify-content-evenly ">
                 {tests?.map((test) => (
@@ -241,13 +228,15 @@ if (tests.level === "Beginner") {
                               <img
                                 src={test.techImageLink}
                                 class="imageLogo"
-                                width="30px"
-                                height="35px"
+                                width="1.875rem"
+                                height="2.188rem"
                               />
                             </div>
                             <div>
                               <div className="Category_box justify-content-center">
-                                <span className="Category">{test.level}</span>
+                                <span className="Category">{test.level} &nbsp;
+                                  {test.level === "Beginner" ? <BronzeStarOri /> : (test.level === "Intermediate" ? <SilverStarOri /> : (test.level === "Advance" ? <GoldStarOri /> : null))}
+                                </span>
                               </div>
                               <div className=" About_box justify-content-center">
                                 <span className="About">{test.examName}</span>
@@ -258,14 +247,14 @@ if (tests.level === "Beginner") {
                             <div class="d-flex flex-column justify-content-center noOfQues">
                               <div class="articles d-flex justify-content-center">
                                 <MdOutlineBallot
-                                  style={{ marginRight: "5px" }}
+                                  style={{ marginRight: "0.313rem" }}
                                 />
                                 {test.numberOfQuestion} Questions
                               </div>
                             </div>
                             <div class="d-flex flex-column justify-content-center testTime">
                               <div class="articles d-flex justify-content-center ">
-                                <BsClock style={{ marginRight: "5px" }} />
+                                <BsClock style={{ marginRight: "0.313rem" }} />
                                 {test.examDuration} mins
                               </div>
                             </div>
