@@ -1,5 +1,5 @@
 import React, { useEffect,useState} from "react";
-import { EmptySkillsAdded } from "./EmptySkillsAdded/EmptySkillsAdded";
+import EmptySkillsAdded  from "./EmptySkillsAdded/EmptySkillsAdded";
 import { ReactComponent as GoldStar } from "./assetsSkillManagment/Star-Icon-gold.svg";
 import { ReactComponent as SilverStar } from "./assetsSkillManagment/Star-Icon-silver.svg";
 import { ReactComponent as BronzeStar } from "./assetsSkillManagment/Star-Icon-bronze.svg";
@@ -30,7 +30,7 @@ const SkillsAdded = () => {
       );
       const data = await response.json();
 
-      setAllData(data.response);
+      // setAllData(data.response);
     } catch (error) {
       console.log(error);
     }
@@ -45,15 +45,13 @@ const SkillsAdded = () => {
       {/* //main card  */}
       <div>
         {allData.length === 0 ? (
-          <div>
-            <EmptySkillsAdded />
-          </div>
+          <EmptySkillsAdded/>
         ) : (
           allData.map((DataUsed) => (
             <div className="card" style={{ width: "288px" }}>
               <div
                 class="card-body p-0"
-                style={{ maxHeight: "602px", overflow: "auto" }}
+                style={{ maxHeight:"calc(100vh - 30vh)", overflow: "auto" }}
               >
                 <div className="row cards">
                   <div className="col-12 d-flex mainImg">

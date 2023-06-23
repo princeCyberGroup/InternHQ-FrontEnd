@@ -193,7 +193,7 @@ const ForgotPasswordScreen = () => {
               </div>
             </div>
           </div>
-          <div className="col-md-7 bg-white p-4"  style={{ height: "35.125rem" }}>
+          <div className="col-md-7 bg-white p-4"  style={{ height: "35.125rem", width: "493.83px" }}>
             <div className="row ">
               <p className="right-container-heading">Forgot Password</p>
             </div>
@@ -232,7 +232,8 @@ const ForgotPasswordScreen = () => {
                   <label className="input-label-text" for="exampleInputEmail1">
                     Email ID
                   </label>
-                  <input
+                  <div className="div-input">
+                    <input
                   className="input-login"
                     type="email"
                     id="exampleInputEmail1"
@@ -241,6 +242,8 @@ const ForgotPasswordScreen = () => {
                     placeholder="Enter Your Email ID"
                     required
                   />
+                  </div>
+                  
                   {!isEmailValid && email && (
                     <span className="sign-up-warning">
                       {incorrectemail ? "Invalid Email!" : "Please make use of CG-Infinity email only"}
@@ -249,7 +252,7 @@ const ForgotPasswordScreen = () => {
                 </div>
                 <button
                   type="submit"
-                  style={{top:"2.5rem", marginBottom: "2rem"}}
+                  style={{top:"2.5rem", marginBottom: "2rem", width: "inherit"}}
                   className="btn btn-warning border-0 sign-up-btn"
                   disabled={
                     (!isEmailValid || isLoading)

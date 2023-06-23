@@ -41,7 +41,9 @@
 }
 
 .table > thead {
-  background-color: #e4eaee;
+  /* background-color: #e4eaee; */
+  background-color: #002c3f;
+  color: #fff;
 }
 
 .column-id {

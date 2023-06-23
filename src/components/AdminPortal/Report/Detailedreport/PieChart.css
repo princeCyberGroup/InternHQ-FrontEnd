@@ -1,58 +1,22 @@
-.pie-chart {
-    position: relative;
-    width: 200px;
-    height: 200px;
-    border-radius: 50%;
-    animation: pieChartAnimation 1s ease-in-out forwards;
-    opacity: 0;position: relative;
-    width: 200px;
-    height: 200px;
-    border-radius: 50%;
-    overflow: hidden;
-  }
-  
-  .slice {
-    position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  border-radius: 50%;
-  border: 2px solid #fff;
-  transform-origin: center center;
-  }
-  
-  .slice-1 {
-    background-color: #B2B2B3;
-    clip-path: polygon(0% 0%, 100% 0%, 100% 100%);
-  }
-  
-  .slice-2 {
-    background-color: #4670B6;
-    clip-path: polygon(0% 0%, 100% 0%, 50% 100%);
-  }
-  
-  .slice-3 {
-    background-color: #5B9BD4;
-    clip-path: polygon(0% 0%, 50% 100%, 0% 100%);
-  }
-  
-  .slice-4 {
-    background-color: #EE7D31;
-    clip-path: polygon(0% 0%, 0% 100%, 100% 100%);
-  }
-  
-  .slice-5 {
-    background-color: #71AE47;
-    clip-path: polygon(50% 0%, 100% 0%, 0% 100%);
-  }
-  @keyframes pieChartAnimation {
-    0% {
-      opacity: 0;
-      transform: scale(0);
-    }
-    100% {
-      opacity: 1;
-      transform: scale(1);
-    }
-  }
+.dropdown-button {
+  width: 123px;
+  font-size: 14px;
+  border: 1px solid #b2b2b3;
+  border-radius: 4px;
+  padding-left: 8px;
+}
+
+.dropdown-button::after {
+  margin-left: 1rem;
+}
+.dropdown-button:hover {
+  border: 1px solid #b2b2b3;
+}
+.parent-wrapper {
+  width: 394px;
+  height: 274px;
+  /* border: 1px solid black; */
+}
+
+/* width: 394px;
+ height: 274px; */
