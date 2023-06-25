@@ -14,7 +14,7 @@ export default function ManageSkillSet({ data }) {
         <Link to="/admin/skill-task" className="about-link">
           Manage Skill Set <Right style={{ marginBottom: "2px" }} />
         </Link>
-        <div className="about-div">Total Test Taken</div>
+        <div className="about-div-total-skill">Total Test Taken</div>
       </div>
       <div className="row" style={{ width: "52.375rem" }}>
         <div
@@ -57,7 +57,6 @@ export default function ManageSkillSet({ data }) {
             </div>
           </div>
         </div>
-{/* >>>>>>> f4a23977b3ff118e9d924d3c1bfe5d5d5217e70e */}
       </div>
       <AddNewSkillTest />
     </>

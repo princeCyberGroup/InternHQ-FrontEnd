@@ -33,7 +33,7 @@ export default function Insights(props) {
                     <div className='col'>
                         <div className='exam-name'>{insights.techName}</div>
                         <div className='number-of-test'>
-                            {insights.beginner} Beginner <Bullet /> {insights.intermediate} Intermediate <Bullet /> {insights.advanced} Advanced
+                            {insights.beginner } Beginner <Bullet/> {insights.intermediate} Intermediate <Bullet /> {insights.advanced} Advanced
                         </div>
                     </div>
                 </div>
@@ -43,13 +43,12 @@ export default function Insights(props) {
 
 
     return (
-        ///need to change rem one 
-        <div style={{ maxHeight: "46rem", overflowY: "scroll" }}>
+        <div >
             <div className='about-insight col'>Insights</div>
-            <div className=' insights' style={{ maxHeight: "90vh", overflowY: "scroll" }}>
-                <div>
-                    <input
-                        className="search-insights"
+            <div className='insights-card'>
+                   <div style={{margin:"0rem" , padding:"0rem"}} >
+                   <input
+                   className='search-insights'
                         type="text"
                         value={searchFilterValue}
                         placeholder="Search"
@@ -58,39 +57,17 @@ export default function Insights(props) {
                             setSearchFilterValue(event.target.value)
                         }}
                     />
-                </div>
+                   </div>
+               <div className=' insights' style={{ maxHeight: "100vh", overflowY: "scroll" }} >
+
                 {originalTests?.length === 0 ? (
                     props.data?.map((insights) => renderInsights(insights))
                 ) : (
                     originalTests?.map((insights) => renderInsights(insights))
                 )}
-                {renderInsights(props.data)}
-                {renderInsights(props.data)}
-                {renderInsights(props.data)}
-                {renderInsights(props.data)}
-                {renderInsights(props.data)}
-                {renderInsights(props.data)}
-                {renderInsights(props.data)}
-                {renderInsights(props.data)}
-                {renderInsights(props.data)}
-                {renderInsights(props.data)}
-                {renderInsights(props.data)}
-                {renderInsights(props.data)}
-                {renderInsights(props.data)}
-                {renderInsights(props.data)}
-                {renderInsights(props.data)}
-                {renderInsights(props.data)}
-                {renderInsights(props.data)}
-                {renderInsights(props.data)}
-                {renderInsights(props.data)}
-                {renderInsights(props.data)}
-                {renderInsights(props.data)}
-                {renderInsights(props.data)}
-                {renderInsights(props.data)}
-                {renderInsights(props.data)}
-                {renderInsights(props.data)}
-                {renderInsights(props.data)}
+            </div> 
             </div>
+            
         </div>
     )
 }

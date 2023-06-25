@@ -8,23 +8,13 @@ import { BsCheckLg } from "react-icons/bs";
 import { responsivePropType } from "react-bootstrap/esm/createUtilityClasses";
 
 const TakeYourTest = () => {
-
-  // const [score, setScoree] = useState(0);
-  // const { score: contextScore, setScore: setContextScore } = useContext(UserContext);
-
  const { score, setScore } = useContext(UserContext);
-//  const [scoreUpdated, setScoreUpdated] = useState(false);
-
   var storedObject = localStorage.getItem("userData");
   var parsedObject = JSON.parse(storedObject);
   var userId = parsedObject.userId;
-  // const [testsData, setTestsData] = useState([]);
-  // const [allData, setAllData] = useState([]);
   const navigate = useNavigate();
   const location = useLocation();
   const data = location.state;
-  // const location = useLocation();
-  // const { data } = location.state;
   const { examId, examName, examDuration, numberOfQuestion, techName, level } =
     data;
   const [Ques, setTestsQues] = useState([]);
@@ -34,14 +24,11 @@ const TakeYourTest = () => {
   const [fullscreen, setFullscreen] = useState(false);
   // const [score, setScore] = useState(0);
   const [submitted, setSubmitted] = useState(false);
-  // const [submitAnswer, setSubmitAnswer] = useState({});
-
   const clickHandler = () => {
     navigate("/skill-Management");
     setFullscreen(false);
     exitFullscreen();
   };
-
   useEffect(() => {
     if (fullscreen) {
       enterFullscreen();
@@ -87,7 +74,6 @@ const TakeYourTest = () => {
   };
 
   const [time, setTime] = useState(0);
-  //main use effect
   let timer;
 
   const startTimer = () => {
@@ -312,7 +298,6 @@ const TakeYourTest = () => {
                 <p>{formatTime(time)}</p>
               </div>
               <div className="col-3 active-Radio-Buttons attempted-Ques">
-                {/* Attempted Questions: {activeRadioButtons}/{testDetails.numberOfQuestion} */}
                 Attempted Questions: {activeRadioCount}/{numberOfQuestion}
               </div>
             </div>

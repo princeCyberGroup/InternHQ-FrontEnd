@@ -54,7 +54,7 @@ const DashboardA = () => {
       <div className="responsiveness">
         <>
           <div className="row">
-            <div className="col-8" >
+            <div className="col-8 component-div"  >
               <div className="about">
                 <Link to="/admin/reports" className="about-link">
                   Manage Consultant <Right style={{ marginBottom: "2px" }} />

@@ -1,6 +1,6 @@
 import { ReactComponent as CloudImage } from "../../../../Assets/Cloud.svg";
 import { ReactComponent as CloseBtn } from "../../../../Assets/Close-admin.svg"
-import React, { useState, useRef } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import './Modals.css';
 import axios from "axios";
 import { Button } from "bootstrap";
@@ -28,6 +28,23 @@ export const AddNewSkillTest = () => {
     const [file, setFile] = useState(null);
     const [progress, setProgress] = useState(0);
     const fileInputRef = useRef(null);
+    const [apitechnology, setApiTechnology] = useState([]);
+    useEffect(() => {
+        fetchTopics();
+      }, []);
+    
+    const fetchTopics = async () => {
+        try {
+            const response = await axios.get(
+                "https://cg-interns-hq.azurewebsites.net/getAllTechnology"
+            );
+            setApiTechnology(response.data.response);
+            
+        } catch (error) {
+            console.error("Error fetching topics:", error);
+        }
+    };
+
     const handleDrop = (e) => {
         e.preventDefault();
         const droppedFile = e.dataTransfer.files[0];
@@ -150,9 +167,27 @@ export const AddNewSkillTest = () => {
                                     <label htmlFor="technology" className="col-form-label form-title-names">
                                         Technology<span style={{ color: 'red' }}>*</span>
                                     </label>
-                                    <input type="text" class="form-control" id="technology" placeholder="Select Technology"
+                                    <select
+                                        className="form-select "
+                                        //   key={resetSelect ? "topicReset" : "topicName"}
+                                        //   disabled={disabled}
                                         onChange={(e) => handleChangeTechnology(e)}
-                                        value={technology} />
+                                        value={technology}
+                                        defaultValue=""
+                                    >
+                                        <option value="" disabled hidden>
+                                        Select Technology
+                                        </option>
+                                        {apitechnology.map((tech) => (
+                                            <option
+                                                className="dtt-opns"
+                                                key={tech.techId}
+                                                value={tech.techName}
+                                            >
+                                                {tech.techName}
+                                            </option>
+                                        ))}
+                                    </select>
                                 </div>
                                 <div class="mb-3">
                                     <label htmlFor="name" className="col-form-label form-title-names">
@@ -168,7 +203,7 @@ export const AddNewSkillTest = () => {
 
 
                                     <div className="form-check">
-                                        <label style={{ marginLeft: "0.313rem" }}>
+                                        <label style={{ marginLeft: "0.313" }}>
                                             <input
                                                 class="form-check-input color-of-radio"
                                                 type="radio"
@@ -228,8 +263,7 @@ export const AddNewSkillTest = () => {
                                                     accept=".csv"
                                                     style={{ display: "none" }}
                                                 />
-                                                {/* {console.log(fileInputRef)} */}
-                                                <button type="button" onClick={handleBrowseClick} className="add-new-skill-test-btn">
+                                                <button type="button" onClick={() => { handleBrowseClick() }} className="add-new-skill-test-btn">
                                                     Browse from your computer
                                                 </button>
                                             </div>
@@ -238,23 +272,23 @@ export const AddNewSkillTest = () => {
                                     </div>
                                 </div>
                                 <div>
-                                <div className="progress-indicator-status"> {file && (
-                                    <div style={{ marginLeft: "5.625rem", marginTop: "0.625rem", position: "relative" }} className="d-flex align-items-center">
-                                        <div >{file.name}</div>
+                                    <div className="progress-indicator-status"> {file && (
+                                        <div style={{ marginLeft: "5.625rem", marginTop: "0.625rem", position: "relative" }} className="d-flex align-items-center">
+                                            <div >{file.name}</div>
+
+                                        </div>
+                                    )}
+                                        {progress > 0 && (
+                                            <progress style={{ marginLeft: "2.813rem", marginTop: "0.313rem" }} max="100" value={progress}></progress>
+
+                                        )}
+                                        <div className=""
+                                            onClick={() => { handleRemoveFile() }}><CloseBtn /> </div>
 
                                     </div>
-                                )}
-                                    {progress > 0 && (
-                                        <progress style={{ marginLeft: "2.813rem", marginTop: "0.313rem" }} max="100" value={progress}></progress>
-                                       
-                                    )}
-                                    <div className=""
-                                    onClick={()=>{handleRemoveFile()}}><CloseBtn /> </div>
-                                    
-                                    </div>         
-                                    
-                                    </div>
-                                     <div className="d-flex justify-content-between">
+
+                                </div>
+                                <div className="d-flex justify-content-between">
                                     <div>
                                         <label htmlFor="questions" className="col-form-label form-title-names">Questions<span style={{ color: 'red' }}>*</span></label>
                                         <select className="form-select select-drop-down-style"
@@ -288,15 +322,17 @@ export const AddNewSkillTest = () => {
                         <div className="modal-footer border-top-0">
                             <button type="button" class="btn cancel-button fw-bold"
                                 data-bs-dismiss="modal"
-                                onClick={(e) => handleClickClear(e)}>
+                                onClick={(e) => handleClickClear(e)}
+                            >
                                 <span className="cancel-text">Cancel</span></button>
                             <button type="button" className="btn save-button"
-                                data-bs-dismiss={"modal" ? false : true}>
+                                data-bs-dismiss={"modal" ? false : true}
+                            >
                                 <span className="save-text" onClick={(e) => { handleSubmit(e) }}>
                                     Save
                                 </span>
-                            </button>
 
+                            </button>
                         </div>
                     </div>
                 </div>

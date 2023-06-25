@@ -2,25 +2,27 @@
 import React, { useState, useRef } from "react";
 import { ReactComponent as CloudImage } from "../../../../Assets/Cloud.svg";
 import { ReactComponent as CloseBtn } from "../../../../Assets/Close-admin.svg"
+import { ReactComponent as CloseUpload} from "../../../../Assets/close-upload.svg"
 import '../ManageSkillSet/Modals.css';
 import axios from "axios";
 
 export const UploadCsv = () => {
-  const [selectedFile, setSelectedFile] = useState(null);
+    const [selectedFile, setSelectedFile] = useState(null);
     const [file, setFile] = useState(null);
     const [progress, setProgress] = useState(0);
     const fileInputRef = useRef(null);
-  
+
     const handleCancelClick = (e) => {
         e.preventDefault();
+        
         setSelectedFile(null);
         setFile(null);
         handleRemoveFile()
     };
 
-    const handleSaveClick = async(e) => {
+    const handleSaveClick = async (e) => {
         e.preventDefault();
-      
+
         const formData = new FormData();
         formData.append('file', file);
         try {
@@ -32,9 +34,8 @@ export const UploadCsv = () => {
                         'Content-Disposition': 'form-data; name="file"; filename="example.csv"'
                     }
                 });
-            // console.log(response);
             // Reset form inputs
-        
+
         } catch (error) {
             console.log(error);
         }
@@ -99,7 +100,13 @@ export const UploadCsv = () => {
                     <div className="modal-content">
                         <div className="modal-header border-bottom-1">
                             <h5 className="modal-title modalheading-text" id="uploadCsvLabel">Upload CSV</h5>
-                            {/* <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button> */}
+                            <div className=""
+                                        onClick={(e)=>{ handleCancelClick(e)}}
+                                        data-bs-dismiss="modal" 
+                                        aria-label="Close"
+                                        ><CloseUpload /> 
+                             </div>
+                             
                         </div>
                         <div className="modal-body">
                             <form>
@@ -137,10 +144,9 @@ export const UploadCsv = () => {
                                                     accept=".csv"
                                                     style={{ display: "none" }}
                                                 />
-                                                {/* {console.log(fileInputRef)} */}
                                                 <button type="button" onClick={handleBrowseClick} className="csv-upload-button">Browse from your computer</button>
                                             </div>
-                                           
+
                                         </div>
 
                                     </div>
@@ -153,55 +159,31 @@ export const UploadCsv = () => {
                                 )}
                                     {progress > 0 && (
                                         <progress style={{ marginLeft: "2.813rem", marginTop: "0.313rem" }} max="100" value={progress}></progress>
-                                       
+
                                     )}
-                                    <div style={{position: "absolute", right: "21.75rem"}}>
-                                    {/* <CloseBtn /> */}
-                                    
+                                    <div style={{ position: "absolute", right: "21.75rem" }}>
+                                        {/* <CloseBtn /> */}
+
                                     </div>
                                     <div className=""
-                                    onClick={()=>{handleRemoveFile()}}><CloseBtn /> </div>
-                                    
-                                   
-                                    </div>    
+                                        onClick={() => { handleRemoveFile() }}><CloseBtn /> </div>
+                                </div>
                             </form>
                             <div className="saveCancel border-top-0 pb-0 row ">
                                 <div class="row mt-3 d-flex justify-content-end">
-                                    <button style={{width:"8rem"}} data-bs-dismiss="modal"
-                                      onClick={(e) =>
-                                        handleCancelClick(e) }>Cancel</button>
-                                    <button style={{width:"8rem",marginLeft:"0.625rem"}}
+                                    <button style={{ width: "8rem" }} data-bs-dismiss="modal"
+                                        onClick={(e) =>
+                                            handleCancelClick(e)}>Cancel</button>
+                                    <button style={{ width: "8rem", marginLeft: "0.625rem" }}
                                         onClick={(e) => handleSaveClick(e)
-                                           }
+                                        }
                                         data-bs-dismiss="modal">Save</button>
                                 </div>
                             </div>
-                        {/* </div>
+                        </div>
                     </div>
-                </div> */}
-              {/* </form> */}
-              <div className="modal-footer border-top-0 pb-0">
-                <button
-                  type="button"
-                  className="btn cancel-button fw-bold"
-                  data-bs-dismiss="modal"
-                  onClick={(e) => handleCancelClick(e)}
-                >
-                  <span className="cancel-text">Cancel</span>
-                </button>
-                <button
-                  type="button"
-                  className="btn save-button"
-                  data-bs-dismiss="modal"
-                  onClick={(e) => handleSaveClick(e)}
-                >
-                  <span className="save-text">Save</span>
-                </button>
-              </div>
+                </div>
             </div>
-          </div>
         </div>
-      </div>
-    </div>
-  );
+    );
 };

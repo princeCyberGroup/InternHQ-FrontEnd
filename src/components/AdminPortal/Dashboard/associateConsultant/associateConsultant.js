@@ -1,7 +1,10 @@
 import "../associateConsultant/associateConsultant.css";
 import React, { useState, useEffect } from "react";
-import { ReactComponent as DownArrow } from "../../../../Assets/chevron-down.svg";
+import { ReactComponent as DownArroww } from "../../../../Assets/down-scroll.svg";
 import { ReactComponent as UpArrow } from "../../../../Assets/chevron-up.svg";
+import { ReactComponent as GoldStarOri } from "../../../../Assets/Star-Icon-gold-ori.svg";
+import { ReactComponent as SilverStarOri } from "../../../../Assets/Star-Icon-silver-ori.svg";
+import { ReactComponent as BronzeStarOri } from "../../../../Assets/Star-Icon-bronze-ori.svg";
 import { useNavigate } from "react-router-dom";
 
 function getInitials(name) {
@@ -12,7 +15,7 @@ function getInitials(name) {
 export default function AssociateConsultant(props) {
   const navigate = useNavigate();
   const handleOnclick = (index) => {
-    navigate(`/admin/report?userId=${33}`);
+    navigate(`/admin/report?userId=${''}`);
   };
   const [searchFilterValue, setSearchFilterValue] = useState("");
   const [originalTests, setOriginalTests] = useState(props.data);
@@ -40,6 +43,17 @@ export default function AssociateConsultant(props) {
       setExpandedMentor(null);
     } else {
       setExpandedMentor(intId);
+    }
+  };
+  const renderStars = (level) => {
+    if (level === "Beginner") {
+      return <BronzeStarOri />;
+    } else if (level === "Intermediate") {
+      return <SilverStarOri />;
+    } else if (level === "Advance") {
+      return <GoldStarOri />;
+    } else {
+      return null;
     }
   };
 
@@ -84,24 +98,30 @@ export default function AssociateConsultant(props) {
                 onClick={() => handleExpand(userData.intId)}
                 className="expand-arrow"
               >
-                {expandedMentor === userData.intId ? (
+                {expandedMentor === userData?.intId ? (
                   <UpArrow />
                 ) : (
-                  <DownArrow />
+
+                  <DownArroww />
+
                 )}
               </span>
             </div>
           </div>
-          {expandedMentor === userData.intId && (
+          {expandedMentor === userData?.intId && (
             <div className="row mt-3">
               <div className="technology">
                 <p className="tech">Technology:</p>
                 {userData &&
                   userData.techNames &&
                   userData.techNames.map((skill, skillIndex) => (
-                    <span key={skillIndex} className="tech-badge">
-                      {skill && skill.toUpperCase()}
-                    </span>
+                    skill && (
+                      <span key={skillIndex} className="tech-div-badge">
+                        {skill.toUpperCase()}
+                        &nbsp;
+                        {renderStars(userData.level[skillIndex])}
+                      </span>
+                    )
                   ))}
               </div>
             </div>
@@ -124,9 +144,9 @@ export default function AssociateConsultant(props) {
 
         <div
 
-        ///change here 
+
           className=" associate-card  "
-          style={{ maxHeight: "23.125", overflow: "auto" }}
+
         >
           <div>
             <input
@@ -140,10 +160,12 @@ export default function AssociateConsultant(props) {
               }}
             />
           </div>
-          {props.data && props.data.map((userData) => {})}
-          {originalTests?.length === 0
-            ? props.data?.map((userData) => renderAssociates(userData))
-            : originalTests?.map((userData) => renderAssociates(userData))}
+          <div style={{ maxHeight: "23.125rem", overflow: "auto" }}>
+            {/* {props.data && props.data.map((userData) => {})} */}
+            {originalTests?.length === 0
+              ? props.data?.map((userData) => renderAssociates(userData))
+              : originalTests?.map((userData) => renderAssociates(userData))}
+          </div>
         </div>
       </div>
     </>

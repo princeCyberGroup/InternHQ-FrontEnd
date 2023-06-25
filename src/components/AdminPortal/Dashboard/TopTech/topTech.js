@@ -3,6 +3,7 @@ import { Chart as ChartJS, ArcElement, Tooltip, Legend } from "chart.js";
 import { Pie } from "react-chartjs-2";
 import PieChartData from "./PieChartData";
 import "../TopTech/topTech.css";
+import {useEffect, useState } from "react";
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 export const data = {
@@ -19,6 +20,23 @@ export const data = {
 };
 
 const PieChart = () => {
+  const [apiData , setApiData] =useState([]);
+  useEffect(() => {
+    fetchData();
+  }, []);
+
+  const fetchData = async () => {
+    try {
+      const response = await fetch(
+        `https://cg-interns-hq.azurewebsites.net/getTop5Tech`
+      );
+      const rsp = await response.json();
+      setApiData(rsp);
+      console.log(rsp);
+    } catch (e) {
+      console.log(e);
+    }
+  };
   const calculateTechPercentage = (data) => {
     const techCount = {};
     const totalCount = data.length;
@@ -96,7 +114,7 @@ const PieChart = () => {
   };
 
   return (
-    <div className="container mt-4" style={{ width: "25rem" }}>
+    <div className="container mt-4" style={{ width: "24rem" }}>
       <div className="row">
         <div className="col">
           <h2

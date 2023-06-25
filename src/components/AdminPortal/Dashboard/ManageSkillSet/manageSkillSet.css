@@ -59,3 +59,17 @@
 
   color: #343435;
 }
+.about-div-total-skill{
+  margin-top: 0.5rem; 
+  margin-bottom: 0.438rem; 
+  width: 9.625rem; 
+  height: 1.188rem; 
+  left: 0px;
+  top: 0.281rem;
+  font-family: "Roboto";
+  font-style: normal;
+  font-weight: 600;
+  font-size: 1rem;
+  line-height: 1.188rem;
+  color: #002c3f;
+}

@@ -1,3 +1,6 @@
+.component-div{
+  height: 100vh;
+}
 .about {
   /* margin-left: 80px; */
   display: flex;
@@ -10,7 +13,6 @@
   order: 0;
   flex-grow: 0;
 }
-.about-div,
 .about-link {
   text-decoration: none;
   font-family: "Roboto";
@@ -37,15 +39,12 @@
 }
 
 .main-div {
-  /* display: flex; */
-  /* justify-content: space-evenly; */
+
   justify-content: start;
 }
 /* ////////////////////////////////////////////// */
 
 .associate-consultant-heading {
-  /* width: 154px;
-height: 19px; */
 left: 0px;
 top: 0.281rem;
   font-family: "Roboto";
