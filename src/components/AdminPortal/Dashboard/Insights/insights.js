@@ -2,12 +2,17 @@ import "../Insights/insights.css";
 import { ReactComponent as Bullet } from "../../../../Assets/bullet.svg";
 import { ReactComponent as SearchIcon } from "../../../../Assets/search.svg";
 import React, { useEffect, useState } from "react";
+import Skeleton from "react-loading-skeleton";
+import "react-loading-skeleton/dist/skeleton.css";
 
 export default function Insights(props) {
+    
+  const [isLoading, setIsLoading] = useState(true);
   const [searchFilterValue, setSearchFilterValue] = useState("");
   const [originalTests, setOriginalTests] = useState(props.data);
+  
   const handleFiltersChange = () => {
-    const getFilterItems = (items, searchValue) => {
+   const getFilterItems = (items, searchValue) => {
       if (searchValue) {
         let fitlerData = items.filter((item) =>
           item.techName?.toLowerCase().includes(searchValue.toLowerCase())

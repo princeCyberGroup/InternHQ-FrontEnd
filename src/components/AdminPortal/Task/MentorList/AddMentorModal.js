@@ -230,14 +230,19 @@ export const AddMentorModal = ({ isOpen, onClose, onAddMentor }) => {
                 </div>
 
                 <div
-                  className="alert alert-info mb-0 image-alert box-for-alert-message"
+
+                  class="alert alert-info mb-0 box-for-alert-message mt-1"
+
                   role="alert"
                 >
-                  <AlertImage />{" "}
-                  <span className="text-for-alert">
-                    Please upload recent image ensuring that the face is clearly
-                    visible. Allowed format is JPEG,PNG.
-                  </span>
+                  <div>
+                  <AlertImage />
+                  </div>
+                  <div className="text-for-alert">
+                    <p className="m-0 mx-2">Please upload recent image ensuring that the face is clearly
+                    visible.</p> 
+                    <p className="m-0 mx-2">Allowed format is JPEG,PNG.</p>
+                  </div>
                 </div>
               </div>
 
@@ -324,6 +329,7 @@ export const AddMentorModal = ({ isOpen, onClose, onAddMentor }) => {
                             <input
                               type="text"
                               className="custom-input"
+                              placeholder="Select Technology"
                               onChange={(e) => handleSkillsChange(e)}
                               value={Object.values(tech)}
                               disabled
