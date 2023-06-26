@@ -226,12 +226,6 @@ setTaskName(editedTask?.taskName)
                     </div>
                   </div>
                 </div>
-                <div
-                  className="row cards main-card-inside"
-                  style={{ maxHeight: "470px", overflow: "auto" }}
-                >
-                  <div className="row d-flex justify-content-evenly"></div>
-                </div>
               </div>
             </div>
           )))}

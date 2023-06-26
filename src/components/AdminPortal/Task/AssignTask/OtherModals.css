@@ -158,97 +158,63 @@
 
 .column-questions {
   width: 204px;
-
   text-align: left;
-
   font-style: normal;
-
   font-weight: 500;
-
   font-size: 13px;
-
   line-height: 15px;
-
   text-align: center;
 }
 
 .column-uploaded-on {
   width: 250px;
-
   font-style: normal;
-
   font-weight: 500;
-
   font-size: 13px;
-
   line-height: 15px;
-
   text-align: center;
 }
 
 .column-actions {
   width: 208px;
-
   font-style: normal;
-
   font-weight: 500;
-
   font-size: 13px;
-
   line-height: 15px;
-
   text-align: center;
 }
 
 .technology-rows {
   font-style: normal;
-
   font-weight: 400;
-
   font-size: 14px;
-
   line-height: 16px;
-
   text-align: left;
-
   color: #343435;
 }
 
 .levels-row {
   font-style: normal;
-
   font-weight: 400;
-
   font-size: 14px;
-
   line-height: 16px;
-
   text-align: left;
-
   color: #343435;
 }
 
 .questions-row {
   font-style: normal;
-
   font-weight: 400;
-
   font-size: 14px;
-
   line-height: 16px;
-
   color: #343435;
 }
 
 .uploaded-on-row {
   font-style: normal;
-
   font-weight: 400;
-
   font-size: 13px;
-
   line-height: 15px;
-
   color: #23262b;
 }
 
@@ -268,64 +234,42 @@
 
 .expand-more {
   border: none;
-
   background: none;
-
   padding-right: 0px;
-
   padding-left: 1.5rem;
 }
 
 .custom-input {
   border-bottom: none;
-
   background: none;
 }
 
 .input-with-button {
   display: flex;
-
   align-items: center;
-
   border-bottom: none;
 }
 
 .select-drop-down-style {
   padding: 8px;
-
   gap: 29px;
-
   width: 228px;
-
   height: 40px;
-
   border-radius: 4px;
 }
 
 .add-new-skill-test-button {
   display: flex;
-
   flex-direction: row;
-
   justify-content: center;
-
   align-items: center;
-
   padding: 20px 16px;
-
   gap: 8px;
-
   width: 189.77px;
-
   height: 40px;
-
   background: #28519e;
-
   border-radius: 4px;
-
   flex: none;
-
   order: 1;
-
   flex-grow: 0;
 }
