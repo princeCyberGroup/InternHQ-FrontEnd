@@ -4,7 +4,7 @@ export const Data = {
   FN: "firstName",
   LN: "lastName",
   INTID: "interId",
-  TN: "techNames",
+  TN: "technames",
   L: "level",
   TS: "totalScore",
   BC: "beginner_count",

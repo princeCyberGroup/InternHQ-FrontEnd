@@ -6,6 +6,7 @@ import { ReactComponent as VectorAdd } from "../../../Assets/Vectoradd.svg";
 import axios from "axios";
 import { Link } from "react-router-dom";
 import ManageSkillTestSkeleton from "./ManageSkillTestSkeleton";
+import Header from "../../Header/Header";
 
 export const ManageSkillTest = () => {
   //data
@@ -49,59 +50,66 @@ export const ManageSkillTest = () => {
   };
 
   return (
-    <div className="container-fluid manage-skill-test-container d-flex flex-column">
-      <div className=" ">
-        <div className="row ">
-          <div className="col-12">
-            <div className="manage-skill-test-nav-bar d-flex">
-              <Link to="/admin-dashboard" className="breadcrum-link">
-                Dashboard
-              </Link>{" "}
-              &nbsp; &gt; &nbsp;<p>Manage Skill Test</p>
+    <>
+      <div className="" style={{ marginBottom: "3.5rem" }}>
+        <Header />
+      </div>
+      <div className="container-fluid manage-skill-test-container d-flex flex-column">
+        <div className=" ">
+          <div className="row ">
+            <div className="col-12">
+              <div className="manage-skill-test-nav-bar d-flex">
+                <Link to="/admin/dashboard" className="breadcrum-link">
+                  Dashboard
+                </Link>
+                &nbsp; &gt; &nbsp;<p>Manage Skill Test</p>
+              </div>
             </div>
           </div>
-        </div>
 
-        <div className="row">
-          <div className="col-12">
-            <div className="manage-skill-test-heading d-flex justify-content-between mb-0">
-              <div>
-                <p>Manage Skill Set</p>
-              </div>
-              <div>
-                <button
-                  type="button"
-                  className="add-new-skill-test-button mb-4"
-                  data-bs-toggle="modal"
-                  data-bs-target="#newSkillModal"
-                  onClick={handleClick}
-                >
-                  <VectorAdd />
-                  <span>Add New Skill Test</span>
-                </button>
-                {showComponent && <AddNewSkillTest />}
+          <div className="row">
+            <div className="col-12">
+              <div className="manage-skill-test-heading d-flex justify-content-between mb-0">
+                <div>
+                  <p>Manage Skill Set</p>
+                </div>
+                <div>
+                  <button
+                    type="button"
+                    className="add-new-skill-test-button mb-4"
+                    data-bs-toggle="modal"
+                    data-bs-target="#newSkillModal"
+                    onClick={handleClick}
+                  >
+                    <VectorAdd />
+                    <span>Add New Skill Test</span>
+                  </button>
+                  {/* {showComponent && <AddNewSkillTest />} */}
+                  <AddNewSkillTest />
+                </div>
               </div>
             </div>
           </div>
         </div>
-        <div className="mb-3">
-          <div className="col-12 manage-skill-table-style p-0"> 
-            <div
-              className="table-responsive"
-              style={{ overflow: "visible" }}
-            ></div>
-            <table id="example" className="table table-striped">
-              <thead>
-                <tr className="color-table">
-                  <th className="column-technology">Technology</th>
-                  <th className="column-name">Name</th>
-                  <th className="column-level">Level</th>
-                  <th className="column-questions">Questions</th>
-                  <th className="column-duration">Duration</th>
-                  <th className="column-uploaded-on">Uploaded On</th>
-                  <th className="column-actions">Action</th>
-                </tr>
-              </thead>
+          <div className="mb-3">
+            <div className="col-12 manage-skill-table-style p-0">
+              <div
+                className="table-responsive"
+                style={{ overflow: "visible" }}
+              ></div>
+              <table id="example" className="table table-striped">
+                <thead>
+                  <tr className="color-table">
+                    <th className="column-technology" style={{width:"1rem"}}>S.No</th>
+                    <th className="column-technology">Technology</th>
+                    <th className="column-name">Name</th>
+                    <th className="column-level">Level</th>
+                    <th className="column-questions">Questions</th>
+                    <th className="column-duration">Duration</th>
+                    <th className="column-uploaded-on">Uploaded On</th>
+                    <th className="column-actions">Action</th>
+                  </tr>
+                </thead>
               <tbody>
                 {isLoading ? (
                   <>
@@ -129,6 +137,7 @@ export const ManageSkillTest = () => {
                     const time = dateObj.toTimeString().split(" ")[0];
                     return (
                       <tr key={index}>
+                        <td className="technology-rows">{index+1}</td>
                         <td className="technology-rows">{item?.techName}</td>
                         <td className="name-row">{item?.examName}</td>
                         <td className="levels-row">{item?.level}</td>
@@ -155,6 +164,6 @@ export const ManageSkillTest = () => {
           </div>
         </div>
       </div>
-    </div>
+    </>
   );
 };

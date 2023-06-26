@@ -120,7 +120,7 @@ const MentorList = () => {
         <button
           style={{ marginRight: "8px" }}
           type="button"
-          class="add-mentor-button"
+          className="add-mentor-button"
           data-bs-toggle="modal"
           data-bs-target="#addMentorModal"
         >
@@ -143,7 +143,7 @@ const MentorList = () => {
             return (
               <>
                 <div key={user.mentorId} className="card mentor-head">
-                  <div className="mentor-wrapper">
+                  <div onClick={() => handleExpand(user.mentorId)} className="mentor-wrapper">
                     <div className="image-wrapper1">
                       <div className="image-box1">
                         {user.imageUrl ? (
@@ -173,6 +173,7 @@ const MentorList = () => {
                       <p className="m-0 pos-wrapper">{user.designation} </p>
                     </div>
                     <div className="arrow-wrapper1">
+                      
                       {user.isActive ? (
                         <button
                           className="remove-btn"
@@ -191,7 +192,7 @@ const MentorList = () => {
                         </button>
                       ) : null}
                       <span
-                        onClick={() => handleExpand(user.mentorId)}
+                        
                         className="expand-arrow"
                       >
                         {expandedMentor === user.mentorId ? (

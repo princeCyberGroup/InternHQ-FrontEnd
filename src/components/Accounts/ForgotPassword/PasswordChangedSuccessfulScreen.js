@@ -43,7 +43,7 @@ const PasswordChangedSuccessfulScreen = () => {
       <div className="row">
         <div className="col text-center">
           <button
-            class="btn btn-warning border-0 success-button-container"
+            className="btn btn-warning border-0 success-button-container"
             onClick={() => navigate("/")}
           >
             Continue

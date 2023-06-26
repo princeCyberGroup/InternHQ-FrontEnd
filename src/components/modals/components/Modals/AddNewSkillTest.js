@@ -56,49 +56,49 @@ export const AddNewSkillTest = () => {
     return (
         <div>
             {/* <button type="button" className="btn" data-bs-toggle="modal" data-bs-target="#newSkillModal">Add New Skill Test</button> */}
-            <div class="modal fade" id="newSkillModal" tabindex="-1" aria-labelledby="newSkillModalLabel" aria-hidden="true">
-                <div class="modal-dialog">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title modalheading-text" id="newSkillModalLabel">Add New Skill Test</h5>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            <div className="modal fade" id="newSkillModal" tabindex="-1" aria-labelledby="newSkillModalLabel" aria-hidden="true">
+                <div className="modal-dialog">
+                    <div className="modal-content">
+                        <div className="modal-header">
+                            <h5 className="modal-title modalheading-text" id="newSkillModalLabel">Add New Skill Test</h5>
+                            <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
-                        <div class="modal-body">
+                        <div className="modal-body">
                             <form>
-                                <div class="mb-3">
+                                <div className="mb-3">
                                     <label htmlFor="technology" className="col-form-label form-title-names">
                                         Technology<span style={{ color: 'red' }}>*</span>
                                     </label>
-                                    <input type="text" class="form-control" id="technology" placeholder="Select Technology"
+                                    <input type="text" className="form-control" id="technology" placeholder="Select Technology"
                                     onChange={(e) => handleChangeTechnology(e)}
                                     value={technology} />
                                 </div>
-                                <div class="mb-3">
+                                <div className="mb-3">
                                     <label htmlFor="name" className="col-form-label form-title-names">
                                         Name<span style={{ color: 'red' }}>*</span>
                                     </label>
-                                    <input type="text" class="form-control" id="name" placeholder="Add Name"
+                                    <input type="text" className="form-control" id="name" placeholder="Add Name"
                                     onChange={(e) => handleChangeName(e)}
                                     value={name}
                                     />
                                 </div>
                                 <span className="d-flex mb-2 form-title-names">Level<span style={{ color: 'red' }}>*</span></span>
                                 <div className="d-flex">
-                                    <div class="form-check">
-                                        <input class="form-check-input color-of-radio" type="radio" name="flexRadioDefault" id="flexRadioDefault1" value={beginnerChecked} />
-                                        <label class="form-check-label ps-2 pe-3" for="flexRadioDefault1">
+                                    <div className="form-check">
+                                        <input className="form-check-input color-of-radio" type="radio" name="flexRadioDefault" id="flexRadioDefault1" value={beginnerChecked} />
+                                        <label className="form-check-label ps-2 pe-3" for="flexRadioDefault1">
                                             Beginner
                                         </label>
                                     </div>
-                                    <div class="form-check">
-                                        <input class="form-check-input color-of-radio" type="radio" name="flexRadioDefault" id="flexRadioDefault1" value={intermediateChecked} />
-                                        <label class="form-check-label ps-2 pe-3" for="flexRadioDefault1">
+                                    <div className="form-check">
+                                        <input className="form-check-input color-of-radio" type="radio" name="flexRadioDefault" id="flexRadioDefault1" value={intermediateChecked} />
+                                        <label className="form-check-label ps-2 pe-3" for="flexRadioDefault1">
                                             Intermediate
                                         </label>
                                     </div>
-                                    <div class="form-check">
-                                        <input class="form-check-input color-of-radio" type="radio" name="flexRadioDefault" id="flexRadioDefault1" value={advancedChecked} />
-                                        <label class="form-check-label ps-2 pe-3" for="flexRadioDefault1">
+                                    <div className="form-check">
+                                        <input className="form-check-input color-of-radio" type="radio" name="flexRadioDefault" id="flexRadioDefault1" value={advancedChecked} />
+                                        <label className="form-check-label ps-2 pe-3" for="flexRadioDefault1">
                                             Advanced
                                         </label>
                                     </div>
@@ -147,8 +147,8 @@ export const AddNewSkillTest = () => {
                             </form>
                         </div>
                         <div className="modal-footer border-top-0">
-                            <button type="button" class="btn cancel-button fw-bold" data-bs-dismiss="modal" onClick={(e) => handleClickClear(e)}><span className="cancel-text">Cancel</span></button>
-                            <button type="button" class="btn save-button" data-bs-dismiss={"modal" ? false : true}><span className="save-text" onClick= { handleSubmit}>Save</span></button>
+                            <button type="button" className="btn cancel-button fw-bold" data-bs-dismiss="modal" onClick={(e) => handleClickClear(e)}><span className="cancel-text">Cancel</span></button>
+                            <button type="button" className="btn save-button" data-bs-dismiss={"modal" ? false : true}><span className="save-text" onClick= { handleSubmit}>Save</span></button>
                         </div>
                     </div>
                 </div>

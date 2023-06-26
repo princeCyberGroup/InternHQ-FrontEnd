@@ -2,6 +2,10 @@ import "../associateConsultant/associateConsultant.css";
 import React, { useState, useEffect } from "react";
 import { ReactComponent as DownArrow } from "../../../../Assets/chevron-down.svg";
 import { ReactComponent as UpArrow } from "../../../../Assets/chevron-up.svg";
+import { ReactComponent as SearchIcon } from "../../../../Assets/search.svg";
+import { ReactComponent as Advance } from "../../../../Assets/advance.svg";
+import { ReactComponent as Beginner } from "../../../../Assets/beginner.svg";
+import { ReactComponent as Intermediate } from "../../../../Assets/intermediate.svg";
 import { useNavigate } from "react-router-dom";
 
 function getInitials(name) {
@@ -11,12 +15,14 @@ function getInitials(name) {
 }
 export default function AssociateConsultant(props) {
   const navigate = useNavigate();
-  const handleOnclick = (index) => {
-    navigate(`/admin/report?userId=${33}`);
+  const handleOnclick = (id) => {
+    sessionStorage.setItem("detailId", id);
+    navigate(`/admin/report?userId=${id}`);
   };
   const [searchFilterValue, setSearchFilterValue] = useState("");
   const [originalTests, setOriginalTests] = useState(props.data);
   const [expandedMentor, setExpandedMentor] = useState(null);
+  
   const handleFiltersChange = () => {
     const getFilterItems = (items, searchValue) => {
       if (searchValue) {
@@ -71,7 +77,7 @@ export default function AssociateConsultant(props) {
             </div>
             <div
               onClick={() => {
-                handleOnclick(userData.intId);
+                handleOnclick(userData.userId);
               }}
               className=" col-4 pointer"
             >
@@ -96,13 +102,41 @@ export default function AssociateConsultant(props) {
             <div className="row mt-3">
               <div className="technology">
                 <p className="tech">Technology:</p>
-                {userData &&
+                {/* {userData &&
                   userData.techNames &&
                   userData.techNames.map((skill, skillIndex) => (
                     <span key={skillIndex} className="tech-badge">
                       {skill && skill.toUpperCase()}
                     </span>
-                  ))}
+                  ))} */}
+                   <div className="tech-tags">
+                      {userData?.techNames?.slice(0, 4).map((value, index) => {
+                        return value === null ? (
+                          <div key={index}></div>
+                        ) : (
+                          <div
+                            key={index}
+                            className="tag-tech d-flex justify-content-center align-items-center"
+                          >
+                            <span>{value}</span>
+                            <div>
+                              {value === "Beginner" ? (
+                                <Beginner />
+                              ) : value === "Intermediate" ? (
+                                <Intermediate />
+                              ) : (
+                                <Advance />
+                              )}
+                            </div>
+                          </div>
+                        );
+                      })}
+                      {userData?.techNames?.slice(4).length!==0 && (
+                        <div className="all-tech">
+                          <span>+ {userData?.techNames?.slice(4).length}</span>
+                        </div>
+                      )}
+                    </div>
               </div>
             </div>
           )}
@@ -123,14 +157,14 @@ export default function AssociateConsultant(props) {
         </div>
 
         <div
-
-        ///change here 
+          ///change here
           className=" associate-card  "
           style={{ maxHeight: "23.125", overflow: "auto" }}
         >
-          <div>
+          <div className="d-flex align-items-center ps-1 insights-search-wrapper">
+            <SearchIcon />
             <input
-              className="search-associate "
+              className="search-associate border-none"
               type="text"
               value={searchFilterValue}
               placeholder="Search"
@@ -140,7 +174,6 @@ export default function AssociateConsultant(props) {
               }}
             />
           </div>
-          {props.data && props.data.map((userData) => {})}
           {originalTests?.length === 0
             ? props.data?.map((userData) => renderAssociates(userData))
             : originalTests?.map((userData) => renderAssociates(userData))}
