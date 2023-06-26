@@ -3,13 +3,13 @@ export const Data = {
   ID: "userId",
   FN: "firstName",
   LN: "lastName",
-  INTID: "interId",
-  TN: "techNames",
+  INTID: "internId",
+  TN: "technames",
   L: "level",
   TS: "totalScore",
-  BC: "beginner_count",
-  IC: "intermediate_count",
-  AC: "advanced_count",
+  BC: "beginnerCount",
+  IC: "intermediateCount",
+  AC: "advancedCount",
   D: "durationOfInternship",
 };
 

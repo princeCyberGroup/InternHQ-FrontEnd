@@ -6,70 +6,92 @@ import { ReactComponent as Beginner } from "../../../Assets/beginner.svg";
 import { ReactComponent as Intermediate } from "../../../Assets/intermediate.svg";
 import { Data } from "./Fetcheddataobject";
 import { useNavigate } from "react-router-dom";
+import ReportTableSkeleton from "./ReportTableSkeleton";
 
-const Reporttable = ({ tableData }) => {
-  //data
-  let objectCount = 0;
+const Reporttable = ({ tableData, isLoading }) => {
   const navigate = useNavigate();
-  //funciton
-  const handleOnclick = (index)=>{
+  const handleOnclick = (index) => {
     // navigate(`/admin/report/userId?id=${tableData[index][Data.ID]}`);
     sessionStorage.setItem("detailId", tableData[index][Data.ID]);
     navigate(`/admin/report?userId=${tableData[index][Data.ID]}`);
-  }
+  };
 
   return (
     <div className="container-fluid container-table">
       <table className="table-report" cellPadding="0" cellSpacing="0">
         <thead>
           <tr>
-            <th style={{ width: "20.375rem" }}>Name</th>
-            <th style={{ width: "20.875rem" }}>Technology Tags</th>
-            <th style={{ width: "20.375rem" }}>Skills Achieved</th>
-            <th style={{ width: "11.375rem" }}>Duration</th>
+            <th style={{ width: "2.5rem" }}>S.No</th>
+            <th style={{ width: "13.375rem" }}>Name</th>
+            <th style={{ width: "28.875rem" }}>Technology Tags</th>
+            <th style={{ width: "17.375rem" }}>Skills Achieved</th>
+            <th style={{ width: "6.375rem" }}>Duration</th>
           </tr>
         </thead>
-        {tableData ? (
+        {isLoading ? (
+          <>
+          <ReportTableSkeleton/>
+          <ReportTableSkeleton/>
+          <ReportTableSkeleton/>
+          <ReportTableSkeleton/>
+          <ReportTableSkeleton/>
+          <ReportTableSkeleton/>
+          <ReportTableSkeleton/>
+          <ReportTableSkeleton/>
+          <ReportTableSkeleton/>
+          <ReportTableSkeleton/>
+          </>
+        ) : tableData ? (
           <tbody>
-            {tableData?.map((val, ind) => {
+            {tableData.map((val, ind) => {
               let objectKeyCount = 0;
               return (
-                <tr className="report-table-tr" key={ind}
-                onClick={()=>{
-                  handleOnclick(ind);
-                  }}>
-                  <td style={{ width: "20.375rem" }}>
+                <tr
+                  className="report-table-tr"
+                  key={ind}
+                  onClick={() => {
+                    handleOnclick(ind);
+                  }}
+                >
+                  <td className="fw-bold d-flex justify-content-center align-items-center" style={{height: "54px"}}>{ind+1}</td>
+                  <td style={{ width: "10.375rem" }}>
                     <div className="name-column">
                       <div className="circle">
-                        {val?.[Data.FN].toUpperCase().slice(0, 1)}
-                        {val?.[Data.LN].toUpperCase().slice(0, 1)}
+                        {val[Data.FN]?.toUpperCase().slice(0, 1)}
+                        {val[Data.LN]?.toUpperCase().slice(0, 1)}
                       </div>
                       <div className="tags">
-                        <div className="tag1">{`${val?.[Data.FN]} ${
-                          val?.[Data.LN]
+                        <div className="tag1">{`${val[Data.FN]} ${
+                          val[Data.LN] === null ? "" : val[Data.LN]
                         }`}</div>
-                        <div className="tag2">{val?.[Data.INTID]}</div>
+                        <div className="tag2">{val[Data.INTID]}</div>
                       </div>
                     </div>
                   </td>
                   <td style={{ width: "20.875rem" }}>
                     <div className="tech-tags">
-                      {val?.[Data.TN].map((value, index) => {
+                      {val?.[Data.TN]?.slice(0, 5).map((value, index) => {
                         objectKeyCount++;
-                        {/* if (objectCount > 3) {
-                          objectCount = 0;
-                          return;
-                        } else {
-                          objectCount++;
-                        } */}
-                        return (
-                          value === null ? <div key={index}></div> :
-                          <div key={index} className="tag-tech">
+                        // {
+                        //    if (objectCount > 3) {
+                        //   objectCount = 0;
+                        //   return;
+                        // } else {
+                        //   objectCount++;
+                        // }
+                        // }
+                        return value === null ? (
+                          <div key={index}></div>
+                        ) : (
+                          <div
+                            key={index}
+                            className="tag-tech d-flex justify-content-center align-items-center"
+                          >
                             <span>{value}</span>
                             <div>
-                              {val?.[Data.L][index] === "Beginner" ? (
+                              {val[Data.L][index] === "Beginner" ? (
                                 <Beginner />
-                              ) : val?.[Data.L][index] === "Intermediate" ? (
+                              ) : val[Data.L][index] === "Intermediate" ? (
                                 <Intermediate />
                               ) : (
                                 <Advance />
@@ -78,9 +100,9 @@ const Reporttable = ({ tableData }) => {
                           </div>
                         );
                       })}
-                      {objectKeyCount > 3 && (
+                      {objectKeyCount > 4 && val?.[Data.TN].slice(5).length!==0 && (
                         <div className="all-tech">
-                          <span>+{objectKeyCount - 3}</span>
+                          <span>+ {val?.[Data.TN].slice(5).length}</span>
                         </div>
                       )}
                     </div>
@@ -88,16 +110,23 @@ const Reporttable = ({ tableData }) => {
                   <td style={{ width: "20.375rem" }}>
                     <div className="skills-wrapper">
                       <span className="skills">
-                        {val?.[Data.BC]} Beginner &nbsp; <span className="dot" />{" "}
-                        &nbsp; {val?.[Data.IC]} Intermediate &nbsp;{" "}
-                        <span className="dot" /> &nbsp; {val?.[Data.AC]} Advanced
+                        {val?.[Data.BC] === null ? "0" : val?.[Data.BC]}{" "}
+                        Beginner &nbsp;
+                        <span className="dot" /> &nbsp;{" "}
+                        {val?.[Data.IC] === null ? "0" : val?.[Data.IC]}{" "}
+                        Intermediate &nbsp;
+                        <span className="dot" /> &nbsp;{" "}
+                        {val?.[Data.AC] === null ? "0" : val?.[Data.AC]}{" "}
+                        Advanced
                       </span>
                     </div>
                   </td>
                   <td style={{ width: "11.375rem" }}>
                     <div className="duration">
                       <span>
-                        {val?.[Data.D]} {val?.[Data.D] <= 1 ? "month" : "months"}
+                        {val?.[Data.D] <= 1
+                          ? `0${val?.[Data.D]} month  `
+                          : `${val?.[Data.D]} months`}
                       </span>
                     </div>
                   </td>

@@ -39,9 +39,9 @@ const Congo = () => {
             </p>
           </div>
           <div className="row Ccontinue">
-            <button type="button" className="view-result-btn">
+            {/* <button type="button" className="view-result-btn">
               View Result
-            </button>
+            </button> */}
             <button
               type="button"
               className="continueBtn"

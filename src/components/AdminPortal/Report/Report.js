@@ -17,10 +17,13 @@ const Report = () => {
   const [tableData, setTableData] = useState([]);
   const [orgTableData, setOrgTableData] = useState([]);
   const [query, setQuery] = useState("");
+  const [isLoading, setIsLoading] = useState(true);
 
   //functions
   useEffect(() => {
-    fetchData();
+    setTimeout(() => {
+      fetchData();
+    }, 1000);
   }, []);
   const fetchData = async () => {
     try {
@@ -28,17 +31,20 @@ const Report = () => {
         `https://cg-interns-hq.azurewebsites.net/getuserReport`
       );
       setOrgTableData(
-        response?.data.response.sort(function (a, b) {
-          if (b.techNames.length === 1 && b.techNames[0] === null) return -1;
-          return b.techNames.length - a.techNames.length;
-        })
+        response?.data.response
+        // response?.data.response.sort(function (a, b) {
+        //   if (b.techNames === 0) return -1;
+        //   return b?.techNames.length - a?.techNames.length;
+        // })
       );
       setTableData(
-        response?.data.response.sort(function (a, b) {
-          if (b.techNames.length === 1 && b.techNames[0] === null) return -1;
-          return b.techNames.length - a.techNames.length;
-        })
+        response?.data.response
+        // response?.data.response.sort(function (a, b) {
+        //   if (b.techNames === 0) return -1;
+        //   return b?.techNames.length - a?.techNames.length;
+        // })
       );
+      setIsLoading(false);
     } catch (error) {
       console.error("Error fetching data:", error);
     }
@@ -100,114 +106,116 @@ const Report = () => {
 
   return (
     <>
-     <div className="" style={{ marginBottom: "5rem" }}>
+      <div className="" style={{ marginBottom: "5rem" }}>
         <Header />
       </div>
       <div className="report-parent-wrapper">
-      <div className="report-child-wrapper">
-        <div className="report-header">Report</div>
-        <div className="report-filter-wrapper ">
-          <div className="report-search">
-            <div className="search-icon" />
-            <input
-              type="text"
-              className="report-input-bar"
-              placeholder="Search Associate Consultant"
-              value={query}
-              onChange={(e) => setQuery(e.target.value)}
-            />
-          </div>
-          <div className="inner-filter">
-            <div className="report-filter">
-              <Filter /> Filter:
+        <div className="report-child-wrapper">
+          <div className="report-header">Report</div>
+          <div className="report-filter-wrapper ">
+            <div className="report-search">
+              <div className="search-icon" />
+              <input
+                type="text"
+                className="report-input-bar"
+                placeholder="Search Associate Consultant"
+                value={query}
+                onChange={(e) => setQuery(e.target.value)}
+              />
             </div>
-            <div className=" report-drop-down-tech">
-              <div className="inner-drop-down-tech">
-                <div className="input-with-button-tech">
-                  <button
-                    type="button"
-                    className="button-for-dropdown-tech"
-                    onClick={() => {
-                      setDropDownTech(!dropDownTech);
-                    }}
-                  >
-                    <input
-                      type="text"
-                      className="custom-input-tech"
-                      value={Object.values(tech)}
-                      placeholder="Select Technology"
-                      disabled
-                    />
-                  </button>
-                  <button
-                    className="expand-more-tech"
-                    type="button"
-                    onClick={() => {
-                      setDropDownTech(!dropDownTech);
-                    }}
-                  >
-                    <ExpandMore />
-                  </button>
-                </div>
-                {dropDownTech && (
-                  <div
-                    className="data-display-tech"
-                    style={{
-                      top: "1.938rem",
-                    }}
-                  >
-                    <TechDropDown techDataComingChild={techDataComingFrmTech} />
+            <div className="inner-filter">
+              <div className="report-filter">
+                <Filter /> Filter:
+              </div>
+              <div className=" report-drop-down-tech">
+                <div className="inner-drop-down-tech">
+                  <div className="input-with-button-tech">
+                    <button
+                      type="button"
+                      className="button-for-dropdown-tech"
+                      onClick={() => {
+                        setDropDownTech(!dropDownTech);
+                      }}
+                    >
+                      <input
+                        type="text"
+                        className="custom-input-tech"
+                        value={Object.values(tech)}
+                        placeholder="Select Technology"
+                        disabled
+                      />
+                    </button>
+                    <button
+                      className="expand-more-tech"
+                      type="button"
+                      onClick={() => {
+                        setDropDownTech(!dropDownTech);
+                      }}
+                    >
+                      <ExpandMore />
+                    </button>
                   </div>
-                )}
+                  {dropDownTech && (
+                    <div
+                      className="data-display-tech"
+                      style={{
+                        top: "1.938rem",
+                      }}
+                    >
+                      <TechDropDown
+                        techDataComingChild={techDataComingFrmTech}
+                      />
+                    </div>
+                  )}
+                </div>
+              </div>
+              <div className=" report-drop-down-level">
+                <div className="inner-drop-down-level">
+                  <div className="input-with-button-level">
+                    <button
+                      type="button"
+                      className="button-for-dropdown-level"
+                      onClick={() => {
+                        setDropDownLevel(!dropDownLevel);
+                      }}
+                    >
+                      <input
+                        type="text"
+                        className="custom-input-level"
+                        value={Object.values(level)}
+                        placeholder="Select level"
+                        disabled
+                      />
+                    </button>
+                    <button
+                      className="expand-more-level"
+                      type="button"
+                      onClick={() => {
+                        setDropDownLevel(!dropDownLevel);
+                      }}
+                    >
+                      <ExpandMore />
+                    </button>
+                  </div>
+                  {dropDownLevel && (
+                    <div
+                      className="data-display-tech"
+                      style={{
+                        top: "1.938rem",
+                      }}
+                    >
+                      <Selectlevel techDataComingChild={dataComingFrmLevel} />
+                    </div>
+                  )}
+                </div>
               </div>
             </div>
-            <div className=" report-drop-down-level">
-              <div className="inner-drop-down-level">
-                <div className="input-with-button-level">
-                  <button
-                    type="button"
-                    className="button-for-dropdown-level"
-                    onClick={() => {
-                      setDropDownLevel(!dropDownLevel);
-                    }}
-                  >
-                    <input
-                      type="text"
-                      className="custom-input-level"
-                      value={Object.values(level)}
-                      placeholder="Select level"
-                      disabled
-                    />
-                  </button>
-                  <button
-                    className="expand-more-level"
-                    type="button"
-                    onClick={() => {
-                      setDropDownLevel(!dropDownLevel);
-                    }}
-                  >
-                    <ExpandMore />
-                  </button>
-                </div>
-                {dropDownLevel && (
-                  <div
-                    className="data-display-tech"
-                    style={{
-                      top: "1.938rem",
-                    }}
-                  >
-                    <Selectlevel techDataComingChild={dataComingFrmLevel} />
-                  </div>
-                )}
-              </div>
-            </div>
           </div>
-        </div>
-        <div className="report-table-wrapper ">
-          <Reporttable tableData={tableData} />
+          <div className="report-table-wrapper ">
+            <Reporttable tableData={tableData} isLoading={isLoading}/>
+          </div>
         </div>
       </div>
-    </div>
     </>
   );
 };

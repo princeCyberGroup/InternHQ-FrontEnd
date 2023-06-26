@@ -2,11 +2,11 @@
     display: flex;
 flex-direction: column;
 align-items: center;
-padding: 16px;
-gap: 16px;
+padding: 1rem;
+gap: 1rem;
 isolation: isolate;
-width: 396px;
-height: 99vh;
+width: 24.75rem;
+height: 90vh;
 /* height: 698px; */
 
 background: #FFFFFF;
@@ -44,7 +44,7 @@ border-radius: 8px;
     padding: 8px 12px;
     gap: 8px;
     margin-bottom: 8px;
-    width: 380px;
+    width: 23.75rem;
     /* height: 59px; */
     
     /* Primary/White */
@@ -76,16 +76,16 @@ border-radius: 8px;
     font-style: normal;
     font-weight: 400;
     padding-top: 0.25rem;
-    font-size: 13px;
-    line-height: 16px;
+    font-size: 0.813rem;
+    line-height: 1rem;
     color: #8E8E92;
 }
 
 .image-box1 img{
-  width: 38px;
-  height: 40px;
+  width: 2.375rem;
+  height: 2.5rem;
   background: #E9ECEB;
-  border-radius: 18px;
+  border-radius: 1.125rem;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -104,49 +104,18 @@ border-radius: 8px;
 .arrow-wrapper1{
     display: flex;
     flex-direction: row;
+    margin: auto;
 }
 
-/* .arrow-wrapper1 button{
-    margin-right: 1rem;
-    display: flex;
-flex-direction: row;
-justify-content: center;
-align-items: center;
-padding: 6px;
-
-width: 82px;
-height: 27px;
-
-color: white;
-background: #E03E2D;
-border-radius: 4px;
-
-} */
-/* .arrow-wrapper1 p{
-    margin: 0;
-    width: 47px;
-height: 15px;
-
-font-family: 'Roboto';
-font-style: normal;
-font-weight: 400;
-font-size: 13px;
-line-height: 15px;
-
-
-
-color: #FFFFFF;
-} */
-
 .technology p{
-    width: 66px;
-    height: 14px;
+    width: 4.125rem;
+    height: 0.875rem;
     margin-bottom: 0.5rem;
     font-family: 'Roboto';
     font-style: normal;
     font-weight: 500;
-    font-size: 12px;
-    line-height: 14px;
+    font-size: 0.75rem;
+    line-height: 0.875rem;
     /* identical to box height */
     
     
@@ -171,15 +140,15 @@ color: #FFFFFF;
     padding: 6px;
     gap: 6px;
     border:none;
-    width: 82px;
-    height: 27px;
+    width: 5.125rem;
+    height: 1.688rem;
     color: white;
     background: #E03E2D;
     border-radius: 4px;
     font-family: 'Roboto';
     font-style: normal;
     font-weight: 400;
-    font-size: 13px;
+    font-size: 0.813rem;
 }
 
 .assign-btn{
@@ -191,13 +160,13 @@ align-items: center;
 padding: 6px;
 gap: 6px;
 border:none;
-width: 82px;
-height: 27px;
+width: 5.125rem;
+height: 1.688rem;
 color: white;
 background: #28519E;
 border-radius: 4px;
 font-family: 'Roboto';
 font-style: normal;
 font-weight: 400;
-font-size: 13px;
+font-size: 0.813rem;
 }
