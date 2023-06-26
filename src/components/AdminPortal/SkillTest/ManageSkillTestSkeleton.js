@@ -5,6 +5,7 @@ import "react-loading-skeleton/dist/skeleton.css";
 const ManageSkillTestSkeleton = () => {
   return (
     <tr>
+      <td className="technology-rows"><Skeleton width={18} height={16}/></td>
       <td className="technology-rows">
         <Skeleton width={84} height={16} />
       </td>
@@ -25,7 +26,7 @@ const ManageSkillTestSkeleton = () => {
       </td>
       <td className="delete-btn-row">
         <button type="button" style={{ border: "none", background: "none" }}>
-          <Skeleton width={16} height={16} />
+          <Skeleton width={16} height={16} highlightColor="#E03E2D"/>
         </button>
       </td>
     </tr>

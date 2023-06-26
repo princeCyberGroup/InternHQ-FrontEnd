@@ -5,6 +5,7 @@ const ReportTableSkeleton = () => {
   return (
     <tbody>
             <tr className="report-table-tr">
+            <td> <Skeleton width={18}/></td>
               <td style={{ width: "20.375rem" }}>
                 <div className="name-column">
                   {/* <div> */}
@@ -29,10 +30,10 @@ const ReportTableSkeleton = () => {
               <td style={{ width: "20.875rem" }}>
               <div className="skills-wrapper">
               <span className="skills">
-                <Skeleton width={85} height={24}/> &nbsp;
-                 <Skeleton width={66} height={24}/> &nbsp;
-                 <Skeleton width={70} height={24}/> &nbsp;
-                 <Skeleton width={22} height={24}/>
+                <Skeleton width={115} height={24} highlightColor="#B2B2B3" /> &nbsp;
+                 <Skeleton width={96} height={24} highlightColor="#B2B2B3" /> &nbsp;
+                 <Skeleton width={100} height={24} highlightColor="#B2B2B3" /> &nbsp;
+                 <Skeleton width={22} height={24} highlightColor="#28519E" />
                 </span>
                 </div>
               </td>

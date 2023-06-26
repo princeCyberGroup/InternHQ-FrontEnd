@@ -8,7 +8,7 @@ import { Data } from "./Fetcheddataobject";
 import { useNavigate } from "react-router-dom";
 import ReportTableSkeleton from "./ReportTableSkeleton";
 
-const Reporttable = ({ tableData }) => {
+const Reporttable = ({ tableData, isLoading }) => {
   const navigate = useNavigate();
   const handleOnclick = (index) => {
     // navigate(`/admin/report/userId?id=${tableData[index][Data.ID]}`);
@@ -53,7 +53,7 @@ const Reporttable = ({ tableData }) => {
                     handleOnclick(ind);
                   }}
                 >
-                  <td className="fw-bold name-column" > {ind+1}</td>
+                  <td className="fw-bold"> {ind+1}</td>
                   <td style={{ width: "10.375rem" }}>
                     <div className="name-column">
                       <div className="circle">

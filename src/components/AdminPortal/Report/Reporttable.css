@@ -22,6 +22,7 @@
 .table-report th {
   background-color: #002c3f;
   color: white;
+  font-weight: 500;
 }
 .table-report .circle {
   border-radius: 50%;
