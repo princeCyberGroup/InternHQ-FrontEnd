@@ -21,7 +21,7 @@ const Reporttable = ({ tableData, isLoading }) => {
       <table className="table-report" cellPadding="0" cellSpacing="0">
         <thead>
           <tr>
-            <th style={{ width: "2rem" }}>S.No</th>
+            <th style={{ width: "2.5rem" }}>S.No</th>
             <th style={{ width: "13.375rem" }}>Name</th>
             <th style={{ width: "28.875rem" }}>Technology Tags</th>
             <th style={{ width: "17.375rem" }}>Skills Achieved</th>
@@ -53,7 +53,7 @@ const Reporttable = ({ tableData, isLoading }) => {
                     handleOnclick(ind);
                   }}
                 >
-                  <td className="fw-bold"> {ind+1}</td>
+                  <td className="fw-bold d-flex justify-content-center align-items-center" style={{height: "54px"}}>{ind+1}</td>
                   <td style={{ width: "10.375rem" }}>
                     <div className="name-column">
                       <div className="circle">
