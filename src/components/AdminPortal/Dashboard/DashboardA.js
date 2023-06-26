@@ -1,12 +1,8 @@
-import React, { useContext } from "react";
-import Card from "react-bootstrap/Card";
 import "../Dashboard/DashboardA.css";
-import HeaderAdmin from "../Header/HeaderAdmin";
-import { Button } from "bootstrap";
 import Uploadcsv from "./UploadCsv/Uploadcsv";
 import ManageSkillSet from "./ManageSkillSet/manageSkillSet";
 import { useEffect, useState } from "react";
-import { useNavigate, useLocation, Link } from "react-router-dom";
+import { Link } from "react-router-dom";
 import Status from "./Status/Status";
 import TopTech from "./TopTech/topTech";
 import AssociateConsultant from "./associateConsultant/associateConsultant";
@@ -54,7 +50,7 @@ const DashboardA = () => {
       <div className="responsiveness">
         <>
           <div className="row">
-            <div className="col-8" >
+            <div className="col-8">
               <div className="about">
                 <Link to="/admin/reports" className="about-link">
                   Manage Consultant <Right style={{ marginBottom: "2px" }} />
@@ -81,7 +77,7 @@ const DashboardA = () => {
             </div>
             {/* //insights */}
             <div className="col-4 ">
-            <Insights data={insights} />
+              <Insights data={insights} />
             </div>
           </div>
         </>

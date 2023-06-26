@@ -38,17 +38,17 @@ const Selectlevel = (props) => {
         return (
           <div
             key={index}
-            class="form-check small"
+            className="form-check small"
             onClick={(e) => {
               handleOptionClick(e);
             }}
             data-value={value}
           >
-            <label class="form-check-label" for="nodeJs">
+            <label className="form-check-label" for="nodeJs">
               {value}
             </label>
             <input
-              class="form-check-input"
+              className="form-check-input"
               type="checkbox"
               value="ytch"
               id="nodeJs"

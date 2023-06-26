@@ -51,17 +51,17 @@ const TechDropDown = (props) => {
         return (
           <div
             key={index}
-            class="form-check small checkbox"
+            className="form-check small checkbox"
             onClick={(e) => {
               handleOptionClick(e);
             }}
             data-value={value.techName}
           >
-            <label class="form-check-label tech-label" for={value.techName}>
+            <label className="form-check-label tech-label" for={value.techName}>
               {value?.techName}
             </label>
             <input
-              class="form-check-input techDrop"
+              className="form-check-input techDrop"
               type="checkbox"
               value="ytch"
               id="nodeJs"

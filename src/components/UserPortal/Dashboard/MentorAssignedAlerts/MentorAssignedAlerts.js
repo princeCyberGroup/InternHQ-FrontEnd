@@ -78,7 +78,7 @@ const MentorAssignedAlerts = (props) => {
         {
           mentorTask.length!==0 ? (
             <div
-              class="card"
+              className="card"
               style={{
                 position: "absolute",
                 right: "1.5rem",
@@ -89,7 +89,7 @@ const MentorAssignedAlerts = (props) => {
                 borderRadius: "0.5rem",
               }}
             >
-              <div class="card-header p-0 border-0">
+              <div className="card-header p-0 border-0">
                 <div
                   className="border-bottom p-0"
                   style={{
@@ -101,7 +101,7 @@ const MentorAssignedAlerts = (props) => {
                   }}
                 >
                   <h5
-                    class="card-title p-3 m-0"
+                    className="card-title p-3 m-0"
                     style={{
                       fontFamily: "Roboto",
                       fontWeight: 600,
@@ -138,7 +138,7 @@ const MentorAssignedAlerts = (props) => {
                         </div>
                       </div>
                       <div className="text-wrapper ps-0 ">
-                        <p class="card-text ">
+                        <p className="card-text ">
                           <b>
                             {data.firstName} {data.lastName}
                           </b>{" "}
@@ -153,7 +153,7 @@ const MentorAssignedAlerts = (props) => {
           ) : (
             // empty state
             <div
-              class="card"
+              className="card"
               style={{
                 position: "absolute",
                 right: "1.5rem",
@@ -164,7 +164,7 @@ const MentorAssignedAlerts = (props) => {
                 borderRadius: "0.5rem",
               }}
             >
-              <div class="card-header p-0 border-0">
+              <div className="card-header p-0 border-0">
                 <div
                   className="border-bottom p-0"
                   style={{
@@ -176,7 +176,7 @@ const MentorAssignedAlerts = (props) => {
                   }}
                 >
                   <h5
-                    class="card-title p-3 m-0"
+                    className="card-title p-3 m-0"
                     style={{
                       fontFamily: "Roboto",
                       fontWeight: 600,

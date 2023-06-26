@@ -5,9 +5,9 @@ import "react-loading-skeleton/dist/skeleton.css";
 const TakeTestSkeleton = () => {
   return (
     <div className="exam">
-      <div class="card outer-card">
-        <div class="d-flex align-items-center">
-          <div class="ml-3 w-100">
+      <div className="card outer-card">
+        <div className="d-flex align-items-center">
+          <div className="ml-3 w-100">
             <div className="d-flex justify-content-start ">
               <div
                 className="p-0"
@@ -32,18 +32,18 @@ const TakeTestSkeleton = () => {
                 </div>
               </div>
             </div>
-            <div class=" col d-flex justify-content-between eounded text-grey quesTimeClick ">
-              <div class="d-flex flex-column justify-content-center noOfQues">
-                <div class="articles d-flex justify-content-center">
+            <div className=" col d-flex justify-content-between eounded text-grey quesTimeClick ">
+              <div className="d-flex flex-column justify-content-center noOfQues">
+                <div className="articles d-flex justify-content-center">
                   <Skeleton width={80} style={{ marginRight: "5px" }} />
                 </div>
               </div>
-              <div class="d-flex flex-column justify-content-center testTime">
-                <div class="articles d-flex justify-content-center ">
+              <div className="d-flex flex-column justify-content-center testTime">
+                <div className="articles d-flex justify-content-center ">
                   <Skeleton width={60} style={{ marginRight: "5px" }} />
                 </div>
               </div>
-              <div class="d-flex flex-column">
+              <div className="d-flex flex-column">
                 <Skeleton
                   highlightColor="#28519E"
                   width={150}

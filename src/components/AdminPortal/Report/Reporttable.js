@@ -8,10 +8,7 @@ import { Data } from "./Fetcheddataobject";
 import { useNavigate } from "react-router-dom";
 
 const Reporttable = ({ tableData }) => {
-  //data
-  let objectCount = 0;
   const navigate = useNavigate();
-  //funciton
   const handleOnclick = (index) => {
     // navigate(`/admin/report/userId?id=${tableData[index][Data.ID]}`);
     sessionStorage.setItem("detailId", tableData[index][Data.ID]);
@@ -23,10 +20,11 @@ const Reporttable = ({ tableData }) => {
       <table className="table-report" cellPadding="0" cellSpacing="0">
         <thead>
           <tr>
-            <th style={{ width: "20.375rem" }}>Name</th>
-            <th style={{ width: "20.875rem" }}>Technology Tags</th>
-            <th style={{ width: "20.375rem" }}>Skills Achieved</th>
-            <th style={{ width: "11.375rem" }}>Duration</th>
+            <th style={{ width: "2rem" }}>S.No</th>
+            <th style={{ width: "13.375rem" }}>Name</th>
+            <th style={{ width: "28.875rem" }}>Technology Tags</th>
+            <th style={{ width: "17.375rem" }}>Skills Achieved</th>
+            <th style={{ width: "6.375rem" }}>Duration</th>
           </tr>
         </thead>
         {tableData ? (
@@ -41,7 +39,8 @@ const Reporttable = ({ tableData }) => {
                     handleOnclick(ind);
                   }}
                 >
-                  <td style={{ width: "20.375rem" }}>
+                  <td className="fw-bold name-column" > {ind+1}</td>
+                  <td style={{ width: "10.375rem" }}>
                     <div className="name-column">
                       <div className="circle">
                         {val?.[Data.FN]?.toUpperCase().slice(0, 1)}
@@ -57,20 +56,23 @@ const Reporttable = ({ tableData }) => {
                   </td>
                   <td style={{ width: "20.875rem" }}>
                     <div className="tech-tags">
-                      {val?.[Data.TN]?.map((value, index) => {
+                      {val?.[Data.TN]?.slice(0, 5).map((value, index) => {
                         objectKeyCount++;
-                        {
-                          /* if (objectCount > 3) {
-                          objectCount = 0;
-                          return;
-                        } else {
-                          objectCount++;
-                        } */
-                        }
+                        // {
+                        //    if (objectCount > 3) {
+                        //   objectCount = 0;
+                        //   return;
+                        // } else {
+                        //   objectCount++;
+                        // }
+                        // }
                         return value === null ? (
                           <div key={index}></div>
                         ) : (
-                          <div key={index} className="tag-tech">
+                          <div
+                            key={index}
+                            className="tag-tech d-flex justify-content-center align-items-center"
+                          >
                             <span>{value}</span>
                             <div>
                               {val?.[Data.L][index] === "Beginner" ? (
@@ -84,9 +86,9 @@ const Reporttable = ({ tableData }) => {
                           </div>
                         );
                       })}
-                      {objectKeyCount > 3 && (
+                      {objectKeyCount > 4 && val?.[Data.TN].slice(5).length!==0 && (
                         <div className="all-tech">
-                          <span>+{objectKeyCount - 3}</span>
+                          <span>+ {val?.[Data.TN].slice(5).length}</span>
                         </div>
                       )}
                     </div>
@@ -94,18 +96,23 @@ const Reporttable = ({ tableData }) => {
                   <td style={{ width: "20.375rem" }}>
                     <div className="skills-wrapper">
                       <span className="skills">
-                        {val?.[Data.BC]} Beginner &nbsp;{" "}
-                        <span className="dot" /> &nbsp; {val?.[Data.IC]}{" "}
-                        Intermediate &nbsp; <span className="dot" /> &nbsp;{" "}
-                        {val?.[Data.AC]} Advanced
+                        {val?.[Data.BC] === null ? "0" : val?.[Data.BC]}{" "}
+                        Beginner &nbsp;
+                        <span className="dot" /> &nbsp;{" "}
+                        {val?.[Data.IC] === null ? "0" : val?.[Data.IC]}{" "}
+                        Intermediate &nbsp;
+                        <span className="dot" /> &nbsp;{" "}
+                        {val?.[Data.AC] === null ? "0" : val?.[Data.AC]}{" "}
+                        Advanced
                       </span>
                     </div>
                   </td>
                   <td style={{ width: "11.375rem" }}>
                     <div className="duration">
                       <span>
-                        {val?.[Data.D]}{" "}
-                        {val?.[Data.D] <= 1 ? "month" : "months"}
+                        {val?.[Data.D] <= 1
+                          ? `0${val?.[Data.D]} month  `
+                          : `${val?.[Data.D]} months`}
                       </span>
                     </div>
                   </td>

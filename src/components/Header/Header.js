@@ -114,9 +114,13 @@ const Header = () => {
             )}
           </div>
 
-          <div>
-            <MentorAssignedAlerts func={anotherFunc} setState={isTodayDate} />
-          </div>
+          {userData.randomString === "07495d" ? (
+            <>
+              <MentorAssignedAlerts func={anotherFunc} setState={isTodayDate} />
+            </>
+          ) : (
+            ""
+          )}
 
           <div
             className="d-flex margin"
