@@ -46,28 +46,34 @@
   color: #fff;
 }
 
-.column-id {
+.dut-column-id {
   width: 2.563rem;
+  font-weight: 500;
 }
 
-.column-date {
+.dut-column-date {
   width: 8.813rem;
+  font-weight: 500;
 }
 
-.column-learning {
+.dut-column-learning {
   width: 13.3rem;
+  font-weight: 500;
 }
 
-.column-topic {
+.dut-column-topic {
   width: 10rem;
+  font-weight: 500;
 }
 
-.column-comment {
+.dut-column-comment {
   width: 16rem;
+  font-weight: 500;
 }
 
-.column-duration {
+.dut-column-duration {
   width: 11.125rem;
+  font-weight: 500;
 }
 
 .search-bar-input {
@@ -118,7 +124,7 @@
 
 .image-tooltip-container {
   position: relative;
-  display: inline;
+  display : inline;
   margin-left: 2.9rem;
 }
 

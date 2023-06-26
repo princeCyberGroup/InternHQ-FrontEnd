@@ -93,7 +93,7 @@ const Header = () => {
                     Skill Test
                   </NavLink>
                 </li>
-                <li className="nav-item">
+                <li className="nav-item mx-2">
                   <NavLink to="/admin/reports" className="btn activeBtn ">
                     Report
                   </NavLink>

@@ -5,11 +5,13 @@ import { AddNewSkillTest } from "./AddNewSkillTest";
 import { ReactComponent as VectorAdd } from "../../../Assets/Vectoradd.svg";
 import axios from "axios";
 import { Link } from "react-router-dom";
+import ManageSkillTestSkeleton from "./ManageSkillTestSkeleton";
 import Header from "../../Header/Header";
 
 export const ManageSkillTest = () => {
   //data
   const [data, setData] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
   const handleDelete = (id) => {
     console.log("this is id and it is working", id);
     axios
@@ -28,7 +30,9 @@ export const ManageSkillTest = () => {
 
   //function
   useEffect(() => {
-    fetchData();
+    setTimeout(() => {
+      fetchData();
+    }, 1000);
   }, []);
   const fetchData = async () => {
     try {
@@ -36,6 +40,7 @@ export const ManageSkillTest = () => {
         `https://cg-interns-hq.azurewebsites.net/getAllExam`
       );
       setData(response.data);
+      setIsLoading(false);
     } catch (error) {
       console.error("Error while fetching the data is ", error);
     }
@@ -85,6 +90,7 @@ export const ManageSkillTest = () => {
               </div>
             </div>
           </div>
+        </div>
           <div className="mb-3">
             <div className="col-12 manage-skill-table-style p-0">
               <div
@@ -104,8 +110,23 @@ export const ManageSkillTest = () => {
                     <th className="column-actions">Action</th>
                   </tr>
                 </thead>
-                <tbody>
-                  {data?.map((item, index) => {
+              <tbody>
+                {isLoading ? (
+                  <>
+                    <ManageSkillTestSkeleton />
+                    <ManageSkillTestSkeleton />
+                    <ManageSkillTestSkeleton />
+                    <ManageSkillTestSkeleton />
+                    <ManageSkillTestSkeleton />
+                    <ManageSkillTestSkeleton />
+                    <ManageSkillTestSkeleton />
+                    <ManageSkillTestSkeleton />
+                    <ManageSkillTestSkeleton />
+                    <ManageSkillTestSkeleton />
+                    <ManageSkillTestSkeleton />
+                  </>
+                ) : (
+                  data?.map((item, index) => {
                     const options = { timeZone: "Asia/Kolkata" };
                     const currentTimeIST = item?.uploadedOn.toLocaleString(
                       "en-US",
@@ -136,10 +157,10 @@ export const ManageSkillTest = () => {
                         </td>
                       </tr>
                     );
-                  })}
-                </tbody>
-              </table>
-            </div>
+                  })
+                )}
+              </tbody>
+            </table>
           </div>
         </div>
       </div>

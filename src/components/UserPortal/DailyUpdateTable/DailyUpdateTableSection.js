@@ -7,6 +7,7 @@ import { Modal, Form } from "react-bootstrap";
 import EmptyDailyUpdateTable from "./EmptyDailyUpdateTable";
 import DurationClock from "../../../Assets/DurationClock.svg";
 import ImageTooltip from "./ImageTooltip";
+import DailyUpdateTableSectionSkeleton from "./DailyUpdateTableSectionSkeleton";
 
 const DailyUpdateTableSection = (props) => {
   //data
@@ -20,9 +21,12 @@ const DailyUpdateTableSection = (props) => {
   const [showModal, setShowModal] = useState(false);
   const [selectedItem, setSelectedItem] = useState(null);
   const [modalSaveFlag, setModalSaveFlag] = useState(true);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    fetchData();
+    setTimeout(() => {
+      fetchData();
+    }, 1000);
   }, []);
 
   const fetchData = async () => {
@@ -35,6 +39,7 @@ const DailyUpdateTableSection = (props) => {
       .then(async (data) => {
         setTableData(data.response);
         setOriginalTableData(data.response);
+        setIsLoading(false);
         props.sendDataToDailyUpdate(data.response);
       });
   };
@@ -165,12 +170,12 @@ const DailyUpdateTableSection = (props) => {
           <table id="example" className="table table-striped">
             <thead>
               <tr>
-                <th className="column-id">#</th>
-                <th className="column-date">Date</th>
-                <th className="column-learning">Learning Type</th>
-                <th className="column-topic">Topic</th>
-                <th className="column-comment">Comment</th>
-                <th className="column-duration">Duration</th>
+                <th className="dut-column-id">#</th>
+                <th className="dut-column-date">Date</th>
+                <th className="dut-column-learning">Learning Type</th>
+                <th className="dut-column-topic">Topic</th>
+                <th className="dut-column-comment">Comment</th>
+                <th className="dut-column-duration">Duration</th>
               </tr>
             </thead>
             <tbody className="align-middle">
@@ -201,8 +206,19 @@ const DailyUpdateTableSection = (props) => {
                 <td></td>
                 <td></td>
               </tr>
-              {arrayCurrentResults == undefined ||
-              arrayCurrentResults?.length === 0 ? (
+              {isLoading ? (
+                <>
+                <DailyUpdateTableSectionSkeleton/>
+                <DailyUpdateTableSectionSkeleton/>
+                <DailyUpdateTableSectionSkeleton/>
+                <DailyUpdateTableSectionSkeleton/>
+                <DailyUpdateTableSectionSkeleton/>
+                <DailyUpdateTableSectionSkeleton/>
+                <DailyUpdateTableSectionSkeleton/>
+                <DailyUpdateTableSectionSkeleton/>
+                </>
+              ) : (arrayCurrentResults == undefined ||
+                arrayCurrentResults?.length === 0 ? (
                 <tr>
                   <td colSpan={6}>
                     <EmptyDailyUpdateTable />
@@ -283,7 +299,7 @@ const DailyUpdateTableSection = (props) => {
                     </tr>
                   );
                 })
-              )}
+              ))}
 
               <Modal
                 size="lg"
