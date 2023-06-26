@@ -26,6 +26,10 @@
     box-shadow: 0rem 0.25rem 1.25rem rgba(40, 52, 73, 0.15); /* Converted from 0px 4px 20px */
     border-radius: 0.5rem; /* Converted from 8px */
 }
+.insights-search-wrapper{
+    border: 1px solid #B2B2B3;
+    border-radius: 5px;
+}
 
 .insights {
     align-items: flex-center;
@@ -38,7 +42,6 @@ margin-left: 0.5rem;
 .search-insights {
   margin: 1rem;
     box-sizing: border-box;
-
      display: flex;
     flex-direction: row; 
     align-items: center;
@@ -46,10 +49,12 @@ margin-left: 0.5rem;
      height: 2.5rem;
      width: 23.5rem;
     background: #FFFFFF;
-    border: 0.0625rem solid #B2B2B3; /* Converted from 1px */
-    border-radius: 0.25rem; /* Converted from 4px */
+border: none;
+outline: none;
 }
-
+.search-insights:hover,.search-associate:hover,.search-insights:focus,.search-associate:focus{
+    outline: none;
+}
 .div-insights {
     box-sizing: border-box;
     display: flex;
@@ -77,8 +82,8 @@ margin-left: 0.5rem;
 }
 
 .number-of-test {
-    margin-top: 0.8rem; /* Converted from 10px */
-    width: 16.25rem; 
+    margin-top: 0.25rem; /* Converted from 10px */
+    width: 16.25rem; /* Converted from 260px */
     height: 0.5625rem; /* Converted from 9px */
     font-family: 'Roboto';
     justify-content: space-between;
@@ -95,6 +100,8 @@ margin-left: 0.5rem;
 
 .image-div {
     display: flex;
+    /* margin-top: 1.25rem; Converted from 10px */
+    flex-direction: row;
     justify-content: center;
     align-items: center;
     border-radius: 1.7613636rem; 

@@ -277,7 +277,7 @@ const DailyUpdateTableSection = (props) => {
                                 convertTime(item.activityTime[0].endedAt)
                               : ""
                           }
-                          styleClass={tooltipClassName}
+                          styleclassName={tooltipClassName}
                         />
                       </td>
                     </tr>

@@ -180,7 +180,7 @@ const TakeTest = ({ test }) => {
           </div>
         </div>
         {isLoading ? (
-          <div class="card-body  p-0">
+          <div className="card-body  p-0">
             <div className="row cards main-card-inside ">
               <div className="row d-flex justify-content-evenly">
                 <TakeTestSkeleton />
@@ -197,19 +197,19 @@ const TakeTest = ({ test }) => {
             </div>
           </div>
         ) : (
-          <div class="card-body p-0">
+          <div className="card-body p-0">
             <div className="row cards main-card-inside">
               <div className="row d-flex justify-content-evenly ">
                 {tests?.map((test) => (
                   <div className="exam">
-                    <div class="card outer-card">
-                      <div class="d-flex align-items-center">
-                        <div class="ml-3 w-100">
+                    <div className="card outer-card">
+                      <div className="d-flex align-items-center">
+                        <div className="ml-3 w-100">
                           <div className="d-flex justify-content-start ">
                             <div className="imagespace">
                               <img
                                 src={test.techImageLink}
-                                class="imageLogo"
+                                className="imageLogo"
                                 width="1.875rem"
                                 height="2.188rem"
                               />
@@ -225,22 +225,22 @@ const TakeTest = ({ test }) => {
                               </div>
                             </div>
                           </div>
-                          <div class=" col d-flex justify-content-between eounded text-grey quesTimeClick ">
-                            <div class="d-flex flex-column justify-content-center noOfQues">
-                              <div class="articles d-flex justify-content-center">
+                          <div className=" col d-flex justify-content-between eounded text-grey quesTimeClick ">
+                            <div className="d-flex flex-column justify-content-center noOfQues">
+                              <div className="articles d-flex justify-content-center">
                                 <MdOutlineBallot
                                   style={{ marginRight: "0.313rem" }}
                                 />
                                 {test.numberOfQuestion} Questions
                               </div>
                             </div>
-                            <div class="d-flex flex-column justify-content-center testTime">
-                              <div class="articles d-flex justify-content-center ">
+                            <div className="d-flex flex-column justify-content-center testTime">
+                              <div className="articles d-flex justify-content-center ">
                                 <BsClock style={{ marginRight: "0.313rem" }} />
                                 {test.examDuration} mins
                               </div>
                             </div>
-                            <div class="d-flex flex-column">
+                            <div className="d-flex flex-column">
                               <Button
                                 onClick={() =>
                                   clickHandler(
@@ -260,7 +260,7 @@ const TakeTest = ({ test }) => {
                               </Button>
                             </div>
                             <div
-                              class="modal fade"
+                              className="modal fade"
                               id="staticBackdrop"
                               data-bs-backdrop="static"
                               data-bs-keyboard="false"
@@ -268,23 +268,23 @@ const TakeTest = ({ test }) => {
                               aria-labelledby="staticBackdropLabel"
                               aria-hidden="true"
                             >
-                              <div class="modal-dialog modal-dialog-centered">
-                                <div class="modal-content">
-                                  <div class="modal-header">
+                              <div className="modal-dialog modal-dialog-centered">
+                                <div className="modal-content">
+                                  <div className="modal-header">
                                     <span
-                                      class="modal-title instruction"
+                                      className="modal-title instruction"
                                       id="staticBackdropLabel"
                                     >
                                       Instructions
                                     </span>
                                     <button
                                       type="button"
-                                      class="btn-close"
+                                      className="btn-close"
                                       data-bs-dismiss="modal"
                                       aria-label="Close"
                                     ></button>
                                   </div>
-                                  <div class="modal-body">
+                                  <div className="modal-body">
                                     <ol style={{ listStyleType: "decimal" }}>
                                       <li>
                                         {" "}
@@ -306,10 +306,10 @@ const TakeTest = ({ test }) => {
                                       </li>
                                     </ol>
                                   </div>
-                                  <div class="modal-footer">
+                                  <div className="modal-footer">
                                     <button
                                       type="button"
-                                      class="btn btn-outline-primary"
+                                      className="btn btn-outline-primary"
                                       data-bs-dismiss="modal"
                                     >
                                       Cancel
@@ -318,7 +318,7 @@ const TakeTest = ({ test }) => {
                                       type="button"
                                       onClick={() => clickCont()}
                                       data-bs-dismiss="modal"
-                                      class="btn btn-primary"
+                                      className="btn btn-primary"
                                     >
                                       Continue
                                     </button>

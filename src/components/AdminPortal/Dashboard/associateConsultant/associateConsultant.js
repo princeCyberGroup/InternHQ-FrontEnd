@@ -2,6 +2,7 @@ import "../associateConsultant/associateConsultant.css";
 import React, { useState, useEffect } from "react";
 import { ReactComponent as DownArroww } from "../../../../Assets/down-scroll.svg";
 import { ReactComponent as UpArrow } from "../../../../Assets/chevron-up.svg";
+import { ReactComponent as SearchIcon } from "../../../../Assets/search.svg";
 import { ReactComponent as GoldStarOri } from "../../../../Assets/Star-Icon-gold-ori.svg";
 import { ReactComponent as SilverStarOri } from "../../../../Assets/Star-Icon-silver-ori.svg";
 import { ReactComponent as BronzeStarOri } from "../../../../Assets/Star-Icon-bronze-ori.svg";
@@ -14,12 +15,14 @@ function getInitials(name) {
 }
 export default function AssociateConsultant(props) {
   const navigate = useNavigate();
-  const handleOnclick = (index) => {
-    navigate(`/admin/report?userId=${''}`);
+  const handleOnclick = (id) => {
+    sessionStorage.setItem("detailId", id);
+    navigate(`/admin/report?userId=${id}`);
   };
   const [searchFilterValue, setSearchFilterValue] = useState("");
   const [originalTests, setOriginalTests] = useState(props.data);
   const [expandedMentor, setExpandedMentor] = useState(null);
+  
   const handleFiltersChange = () => {
     const getFilterItems = (items, searchValue) => {
       if (searchValue) {
@@ -85,7 +88,7 @@ export default function AssociateConsultant(props) {
             </div>
             <div
               onClick={() => {
-                handleOnclick(userData.intId);
+                handleOnclick(userData.userId);
               }}
               className=" col-4 pointer"
             >
@@ -112,7 +115,7 @@ export default function AssociateConsultant(props) {
             <div className="row mt-3">
               <div className="technology">
                 <p className="tech">Technology:</p>
-                {userData &&
+                {/* {userData &&
                   userData.techNames &&
                   userData.techNames.map((skill, skillIndex) => (
                     skill && (
@@ -143,14 +146,13 @@ export default function AssociateConsultant(props) {
         </div>
 
         <div
-
-
           className=" associate-card  "
 
         >
-          <div>
+          <div className="d-flex align-items-center ps-1 insights-search-wrapper">
+            <SearchIcon />
             <input
-              className="search-associate "
+              className="search-associate border-none"
               type="text"
               value={searchFilterValue}
               placeholder="Search"

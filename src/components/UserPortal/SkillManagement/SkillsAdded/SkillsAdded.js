@@ -50,7 +50,7 @@ const SkillsAdded = () => {
           allData.map((DataUsed) => (
             <div className="card" style={{ width: "18rem" }}>
               <div
-                class="card-body p-0"
+                className="card-body p-0"
                 style={{ maxHeight: "calc(100vh - 30vh)", overflow: "auto" }}
               >
                 <div className="row cards">

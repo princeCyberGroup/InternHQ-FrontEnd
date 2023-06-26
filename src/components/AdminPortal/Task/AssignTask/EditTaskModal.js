@@ -143,10 +143,10 @@ export const EditTaskModal = ({ task, onEditClose, technology, assignedTo, edite
                   ></textarea>
                 </div>
 
-                <div class="mb-3">
+                <div className="mb-3">
                   <label
                     for="technology-tag"
-                    class="col-form-label form-title-names"
+                    className="col-form-label form-title-names"
                   >
                     Technology Tag<span style={{ color: "red" }}>*</span>
                   </label>
@@ -195,10 +195,10 @@ export const EditTaskModal = ({ task, onEditClose, technology, assignedTo, edite
                   </div>
                 </div>
 
-                <div class="mb-3">
+                <div className="mb-3">
                   <label
                     for="assigned-to"
-                    class="col-form-label form-title-names"
+                    className="col-form-label form-title-names"
                   >
                     Assigned To<span style={{ color: "red" }}>*</span>
                   </label>

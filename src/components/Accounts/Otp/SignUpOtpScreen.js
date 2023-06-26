@@ -107,7 +107,7 @@ const SignUpOtpScreen = () => {
                   <button
                     data-bs-target="#carouselExampleIndicators"
                     data-bs-slide-to="0"
-                    class="active"
+                    className="active"
                     aria-current="true"
                     aria-label="Slide 1"
                   ></button>
@@ -215,7 +215,7 @@ const SignUpOtpScreen = () => {
                   )}
                 </div>
                 <button
-                  class="btn btn-warning border-0 sign-up-btn mt-3"
+                  className="btn btn-warning border-0 sign-up-btn mt-3"
                   disabled={value.length < 6 || isLoading}
                 >
                   {isLoading ? (

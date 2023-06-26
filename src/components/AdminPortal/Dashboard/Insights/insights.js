@@ -1,6 +1,6 @@
-import '../Insights/insights.css';
-import { ReactComponent as Bullet } from "../../../../Assets/bullet.svg"
-import { ReactComponent as SearchIcon } from '../../../../Assets/search.svg';
+import "../Insights/insights.css";
+import { ReactComponent as Bullet } from "../../../../Assets/bullet.svg";
+import { ReactComponent as SearchIcon } from "../../../../Assets/search.svg";
 import React, { useEffect, useState } from "react";
 
 export default function Insights(props) {
@@ -19,10 +19,6 @@ export default function Insights(props) {
         const filters = getFilterItems(props.data, searchFilterValue);
         setOriginalTests(filters);
     }
-    useEffect(() => {
-        handleFiltersChange();
-    }, [searchFilterValue])
-
     function renderInsights(insights) {
         return (
             <div className='div-insights'>
@@ -39,14 +35,21 @@ export default function Insights(props) {
                 </div>
             </div>
         );
-    }
-
-
-    return (
-        <div >
+        return fitlerData;
+      }
+      return items;
+    };
+    const filters = getFilterItems(props.data, searchFilterValue);
+    setOriginalTests(filters);
+  };
+  useEffect(() => {
+    handleFiltersChange();
+  }, [searchFilterValue]);
+  return (
+   <div >
             <div className='about-insight col'>Insights</div>
             <div className='insights-card'>
-                   <div style={{margin:"0rem" , padding:"0rem"}} >
+                   <div className="d-flex align-items-center ps-1 insights-search-wrapper">
                    <input
                    className='search-insights'
                         type="text"
@@ -69,6 +72,5 @@ export default function Insights(props) {
             </div>
             
         </div>
-    )
+  );
 }
-
