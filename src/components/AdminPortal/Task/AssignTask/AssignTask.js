@@ -3,6 +3,7 @@ import "./AssignTask.css";
 import { ReactComponent as Delete } from "../../../../Assets/Buttondelete.svg";
 import { ReactComponent as Edit } from "../../../../Assets/Buttonedit.svg";
 import { ReactComponent as Plus } from "../../../../Assets/+plusbtn.svg";
+import { ReactComponent as NoTask } from "../../../../Assets/Group 3EmpGraph.svg";
 import axios from "axios";
 import { AddNewTask } from "./AddNewTaskModal";
 import { EditTaskModal } from "./EditTaskModal";
@@ -103,7 +104,19 @@ setTaskName(editedTask?.taskName)
         </button>
       </div>
       <div style={{ maxHeight: "80vh", overflow: "auto", width: "820px" }}>
-        {tasks &&
+        {tasks.length === 0 ? (
+          <div className="empty-task-state">
+            <div
+            className="col-12 d-flex justify-content-center"
+            // style={{ marginTop: "70px" }}
+          >
+            <NoTask />
+          </div>
+          <div className="col-12 d-flex justify-content-center">
+            <p>No Task Assigned Yet! </p>
+          </div>
+            </div>
+        ) :(
           tasks.map((task, index) => (
             <div className="card task-card" key={task.taskId}>
               <div className="dots">
@@ -221,7 +234,7 @@ setTaskName(editedTask?.taskName)
                 </div>
               </div>
             </div>
-          ))}
+          )))}
       </div>
       {/* <AddNewTask/> */}
       <EditTaskModal

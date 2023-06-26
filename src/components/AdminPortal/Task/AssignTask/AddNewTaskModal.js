@@ -215,6 +215,7 @@ export const AddNewTask = ({ onAddClose }) => {
                         <input
                           type="text"
                           className="custom-input"
+                          placeholder="Select Technology"
                           value={Object.values(tech)}
                           disabled
                         />
@@ -265,6 +266,7 @@ export const AddNewTask = ({ onAddClose }) => {
                         <input
                           type="text"
                           className="custom-input"
+                          placeholder="Select Assigned To"
                           value={Object.values(users)}
                           disabled
                         />
