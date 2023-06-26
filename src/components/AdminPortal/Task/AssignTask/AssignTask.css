@@ -1,3 +1,7 @@
+.empty-task-state{
+  margin-top: 7rem;
+}
+
 .assign-task-container {
   display: flex;
   flex-direction: row;
@@ -48,7 +52,7 @@
   gap: 1rem;
   margin-bottom: 1.5rem;
   /* width: 748px; */
-  /* height: 239px; */
+  max-height: 270px;
 
   background: #ffffff;
   /* Shadow */
