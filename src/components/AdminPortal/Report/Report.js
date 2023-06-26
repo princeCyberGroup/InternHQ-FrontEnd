@@ -17,10 +17,13 @@ const Report = () => {
   const [tableData, setTableData] = useState([]);
   const [orgTableData, setOrgTableData] = useState([]);
   const [query, setQuery] = useState("");
+  const [isLoading, setIsLoading] = useState(true);
 
   //functions
   useEffect(() => {
-    fetchData();
+    setTimeout(() => {
+      fetchData();
+    }, 1000);
   }, []);
   const fetchData = async () => {
     try {
@@ -41,6 +44,7 @@ const Report = () => {
         //   return b?.techNames.length - a?.techNames.length;
         // })
       );
+      setIsLoading(false);
     } catch (error) {
       console.error("Error fetching data:", error);
     }
@@ -208,7 +212,7 @@ const Report = () => {
             </div>
           </div>
           <div className="report-table-wrapper ">
-            <Reporttable tableData={tableData} />
+            <Reporttable tableData={tableData} isLoading={isLoading}/>
           </div>
         </div>
       </div>

@@ -1,0 +1,58 @@
+import Skeleton from "react-loading-skeleton";
+import "react-loading-skeleton/dist/skeleton.css";
+
+const ReportTableSkeleton = () => {
+  return (
+    <tbody>
+            <tr className="report-table-tr">
+              <td style={{ width: "20.375rem" }}>
+                <div className="name-column">
+                  {/* <div> */}
+                    <Skeleton
+                      width={38}
+                      height={38}
+                      borderRadius={50}
+                      style={{ marginRight: "0.5rem" }}
+                      highlightColor="#97c0c5"
+                    />
+                  {/* </div> */}
+                  <div className="tags">
+                    <div className="tag1">
+                      <Skeleton width={100} height={12}/>
+                    </div>
+                    <div className="tag2">
+                      <Skeleton width={50} height={10}/>
+                    </div>
+                  </div>
+                </div>
+              </td>
+              <td style={{ width: "20.875rem" }}>
+              <div className="skills-wrapper">
+              <span className="skills">
+                <Skeleton width={85} height={24}/> &nbsp;
+                 <Skeleton width={66} height={24}/> &nbsp;
+                 <Skeleton width={70} height={24}/> &nbsp;
+                 <Skeleton width={22} height={24}/>
+                </span>
+                </div>
+              </td>
+              <td style={{ width: "20.375rem" }}>
+                <div className="skills-wrapper">
+                  <span className="skills">
+                     <Skeleton width={78} /> &nbsp;
+                    &nbsp;  <Skeleton width={88} /> &nbsp;
+                    &nbsp;  <Skeleton width={84} />
+                  </span>
+                </div>
+              </td>
+              <td style={{ width: "11.375rem" }}>
+                <div className="duration">
+                  <Skeleton width={100}/>
+                </div>
+              </td>
+            </tr>
+          </tbody>
+  )
+}
+
+export default ReportTableSkeleton
