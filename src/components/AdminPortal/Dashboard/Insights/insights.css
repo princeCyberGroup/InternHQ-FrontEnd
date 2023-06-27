@@ -1,70 +1,86 @@
 .about-insight {
-    width: 12.5rem; /* Converted from 200px */
-    height: 1.1875rem; /* Converted from 19px */
-    margin-top: 1.25rem; /* Converted from 20px */
+    width: 12.5rem;
+    /* Converted from 200px */
+    height: 1.1875rem;
+    /* Converted from 19px */
+    margin-top: 1.25rem;
+    /* Converted from 20px */
     font-family: 'Roboto';
     font-style: normal;
     font-weight: 600;
-    font-size: 1rem; /* Converted from 16px */
-    line-height: 1.1875rem; /* Converted from 19px */
+    font-size: 1rem;
+    /* Converted from 16px */
+    line-height: 1.1875rem;
+    /* Converted from 19px */
     color: #002C3F;
     flex: none;
     order: 0;
     flex-grow: 0;
 }
-
-.main-div-insight {
-
-}
-.insights-card{
+/* ///height of insights card  */
+.insights-card {
     margin-top: 0.7rem;
     display: flex;
+    max-height: 43.3rem;
     flex-direction: column;
     /* height: 109vh; */
-    height: 42rem;
+    /* height: 44rem; */
     background: #FFFFFF;
-    box-shadow: 0rem 0.25rem 1.25rem rgba(40, 52, 73, 0.15); /* Converted from 0px 4px 20px */
-    border-radius: 0.5rem; /* Converted from 8px */
+    box-shadow: 0rem 0.25rem 1.25rem rgba(40, 52, 73, 0.15);
+    /* Converted from 0px 4px 20px */
+    border-radius: 0.5rem;
+    /* Converted from 8px */
 }
-.insights-search-wrapper{
+
+.insights-search-wrapper {
     border: 1px solid #B2B2B3;
     border-radius: 5px;
+    margin:1rem;
 }
 
 .insights {
     align-items: flex-center;
-    padding: 1rem; 
-    gap: 1.25rem; 
-margin-left: 0.5rem;
-   
+    padding: 1rem;
+    margin-left: 0.5rem;
+    overflow-y: scroll;
+
 }
 
 .search-insights {
-  margin: 1rem;
-    box-sizing: border-box;
-     display: flex;
-    flex-direction: row; 
+
+    display: flex;
+    flex-direction: row;
     align-items: center;
-    padding: 1rem 1rem; /* Converted from 0px 16px */
-     height: 2.5rem;
-     width: 23.5rem;
     background: #FFFFFF;
-border: none;
-outline: none;
-}
-.search-insights:hover,.search-associate:hover,.search-insights:focus,.search-associate:focus{
+    box-sizing: border-box;
+    margin-left: 0.5rem;
+    width: 20rem;
+    height: 2.5rem;
+    border-radius: 30%;
+    border: none;
     outline: none;
 }
+
+.search-insights:hover,
+.search-associate:hover,
+.search-insights:focus,
+.search-associate:focus {
+    outline: none;
+}
+
 .div-insights {
     box-sizing: border-box;
     display: flex;
     flex-direction: column;
     align-items: flex-start;
-    padding: 1rem 1rem 0rem 0.75rem; /* Converted from 16px 0px 16px 12px */
+    padding: 1rem 1rem 0rem 0.75rem;
+    /* Converted from 16px 0px 16px 12px */
     /* width: 20.25rem;  */
-    height: 4.1875rem; /* Converted from 67px */
+    height: 4.1875rem;
+    /* Converted from 67px */
     background: #FFFFFF;
-    border-bottom: 0.0625rem solid #E9ECEB; /* Converted from 1px */
+    border-bottom: 0.0625rem solid #E9ECEB;
+    /* Converted from 1px */
     flex: none;
     order: 0;
     flex-grow: 0;
@@ -72,25 +88,33 @@ outline: none;
 
 .exam-name {
     width: 11.625rem;
-    height: 1rem; /* Converted from 16px */
+    height: 1rem;
+    /* Converted from 16px */
     font-family: 'Roboto';
     font-style: normal;
     font-weight: 600;
-    font-size: 1rem; /* Converted from 16px */
-    line-height: 1rem; /* Converted from 16px */
+    font-size: 1rem;
+    /* Converted from 16px */
+    line-height: 1rem;
+    /* Converted from 16px */
     color: #262626;
 }
 
 .number-of-test {
-    margin-top: 0.25rem; /* Converted from 10px */
-    width: 16.25rem; /* Converted from 260px */
-    height: 0.5625rem; /* Converted from 9px */
+    margin-top: 0.25rem;
+    /* Converted from 10px */
+    width: 16.25rem;
+    /* Converted from 260px */
+    height: 0.5625rem;
+    /* Converted from 9px */
     font-family: 'Roboto';
     justify-content: space-between;
     font-style: normal;
     font-weight: 400;
-    font-size: 0.875rem; /* Converted from 14px */
-    line-height: 0.875rem; /* Converted from 14px */
+    font-size: 0.875rem;
+    /* Converted from 14px */
+    line-height: 0.875rem;
+    /* Converted from 14px */
     color: #343435;
     flex: none;
     order: 1;
@@ -100,17 +124,22 @@ outline: none;
 
 .image-div {
     display: flex;
-    /* margin-top: 1.25rem; Converted from 10px */
-    flex-direction: row;
     justify-content: center;
     align-items: center;
-    border-radius: 1.7613636rem; 
+    border-radius: 1.7613636rem;
     flex-direction: row;
-  }
-  
-  .image-div img {
+}
+
+.image-div img {
     width: 2rem;
     height: 1.25rem;
     padding: 0rem;
-  
-  }
+
+}
+
+.search-associate:hover,
+
+.search-associate:focus {
+    outline: none;
+
+}

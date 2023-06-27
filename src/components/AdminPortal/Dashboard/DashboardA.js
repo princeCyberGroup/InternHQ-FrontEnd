@@ -47,36 +47,36 @@ const DashboardA = () => {
       <div className="" style={{ marginBottom: "3rem" }}>
         <Header />
       </div>
-      <div className="responsiveness">
+      <div className="responsivenessA ">
         <>
           <div className="row">
             <div className="col-8 component-div"  >
-              <div className="about">
-                <Link to="/admin/reports" className="about-link">
+            <div className="about">
+               
+              </div>
+              <div className="row div-staus-upload">
+                 <Link to="/admin/reports" className="about-link">
                   Manage Consultant <Right style={{ marginBottom: "2px" }} />
                 </Link>
-              </div>
-
-              <div className="row div-card-upload">
-                <div className="col-8 outer-row-info">
+                <div className="col-6 outer-row-info">
                   <Status data={StatusData} />
                 </div>
-                <div className="col-4 upload-list">
+                <div className="col-6 upload-list">
                   <Uploadcsv />
                 </div>
               </div>
               <ManageSkillSet data={StatusData} />
               <div className="row main-div d-flex">
-                <div className="col-3">
+                <div className="col-6"style={{ padding: 0 }}>
                   <TopTech />
                 </div>
-                <div className="col-3 associate-div">
+                <div className="col-6 associate-div " style={{ padding: 0 }}>
                   <AssociateConsultant data={acData} />
                 </div>
               </div>
             </div>
             {/* //insights */}
-            <div className="col-4 ">
+            <div className="col-4 " style={{marginTop:"1rem"}}>
               <Insights data={insights} />
             </div>
           </div>

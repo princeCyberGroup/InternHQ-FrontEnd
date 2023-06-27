@@ -1,6 +1,12 @@
 .component-div{
   height: 100vh;
 }
+.responsivenessA{
+  max-width: 80rem;
+  margin: 0 auto;
+  max-height: 80vh;
+  /* border:1px solid black; */
+}
 .about {
   /* margin-left: 80px; */
   display: flex;

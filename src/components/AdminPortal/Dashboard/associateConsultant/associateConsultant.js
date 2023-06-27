@@ -1,8 +1,8 @@
 import "../associateConsultant/associateConsultant.css";
 import React, { useState, useEffect } from "react";
+import { ReactComponent as SearchIcon } from "../../../../Assets/search.svg";
 import { ReactComponent as DownArroww } from "../../../../Assets/down-scroll.svg";
 import { ReactComponent as UpArrow } from "../../../../Assets/chevron-up.svg";
-import { ReactComponent as SearchIcon } from "../../../../Assets/search.svg";
 import { ReactComponent as GoldStarOri } from "../../../../Assets/Star-Icon-gold-ori.svg";
 import { ReactComponent as SilverStarOri } from "../../../../Assets/Star-Icon-silver-ori.svg";
 import { ReactComponent as BronzeStarOri } from "../../../../Assets/Star-Icon-bronze-ori.svg";
@@ -21,8 +21,8 @@ export default function AssociateConsultant(props) {
   };
   const [searchFilterValue, setSearchFilterValue] = useState("");
   const [originalTests, setOriginalTests] = useState(props.data);
+  const [showAllTech, setShowAllTech] = useState(false);
   const [expandedMentor, setExpandedMentor] = useState(null);
-  
   const handleFiltersChange = () => {
     const getFilterItems = (items, searchValue) => {
       if (searchValue) {
@@ -115,9 +115,11 @@ export default function AssociateConsultant(props) {
             <div className="row mt-3">
               <div className="technology">
                 <p className="tech">Technology:</p>
-                {/* {userData &&
+
+
+                {userData &&
                   userData.techNames &&
-                  userData.techNames.map((skill, skillIndex) => (
+                  userData.techNames.slice(0, 4).map((skill, skillIndex) => (
                     skill && (
                       <span key={skillIndex} className="tech-div-badge">
                         {skill.toUpperCase()}
@@ -126,6 +128,27 @@ export default function AssociateConsultant(props) {
                       </span>
                     )
                   ))}
+                {userData &&
+                  userData.techNames &&
+                  userData.techNames.length > 4 && (
+                    <div className="all-tech">
+                      {showAllTech ? (
+                        userData.techNames.slice(4).map((skill, skillIndex) => (
+                          skill && (
+                            <span key={skillIndex} className="tech-div-badge">
+                              {skill.toUpperCase()}
+                              &nbsp;
+                              {renderStars(userData.level[skillIndex + 4])}
+                            </span>
+                          )
+                        ))
+                      ) : (
+                        <span onClick={() => setShowAllTech(true)}>
+                          + {userData.techNames.length - 4}
+                        </span>
+                      )}
+                    </div>
+                  )}
               </div>
             </div>
           )}
@@ -136,23 +159,22 @@ export default function AssociateConsultant(props) {
 
   return (
     <>
-      <div
-        style={{
-          marginLeft: "12.125rem",
-        }}
+      <div 
       >
         <div className="about-associate" style={{ marginLeft: "0.938rem" }}>
           Associate Consultant
         </div>
 
         <div
+
+
           className=" associate-card  "
 
         >
-          <div className="d-flex align-items-center ps-1 insights-search-wrapper">
+          <div className="d-flex align-items-center ps-1 associate-search-wrapper">
             <SearchIcon />
             <input
-              className="search-associate border-none"
+              className="search-associate "
               type="text"
               value={searchFilterValue}
               placeholder="Search"
@@ -162,8 +184,7 @@ export default function AssociateConsultant(props) {
               }}
             />
           </div>
-          <div style={{ maxHeight: "23.125rem", overflow: "auto" }}>
-            {/* {props.data && props.data.map((userData) => {})} */}
+          <div style={{ overflow: "auto" }}>
             {originalTests?.length === 0
               ? props.data?.map((userData) => renderAssociates(userData))
               : originalTests?.map((userData) => renderAssociates(userData))}

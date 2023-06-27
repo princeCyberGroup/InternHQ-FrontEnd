@@ -16,16 +16,16 @@ export default function ManageSkillSet({ data }) {
         </Link>
         <div className="about-div-total-skill">Total Test Taken</div>
       </div>
-      <div className="row" style={{ width: "52.375rem" }}>
+      <div className="row" style={{marginRight:"0.5rem"}} >
         <div
-          className="add-new-skill-test col-3"
+          className="add-new-skill-test col-4"
           data-bs-toggle="modal"
           data-bs-target="#newSkillModal"
         >
           <Add /> &nbsp; Add New Skill Test
         </div>
 
-        <div className="beg-int-advance col-5 d-flex ">
+        <div className="beg-int-advance col-8 d-flex ">
           <div className="col-4">
             <div className="row inside-manage-skills justify-content-center">
               <div className="col inside-manage-skills-number">
