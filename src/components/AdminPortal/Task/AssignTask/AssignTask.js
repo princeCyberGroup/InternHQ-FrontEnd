@@ -105,19 +105,20 @@ setTaskName(editedTask?.taskName)
       </div>
       <div style={{ maxHeight: "80vh", overflow: "auto", width: "820px" }}>
         {tasks.length === 0 ? (
-          <div className="empty-task-state">
+          <div className="card empty-task-state d-flex justify-content-center align-items-center">
             <div
             className="col-12 d-flex justify-content-center"
             // style={{ marginTop: "70px" }}
           >
             <NoTask />
           </div>
-          <div className="col-12 d-flex justify-content-center">
+          <div className="col-12 d-flex justify-content-center assign-task-empty">
             <p>No Task Assigned Yet! </p>
           </div>
             </div>
         ) :(
           tasks.map((task, index) => (
+            
             <div className="card task-card" key={task.taskId}>
               <div className="dots">
                 <Edit
@@ -228,6 +229,7 @@ setTaskName(editedTask?.taskName)
                 </div>
               </div>
             </div>
+            
           )))}
       </div>
       {/* <AddNewTask/> */}
