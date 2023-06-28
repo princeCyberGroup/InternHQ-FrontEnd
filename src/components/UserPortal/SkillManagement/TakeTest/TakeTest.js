@@ -161,7 +161,7 @@ const TakeTest = ({ test }) => {
             }`}
             onClick={() => {
               setActiveButton("advanced");
-              setTests(tests.filter((tests) => tests.level === "Advance"));
+              setTests(allData.filter((tests) => tests.level === "Advance"));
             }}
           >
             <button className="btn-nav p-0">Advanced</button>
@@ -181,8 +181,8 @@ const TakeTest = ({ test }) => {
         </div>
         {isLoading ? (
           <div className="card-body  p-0">
-            <div className="row cards main-card-inside ">
-              <div className="row d-flex justify-content-evenly">
+            <div className="row cards main-card-inside mx-0">
+              <div className="row">
                 <TakeTestSkeleton />
                 <TakeTestSkeleton />
                 <TakeTestSkeleton />
@@ -198,10 +198,10 @@ const TakeTest = ({ test }) => {
           </div>
         ) : (
           <div className="card-body p-0">
-            <div className="row cards main-card-inside">
-              <div className="row d-flex justify-content-evenly ">
-                {tests?.map((test) => (
-                  <div className="exam">
+            <div className="row cards main-card-inside mx-0">
+              <div className="row">
+                {tests?.map((test, key) => (
+                  <div className="exam" style={{marginLeft: "9px", marginRight: "8px"}} key={key}>
                     <div className="card outer-card">
                       <div className="d-flex align-items-center">
                         <div className="ml-3 w-100">
@@ -264,7 +264,7 @@ const TakeTest = ({ test }) => {
                               id="staticBackdrop"
                               data-bs-backdrop="static"
                               data-bs-keyboard="false"
-                              tabindex="-1"
+                              tabIndex="-1"
                               aria-labelledby="staticBackdropLabel"
                               aria-hidden="true"
                             >
