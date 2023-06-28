@@ -11,13 +11,13 @@ const SkillManagement = () => {
   const { score } = useContext(UserContext);
   return (
     <>
-      <div className="" style={{ marginBottom: "5rem" }}>
+      <div className="" style={{ marginBottom: "3rem" }}>
         <Header />
       </div>
       <>
         {score == -1 ? "" : score >= 80 ? <Congo /> : <Sorry />}
         <div className="mainDiv">
-          <div className="container-fluid ">
+          <div className="container-fluid " style={{height: "780px"}}>
             <div className="row">
               <div className="col-12">
                 <div className="SM-breadcrumbs">
@@ -25,11 +25,11 @@ const SkillManagement = () => {
                 </div>
               </div>
             </div>
-            <div className="row mt-3">
+            <div className="row mt-2">
               <div className=" col-md-9 p-0 " style={{ width: "58.125rem" }}>
                 <TakeTest />
               </div>
-              <div className=" col-md-3 p-0 skill-added-card">
+              <div className=" col-md-3 ps-0 skill-added-card">
                 <SkillsAdded />
               </div>
             </div>
