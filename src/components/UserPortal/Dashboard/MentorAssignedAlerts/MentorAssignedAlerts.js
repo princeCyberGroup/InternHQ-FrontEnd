@@ -119,7 +119,7 @@ const MentorAssignedAlerts = (props) => {
                 className="card-body pt-0 pb-0"
                 style={{ height: "20rem", overflow: "scroll" }}
               >
-                {mentorTask.map((data, key) => {
+                {mentorTask?.map((data, key) => {
                   return (
                     <div
                       className="notification-wrapper px-0"
@@ -135,8 +135,8 @@ const MentorAssignedAlerts = (props) => {
                         }}
                       >
                         <div className="background-set">
-                          {data.firstName.toUpperCase().slice(0, 1)}
-                          {data.lastName.toUpperCase().slice(0, 1)}
+                          {data.firstName?.toUpperCase().slice(0, 1)}
+                          {data.lastName?.toUpperCase().slice(0, 1)}
                         </div>
                       </div>
                       <div className="text-wrapper ps-0 ">
