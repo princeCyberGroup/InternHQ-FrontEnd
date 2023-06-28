@@ -160,7 +160,7 @@ setTaskName(editedTask?.taskName)
                     <div className="mentor-wrapper">
                       <div className="image-wrapper1">
                         <div className="assignedBy-img">
-                          {`${task.mentorFirstName} ${task.mentorLastName}`
+                          {`${task.mentorFirstName} ${task.mentorLastName===null?"":task.mentorLastName}`
                             .split(" ")
                             .map((name) => name.charAt(0).toUpperCase())
                             .join("")}
