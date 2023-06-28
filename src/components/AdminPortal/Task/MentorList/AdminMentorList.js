@@ -34,7 +34,7 @@ const MentorList = () => {
         })
       );
     } catch (err) {
-      console.log(err);
+      // console.log(err);
     }
   };
   const assignMentor = async (mentorId) => {
@@ -52,7 +52,7 @@ const MentorList = () => {
         })
       );
     } catch (err) {
-      console.log(err);
+      // console.log(err);
     }
   };
   // const addMentor = (newMentor) => {
@@ -67,7 +67,7 @@ const MentorList = () => {
       // Update the mentor list after adding a new mentor
       setMentor((prevMentor) => [...prevMentor, newMentor]);
     } catch (err) {
-      console.log(err);
+      // console.log(err);
     } finally {
       fetchMentorList();
     }
@@ -120,7 +120,7 @@ const MentorList = () => {
         <button
           style={{ marginRight: "8px" }}
           type="button"
-          class="add-mentor-button"
+          className="add-mentor-button"
           data-bs-toggle="modal"
           data-bs-target="#addMentorModal"
         >
@@ -133,7 +133,7 @@ const MentorList = () => {
 
       <div
         className="card mentor-card"
-        style={{ maxHeight: "90vh", width: "420px", overflow: "auto" }}
+        style={{ maxHeight: "80vh", width: "420px", overflow: "auto" }}
       >
         <div
           className="card-body p-0"
@@ -143,7 +143,7 @@ const MentorList = () => {
             return (
               <>
                 <div key={user.mentorId} className="card mentor-head">
-                  <div className="mentor-wrapper">
+                  <div onClick={() => handleExpand(user.mentorId)} className="mentor-wrapper">
                     <div className="image-wrapper1">
                       <div className="image-box1">
                         {user.imageUrl ? (
@@ -173,6 +173,7 @@ const MentorList = () => {
                       <p className="m-0 pos-wrapper">{user.designation} </p>
                     </div>
                     <div className="arrow-wrapper1">
+                      
                       {user.isActive ? (
                         <button
                           className="remove-btn"
@@ -191,7 +192,7 @@ const MentorList = () => {
                         </button>
                       ) : null}
                       <span
-                        onClick={() => handleExpand(user.mentorId)}
+                        
                         className="expand-arrow"
                       >
                         {expandedMentor === user.mentorId ? (

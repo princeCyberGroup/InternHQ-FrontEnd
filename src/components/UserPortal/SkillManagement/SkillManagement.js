@@ -15,9 +15,9 @@ const SkillManagement = () => {
         <Header />
       </div>
       <>
-        {score == -1 ? "" : score >= 8 ? <Congo /> : <Sorry />}
+        {score == -1 ? "" : score >= 80 ? <Congo /> : <Sorry />}
         <div className="mainDiv">
-          <div class="container-fluid ">
+          <div className="container-fluid ">
             <div className="row">
               <div className="col-12">
                 <div className="SM-breadcrumbs">
@@ -25,11 +25,11 @@ const SkillManagement = () => {
                 </div>
               </div>
             </div>
-            <div class="row mt-3">
-              <div class=" col-md-9 p-0 " style={{ width: "58.125rem" }}>
+            <div className="row mt-3">
+              <div className=" col-md-9 p-0 " style={{ width: "58.125rem" }}>
                 <TakeTest />
               </div>
-              <div class=" col-md-3 p-0 skill-added-card">
+              <div className=" col-md-3 p-0 skill-added-card">
                 <SkillsAdded />
               </div>
             </div>

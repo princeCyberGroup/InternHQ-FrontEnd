@@ -188,7 +188,7 @@ p.card-textt {
 .save-button {
     background: #28519E;
     color: #fff;
-    border: 4px;
+    border: 0.25rem;
     justify-content: center;
     align-items: center;
 }
@@ -248,8 +248,8 @@ p.card-textt {
     font-family: 'Roboto';
     font-style: normal;
     font-weight: 600;
-    font-size: 14px;
-    line-height: 16px;
+    font-size: 0.875rem;
+    line-height: 1rem;
     text-align: center;
 
     color: #FFFFFF;
@@ -260,18 +260,11 @@ p.card-textt {
     justify-content: center;
     align-items: center;
     padding: 12px 16px;
-    gap: 8px;
-    
-    width: 128px;
-    height: 40px;
-    
-    /* Primary/Blue */
-    
+    gap: 0.5rem; 
+    width: 8rem;
+    height: 2.5rem;
     background: #28519E;
-    border-radius: 4px;
-    
-    /* Inside auto layout */
-    
+    border-radius: 0.25rem;
     flex: none;
     order: 1;
     flex-grow: 0;

@@ -39,7 +39,7 @@ export const AddMentor = () => {
         const imageRef = ref(storage, `userProfilePicture/${data.target.files[0].name}`);
         uploadBytes(imageRef, data.target.files[0]).then((snapshot) => {
             getDownloadURL(snapshot.ref).then((url) => {
-                console.log("URL:", url);
+                // console.log("URL:", url);
                 setImageUrl(url);
             });
         });
@@ -63,9 +63,9 @@ export const AddMentor = () => {
                 designation,
                 skills
             }).then((res) => {
-                console.log("print", res.data);
+                // console.log("print", res.data);
             }).catch((err) => {
-                console.log(err);
+                // console.log(err);
             })
             setSkills([]);
             setMentorName("");
@@ -100,23 +100,23 @@ export const AddMentor = () => {
 
 
     return (
-        <div class="">
+        <div className="">
             <div className="d-flex align-item-center justify-content-between mb-2 ">
                 <div className="d-flex">
                     <p className="heading-name mb-0">Mentor List</p>
                 </div>
 
             </div>
-            <button type="button" class="btn add-mentor-button" data-bs-toggle="modal" data-bs-target="#exampleModal">
+            <button type="button" className="btn add-mentor-button" data-bs-toggle="modal" data-bs-target="#exampleModal">
                 <AddSign /> <span className="add-mentor-text">Add Mentor</span>
             </button>
 
-            <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                <div class="modal-dialog">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title modalheading-text" id="exampleModalLabel">Add Mentor</h5>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" onClick={handleClickClear}></button>
+            <div className="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div className="modal-dialog">
+                    <div className="modal-content">
+                        <div className="modal-header">
+                            <h5 className="modal-title modalheading-text" id="exampleModalLabel">Add Mentor</h5>
+                            <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close" onClick={handleClickClear}></button>
                         </div>
                         <div className="align-items-center">
 
@@ -128,13 +128,13 @@ export const AddMentor = () => {
 
                                     </div>
                                     <div>
-                                        <label for="fileUpload" class="file-upload btn btn-block"><CameraIcon /><span className="upload-image-text fw-bold">Upload Image</span>
+                                        <label for="fileUpload" className="file-upload btn btn-block"><CameraIcon /><span className="upload-image-text fw-bold">Upload Image</span>
                                             <input id="fileUpload" ref={fileInputRef} type="file" onChange={(e) => handleImageUpload(e)} />
                                         </label>
                                     </div>
 
                                 </div>
-                                <div class="alert alert-info mb-0 image-alert box-for-alert-message" role="alert">
+                                <div className="alert alert-info mb-0 image-alert box-for-alert-message" role="alert">
                                     <AlertImage /> <span className="text-for-alert">Please upload recent image ensuring that the face is clearly visible.
                                         Allowed format is JPEG,PNG.</span>
                                     
@@ -208,9 +208,9 @@ export const AddMentor = () => {
                                 </form>
                             </div>
                         </div>
-                        <div class="modal-footer border-top-0">
-                            <button type="button" class="btn cancel-button fw-bold" data-bs-dismiss="modal" onClick={handleClickClear}><span className="cancel-text">Cancel</span></button>
-                            <button type="button" class="btn save-button fw-bold" data-bs-dismiss={"modal" ? false : true}
+                        <div className="modal-footer border-top-0">
+                            <button type="button" className="btn cancel-button fw-bold" data-bs-dismiss="modal" onClick={handleClickClear}><span className="cancel-text">Cancel</span></button>
+                            <button type="button" className="btn save-button fw-bold" data-bs-dismiss={"modal" ? false : true}
                                 onClick={handleFormSubmit}
                             ><span className="save-text">Save</span></button>
                         </div>

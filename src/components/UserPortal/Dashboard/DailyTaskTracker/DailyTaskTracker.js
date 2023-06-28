@@ -121,8 +121,6 @@ const DailyTaskTracker = () => {
         topicName,
       })
       localStorage.setItem("DTT-token",response.data.token);
-      console.log(response.data.token);
-      console.log("Start Data sent to backend:", response.data);
     } catch (error) {
       navigate({
         pathname:"/error",
@@ -135,14 +133,12 @@ const DailyTaskTracker = () => {
   const sendPauseDataToBackend = async () => {
     try {
       const dttToken = localStorage.getItem("DTT-token");
-      console.log("Pause:",dttToken);
       const response = await axios.post("https://cg-interns-hq.azurewebsites.net/dailyTaskTrackerPauseCheck",{},{
         headers:{
           'content-type':'application/json',
           "Authorization":`Bearer ${dttToken}`
         }
       })
-      console.log("Pause Data sent to backend:", response.data);
     } catch (error) {
       console.error("Error sending pause data to backend:", error);
     }
@@ -157,7 +153,6 @@ const DailyTaskTracker = () => {
       },{headers:{
         Authorization:`Bearer ${token}`,
       }});
-      console.log("Stop Data sent to backend:", response.data);
 
     } catch (error) {
       navigate({

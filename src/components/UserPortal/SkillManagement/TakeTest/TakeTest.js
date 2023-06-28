@@ -1,11 +1,11 @@
 import React, { useEffect } from "react";
-import{ useContext } from "react";
-import { useState, createContext  } from "react";
-import { ReactComponent as LeftToRetake } from "./svgs/leftToReatake.svg";
-import { ReactComponent as Completed } from "./svgs/Testcompleted.svg";
-import { ReactComponent as Bronze } from "./svgs/Star-bronze.svg";
-import { ReactComponent as Silver } from "./svgs/Star-silver.svg";
-import { ReactComponent as Gold } from "./svgs/Star-gold.svg";
+import { useContext } from "react";
+import { useState, createContext } from "react";
+import { ReactComponent as LeftToRetake } from "../../../../Assets/leftToReatake.svg";
+import { ReactComponent as Completed } from "../../../../Assets/Testcompleted.svg";
+import { ReactComponent as GoldStarOri } from "../../../../Assets/Star-Icon-gold-ori.svg";
+import { ReactComponent as SilverStarOri } from "../../../../Assets/Star-Icon-silver-ori.svg";
+import { ReactComponent as BronzeStarOri } from "../../../../Assets/Star-Icon-bronze-ori.svg";
 // import logo from '../../../Assets/image 13.png';
 import "./TakeTest.css";
 import { BsClock } from "react-icons/bs";
@@ -20,9 +20,10 @@ export const TestContext = createContext();
 
 const TakeTest = ({ test }) => {
   const [activeButton, setActiveButton] = useState("all");
-    const { score } = useContext(UserContext);
-    const [daysDifference, setDaysDifference] = useState(calculateDaysDifference());
-  
+  const { score } = useContext(UserContext);
+
+  const [daysDifference, setDaysDifference] = useState(calculateDaysDifference());
+
   // const [searchQuery, setSearchQuery] = useState("");
   const [tests, setTests] = useState([]);
   const [originalTests, setOriginalTests] = useState([]);
@@ -62,13 +63,10 @@ const TakeTest = ({ test }) => {
     setTests(filters);
   };
 
-  //   setTests(getFilterItems)
   useEffect(() => {
     handleFiltersChange();
   }, [searchFilterValue]);
 
-  //   console.log(tests);
-  //   getFilterItems(tests,searchFilterValue);
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -88,21 +86,20 @@ const TakeTest = ({ test }) => {
       techName: techName,
       level: level,
     });
-    // const locationstate=location.state;
   };
   const clickCont = () => {
     navigate("/take-your-test", { state: data });
   };
-  
-      function calculateDaysDifference() {
-        const currentDate = new Date();
-        const twoDaysAgo = new Date();
-        twoDaysAgo.setDate(twoDaysAgo.getDate() - 2);
-        return Math.floor(
-          (currentDate.getTime() - twoDaysAgo.getTime()) / (1000 * 60 * 60 * 24)
-        );
-      }
-      let statusDiv;
+
+  function calculateDaysDifference() {
+    const currentDate = new Date();
+    const twoDaysAgo = new Date();
+    twoDaysAgo.setDate(twoDaysAgo.getDate() - 2);
+    return Math.floor(
+      (currentDate.getTime() - twoDaysAgo.getTime()) / (1000 * 60 * 60 * 24)
+    );
+  }
+  let statusDiv;
   if (score > 8) {
     statusDiv = (
       <div className="statusOfTEstCompleted">
@@ -116,16 +113,6 @@ const TakeTest = ({ test }) => {
       </div>
     );
   }
-  let LevelComponent;
-
-if (tests.level === "Beginner") {
-  LevelComponent =( <div> <Bronze /></div> );
-} else if (tests.level === "Intermediate") {
-  LevelComponent = <Silver />;
-} else if (tests.level === "Advanced") {
-  LevelComponent = <Gold />;
-}
-  
   return (
     <>
       <div className="TTheading">
@@ -134,62 +121,50 @@ if (tests.level === "Beginner") {
       <div className="card maincard">
         <div className="card-header-nav mt-1">
           <div
-            className={`nav-btn ${activeButton === "all" ? "activated" : ""}`}
+            className={`nav-btn pointer ${
+              activeButton === "all" ? "activated" : ""
+            }`}
+            onClick={() => {
+              setActiveButton("all");
+              setTests(allData);
+            }}
           >
-            <button
-              className="btn-nav p-0"
-              onClick={() => {
-                setActiveButton("all");
-                setTests(allData);
-              }}
-            >
-              All
-            </button>
+            <button className="btn-nav p-0">All</button>
           </div>
           <div
-            className={`nav-btn ${
+            className={`nav-btn pointer ${
               activeButton === "beginner" ? "activated" : ""
             }`}
+            onClick={() => {
+              setActiveButton("beginner");
+              setTests(allData.filter((tests) => tests.level === "Beginner"));
+            }}
           >
-            <button
-              className="btn-nav p-0"
-              onClick={() => {
-                setActiveButton("beginner");
-                setTests(allData.filter((tests) => tests.level === "Beginner"));
-              }}
-            >
-              Beginner
-            </button>
+            <button className="btn-nav p-0">Beginner</button>
           </div>
           <div
-            className={`nav-btn ${activeButton === "inter" ? "activated" : ""}`}
+            className={`nav-btn pointer ${
+              activeButton === "inter" ? "activated" : ""
+            }`}
+            onClick={() => {
+              setActiveButton("inter");
+              setTests(
+                allData.filter((tests) => tests.level === "Intermediate")
+              );
+            }}
           >
-            <button
-              className="btn-nav p-0"
-              onClick={() => {
-                setActiveButton("inter");
-                setTests(
-                  allData.filter((tests) => tests.level === "Intermediate")
-                );
-              }}
-            >
-              Intermediate
-            </button>
+            <button className="btn-nav p-0">Intermediate</button>
           </div>
           <div
-            className={`nav-btn ${
+            className={`nav-btn pointer ${
               activeButton === "advanced" ? "activated" : ""
             }`}
+            onClick={() => {
+              setActiveButton("advanced");
+              setTests(tests.filter((tests) => tests.level === "Advance"));
+            }}
           >
-            <button
-              className="btn-nav p-0"
-              onClick={() => {
-                setActiveButton("advanced");
-                setTests(tests.filter((tests) => tests.level === "Advanced"));
-              }}
-            >
-              Advanced
-            </button>
+            <button className="btn-nav p-0">Advanced</button>
           </div>
           <div className="search-bar" style={{ margin: "auto" }}>
             <input
@@ -205,9 +180,9 @@ if (tests.level === "Beginner") {
           </div>
         </div>
         {isLoading ? (
-          <div class="card-body  p-0 m-0">
+          <div className="card-body  p-0">
             <div className="row cards main-card-inside ">
-              <div className="row d-flex justify-content-evenly m-0 p-0">
+              <div className="row d-flex justify-content-evenly">
                 <TakeTestSkeleton />
                 <TakeTestSkeleton />
                 <TakeTestSkeleton />
@@ -222,54 +197,50 @@ if (tests.level === "Beginner") {
             </div>
           </div>
         ) : (
-          <div
-            class="card-body p-0"
-            // style={{ maxHeight: "50rem", overflow: "auto" }}
-          >
-            <div
-              className="row cards main-card-inside"
-              //   style={{ maxHeight: "470px", overflow: "auto" }}
-            >
+          <div className="card-body p-0">
+            <div className="row cards main-card-inside">
               <div className="row d-flex justify-content-evenly ">
                 {tests?.map((test) => (
                   <div className="exam">
-                    <div class="card outer-card">
-                      <div class="d-flex align-items-center">
-                        <div class="ml-3 w-100">
+                    <div className="card outer-card">
+                      <div className="d-flex align-items-center">
+                        <div className="ml-3 w-100">
                           <div className="d-flex justify-content-start ">
                             <div className="imagespace">
                               <img
                                 src={test.techImageLink}
-                                class="imageLogo"
-                                width="30px"
-                                height="35px"
+                                className="imageLogo"
+                                width="1.875rem"
+                                height="2.188rem"
                               />
                             </div>
                             <div>
                               <div className="Category_box justify-content-center">
-                                <span className="Category">{test.level}</span>
+                                <span className="Category">{test.level} &nbsp;
+                                  {test.level === "Beginner" ? <BronzeStarOri /> : (test.level === "Intermediate" ? <SilverStarOri /> : (test.level === "Advance" ? <GoldStarOri /> : null))}
+                                </span>
                               </div>
                               <div className=" About_box justify-content-center">
                                 <span className="About">{test.examName}</span>
                               </div>
                             </div>
                           </div>
-                          <div class=" col d-flex justify-content-between eounded text-grey quesTimeClick ">
-                            <div class="d-flex flex-column justify-content-center noOfQues">
-                              <div class="articles d-flex justify-content-center">
+                          <div className=" col d-flex justify-content-between eounded text-grey quesTimeClick ">
+                            <div className="d-flex flex-column justify-content-center noOfQues">
+                              <div className="articles d-flex justify-content-center">
                                 <MdOutlineBallot
-                                  style={{ marginRight: "5px" }}
+                                  style={{ marginRight: "0.313rem" }}
                                 />
                                 {test.numberOfQuestion} Questions
                               </div>
                             </div>
-                            <div class="d-flex flex-column justify-content-center testTime">
-                              <div class="articles d-flex justify-content-center ">
-                                <BsClock style={{ marginRight: "5px" }} />
+                            <div className="d-flex flex-column justify-content-center testTime">
+                              <div className="articles d-flex justify-content-center ">
+                                <BsClock style={{ marginRight: "0.313rem" }} />
                                 {test.examDuration} mins
                               </div>
                             </div>
-                            <div class="d-flex flex-column">
+                            <div className="d-flex flex-column">
                               <Button
                                 onClick={() =>
                                   clickHandler(
@@ -287,10 +258,9 @@ if (tests.level === "Beginner") {
                               >
                                 Start Test
                               </Button>
-                              {/* </Link>{' '} */}
                             </div>
                             <div
-                              class="modal fade"
+                              className="modal fade"
                               id="staticBackdrop"
                               data-bs-backdrop="static"
                               data-bs-keyboard="false"
@@ -298,23 +268,23 @@ if (tests.level === "Beginner") {
                               aria-labelledby="staticBackdropLabel"
                               aria-hidden="true"
                             >
-                              <div class="modal-dialog modal-dialog-centered">
-                                <div class="modal-content">
-                                  <div class="modal-header">
+                              <div className="modal-dialog modal-dialog-centered">
+                                <div className="modal-content">
+                                  <div className="modal-header">
                                     <span
-                                      class="modal-title instruction"
+                                      className="modal-title instruction"
                                       id="staticBackdropLabel"
                                     >
                                       Instructions
                                     </span>
                                     <button
                                       type="button"
-                                      class="btn-close"
+                                      className="btn-close"
                                       data-bs-dismiss="modal"
                                       aria-label="Close"
                                     ></button>
                                   </div>
-                                  <div class="modal-body">
+                                  <div className="modal-body">
                                     <ol style={{ listStyleType: "decimal" }}>
                                       <li>
                                         {" "}
@@ -336,25 +306,22 @@ if (tests.level === "Beginner") {
                                       </li>
                                     </ol>
                                   </div>
-                                  <div class="modal-footer">
+                                  <div className="modal-footer">
                                     <button
                                       type="button"
-                                      class="btn btn-outline-primary"
+                                      className="btn btn-outline-primary"
                                       data-bs-dismiss="modal"
                                     >
                                       Cancel
                                     </button>
-                                    {/* <Link key={test.examId} to={`/take-your-test`}> */}
                                     <button
                                       type="button"
                                       onClick={() => clickCont()}
-                                      // onClick={() => { clickHandler(test.examId,test.examName,test.examDuration,test.numberOfQuestion,test.techName,test.level) }}
                                       data-bs-dismiss="modal"
-                                      class="btn btn-primary"
+                                      className="btn btn-primary"
                                     >
                                       Continue
                                     </button>
-                                    {/* </Link> */}
                                   </div>
                                 </div>
                               </div>

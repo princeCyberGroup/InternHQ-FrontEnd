@@ -18,7 +18,7 @@ const Error_500 = () => {
             <h1
               className="text-center error-heading mt-3"
               style={{
-                fontSize: "72px",
+                fontSize: "4.5rem",
               }}
             >
               500

@@ -63,6 +63,7 @@ const AddProject = () => {
     setProjNameError("");
     setDesError("");
     setProjLinkError("");
+    setTech({});
   };
   const handleProjectLinkChange = (event) => {
     const link = event.target.value;
@@ -114,6 +115,7 @@ const AddProject = () => {
       setProjectLink("");
       setHostedLink("");
       setError(false);
+      setTech({});
     }
   };
 
@@ -129,7 +131,6 @@ const AddProject = () => {
 
   return (
     <>
-    {/* //component div 171 -233 */}
       <div className="card-body pb-0">
         <div className="project-card-text-row">
           <p className="project-card-text">
@@ -139,16 +140,16 @@ const AddProject = () => {
           </p>
         </div>
         <div className="project-idea">
-          <div class="d-flex justify-content-between">
-            <div class="d-flex pt-2">
-              <p class="text mb-0 ms-1 fw-bold">Project</p>
+          <div className="d-flex justify-content-between">
+            <div className="d-flex pt-2">
+              <p className="text mb-0 ms-1 fw-bold">Project</p>
             </div>
             <button
               type="button"
               onClick={(e) => {
                 handleClick(e);
               }}
-              class="view-all fw-bold"
+              className="view-all fw-bold"
             >
               View All
             </button>
@@ -192,35 +193,34 @@ const AddProject = () => {
           </p>
         </div>
       </div>
-      {/* //modal div 234-759  */}
       <div
-        class="modal fade"
+        className="modal fade"
         id="exampleModal"
         tabindex="-1"
         aria-labelledby="exampleModalLabel"
         aria-hidden="true"
       >
-        <div class="modal-dialog">
-          <div class="modal-content">
-            <div class="modal-header">
+        <div className="modal-dialog">
+          <div className="modal-content">
+            <div className="modal-header">
               <h1
-                class="modal-title fs-5 add-project-wrapper"
+                className="modal-title fs-5 add-project-wrapper"
                 id="exampleModalLabel"
               >
                 Add Project
               </h1>
               <button
                 type="button"
-                class="btn-close"
+                className="btn-close"
                 data-bs-dismiss="modal"
                 aria-label="Close"
                 onClick={clear}
               ></button>
             </div>
-            <div class="modal-body">
+            <div className="modal-body">
               <form>
-                <div class="mb-3">
-                  <label for="project-name" class="col-form-label title-text">
+                <div className="mb-3">
+                  <label for="project-name" className="col-form-label title-text">
                     Project Name<span style={{ color: "red" }}>*</span>{" "}
                     {projNameError && (
                       <span style={{ color: "red", fontSize: "11px" }}>
@@ -230,7 +230,7 @@ const AddProject = () => {
                   </label>
                   <input
                     type="text"
-                    class="form-control"
+                    className="form-control"
                     id="project-name"
                     value={projName}
                     placeholder="Enter Project Name"
@@ -238,10 +238,10 @@ const AddProject = () => {
                   />
                 </div>
 
-                <div class="mb-3">
+                <div className="mb-3">
                   <label
                     for="project-description"
-                    class="col-form-label title-text"
+                    className="col-form-label title-text"
                   >
                     Project Description
                     <span style={{ color: "red" }}>*</span>{" "}
@@ -252,7 +252,7 @@ const AddProject = () => {
                     )}
                   </label>
                   <textarea
-                    class="form-control"
+                    className="form-control"
                     id="project-description"
                     value={projDescription}
                     placeholder="Write Here..."
@@ -304,12 +304,11 @@ const AddProject = () => {
                             />
                           </ul>
                         </div>
-                        {/* </div> */}
                       </div>
                     </div>
 
-                <div class="mb-3">
-                  <label for="Project Link" class="col-form-label title-text">
+                <div className="mb-3">
+                  <label for="Project Link" className="col-form-label title-text">
                     Project Link<span style={{ color: "red" }}>*</span>{" "}
                     {projLinkError && (
                       <span style={{ color: "red", fontSize: "11px" }}>
@@ -318,37 +317,37 @@ const AddProject = () => {
                     )}
                   </label>
                   <input
-                    class="form-control"
+                    className="form-control"
                     id="project-link"
                     placeholder="Enter Project Link"
                     value={projectLink}
                     onChange={handleProjectLinkChange}
                   />
                 </div>
-                <div class="mb-3">
+                <div className="mb-3">
                   <label
                     for="Hosted Link(Optional)"
-                    class="col-form-label title-text"
+                    className="col-form-label title-text"
                   >
                     Hosted Link(Optional)
                   </label>
                   <input
-                    class="form-control"
+                    className="form-control"
                     id="hosted-link"
                     placeholder="Enter Hosted Link"
                     value={hostedLink}
                     onChange={(event) => setHostedLink(event.target.value)}
                   />
                 </div>
-                <div class="mb-3">
+                <div className="mb-3">
                   <label
                     for="Members(Optional)"
-                    class="col-form-label title-text"
+                    className="col-form-label title-text"
                   >
                     Members(Optional)
                   </label>
                   <input
-                    class="form-control"
+                    className="form-control"
                     id="project-description"
                     placeholder="Member Name"
                     value={textInput}
@@ -358,7 +357,7 @@ const AddProject = () => {
               </form>
             </div>
 
-            <div class="modal-footer">
+            <div className="modal-footer">
               <button
                 type="button"
                 className="btn cancel-button"

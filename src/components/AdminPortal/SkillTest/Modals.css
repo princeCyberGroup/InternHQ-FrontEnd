@@ -92,8 +92,8 @@
   text-align: left;
   font-family: "Roboto";
   font-style: normal;
-  font-weight: 600;
-  font-size: 0.75rem;
+  font-weight: 500;
+  font-size: 0.913rem;
   line-height: 1.25rem;
 }
 
@@ -102,8 +102,8 @@
   text-align: left;
   font-family: "Roboto";
   font-style: normal;
-  font-weight: 600;
-  font-size: 0.75rem;
+  font-weight: 500;
+  font-size: 0.913rem;
   line-height: 1.25rem;
 }
 
@@ -113,29 +113,28 @@
   font-family: "Roboto";
   font-style: normal;
   font-weight: 500;
-  font-size: 0.813rem;
-  line-height: 0.938rem;
-  text-align: left;
+  font-size: 0.913rem;
+  line-height: 1.25rem;
 }
 
 .column-questions {
   width: 6.75rem;
-  text-align: left;
+  /* text-align: left; */
   font-family: "Roboto";
   font-style: normal;
   font-weight: 500;
-  font-size: 0.813rem;
-  line-height: 0.938rem;
+  font-size: 0.913rem;
+  line-height: 1.25rem;
   text-align: center;
 }
 .column-duration {
   width: 7.063rem;
-  text-align: left;
+  /* text-align: left; */
   font-style: normal;
   font-family: "Roboto";
   font-weight: 500;
-  font-size: 0.813rem;
-  line-height: 0.938rem;
+  font-size: 0.913rem;
+  line-height: 1.25rem;
   text-align: center;
 }
 .column-uploaded-on {
@@ -143,8 +142,8 @@
   font-style: normal;
   font-family: "Roboto";
   font-weight: 500;
-  font-size: 0.813rem;
-  line-height: 0.938rem;
+  font-size: 0.913rem;
+ line-height: 1.25rem;
   text-align: center;
 }
 
@@ -153,8 +152,8 @@
   font-style: normal;
   font-family: "Roboto";
   font-weight: 500;
-  font-size: 0.813rem;
-  line-height: 0.938rem;
+  font-size: 0.913rem;
+  line-height: 1.25rem;
   text-align: center;
 }
 
@@ -270,7 +269,7 @@
   color: #ffffff;
   font-size: 16px;
   font-family: Roboto;
-  font-weight: 600;
+  /* font-weight: 600; */
   border: none;
 }
 
