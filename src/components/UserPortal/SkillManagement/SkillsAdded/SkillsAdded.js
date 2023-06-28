@@ -30,7 +30,7 @@ const SkillsAdded = () => {
       );
       const data = await response.json();
 
-      setAllData(data.response);
+      // setAllData(data.response);
       setIsLoading(false);
     } catch (error) {
       console.log(error);
