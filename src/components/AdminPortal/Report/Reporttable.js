@@ -6,8 +6,9 @@ import { ReactComponent as Beginner } from "../../../Assets/beginner.svg";
 import { ReactComponent as Intermediate } from "../../../Assets/intermediate.svg";
 import { Data } from "./Fetcheddataobject";
 import { useNavigate } from "react-router-dom";
+import ReportTableSkeleton from "./ReportTableSkeleton";
 
-const Reporttable = ({ tableData }) => {
+const Reporttable = ({ tableData, isLoading }) => {
   const navigate = useNavigate();
   const handleOnclick = (index) => {
     // navigate(`/admin/report/userId?id=${tableData[index][Data.ID]}`);
@@ -20,16 +21,29 @@ const Reporttable = ({ tableData }) => {
       <table className="table-report" cellPadding="0" cellSpacing="0">
         <thead>
           <tr>
-            <th style={{ width: "2rem" }}>S.No</th>
+            <th style={{ width: "2.5rem" }}>S.No</th>
             <th style={{ width: "13.375rem" }}>Name</th>
             <th style={{ width: "28.875rem" }}>Technology Tags</th>
             <th style={{ width: "17.375rem" }}>Skills Achieved</th>
             <th style={{ width: "6.375rem" }}>Duration</th>
           </tr>
         </thead>
-        {tableData ? (
+        {isLoading ? (
+          <>
+          <ReportTableSkeleton/>
+          <ReportTableSkeleton/>
+          <ReportTableSkeleton/>
+          <ReportTableSkeleton/>
+          <ReportTableSkeleton/>
+          <ReportTableSkeleton/>
+          <ReportTableSkeleton/>
+          <ReportTableSkeleton/>
+          <ReportTableSkeleton/>
+          <ReportTableSkeleton/>
+          </>
+        ) : tableData ? (
           <tbody>
-            {tableData?.map((val, ind) => {
+            {tableData.map((val, ind) => {
               let objectKeyCount = 0;
               return (
                 <tr
@@ -39,18 +53,18 @@ const Reporttable = ({ tableData }) => {
                     handleOnclick(ind);
                   }}
                 >
-                  <td className="fw-bold name-column" > {ind+1}</td>
+                  <td className="fw-bold d-flex justify-content-center align-items-center" style={{height: "54px"}}>{ind+1}</td>
                   <td style={{ width: "10.375rem" }}>
                     <div className="name-column">
                       <div className="circle">
-                        {val?.[Data.FN]?.toUpperCase().slice(0, 1)}
-                        {val?.[Data.LN]?.toUpperCase().slice(0, 1)}
+                        {val[Data.FN]?.toUpperCase().slice(0, 1)}
+                        {val[Data.LN]?.toUpperCase().slice(0, 1)}
                       </div>
                       <div className="tags">
-                        <div className="tag1">{`${val?.[Data.FN]} ${
-                          val?.[Data.LN] === null ? "" : val?.[Data.LN]
+                        <div className="tag1">{`${val[Data.FN]} ${
+                          val[Data.LN] === null ? "" : val[Data.LN]
                         }`}</div>
-                        <div className="tag2">{val?.[Data.INTID]}</div>
+                        <div className="tag2">{val[Data.INTID]}</div>
                       </div>
                     </div>
                   </td>
@@ -75,9 +89,9 @@ const Reporttable = ({ tableData }) => {
                           >
                             <span>{value}</span>
                             <div>
-                              {val?.[Data.L][index] === "Beginner" ? (
+                              {val[Data.L][index] === "Beginner" ? (
                                 <Beginner />
-                              ) : val?.[Data.L][index] === "Intermediate" ? (
+                              ) : val[Data.L][index] === "Intermediate" ? (
                                 <Intermediate />
                               ) : (
                                 <Advance />
