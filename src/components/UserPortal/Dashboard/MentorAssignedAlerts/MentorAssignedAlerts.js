@@ -9,6 +9,7 @@ const MentorAssignedAlerts = (props) => {
   const [mentorTask, setMentorTask] = useState([]);
   const [notification, setNotification] = useState(false);
 
+
   props.func(mentorTask);
 
   const handleNotificationClick = () => {
@@ -37,7 +38,7 @@ const MentorAssignedAlerts = (props) => {
       .then(async (data) => {
         setMentorTask(data.response);
       })
-      .error((e) => {
+      .catch((e) => {
         console.log(e);
       });
   };
@@ -118,11 +119,12 @@ const MentorAssignedAlerts = (props) => {
                 className="card-body pt-0 pb-0"
                 style={{ height: "20rem", overflow: "scroll" }}
               >
-                {mentorTask.map((data) => {
+                {mentorTask.map((data, key) => {
                   return (
                     <div
                       className="notification-wrapper px-0"
                       style={{ width: "18.9rem", alignItems: "center" }}
+                      key={key}
                     >
                       <div
                         className=""
@@ -142,7 +144,7 @@ const MentorAssignedAlerts = (props) => {
                           <b>
                             {data.firstName} {data.lastName}
                           </b>{" "}
-                          has assigned you <b>{data.taskDescription}</b> task
+                          has assigned you <b>{data.taskName}</b> task
                         </p>
                       </div>
                     </div>

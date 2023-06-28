@@ -1,6 +1,8 @@
-.skill-added-card{
+.skill-added-card {
     margin-left: 0px;
-    
+    max-height: 632px;
+    width: 288px;
+    /* overflow-x: hidden; */
 }
 
 .heading p{
