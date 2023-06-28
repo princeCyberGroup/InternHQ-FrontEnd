@@ -6,21 +6,16 @@
     background: #002C3F;
 }
 .count{
-    width: 1.75rem; /* 28px / 16px */
-    height: 1.75rem;
-
 font-family: 'Roboto';
 font-style: normal;
 font-weight: 600;
 font-size: 1.5rem; /* 24px / 16px */
 line-height: 1.75rem; 
 color: #002C3F;
-flex: none;
-order: 0;
-flex-grow: 0;
 }
 .status{
-    margin-top: 0.313rem; /* 5px / 16px */
+   display: flex;
+   justify-content: center;
     height: 1.188rem; 
     font-family: 'Roboto';
     font-style: normal;
@@ -28,8 +23,17 @@ flex-grow: 0;
     font-size: 1rem; 
     line-height: 1.188rem;
     color: #343435;
-    
+    margin: 0rem;
     flex: none;
     order: 1;
     flex-grow: 0;
+}
+
+.count-info{
+display: flex;
+flex-direction: row;
+margin-top: 0.5rem;
+margin-left: 0.1rem;
+justify-content: center;
+height:2rem;
 }

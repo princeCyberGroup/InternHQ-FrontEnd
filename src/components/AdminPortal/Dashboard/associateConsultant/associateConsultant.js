@@ -143,9 +143,9 @@ export default function AssociateConsultant(props) {
                           )
                         ))
                       ) : (
-                        <span onClick={() => setShowAllTech(true)}>
+                        <button className="more-tech-stacks" onClick={() => setShowAllTech(true)}>
                           + {userData.techNames.length - 4}
-                        </span>
+                        </button>
                       )}
                     </div>
                   )}

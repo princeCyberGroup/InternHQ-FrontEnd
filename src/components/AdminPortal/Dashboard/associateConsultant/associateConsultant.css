@@ -114,4 +114,11 @@ border-radius: 0.5rem;
   background-color: #E9ECEB;
   margin-right: 5px;
 }
-
+.more-tech-stacks{
+  margin-top: 0.5rem;
+  border: 0rem;
+  text-align: center;
+  background-color: #28519E;;
+  color: white;
+  border-radius: 0.2rem;
+}

@@ -270,6 +270,7 @@ export const AddNewSkillTest = () => {
                                     </div>
                                 </div>
                                 <div>
+                                    <div className="d-flex align-items-center ps-1 ast-search-wrapper">
                                     <div className="progress-indicator-status"> {file && (
                                         <div style={{ marginLeft: "5.625rem", marginTop: "0.625rem", position: "relative" }} className="d-flex align-items-center">
                                             <div >{file.name}</div>
@@ -280,10 +281,13 @@ export const AddNewSkillTest = () => {
                                             <progress style={{ marginLeft: "2.813rem", marginTop: "0.313rem" }} max="100" value={progress}></progress>
 
                                         )}
-                                        <div className=""
+                                    </div>
+                                    <div className=""
                                             onClick={() => { handleRemoveFile() }}><CloseBtn /> </div>
 
+                                        
                                     </div>
+                              
 
                                 </div>
                                 <div className="d-flex justify-content-between">
