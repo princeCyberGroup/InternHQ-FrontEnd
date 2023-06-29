@@ -29,6 +29,7 @@ const TakeYourTest = () => {
     setFullscreen(false);
     exitFullscreen();
   };
+
   useEffect(() => {
     if (fullscreen) {
       enterFullscreen();
@@ -62,6 +63,7 @@ const TakeYourTest = () => {
     } else if (document.msExitFullscreen) {
       document.msExitFullscreen();
     }
+    console.log("is this working after escaping");
   };
 
 

@@ -1,9 +1,8 @@
 import React from "react";
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from "chart.js";
 import { Pie } from "react-chartjs-2";
-// import apiData from "./apiData";
 import "../TopTech/topTech.css";
-import {useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 export const data = {
@@ -20,7 +19,7 @@ export const data = {
 };
 
 const PieChart = () => {
-  const [apiData , setApiData] =useState([]);
+  const [apiData, setApiData] = useState([]);
   useEffect(() => {
     fetchData();
   }, []);
@@ -38,23 +37,22 @@ const PieChart = () => {
     }
   };
   const calculateTechPercentage = (data) => {
-    const techCount = {};
-    const totalCount = data.length;
+    // const totalCount = data.length;
+    // const techCount = {};
 
-    data.forEach((item) => {
-      const techName = item.techName;
-      const lowerCaseTechName = techName.toLowerCase();
-      techCount[lowerCaseTechName] = (techCount[lowerCaseTechName] || 0) + 1;
-    });
+    // data.forEach((item) => {
+    //   const techName = item.techName;
+    //   const lowerCaseTechName = techName.toLowerCase();
+    //   techCount[lowerCaseTechName] = (techCount[lowerCaseTechName] || 0) + 1;
+    // });
 
-    const techPercentage = {};
+    let techPercentage = {};
 
-    for (const techName in techCount) {
-      const count = techCount[techName];
-      const percentage = (count / totalCount) * 100;
-      techPercentage[techName] = percentage.toFixed(2) + "%";
+    for (const ind in data) {
+      const count = data[ind].techCount;
+      const percentage = (count / 16) * 100;
+      techPercentage[data[ind].techName.toLowerCase()] = percentage.toFixed(2) + "%";
     }
-
     return techPercentage;
   };
 
@@ -66,7 +64,6 @@ const PieChart = () => {
     return accumulator;
   }, {});
   const techPercentages = calculateTechPercentage(apiData);
-
   // Populate the labels and data arrays based on techName occurrences
   data.labels = Object.keys(techNameOccurrences).map(
     (techName) => techName.charAt(0).toUpperCase() + techName.slice(1)
@@ -82,13 +79,21 @@ const PieChart = () => {
           boxWidth: 17,
           boxHeight: 17,
 
+
+
+
           generateLabels: (chart) => {
+            console.log("chart", chart.data);
             const data = chart.data;
             if (data.labels.length && data.datasets.length) {
+
+
               return data.labels.map((label, i) => {
                 const dataset = data.datasets[0];
                 const percentage = techPercentages[label.toLowerCase()];
                 const value = dataset.data[i];
+
+
                 return {
                   text: `${label} (${percentage})`,
                   fontColor: "#343435",
@@ -103,18 +108,28 @@ const PieChart = () => {
                   strokeStyle: "#fff",
                   pointStyle: dataset.pointStyle,
                   rotation: dataset.rotation,
+                  textDecoration: 'none',
                 };
+
+
               });
             }
             return [];
           },
+
+
+
+
+
+
+          
         },
       },
     },
   };
 
   return (
-    <div className="container mt-4" style={{ width: "25rem" , margin:"9px" }}>
+    <div className="container mt-4" style={{ width: "25rem", margin: "9px" }}>
       <div className="row">
         <div className="col">
           <h2
