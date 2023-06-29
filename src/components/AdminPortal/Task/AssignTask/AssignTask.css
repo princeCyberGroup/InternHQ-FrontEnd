@@ -173,7 +173,6 @@
 .name-of-members {
   position: relative;
   display: inline-block;
-  margin-right: 5px;
 }
 
 .name-of-members:hover .full-name {

@@ -4,11 +4,10 @@ import "./EmptySkillsAdded.css"
 
 const EmptySkillsAdded = () => {
   return (
-    <div className="container-fluid">
-      <div className="row">
-        <div className="col">
-          <div className="card">
-            <div className="card-body empty-skill-body d-flex justify-content-center flex-column align-items-center pb-0">
+ 
+          
+          
+            <div className="card-body empty-skill-body d-flex justify-content-center flex-column align-items-center pb-0" style={{ width: "18.4rem" }}>
               <div className="row">
                 <div className="col">
                   <SkillAddedEmpty />
@@ -28,10 +27,9 @@ const EmptySkillsAdded = () => {
                 </div>
               </div>
             </div>
-          </div>
-        </div>
-      </div>
-    </div>
+            
+         
+       
   );
 };
 

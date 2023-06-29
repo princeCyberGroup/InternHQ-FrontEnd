@@ -40,7 +40,6 @@ const DailyUpdateTableSection = (props) => {
         setTableData(data.response);
         setOriginalTableData(data.response);
         setIsLoading(false);
-        props.sendDataToDailyUpdate(data.response);
       });
   };
 

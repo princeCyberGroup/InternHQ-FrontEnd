@@ -4,7 +4,7 @@ import "react-loading-skeleton/dist/skeleton.css";
 
 const TakeTestSkeleton = () => {
   return (
-    <div className="exam">
+    <div className="exam" style={{marginLeft: "9px", marginRight: "8px"}}>
       <div className="card outer-card">
         <div className="d-flex align-items-center">
           <div className="ml-3 w-100">
