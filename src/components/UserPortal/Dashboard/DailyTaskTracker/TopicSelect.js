@@ -33,7 +33,17 @@ const TopicSelect = (props) => {
       const response = await axios.get(
         "https://cg-interns-hq.azurewebsites.net/getAllTechnology"
       );
-      setTopics(response.data.response);
+      setTopics(response.data.response.sort((a, b) => {
+        const nameA = a.techName.toUpperCase();
+        const nameB = b.techName.toUpperCase();
+        if (nameA < nameB) {
+          return -1;
+        }
+        if (nameA > nameB) {
+          return 1;
+        }
+        return 0; // names are equal
+      }));
     } catch (error) {
       console.error("Error fetching topics:", error);
     }
@@ -148,7 +158,7 @@ const storedObject = localStorage.getItem("userData");
               <option value="" disabled hidden>
                 Select Topic
               </option>
-              {topics.map((topic) => (
+              {topics.sort().map((topic) => (
                 <option
                   className="dtt-opns"
                   key={topic.techId}

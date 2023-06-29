@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import "./DailyUpdateTable.css";
 
-const ImageTooltip = ({ src, alt, tooltipHead, firstActivity, secondActivity, thirdActivity, fourthActivity, fifthActivity, styleClass }) => {
+const ImageTooltip = ({ src, alt, tooltipHead, firstActivity, secondActivity, thirdActivity, fourthActivity, fifthActivity, styleclassName }) => {
   const [showTooltip, setShowTooltip] = useState(false);
 
   const handleMouseEnter = () => {
@@ -20,7 +20,7 @@ const ImageTooltip = ({ src, alt, tooltipHead, firstActivity, secondActivity, th
         onMouseLeave={handleMouseLeave}
       />
       {showTooltip && (
-        <div className={styleClass ? "tooltip tooltip-above" : "tooltip"}>
+        <div className={styleclassName ? "tooltip tooltip-above" : "tooltip"}>
           <div className="tooltip-head">{tooltipHead}</div>
           <div className="tooltip-body">{firstActivity}</div>
           <div className="tooltip-body">{secondActivity}</div>

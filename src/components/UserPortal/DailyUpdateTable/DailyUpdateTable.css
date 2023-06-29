@@ -21,8 +21,8 @@
 }
 
 .daily-update-nav-bar {
-  font-weight: 400;
-  font-size: 0.875rem;
+  /* font-weight: 400;
+  font-size: 0.875rem; */
   line-height: 2rem;
   padding-top: 1.25rem;
   padding-right: 0;
@@ -46,28 +46,34 @@
   color: #fff;
 }
 
-.column-id {
+.dut-column-id {
   width: 2.563rem;
+  font-weight: 500;
 }
 
-.column-date {
+.dut-column-date {
   width: 8.813rem;
+  font-weight: 500;
 }
 
-.column-learning {
+.dut-column-learning {
   width: 13.3rem;
+  font-weight: 500;
 }
 
-.column-topic {
+.dut-column-topic {
   width: 10rem;
+  font-weight: 500;
 }
 
-.column-comment {
+.dut-column-comment {
   width: 16rem;
+  font-weight: 500;
 }
 
-.column-duration {
+.dut-column-duration {
   width: 11.125rem;
+  font-weight: 500;
 }
 
 .search-bar-input {
@@ -75,6 +81,7 @@
   background-position: right 0.625rem center;
   background-repeat: no-repeat;
   width: 10rem;
+  height: 38px;
   padding: 0.305rem 0.5rem;
   border: 0.063rem solid #e9eceb;
   border-radius: 0.25rem;
@@ -118,7 +125,7 @@
 
 .image-tooltip-container {
   position: relative;
-  display: inline;
+  display : inline;
   margin-left: 2.9rem;
 }
 
@@ -133,7 +140,7 @@
   border: 0.063rem solid #e9eceb;
   box-shadow: 0 0.25rem 0.25rem rgba(0, 0, 0, 0.25);
   border-radius: 0.25rem;
-  opacity: 0.9;
+  opacity: 1;
   width: 10.26rem;
   height: 12.5rem;
 }
