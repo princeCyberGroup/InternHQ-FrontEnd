@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useContext } from "react";
+import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
 import "../Accounts.css";
@@ -6,14 +6,11 @@ import Cginfinitylogo from "../../../Assets/Cginfinitylogo.png";
 import CarouselImage1 from "../../../Assets/CarouselImage1.svg";
 import CarouselImage2 from "../../../Assets/CarouselImage2.svg";
 import CarouselImage3 from "../../../Assets/CarouselImage3.svg";
-import { UserContext } from "../../../Context/Context";
 import "bootstrap-icons/font/bootstrap-icons.css";
 import { bottom } from "@popperjs/core";
 
 const LoginScreen = () => {
   const navigate = useNavigate();
-  const { navigateTo } = useContext(UserContext);
-  // const [activeIndex, setActiveIndex] = useState(0); //For carousel
 
   const [email, setEmail] = useState("");
   const [isEmailValid, setIsEmailValid] = useState(false);
@@ -58,46 +55,21 @@ const LoginScreen = () => {
           firstName: response.data.firstName,
           lastName: response.data.lastName,
           deployed: response.data.isDeployed,
-          userType: response.data.userType,
+          randomString: response.data.randomString,
+          designation: response.data.designation,
         };
         localStorage.setItem("userData", JSON.stringify(res));
-        // const res = {
-        //   token:response.data.token,
-        //   email:response.data.response[0].email,
-        //   id:response.data.response[0].id,
-        //   firstName:response.data.response[0].firstname,
-        //   lastName:response.data.response[0].lastname,
-        //   lastLogin:response.data.response[0].lastlogin
-        // };
-
-        // console.log(response.data.response[0].id);
-        // console.log(response.data)
-        // setCurrentUser(response.data);
-        // const token = response.data.token;
-        // localStorage.setItem("token", response.data.token);
-        // localStorage.setItem('userData', JSON.stringify(res));
-        // setAuth({ email, password, token });
         setIsLoading(false);
-        navigateTo = res.userType.toLowerCase();
-        navigate(
-          res.userType.toLowerCase() === "u"
-            ? "/dashboard"
-            : res.userType.toLowerCase() === "a"
-            ? "/admin-dashboard"
-            : "/mentor-dashboard"
-        );
+        let str = res.randomString.toLowerCase();
+        str === "07495d"
+          ? navigate("/dashboard")
+          : str === "cb8715"
+          ? navigate("/admin/dashboard")
+          : navigate("/mentor/dashboard");
         localStorage.setItem("token");
       })
       .catch((error) => {
-        // if(error.response?.data.statusCode == 400) {
-        //   navigate(`/error?statusCode=${error.response?.data.statusCode}`)
-        // }
         console.log(error.response?.data);
-        // console.log(error.response.data);
-        // console.log(error.response?.data.msg);
-        // console.log(error.response.data.status);
-
-        // localStorage.setItem("login",false);
         if (error.response?.data.msg === "Error: Email does not exist") {
           setIsEmailValid(false);
           setIncorrectemail(true);
@@ -105,44 +77,28 @@ const LoginScreen = () => {
           setIsPasswordValid(false);
         }
         setIsLoading(false);
-        if(error.response?.data.statusCode == 400) {
-          navigate('/error?statusCode=400')
-        } 
-         if(error.response?.data.statusCode == 500) {
-          navigate('/error?statusCode=500')
+        if (error.response?.data.statusCode == 400) {
+          navigate("/error?statusCode=400");
         }
-        // navigate(`/error?statusCode=${error.response?.data.statusCode}`);
+        if (error.response?.data.statusCode == 500) {
+          navigate("/error?statusCode=500");
+        }
       });
-    // console.log(email);
-    // console.log(`password: ${password} (hidden visible only on backend)`);
   };
-  // const handleSlideChange = (index) => {
-  //   setActiveIndex(index);
-  // };
-
   useEffect(() => {
     let login = localStorage.getItem("login");
-    console.log("value of authguard in login", navigateTo);
-    if (login && navigateTo !== "") {
-      navigateTo === "u"
+    let userData = localStorage.getItem("userData");
+    if (login && userData) {
+      let str = JSON.parse(userData).randomString;
+      str === "07495d"
         ? navigate("/dashboard")
-        : navigateTo === "a"
-        ? navigate("/admin-dashboard")
+        : str === "cb8715"
+        ? navigate("/admin/dashboard")
         : navigate("/mentor-dashboard");
     }
-    // const interval = setInterval(() => {
-    //   setActiveIndex((prevIndex) => (prevIndex + 1) % 3);
-    // }, 3000); //Make it 1000
-
-    // return () => {
-    //   setNavigateTo();
-    // };
   }, []);
   return (
     <div className="container-fluid login-screen-body ">
-      {/* {console.log(btoa("sign-up"))}
-      {console.log(encodeURIComponent("c2lnbi11cA=="))}
-      {console.log(atob("c2lnbi11cA=="))} */}
       <div className="row pos">
         <div className="d-flex justify-content-center  align-items-center flex-row">
           <div
@@ -162,14 +118,12 @@ const LoginScreen = () => {
                 />
               </div>
               <div className="row card-left-heading">
-                <p>Intern HQ</p>
+                <p>CGI SkillFinity</p>
               </div>
               <div
                 id="carouselExampleIndicators"
                 className="carousel slide mt-3"
                 data-bs-ride="carousel"
-                // data-bs-interval="4000"
-                // data-interval="false" //Remove it
               >
                 <div className="carousel-indicators">
                   <button
@@ -178,30 +132,21 @@ const LoginScreen = () => {
                     className="active"
                     aria-current="true"
                     aria-label="Slide 1"
-                    // onClick={() => handleSlideChange(0)}
-                    // className={activeIndex === 0 ? "active" : ""}
                   ></button>
                   <button
                     data-bs-target="#carouselExampleIndicators"
                     data-bs-slide-to="1"
                     aria-label="Slide 2"
-                    // onClick={() => handleSlideChange(1)}
-                    // className={activeIndex === 1 ? "active" : ""}
                   ></button>
                   <button
                     data-bs-target="#carouselExampleIndicators"
                     data-bs-slide-to="2"
                     aria-label="Slide 3"
-                    // onClick={() => handleSlideChange(2)}
-                    // className={activeIndex === 2 ? "active" : ""}
                   ></button>
                 </div>
                 <div className="carousel-inner">
                   <div
                     style={{ width: "16.25rem" }}
-                    // className={`carousel-item ${
-                    //   activeIndex === 0 ? "active" : ""
-                    // }`}
                     className="carousel-item active"
                   >
                     <img
@@ -215,13 +160,7 @@ const LoginScreen = () => {
                     </p>
                   </div>
 
-                  <div
-                    style={{ width: "16.25rem" }}
-                    // className={`carousel-item ${
-                    //   activeIndex === 1 ? "active" : ""
-                    // }`}
-                    className="carousel-item"
-                  >
+                  <div style={{ width: "16.25rem" }} className="carousel-item">
                     <img
                       src={CarouselImage2}
                       className="d-block "
@@ -232,13 +171,7 @@ const LoginScreen = () => {
                       Enhance your skills via assessments
                     </p>
                   </div>
-                  <div
-                    style={{ width: "16.25rem" }}
-                    // className={`carousel-item ${
-                    //   activeIndex === 2 ? "active" : ""
-                    // }`}
-                    className="carousel-item"
-                  >
+                  <div style={{ width: "16.25rem" }} className="carousel-item">
                     <img
                       src={CarouselImage3}
                       className="d-block "
@@ -270,15 +203,17 @@ const LoginScreen = () => {
                     >
                       Email ID
                     </label>
-                    <input
-                      className="input-login"
-                      type="email"
-                      id="exampleInputEmail1"
-                      value={email}
-                      onChange={handleEmailChange}
-                      placeholder="Enter Your Email ID"
-                      required
-                    />
+                    <div className="div-input">
+                      <input
+                        className="input-login"
+                        type="email"
+                        id="exampleInputEmail1"
+                        value={email}
+                        onChange={handleEmailChange}
+                        placeholder="Enter Your Email ID"
+                        required
+                      />
+                    </div>
                     {!isEmailValid && email && (
                       <span className="sign-up-warning">
                         {incorrectemail
@@ -295,67 +230,43 @@ const LoginScreen = () => {
                     >
                       Password
                     </label>
-                    {/* <div className="password-input-container"> */}
                     <div className="input-group">
-                      <input
-                        className="input-login"
-                        type={showPassword ? "password" : "text"}
-                        id="exampleInputPassword1"
-                        placeholder="Enter Your Password"
-                        value={password}
-                        required
-                        onChange={handlePasswordChange}
-                      />
-                      <button
-                        className="btn password-toggle-button"
-                        style={{ border: "none" }}
-                        type="button"
-                        onClick={handleTogglePasswordVisibility}
-                      >
-                        {showPassword ? (
-                          <i className="bi bi-eye"></i>
-                        ) : (
-                          <i className="bi bi-eye-slash"></i>
-                        )}
-                      </button>
+                      <div className="div-input pass-input-div">
+                        <input
+                          className="input-login"
+                          type={showPassword ? "password" : "text"}
+                          id="exampleInputPassword1"
+                          placeholder="Enter Your Password"
+                          value={password}
+                          required
+                          onChange={handlePasswordChange}
+                        />
+                        <button
+                          className="btn password-toggle-button"
+                          style={{ border: "none" }}
+                          type="button"
+                          onClick={handleTogglePasswordVisibility}
+                        >
+                          {showPassword ? (
+                            <i className="bi bi-eye"></i>
+                          ) : (
+                            <i className="bi bi-eye-slash"></i>
+                          )}
+                        </button>
+                      </div>
                     </div>
                     {!isPasswordValid && password && (
                       <span className="sign-up-warning">
                         Incorrect Password
                       </span>
                     )}
-
-                    {/* <input
-                      className="input-fields"
-                      type={showPassword ? "text" : "password"}
-                      id="exampleInputPassword1"
-                      placeholder="Enter Your Password"
-                      value={password}
-                      required
-                      onChange={handlePasswordChange}
-                    />
-                    <span
-                      className=""
-                      onClick={handleTogglePasswordVisibility}
-                    >
-                      {showPassword ? (
-                        <i className="bi bi-eye-slash"></i>
-                      ) : (
-                        <i className="bi bi-eye"></i>
-                      )}
-                    </span>
-            
-                    {!isPasswordValid && password && (
-                      <span className="sign-up-warning">
-                        Incorrect Password
-                      </span>
-                    )} */}
                   </div>
                 </div>
 
                 <button
                   type="submit"
                   className="btn btn-warning border-0 sign-up-btn mt-3"
+                  style={{ width: "inherit" }}
                   disabled={!isEmailValid || isLoading}
                 >
                   {isLoading ? (

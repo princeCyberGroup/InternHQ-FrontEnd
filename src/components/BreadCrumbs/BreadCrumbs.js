@@ -8,7 +8,7 @@ const BreadCrumbs = () => {
   let currentLink = "";
   const crumbs = location.pathname;
 
-  const crumbName=crumbs.split("/").filter((crumbs) => crumbs !== "")
+  const crumbName=crumbs.split(/[\/-]/).filter((crumbs) => crumbs !== "")
     .map((crumb) => {
       currentLink = +`>${crumb}`;
       return (
@@ -17,10 +17,9 @@ const BreadCrumbs = () => {
         </>
       );
     });
-    const crumbSimplified=crumbName[0].props.children.props.children
+    const crumbSimplified=crumbName[0].props.children.props.children+ " " + crumbName[1].props.children.props.children
     const capital=()=>{
-
-      const name=crumbSimplified.split("-").map((d)=>{
+      const name=crumbSimplified.split(" ").map((d)=>{
         return d.slice(0,1).toUpperCase()+d.slice(1).toLowerCase() +" ";
       })
       return name;

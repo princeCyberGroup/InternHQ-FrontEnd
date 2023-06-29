@@ -11,13 +11,13 @@ const SearchBar = ({ searchfunc }) => {
   
   return (
     <div className="container">
-      <form className="d-flex" >
+      <form className="d-flex" onSubmit={(event) => event.preventDefault()}>
         <input
           className="form-control me-2 search-bar-input pos-6"
+          style={{border: "1px solid #ced4da"}}
           type="text"
           value={searchInnerValue}
           onChange={(event) => {
-            event.preventDefault();
             setSearchInnerValue(event.target.value)
         }}
           placeholder="Search"

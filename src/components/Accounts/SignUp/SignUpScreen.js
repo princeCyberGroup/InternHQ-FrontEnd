@@ -9,16 +9,15 @@ import CarouselImage3 from "../../../Assets/CarouselImage3.svg";
 
 const SignUpScreen = () => {
   const navigate = useNavigate();
-  // const [activeIndex, setActiveIndex] = useState(0); //For carousel
 
   const [email, setEmail] = useState("");
   const [isEmailValid, setIsEmailValid] = useState(false);
   const [password, setPassword] = useState("");
   const [isPasswordValid, setIsPasswordValid] = useState(false);
   const [showPassword, setShowPassword] = useState(true);
-
   const [incorrectemail, setIncorrectemail] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const [errorMsg, setErrorMsg] = useState("");
 
   const handleEmailChange = (event) => {
     const { value } = event.target;
@@ -50,20 +49,16 @@ const SignUpScreen = () => {
         password,
       })
       .then((response) => {
-        console.log("Inside then")
-        console.log(response.data);
         localStorage.setItem("token", response.data.token);
         localStorage.setItem("email", email);
         setIsLoading(false);
         navigate("/sign-up-verification");
       })
       .catch((error) => {
-        console.log("Inside Catch")
-        console.log(error.response?.data);
-        
-        if (error.response?.data.msg == "Error: User Already Exists!") {
+        if (error.response?.data.msg) {
           setIsEmailValid(false);
           setIncorrectemail(true);
+          setErrorMsg(error.response?.data.msg)
         }
         setIsLoading(false);
         if(error.response?.data.statusCode == 400) {
@@ -73,25 +68,13 @@ const SignUpScreen = () => {
           navigate('/error?statusCode=500')
         } 
       });
-    console.log(email);
-    console.log(`password: ${password} (hidden visible only on backend)`);
   };
-  // const handleSlideChange = (index) => {
-  //   setActiveIndex(index);
-  // };
 
   useEffect(() => {
     let login = localStorage.getItem("login");
     if (login) {
       navigate("/dashboard");
     }
-    // const interval = setInterval(() => {
-    //   setActiveIndex((prevIndex) => (prevIndex + 1) % 3);
-    // }, 3000); //Make it 1000
-
-    // return () => {
-    //   clearInterval(interval);
-    // };
   }, []);
 
   return (
@@ -115,14 +98,12 @@ const SignUpScreen = () => {
                 />
               </div>
               <div className="row card-left-heading">
-                <p>Intern HQ</p>
+                <p>CGI SkillFinity</p>
               </div>
               <div
                 id="carouselExampleIndicators"
                 className="carousel slide mt-3"
                 data-bs-ride="carousel"
-                // data-bs-interval="4000"
-                // data-interval="false" //Remove it
               >
                 <div className="carousel-indicators">
                   <button
@@ -131,30 +112,21 @@ const SignUpScreen = () => {
                     className="active"
                     aria-current="true"
                     aria-label="Slide 1"
-                    // onClick={() => handleSlideChange(0)}
-                    // className={activeIndex === 0 ? "active" : ""}
                   ></button>
                   <button
                     data-bs-target="#carouselExampleIndicators"
                     data-bs-slide-to="1"
                     aria-label="Slide 2"
-                    // onClick={() => handleSlideChange(1)}
-                    // className={activeIndex === 1 ? "active" : ""}
                   ></button>
                   <button
                     data-bs-target="#carouselExampleIndicators"
                     data-bs-slide-to="2"
                     aria-label="Slide 3"
-                    // onClick={() => handleSlideChange(2)}
-                    // className={activeIndex === 2 ? "active" : ""}
                   ></button>
                 </div>
                 <div className="carousel-inner">
                   <div
                     style={{ width: "16.25rem" }}
-                    // className={`carousel-item ${
-                    //   activeIndex === 0 ? "active" : ""
-                    // }`}
                     className="carousel-item active"
                   >
                     <img
@@ -170,9 +142,6 @@ const SignUpScreen = () => {
 
                   <div
                     style={{ width: "16.25rem" }}
-                    // className={`carousel-item ${
-                    //   activeIndex === 1 ? "active" : ""
-                    // }`}
                     className="carousel-item"
                   >
                     <img
@@ -187,9 +156,6 @@ const SignUpScreen = () => {
                   </div>
                   <div
                     style={{ width: "16.25rem" }}
-                    // className={`carousel-item ${
-                    //   activeIndex === 2 ? "active" : ""
-                    // }`}
                     className="carousel-item"
                   >
                     <img
@@ -208,14 +174,17 @@ const SignUpScreen = () => {
           </div>
           <div
             className="col-md-7 bg-white p-4"
-            style={{ height: "35.125rem" }}
+            style={{ height: "35.125rem"}}
           >
             <div className="row ">
               <p className="right-container-heading">Sign Up</p>
             </div>
             <div className="row" style={{ height: "15.625rem" }}>
-              <form onSubmit={(e)=>{
-                handleSubmit(e)}}>
+              <form
+                onSubmit={(e) => {
+                  handleSubmit(e);
+                }}
+              >
                 <div style={{ height: "11.25rem", marginTop: "1rem" }}>
                   <div className="d-flex flex-column">
                     <label
@@ -224,7 +193,8 @@ const SignUpScreen = () => {
                     >
                       Email ID
                     </label>
-                    <input
+                    <div className="div-input">
+                      <input
                       className="input-login"
                       type="email"
                       id="exampleInputEmail1"
@@ -233,10 +203,11 @@ const SignUpScreen = () => {
                       placeholder="Enter Your Email ID"
                       required
                     />
+                    </div>
                     {!isEmailValid && email && (
                       <span className="sign-up-warning">
                         {incorrectemail
-                          ? "User Already Exists!"
+                          ? errorMsg
                           : "Please make use of CG-Infinity email only"}
                       </span>
                     )}
@@ -250,7 +221,8 @@ const SignUpScreen = () => {
                       Password
                     </label>
                     <div className="input-group">
-                    <input
+                      <div className="div-input pass-input-div">
+                        <input
                       className="input-login"
                       type={showPassword ? "password" : "text"}
                       id="exampleInputPassword1"
@@ -271,6 +243,7 @@ const SignUpScreen = () => {
                           <i className="bi bi-eye-slash"></i>
                         )}
                       </button>
+                      </div>
                     </div>
                     {!isPasswordValid && password && (
                       <span className="sign-up-warning">
@@ -284,6 +257,7 @@ const SignUpScreen = () => {
                 <button
                   type="submit"
                   className="btn btn-warning border-0 sign-up-btn"
+                  style={{width:"inherit"}}
                   disabled={!isEmailValid || !isPasswordValid || isLoading}
                 >
                   {isLoading ? (

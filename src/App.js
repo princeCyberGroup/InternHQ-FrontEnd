@@ -1,5 +1,11 @@
 import React, { useState } from "react";
-import { Routes, Route, useLocation, useNavigate } from "react-router-dom";
+import {
+  Routes,
+  Route,
+  useLocation,
+  useNavigate,
+  useSearchParams,
+} from "react-router-dom";
 import LoginScreen from "./components/Accounts/Login/LoginScreen";
 import SignUpScreen from "./components/Accounts/SignUp/SignUpScreen";
 import RegistrationSuccessfulScreen from "./components/Accounts/SignUp/RegistrationSuccessfulScreen";
@@ -30,59 +36,14 @@ import MentorAuthGuard from "./components/MentorAuthGuard";
 import Error_400 from "./components/ErrorPage/Error_400";
 import Error_500 from "./components/ErrorPage/Error_500";
 import Error_404 from "./components/ErrorPage/Error_404";
+import  PieChart  from "./components/AdminPortal/Report/Detailedreport/PieChart";
+import { ManageSkillTest } from "./components/AdminPortal/SkillTest/ManageSkillTest";
 
 function App() {
   const location = useLocation();
   const navigate = useNavigate();
-
-  // const encodeUrl = (url) => {
-  //   const encodeUrlFromBase = {
-  //     0: "L2Rhc2hib2FyZA==",
-  //     1: "L2RhaWx5LVVwZGF0ZQ==",
-  //     2: "L2FsbC1wcm9qZWN0cw==",
-  //     3: "L3NraWxsLU1hbmFnZW1lbnQ=",
-  //     4: "L3ZhcnVu",
-  //   };
-  //   const encode= location.pathname;
-  //   if (!encode.includes("/L3") || !encode.includes("/L2") ) {
-  //     switch (encode) {
-  //       case "/dashboard":
-  //         console.log(encode);
-
-  //         <Link to="/L2Rhc2hib2FyZA==" />
-  //         // console.log(n)
-  //         break;
-
-  //       case "/daily-Update":
-  //         navigate(`${encodeUrlFromBase[1]}`)
-  //         break;
-
-  //       case "/all-projects":
-  //         navigate(`${encodeUrlFromBase[2]}`);
-  //         break;
-
-  //       case "/skill-Management":
-  //         navigate(`${encodeUrlFromBase[3]}`);
-  //         break;
-
-  //       case "/varun":
-  //         navigate(`${encodeUrlFromBase[4]}`);
-  //         break;
-
-  //       default: navigate("*")
-  //     }
-  //   }
-  //   // console.log("location: ",encode);
-
-  //   const encodeUrl = btoa(url);
-  //   return encodeUrl;
-  // };
-
-  // const decodeUrl = (encodedUrl) => {
-  //   const decodedUrl = decodeURIComponent(encodedUrl);
-  //   // console.log(atob(decodedUrl), "decoded");
-  //   return atob(decodedUrl);
-  // };
+  const [searchParams] = useSearchParams();
+  const userId = searchParams.get("userId");
   const [dataFromDailyUpdate, setDataFromDailyUpdate] = useState("");
   const handleDataFromDailyUpdate = (data) => {
     setDataFromDailyUpdate(data);
@@ -90,8 +51,8 @@ function App() {
   return (
     <Context>
       <div className="App">
-        {/* <Router> */}
         <Routes>
+          <Route path="/piechart" element={<PieChart />} />
           <Route path="/" element={<LoginScreen />} />
           <Route path="/forgot-password" element={<ForgotPasswordScreen />} />
           <Route path="/sign-up" element={<SignUpScreen />} />
@@ -106,8 +67,7 @@ function App() {
             element={<CreateNewPasswordScreen />}
           />
           <Route path="/change-success" element={<PasswordChangedScreen />} />
-          {/* <Route path={encodeUrl("/dashboard")} element={<Dashboard />} /> */}
-          
+
           {/* User Protected Routes here */}
           <Route element={<AuthGuard />}>
             <Route
@@ -132,22 +92,23 @@ function App() {
 
           {/* Admin routes */}
           <Route element={<AdminAuthGuard />}>
-            <Route path="/admin-dashboard" element={<DashboardA />} />
-            <Route path="/admin/report" element={<Report />} />
-            <Route path="/admin/report/:userId" element={<Detailedreport />} />
-            <Route path="/assign-task" element={<Task />} />
+            <Route path="/admin/dashboard" element={<DashboardA />} />
+            <Route path="/admin/reports" element={<Report />} />
+            <Route path="/admin/report" element={<Detailedreport />} />
+            <Route path="/admin/assign-task" element={<Task />} />
+            <Route path="/admin/skill-test" element={<ManageSkillTest />} />
+              
           </Route>
 
           {/* Mentor routes */}
           <Route element={<MentorAuthGuard />}>
-          <Route path="/mentor-dashboard" element={<MentorDashboard />} />
+            <Route path="/mentor-dashboard" element={<MentorDashboard />} />
           </Route>
-          
-          <Route path="/error?statusCode=400" element={<Error_400 />}/>
-          <Route path="/error?statusCode=500" element={<Error_500 />}/>
+
+          <Route path="/error?statusCode=400" element={<Error_400 />} />
+          <Route path="/error?statusCode=500" element={<Error_500 />} />
           <Route path="*" element={<Error_404 />} />
         </Routes>
-        {/* </Router> */}
       </div>
     </Context>
   );

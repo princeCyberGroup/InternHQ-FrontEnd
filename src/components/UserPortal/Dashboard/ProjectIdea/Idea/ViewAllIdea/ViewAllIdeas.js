@@ -1,4 +1,4 @@
-import React, { useState,useEffect,useContext} from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import "./ViewAllIdea.css";
 import Header from "../../../../../Header/Header";
@@ -12,10 +12,11 @@ import { UserContext } from "../../../../../../Context/Context";
 import BreadCrumbs from "../../../../../BreadCrumbs/BreadCrumbs";
 
 const ViewAllIdeas = () => {
-  const { idea, setIdea, project, setProject } = useContext(UserContext);
+  // const { idea, setIdea, project, setProject } = useContext(UserContext);
 
-  const location = useLocation();
-  const details = idea;
+  // const location = useLocation();
+  // const details = idea;
+  const [idea, setIdea] = useState([]);
   const [projectIndex, setProjectIndex] = useState(0);
   const [projNameError, setProjNameError] = useState("");
   const [projDescriptionError, setProjDescriptionError] = useState("");
@@ -25,7 +26,7 @@ const ViewAllIdeas = () => {
   const [dropDown, setDropDown] = useState(false);
   const [textInput, setTextInput] = useState("");
   const [memberNames, setMemberNames] = useState({});
-  
+
   const handelIndex = (index) => {
     setProjectIndex(index);
   };
@@ -95,23 +96,34 @@ const ViewAllIdeas = () => {
   };
 
   useEffect(() => {
+    var storedObject = localStorage.getItem("userData");
+      var parsedObject = JSON.parse(storedObject);
+      var userId = parsedObject.userId;
+    axios
+      .get(`https://cg-interns-hq.azurewebsites.net/getProjectIdea?userId=${userId}`)
+      .then((response) => {
+        setIdea(response.data.response);
+      })
+      .catch((error) => {
+        console.error("Error fetching tasks:", error);
+      });
+  }, []);
+
+  useEffect(() => {
     const texts = textInput.split(",").map((text) => text.trim());
     var membersObj = {};
     texts.forEach((text, index) => {
       membersObj[`member${index + 1}`] = text;
     });
 
-    // technologyNames.forEach((curElem, index) => {
-    //   techNames[`tech${index + 1}`] = curElem;
-    // });
-
     isObjectEmpty(membersObj);
   }, [textInput, tech]);
 
   return (
-    // <div>working</div>
     <>
-      <Header />
+      <div className="" style={{ marginBottom: "4rem" }}>
+        <Header />
+      </div>
       <div className="container page-color">
         <div className="view-all-nav-bar pt-4">
           <BreadCrumbs />
@@ -121,18 +133,16 @@ const ViewAllIdeas = () => {
           <div className="d-flex">
             <p className="sub-text ps-0">My Idea</p>
           </div>
-         
-            <div
-              className="add-new-project-wrapper pb-0 me-0"
-              data-bs-toggle="modal"
-              data-bs-target="#exampleModal"
-              data-bs-whatever="@mdo"
-            >
-              <p className="add-new-project me-2">
-                Add New Idea
-              </p>
-            </div>
-         
+
+          <div
+            className="add-new-project-wrapper pb-0 me-0"
+            data-bs-toggle="modal"
+            data-bs-target="#exampleModal"
+            data-bs-whatever="@mdo"
+          >
+            <p className="add-new-project me-2">Add New Idea</p>
+          </div>
+
           <div
             className="modal fade"
             id="exampleModal"
@@ -185,7 +195,8 @@ const ViewAllIdeas = () => {
                         htmlFor="project-description"
                         className="col-form-label title-text"
                       >
-                        Project Description<span style={{ color: "red" }}>*</span>{" "}
+                        Project Description
+                        <span style={{ color: "red" }}>*</span>{" "}
                         {projDescriptionError && (
                           <span style={{ color: "red", fontSize: "11px" }}>
                             ({projDescriptionError})
@@ -246,7 +257,6 @@ const ViewAllIdeas = () => {
                             />
                           </ul>
                         </div>
-                        {/* </div> */}
                       </div>
                     </div>
 
@@ -289,7 +299,7 @@ const ViewAllIdeas = () => {
             </div>
           </div>
         </div>
-       {idea.length === 0 ? (
+        {idea.length === 0 ? (
           <EmptyIdea />
         ) : (
           <div

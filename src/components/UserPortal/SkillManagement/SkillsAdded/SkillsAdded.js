@@ -1,25 +1,25 @@
-import React, { useEffect,useState} from "react";
-import { EmptySkillsAdded } from "./EmptySkillsAdded/EmptySkillsAdded";
-import { ReactComponent as GoldStar } from "./assetsSkillManagment/Star-Icon-gold.svg";
-import { ReactComponent as SilverStar } from "./assetsSkillManagment/Star-Icon-silver.svg";
-import { ReactComponent as BronzeStar } from "./assetsSkillManagment/Star-Icon-bronze.svg";
+import React, { useEffect, useState } from "react";
+import EmptySkillsAdded from "./EmptySkillsAdded/EmptySkillsAdded";
+import { ReactComponent as GoldStar } from "../../../../Assets/Star-Icon-gold.svg";
+import { ReactComponent as SilverStar } from "../../../../Assets/Star-Icon-silver.svg";
+import { ReactComponent as BronzeStar } from "../../../../Assets/Star-Icon-bronze.svg";
 import "./SkillsAdded.css";
 // import nonActiveimageStar from '../Assets/nonActiveimageStar.png';
 import { ReactComponent as EmptyStar } from "../../../../Assets/emptystar.svg";
+import SkillsAddedSkeleton from "./SkillsAddedSkeleton";
 // import { ReactComponent as Star } from "../../../../Assets/Star.svg";
 
 const SkillsAdded = () => {
   var storedObject = localStorage.getItem("userData");
   var parsedObject = JSON.parse(storedObject);
   var userId = parsedObject.userId;
-
-  const [isLoading, setIsLoading] = useState(true);
   const [allData, setAllData] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
+
   useEffect(() => {
     setTimeout(() => {
-      return setIsLoading(false);
-    }, 2000);
-    fetchData();
+      fetchData();
+    }, 1000);
   }, []);
 
   const fetchData = async () => {
@@ -30,7 +30,8 @@ const SkillsAdded = () => {
       );
       const data = await response.json();
 
-      setAllData(data.response);
+      // setAllData(data.response);
+      setIsLoading(false);
     } catch (error) {
       console.log(error);
     }
@@ -41,19 +42,29 @@ const SkillsAdded = () => {
       <div className="heading">
         <p>Skills Added</p>
       </div>
-
-      {/* //main card  */}
-      <div>
-        {allData.length === 0 ? (
-          <div>
-            <EmptySkillsAdded />
-          </div>
+      <div
+        className="card skill-added-card"
+        style={{ boxShadow: " 0px 4px 20px 0px rgba(40, 52, 73, 0.15)", overflowY: "scroll" , overflowX: "hidden"}}
+      >
+        {isLoading ? (
+          <>
+            <SkillsAddedSkeleton />
+            <SkillsAddedSkeleton />
+            <SkillsAddedSkeleton />
+            <SkillsAddedSkeleton />
+            <SkillsAddedSkeleton />
+          </>
+        ) : allData.length === 0 ? (
+          <EmptySkillsAdded />
         ) : (
-          allData.map((DataUsed) => (
-            <div className="card" style={{ width: "288px" }}>
+          allData.map((DataUsed, key) => (
+            <div style={{ width: "17.9rem" }} key={key}>
               <div
-                class="card-body p-0"
-                style={{ maxHeight: "602px", overflow: "auto" }}
+                className="p-0"
+                style={{
+                  maxHeight: "calc(100vh - 30vh)",
+                  borderBottom: "1px solid #E9ECEB",
+                }}
               >
                 <div className="row cards">
                   <div className="col-12 d-flex mainImg">
@@ -71,7 +82,7 @@ const SkillsAdded = () => {
                         {DataUsed.examScores[0] >= 8 ? (
                           // <GoldStar />
                           // <SilverStar />
-                          <BronzeStar style={{ fontSize: '50px' }} />
+                          <BronzeStar style={{ fontSize: "3.125rem" }} />
                         ) : (
                           <EmptyStar />
                         )}
@@ -98,7 +109,7 @@ const SkillsAdded = () => {
                         {DataUsed.examScores[1] >= 8 ? (
                           // <GoldStar />
                           // <SilverStar />
-                          <SilverStar style={{ fontSize: '50px' }} />
+                          <SilverStar style={{ fontSize: "3.125rem" }} />
                         ) : (
                           <EmptyStar />
                         )}
@@ -129,7 +140,7 @@ const SkillsAdded = () => {
                     >
                       <div className="my-spacing">
                         {DataUsed.examScores[2] >= 8 ? (
-                          <GoldStar style={{ fontSize: '50px' }} />
+                          <GoldStar style={{ fontSize: "3.125rem" }} />
                         ) : (
                           <EmptyStar />
                         )}
@@ -154,7 +165,7 @@ const SkillsAdded = () => {
                     >
                       <div className="my-spacing">
                         {DataUsed.examScores[3] >= 8 ? (
-                           <GoldStar style={{ fontSize: '50px' }} />
+                          <GoldStar style={{ fontSize: "3.125rem" }} />
                         ) : (
                           <EmptyStar />
                         )}

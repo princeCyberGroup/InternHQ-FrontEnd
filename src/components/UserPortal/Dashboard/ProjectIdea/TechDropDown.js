@@ -12,7 +12,18 @@ const TechDropDown = (props) => {
     axios
       .get(`https://cg-interns-hq.azurewebsites.net/getAllTechnology`)
       .then((response) => {
-        setAllTech(response.data);
+        setAllTech(response.data.response.sort((a, b) => {
+          const nameA = a.techName.toUpperCase();
+          const nameB = b.techName.toUpperCase();
+          if (nameA < nameB) {
+            return -1;
+          }
+          if (nameA > nameB) {
+            return 1;
+          }
+          return 0; // names are equal
+        }));
+        console.log(response.data.response)
       })
       .catch((error) => {
         console.error(error);
@@ -20,7 +31,6 @@ const TechDropDown = (props) => {
   }, []);
 
   const handleOptionClick = (event) => {
-    // console.log(event)
     const { value } = event.currentTarget.dataset;
     const isChecked = event.currentTarget.querySelector("input").checked;
     if (isChecked && !technologyNames.includes(value)) {
@@ -40,7 +50,7 @@ const TechDropDown = (props) => {
         if (techNames[`tech${index + 1}`] === value) {
           const t = delete techNames[`tech${index + 1}`];
           setCounter((prevCounter) => prevCounter - 1);
-          console.log(t);
+          // console.log(t);
         }
       });
     }
@@ -48,21 +58,21 @@ const TechDropDown = (props) => {
   };
   return (
     <div className="drop-tech">
-      {allTech?.response.map((value, index) => {
+      {allTech?.map((value, index) => {
         return (
           <div
             key={index}
-            class="form-check small checkbox"
+            className="form-check small checkbox"
             onClick={(e) => {
               handleOptionClick(e);
             }}
             data-value={value.techName}
           >
-            <label class="form-check-label tech-label" for={value.techName}>
+            <label className="form-check-label tech-label" for={value.techName}>
               {value?.techName}
             </label>
             <input
-              class="form-check-input"
+              className="form-check-input techDrop"
               type="checkbox"
               value="ytch"
               id="nodeJs"

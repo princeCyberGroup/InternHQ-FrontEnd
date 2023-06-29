@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { ReactComponent as CloudImage } from "../../Assets/Cloud.svg";
-import FileUploadButton from "./DragandDropFile";
+// import FileUploadButton from "./DragandDropFile";
 import axios from "axios";
 
 export const UploadCsv = () => {
@@ -22,14 +22,14 @@ export const UploadCsv = () => {
                 .post("your-api-endpoint", formData)
                 .then((response) => {
                     // Handle the response from the backend
-                    console.log(response.data);
+                    // console.log(response.data);
                 })
                 .catch((error) => {
                     // Handle the error
-                    console.log(error);
+                    // console.log(error);
                 });
         }
-        console.log("filename:",selectedFile);
+        // console.log("filename:",selectedFile);
     };
 
     return (

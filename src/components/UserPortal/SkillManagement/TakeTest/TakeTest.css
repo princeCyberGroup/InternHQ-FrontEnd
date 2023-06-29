@@ -45,11 +45,11 @@
     /* align-items: center;
     justify-content: center; */
     /* padding: 16px 0px; */
-    gap: 16px;
+    /* gap: 16px; */
 
     /* position: absolute; */
-    width: 870px;
-    /* height: 730px; */
+    width: 862px;
+    height: 632px;
     /* left: 55px;
     top: 164px; */
     /* margin-top: 5px;
@@ -66,12 +66,11 @@
     margin-top: 16px;
     width: 860px;
     /* margin-left: 100px; */
-    margin-right: 200px;
     max-height: 3.188rem;
     display: flex;
     flex: 1;
     background-color: #FFFFFF;
-    border-bottom: 2px solid #E9ECEB;
+    border-bottom: 1px solid #E9ECEB;
 }
 
 .nav-btn {
@@ -175,7 +174,7 @@
     padding: 2.5px 8px;
     gap: 8px;
 
-    width: 80px;
+    width: 115px;
     height: 25px;
     font-size: 13px;
     background: #B8DDE1;
@@ -243,7 +242,10 @@
     margin-left: 60px;
 }
 .main-card-inside{
- box-shadow: 0px 4px 10px rgba(66, 76, 97, 0.15);   
+ /* box-shadow: 0px 4px 10px rgba(66, 76, 97, 0.15);    */
+ /* margin: 0 0 1rem 0; */
+ max-height: 557px;
+ overflow-y: scroll;
 }
 
 .statusOftest{

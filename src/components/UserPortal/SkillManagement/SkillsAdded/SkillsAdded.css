@@ -1,14 +1,16 @@
-.skill-added-card{
+.skill-added-card {
     margin-left: 0px;
-    
+    height: 632px;
+    width: 288px;
+    /* overflow-x: hidden; */
 }
 
 .heading p{
-    width: 112px;
+    width: 7rem;
     font-family: 'Roboto';
     font-style: normal;
     font-weight: 600;
-    font-size: 20px;
+    font-size: 1.25rem;
     line-height: 32px;
     color: #343435;
 }
@@ -21,31 +23,31 @@
 }
 
 .mainImg p{
-    margin-top: 20px;
-    margin-right: 18px;
-    margin-left: 14px;
-    width: 196px;
-    height: 36px;
+    margin-top: 1.25rem;
+    margin-right: 1.125rem;
+    margin-left: 0.875rem;
+    width: 12.25rem;
+    height: 2rem;
 
     font-family: 'Roboto';
     font-style: normal;
     font-weight: 600;
     font-size: 15px;
-    line-height: 18px;
+    line-height: 1.125rem;
 
     color: #262626;
 
 }
 
 .stars{
-    margin-left: 24px;
-    margin-right: 24px;
-    margin-bottom: 24px;
+    margin-left: 1.5rem;
+    margin-right: 1.5rem;
+    margin-bottom: 1.5rem;
     flex-shrink: 1;
 }
 
 .stars p{
-    font-size: 12px;
+    font-size: 0.75rem;
     font-weight: 500;
     display: flex;
     justify-content: center;
@@ -58,8 +60,8 @@
 
 .stars img{
     margin: auto;
-    height: 20px;
-    width: 20px;
+    height: 1.25rem;
+    width: 1.25rem;
 }
 
 .grey p{
@@ -67,5 +69,5 @@
 color : grey;
 }
 .my-spacing{
-    margin-left: 20px;
+    margin-left: 1.25rem;
 }

@@ -3,7 +3,7 @@ import { ReactComponent as Arrow } from "../../../../../Assets/arrow_forward_ios
 import { UserContext } from "../../../../../Context/Context";
 
 const DetailsLeft = (props) => {
-  // const {idea,setIdea,project,setProject}=useContext(UserContext)
+
   const [isBorder, setIsBorder] = useState(false);
   const [selectedIdx, setSelectedIdx] = useState(0);
   const truncate = (str, maxLength) => {
@@ -38,7 +38,7 @@ const DetailsLeft = (props) => {
 
               <div>
                 <p className="project-text flex-grow-1">
-                  {user.projectText.length > 100
+                  {user.projectText?.length > 100
                     ? truncate(user.projectText, 100)
                     : user.projectText}
                 </p>

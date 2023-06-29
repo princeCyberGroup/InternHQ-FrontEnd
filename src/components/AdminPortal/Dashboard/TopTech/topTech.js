@@ -2,14 +2,14 @@ import React from "react";
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from "chart.js";
 import { Pie } from "react-chartjs-2";
 import PieChartData from "./PieChartData";
-import '../TopTech/topTech.css';
+import "../TopTech/topTech.css";
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 export const data = {
   labels: [],
   datasets: [
     {
-      radius: "50%",
+      radius: "70%",
       label: "Total Numbers",
       data: [],
       backgroundColor: ["#28519E", "#3B82F6", "#99CC00", "#E23237", "#FFB81C"],
@@ -39,7 +39,6 @@ const PieChart = () => {
 
     return techPercentage;
   };
-  // console.log(calculateTechPercentage(pieChartData));
 
   // Calculate the occurrence of each techName in lowercase
   const techNameOccurrences = PieChartData.reduce((accumulator, item) => {
@@ -55,26 +54,16 @@ const PieChart = () => {
     (techName) => techName.charAt(0).toUpperCase() + techName.slice(1)
   );
   data.datasets[0].data = Object.values(techNameOccurrences);
-  // data.datasets[0].
-  // data.datasets[0].backgroundColor = generateRandomColors();
-  // data.datasets[0].borderColor = "#fff"
-  // data.datasets[0].borderWidth = 5
 
   const options = {
     plugins: {
       legend: {
         display: true,
-        // layout: "vertical",
-        // verticalAlign: "center",
-        // align: "right",
         position: "bottom",
         labels: {
-          // usePointStyle: true,
           boxWidth: 17,
           boxHeight: 17,
-          // pointStyle: 'cross',
-          // boxWidth: 12,
-          
+
           generateLabels: (chart) => {
             const data = chart.data;
             if (data.labels.length && data.datasets.length) {
@@ -93,7 +82,6 @@ const PieChart = () => {
                   lineDash: dataset.borderDash,
                   lineDashOffset: dataset.borderDashOffset,
                   lineJoin: dataset.borderJoinStyle,
-                  // lineWidth: dataset.borderWidth,
                   strokeStyle: "#fff",
                   pointStyle: dataset.pointStyle,
                   rotation: dataset.rotation,
@@ -108,7 +96,7 @@ const PieChart = () => {
   };
 
   return (
-    <div className="container mt-4" style={{ width: "400px" }}>
+    <div className="container mt-4" style={{ width: "25rem" }}>
       <div className="row">
         <div className="col">
           <h2
@@ -116,8 +104,8 @@ const PieChart = () => {
               fontFamily: "Roboto",
               textAlign: "start",
               fontWeight: 600,
-              fontSize: "16px",
-              lineHeight: "19px",
+              fontSize: "1rem",
+              lineHeight: "1.3rem",
               color: "#002C3F",
             }}
           >
@@ -129,8 +117,8 @@ const PieChart = () => {
         <div
           className="col"
           style={{
-            boxShadow: "0px 4px 20px rgba(40, 52, 73, 0.15)",
-            borderRadius: "8px",
+            boxShadow: "0rem 0.25rem 1.25rem rgba(40, 52, 73, 0.15)",
+            borderRadius: "0.5rem",
           }}
         >
           <Pie data={data} options={options} />

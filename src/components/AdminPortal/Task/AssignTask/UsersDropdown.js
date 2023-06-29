@@ -11,7 +11,17 @@ const UsersDropdown = (props) => {
     axios
       .get("https://cg-interns-hq.azurewebsites.net/getAllUsers")
       .then((response) => {
-        setAllUsers(response.data.response);
+        setAllUsers(response.data.response.sort((a, b) => {
+          const nameA = a.name.toUpperCase();
+          const nameB = b.name.toUpperCase();
+          if (nameA < nameB) {
+            return -1;
+          }
+          if (nameA > nameB) {
+            return 1;
+          }
+          return 0; // names are equal
+        }));
       })
       .catch((error) => {
         console.error(error);
@@ -98,7 +108,7 @@ const UsersDropdown = (props) => {
 
   useEffect(() => {
     if(props.selectedUsers){
-    const selectedUsersNames = props.selectedUsers.map((user) => user.name);
+    const selectedUsersNames = props.selectedUsers?.map((user) => user.name);
     props.usersDataComingChild(selectedUsersNames);
     }
   }, [props.selectedUsers]);
@@ -128,7 +138,7 @@ const UsersDropdown = (props) => {
       <input
         type="text"
         className="custom-input"
-        value={props.selectedUsers.map((user) => user.name).join(", ")}
+        value={props.selectedUsers?.map((user) => user.name).join(", ")}
         disabled
       />
     </div>
