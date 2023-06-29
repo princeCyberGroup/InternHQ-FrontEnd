@@ -11,7 +11,17 @@ const TechDropDown = (props) => {
         const response = await axios.get(
           "https://cg-interns-hq.azurewebsites.net/getAllTechnology"
         );
-        setTechOptions(response.data?.response || []);
+        setTechOptions(response.data?.response.sort((a, b) => {
+          const nameA = a.techName.toUpperCase();
+          const nameB = b.techName.toUpperCase();
+          if (nameA < nameB) {
+            return -1;
+          }
+          if (nameA > nameB) {
+            return 1;
+          }
+          return 0; // names are equal
+        }) || []);
       } catch (error) {
         console.error(error);
       }

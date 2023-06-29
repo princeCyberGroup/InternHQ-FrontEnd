@@ -38,7 +38,7 @@ const DetailsLeft = (props) => {
 
               <div>
                 <p className="project-text flex-grow-1">
-                  {user.projectText.length > 100
+                  {user.projectText?.length > 100
                     ? truncate(user.projectText, 100)
                     : user.projectText}
                 </p>

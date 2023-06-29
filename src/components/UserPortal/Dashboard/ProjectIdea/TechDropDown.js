@@ -12,7 +12,18 @@ const TechDropDown = (props) => {
     axios
       .get(`https://cg-interns-hq.azurewebsites.net/getAllTechnology`)
       .then((response) => {
-        setAllTech(response.data);
+        setAllTech(response.data.response.sort((a, b) => {
+          const nameA = a.techName.toUpperCase();
+          const nameB = b.techName.toUpperCase();
+          if (nameA < nameB) {
+            return -1;
+          }
+          if (nameA > nameB) {
+            return 1;
+          }
+          return 0; // names are equal
+        }));
+        console.log(response.data.response)
       })
       .catch((error) => {
         console.error(error);
@@ -47,7 +58,7 @@ const TechDropDown = (props) => {
   };
   return (
     <div className="drop-tech">
-      {allTech?.response.map((value, index) => {
+      {allTech?.map((value, index) => {
         return (
           <div
             key={index}
