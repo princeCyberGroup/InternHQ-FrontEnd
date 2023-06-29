@@ -2,7 +2,8 @@ import React from "react";
 import { useEffect, useState, useContext } from "react";
 import "./TakeYourTest.css";
 import { useNavigate ,useLocation } from "react-router-dom";
-
+// import { ReactCompont as Dot } from "../../../../Assets/Ellipsestakeyourtest.svg";
+import { ReactComponent as DotTYT } from "../../../../Assets/Ellipsestakeyourtest.svg";
 import { UserContext } from "../../../../Context/Context";
 import { BsCheckLg } from "react-icons/bs";
 import { responsivePropType } from "react-bootstrap/esm/createUtilityClasses";
@@ -291,7 +292,7 @@ const TakeYourTest = () => {
                 <p> Take The Test </p>
               </div>
               <div className="quiz-description mx-5 ">
-                {examName} {"\u2B24"} {examDuration} mins {"\u2B24"}{" "}
+                {examName} &nbsp; <DotTYT/> &nbsp; {examDuration} mins &nbsp; <DotTYT/> &nbsp;
                 {numberOfQuestion} Questions
               </div>
             </div>
@@ -300,7 +301,7 @@ const TakeYourTest = () => {
                 <p>{formatTime(time)}</p>
               </div>
               <div className="col-3 active-Radio-Buttons attempted-Ques">
-                Attempted Questions: {activeRadioCount}/{numberOfQuestion}
+               &nbsp; Attempted Questions: {activeRadioCount}/{numberOfQuestion}
               </div>
             </div>
           </div>

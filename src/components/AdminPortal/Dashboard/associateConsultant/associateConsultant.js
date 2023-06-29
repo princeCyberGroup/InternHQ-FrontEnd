@@ -97,7 +97,7 @@ export default function AssociateConsultant(props) {
             </div>
             <div className=" col-4">
               <span
-                style={{ marginLeft: "9.375rem", cursor: "pointer" }}
+                style={{ marginLeft: "10.5rem", cursor: "pointer" }}
                 onClick={() => handleExpand(userData.intId)}
                 className="expand-arrow"
               >

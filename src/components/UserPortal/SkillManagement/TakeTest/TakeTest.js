@@ -6,6 +6,7 @@ import { ReactComponent as Completed } from "../../../../Assets/Testcompleted.sv
 import { ReactComponent as GoldStarOri } from "../../../../Assets/Star-Icon-gold-ori.svg";
 import { ReactComponent as SilverStarOri } from "../../../../Assets/Star-Icon-silver-ori.svg";
 import { ReactComponent as BronzeStarOri } from "../../../../Assets/Star-Icon-bronze-ori.svg";
+import { ReactComponent as SearchIcon } from "../../../../Assets/search.svg";
 // import logo from '../../../Assets/image 13.png';
 import "./TakeTest.css";
 import { BsClock } from "react-icons/bs";
@@ -166,7 +167,9 @@ const TakeTest = ({ test }) => {
           >
             <button className="btn-nav p-0">Advanced</button>
           </div>
-          <div className="search-bar" style={{ margin: "auto" }}>
+
+          <div className="d-flex align-items-center ps-1 takeTest-search-wrapper">
+            <SearchIcon />
             <input
               className="sea"
               type="text"
@@ -178,6 +181,18 @@ const TakeTest = ({ test }) => {
               }}
             />
           </div>
+          {/* <div className="search-bar" style={{ margin: "auto" }}>
+            <input
+              className="sea"
+              type="text"
+              value={searchFilterValue}
+              placeholder="Search"
+              onChange={(event) => {
+                event.preventDefault();
+                setSearchFilterValue(event.target.value);
+              }}
+            />
+          </div> */}
         </div>
         {isLoading ? (
           <div className="card-body  p-0">
@@ -318,7 +333,7 @@ const TakeTest = ({ test }) => {
                                       type="button"
                                       onClick={() => clickCont()}
                                       data-bs-dismiss="modal"
-                                      className="btn btn-primary"
+                                      className="btn btn-primary continuebtn"
                                     >
                                       Continue
                                     </button>

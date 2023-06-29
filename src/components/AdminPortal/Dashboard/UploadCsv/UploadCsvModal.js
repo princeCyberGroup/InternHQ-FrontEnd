@@ -2,7 +2,7 @@
 import React, { useState, useRef } from "react";
 import { ReactComponent as CloudImage } from "../../../../Assets/Cloud.svg";
 import { ReactComponent as CloseBtn } from "../../../../Assets/Close-admin.svg"
-import { ReactComponent as CloseUpload} from "../../../../Assets/close-upload.svg"
+import { ReactComponent as CloseUpload } from "../../../../Assets/close-upload.svg"
 import '../ManageSkillSet/Modals.css';
 import axios from "axios";
 
@@ -14,7 +14,7 @@ export const UploadCsv = () => {
 
     const handleCancelClick = (e) => {
         e.preventDefault();
-        
+
         setSelectedFile(null);
         setFile(null);
         handleRemoveFile()
@@ -101,12 +101,12 @@ export const UploadCsv = () => {
                         <div className="modal-header border-bottom-1">
                             <h5 className="modal-title modalheading-text" id="uploadCsvLabel">Upload CSV</h5>
                             <div className=""
-                                        onClick={(e)=>{ handleCancelClick(e)}}
-                                        data-bs-dismiss="modal" 
-                                        aria-label="Close"
-                                        ><CloseUpload /> 
-                             </div>
-                             
+                                onClick={(e) => { handleCancelClick(e) }}
+                                data-bs-dismiss="modal"
+                                aria-label="Close"
+                            ><CloseUpload />
+                            </div>
+
                         </div>
                         <div className="modal-body">
                             <form>
@@ -152,31 +152,38 @@ export const UploadCsv = () => {
                                     </div>
                                 </div>
                                 {file && <div>
-                                    <div 
-                                     className="d-flex align-items-center ps-1 ast-search-wrapper">
-                                    <div className="progress-indicator-status"> {file && (
-                                        <div style={{ marginLeft: "5.625rem", marginTop: "0.625rem", position: "relative" }} className="d-flex align-items-center">
-                                            <div >{file.name}</div>
+                                    <div
+                                        className="d-flex align-items-center ps-1 ast-search-wrapper">
+                                        <div className="progress-indicator-status"> {file && (
+                                            <div style={{ marginLeft: "5.625rem", marginTop: "0.625rem", position: "relative" }} className="d-flex align-items-center">
+                                                <div >{file.name}</div>
+
+                                            </div>
+                                        )}
 
                                         </div>
-                                    )}
-                                        
-                                    </div>
-                                    <div className=""
+                                        <div className=""
                                             onClick={() => { handleRemoveFile() }}><CloseBtn /> </div>
 
-                                        
+
                                     </div>
-                              
+
 
                                 </div>}
                             </form>
-                            <div className="saveCancel border-top-0 pb-0 row ">
+                            <div className="border-top-0 pb-0 row ">
                                 <div class="row mt-3 d-flex justify-content-end">
-                                    <button style={{ width: "8rem" }} data-bs-dismiss="modal"
+                                    <button className="btn " style={{
+                                        width: "6rem",
+                                        backgroundColor: "white",
+                                        color: "#28519E",
+                                        border: "1px solid #28519E",
+                                        borderRadius: "4px",
+                                    }}
+                                        data-bs-dismiss="modal"
                                         onClick={(e) =>
                                             handleCancelClick(e)}>Cancel</button>
-                                    <button style={{ width: "8rem", marginLeft: "0.625rem" }}
+                                    <button style={{ width: "6rem", marginLeft: "0.625rem" }}
                                         onClick={(e) => handleSaveClick(e)
                                         }
                                         data-bs-dismiss="modal">Save</button>

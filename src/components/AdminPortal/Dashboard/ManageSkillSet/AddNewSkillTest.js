@@ -278,15 +278,10 @@ export const AddNewSkillTest = () => {
 
                                         </div>
                                     )}
-                                        
                                     </div>
                                     <div className=""
                                             onClick={() => { handleRemoveFile() }}><CloseBtn /> </div>
-
-                                        
                                     </div>
-                              
-
                                 </div>}
                                 <div className="d-flex justify-content-between">
                                     <div>

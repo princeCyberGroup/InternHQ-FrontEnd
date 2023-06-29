@@ -21,7 +21,7 @@
 .insights-card {
     margin-top: 0.7rem;
     display: flex;
-    max-height: 43.3rem;
+    height: 43.3rem;
     flex-direction: column;
     /* height: 109vh; */
     /* height: 44rem; */

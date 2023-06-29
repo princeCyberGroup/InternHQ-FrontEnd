@@ -30,7 +30,7 @@ const SkillsAdded = () => {
       );
       const data = await response.json();
 
-      // setAllData(data.response);
+      setAllData(data.response);
       setIsLoading(false);
     } catch (error) {
       console.log(error);
@@ -104,8 +104,7 @@ const SkillsAdded = () => {
                     >
                       <div className="my-spacing">
                         {DataUsed.examScores[1] >= 8 ? (
-                          // <GoldStar />
-                          // <SilverStar />
+
                           <SilverStar style={{ fontSize: "3.125rem" }} />
                         ) : (
                           <EmptyStar />
