@@ -1,3 +1,12 @@
+.manage-total-test{
+  width: fit-content;
+}
+.addNew-manage{
+  width: fit-content;
+  /* margin: 0rem; */
+  padding: 0rem;
+  
+}
 .add-new-skill-test {
 
   margin-top: 0.625rem; /* 10px / 16px */
@@ -6,8 +15,8 @@
   flex-direction: row;
   justify-content: center;
   align-items: center;
-  padding: 1.25rem 1rem; /* 20px / 16px, 16px / 16px */
-  width: 11.861rem; /* 189.77px / 16px */
+   /* 20px / 16px, 16px / 16px */
+  width: 12.5rem; /* 189.77px / 16px */
   height: 3.688rem; /* 59px / 16px */
   color: white;
   background: #28519e;
@@ -16,26 +25,30 @@
 
 }
 
+
 .beg-int-advance {
   margin-top: 0.625rem; /* 10px / 16px */
-  margin-left: 0.75rem;
   display: flex;
+  margin-left: 1rem;
   flex-direction: row;
   align-items: center;
-  justify-content: center;
+  justify-content: space-evenly;
   height: 3.688rem; /* 59px / 16px */
-  width: 36.375rem;
+   width: 39.6rem;
   background: #ffffff;
   box-shadow: 0px 4px 1.5rem rgba(40, 52, 73, 0.15);
   border-radius: 4px;
-  flex: none;
-  order: 1;
-  flex-grow: 1;
+ 
+ 
+}
+.insideContent-totalTest{
+  justify-content: center;
 }
 
 .inside-manage-skills-number {
-  margin-left: 1.25rem; /* 20px / 16px */
-  width: 1.875rem; /* 30px / 16px */
+   /* 20px / 16px */
+  width: fit-content; /* 30px / 16px */
+  padding: 0%;
   height: 1.875rem; 
   font-family: "Roboto";
   font-style: normal;
@@ -49,7 +62,7 @@
 .inside-manage-skills-text {
   margin-top: 0.313rem; /* 5px / 16px */
   margin-left: 0;
-  margin-right: 6.875rem; /* 110px / 16px */
+  margin-right:rem; /* 110px / 16px */
   width: 4rem; /* 64px / 16px */
   height: 1.25rem;
   font-family: "Roboto";

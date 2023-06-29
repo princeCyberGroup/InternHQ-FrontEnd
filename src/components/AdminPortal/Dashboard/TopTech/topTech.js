@@ -129,6 +129,7 @@ const PieChart = () => {
   };
 
   return (
+    <div>
     <div className="container mt-4" style={{ width: "25rem", margin: "9px" }}>
       <div className="row">
         <div className="col">
@@ -157,6 +158,7 @@ const PieChart = () => {
           <Pie data={data} options={options} />
         </div>
       </div>
+    </div>
     </div>
   );
 };

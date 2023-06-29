@@ -75,17 +75,13 @@ margin-top: 0.6rem;
 }
 .associate-card {
 
-  /* ...height of associate card change  */
 height: 23.6rem;
+width: 27rem;
 overflow: auto;
-/* height: inherit; */
-/* border: 1px solid  black; */
-margin-left: 0.625rem;
 display: flex;
 flex-direction: column;
 align-items: center;
-padding: 1rem;
-gap: 1rem;
+margin-left: 0.16rem;
 isolation: isolate;
 background: #ffffff;
 /* Shadow */

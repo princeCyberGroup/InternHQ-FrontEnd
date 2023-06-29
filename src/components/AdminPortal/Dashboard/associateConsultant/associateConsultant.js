@@ -159,18 +159,12 @@ export default function AssociateConsultant(props) {
 
   return (
     <>
-      <div 
-      >
+      <div>
         <div className="about-associate" style={{ marginLeft: "0.938rem" }}>
           Associate Consultant
         </div>
 
-        <div
-
-
-          className=" associate-card  "
-
-        >
+        <div className="associate-card">
           <div className="d-flex align-items-center ps-1 associate-search-wrapper">
             <SearchIcon />
             <input

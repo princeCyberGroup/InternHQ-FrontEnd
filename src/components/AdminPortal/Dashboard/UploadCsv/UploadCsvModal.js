@@ -151,23 +151,25 @@ export const UploadCsv = () => {
 
                                     </div>
                                 </div>
-                                <div className="d-flex align-items-center ps-1 ast-search-wrapper">
+                                {file && <div>
+                                    <div 
+                                     className="d-flex align-items-center ps-1 ast-search-wrapper">
                                     <div className="progress-indicator-status"> {file && (
                                         <div style={{ marginLeft: "5.625rem", marginTop: "0.625rem", position: "relative" }} className="d-flex align-items-center">
                                             <div >{file.name}</div>
 
                                         </div>
                                     )}
-                                        {progress > 0 && (
-                                            <progress style={{ marginLeft: "2.813rem", marginTop: "0.313rem" }} max="100" value={progress}></progress>
-
-                                        )}
+                                        
                                     </div>
                                     <div className=""
                                             onClick={() => { handleRemoveFile() }}><CloseBtn /> </div>
 
                                         
                                     </div>
+                              
+
+                                </div>}
                             </form>
                             <div className="saveCancel border-top-0 pb-0 row ">
                                 <div class="row mt-3 d-flex justify-content-end">

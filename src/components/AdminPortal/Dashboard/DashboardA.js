@@ -66,7 +66,7 @@ const DashboardA = () => {
                 </div>
               </div>
               <ManageSkillSet data={StatusData} />
-              <div className="row main-div d-flex">
+              <div className="row manage-total-test d-flex">
                 <div className="col-6"style={{ padding: 0 }}>
                   <TopTech />
                 </div>

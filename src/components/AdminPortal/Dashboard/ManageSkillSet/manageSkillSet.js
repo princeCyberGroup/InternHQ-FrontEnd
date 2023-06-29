@@ -16,44 +16,44 @@ export default function ManageSkillSet({ data }) {
         </Link>
         <div className="about-div-total-skill">Total Test Taken</div>
       </div>
-      <div className="row" style={{marginRight:"0.5rem"}} >
+      <div className="row addNew-manage " >
         <div
-          className="add-new-skill-test col-4"
+          className="add-new-skill-test col-5"
           data-bs-toggle="modal"
           data-bs-target="#newSkillModal"
         >
           <Add /> &nbsp; Add New Skill Test
         </div>
 
-        <div className="beg-int-advance col-8 d-flex ">
-          <div className="col-4">
+        <div className="beg-int-advance col-7 d-flex ">
+          <div className="col-4 insideContent-totalTest">
             <div className="row inside-manage-skills justify-content-center">
-              <div className="col inside-manage-skills-number">
+              <div className="col-2 inside-manage-skills-number">
                 {data.beginner}
               </div>
-              <div className="col inside-manage-skills-text">Beginner</div>
+              <div className="col-10 inside-manage-skills-text">Beginner</div>
             </div>
           </div>
           <div
             style={{ width: 0, height: "1.375rem", border: "1px solid black" }}
           ></div>
-          <div className="col-4">
+          <div className="col-4 insideContent-totalTest">
             <div className="row inside-manage-skills justify-content-center">
-              <div className="col inside-manage-skills-number">
+              <div className="col-2 inside-manage-skills-number">
                 {data.intermediate}
               </div>
-              <div className="col inside-manage-skills-text">Intermediate</div>
+              <div className="col-10 inside-manage-skills-text">Intermediate</div>
             </div>
           </div>
           <div
-            style={{ width: 0, height: "1.375rem", border: "1px solid black" }}
+            style={{ width: 0, height: "1.375rem", border: "1px solid black" , marginLeft:"0.5rem" }}
           ></div>
-          <div className="col-4">
+          <div className="col-4 insideContent-totalTest">
             <div className="row inside-manage-skills justify-content-center">
-              <div className="col inside-manage-skills-number">
+              <div className="col-2 inside-manage-skills-number">
                 {data.advanced}
               </div>
-              <div className="col inside-manage-skills-text">Advanced</div>
+              <div className="col-10 inside-manage-skills-text">Advanced</div>
             </div>
           </div>
         </div>
