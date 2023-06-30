@@ -6,7 +6,7 @@ const ProjectDetail = ({ data, indexNumber }) => {
       <h5 className="project-detail-name">{data[indexNumber].projectNames}</h5>
       <p className="created-at">{data[indexNumber].createdAt}</p>
       <p className="project-detail-text">{data[indexNumber].projectText}</p>
-      <p className="project-detail-technology-used mb-0">Technology Used:</p>
+      <p className="project-detail-technology-used mb-2">Technology Used:</p>
 
       <div className="project-detail-technology-badges">
         {data[indexNumber].technology?.map && data[indexNumber].technology.map((tech) => {
@@ -28,14 +28,14 @@ const ProjectDetail = ({ data, indexNumber }) => {
           ? data[indexNumber].hostedLink
           : "No Link Provided"}
       </p>
-      <p className="members fw-bold">Members:</p>
-            <div className="project-detail-technology-badges">
+      <p className="members fw-bold mb-2">Members:</p>
+            {/* <div className="project-detail-technology-badges">
                 {data[indexNumber].technologyNames && data[indexNumber].technologyNames.map((tech) => {
                     if (tech != null){
                     return <p className="technology-badge me-1"> {tech} </p>
                     }
                 })}
-            </div>
+            </div> */}
       <div className="members-name project-members text-center">
         {data[indexNumber].members && data[indexNumber].members?.length > 4 ? (
           data[indexNumber].members.map((curElem, index) => {
