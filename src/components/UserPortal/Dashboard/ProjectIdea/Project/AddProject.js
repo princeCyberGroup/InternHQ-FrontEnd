@@ -94,7 +94,7 @@ const AddProject = () => {
       setError(true);
     } else {
       axios
-        .post("https://cg-interns-hq.azurewebsites.net/Project", {
+        .post(process.env.REACT_APP_API_URL+"/api/v2/Project", {
           projName,
           projDescription,
           userId,

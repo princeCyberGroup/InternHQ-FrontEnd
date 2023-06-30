@@ -76,7 +76,7 @@ const ViewAllIdeas = () => {
     var parsedObject = JSON.parse(storedObject);
     var userId = parsedObject.userId;
     await axios
-      .post("https://cg-interns-hq.azurewebsites.net/projectIdea", {
+      .post(process.env.REACT_APP_API_URL+"/api/v2/projectIdea", {
         projName,
         projDescription,
         userId,
@@ -100,7 +100,13 @@ const ViewAllIdeas = () => {
       var parsedObject = JSON.parse(storedObject);
       var userId = parsedObject.userId;
     axios
-      .get(`https://cg-interns-hq.azurewebsites.net/getProjectIdea?userId=${userId}`)
+      .get(process.env.REACT_APP_API_URL+`/api/v2/getProjectIdea?userId=${userId}`,
+      {
+        headers: {
+          Authorization:`Bearer ${JSON.parse(localStorage.getItem('userData'))['token']}`,
+        },
+      }
+      )
       .then((response) => {
         setIdea(response.data.response);
       })

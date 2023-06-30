@@ -35,7 +35,7 @@ const SignUpOtpScreen = () => {
     const email = localStorage.getItem("email");
     axios
       .post(
-        "https://cg-interns-hq.azurewebsites.net/verifyOtp",
+        process.env.REACT_APP_API_URL+"/api/v2/verifyOtp",
         { email, otp },
         {
           headers: {

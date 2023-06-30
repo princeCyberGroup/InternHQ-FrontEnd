@@ -44,7 +44,7 @@ const SignUpScreen = () => {
     e.preventDefault();
     setIsLoading(true);
     axios
-      .post("https://cg-interns-hq.azurewebsites.net/internSignUp", {
+      .post(process.env.REACT_APP_API_URL+"/api/v2/internSignUp", {
         email,
         password,
       })

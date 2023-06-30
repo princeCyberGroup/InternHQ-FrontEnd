@@ -18,7 +18,12 @@ const MentorComponent = () => {
     try {
       // Make an API request to fetch mentors data
       const response = await fetch(
-        "https://cg-interns-hq.azurewebsites.net/getMentorDetails"
+        process.env.REACT_APP_API_URL+"/api/v2/getMentorDetails",
+        {
+          headers: {
+            Authorization:`Bearer ${JSON.parse(localStorage.getItem('userData'))['token']}`,
+          },
+        }
       );
 
       const data = await response.json();

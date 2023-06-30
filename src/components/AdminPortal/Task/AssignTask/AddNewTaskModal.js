@@ -69,7 +69,7 @@ export const AddNewTask = ({ onAddClose }) => {
       alert("Please fill out the necessary fields");
     } else {
       await axios
-        .post("https://cg-interns-hq.azurewebsites.net/addNewTask", {
+        .post(process.env.REACT_APP_API_URL+"/api/v2/addNewTask", {
           taskName,
 
           taskDescription,
