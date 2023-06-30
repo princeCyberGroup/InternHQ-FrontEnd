@@ -86,7 +86,6 @@ const AddNewIdea = () => {
     var userId = parsedObject.userId;
     if (error) {
       alert("Please fill in the required details");
-
     } else {
       await axios
         .post("https://cg-interns-hq.azurewebsites.net/projectIdea", {
