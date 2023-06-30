@@ -3,8 +3,8 @@ import axios from "axios";
 import "../ProjectIdea/TechDropDown.css"
 const TechDropDown = (props) => {
   const [counter, setCounter] = useState(1);
-  const [technologyNames, setTechnolotyNames] = useState([]);
-  const [techNames, setTechNames] = useState({});
+  const [technologyNames, setTechnologyNames] = useState([]);
+  // const [props.techNames, setprops.techNames] = useState({});
   const [allTech, setAllTech] = useState();
 
   useEffect(() => {
@@ -36,7 +36,7 @@ const TechDropDown = (props) => {
     if (isChecked && !technologyNames.includes(value)) {
       technologyNames.push(value);
       technologyNames.forEach((curElem, index) => {
-        techNames[`tech${index + 1}`] = curElem;
+        props.techNames[`tech${index + 1}`] = curElem;
       });
       setCounter((prevCounter) => prevCounter + 1);
     } else {
@@ -45,16 +45,17 @@ const TechDropDown = (props) => {
         technologyNames.splice(index, 1);
       }
 
-      const keys = Object.keys(techNames);
+      const keys = Object.keys(props.techNames);
       keys.forEach((curElem, index) => {
-        if (techNames[`tech${index + 1}`] === value) {
-          const t = delete techNames[`tech${index + 1}`];
+        if (props.techNames[`tech${index + 1}`] === value) {
+          const t = delete props.techNames[`tech${index + 1}`];
           setCounter((prevCounter) => prevCounter - 1);
           // console.log(t);
         }
       });
     }
-    props.techDataComingChild(techNames);
+    props.techDataComingChild(props.techNames);
+   
   };
   return (
     <div className="drop-tech">

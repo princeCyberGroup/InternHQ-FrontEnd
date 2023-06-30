@@ -1,6 +1,7 @@
 import React, { useState,useContext } from "react";
 import { ReactComponent as Arrow } from "../../../../../Assets/arrow_forward_iosarrow.svg";
 import { UserContext } from "../../../../../Context/Context";
+import "./DetailsLeft.css";
 
 const DetailsLeft = (props) => {
 
@@ -29,6 +30,9 @@ const DetailsLeft = (props) => {
                 setIsBorder(true);
               }}
             >
+              <div className="mentor-assigned-task-badges">
+               <p className="mentor-assigned-badge mb-2"> Mentor Assigned</p>
+              </div>
               <div className="d-flex justify-content-between w-100"         >
                 <h5 className="project-names">{user.projectNames}</h5>
                 <span className="click-arrow">

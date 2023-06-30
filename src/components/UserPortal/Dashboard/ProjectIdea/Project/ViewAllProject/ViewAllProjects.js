@@ -150,7 +150,7 @@ const ViewAllProjects = () => {
     //   })
     //   .catch((error) => {
     //     console.error("Error fetching data from another API:", error);
-    //   });
+      // });
   }, []);
 
   useEffect(() => {

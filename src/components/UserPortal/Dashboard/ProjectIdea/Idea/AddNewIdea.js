@@ -20,6 +20,7 @@ const AddNewIdea = () => {
   const [projNameError, setProjNameError] = useState("");
   const [projDescriptionError, setProjDescriptionError] = useState("");
   const [error, setError] = useState(true);
+  const [techNames, seTechNames] = useState({});
   const handleClickClear = (event) => {
     event.preventDefault();
     setTextInput("");
@@ -29,14 +30,17 @@ const AddNewIdea = () => {
     setProjNameError("");
     setProjDescriptionError("");
     setTech({});
+    seTechNames({});
   };
   const handleChangeProjNameError = (event) => {
     event.preventDefault();
     const name = event.target.value;
     setProjName(name);
     if (!name) {
+      setError(true);
       setProjNameError("Project Name is required");
     } else {
+      setError(false);
       setProjNameError("");
     }
   };
@@ -46,9 +50,11 @@ const AddNewIdea = () => {
     const description = event.target.value;
     setProjDescription(description);
     if (!description) {
+      setError(true);
       setProjDescriptionError("Project Description is required");
     } else {
       setProjDescriptionError("");
+      setError(false);
     }
   };
   const truncate = (str, maxLength) => {
@@ -78,9 +84,9 @@ const AddNewIdea = () => {
     var storedObject = localStorage.getItem("userData");
     var parsedObject = JSON.parse(storedObject);
     var userId = parsedObject.userId;
-    if (projName.length === 0 && projDescription.length < 2 && tech) {
+    if (error) {
       alert("Please fill in the required details");
-      setError(true);
+
     } else {
       await axios
         .post("https://cg-interns-hq.azurewebsites.net/projectIdea", {
@@ -100,7 +106,7 @@ const AddNewIdea = () => {
       setProjName("");
       setProjDescription("");
       setDropDown(false);
-      setError(false);
+      // setError(true);
       setTech({});
     }
   };
@@ -183,8 +189,7 @@ const AddNewIdea = () => {
           <div
             className="add-new-idea pt-2"
             data-bs-toggle="modal"
-            data-bs-target="#exampleModal"
-            data-bs-whatever="@mdo"
+            data-bs-target="#myIdeaModal"
           >
             <p className="project-p mb-0 fw-bold">
               <span>+</span> Add New Idea
@@ -194,9 +199,9 @@ const AddNewIdea = () => {
       </div>
       <div
         className="modal fade"
-        id="exampleModal"
+        id="myIdeaModal"
         tabIndex="-1"
-        aria-labelledby="exampleModalLabel"
+        aria-labelledby="myIdeaModalLabel"
         aria-hidden="true"
       >
         <div className="modal-dialog">
@@ -204,7 +209,7 @@ const AddNewIdea = () => {
             <div className="modal-header">
               <h1
                 className="modal-title fs-5 add-project-wrapper"
-                id="exampleModalLabel"
+                id="myIdeaModalLabel"
               >
                 Add your Project Idea
               </h1>
@@ -302,6 +307,8 @@ const AddNewIdea = () => {
                       >
                         <TechDropDown
                           techDataComingChild={techDataComingFrmChild}
+                          seTechNames={seTechNames}
+                          techNames={techNames}
                         />
                       </ul>
                     </div>
@@ -338,7 +345,9 @@ const AddNewIdea = () => {
               <button
                 type="button"
                 className="btn save-button"
-                data-bs-dismiss={error ? "" : "modal"}
+                data-bs-target="#myIdeaModal"
+                data-bs-dismiss={!error ? 'modal' : ''}
+                
                 onClick={(e) => {
                   handleSubmit(e);
                 }}
