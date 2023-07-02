@@ -54,7 +54,7 @@ const CreateNewPasswordScreen = () => {
 
     await axios
       .post(
-        "https://cg-interns-hq.azurewebsites.net/changePassword",
+        process.env.REACT_APP_API_URL+"/api/v2/changePassword",
         {
           newPassword,
           confirmPassword,

@@ -9,6 +9,7 @@ const MentorAssignedAlerts = (props) => {
   const [mentorTask, setMentorTask] = useState([]);
   const [notification, setNotification] = useState(false);
 
+
   props.func(mentorTask);
 
   const handleNotificationClick = () => {
@@ -29,7 +30,12 @@ const MentorAssignedAlerts = (props) => {
 
   const fetchData = async () => {
     await fetch(
-      `https://cg-interns-hq.azurewebsites.net/getAssignedNotification?userId=${userId}`
+      process.env.REACT_APP_API_URL+`/api/v2/getAssignedNotification?userId=${userId}`,
+      {
+        headers: {
+          Authorization:`Bearer ${JSON.parse(localStorage.getItem('userData'))['token']}`,
+        },
+      }
     )
       .then((response) => {
         return response.json();
@@ -37,7 +43,7 @@ const MentorAssignedAlerts = (props) => {
       .then(async (data) => {
         setMentorTask(data.response);
       })
-      .error((e) => {
+      .catch((e) => {
         console.log(e);
       });
   };
@@ -118,11 +124,12 @@ const MentorAssignedAlerts = (props) => {
                 className="card-body pt-0 pb-0"
                 style={{ height: "20rem", overflow: "scroll" }}
               >
-                {mentorTask.map((data) => {
+                {mentorTask?.map((data, key) => {
                   return (
                     <div
                       className="notification-wrapper px-0"
                       style={{ width: "18.9rem", alignItems: "center" }}
+                      key={key}
                     >
                       <div
                         className=""
@@ -133,8 +140,8 @@ const MentorAssignedAlerts = (props) => {
                         }}
                       >
                         <div className="background-set">
-                          {data.firstName.toUpperCase().slice(0, 1)}
-                          {data.lastName.toUpperCase().slice(0, 1)}
+                          {data.firstName?.toUpperCase().slice(0, 1)}
+                          {data.lastName?.toUpperCase().slice(0, 1)}
                         </div>
                       </div>
                       <div className="text-wrapper ps-0 ">
@@ -142,7 +149,7 @@ const MentorAssignedAlerts = (props) => {
                           <b>
                             {data.firstName} {data.lastName}
                           </b>{" "}
-                          has assigned you <b>{data.taskDescription}</b> task
+                          has assigned you <b>{data.taskName}</b> task
                         </p>
                       </div>
                     </div>

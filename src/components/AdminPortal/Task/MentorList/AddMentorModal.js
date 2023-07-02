@@ -101,7 +101,7 @@ export const AddMentorModal = ({ isOpen, onClose, onAddMentor }) => {
     else{
   
     try {
-      await axios.post("https://cg-interns-hq.azurewebsites.net/postMentorDetails", {
+      await axios.post(process.env.REACT_APP_API_URL+"/api/v2/postMentorDetails", {
         mentorName,
         emailId,
         imageUrl,

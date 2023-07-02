@@ -48,8 +48,8 @@
     /* gap: 16px; */
 
     /* position: absolute; */
-    width: 870px;
-    /* height: 730px; */
+    width: 862px;
+    height: 632px;
     /* left: 55px;
     top: 164px; */
     /* margin-top: 5px;
@@ -66,12 +66,11 @@
     margin-top: 16px;
     width: 860px;
     /* margin-left: 100px; */
-    margin-right: 200px;
     max-height: 3.188rem;
     display: flex;
     flex: 1;
     background-color: #FFFFFF;
-    border-bottom: 2px solid #E9ECEB;
+    border-bottom: 1px solid #E9ECEB;
 }
 
 .nav-btn {
@@ -245,7 +244,7 @@
 .main-card-inside{
  /* box-shadow: 0px 4px 10px rgba(66, 76, 97, 0.15);    */
  /* margin: 0 0 1rem 0; */
- height: calc(100vh - 30vh);
+ max-height: 557px;
  overflow-y: scroll;
 }
 

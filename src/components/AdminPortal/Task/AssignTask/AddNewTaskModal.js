@@ -24,7 +24,7 @@ export const AddNewTask = ({ onAddClose }) => {
   const [selectedTechIds, setSelectedTechIds] = useState([]);
   const [technologyNames, setTechnologyNames] = useState([]);
 
- const handleClickClear = (e) => {
+  const handleClickClear = (e) => {
     e.preventDefault();
 
     onAddClose();
@@ -47,7 +47,6 @@ export const AddNewTask = ({ onAddClose }) => {
     checkboxes.forEach((checkbox) => {
       checkbox.checked = false;
     });
-
   };
   const techDataComingFrmChild = (data) => {
     setTech(data);
@@ -69,10 +68,8 @@ export const AddNewTask = ({ onAddClose }) => {
     if (error) {
       alert("Please fill out the necessary fields");
     } else {
-
-
       await axios
-        .post("https://cg-interns-hq.azurewebsites.net/addNewTask", {
+        .post(process.env.REACT_APP_API_URL+"/api/v2/addNewTask", {
           taskName,
 
           taskDescription,
@@ -115,16 +112,18 @@ export const AddNewTask = ({ onAddClose }) => {
     setTaskName(e.target.value);
     if (taskName.length === 0) {
       setError(true);
+    } else {
+      setError(false);
     }
-    else{setError(false)}
   };
 
   const handleDescription = (e) => {
     setTaskDescription(e.target.value);
-    if (taskDescription.length < 2) {
+    if (taskDescription.length < 2 || taskDescription.length > 500) {
       setError(true);
+    } else {
+      setError(false);
     }
-    else{setError(false)}
   };
   const handleAssignedTo = (e) => {
     setTaskUsers(e.target.value);
@@ -137,15 +136,18 @@ export const AddNewTask = ({ onAddClose }) => {
         id="addTaskModal"
         data-bs-backdrop="static"
         tabindex="-1"
-        data-bs-keyboard="false" 
-        aria-labelledby="staticBackdropLabel" 
+        data-bs-keyboard="false"
+        aria-labelledby="staticBackdropLabel"
         aria-hidden="true"
       >
         <div className="modal-dialog">
           <div className="modal-content">
             <div className="modal-header border-bottom-1">
-              <h5 className="modal-title modalheading-text" id="skillModalLabel">
-              Add New Task
+              <h5
+                className="modal-title modalheading-text"
+                id="skillModalLabel"
+              >
+                Add New Task
               </h5>
 
               <button
@@ -183,6 +185,11 @@ export const AddNewTask = ({ onAddClose }) => {
                     className="col-form-label form-title-names"
                   >
                     Description<span style={{ color: "red" }}>*</span>
+                    {taskDescription.length > 500 && (
+                    <span style={{ color: "red" }}>
+                      Exceeded maximum word limit of 500
+                    </span>
+                  )}
                   </label>
 
                   <textarea
@@ -193,6 +200,7 @@ export const AddNewTask = ({ onAddClose }) => {
                     value={taskDescription}
                     onChange={(e) => handleDescription(e)}
                   ></textarea>
+                  
                 </div>
 
                 <div className="mb-3">
@@ -313,16 +321,11 @@ export const AddNewTask = ({ onAddClose }) => {
               <button
                 type="button"
                 className="btn modal-save-button"
-                data-bs-dismiss={!error ? 'modal': ''  }
+                data-bs-dismiss={!error ? "modal" : ""}
                 data-bs-target="#addTaskModal"
                 onClick={(e) => handleSubmit(e)}
               >
-                <span
-                  className="save-text-field"
-                  
-                >
-                  Save
-                </span>
+                <span className="save-text-field">Save</span>
               </button>
             </div>
           </div>
