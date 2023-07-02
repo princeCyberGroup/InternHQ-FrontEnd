@@ -21,7 +21,7 @@ const Task = () => {
               <AssignTask />
             </div>
             <div
-              className=" col-md-4 p-0 skill-added-card"
+              className=" col-md-4 p-0 "
               // style={{ height: "100vh" }}
             >
               <MentorList />

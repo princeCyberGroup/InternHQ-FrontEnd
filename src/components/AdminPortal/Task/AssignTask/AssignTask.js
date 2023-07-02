@@ -43,7 +43,12 @@ setTaskName(editedTask?.taskName)
   useEffect(() => {
     // Fetch tasks from the API
     axios
-      .get("https://cg-interns-hq.azurewebsites.net/getAssignedTask")
+      .get(process.env.REACT_APP_API_URL+"/api/v2/getAssignedTask",
+      {
+        headers: {
+          Authorization:`Bearer ${JSON.parse(localStorage.getItem('userData'))['token']}`,
+        },
+      })
       .then((response) => {
         setTasks(response.data.response);
       })

@@ -103,7 +103,7 @@ export const AddNewSkillTest = () => {
     formData.append("file", file);
     try {
       const response = await axios.post(
-        `https://cg-interns-hq.azurewebsites.net/questions?technology=${technology}&level=${level}&examName=${name}&noOfQuestion=${question}&examDuration=${duration}`,
+        process.env.REACT_APP_API_URL+`/api/v2/questions?technology=${technology}&level=${level}&examName=${name}&noOfQuestion=${question}&examDuration=${duration}`,
         formData,
         {
           headers: {

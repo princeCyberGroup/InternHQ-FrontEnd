@@ -39,7 +39,12 @@ const TakeTest = ({ test }) => {
   const fetchTests = async (examId) => {
     try {
       const response = await fetch(
-        "https://cg-interns-hq.azurewebsites.net/getAllExam"
+        process.env.REACT_APP_API_URL+"/api/v2/getAllExam",
+        {
+          headers: {
+            Authorization:`Bearer ${JSON.parse(localStorage.getItem('userData'))['token']}`,
+          },
+        }
       );
       const data = await response.json();
       setAllData(data);
