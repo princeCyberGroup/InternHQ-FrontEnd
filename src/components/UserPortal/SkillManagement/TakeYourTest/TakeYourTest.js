@@ -185,7 +185,7 @@ const TakeYourTest = () => {
           }
           );
           submitQuesData = await response.json();
-          setScore(submitQuesData.scorePercentage);
+          setScore(Math.floor(submitQuesData.scorePercentage));
         } catch (error) {
       console.log(error);
     }
