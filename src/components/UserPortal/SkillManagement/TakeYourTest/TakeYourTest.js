@@ -28,53 +28,53 @@ const TakeYourTest = () => {
   const clickHandler = () => {
     navigate("/skill-Management");
     setFullscreen(false);
-    exitFullscreen();
+    // exitFullscreen();
   };
 
-  useEffect(() => {
-    if (fullscreen) {
-      enterFullscreen();
-      window.addEventListener("keydown", handleKeyDown);
-    } else {
-      exitFullscreen();
-      window.removeEventListener("keydown", handleKeyDown);
-    }
-  }, [fullscreen]);
+  // useEffect(() => {
+  //   if (fullscreen) {
+  //     enterFullscreen();
+  //     window.addEventListener("keydown", handleKeyDown);
+  //   } else {
+  //     exitFullscreen();
+  //     window.removeEventListener("keydown", handleKeyDown);
+  //   }
+  // }, [fullscreen]);
 
-  const enterFullscreen = () => {
-    const element = document.documentElement;
-    if (element.requestFullscreen) {
-      element.requestFullscreen();
-    } else if (element.mozRequestFullScreen) {
-      element.mozRequestFullScreen();
-    } else if (element.webkitRequestFullscreen) {
-      element.webkitRequestFullscreen();
-    } else if (element.msRequestFullscreen) {
-      element.msRequestFullscreen();
-    }
-  };
+  // const enterFullscreen = () => {
+  //   const element = document.documentElement;
+  //   if (element.requestFullscreen) {
+  //     element.requestFullscreen();
+  //   } else if (element.mozRequestFullScreen) {
+  //     element.mozRequestFullScreen();
+  //   } else if (element.webkitRequestFullscreen) {
+  //     element.webkitRequestFullscreen();
+  //   } else if (element.msRequestFullscreen) {
+  //     element.msRequestFullscreen();
+  //   }
+  // };
 
-  const exitFullscreen = () => {
-    if (document.exitFullscreen) {
-      document.exitFullscreen();
-    } else if (document.mozCancelFullScreen) {
-      document.mozCancelFullScreen();
-    } else if (document.webkitExitFullscreen) {
-      document.webkitExitFullscreen();
-    } else if (document.msExitFullscreen) {
-      document.msExitFullscreen();
-    }
-    console.log("is this working after escaping");
-  };
+  // const exitFullscreen = () => {
+  //   if (document.exitFullscreen) {
+  //     document.exitFullscreen();
+  //   } else if (document.mozCancelFullScreen) {
+  //     document.mozCancelFullScreen();
+  //   } else if (document.webkitExitFullscreen) {
+  //     document.webkitExitFullscreen();
+  //   } else if (document.msExitFullscreen) {
+  //     document.msExitFullscreen();
+  //   }
+  //   console.log("is this working after escaping");
+  // };
 
 
-  const handleKeyDown = (event) => {
-    event.preventDefault();
+  // const handleKeyDown = (event) => {
+  //   event.preventDefault();
     
-    if (event.key === "Escape" || event.key === "F11") {
-      event.disabled = true;
-    }
-  };
+  //   if (event.key === "Escape" || event.key === "F11") {
+  //     event.disabled = true;
+  //   }
+  // };
 
   const [time, setTime] = useState(0);
   let timer;
@@ -264,7 +264,7 @@ const TakeYourTest = () => {
                   type="button"
                   onClick={() => {
                     setFullscreen(false);
-                    exitFullscreen();
+                    // exitFullscreen();
                     submitTest();
                     clickHandler();
                   }}
@@ -284,14 +284,12 @@ const TakeYourTest = () => {
   return (
     <>
       <div className="resp">
-        <div className="container-fluid ">
-          <div className="row"></div>
           <div className="row testhHeading-and-Timer-Div">
             <div className="col-3">
               <div className="main-heading">
                 <p> Take The Test </p>
               </div>
-              <div className="quiz-description mx-5 ">
+              <div className="quiz-description ">
                 {examName} &nbsp; <DotTYT/> &nbsp; {examDuration} mins &nbsp; <DotTYT/> &nbsp;
                 {numberOfQuestion} Questions
               </div>
@@ -305,13 +303,10 @@ const TakeYourTest = () => {
               </div>
             </div>
           </div>
-          <div className="ques.card ">
-            <div className="card insidecard" style={{ width: "76.25rem" }}>
+            <div className="card insidecard" >
               {fullscreen && !submitted && <div> {renderQuestions()} </div>}
             </div>
-          </div>
         </div>
-      </div>
     </>
   );
 };

@@ -1,8 +1,9 @@
 import React from "react";
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from "chart.js";
 import { Pie } from "react-chartjs-2";
+import PieChartData from "./PieChartData";
 import "../TopTech/topTech.css";
-import { useEffect, useState } from "react";
+import {useEffect, useState } from "react";
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 export const data = {
@@ -19,7 +20,7 @@ export const data = {
 };
 
 const PieChart = () => {
-  const [apiData, setApiData] = useState([]);
+  const [apiData , setApiData] =useState([]);
   useEffect(() => {
     fetchData();
   }, []);
@@ -30,40 +31,42 @@ const PieChart = () => {
         `https://cg-interns-hq.azurewebsites.net/getTop5Tech`
       );
       const rsp = await response.json();
-      setApiData(rsp.response);
-      console.log(apiData);
+      setApiData(rsp);
+      console.log(rsp);
     } catch (e) {
       console.log(e);
     }
   };
   const calculateTechPercentage = (data) => {
-    // const totalCount = data.length;
-    // const techCount = {};
+    const techCount = {};
+    const totalCount = data.length;
 
-    // data.forEach((item) => {
-    //   const techName = item.techName;
-    //   const lowerCaseTechName = techName.toLowerCase();
-    //   techCount[lowerCaseTechName] = (techCount[lowerCaseTechName] || 0) + 1;
-    // });
+    data.forEach((item) => {
+      const techName = item.techName;
+      const lowerCaseTechName = techName.toLowerCase();
+      techCount[lowerCaseTechName] = (techCount[lowerCaseTechName] || 0) + 1;
+    });
 
-    let techPercentage = {};
+    const techPercentage = {};
 
-    for (const ind in data) {
-      const count = data[ind].techCount;
-      const percentage = (count / 16) * 100;
-      techPercentage[data[ind].techName.toLowerCase()] = percentage.toFixed(2) + "%";
+    for (const techName in techCount) {
+      const count = techCount[techName];
+      const percentage = (count / totalCount) * 100;
+      techPercentage[techName] = percentage.toFixed(2) + "%";
     }
+
     return techPercentage;
   };
 
   // Calculate the occurrence of each techName in lowercase
-  const techNameOccurrences = apiData.reduce((accumulator, item) => {
+  const techNameOccurrences = PieChartData.reduce((accumulator, item) => {
     const { techName } = item;
     const lowerCaseTechName = techName.toLowerCase();
     accumulator[lowerCaseTechName] = (accumulator[lowerCaseTechName] || 0) + 1;
     return accumulator;
   }, {});
-  const techPercentages = calculateTechPercentage(apiData);
+  const techPercentages = calculateTechPercentage(PieChartData);
+
   // Populate the labels and data arrays based on techName occurrences
   data.labels = Object.keys(techNameOccurrences).map(
     (techName) => techName.charAt(0).toUpperCase() + techName.slice(1)
@@ -79,21 +82,13 @@ const PieChart = () => {
           boxWidth: 17,
           boxHeight: 17,
 
-
-
-
           generateLabels: (chart) => {
-            console.log("chart", chart.data);
             const data = chart.data;
             if (data.labels.length && data.datasets.length) {
-
-
               return data.labels.map((label, i) => {
                 const dataset = data.datasets[0];
                 const percentage = techPercentages[label.toLowerCase()];
                 const value = dataset.data[i];
-
-
                 return {
                   text: `${label} (${percentage})`,
                   fontColor: "#343435",
@@ -108,29 +103,18 @@ const PieChart = () => {
                   strokeStyle: "#fff",
                   pointStyle: dataset.pointStyle,
                   rotation: dataset.rotation,
-                  textDecoration: 'none',
                 };
-
-
               });
             }
             return [];
-          }
-
-
-
-
-
-
-          
+          },
         },
       },
     },
   };
 
   return (
-    <div>
-    <div className="container mt-4" style={{ width: "25rem", margin: "9px" }}>
+    <div className="container mt-4" style={{ width: "25rem" , margin:"9px" }}>
       <div className="row">
         <div className="col">
           <h2
@@ -158,7 +142,6 @@ const PieChart = () => {
           <Pie data={data} options={options} />
         </div>
       </div>
-    </div>
     </div>
   );
 };
