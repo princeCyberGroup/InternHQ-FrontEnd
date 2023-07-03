@@ -6,6 +6,8 @@ import EmptyProject from "../../EmptyStates/EmptyProject/MyIdea";
 import { ReactComponent as ExpandMore } from "../../../../../Assets/expand_more.svg";
 import TechDropDown from "../TechDropDown";
 import { UserContext } from "../../../../../Context/Context";
+import Skeleton from "react-loading-skeleton";
+import "react-loading-skeleton/dist/skeleton.css";
 
 const AddNewIdea = () => {
   const { idea } = useContext(UserContext);
@@ -20,6 +22,14 @@ const AddNewIdea = () => {
   const [projNameError, setProjNameError] = useState("");
   const [projDescriptionError, setProjDescriptionError] = useState("");
   const [error, setError] = useState(true);
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    setTimeout(() => {
+      setIsLoading(false);
+    }, 1000);
+  }, []);
+
   const handleClickClear = (event) => {
     event.preventDefault();
     setTextInput("");
@@ -83,7 +93,7 @@ const AddNewIdea = () => {
       setError(true);
     } else {
       await axios
-        .post("https://cg-interns-hq.azurewebsites.net/projectIdea", {
+        .post(process.env.REACT_APP_API_URL+"/api/v2/projectIdea", {
           projName,
           projDescription,
           userId,
@@ -136,7 +146,75 @@ const AddNewIdea = () => {
             </button>
           </div>
         </div>
-        {idea.length === 0 ? (
+        {isLoading ? (
+          <div className="recipe-row">
+            <div className="recipe-text">
+              <h5 className="fw-bold">
+                <Skeleton width={252} />
+              </h5>
+              <p className="fw-normal mb-1">
+                <Skeleton height={60} />
+              </p>
+              <div className="members-div pt-0">
+                <div className="member mb pt-1 fw-bold mb-2">
+                  <Skeleton width={84} height={16} />
+                </div>
+                <div className="project-members ml-0">
+                  <div className="project-idea-members-skeleton">
+                    <p className="name-of-members m-0">
+                      <Skeleton
+                        width={40}
+                        height={40}
+                        circle
+                        highlightColor="#fff"
+                      />
+                    </p>
+                  </div>
+                  <div className="project-idea-members-skeleton">
+                    <p className="name-of-members m-0">
+                      <Skeleton
+                        width={40}
+                        height={40}
+                        circle
+                        highlightColor="#fff"
+                      />
+                    </p>
+                  </div>
+                  <div className="project-idea-members-skeleton">
+                    <p className="name-of-members m-0">
+                      <Skeleton
+                        width={40}
+                        height={40}
+                        circle
+                        highlightColor="#fff"
+                      />
+                    </p>
+                  </div>
+                  <div className="project-idea-members-skeleton">
+                    <p className="name-of-members m-0">
+                      <Skeleton
+                        width={40}
+                        height={40}
+                        circle
+                        highlightColor="#fff"
+                      />
+                    </p>
+                  </div>
+                  <div className="project-idea-members-skeleton">
+                    <p className="name-of-members m-0">
+                      <Skeleton
+                        width={40}
+                        height={40}
+                        circle
+                        highlightColor="rgba(40, 81, 158, 0.2)"
+                      />
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        ) : idea.length === 0 ? (
           <EmptyProject />
         ) : (
           <div className="recipe-row">
@@ -178,7 +256,6 @@ const AddNewIdea = () => {
             </div>
           </div>
         )}
-
         <div className="add-new-idea-container">
           <div
             className="add-new-idea pt-2"

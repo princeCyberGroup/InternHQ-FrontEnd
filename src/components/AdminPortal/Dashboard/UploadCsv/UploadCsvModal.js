@@ -7,37 +7,33 @@ import '../ManageSkillSet/Modals.css';
 import axios from "axios";
 
 export const UploadCsv = () => {
-    const [selectedFile, setSelectedFile] = useState(null);
-    const [file, setFile] = useState(null);
-    const [progress, setProgress] = useState(0);
-    const fileInputRef = useRef(null);
+  const [selectedFile, setSelectedFile] = useState(null);
+  const [file, setFile] = useState(null);
+  const [progress, setProgress] = useState(0);
+  const fileInputRef = useRef(null);
 
-    const handleCancelClick = (e) => {
-        e.preventDefault();
+  const handleCancelClick = (e) => {
+    e.preventDefault();
+    setSelectedFile(null);
+    setFile(null);
+    handleRemoveFile();
+  };
 
-        setSelectedFile(null);
-        setFile(null);
-        handleRemoveFile()
-    };
+  const handleSaveClick = async (e) => {
+    e.preventDefault();
 
-    const handleSaveClick = async (e) => {
-        e.preventDefault();
-
-        const formData = new FormData();
-        formData.append('file', file);
-        try {
-            const response = await axios.post(`https://cg-interns-hq.azurewebsites.net/associateConsultantDetails`
-                , formData
-                , {
-                    headers: {
-                        'Content-Type': 'multipart/form-data',
-                        'Content-Disposition': 'form-data; name="file"; filename="example.csv"'
-                    }
-                });
-            // Reset form inputs
-
-        } catch (error) {
-            console.log(error);
+    const formData = new FormData();
+    formData.append("file", file);
+    try {
+      const response = await axios.post(
+        process.env.REACT_APP_API_URL+`/api/v2/associateConsultantDetails`,
+        formData,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+            "Content-Disposition":
+              'form-data; name="file"; filename="example.csv"',
+          },
         }
     };
     const handleDrop = (e) => {
