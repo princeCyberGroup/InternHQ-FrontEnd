@@ -15,27 +15,35 @@ const ProjectDetail = ({ data, indexNumber }) => {
           }
         })}
       </div>
+      <div>
+        {data[indexNumber].projectLink && (
+          <p className="project-detail-link">Project Link:</p>
+        )}
+        {data[indexNumber].projectLink && (
+          <p className="project-link-name">
+            <Link to={data[indexNumber].projectLink} target="_blank">
+              {data[indexNumber].projectLink}
+            </Link>
+          </p>
+        )}
+      </div>
 
-      <p className="project-detail-link">Project Link:</p>
-      <p className="project-link-name">
-        <Link to={data[indexNumber].projectLink} target="_blank">
-          {data[indexNumber].projectLink}
-        </Link>
-      </p>
-      <p className="project-detail-hosted-link">Hosted Link:</p>
-      <p className="hosted-link-name text-decoration-none">
-        {data[indexNumber].hostedLink
-          ? data[indexNumber].hostedLink
-          : "No Link Provided"}
-      </p>
-      <p className="members fw-bold mb-2">Members:</p>
-            {/* <div className="project-detail-technology-badges">
-                {data[indexNumber].technologyNames && data[indexNumber].technologyNames.map((tech) => {
-                    if (tech != null){
-                    return <p className="technology-badge me-1"> {tech} </p>
-                    }
-                })}
-            </div> */}
+      <div>
+        {data[indexNumber].hostedLink && (
+          <p className="project-detail-hosted-link">Hosted Link:</p>
+        )}
+        {data[indexNumber].hostedLink && (
+          <p className="hosted-link-name text-decoration-none">
+            <Link to={data[indexNumber].hostedLink} target="_blank">
+              {data[indexNumber].hostedLink}
+            </Link>
+          </p>
+        )}
+      </div>
+
+      {data[indexNumber].members && (
+        <p className="members fw-bold mb-2">Members:</p>
+      )}
       <div className="members-name project-members text-center">
         {data[indexNumber].members && data[indexNumber].members?.length > 4 ? (
           data[indexNumber].members.map((curElem, index) => {
@@ -52,11 +60,13 @@ const ProjectDetail = ({ data, indexNumber }) => {
             }
           })
         ) : (
-          <div className="project-idea-members">
-            <p className="name-of-members">
-              + {data[indexNumber].members.length}
-            </p>
-          </div>
+          data[indexNumber].members && (
+            <div className="project-idea-members">
+              <p className="name-of-members">
+                + {data[indexNumber].members.length}
+              </p>
+            </div>
+          )
         )}
       </div>
     </div>

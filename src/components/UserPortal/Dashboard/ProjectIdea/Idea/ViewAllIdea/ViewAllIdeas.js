@@ -39,6 +39,11 @@ const ViewAllIdeas = () => {
     setProjDescriptionError("");
     setTech({});
     seTechNames({});
+    
+    const checkboxes = document.querySelectorAll(".tech-checkbox");
+    checkboxes.forEach((checkbox) => {
+      checkbox.checked = false;
+    });
   };
   const handleChangeProjNameError = (event) => {
     event.preventDefault();
@@ -105,6 +110,12 @@ const ViewAllIdeas = () => {
       setProjDescription("");
       setDropDown(false);
       setTech({});
+      seTechNames({});
+    
+    const checkboxes = document.querySelectorAll(".tech-checkbox");
+    checkboxes.forEach((checkbox) => {
+      checkbox.checked = false;
+    });
     }
   };
 

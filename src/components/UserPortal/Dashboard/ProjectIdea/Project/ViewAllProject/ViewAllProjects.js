@@ -67,6 +67,13 @@ const ViewAllProjects = () => {
     setProjectLink("");
     setHostedLink("");
     setDropDown(false);
+    setTech({});
+    seTechNames({});
+    
+    const checkboxes = document.querySelectorAll(".tech-checkbox");
+    checkboxes.forEach((checkbox) => {
+      checkbox.checked = false;
+    });
   };
   const handleProjectLinkChange = (event) => {
     const link = event.target.value;
@@ -118,6 +125,12 @@ const ViewAllProjects = () => {
       setProjectLink("");
       setHostedLink("");
       setTech({});
+      seTechNames({});
+    
+    const checkboxes = document.querySelectorAll(".tech-checkbox");
+    checkboxes.forEach((checkbox) => {
+      checkbox.checked = false;
+    });
     }
   };
 

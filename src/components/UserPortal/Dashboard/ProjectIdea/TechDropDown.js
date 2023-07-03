@@ -3,7 +3,7 @@ import axios from "axios";
 import "../ProjectIdea/TechDropDown.css"
 const TechDropDown = (props) => {
   const [counter, setCounter] = useState(1);
-  const [technologyNames, setTechnologyNames] = useState([]);
+  // const [props.technologyNames, setTechnologyNames] = useState([]);
   // const [props.techNames, setprops.techNames] = useState({});
   const [allTech, setAllTech] = useState();
 
@@ -33,16 +33,16 @@ const TechDropDown = (props) => {
   const handleOptionClick = (event) => {
     const { value } = event.currentTarget.dataset;
     const isChecked = event.currentTarget.querySelector("input").checked;
-    if (isChecked && !technologyNames.includes(value)) {
-      technologyNames.push(value);
-      technologyNames.forEach((curElem, index) => {
+    if (isChecked && !props.technologyNames.includes(value)) {
+      props.technologyNames.push(value);
+      props.technologyNames.forEach((curElem, index) => {
         props.techNames[`tech${index + 1}`] = curElem;
       });
       setCounter((prevCounter) => prevCounter + 1);
     } else {
-      const index = technologyNames.indexOf(value);
+      const index = props.technologyNames.indexOf(value);
       if (index !== -1) {
-        technologyNames.splice(index, 1);
+        props.technologyNames.splice(index, 1);
       }
 
       const keys = Object.keys(props.techNames);
@@ -60,6 +60,7 @@ const TechDropDown = (props) => {
   return (
     <div className="drop-tech">
       {allTech?.map((value, index) => {
+       
         return (
           <div
             key={index}
@@ -69,14 +70,13 @@ const TechDropDown = (props) => {
             }}
             data-value={value.techName}
           >
-            <label className="form-check-label tech-label" for={value.techName}>
+            <label className="form-check-label" for={value.techName}>
               {value?.techName}
             </label>
             <input
-              className="form-check-input techDrop"
+              className="form-check-input tech-checkbox"
               type="checkbox"
-              value="ytch"
-              id="nodeJs"
+              value={value.techName}
             />
           </div>
         );
@@ -84,5 +84,5 @@ const TechDropDown = (props) => {
     </div>
   );
 };
-
+  
 export default TechDropDown;

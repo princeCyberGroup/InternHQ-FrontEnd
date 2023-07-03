@@ -23,24 +23,27 @@ const AddProject = () => {
   const [desError, setDesError] = useState("");
   const [projLinkError, setProjLinkError] = useState("");
   const [tech, setTech] = useState({});
+  const [technologyNames, setTechnologyNames] = useState([]);
 
   const handleProjectNameChange = (event) => {
-    const name = event.target.value;
-    setProjName(name);
-    if (!name) {
+    setProjName(event.target.value);
+    if (projName.length===0) {
       setError(true);
       setProjNameError("Project name is required");
+      
+      
     } else {
       setError(false);
       setProjNameError("");
     }
   };
   const handleProjectDescriptionChange = (event) => {
-    const description = event.target.value;
-    setProjDescription(description);
-    if (!description) {
+    setProjDescription(event.target.value);
+    if (projDescription.length < 2) {
       setError(true);
       setDesError("Project description is required");
+      
+      
     } else {
       setError(false);
       setDesError("");
@@ -68,6 +71,13 @@ const AddProject = () => {
     setDesError("");
     setProjLinkError("");
     setTech({});
+    seTechNames({});
+    setTechnologyNames([]);
+
+    const checkboxes = document.querySelectorAll(".tech-checkbox");
+    checkboxes.forEach((checkbox) => {
+      checkbox.checked = false;
+    });
   };
   const handleProjectLinkChange = (event) => {
     const link = event.target.value;
@@ -98,7 +108,7 @@ const AddProject = () => {
      
     } else {
       axios
-        .post("https://cg-interns-hq.azurewebsites.net/Project", {
+        .post("https://cg-interns-hq.azurewebsites.net/api/v2/Project", {
           projName,
           projDescription,
           userId,
@@ -120,6 +130,11 @@ const AddProject = () => {
       setHostedLink("");
    
       setTech({});
+        
+    const checkboxes = document.querySelectorAll(".tech-checkbox");
+    checkboxes.forEach((checkbox) => {
+      checkbox.checked = false;
+    });
     }
   };
 
@@ -307,6 +322,7 @@ const AddProject = () => {
                               techDataComingChild={techDataComingFrmChild}
                               seTechNames={seTechNames}
                               techNames={techNames}
+                              technologyNames={technologyNames}
                             />
                           </ul>
                         </div>
@@ -369,6 +385,7 @@ const AddProject = () => {
                 className="btn cancel-button"
                 data-bs-dismiss="modal"
                 onClick={clear}
+            
               >
                 <span className="cancel-text"> Cancel</span>
               </button>

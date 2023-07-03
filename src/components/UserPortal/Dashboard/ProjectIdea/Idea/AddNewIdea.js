@@ -21,6 +21,9 @@ const AddNewIdea = () => {
   const [projDescriptionError, setProjDescriptionError] = useState("");
   const [error, setError] = useState(true);
   const [techNames, seTechNames] = useState({});
+  const [technologyNames, setTechnologyNames] = useState([]);
+
+
   const handleClickClear = (event) => {
     event.preventDefault();
     setTextInput("");
@@ -31,7 +34,15 @@ const AddNewIdea = () => {
     setProjDescriptionError("");
     setTech({});
     seTechNames({});
+    setTechnologyNames([]);
+
+    const checkboxes = document.querySelectorAll(".tech-checkbox");
+    checkboxes.forEach((checkbox) => {
+      checkbox.checked = false;
+    });
   };
+
+
   const handleChangeProjNameError = (event) => {
     event.preventDefault();
     const name = event.target.value;
@@ -88,7 +99,7 @@ const AddNewIdea = () => {
       alert("Please fill in the required details");
     } else {
       await axios
-        .post("https://cg-interns-hq.azurewebsites.net/projectIdea", {
+        .post("https://cg-interns-hq.azurewebsites.net/api/v2/projectIdea", {
           projName,
           projDescription,
           userId,
@@ -105,8 +116,13 @@ const AddNewIdea = () => {
       setProjName("");
       setProjDescription("");
       setDropDown(false);
-      // setError(true);
       setTech({});
+      seTechNames([]);
+        
+    const checkboxes = document.querySelectorAll(".tech-checkbox");
+    checkboxes.forEach((checkbox) => {
+      checkbox.checked = false;
+    });
     }
   };
 
@@ -118,6 +134,7 @@ const AddNewIdea = () => {
     });
     isObjectEmpty(membersObj);
   }, [textInput, tech]);
+
   return (
     <>
       <div className="card-body pb-0">
@@ -155,7 +172,7 @@ const AddNewIdea = () => {
               <div className="members-div pt-0">
                 <div className="member mb pt-1 fw-bold mb-2">Members:</div>
                 <div className="project-members ml-0">
-                  {first.members.length > 4 ? (
+                  {first.members.length > 9 ? (
                     first.members.map((curElem, index) => {
                       if (curElem != null) {
                         const initials = curElem
@@ -308,6 +325,7 @@ const AddNewIdea = () => {
                           techDataComingChild={techDataComingFrmChild}
                           seTechNames={seTechNames}
                           techNames={techNames}
+                          technologyNames={technologyNames}
                         />
                       </ul>
                     </div>

@@ -13,14 +13,14 @@ const DetailsLeft = (props) => {
   };
 
   return (
-    <div className="all-project-names pt-3">
+    <div className="all-project-names pt-3 border-end">
       <div className="child-wrapper">
         {props.data?.map((user, index) => {
           const isBorder = index === selectedIdx;
           return (
             <div
               className={
-                "project-names-wrapper mt-2 pb-0 d-flex justify-content-between" +
+                "project-names-wrapper mt-3 pb-0 d-flex justify-content-between" +
                 (isBorder ? " project-names-wrapper-border" : "")
               }
               key={index}
@@ -30,9 +30,9 @@ const DetailsLeft = (props) => {
                 setIsBorder(true);
               }}
             >
-              <div className="mentor-assigned-task-badges">
+              {/* <div className="mentor-assigned-task-badges">
                <p className="mentor-assigned-badge mb-2"> Mentor Assigned</p>
-              </div>
+              </div> */}
               <div className="d-flex justify-content-between w-100"         >
                 <h5 className="project-names">{user.projectNames}</h5>
                 <span className="click-arrow">
