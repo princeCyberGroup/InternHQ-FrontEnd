@@ -29,7 +29,12 @@ const Detailedreport = () => {
   const fetchData = async () => {
     try {
       const response = await axios.get(
-        `https://cg-interns-hq.azurewebsites.net/getAllDetailsOfIntern?userId=${idVal}`
+        process.env.REACT_APP_API_URL+`/api/v2/getAllDetailsOfIntern?userId=${idVal}`,
+        {
+          headers: {
+            Authorization:`Bearer ${JSON.parse(localStorage.getItem('userData'))['token']}`,
+          },
+        }
       );
       setData(response.data?.userDetails);
     } catch (error) {

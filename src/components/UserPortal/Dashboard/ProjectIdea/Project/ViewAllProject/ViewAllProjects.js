@@ -11,7 +11,8 @@ import { ReactComponent as ExpandMore } from "../../../../../../Assets/expand_mo
 import BreadCrumbs from "../../../../../BreadCrumbs/BreadCrumbs";
 
 const ViewAllProjects = () => {
-  const { project } = useContext(UserContext);
+  // const { project } = useContext(UserContext);
+  const [project, setProject] = useState([]);
   const [dropDown, setDropDown] = useState(false);
   const [projName, setProjName] = useState("");
   const [projDescription, setProjDescription] = useState("");
@@ -26,7 +27,7 @@ const ViewAllProjects = () => {
   const [projectIndex, setProjectIndex] = useState(0);
   const [tech, setTech] = useState({});
 
-  const details = project;
+  // const details = project;
 
   const techDataComingFrmChild = (data) => {
     return setTech(data);
@@ -87,7 +88,7 @@ const ViewAllProjects = () => {
     var parsedObject = JSON.parse(storedObject);
     var userId = parsedObject.userId;
     axios
-      .post("https://cg-interns-hq.azurewebsites.net/Project", {
+      .post(process.env.REACT_APP_API_URL+"/api/v2/Project", {
         projName,
         projDescription,
         userId,
@@ -105,6 +106,57 @@ const ViewAllProjects = () => {
     setProjectLink("");
     setHostedLink("");
   };
+
+  // useEffect(() => {
+  //   var storedObject = localStorage.getItem("userData");
+  //   var parsedObject = JSON.parse(storedObject);
+  //   var userId = parsedObject.userId;
+
+  //   axios.all([
+  //     axios.get(`https://cg-interns-hq.azurewebsites.net/getProject?userId=${userId}`),
+  //     axios.get("https://cg-interns-hq.azurewebsites.net/getAssignedTask")
+  //   ])
+  //     .then(axios.spread((projectResponse, mentorTaskApiResponse) => {
+  //       const combinedResponse = {
+  //         project: projectResponse.data.response,
+  //         anotherData: mentorTaskApiResponse.data.response
+  //       };
+  //       setProject(combinedResponse);
+  //     }))
+  //     .catch((error) => {
+  //       console.error("Error fetching data:", error);
+  //     });
+  // }, []);
+
+  useEffect(() => {
+    var storedObject = localStorage.getItem("userData");
+    var parsedObject = JSON.parse(storedObject);
+    var userId = parsedObject.userId;
+    axios
+      .get(
+        process.env.REACT_APP_API_URL+`/api/v2/getProject?userId=${userId}`,
+        {
+          headers: {
+            Authorization:`Bearer ${JSON.parse(localStorage.getItem('userData'))['token']}`,
+          },
+        }
+      )
+      .then((response) => {
+        setProject(response.data.response);
+      })
+      .catch((error) => {
+        console.error("Error fetching tasks:", error);
+      });
+
+    // axios
+    //   .get(`https://cg-interns-hq.azurewebsites.net/getAssignedTask`)
+    //   .then((responsedata) => {
+    //     setProject(responsedata.data.response);
+    //   })
+    //   .catch((error) => {
+    //     console.error("Error fetching data from another API:", error);
+    //   });
+  }, []);
 
   useEffect(() => {
     const texts = textInput.split(",").map((text) => text.trim());
@@ -331,7 +383,7 @@ const ViewAllProjects = () => {
             </div>
           </div>
         </div>
-        {project && project.length === 0 ? (
+        {project && project?.length === 0 ? (
           <EmptyProjectView />
         ) : (
           <div

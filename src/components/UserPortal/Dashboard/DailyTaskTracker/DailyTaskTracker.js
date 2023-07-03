@@ -1,43 +1,64 @@
-import React, { useState, useEffect,useContext } from "react";
+import React, { useState, useEffect, useContext } from "react";
+import { AES, enc } from "crypto-js";
+// import dotenv from 'dotenv';
 import "./DailyTaskTracker.css";
 import { ReactComponent as Tick } from "../../../../Assets/tick.svg";
 import axios from "axios";
-import { ReactComponent as Play} from "../../../../Assets/time trackingplay.svg"
-import { ReactComponent as Pause} from "../../../../Assets/time trackingpause.svg"
-import { ReactComponent as Stop} from "../../../../Assets/time trackingstop.svg"
-import { ReactComponent as StopD} from "../../../../Assets/time trackingStopDisabled.svg"
-import { ReactComponent as PlayD} from "../../../../Assets/time trackingStartDisabled.svg"
+import { ReactComponent as Play } from "../../../../Assets/time trackingplay.svg";
+import { ReactComponent as Pause } from "../../../../Assets/time trackingpause.svg";
+import { ReactComponent as Stop } from "../../../../Assets/time trackingstop.svg";
+import { ReactComponent as StopD } from "../../../../Assets/time trackingStopDisabled.svg";
+import { ReactComponent as PlayD } from "../../../../Assets/time trackingStartDisabled.svg";
 import { useNavigate } from "react-router";
 import { UserContext } from "../../../../Context/Context";
 import TopicSelect from "./TopicSelect";
-
-
 
 const learningTypeOptions = [
   "CG Learning Videos",
   "Self Learning",
   "Mentor Assigned Task",
   "Project",
+  "Session",
 ];
 
+// dotenv.config();
+
+const secretKey = process.env.REACT_APP_SECRET_KEY;
+
+// const url = 
+// console.log(url);
 
 const MAX_COMMENT_LENGTH = 150;
 
 const DailyTaskTracker = () => {
-  const {isRunning, setIsRunning, isPaused, setIsPaused, elapsedTime, setElapsedTime,startTime, setStartTime}=useContext(UserContext);
-  
-  const [learningType, setLearningType] = useState(localStorage.getItem("learningType") || "");
-  const [topicName, setTopicName] = useState(localStorage.getItem("topicName") || "");
+  const {
+    isRunning,
+    setIsRunning,
+    isPaused,
+    setIsPaused,
+    elapsedTime,
+    setElapsedTime,
+    startTime,
+    setStartTime,
+  } = useContext(UserContext);
+
+  const [learningType, setLearningType] = useState(
+    localStorage.getItem("learningType") || ""
+  );
+  const [topicName, setTopicName] = useState(
+    localStorage.getItem("topicName") || ""
+  );
   // const [startTime, setStartTime] = useState( localStorage.getItem("startTime") ? parseInt(localStorage.getItem("startTime")) : null);
-  const [comments, setComments] = useState(localStorage.getItem("comments") || "");
+  const [comments, setComments] = useState(
+    localStorage.getItem("comments") || ""
+  );
   const [comDisabled, setComDisabled] = useState(true);
   const [disabled, setDisabled] = useState(false);
   const [btnDisabled, setBtnDisabled] = useState(true);
   const [stopBtnDisabled, setStopBtnDisabled] = useState(true);
   const [resetSelect, setResetSelect] = useState(false);
 
-
-  const[firstCount,setFirstCount] = useState(true);
+  const [firstCount, setFirstCount] = useState(true);
   const [commentLength, setCommentLength] = useState(comments.length);
   const [pauseClickCount, setPauseClickCount] = useState(0);
 
@@ -49,7 +70,8 @@ const DailyTaskTracker = () => {
       e.preventDefault();
 
       // Chrome requires the returnValue property to be set
-      e.returnValue = "You have an active timer. Are you sure you want to leave this page?";
+      e.returnValue =
+        "You have an active timer. Are you sure you want to leave this page?";
       // let leaving= confirm("You have an active timer. Are you sure you want to leave this page?");
       // leaving?return confirmationMessage:"";
       // Show the confirmation dialog
@@ -64,11 +86,6 @@ const DailyTaskTracker = () => {
     };
   }, []);
 
-
-
-
-
-
   useEffect(() => {
     if (learningType && topicName) {
       setBtnDisabled(false);
@@ -78,54 +95,99 @@ const DailyTaskTracker = () => {
   useEffect(() => {
     if (comments.length >= 150) {
       setStopBtnDisabled(false);
-    }
-    else if(comments.length < 150){
+    } else if (comments.length < 150) {
       setStopBtnDisabled(true);
     }
   }, [comments]);
 
-
   useEffect(() => {
-    const storedData = localStorage.getItem('taskData');
-    if (storedData) {
-      const { isRunning, disabled, comDisabled, learningType, topicName, comments, startTime, isPaused, pauseClickCount, firstCount} = JSON.parse(storedData);
-      setIsRunning(isRunning);
-      setDisabled(disabled);
-      setComDisabled(comDisabled)
-      setLearningType(learningType);
-      setTopicName(topicName);
-      setComments(comments);
-      setStartTime(startTime);
-      // setElapsedTime(elapsedTime);
-      setIsPaused(isPaused);
-      setPauseClickCount(pauseClickCount);
-      setFirstCount(firstCount);
+    const encryptedData = localStorage.getItem("tD8kFi5j");
+    if (encryptedData) {
+      const decryptedData = AES.decrypt(encryptedData, secretKey).toString(
+        enc.Utf8
+      );
+      if (decryptedData) {
+        const {
+          isRunning,
+          disabled,
+          comDisabled,
+          learningType,
+          topicName,
+          comments,
+          startTime,
+          elapsedTime,
+          isPaused,
+          pauseClickCount,
+          firstCount,
+        } = JSON.parse(decryptedData);
+        setIsRunning(isRunning);
+        setDisabled(disabled);
+        setComDisabled(comDisabled);
+        setLearningType(learningType);
+        setTopicName(topicName);
+        setComments(comments);
+        setStartTime(startTime);
+        setElapsedTime(elapsedTime);
+        setIsPaused(isPaused);
+        setPauseClickCount(pauseClickCount);
+        setFirstCount(firstCount);
+      }
     }
+
+    // const storedData = localStorage.getItem('tD8kFi5j');
+    // if (storedData) {
+    //   const { isRunning, disabled, comDisabled, learningType, topicName, comments, startTime, isPaused, pauseClickCount, firstCount} = JSON.parse(storedData);
+    //   setIsRunning(isRunning);
+    //   setDisabled(disabled);
+    //   setComDisabled(comDisabled)
+    //   setLearningType(learningType);
+    //   setTopicName(topicName);
+    //   setComments(comments);
+    //   setStartTime(startTime);
+    //   // setElapsedTime(elapsedTime);
+    //   setIsPaused(isPaused);
+    //   setPauseClickCount(pauseClickCount);
+    //   setFirstCount(firstCount);
+    // }
   }, []);
 
   useEffect(() => {
-    const taskData = JSON.stringify({ isRunning, disabled, comDisabled, learningType, topicName, comments, startTime, elapsedTime, isPaused, pauseClickCount, firstCount });
-    localStorage.setItem('taskData', taskData);
+    const tD8kFi5j = JSON.stringify({
+      isRunning,
+      disabled,
+      comDisabled,
+      learningType,
+      topicName,
+      comments,
+      startTime,
+      elapsedTime,
+      isPaused,
+      pauseClickCount,
+      firstCount,
+    });
+    const encryptedData = AES.encrypt(tD8kFi5j, secretKey).toString();
+    localStorage.setItem("tD8kFi5j", encryptedData);
+
+    // const tD8kFi5j = JSON.stringify({ isRunning, disabled, comDisabled, learningType, topicName, comments, startTime, elapsedTime, isPaused, pauseClickCount, firstCount });
+    // localStorage.setItem('tD8kFi5j', tD8kFi5j);
   }, [isRunning, startTime, elapsedTime, isPaused, comments]);
 
-
-  
-  var storedObject = localStorage.getItem('userData');
+  var storedObject = localStorage.getItem("userData");
   var parsedObject = JSON.parse(storedObject);
   var userId = parsedObject.userId;
   const sendStartDataToBackend = async () => {
     try {
-      const response = await axios.post("https://cg-interns-hq.azurewebsites.net/dailyTaskTrackerStartCheck", {
+      const response = await axios.post(process.env.REACT_APP_API_URL+"/api/v2/dailyTaskTrackerStartCheck", {
         userId,
         learningType,
         topicName,
-      })
-      localStorage.setItem("DTT-token",response.data.token);
+      });
+      localStorage.setItem("DTT-token", response.data.token);
     } catch (error) {
       navigate({
-        pathname:"/error",
-        search:`statusCode=${error.response.status}`
-      })
+        pathname: "/error",
+        search: `statusCode=${error.response.status}`,
+      });
       console.error("Error sending start data to backend:", error);
     }
   };
@@ -133,12 +195,16 @@ const DailyTaskTracker = () => {
   const sendPauseDataToBackend = async () => {
     try {
       const dttToken = localStorage.getItem("DTT-token");
-      const response = await axios.post("https://cg-interns-hq.azurewebsites.net/dailyTaskTrackerPauseCheck",{},{
-        headers:{
-          'content-type':'application/json',
-          "Authorization":`Bearer ${dttToken}`
+      const response = await axios.post(
+        process.env.REACT_APP_API_URL+"/api/v2/dailyTaskTrackerPauseCheck",
+        {},
+        {
+          headers: {
+            "content-type": "application/json",
+            Authorization: `Bearer ${dttToken}`,
+          },
         }
-      })
+      );
     } catch (error) {
       console.error("Error sending pause data to backend:", error);
     }
@@ -147,27 +213,29 @@ const DailyTaskTracker = () => {
   const sendStopDataToBackend = async () => {
     try {
       const token = localStorage.getItem("DTT-token");
-      const response = await axios.post("https://cg-interns-hq.azurewebsites.net/dailyTaskTrackerEndCheck", {
-        comments,
-        elapsedTime,
-      },{headers:{
-        Authorization:`Bearer ${token}`,
-      }});
-
+      const response = await axios.post(
+        process.env.REACT_APP_API_URL+"/api/v2/dailyTaskTrackerEndCheck",
+        {
+          comments,
+          elapsedTime,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
     } catch (error) {
       navigate({
-        pathname:"/error",
-        search:`statusCode=${error.response.status}`
-      })
+        pathname: "/error",
+        search: `statusCode=${error.response.status}`,
+      });
       console.error("Error sending stop data to backend:", error);
-    }
-    finally{
-      localStorage.removeItem('taskData');
-      localStorage.removeItem('DTT-token');
-
+    } finally {
+      localStorage.removeItem("tD8kFi5j");
+      localStorage.removeItem("DTT-token");
     }
   };
-
 
   const handleStop = () => {
     sendStopDataToBackend();
@@ -193,20 +261,17 @@ const DailyTaskTracker = () => {
     setPauseClickCount(0);
   };
 
-
   const handlePause = () => {
     if (pauseClickCount < 4) {
       sendPauseDataToBackend();
-      setPauseClickCount(prevCount => prevCount + 1);
+      setPauseClickCount((prevCount) => prevCount + 1);
       setIsPaused(true);
-    }
-    else{
-    window.alert("You have exceeded the maximum pause limit!");
+    } else {
+      window.alert("You have exceeded the maximum pause limit!");
     }
   };
 
   const handleStart = () => {
-
     if (learningType === "CG Learning Videos" && firstCount) {
       const newTab = window.open("https://cgu.cginfinity.com/login/", "_blank");
       if (newTab) {
@@ -214,17 +279,16 @@ const DailyTaskTracker = () => {
       }
     }
 
-    if(firstCount){
+    if (firstCount) {
       sendStartDataToBackend();
       setFirstCount(false);
+    } else {
+      sendPauseDataToBackend();
     }
-    else{ 
-         sendPauseDataToBackend();
-        }
 
     setComDisabled(false);
     setDisabled(true);
-  
+
     if (isRunning) {
       setIsPaused(!isPaused);
     } else {
@@ -243,17 +307,17 @@ const DailyTaskTracker = () => {
         setElapsedTime(0);
       }
     }
-
-
-
   };
 
   const onLearningChange = (e) => {
     setLearningType(e.target.value);
+    setTopicName("")
   };
 
   const onTopicChange = (e) => {
-    setTopicName(e.target.value);
+    setTopicName(e.target.value)
+    if(topicName.length <=1) setBtnDisabled(true)
+
   };
 
   const onCommentsChange = (e) => {
@@ -274,146 +338,140 @@ const DailyTaskTracker = () => {
 
   return (
     <>
-        <div className="tracker border card-body p-0">
-          <div className="border-bottom ">
-            <h5 className="card-title dtt-hfs ">Daily Task Tracker</h5>
-          </div>
-          <div>
-            <label htmlFor="learning" className="form-label mt-3 dtt-lt">
-              Learning Type <span style={{ color: 'red' }}>*</span>
-            </label>
-            <select
-              key={resetSelect ? "learningTypeReset" : "learningType"}
-              disabled={disabled}
-              className="form-select dtt-selector "
-              id="learning"
-              aria-label=""
-              value={learningType}
-              onChange={(e) => onLearningChange(e)}
-              defaultValue=""
-            >
-              <option value="" disabled selected hidden>
-                Select learning type
+      <div className="tracker border card-body p-0">
+        <div className="border-bottom ">
+          <h5 className="card-title dtt-hfs ">Daily Task Tracker</h5>
+        </div>
+        <div>
+          <label htmlFor="learning" className="form-label mt-3 dtt-lt">
+            Learning Type <span style={{ color: "red" }}>*</span>
+          </label>
+          <select
+            key={resetSelect ? "learningTypeReset" : "learningType"}
+            disabled={disabled}
+            className="form-select dtt-selector "
+            id="learning"
+            aria-label=""
+            value={learningType}
+            onChange={(e) => onLearningChange(e)}
+            defaultValue=""
+          >
+            <option value="" disabled selected hidden>
+              Select learning type
+            </option>
+            {learningTypeOptions.map((option) => (
+              <option className="dtt-opns" key={option} value={option}>
+                {option}
               </option>
-              {learningTypeOptions.map((option) => (
-                <option className="dtt-opns" key={option} value={option}>
-                  {option}
-                </option>
-              ))}
-            </select>
-          </div>
+            ))}
+          </select>
+        </div>
 
-            <div>
-            <TopicSelect
+        <div>
+          <TopicSelect
             disabled={disabled}
             resetSelect={resetSelect}
             // value={topicName}
             learningType={learningType}
             topicName={topicName}
-            onChange={(e) => onTopicChange(e)} />
+            onChange={(e) => onTopicChange(e)}
+          />
+        </div>
 
-          </div>
+        <div>
+          <label htmlFor="comments" className="form-label dtt-t">
+            Comments <span style={{ color: "red" }}>*</span>{" "}
+            <span style={{ color: "grey" }}>(Minimum 150 Characters)</span>
+          </label>
+          <textarea
+            placeholder="Type comments"
+            id="comments"
+            className="form-control dtt-text"
+            value={comments}
+            onChange={(e) => onCommentsChange(e)}
+            disabled={comDisabled} // Add the disabled attribute
+          ></textarea>
+          <span
+            className="charLen"
+            style={{
+              color: "grey",
+              display: "flex",
+              justifyContent: "flex-end",
+              marginRight: "1rem",
+            }}
+          >
+            {commentLength}/{MAX_COMMENT_LENGTH}
+          </span>
+        </div>
 
-          <div>
-            <label htmlFor="comments" className="form-label dtt-t">
-              Comments <span style={{ color: 'red' }}>*</span> <span style={{ color: 'grey' }}>(Minimum 150 Characters)</span>
-              
-            </label>
-            <textarea
-              placeholder="Type comments"
-              id="comments"
-              className="form-control dtt-text"
-              value={comments}
-              onChange={(e) => onCommentsChange(e)}
-              disabled={comDisabled} // Add the disabled attribute
-            ></textarea>
-            <span className="charLen" style={{ color: 'grey',display:"flex",justifyContent:"flex-end", marginRight:"1rem" }}>{commentLength}/{MAX_COMMENT_LENGTH}</span>
-            
-          </div>
-
-
-          <div className="d-flex align-items-center justify-content-end dtt-gap ">
-
-            <p className="dtt-timer" >{formatTime(elapsedTime)}</p>
-            <div className="d-flex align-items-center justify-content-center iconGap ">
+        <div className="d-flex align-items-center justify-content-end dtt-gap ">
+          <p className="dtt-timer">{formatTime(elapsedTime)}</p>
+          <div className="d-flex align-items-center justify-content-center iconGap ">
             <p>
               {isRunning && !isPaused ? (
-                <Pause
-                onClick={handlePause}
-                disabled={pauseClickCount >= 4}
-                />
+                <Pause onClick={handlePause} disabled={pauseClickCount >= 4} />
+              ) : btnDisabled ? (
+                <PlayD />
               ) : (
-                btnDisabled ? <PlayD/> :
-                <Play
-                onClick={btnDisabled ? null : handleStart}
-                />
+                <Play onClick={btnDisabled ? null : handleStart} />
               )}
             </p>
             <p>
-              {stopBtnDisabled ? (<StopD/>) :
-              (<Stop
-                data-bs-toggle="modal"
-                data-bs-target="#exampleModal1"
-                onClick={stopBtnDisabled ? null : handleStop}
-              />
+              {stopBtnDisabled ? (
+                <StopD />
+              ) : (
+                <Stop
+                  data-bs-toggle="modal"
+                  data-bs-target="#exampleModal1"
+                  onClick={stopBtnDisabled ? null : handleStop}
+                />
               )}
-              
-            
             </p>
-            </div>
+          </div>
 
-            {/* SUCCESS MODAL */}
-            <div
-              className="modal fade"
-              id="exampleModal1"
-              tabIndex="-1"
-              aria-labelledby="exampleModalLabel"
-              aria-hidden="true"
-            >
-              <div className="modal-dialog modal-dialog-centered">
-                <div className="modal-content sSize">
-                  <div className="row crossBtn">
-                    <button
-                      type="button"
-                      className="btn-close"
-                      data-bs-dismiss="modal"
-                      aria-label="Close"
-                    ></button>
-                  </div>
-                  <div className="row tick">
-                    <Tick />
-                  </div>
-                  <div className="row l1">
-                    <p>
-                      Record Saved!
-                    </p>
-                  </div>
-                  <div className="row l2">
-                    <p>
-                      We Have Successfully Saved Your Record.
-                    </p>
-                  </div>
-                  <div
-                    className="row continue"
+          {/* SUCCESS MODAL */}
+          <div
+            className="modal fade"
+            id="exampleModal1"
+            tabIndex="-1"
+            aria-labelledby="exampleModalLabel"
+            aria-hidden="true"
+          >
+            <div className="modal-dialog modal-dialog-centered">
+              <div className="modal-content sSize">
+                <div className="row crossBtn">
+                  <button
+                    type="button"
+                    className="btn-close"
+                    data-bs-dismiss="modal"
+                    aria-label="Close"
+                  ></button>
+                </div>
+                <div className="row tick">
+                  <Tick />
+                </div>
+                <div className="row l1">
+                  <p>Record Saved!</p>
+                </div>
+                <div className="row l2">
+                  <p>We Have Successfully Saved Your Record.</p>
+                </div>
+                <div className="row continue">
+                  <button
+                    type="button"
+                    className="continueBtn"
+                    data-bs-dismiss="modal"
                   >
-                    <button
-                      type="button"
-                      className="continueBtn"
-                      data-bs-dismiss="modal"
-                    >
-                      Continue
-                    </button>
-                  </div>
+                    Continue
+                  </button>
                 </div>
               </div>
             </div>
           </div>
         </div>
+      </div>
     </>
   );
 };
 
 export default DailyTaskTracker;
-
-
-

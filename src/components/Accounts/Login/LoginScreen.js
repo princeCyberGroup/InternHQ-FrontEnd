@@ -42,7 +42,7 @@ const LoginScreen = () => {
     event.preventDefault();
     setIsLoading(true);
     await axios
-      .post("https://cg-interns-hq.azurewebsites.net/internLogin", {
+      .post(process.env.REACT_APP_API_URL+"/api/v2/internLogin", {
         email,
         password,
       })

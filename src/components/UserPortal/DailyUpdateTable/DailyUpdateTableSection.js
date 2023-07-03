@@ -30,7 +30,12 @@ const DailyUpdateTableSection = (props) => {
 
   const fetchData = async () => {
     await fetch(
-      `https://cg-interns-hq.azurewebsites.net/getDailyTaskTrackerRecords?userId=${props.userId}`
+      process.env.REACT_APP_API_URL+`/api/v2/getDailyTaskTrackerRecords?userId=${props.userId}`,
+      {
+        headers: {
+          Authorization:`Bearer ${JSON.parse(localStorage.getItem('userData'))['token']}`,
+        },
+      }
     )
       .then((response) => {
         return response.json();

@@ -93,7 +93,7 @@ const AddNewIdea = () => {
       setError(true);
     } else {
       await axios
-        .post("https://cg-interns-hq.azurewebsites.net/projectIdea", {
+        .post(process.env.REACT_APP_API_URL+"/api/v2/projectIdea", {
           projName,
           projDescription,
           userId,

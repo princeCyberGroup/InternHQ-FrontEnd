@@ -22,7 +22,12 @@ const DashboardA = () => {
   const fetchData = async () => {
     try {
       const response = await fetch(
-        `https://cg-interns-hq.azurewebsites.net/getDashboardStatus`
+        process.env.REACT_APP_API_URL+`/api/v2/getDashboardStatus`,
+        {
+          headers: {
+            Authorization:`Bearer ${JSON.parse(localStorage.getItem('userData'))['token']}`,
+          },
+        }
       );
       const rsp = await response.json();
       setStatusData(rsp);
@@ -34,7 +39,12 @@ const DashboardA = () => {
   const InsightData = async () => {
     try {
       const response = await fetch(
-        `https://cg-interns-hq.azurewebsites.net/getInsights`
+        process.env.REACT_APP_API_URL+`/api/v2/getInsights`,
+        {
+          headers: {
+            Authorization:`Bearer ${JSON.parse(localStorage.getItem('userData'))['token']}`,
+          },
+        }
       );
       const insData = await response.json();
       setInsights(insData.response);

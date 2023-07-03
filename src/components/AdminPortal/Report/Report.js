@@ -28,7 +28,12 @@ const Report = () => {
   const fetchData = async () => {
     try {
       const response = await axios.get(
-        `https://cg-interns-hq.azurewebsites.net/getuserReport`
+        process.env.REACT_APP_API_URL+`/api/v2/getuserReport`,
+        {
+          headers: {
+            Authorization:`Bearer ${JSON.parse(localStorage.getItem('userData'))['token']}`,
+          },
+        }
       );
       setOrgTableData(
         response?.data.response

@@ -12,10 +12,11 @@ import { UserContext } from "../../../../../../Context/Context";
 import BreadCrumbs from "../../../../../BreadCrumbs/BreadCrumbs";
 
 const ViewAllIdeas = () => {
-  const { idea, setIdea, project, setProject } = useContext(UserContext);
+  // const { idea, setIdea, project, setProject } = useContext(UserContext);
 
-  const location = useLocation();
-  const details = idea;
+  // const location = useLocation();
+  // const details = idea;
+  const [idea, setIdea] = useState([]);
   const [projectIndex, setProjectIndex] = useState(0);
   const [projNameError, setProjNameError] = useState("");
   const [projDescriptionError, setProjDescriptionError] = useState("");
@@ -75,7 +76,7 @@ const ViewAllIdeas = () => {
     var parsedObject = JSON.parse(storedObject);
     var userId = parsedObject.userId;
     await axios
-      .post("https://cg-interns-hq.azurewebsites.net/projectIdea", {
+      .post(process.env.REACT_APP_API_URL+"/api/v2/projectIdea", {
         projName,
         projDescription,
         userId,
@@ -93,6 +94,26 @@ const ViewAllIdeas = () => {
     setProjDescription("");
     setDropDown(false);
   };
+
+  useEffect(() => {
+    var storedObject = localStorage.getItem("userData");
+      var parsedObject = JSON.parse(storedObject);
+      var userId = parsedObject.userId;
+    axios
+      .get(process.env.REACT_APP_API_URL+`/api/v2/getProjectIdea?userId=${userId}`,
+      {
+        headers: {
+          Authorization:`Bearer ${JSON.parse(localStorage.getItem('userData'))['token']}`,
+        },
+      }
+      )
+      .then((response) => {
+        setIdea(response.data.response);
+      })
+      .catch((error) => {
+        console.error("Error fetching tasks:", error);
+      });
+  }, []);
 
   useEffect(() => {
     const texts = textInput.split(",").map((text) => text.trim());
