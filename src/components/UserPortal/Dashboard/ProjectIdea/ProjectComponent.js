@@ -18,7 +18,12 @@ const ProjectComponent = () => {
 
   const MyIdeaComponent = async () => {
     try {
-      const response = await axios.get(`https://cg-interns-hq.azurewebsites.net/getProjectIdea?userId=${userId}`);
+      const response = await axios.get(process.env.REACT_APP_API_URL+`/api/v2/getProjectIdea?userId=${userId}`,
+      {
+        headers: {
+          Authorization:`Bearer ${JSON.parse(localStorage.getItem('userData'))['token']}`,
+        },
+      });
 
       setIdea(response.data.response);
     } catch (error) {
@@ -29,7 +34,12 @@ const ProjectComponent = () => {
   const ProjectApi = async () => {
     try {
       const response = await axios.get(
-        `https://cg-interns-hq.azurewebsites.net/getProject?userId=${userId}`
+        process.env.REACT_APP_API_URL+`/api/v2/getProject?userId=${userId}`,
+        {
+          headers: {
+            Authorization:`Bearer ${JSON.parse(localStorage.getItem('userData'))['token']}`,
+          },
+        }
       );
 
       setProject(response.data.response);

@@ -9,7 +9,12 @@ const TechDropDown = (props) => {
     const fetchTechOptions = async () => {
       try {
         const response = await axios.get(
-          "https://cg-interns-hq.azurewebsites.net/getAllTechnology"
+          process.env.REACT_APP_API_URL+"/api/v2/getAllTechnology",
+          {
+            headers: {
+              Authorization:`Bearer ${JSON.parse(localStorage.getItem('userData'))['token']}`,
+            },
+          }
         );
         setTechOptions(response.data?.response.sort((a, b) => {
           const nameA = a.techName.toUpperCase();

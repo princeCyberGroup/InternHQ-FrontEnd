@@ -30,7 +30,12 @@ const MentorAssignedAlerts = (props) => {
 
   const fetchData = async () => {
     await fetch(
-      `https://cg-interns-hq.azurewebsites.net/getAssignedNotification?userId=${userId}`
+      process.env.REACT_APP_API_URL+`/api/v2/getAssignedNotification?userId=${userId}`,
+      {
+        headers: {
+          Authorization:`Bearer ${JSON.parse(localStorage.getItem('userData'))['token']}`,
+        },
+      }
     )
       .then((response) => {
         return response.json();

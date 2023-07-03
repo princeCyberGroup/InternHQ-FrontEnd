@@ -1,15 +1,23 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 
+
 const UsersDropdown = (props) => {
   // const [selectedUsers, setSelectedUsers] = useState([]);
   const [allUsers, setAllUsers] = useState([]);
+  const [selectAllChecked, setSelectAllChecked] = useState(false);
+
 
 
 
   useEffect(() => {
     axios
-      .get("https://cg-interns-hq.azurewebsites.net/getAllUsers")
+      .get(process.env.REACT_APP_API_URL+"/api/v2/getAllUsers",
+      {
+        headers: {
+          Authorization:`Bearer ${JSON.parse(localStorage.getItem('userData'))['token']}`,
+        },
+      })
       .then((response) => {
         setAllUsers(response.data.response.sort((a, b) => {
           const nameA = a.name.toUpperCase();
@@ -28,6 +36,50 @@ const UsersDropdown = (props) => {
       });
   }, []);
 
+  // const handleOptionClick = (event) => {
+  //   const { value, id } = event.currentTarget.dataset;
+  //   const isChecked = event.currentTarget.querySelector("input").checked;
+  
+  //   if (value === "Select all") {
+  //     setSelectAllChecked(isChecked);
+  
+  //     if (isChecked) {
+  //       props.setSelectedUsers(allUsers);
+  //       props.setSelectedUserIds(allUsers.map((user) => user.userId));
+  //     } else {
+  //       props.setSelectedUsers([]);
+  //       props.setSelectedUserIds([]);
+  //     }
+  //   } else {
+  //     if (selectAllChecked) {
+  //       // Individual checkbox clicked when "Select all" is checked
+  //       setSelectAllChecked(false); // Uncheck "Select all"
+  //       props.setSelectedUsers([{ name: value }]);
+  //       props.setSelectedUserIds([id]);
+  //     } else {
+  //       // Handle individual user selection
+  //       if (isChecked) {
+  //         props.setSelectedUsers((prevSelectedUsers) => [
+  //           ...prevSelectedUsers,
+  //           { name: value },
+  //         ]);
+  //         props.setSelectedUserIds((prevSelectedUserIds) => [...prevSelectedUserIds, id]);
+  
+  //       } else {
+  //         props.setSelectedUsers((prevSelectedUsers) =>
+  //           prevSelectedUsers.filter((user) => user.name !== value)
+  //         );
+  //         props.setSelectedUserIds((prevSelectedUserIds) =>
+  //           prevSelectedUserIds.filter((userId) => userId !== id)
+  //         );
+  //       }
+  //     }
+  //   }
+  // };
+  
+
+
+
   const handleOptionClick = (event) => {
     const { value, id } = event.currentTarget.dataset;
     const isChecked = event.currentTarget.querySelector("input").checked;
@@ -36,6 +88,8 @@ const UsersDropdown = (props) => {
     // setSelectedUserIds(userIds);
 
     if (value === "Select all") {
+      setSelectAllChecked(isChecked);
+  
       if (isChecked) {
         props.setSelectedUsers(allUsers);
         props.setSelectedUserIds(allUsers.map((user) => user.userId));
@@ -43,7 +97,8 @@ const UsersDropdown = (props) => {
         props.setSelectedUsers([]);
         props.setSelectedUserIds([]);
       }
-    } else {
+    } 
+     else {
       if (isChecked) {
         props.setSelectedUsers((prevSelectedUsers) => [
           ...prevSelectedUsers,
@@ -61,6 +116,9 @@ const UsersDropdown = (props) => {
       }
     }
   };
+
+
+  
   
 
   // const handleOptionClick = (event) => {
@@ -132,6 +190,8 @@ const UsersDropdown = (props) => {
             type="checkbox"
             value={user.name}
             id={user.userId}
+            checked={selectAllChecked || props.selectedUserIds?.includes(user.userId)}
+
           />
         </div>
       ))}

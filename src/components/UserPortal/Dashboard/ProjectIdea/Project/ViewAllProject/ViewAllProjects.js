@@ -107,7 +107,7 @@ const ViewAllProjects = () => {
     }
     else {
       axios
-        .post("https://cg-interns-hq.azurewebsites.net/Project", {
+        .post(process.env.REACT_APP_API_URL+"/api/v2/Project", {
           projName,
           projDescription,
           userId,
@@ -161,7 +161,12 @@ const ViewAllProjects = () => {
     var userId = parsedObject.userId;
     axios
       .get(
-        `https://cg-interns-hq.azurewebsites.net/getProject?userId=${userId}`
+        process.env.REACT_APP_API_URL+`/api/v2/getProject?userId=${userId}`,
+        {
+          headers: {
+            Authorization:`Bearer ${JSON.parse(localStorage.getItem('userData'))['token']}`,
+          },
+        }
       )
       .then((response) => {
         setProject(response.data.response);
