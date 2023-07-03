@@ -1,8 +1,18 @@
+.activeBtn{
+  height: 2rem;
+  padding-top: 0.25rem ;
+  padding-bottom: 0.25rem ;
+  display: flex;
+  align-items: center;
+}
 .activeBtn.active {
+  height: 2.5rem;
   background-color: #002c3f;
   color: #fff;
+
 }
 .activeBtn:hover {
+  height: 2.5rem;
   background-color: #002c3f;
   color: #fff;
 }
