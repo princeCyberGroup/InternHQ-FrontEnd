@@ -29,13 +29,13 @@ flex-grow: 0;
 }
 .upload-list {
     margin-top: 0.688rem; /* 11px / 16px */
-    margin-left: 0.5rem;
+    margin-left: 1.1rem;
     box-sizing: border-box;
     display: flex;
     flex-direction: column;
     align-items: flex-start;
     /* //need a change  */
-    width: 26.875rem; /* 430px / 16px */
+    width: 27.8rem;
     height: 9.5rem;
     background: #EAEEF6;
     
@@ -72,7 +72,7 @@ flex-grow: 0;
     justify-content: center;
     align-items: center;
     padding: 0.5rem; /* 8px / 16px */
-    width: 25.25rem; /* 404px / 16px */
+    width: 26.1rem; /* 404px / 16px */
     height: 2.25rem;
     color: white;
     background: #28519e;

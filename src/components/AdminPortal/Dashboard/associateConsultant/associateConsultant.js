@@ -1,11 +1,11 @@
 import "../associateConsultant/associateConsultant.css";
 import React, { useState, useEffect } from "react";
-import { ReactComponent as DownArrow } from "../../../../Assets/chevron-down.svg";
-import { ReactComponent as UpArrow } from "../../../../Assets/chevron-up.svg";
 import { ReactComponent as SearchIcon } from "../../../../Assets/search.svg";
-import { ReactComponent as Advance } from "../../../../Assets/advance.svg";
-import { ReactComponent as Beginner } from "../../../../Assets/beginner.svg";
-import { ReactComponent as Intermediate } from "../../../../Assets/intermediate.svg";
+import { ReactComponent as DownArroww } from "../../../../Assets/down-scroll.svg";
+import { ReactComponent as UpArrow } from "../../../../Assets/chevron-up.svg";
+import { ReactComponent as GoldStarOri } from "../../../../Assets/Star-Icon-gold-ori.svg";
+import { ReactComponent as SilverStarOri } from "../../../../Assets/Star-Icon-silver-ori.svg";
+import { ReactComponent as BronzeStarOri } from "../../../../Assets/Star-Icon-bronze-ori.svg";
 import { useNavigate } from "react-router-dom";
 
 function getInitials(name) {
@@ -21,8 +21,8 @@ export default function AssociateConsultant(props) {
   };
   const [searchFilterValue, setSearchFilterValue] = useState("");
   const [originalTests, setOriginalTests] = useState(props.data);
+  const [showAllTech, setShowAllTech] = useState(false);
   const [expandedMentor, setExpandedMentor] = useState(null);
-  
   const handleFiltersChange = () => {
     const getFilterItems = (items, searchValue) => {
       if (searchValue) {
@@ -46,6 +46,17 @@ export default function AssociateConsultant(props) {
       setExpandedMentor(null);
     } else {
       setExpandedMentor(intId);
+    }
+  };
+  const renderStars = (level) => {
+    if (level === "Beginner") {
+      return <BronzeStarOri />;
+    } else if (level === "Intermediate") {
+      return <SilverStarOri />;
+    } else if (level === "Advance") {
+      return <GoldStarOri />;
+    } else {
+      return null;
     }
   };
 
@@ -86,57 +97,58 @@ export default function AssociateConsultant(props) {
             </div>
             <div className=" col-4">
               <span
-                style={{ marginLeft: "9.375rem", cursor: "pointer" }}
+                style={{ marginLeft: "10.5rem", cursor: "pointer" }}
                 onClick={() => handleExpand(userData.intId)}
                 className="expand-arrow"
               >
-                {expandedMentor === userData.intId ? (
+                {expandedMentor === userData?.intId ? (
                   <UpArrow />
                 ) : (
-                  <DownArrow />
+
+                  <DownArroww />
+
                 )}
               </span>
             </div>
           </div>
-          {expandedMentor === userData.intId && (
+          {expandedMentor === userData?.intId && (
             <div className="row mt-3">
               <div className="technology">
                 <p className="tech">Technology:</p>
-                {/* {userData &&
+
+
+                {userData &&
                   userData.techNames &&
-                  userData.techNames.map((skill, skillIndex) => (
-                    <span key={skillIndex} className="tech-badge">
-                      {skill && skill.toUpperCase()}
-                    </span>
-                  ))} */}
-                   <div className="tech-tags">
-                      {userData?.techNames?.slice(0, 4).map((value, index) => {
-                        return value === null ? (
-                          <div key={index}></div>
-                        ) : (
-                          <div
-                            key={index}
-                            className="tag-tech d-flex justify-content-center align-items-center"
-                          >
-                            <span>{value}</span>
-                            <div>
-                              {value === "Beginner" ? (
-                                <Beginner />
-                              ) : value === "Intermediate" ? (
-                                <Intermediate />
-                              ) : (
-                                <Advance />
-                              )}
-                            </div>
-                          </div>
-                        );
-                      })}
-                      {userData?.techNames?.slice(4).length!==0 && (
-                        <div className="all-tech">
-                          <span>+ {userData?.techNames?.slice(4).length}</span>
-                        </div>
+                  userData.techNames.slice(0, 4).map((skill, skillIndex) => (
+                    skill && (
+                      <span key={skillIndex} className="tech-div-badge">
+                        {skill.toUpperCase()}
+                        &nbsp;
+                        {renderStars(userData.level[skillIndex])}
+                      </span>
+                    )
+                  ))}
+                {userData &&
+                  userData.techNames &&
+                  userData.techNames.length > 4 && (
+                    <div className="all-tech">
+                      {showAllTech ? (
+                        userData.techNames.slice(4).map((skill, skillIndex) => (
+                          skill && (
+                            <span key={skillIndex} className="tech-div-badge">
+                              {skill.toUpperCase()}
+                              &nbsp;
+                              {renderStars(userData.level[skillIndex + 4])}
+                            </span>
+                          )
+                        ))
+                      ) : (
+                        <button className="more-tech-stacks" onClick={() => setShowAllTech(true)}>
+                          + {userData.techNames.length - 4}
+                        </button>
                       )}
                     </div>
+                  )}
               </div>
             </div>
           )}
@@ -147,24 +159,16 @@ export default function AssociateConsultant(props) {
 
   return (
     <>
-      <div
-        style={{
-          marginLeft: "12.125rem",
-        }}
-      >
+      <div>
         <div className="about-associate" style={{ marginLeft: "0.938rem" }}>
           Associate Consultant
         </div>
 
-        <div
-          ///change here
-          className=" associate-card  "
-          style={{ maxHeight: "23.125", overflow: "auto" }}
-        >
-          <div className="d-flex align-items-center ps-1 insights-search-wrapper">
+        <div className="associate-card">
+          <div className="d-flex align-items-center ps-1 associate-search-wrapper">
             <SearchIcon />
             <input
-              className="search-associate border-none"
+              className="search-associate "
               type="text"
               value={searchFilterValue}
               placeholder="Search"
@@ -174,9 +178,11 @@ export default function AssociateConsultant(props) {
               }}
             />
           </div>
-          {originalTests?.length === 0
-            ? props.data?.map((userData) => renderAssociates(userData))
-            : originalTests?.map((userData) => renderAssociates(userData))}
+          <div style={{ overflow: "auto" }}>
+            {originalTests?.length === 0
+              ? props.data?.map((userData) => renderAssociates(userData))
+              : originalTests?.map((userData) => renderAssociates(userData))}
+          </div>
         </div>
       </div>
     </>
