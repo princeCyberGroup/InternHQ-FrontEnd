@@ -27,9 +27,9 @@
 .report-child-wrapper {
   display: flex;
   flex-direction: column;
-  max-width: 1280px;
-  min-width: 1280px;
-  overflow-x: hidden;
+  overflow: hidden;
+  align-items: center;
+  width: -webkit-fill-available;
 }
 .report-header {
   font-family: "Roboto";
@@ -38,23 +38,25 @@
   font-size: 20px;
   line-height: 23px;
   color: #343435;
-  width: 100%;
+  width: inherit;
   text-align: left;
-  margin-bottom: 23px;
+  margin: 0px 43px 23px 43px;
 }
 .report-filter-wrapper {
-  width: 100%;
   display: flex;
+  width: inherit;
   height: 1.938rem;
   align-items: center;
   justify-content: space-between;
-  margin-bottom: 24px;
+  margin: 0px 43px 24px 43px;
 }
 .report-search {
-  border: 0.126rem solid #e9eceb;
+  border: 1px solid #b2b2b2;
   height: 1.938rem;
   width: 21.875rem;
   display: flex;
+  border-radius: 0.25rem;
+  overflow: hidden;
 }
 .search-icon {
   height: 100%;
@@ -214,6 +216,7 @@
 }
 .report-table-wrapper {
   overflow: auto;
+  width: inherit;
 }
 .report-table-tr {
   padding: 0.625rem 0.75rem;

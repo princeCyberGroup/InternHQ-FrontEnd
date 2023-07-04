@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from "chart.js";
 import { Pie } from "react-chartjs-2";
 import PieChartData from "./PieChartData";
@@ -18,7 +18,6 @@ export const data = {
     },
   ],
 };
-
 const PieChart = () => {
   const [apiData , setApiData] =useState([]);
   useEffect(() => {
@@ -41,36 +40,55 @@ const PieChart = () => {
     const techCount = {};
     const totalCount = data.length;
 
-    data.forEach((item) => {
-      const techName = item.techName;
-      const lowerCaseTechName = techName.toLowerCase();
-      techCount[lowerCaseTechName] = (techCount[lowerCaseTechName] || 0) + 1;
-    });
+  const totalTechCount = pdata?.reduce(
+    (accumulator, item) => accumulator + parseInt(item.techCount),
+    0
+  );
 
-    const techPercentage = {};
+  const fetchData = async () => {
+    const token =
+      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkYXRhIjp7InN0YXR1c0NvZGUiOjIwMCwibWVzc2FnZSI6IkxvZ2luIFN1Y2Nlc3NmdWxsIiwidXNlcklkIjo5MywiZmlyc3ROYW1lIjoiQWRtaW4iLCJsYXN0TmFtZSI6bnVsbCwiZW1haWwiOiJhZG1pbkBjZ2luZmluaXR5LmNvbSIsImlzRGVwbG95ZWQiOmZhbHNlLCJyYW5kb21TdHJpbmciOiJjYjg3MTUifSwiZXhwIjoxNjg4MTIzNTI4LCJpYXQiOjE2ODgxMTQ5Mjh9.IDRlW0sv4v35n-B9kAczNEJYCi9k6DfHe-70dp7-Wwc";
+    //get the token from usedata
+    await fetch(`https://cg-interns-hq.azurewebsites.net/api/v2/getTop5Tech`, {
+      method: "GET",
+      headers: {
+        Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkYXRhIjp7InN0YXR1c0NvZGUiOjIwMCwibWVzc2FnZSI6IkxvZ2luIFN1Y2Nlc3NmdWxsIiwidXNlcklkIjo5MywiZmlyc3ROYW1lIjoiQWRtaW4iLCJsYXN0TmFtZSI6bnVsbCwiZW1haWwiOiJhZG1pbkBjZ2luZmluaXR5LmNvbSIsImlzRGVwbG95ZWQiOmZhbHNlLCJyYW5kb21TdHJpbmciOiJjYjg3MTUifSwiZXhwIjoxNjg4NTc0MDc0LCJpYXQiOjE2ODg0MDEyNzR9.FdkvzcoUcYpqilUqnBog_yS1iSyrI8V8gtuahhhZqdE`,
+      },
+    })
+      .then((response) => {
+        return response.json();
+      })
+      .then(async (data) => {
+        console.log("data", data.response);
+        setPData(data.response);
+      })
+      .catch((error) => {
+        console.log("this is error", error);
+      });
+  };
 
-    for (const techName in techCount) {
-      const count = techCount[techName];
-      const percentage = (count / totalCount) * 100;
-      techPercentage[techName] = percentage.toFixed(2) + "%";
-    }
+  const calculateTechPercentage = (data) => {
+    const techDataWithCounts = pdata?.reduce((accumulator, item) => {
+      const percentage = (
+        (parseInt(item.techCount) / totalTechCount) *
+        100
+      ).toFixed(2);
+      accumulator[item.techName] = percentage;
+      return accumulator;
+    }, {});
 
-    return techPercentage;
+    return techDataWithCounts;
   };
 
   // Calculate the occurrence of each techName in lowercase
-  const techNameOccurrences = PieChartData.reduce((accumulator, item) => {
+  const techNameOccurrences = pdata?.reduce((accumulator, item) => {
     const { techName } = item;
     const lowerCaseTechName = techName.toLowerCase();
     accumulator[lowerCaseTechName] = (accumulator[lowerCaseTechName] || 0) + 1;
     return accumulator;
   }, {});
-  const techPercentages = calculateTechPercentage(PieChartData);
+  const techPercentages = calculateTechPercentage(pdata);
 
-  // Populate the labels and data arrays based on techName occurrences
-  data.labels = Object.keys(techNameOccurrences).map(
-    (techName) => techName.charAt(0).toUpperCase() + techName.slice(1)
-  );
   data.datasets[0].data = Object.values(techNameOccurrences);
 
   const options = {
@@ -84,7 +102,7 @@ const PieChart = () => {
 
           generateLabels: (chart) => {
             const data = chart.data;
-            if (data.labels.length && data.datasets.length) {
+            if (data.labels?.length && data.datasets?.length) {
               return data.labels.map((label, i) => {
                 const dataset = data.datasets[0];
                 const percentage = techPercentages[label.toLowerCase()];

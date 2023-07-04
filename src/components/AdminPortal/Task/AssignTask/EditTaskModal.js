@@ -16,6 +16,7 @@ export const EditTaskModal = ({ task, onEditClose, technology, assignedTo, edite
   const [technologyNames, setTechnologyNames] = useState([]);
   const [selectAllUsers, setSelectAllUsers] = useState(false);
   const [error, setError] = useState(false);
+  const [selectAllChecked, setSelectAllChecked] = useState(false);
 
 
 
@@ -28,6 +29,9 @@ export const EditTaskModal = ({ task, onEditClose, technology, assignedTo, edite
 
   };
   const handleOnEditClose = () => {
+    setSelectAllChecked(false);
+    setTech(editedTask?.technology);
+    setUsers(editedTask?.name);
     onEditClose();
   }
 
@@ -82,12 +86,12 @@ export const EditTaskModal = ({ task, onEditClose, technology, assignedTo, edite
       <div
         className="modal fade"
         id="editTaskModal"
-        data-bs-backdrop="static"
+        // data-bs-backdrop="static"
         tabIndex="-1"
         aria-labelledby="editTaskModalLabel"
         aria-hidden="true"
       >
-        <div className="modal-dialog">
+        <div className="modal-dialog modal-dialog-centered">
           <div className="modal-content">
             <div className="modal-header border-bottom-1">
               <h5
@@ -240,6 +244,8 @@ export const EditTaskModal = ({ task, onEditClose, technology, assignedTo, edite
                           setSelectedUserIds={setSelectedUserIds}
                           setSelectedUsers={setSelectedUsers}
                           selectedUsers={selectedUsers}
+                          selectAllChecked={selectAllChecked}
+                          setSelectAllChecked={setSelectAllChecked}
                         />
                       </ul>
                     </div>

@@ -1,7 +1,9 @@
-import { useState, useEffect, useContext } from "react";
+import { useState, useEffect } from "react";
 import "./mentorlist.css";
 import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
+import { useNavigate } from "react-router-dom";
+
 
 const MentorComponent = () => {
   const [mentors, setMentors] = useState([]);
@@ -30,7 +32,6 @@ const MentorComponent = () => {
       const activeMentors = data.activeMentors;
       setMentors(activeMentors);
       setIsLoading(false);
-      // console.log(isLoading, "Fetched data");
     } catch (error) {
       // console.log("Error occurred while fetching mentors:", error);
     }

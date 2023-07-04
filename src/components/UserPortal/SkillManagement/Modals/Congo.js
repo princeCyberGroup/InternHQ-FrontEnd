@@ -11,8 +11,8 @@ const Congo = () => {
   };
   return (
     <div>
-      <div className="parent-wrapper">
-        <div className="child-wrapper">
+      <div className="parent-congo-wrapper">
+        <div className="child-congo-wrapper">
           <div className="row crossBtn">
             <button
               type="button"

@@ -133,13 +133,13 @@ export const ManageSkillTest = () => {
                 ) : (
                   data?.map((item, index) => {
                     const options = { timeZone: "Asia/Kolkata" };
-                    const currentTimeIST = item?.uploadedOn.toLocaleString(
+                    const currentTimeIST = item?.uploadedOn?.toLocaleString(
                       "en-US",
                       options
                     );
                     const dateObj = new Date(currentTimeIST);
-                    const date = dateObj.toISOString().split("T")[0];
-                    const time = dateObj.toTimeString().split(" ")[0];
+                    {/* const date = dateObj?.toISOString().split("T")[0]; */}
+                    const time = dateObj?.toTimeString().split(" ")[0];
                     return (
                       <tr key={index}>
                         <td className="technology-rows">{index+1}</td>
@@ -150,7 +150,7 @@ export const ManageSkillTest = () => {
                           {item?.numberOfQuestion}
                         </td>
                         <td className="duration-row">{`${item?.examDuration} mins`}</td>
-                        <td className="uploaded-on-row">{`${date} ${time}`}</td>
+                        <td className="uploaded-on-row">{` ${time}`}</td>
                         <td className="delete-btn-row">
                           <button
                             type="button"
