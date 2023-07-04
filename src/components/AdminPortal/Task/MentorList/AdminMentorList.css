@@ -17,6 +17,7 @@ border-radius: 8px;
 }
 
 .mentor-wrapper {
+    cursor: pointer;
     box-sizing: border-box;
 
     /* Auto layout */
@@ -136,6 +137,7 @@ linear-gradient(0deg, #F4F6F5, #F4F6F5); */
     height: 24px;
     padding: 6px;
     border-radius: 2px;
+    font-weight: 400;
     /* border: 1px; */
     gap: 4px
 }

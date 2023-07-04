@@ -1,5 +1,7 @@
 .container-table {
   padding: 0;
+  width: inherit;
+  margin: 0px 43px;
 }
 .table-report{
   width: inherit;

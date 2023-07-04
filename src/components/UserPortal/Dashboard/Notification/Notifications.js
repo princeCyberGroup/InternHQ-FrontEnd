@@ -2,7 +2,6 @@ import { useState, useEffect } from "react";
 import "./Notification.css";
 import NotificationContentSkeleton from "./NotificationContentSkeleton";
 import EmptyNotification from "../EmptyStates/EmptyNoti/EmptyNoti"
-// import angular from '../Notification/angular.svg';
 
 export const NotificationComponent = () => {
   return (
