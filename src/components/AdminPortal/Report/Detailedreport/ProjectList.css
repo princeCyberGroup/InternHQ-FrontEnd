@@ -1,7 +1,14 @@
 .list-parent-wrapper {
-  width: 24.875rem;
   max-height: 15.938rem;
   overflow-y: auto;
+}
+.no-data-wrapper {
+  height: inherit;
+  width: 24.875rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 .list-desp-wrapper {
   border-bottom: 1px solid #e9eceb;
@@ -27,6 +34,7 @@
   height: inherit;
   width: -webkit-fill-available;
   padding: 1rem;
+  padding-right: 0.5rem;
 }
 .brief-desp,
 .detail-desp {
