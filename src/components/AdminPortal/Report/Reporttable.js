@@ -13,7 +13,7 @@ const Reporttable = ({ tableData, isLoading }) => {
   const handleOnclick = (index) => {
     // navigate(`/admin/report/userId?id=${tableData[index][Data.ID]}`);
     sessionStorage.setItem("detailId", tableData[index][Data.ID]);
-    navigate(`/admin/report?userId=${tableData[index][Data.ID]}`);
+    navigate(`/admin/report?userId=${tableData[index][Data.ID]}`, {state: "Report"});
   };
 
   return (

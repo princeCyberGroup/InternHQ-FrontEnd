@@ -36,18 +36,18 @@ const Report = () => {
         }
       );
       setOrgTableData(
-        response?.data.response
-        // response?.data.response.sort(function (a, b) {
-        //   if (b.techNames === 0) return -1;
-        //   return b?.techNames.length - a?.techNames.length;
-        // })
+        // response?.data.response
+        response?.data.response.sort(function (a, b) {
+          // if (!b?.techNames) return -1;
+          return b?.techNames?.length - a?.techNames?.length;
+        })
       );
       setTableData(
-        response?.data.response
-        // response?.data.response.sort(function (a, b) {
-        //   if (b.techNames === 0) return -1;
-        //   return b?.techNames.length - a?.techNames.length;
-        // })
+        // response?.data.response
+        response?.data.response.sort(function (a, b) {
+          // if (!b?.techNames) return -1;
+          return b?.techNames?.length - a?.techNames?.length;
+        })
       );
       setIsLoading(false);
     } catch (error) {
