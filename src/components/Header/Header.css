@@ -4,6 +4,7 @@
   padding-bottom: 0.25rem ;
   display: flex;
   align-items: center;
+  color: #667085;
 }
 .activeBtn.active {
   height: 2.5rem;
