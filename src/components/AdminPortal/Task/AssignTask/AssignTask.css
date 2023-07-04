@@ -27,7 +27,7 @@
 }
 
 .assign-task-container p {
-  width: 6.813rem;
+  /* width: 6.813rem; */
   height: 1.438rem;
 
   font-family: "Roboto";
@@ -90,7 +90,7 @@
   border-radius: 8px;
 }
 
-.task-title {
+/* .task-title {
   width: 3.5rem;
   height: 0.938rem;
 
@@ -101,22 +101,16 @@
   line-height: 0.938rem;
 
   color: #6d6d6d;
-}
+} */
 
 .task-name {
   /* width: 9.75rem; */
-  height: 1.125rem;
-
-  font-family: "Roboto";
+  color: var(--primary-gray, #343435);
+  font-size: 16px;
+  font-family: Roboto;
   font-style: normal;
-  font-weight: 500;
-  font-size: 0.938rem;
-  line-height: 1.125rem;
-  /* identical to box height */
-
-  /* Primary/Blue */
-
-  color: #28519e;
+  font-weight: 600;
+  line-height: normal;
 }
 
 .card-body h6 {
@@ -145,7 +139,7 @@
 
 .dots {
   position: absolute;
-  top: 1.25rem;
+  /* top: 1.25rem; */
   right: 1.563rem;
 }
 

@@ -75,6 +75,16 @@ setTaskName(editedTask?.taskName)
   const handleEditCloseModal = () => {
     setTaskToEdit(null);
     setTaskVersion((prevVersion) => prevVersion + 1);
+
+    
+    const checkboxes = document.querySelectorAll(".tech-checkbox");
+  checkboxes.forEach((checkbox) => {
+    checkbox.checked = false;
+  });
+  const userCheckboxes = document.querySelectorAll(".user-checkbox");
+  userCheckboxes.forEach((checkbox) => {
+    checkbox.checked = false;
+  });
   };
 
   const handleAddCloseModal = () => {
@@ -96,7 +106,7 @@ setTaskName(editedTask?.taskName)
         ""
       )}
       <div className="assign-task-container">
-        <p>Assign Task</p>
+        <p>Assigned Task</p>
         <button
           type="button"
           className="add-mentor-button"
@@ -141,10 +151,10 @@ setTaskName(editedTask?.taskName)
                 />
               </div>
               <div className="card-title mb-0">
-                <p className="mb-1 task-title">Task Title</p>
-                <h5 className="task-name mb-0">{task.taskName}</h5>
+                {/* <p className="mb-1 task-title">Task Title</p> */}
+                <h5 className="task-name mb-0 mt-2">{task.taskName}</h5>
               </div>
-              <div className="card-body p-0" style={{ width: "780px" }}>
+              <div className="card-body p-0 mt-2" style={{ width: "780px" }}>
                 <h6>Description</h6>
                 <p className="card-text">{task.taskDescription}</p>
                 <h6>Technology</h6>
