@@ -28,7 +28,6 @@ const TechDropDown = (props) => {
           }
           return 0; // names are equal
         }));
-        console.log(response.data.response)
       })
       .catch((error) => {
         console.error(error);
