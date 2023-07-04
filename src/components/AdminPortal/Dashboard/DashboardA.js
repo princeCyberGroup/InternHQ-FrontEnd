@@ -4,7 +4,8 @@ import ManageSkillSet from "./ManageSkillSet/manageSkillSet";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import Status from "./Status/Status";
-import TopTech from "./TopTech/topTech";
+// import TopTech from "./TopTech/topTech";
+import PieChartTopTech from "./TopTech/PieChartTopTech";
 import AssociateConsultant from "./associateConsultant/associateConsultant";
 import Insights from "./Insights/insights";
 import { ReactComponent as Right } from "../../../Assets/right.svg";
@@ -68,14 +69,14 @@ const DashboardA = () => {
               <ManageSkillSet data={StatusData} />
               <div className="row main-div d-flex">
                 <div className="col-3">
-                  <TopTech />
+                {/* <TopTech /> */}
+                  <PieChartTopTech />
                 </div>
                 <div className="col-3 associate-div">
                   <AssociateConsultant data={acData} />
                 </div>
               </div>
             </div>
-            {/* //insights */}
             <div className="col-4 ">
               <Insights data={insights} />
             </div>

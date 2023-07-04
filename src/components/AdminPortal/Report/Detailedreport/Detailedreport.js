@@ -1,6 +1,6 @@
 import React, { createContext, useEffect, useState } from "react";
 import "./Detailedreport.css";
-import { Link, useNavigate, useSearchParams } from "react-router-dom";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 import { ReactComponent as Chevron } from "../../../../Assets/Vectorchevron.svg";
 import { ReactComponent as Download } from "../../../../Assets/Download.svg";
 import { ReactComponent as DownloadPdf } from "../../../../Assets/DownloadPDF.svg";
@@ -123,6 +123,7 @@ const Detailedreport = () => {
               </div>
             </div>
             <div className="detailrep-table">
+            <div className="progress-div"><span>Progress Report</span></div>
               <DailyUpdateTableSection userId={idVal} />
             </div>
           </div>
