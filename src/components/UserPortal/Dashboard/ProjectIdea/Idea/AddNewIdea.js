@@ -6,6 +6,8 @@ import EmptyProject from "../../EmptyStates/EmptyProject/MyIdea";
 import { ReactComponent as ExpandMore } from "../../../../../Assets/expand_more.svg";
 import TechDropDown from "../TechDropDown";
 import { UserContext } from "../../../../../Context/Context";
+import Skeleton from "react-loading-skeleton";
+import "react-loading-skeleton/dist/skeleton.css";
 
 const AddNewIdea = () => {
   const { idea } = useContext(UserContext);
@@ -20,6 +22,16 @@ const AddNewIdea = () => {
   const [projNameError, setProjNameError] = useState("");
   const [projDescriptionError, setProjDescriptionError] = useState("");
   const [error, setError] = useState(true);
+  const [techNames, seTechNames] = useState({});
+  const [technologyNames, setTechnologyNames] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    setTimeout(() => {
+      setIsLoading(false);
+    }, 1000);
+  }, []);
+
   const handleClickClear = (event) => {
     event.preventDefault();
     setTextInput("");
@@ -29,14 +41,25 @@ const AddNewIdea = () => {
     setProjNameError("");
     setProjDescriptionError("");
     setTech({});
+    seTechNames({});
+    setTechnologyNames([]);
+
+    const checkboxes = document.querySelectorAll(".tech-checkbox");
+    checkboxes.forEach((checkbox) => {
+      checkbox.checked = false;
+    });
   };
+
+
   const handleChangeProjNameError = (event) => {
     event.preventDefault();
     const name = event.target.value;
     setProjName(name);
     if (!name) {
+      setError(true);
       setProjNameError("Project Name is required");
     } else {
+      setError(false);
       setProjNameError("");
     }
   };
@@ -46,9 +69,11 @@ const AddNewIdea = () => {
     const description = event.target.value;
     setProjDescription(description);
     if (!description) {
+      setError(true);
       setProjDescriptionError("Project Description is required");
     } else {
       setProjDescriptionError("");
+      setError(false);
     }
   };
   const truncate = (str, maxLength) => {
@@ -78,12 +103,11 @@ const AddNewIdea = () => {
     var storedObject = localStorage.getItem("userData");
     var parsedObject = JSON.parse(storedObject);
     var userId = parsedObject.userId;
-    if (projName.length === 0 && projDescription.length < 2 && tech) {
+    if (error) {
       alert("Please fill in the required details");
-      setError(true);
     } else {
       await axios
-        .post("https://cg-interns-hq.azurewebsites.net/projectIdea", {
+        .post(process.env.REACT_APP_API_URL+"/api/v2/projectIdea", {
           projName,
           projDescription,
           userId,
@@ -100,8 +124,13 @@ const AddNewIdea = () => {
       setProjName("");
       setProjDescription("");
       setDropDown(false);
-      setError(false);
       setTech({});
+      seTechNames([]);
+        
+    const checkboxes = document.querySelectorAll(".tech-checkbox");
+    checkboxes.forEach((checkbox) => {
+      checkbox.checked = false;
+    });
     }
   };
 
@@ -113,6 +142,7 @@ const AddNewIdea = () => {
     });
     isObjectEmpty(membersObj);
   }, [textInput, tech]);
+
   return (
     <>
       <div className="card-body pb-0">
@@ -136,7 +166,75 @@ const AddNewIdea = () => {
             </button>
           </div>
         </div>
-        {idea.length === 0 ? (
+        {isLoading ? (
+          <div className="recipe-row">
+            <div className="recipe-text">
+              <h5 className="fw-bold">
+                <Skeleton width={252} />
+              </h5>
+              <p className="fw-normal mb-1">
+                <Skeleton height={60} />
+              </p>
+              <div className="members-div pt-0">
+                <div className="member mb pt-1 fw-bold mb-2">
+                  <Skeleton width={84} height={16} />
+                </div>
+                <div className="project-members ml-0">
+                  <div className="project-idea-members-skeleton">
+                    <p className="name-of-members m-0">
+                      <Skeleton
+                        width={40}
+                        height={40}
+                        circle
+                        highlightColor="#fff"
+                      />
+                    </p>
+                  </div>
+                  <div className="project-idea-members-skeleton">
+                    <p className="name-of-members m-0">
+                      <Skeleton
+                        width={40}
+                        height={40}
+                        circle
+                        highlightColor="#fff"
+                      />
+                    </p>
+                  </div>
+                  <div className="project-idea-members-skeleton">
+                    <p className="name-of-members m-0">
+                      <Skeleton
+                        width={40}
+                        height={40}
+                        circle
+                        highlightColor="#fff"
+                      />
+                    </p>
+                  </div>
+                  <div className="project-idea-members-skeleton">
+                    <p className="name-of-members m-0">
+                      <Skeleton
+                        width={40}
+                        height={40}
+                        circle
+                        highlightColor="#fff"
+                      />
+                    </p>
+                  </div>
+                  <div className="project-idea-members-skeleton">
+                    <p className="name-of-members m-0">
+                      <Skeleton
+                        width={40}
+                        height={40}
+                        circle
+                        highlightColor="rgba(40, 81, 158, 0.2)"
+                      />
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        ) : idea.length === 0 ? (
           <EmptyProject />
         ) : (
           <div className="recipe-row">
@@ -150,7 +248,7 @@ const AddNewIdea = () => {
               <div className="members-div pt-0">
                 <div className="member mb pt-1 fw-bold mb-2">Members:</div>
                 <div className="project-members ml-0">
-                  {first.members.length > 4 ? (
+                  {first.members.length > 9 ? (
                     first.members.map((curElem, index) => {
                       if (curElem != null) {
                         const initials = curElem
@@ -178,13 +276,11 @@ const AddNewIdea = () => {
             </div>
           </div>
         )}
-
         <div className="add-new-idea-container">
           <div
             className="add-new-idea pt-2"
             data-bs-toggle="modal"
-            data-bs-target="#exampleModal"
-            data-bs-whatever="@mdo"
+            data-bs-target="#myIdeaModal"
           >
             <p className="project-p mb-0 fw-bold">
               <span>+</span> Add New Idea
@@ -194,9 +290,9 @@ const AddNewIdea = () => {
       </div>
       <div
         className="modal fade"
-        id="exampleModal"
+        id="myIdeaModal"
         tabIndex="-1"
-        aria-labelledby="exampleModalLabel"
+        aria-labelledby="myIdeaModalLabel"
         aria-hidden="true"
       >
         <div className="modal-dialog">
@@ -204,7 +300,7 @@ const AddNewIdea = () => {
             <div className="modal-header">
               <h1
                 className="modal-title fs-5 add-project-wrapper"
-                id="exampleModalLabel"
+                id="myIdeaModalLabel"
               >
                 Add your Project Idea
               </h1>
@@ -302,6 +398,9 @@ const AddNewIdea = () => {
                       >
                         <TechDropDown
                           techDataComingChild={techDataComingFrmChild}
+                          seTechNames={seTechNames}
+                          techNames={techNames}
+                          technologyNames={technologyNames}
                         />
                       </ul>
                     </div>
@@ -338,7 +437,9 @@ const AddNewIdea = () => {
               <button
                 type="button"
                 className="btn save-button"
-                data-bs-dismiss={error ? "" : "modal"}
+                data-bs-target="#myIdeaModal"
+                data-bs-dismiss={!error ? 'modal' : ''}
+                
                 onClick={(e) => {
                   handleSubmit(e);
                 }}

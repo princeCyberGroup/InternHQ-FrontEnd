@@ -28,21 +28,26 @@ const Report = () => {
   const fetchData = async () => {
     try {
       const response = await axios.get(
-        `https://cg-interns-hq.azurewebsites.net/getuserReport`
+        process.env.REACT_APP_API_URL+`/api/v2/getuserReport`,
+        {
+          headers: {
+            Authorization:`Bearer ${JSON.parse(localStorage.getItem('userData'))['token']}`,
+          },
+        }
       );
       setOrgTableData(
-        response?.data.response
-        // response?.data.response.sort(function (a, b) {
-        //   if (b.techNames === 0) return -1;
-        //   return b?.techNames.length - a?.techNames.length;
-        // })
+        // response?.data.response
+        response?.data.response.sort(function (a, b) {
+          // if (!b?.techNames) return -1;
+          return b?.techNames?.length - a?.techNames?.length;
+        })
       );
       setTableData(
-        response?.data.response
-        // response?.data.response.sort(function (a, b) {
-        //   if (b.techNames === 0) return -1;
-        //   return b?.techNames.length - a?.techNames.length;
-        // })
+        // response?.data.response
+        response?.data.response.sort(function (a, b) {
+          // if (!b?.techNames) return -1;
+          return b?.techNames?.length - a?.techNames?.length;
+        })
       );
       setIsLoading(false);
     } catch (error) {

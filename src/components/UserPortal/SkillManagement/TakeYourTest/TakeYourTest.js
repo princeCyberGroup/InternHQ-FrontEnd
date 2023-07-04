@@ -129,7 +129,12 @@ const TakeYourTest = () => {
     let Quesdata
     try {
       const response = await fetch(
-        `https://cg-interns-hq.azurewebsites.net/getAllQuestions?examId=${examId}`
+        process.env.REACT_APP_API_URL+`/api/v2/getAllQuestions?examId=${examId}`,
+        {
+          headers: {
+            Authorization:`Bearer ${JSON.parse(localStorage.getItem('userData'))['token']}`,
+          },
+        }
       );
       Quesdata = await response.json();
       setAllQuesData(Quesdata);
@@ -164,7 +169,7 @@ const TakeYourTest = () => {
   });
 
   let submitQuesData;
-  const api = "https://cg-interns-hq.azurewebsites.net/submitAnswer";
+  const api = process.env.REACT_APP_API_URL+"/api/v2//submitAnswer";
   const submitTest = async () => {
     try {
       // debugger;
@@ -191,7 +196,7 @@ const TakeYourTest = () => {
           }
           );
           submitQuesData = await response.json();
-          setScore(submitQuesData.scorePercentage);
+          setScore(Math.floor(submitQuesData.scorePercentage));
         } catch (error) {
       console.log(error);
     }

@@ -21,7 +21,7 @@ const Header = () => {
     const today = new Date();
     const formattedToday = today.toISOString().split("T")[0];
 
-    const isToday = mentorTask.some((record) => {
+    const isToday = mentorTask?.some((record) => {
       const assignedDate = record.assignedDate;
       if (assignedDate === formattedToday) {
         return true;
@@ -52,10 +52,10 @@ const Header = () => {
             </div>
           </NavLink>
           <div className="collapse navbar-collapse border-Side" id="navbarNav">
-            {userData.randomString === "07495d" ? (
+            {userData.randomString === process.env.REACT_APP_USER_DES_USER ? (
               // user */
-              <ul className="navbar-nav nav-bg">
-                <li className="nav-item ">
+              <ul className="navbar-nav nav-bg d-flex align-items-center" style={{height:"2.7rem"}}>
+                <li className="nav-item ps-1">
                   <NavLink to="/dashboard" className="btn activeBtn">
                     Dashboard
                   </NavLink>
@@ -67,7 +67,7 @@ const Header = () => {
                   </NavLink>
                 </li>
 
-                <li className="nav-item">
+                <li className="nav-item pe-1">
                   <NavLink to="/skill-Management" className="btn activeBtn ">
                     Skill Management
                   </NavLink>
@@ -75,8 +75,8 @@ const Header = () => {
               </ul>
             ) : (
               // Admin */
-              <ul className="navbar-nav nav-bg">
-                <li className="nav-item ">
+              <ul className="navbar-nav nav-bg d-flex align-items-center"  style={{height:"2.7rem"}}>
+                <li className="nav-item ps-1">
                   <NavLink to="/admin/dashboard" className="btn activeBtn">
                     Dashboard
                   </NavLink>
@@ -99,7 +99,7 @@ const Header = () => {
                   </NavLink>
                 </li>
                 <li
-                  className="nav-item"
+                  className="nav-item pe-1"
                   onClick={(e) => {
                     e.preventDefault();
                     alert("Developement is in progress");
@@ -114,7 +114,7 @@ const Header = () => {
             )}
           </div>
 
-          {userData.randomString === "07495d" ? (
+          {userData.randomString === process.env.REACT_APP_USER_DES_USER ? (
             <>
               <MentorAssignedAlerts func={anotherFunc} setState={isTodayDate} />
             </>

@@ -26,11 +26,16 @@ const SkillsAdded = () => {
     try {
       //const response = await fetch(`https://cg-interns-hq.azurewebsites.net/skillAdded?userId=41`);
       const response = await fetch(
-        `https://cg-interns-hq.azurewebsites.net/skillAdded?userId=${userId}`
+        process.env.REACT_APP_API_URL+`/api/v2/skillAdded?userId=${userId}`,
+        {
+          headers: {
+            Authorization:`Bearer ${JSON.parse(localStorage.getItem('userData'))['token']}`,
+          },
+        }
       );
       const data = await response.json();
 
-      // setAllData(data.response);
+      setAllData(data.response);
       setIsLoading(false);
     } catch (error) {
       console.log(error);

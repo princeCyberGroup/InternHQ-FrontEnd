@@ -4,7 +4,8 @@ import ManageSkillSet from "./ManageSkillSet/manageSkillSet";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import Status from "./Status/Status";
-import TopTech from "./TopTech/topTech";
+// import TopTech from "./TopTech/topTech";
+import PieChartTopTech from "./TopTech/PieChartTopTech";
 import AssociateConsultant from "./associateConsultant/associateConsultant";
 import Insights from "./Insights/insights";
 import { ReactComponent as Right } from "../../../Assets/right.svg";
@@ -22,7 +23,12 @@ const DashboardA = () => {
   const fetchData = async () => {
     try {
       const response = await fetch(
-        `https://cg-interns-hq.azurewebsites.net/getDashboardStatus`
+        process.env.REACT_APP_API_URL+`/api/v2/getDashboardStatus`,
+        {
+          headers: {
+            Authorization:`Bearer ${JSON.parse(localStorage.getItem('userData'))['token']}`,
+          },
+        }
       );
       const rsp = await response.json();
       setStatusData(rsp);
@@ -34,7 +40,12 @@ const DashboardA = () => {
   const InsightData = async () => {
     try {
       const response = await fetch(
-        `https://cg-interns-hq.azurewebsites.net/getInsights`
+        process.env.REACT_APP_API_URL+`/api/v2/getInsights`,
+        {
+          headers: {
+            Authorization:`Bearer ${JSON.parse(localStorage.getItem('userData'))['token']}`,
+          },
+        }
       );
       const insData = await response.json();
       setInsights(insData.response);
@@ -68,14 +79,14 @@ const DashboardA = () => {
               <ManageSkillSet data={StatusData} />
               <div className="row main-div d-flex">
                 <div className="col-3">
-                  <TopTech />
+                {/* <TopTech /> */}
+                  <PieChartTopTech />
                 </div>
                 <div className="col-3 associate-div">
                   <AssociateConsultant data={acData} />
                 </div>
               </div>
             </div>
-            {/* //insights */}
             <div className="col-4 ">
               <Insights data={insights} />
             </div>

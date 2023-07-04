@@ -15,7 +15,7 @@ export const ManageSkillTest = () => {
   const handleDelete = (id) => {
     console.log("this is id and it is working", id);
     axios
-      .post(`https://cg-interns-hq.azurewebsites.net/removeExam`, {
+      .post(process.env.REACT_APP_API_URL+`/api/v2/removeExam`, {
         examId: id,
       })
       .then((response) => {
@@ -37,7 +37,12 @@ export const ManageSkillTest = () => {
   const fetchData = async () => {
     try {
       const response = await axios.get(
-        `https://cg-interns-hq.azurewebsites.net/getAllExam`
+        process.env.REACT_APP_API_URL+`/api/v2/getAllExam`,
+        {
+          headers: {
+            Authorization:`Bearer ${JSON.parse(localStorage.getItem('userData'))['token']}`,
+          },
+        }
       );
       setData(response.data);
       setIsLoading(false);
@@ -128,13 +133,13 @@ export const ManageSkillTest = () => {
                 ) : (
                   data?.map((item, index) => {
                     const options = { timeZone: "Asia/Kolkata" };
-                    const currentTimeIST = item?.uploadedOn.toLocaleString(
+                    const currentTimeIST = item?.uploadedOn?.toLocaleString(
                       "en-US",
                       options
                     );
                     const dateObj = new Date(currentTimeIST);
-                    const date = dateObj.toISOString().split("T")[0];
-                    const time = dateObj.toTimeString().split(" ")[0];
+                    {/* const date = dateObj?.toISOString().split("T")[0]; */}
+                    const time = dateObj?.toTimeString().split(" ")[0];
                     return (
                       <tr key={index}>
                         <td className="technology-rows">{index+1}</td>
@@ -145,7 +150,7 @@ export const ManageSkillTest = () => {
                           {item?.numberOfQuestion}
                         </td>
                         <td className="duration-row">{`${item?.examDuration} mins`}</td>
-                        <td className="uploaded-on-row">{`${date} ${time}`}</td>
+                        <td className="uploaded-on-row">{` ${time}`}</td>
                         <td className="delete-btn-row">
                           <button
                             type="button"

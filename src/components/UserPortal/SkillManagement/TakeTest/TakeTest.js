@@ -39,7 +39,12 @@ const TakeTest = ({ test }) => {
   const fetchTests = async (examId) => {
     try {
       const response = await fetch(
-        "https://cg-interns-hq.azurewebsites.net/getAllExam"
+        process.env.REACT_APP_API_URL+"/api/v2/getAllExam",
+        {
+          headers: {
+            Authorization:`Bearer ${JSON.parse(localStorage.getItem('userData'))['token']}`,
+          },
+        }
       );
       const data = await response.json();
       setAllData(data);
@@ -59,13 +64,27 @@ const TakeTest = ({ test }) => {
       }
       return items;
     };
+    
     const filters = getFilterItems(originalTests, searchFilterValue);
-    setTests(filters);
+
+    let filteredTests = [];
+
+    if (activeButton === "all") {
+      filteredTests = filters;
+    } else if (activeButton === "beginner") {
+      filteredTests = filters.filter((test) => test.level === "Beginner");
+    } else if (activeButton === "inter") {
+      filteredTests = filters.filter((test) => test.level === "Intermediate");
+    } else if (activeButton === "advanced") {
+      filteredTests = filters.filter((test) => test.level === "Advance");
+    }
+
+    setTests(filteredTests);
   };
 
   useEffect(() => {
     handleFiltersChange();
-  }, [searchFilterValue]);
+  }, [searchFilterValue, activeButton]);
 
   const navigate = useNavigate();
   const location = useLocation();
@@ -126,7 +145,6 @@ const TakeTest = ({ test }) => {
             }`}
             onClick={() => {
               setActiveButton("all");
-              setTests(allData);
             }}
           >
             <button className="btn-nav p-0">All</button>
@@ -137,7 +155,6 @@ const TakeTest = ({ test }) => {
             }`}
             onClick={() => {
               setActiveButton("beginner");
-              setTests(allData.filter((tests) => tests.level === "Beginner"));
             }}
           >
             <button className="btn-nav p-0">Beginner</button>
@@ -148,9 +165,6 @@ const TakeTest = ({ test }) => {
             }`}
             onClick={() => {
               setActiveButton("inter");
-              setTests(
-                allData.filter((tests) => tests.level === "Intermediate")
-              );
             }}
           >
             <button className="btn-nav p-0">Intermediate</button>
@@ -161,7 +175,6 @@ const TakeTest = ({ test }) => {
             }`}
             onClick={() => {
               setActiveButton("advanced");
-              setTests(allData.filter((tests) => tests.level === "Advance"));
             }}
           >
             <button className="btn-nav p-0">Advanced</button>
@@ -342,3 +355,4 @@ const TakeTest = ({ test }) => {
 };
 
 export default TakeTest;
+

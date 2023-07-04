@@ -101,7 +101,7 @@ export const AddMentorModal = ({ isOpen, onClose, onAddMentor }) => {
     else{
   
     try {
-      await axios.post("https://cg-interns-hq.azurewebsites.net/postMentorDetails", {
+      await axios.post(process.env.REACT_APP_API_URL+"/api/v2/postMentorDetails", {
         mentorName,
         emailId,
         imageUrl,
@@ -148,6 +148,10 @@ export const AddMentorModal = ({ isOpen, onClose, onAddMentor }) => {
 
   const handleDesignation = (e) => {
     setDesignation(e.target.value);
+    if(!designation){
+      setError(true)
+    }
+    else{setError(false)}
   };
 
   const handleEmailId = (e) => {
@@ -179,11 +183,11 @@ export const AddMentorModal = ({ isOpen, onClose, onAddMentor }) => {
         tabindex="-1"
         aria-labelledby="skillModalLabel"
         aria-hidden="true"
-        data-bs-backdrop="static"
+        // data-bs-backdrop="static"
         data-bs-keyboard="false" 
 
       >
-        <div className="modal-dialog">
+        <div className="modal-dialog modal-dialog-centered">
           <div className="modal-content">
             <div className="modal-header">
               <h5 className="modal-title modalheading-text" id="mentorAddmodal">

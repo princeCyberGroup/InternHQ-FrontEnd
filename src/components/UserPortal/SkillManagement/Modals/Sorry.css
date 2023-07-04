@@ -1,20 +1,23 @@
 /* Congo MODAL */
 
 .sorry-parent-wrapper {
-  position: absolute;
+  position: fixed;
   height: 100vh;
   width: 100vw;
   background-color: rgba(0, 0, 0, 0.5);
-  z-index: 5;
+  z-index: 100;
   top: 0;
   display: flex;
   justify-content: center;
   align-items: center;
+  overflow-y: hidden;
+  
 }
 
 .sorry-child-wrapper {
   background-color: #ffffff;
   width: 464px;
+  border-radius: 8px;
 }
 
 

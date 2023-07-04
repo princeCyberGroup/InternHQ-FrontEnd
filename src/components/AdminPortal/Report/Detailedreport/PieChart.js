@@ -70,7 +70,12 @@ const PieChart = () => {
 
   const fetchData = async () => {
     await fetch(
-      `https://cg-interns-hq.azurewebsites.net/getDailyTaskTrackerRecords?userId=${piechartId}`
+      process.env.REACT_APP_API_URL+`/api/v2/getDailyTaskTrackerRecords?userId=${piechartId}`,
+      {
+        headers: {
+          Authorization:`Bearer ${JSON.parse(localStorage.getItem('userData'))['token']}`,
+        },
+      }
     )
       .then((response) => {
         return response.json();
@@ -231,7 +236,7 @@ const PieChart = () => {
           font: {
             family: "Roboto",
             style: "normal",
-            weight: "bold", 
+            weight: "bold",
             size: 12,
             lineHeight: 16,
           },
@@ -276,8 +281,9 @@ const PieChart = () => {
     },
     responsive: true,
     maintainAspectRatio: false,
+    width: 410,
+    height: 220,
   };
-
 
   return (
     <div className="container" style={{ height: "inherit" }}>
@@ -328,12 +334,11 @@ const PieChart = () => {
             ) : (
               <div
                 style={{
-                  width: "394px",
+                  width: "410px",
                   height: "220px",
-                  // position: "absolute",
                 }}
               >
-                <Pie data={data} options={options} width={158} height={158} />
+                <Pie data={data} options={options}  />
               </div>
             )}
           </div>

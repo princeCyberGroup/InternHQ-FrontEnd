@@ -1,6 +1,6 @@
 import React, { createContext, useEffect, useState } from "react";
 import "./Detailedreport.css";
-import { Link, useNavigate, useSearchParams } from "react-router-dom";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 import { ReactComponent as Chevron } from "../../../../Assets/Vectorchevron.svg";
 import { ReactComponent as Download } from "../../../../Assets/Download.svg";
 import { ReactComponent as DownloadPdf } from "../../../../Assets/DownloadPDF.svg";
@@ -29,7 +29,12 @@ const Detailedreport = () => {
   const fetchData = async () => {
     try {
       const response = await axios.get(
-        `https://cg-interns-hq.azurewebsites.net/getAllDetailsOfIntern?userId=${idVal}`
+        process.env.REACT_APP_API_URL+`/api/v2/getAllDetailsOfIntern?userId=${idVal}`,
+        {
+          headers: {
+            Authorization:`Bearer ${JSON.parse(localStorage.getItem('userData'))['token']}`,
+          },
+        }
       );
       setData(response.data?.userDetails);
     } catch (error) {
@@ -123,6 +128,7 @@ const Detailedreport = () => {
               </div>
             </div>
             <div className="detailrep-table">
+            <div className="progress-div"><span>Progress Report</span></div>
               <DailyUpdateTableSection userId={idVal} />
             </div>
           </div>

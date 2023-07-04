@@ -23,6 +23,7 @@ export const AddNewTask = ({ onAddClose }) => {
   const [selectedUsers, setSelectedUsers] = useState([]);
   const [selectedTechIds, setSelectedTechIds] = useState([]);
   const [technologyNames, setTechnologyNames] = useState([]);
+  const [selectAllChecked, setSelectAllChecked] = useState(false);
 
   const handleClickClear = (e) => {
     e.preventDefault();
@@ -36,6 +37,8 @@ export const AddNewTask = ({ onAddClose }) => {
     setSelectedUsers([]);
     setTech({});
     setUsers({});
+
+    setSelectAllChecked(false);
 
     const userCheckboxes = document.querySelectorAll(".user-checkbox");
     userCheckboxes.forEach((checkbox) => {
@@ -69,7 +72,7 @@ export const AddNewTask = ({ onAddClose }) => {
       alert("Please fill out the necessary fields");
     } else {
       await axios
-        .post("https://cg-interns-hq.azurewebsites.net/addNewTask", {
+        .post(process.env.REACT_APP_API_URL+"/api/v2/addNewTask", {
           taskName,
 
           taskDescription,
@@ -134,13 +137,13 @@ export const AddNewTask = ({ onAddClose }) => {
       <div
         className="modal fade"
         id="addTaskModal"
-        data-bs-backdrop="static"
+        // data-bs-backdrop="static"
         tabindex="-1"
         data-bs-keyboard="false"
         aria-labelledby="staticBackdropLabel"
         aria-hidden="true"
       >
-        <div className="modal-dialog">
+        <div className="modal-dialog modal-dialog-centered">
           <div className="modal-content">
             <div className="modal-header border-bottom-1">
               <h5
@@ -300,6 +303,8 @@ export const AddNewTask = ({ onAddClose }) => {
                           setSelectedUserIds={setSelectedUserIds}
                           setSelectedUsers={setSelectedUsers}
                           selectedUsers={selectedUsers}
+                          selectAllChecked={selectAllChecked}
+                          setSelectAllChecked={setSelectAllChecked}
                         />
                       </ul>
                     </div>
