@@ -31,9 +31,24 @@ const TopicSelect = (props) => {
   const fetchTopics = async () => {
     try {
       const response = await axios.get(
-        "https://cg-interns-hq.azurewebsites.net/getAllTechnology"
+        process.env.REACT_APP_API_URL+"/api/v2/getAllTechnology",
+        {
+          headers: {
+            Authorization:`Bearer ${JSON.parse(localStorage.getItem('userData'))['token']}`,
+          },
+        }
       );
-      setTopics(response.data.response);
+      setTopics(response.data.response.sort((a, b) => {
+        const nameA = a.techName.toUpperCase();
+        const nameB = b.techName.toUpperCase();
+        if (nameA < nameB) {
+          return -1;
+        }
+        if (nameA > nameB) {
+          return 1;
+        }
+        return 0; // names are equal
+      }));
     } catch (error) {
       console.error("Error fetching topics:", error);
     }
@@ -46,7 +61,12 @@ const storedObject = localStorage.getItem("userData");
   const Projects = async () => {
     try {
       const response = await axios.get(
-        `https://cg-interns-hq.azurewebsites.net/getProject?userId=${userId}`
+        process.env.REACT_APP_API_URL+`/api/v2/getProject?userId=${userId}`,
+        {
+          headers: {
+            Authorization:`Bearer ${JSON.parse(localStorage.getItem('userData'))['token']}`,
+          },
+        }
       );
 
       setMyProjects(response.data.response);
@@ -123,11 +143,29 @@ const storedObject = localStorage.getItem("userData");
               {myProjects?.length===0 ? (<option value="default" disabled >
                 No Project Added
               </option>) : myProjects?.map((topic, index) => (
-                <option className="dtt-opns" key={index} value={topic}>
+                <option className="dtt-opns" key={index} value={topic.projectNames}>
                   {topic.projectNames}
                 </option>
               ))}
             </select>
+          </>
+        );
+
+        case "Session":
+        return (
+          <>
+            <label htmlFor="topic" className="form-label dtt-t">
+              Session Name <span style={{ color: 'red' }}>*</span>
+            </label>
+            <input
+              type="text"
+              id="taskName"
+              disabled={disabled}
+              value={topicName}
+              className="form-control dtt-selector"
+              placeholder="Enter Session Name"
+              onChange={onChange}
+            />
           </>
         );
 
@@ -148,7 +186,7 @@ const storedObject = localStorage.getItem("userData");
               <option value="" disabled hidden>
                 Select Topic
               </option>
-              {topics.map((topic) => (
+              {topics.sort().map((topic) => (
                 <option
                   className="dtt-opns"
                   key={topic.techId}

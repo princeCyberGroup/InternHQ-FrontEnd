@@ -2,7 +2,6 @@ import { useState, useEffect } from "react";
 import "./Notification.css";
 import NotificationContentSkeleton from "./NotificationContentSkeleton";
 import EmptyNotification from "../EmptyStates/EmptyNoti/EmptyNoti"
-// import angular from '../Notification/angular.svg';
 
 export const NotificationComponent = () => {
   return (
@@ -31,7 +30,12 @@ export const NewNotifications = () => {
     try {
       // Make an API request to fetch data
       const response = await fetch(
-        "https://cg-interns-hq.azurewebsites.net/getNotification"
+        process.env.REACT_APP_API_URL+"/api/v2/getNotification",
+        {
+          headers: {
+            Authorization:`Bearer ${JSON.parse(localStorage.getItem('userData'))['token']}`,
+          },
+        }
       );
       const data = await response.json();
       setNotifications(data.response);
@@ -52,8 +56,8 @@ export const NewNotifications = () => {
           <NotificationContentSkeleton />
         </>
       ) : (
-        notifications.length == 0 ? <EmptyNotification/> :
-        notifications.map((user) => {
+        notifications?.length === 0 ? <EmptyNotification/> :
+        notifications?.map((user) => {
           return (
             <>
               <div key={user.userId} className="notification-wrapper">

@@ -6,31 +6,37 @@ import { ReactComponent as BronzeStar } from "../../../../Assets/Star-Icon-bronz
 import "./SkillsAdded.css";
 // import nonActiveimageStar from '../Assets/nonActiveimageStar.png';
 import { ReactComponent as EmptyStar } from "../../../../Assets/emptystar.svg";
+import SkillsAddedSkeleton from "./SkillsAddedSkeleton";
 // import { ReactComponent as Star } from "../../../../Assets/Star.svg";
 
 const SkillsAdded = () => {
   var storedObject = localStorage.getItem("userData");
   var parsedObject = JSON.parse(storedObject);
   var userId = parsedObject.userId;
-
-  const [isLoading, setIsLoading] = useState(true);
   const [allData, setAllData] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
+
   useEffect(() => {
     setTimeout(() => {
-      return setIsLoading(false);
-    }, 2000);
-    fetchData();
+      fetchData();
+    }, 1000);
   }, []);
 
   const fetchData = async () => {
     try {
       //const response = await fetch(`https://cg-interns-hq.azurewebsites.net/skillAdded?userId=41`);
       const response = await fetch(
-        `https://cg-interns-hq.azurewebsites.net/skillAdded?userId=${userId}`
+        process.env.REACT_APP_API_URL+`/api/v2/skillAdded?userId=${userId}`,
+        {
+          headers: {
+            Authorization:`Bearer ${JSON.parse(localStorage.getItem('userData'))['token']}`,
+          },
+        }
       );
       const data = await response.json();
 
       setAllData(data.response);
+      setIsLoading(false);
     } catch (error) {
       console.log(error);
     }
@@ -41,17 +47,29 @@ const SkillsAdded = () => {
       <div className="heading">
         <p>Skills Added</p>
       </div>
-
-      {/* //main card  */}
-      <div>
-        {allData.length === 0 ? (
+      <div
+        className="card skill-added-card"
+        style={{ boxShadow: " 0px 4px 20px 0px rgba(40, 52, 73, 0.15)", overflowY: "scroll" , overflowX: "hidden"}}
+      >
+        {isLoading ? (
+          <>
+            <SkillsAddedSkeleton />
+            <SkillsAddedSkeleton />
+            <SkillsAddedSkeleton />
+            <SkillsAddedSkeleton />
+            <SkillsAddedSkeleton />
+          </>
+        ) : allData.length === 0 ? (
           <EmptySkillsAdded />
         ) : (
-          allData.map((DataUsed) => (
-            <div className="card" style={{ width: "18rem" }}>
+          allData.map((DataUsed, key) => (
+            <div style={{ width: "17.9rem" }} key={key}>
               <div
-                className="card-body p-0"
-                style={{ maxHeight: "calc(100vh - 30vh)", overflow: "auto" }}
+                className="p-0"
+                style={{
+                  maxHeight: "calc(100vh - 30vh)",
+                  borderBottom: "1px solid #E9ECEB",
+                }}
               >
                 <div className="row cards">
                   <div className="col-12 d-flex mainImg">
@@ -69,7 +87,7 @@ const SkillsAdded = () => {
                         {DataUsed.examScores[0] >= 8 ? (
                           // <GoldStar />
                           // <SilverStar />
-                          <BronzeStar style={{ fontSize: '3.125rem' }} />
+                          <BronzeStar style={{ fontSize: "3.125rem" }} />
                         ) : (
                           <EmptyStar />
                         )}
@@ -96,7 +114,7 @@ const SkillsAdded = () => {
                         {DataUsed.examScores[1] >= 8 ? (
                           // <GoldStar />
                           // <SilverStar />
-                          <SilverStar style={{ fontSize: '3.125rem' }} />
+                          <SilverStar style={{ fontSize: "3.125rem" }} />
                         ) : (
                           <EmptyStar />
                         )}
@@ -127,7 +145,7 @@ const SkillsAdded = () => {
                     >
                       <div className="my-spacing">
                         {DataUsed.examScores[2] >= 8 ? (
-                          <GoldStar style={{ fontSize: '3.125rem' }} />
+                          <GoldStar style={{ fontSize: "3.125rem" }} />
                         ) : (
                           <EmptyStar />
                         )}
@@ -152,7 +170,7 @@ const SkillsAdded = () => {
                     >
                       <div className="my-spacing">
                         {DataUsed.examScores[3] >= 8 ? (
-                           <GoldStar style={{ fontSize: '3.125rem' }} />
+                          <GoldStar style={{ fontSize: "3.125rem" }} />
                         ) : (
                           <EmptyStar />
                         )}

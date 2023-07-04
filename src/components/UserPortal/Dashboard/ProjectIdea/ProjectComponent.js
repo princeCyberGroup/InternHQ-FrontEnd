@@ -5,9 +5,11 @@ import "./ProjectComponent.css";
 import "./Idea/AddNewIdea.css";
 import "./Project/AddProject.css";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 import { UserContext } from "../../../../Context/Context";
 
 const ProjectComponent = () => {
+  const navigate = useNavigate();
   const { setIdea, setProject } = useContext(UserContext);
   const [pActive, setPActive] = useState(true);
   // const [projectData, setProjectData] = useState([]);
@@ -18,22 +20,38 @@ const ProjectComponent = () => {
 
   const MyIdeaComponent = async () => {
     try {
-      const response = await axios.get(`https://cg-interns-hq.azurewebsites.net/getProjectIdea?userId=${userId}`);
+      const response = await axios.get(process.env.REACT_APP_API_URL+`/api/v2/getProjectIdea?userId=${userId}`,
+      {
+        headers: {
+          Authorization:`Bearer ${JSON.parse(localStorage.getItem('userData'))['token']}`,
+        },
+      });
 
       setIdea(response.data.response);
     } catch (error) {
-      console.log("Error ", error.response?.data);
+      if(error.response?.data.statusCode===401){
+       return navigate("/error?statusCode=400");
+      }
+      // console.log("Error ", error.response?.data);
       // console.log(error.response?.data.msg);
     }
   };
   const ProjectApi = async () => {
     try {
       const response = await axios.get(
-        `https://cg-interns-hq.azurewebsites.net/getProject?userId=${userId}`
+        process.env.REACT_APP_API_URL+`/api/v2/getProject?userId=${userId}`,
+        {
+          headers: {
+            Authorization:`Bearer ${JSON.parse(localStorage.getItem('userData'))['token']}`,
+          },
+        }
       );
 
       setProject(response.data.response);
     } catch (error) {
+      if(error.response?.data.statusCode===401){
+        navigate("/error?statusCode=400");
+      }
       // console.log(error.response?.data);
       // console.log(error.response?.data.msg);
     }

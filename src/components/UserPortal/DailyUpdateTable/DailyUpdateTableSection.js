@@ -10,7 +10,6 @@ import ImageTooltip from "./ImageTooltip";
 import DailyUpdateTableSectionSkeleton from "./DailyUpdateTableSectionSkeleton";
 
 const DailyUpdateTableSection = (props) => {
-  //data
   const [tableData, setTableData] = useState([]);
   const [originalTableData, setOriginalTableData] = useState([]);
   const [searchFilterValue, setSearchFilterValue] = useState("");
@@ -31,7 +30,12 @@ const DailyUpdateTableSection = (props) => {
 
   const fetchData = async () => {
     await fetch(
-      `https://cg-interns-hq.azurewebsites.net/getDailyTaskTrackerRecords?userId=${props.userId}`
+      process.env.REACT_APP_API_URL+`/api/v2/getDailyTaskTrackerRecords?userId=${props.userId}`,
+      {
+        headers: {
+          Authorization:`Bearer ${JSON.parse(localStorage.getItem('userData'))['token']}`,
+        },
+      }
     )
       .then((response) => {
         return response.json();
@@ -40,7 +44,6 @@ const DailyUpdateTableSection = (props) => {
         setTableData(data.response);
         setOriginalTableData(data.response);
         setIsLoading(false);
-        props.sendDataToDailyUpdate(data.response);
       });
   };
 
@@ -124,7 +127,7 @@ const DailyUpdateTableSection = (props) => {
       return items;
     };
 
-    const filterDropDown = (items, dropDownValue, tableArr) => {
+    const filterDropDown = (items, dropDownValue) => {
       if (dropDownValue && dropDownValue !== "Select learning type") {
         return items?.filter((item) => item.learning === dropDownValue);
       }
@@ -132,7 +135,7 @@ const DailyUpdateTableSection = (props) => {
       return items;
     };
 
-    const getFilterDate = (items, dateFilterValue, tableArr) => {
+    const getFilterDate = (items, dateFilterValue) => {
       if (dateFilterValue !== "") {
         const dateObject = new Date(dateFilterValue);
         const year = dateObject.getFullYear();
@@ -161,7 +164,12 @@ const DailyUpdateTableSection = (props) => {
 
   useEffect(() => {
     handleFiltersChange();
-  }, [dropdownFilterValue, searchFilterValue, dateFilterValue]);
+  }, [
+    dropdownFilterValue,
+    searchFilterValue,
+    dateFilterValue,
+    originalTableData,
+  ]);
 
   return (
     <div className="mb-3">
@@ -208,16 +216,16 @@ const DailyUpdateTableSection = (props) => {
               </tr>
               {isLoading ? (
                 <>
-                <DailyUpdateTableSectionSkeleton/>
-                <DailyUpdateTableSectionSkeleton/>
-                <DailyUpdateTableSectionSkeleton/>
-                <DailyUpdateTableSectionSkeleton/>
-                <DailyUpdateTableSectionSkeleton/>
-                <DailyUpdateTableSectionSkeleton/>
-                <DailyUpdateTableSectionSkeleton/>
-                <DailyUpdateTableSectionSkeleton/>
+                  <DailyUpdateTableSectionSkeleton />
+                  <DailyUpdateTableSectionSkeleton />
+                  <DailyUpdateTableSectionSkeleton />
+                  <DailyUpdateTableSectionSkeleton />
+                  <DailyUpdateTableSectionSkeleton />
+                  <DailyUpdateTableSectionSkeleton />
+                  <DailyUpdateTableSectionSkeleton />
+                  <DailyUpdateTableSectionSkeleton />
                 </>
-              ) : (arrayCurrentResults == undefined ||
+              ) : arrayCurrentResults == undefined ||
                 arrayCurrentResults?.length === 0 ? (
                 <tr>
                   <td colSpan={6}>
@@ -299,7 +307,7 @@ const DailyUpdateTableSection = (props) => {
                     </tr>
                   );
                 })
-              ))}
+              )}
 
               <Modal
                 size="lg"

@@ -77,14 +77,21 @@ export default function DashboardGraph() {
   var userId = parsedObject.userId;
   const fetchData = async () => {
     await fetch(
-      `https://cg-interns-hq.azurewebsites.net/getDailyTaskTrackerRecords?userId=${userId}`
+      process.env.REACT_APP_API_URL+`/api/v2/getDailyTaskTrackerRecords?userId=${userId}`,
+      {
+        headers: {
+          Authorization:`Bearer ${JSON.parse(localStorage.getItem('userData'))['token']}`,
+        },
+      }
     )
       .then((response) => {
         return response.json();
       })
       .then(async (data) => {
         setTableData(data.response);
-      });
+      }).catch((error)=>{
+        console.log(error)
+      })
   };
 
   function getMonthName(monthNumber) {
