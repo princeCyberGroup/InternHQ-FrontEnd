@@ -21,7 +21,8 @@ const ViewAllProjects = () => {
   const [textInput, setTextInput] = useState("");
   const [memberNames, setMemberNames] = useState({});
   const [techNames, seTechNames] = useState({});
-  const [error, setError] = useState("");
+  const [error, setError] = useState(true);
+  const [projNameError, setProjNameError] = useState("");
   const [desError, setDesError] = useState("");
   const [projLinkError, setProjLinkError] = useState("");
   const [projectIndex, setProjectIndex] = useState(0);
@@ -37,17 +38,21 @@ const ViewAllProjects = () => {
     const name = event.target.value;
     setProjName(name);
     if (!name) {
-      setError("Project name is required");
+      setError(true);
+      setProjNameError("Project name is required");
     } else {
-      setError("");
+      setError(false);
+      setProjNameError("");
     }
   };
   const handleProjectDescriptionChange = (event) => {
     const description = event.target.value;
     setProjDescription(description);
     if (!description) {
+      setError(true);
       setDesError("Project description is required");
     } else {
+      setError(false);
       setDesError("");
     }
   };
@@ -62,13 +67,22 @@ const ViewAllProjects = () => {
     setProjectLink("");
     setHostedLink("");
     setDropDown(false);
+    setTech({});
+    seTechNames({});
+    
+    const checkboxes = document.querySelectorAll(".tech-checkbox");
+    checkboxes.forEach((checkbox) => {
+      checkbox.checked = false;
+    });
   };
   const handleProjectLinkChange = (event) => {
     const link = event.target.value;
     setProjectLink(link);
     if (!link) {
+      setError(true);
       setProjLinkError("Project link is required");
     } else {
+      setError(false);
       setProjLinkError("");
     }
   };
@@ -87,24 +101,37 @@ const ViewAllProjects = () => {
     var storedObject = localStorage.getItem("userData");
     var parsedObject = JSON.parse(storedObject);
     var userId = parsedObject.userId;
-    axios
-      .post(process.env.REACT_APP_API_URL+"/api/v2/Project", {
-        projName,
-        projDescription,
-        userId,
-        projectLink,
-        hostedLink,
-        technologyNames: techNames,
-        memberNames: memberNames,
-      })
+    if (error) {
+      alert("Please fill in the required details");
+
+    }
+    else {
+      axios
+        .post(process.env.REACT_APP_API_URL+"/api/v2/Project", {
+          projName,
+          projDescription,
+          userId,
+          projectLink,
+          hostedLink,
+          technologyNames: techNames,
+          memberNames: memberNames,
+        })
       .catch((err) => {
         console.log(err);
       });
-    setTextInput("");
-    setProjName("");
-    setProjDescription("");
-    setProjectLink("");
-    setHostedLink("");
+      setTextInput("");
+      setProjName("");
+      setProjDescription("");
+      setProjectLink("");
+      setHostedLink("");
+      setTech({});
+      seTechNames({});
+    
+    const checkboxes = document.querySelectorAll(".tech-checkbox");
+    checkboxes.forEach((checkbox) => {
+      checkbox.checked = false;
+    });
+    }
   };
 
   // useEffect(() => {
@@ -155,7 +182,7 @@ const ViewAllProjects = () => {
     //   })
     //   .catch((error) => {
     //     console.error("Error fetching data from another API:", error);
-    //   });
+    // });
   }, []);
 
   useEffect(() => {
@@ -165,7 +192,7 @@ const ViewAllProjects = () => {
       membersObj[`member${index + 1}`] = text;
     });
     isObjectEmpty(membersObj);
-  }, [textInput]);
+  }, [textInput, tech]);
 
   const handelIndex = (index) => {
     setProjectIndex(index);
@@ -199,7 +226,7 @@ const ViewAllProjects = () => {
             className="modal fade"
             id="xampleModal"
             tabindex="-1"
-            aria-labelledby="exampleModalLabel"
+            aria-labelledby="xampleModalLabel"
             aria-hidden="true"
           >
             <div className="modal-dialog">
@@ -207,7 +234,7 @@ const ViewAllProjects = () => {
                 <div className="modal-header">
                   <h1
                     className="modal-title fs-5 add-project-wrapper"
-                    id="exampleModalLabel"
+                    id="xampleModalLabel"
                   >
                     Add Project
                   </h1>
@@ -227,9 +254,9 @@ const ViewAllProjects = () => {
                         className="col-form-label title-text"
                       >
                         Project Name<span style={{ color: "red" }}>*</span>{" "}
-                        {error && (
+                        {projNameError && (
                           <span style={{ color: "red", fontSize: "11px" }}>
-                            ({error})
+                            ({projNameError})
                           </span>
                         )}
                       </label>
@@ -306,6 +333,8 @@ const ViewAllProjects = () => {
                           >
                             <TechDropDown
                               techDataComingChild={techDataComingFrmChild}
+                              seTechNames={seTechNames}
+                              techNames={techNames}
                             />
                           </ul>
                         </div>
@@ -373,7 +402,8 @@ const ViewAllProjects = () => {
                   <button
                     type="button"
                     className="btn save-button"
-                    data-bs-dismiss="modal"
+                    data-bs-target="#xampleModal"
+                    data-bs-dismiss={!error ? 'modal' : ''}
                     onClick={handleSubmit}
                   >
                     <span className="save-text"> Save</span>

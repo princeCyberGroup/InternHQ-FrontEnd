@@ -25,6 +25,7 @@ const AddProject = () => {
   const [desError, setDesError] = useState("");
   const [projLinkError, setProjLinkError] = useState("");
   const [tech, setTech] = useState({});
+  const [technologyNames, setTechnologyNames] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
@@ -32,22 +33,28 @@ const AddProject = () => {
       setIsLoading(false);
     }, 1000);
   }, []);
-
+  
   const handleProjectNameChange = (event) => {
-    const name = event.target.value;
-    setProjName(name);
-    if (!name) {
+    setProjName(event.target.value);
+    if (projName.length===0) {
+      setError(true);
       setProjNameError("Project name is required");
+      
+      
     } else {
+      setError(false);
       setProjNameError("");
     }
   };
   const handleProjectDescriptionChange = (event) => {
-    const description = event.target.value;
-    setProjDescription(description);
-    if (!description) {
+    setProjDescription(event.target.value);
+    if (projDescription.length < 2) {
+      setError(true);
       setDesError("Project description is required");
+      
+      
     } else {
+      setError(false);
       setDesError("");
     }
   };
@@ -73,6 +80,13 @@ const AddProject = () => {
     setDesError("");
     setProjLinkError("");
     setTech({});
+    seTechNames({});
+    setTechnologyNames([]);
+
+    const checkboxes = document.querySelectorAll(".tech-checkbox");
+    checkboxes.forEach((checkbox) => {
+      checkbox.checked = false;
+    });
   };
   const handleProjectLinkChange = (event) => {
     const link = event.target.value;
@@ -98,9 +112,9 @@ const AddProject = () => {
     var storedObject = localStorage.getItem("userData");
     var parsedObject = JSON.parse(storedObject);
     var userId = parsedObject.userId;
-    if (projName.length === 0 && projDescription.length < 2) {
+    if (error) {
       alert("Please fill in the required details");
-      setError(true);
+     
     } else {
       axios
         .post(process.env.REACT_APP_API_URL+"/api/v2/Project", {
@@ -123,8 +137,13 @@ const AddProject = () => {
       setProjDescription("");
       setProjectLink("");
       setHostedLink("");
-      setError(false);
+   
       setTech({});
+        
+    const checkboxes = document.querySelectorAll(".tech-checkbox");
+    checkboxes.forEach((checkbox) => {
+      checkbox.checked = false;
+    });
     }
   };
 
@@ -228,7 +247,7 @@ const AddProject = () => {
         <div
           className="add-project"
           data-bs-toggle="modal"
-          data-bs-target="#exampleModal"
+          data-bs-target="#projectExampleModal"
           data-bs-whatever="@mdo"
         >
           <p className="project-p">
@@ -238,9 +257,9 @@ const AddProject = () => {
       </div>
       <div
         className="modal fade"
-        id="exampleModal"
+        id="projectExampleModal"
         tabindex="-1"
-        aria-labelledby="exampleModalLabel"
+        aria-labelledby="projectExampleModalLabel"
         aria-hidden="true"
       >
         <div className="modal-dialog">
@@ -248,7 +267,7 @@ const AddProject = () => {
             <div className="modal-header">
               <h1
                 className="modal-title fs-5 add-project-wrapper"
-                id="exampleModalLabel"
+                id="projectExampleModalLabel"
               >
                 Add Project
               </h1>
@@ -345,12 +364,15 @@ const AddProject = () => {
                         style={{ display: dropDown ? "" : "none" }}
                         className="ul-styling"
                       >
-                        <TechDropDown
-                          techDataComingChild={techDataComingFrmChild}
-                        />
-                      </ul>
-                    </div>
-                  </div>
+                            <TechDropDown
+                              techDataComingChild={techDataComingFrmChild}
+                              seTechNames={seTechNames}
+                              techNames={techNames}
+                              technologyNames={technologyNames}
+                            />
+                          </ul>
+                        </div>
+                      </div>
                 </div>
 
                 <div className="mb-3">
@@ -412,13 +434,16 @@ const AddProject = () => {
                 className="btn cancel-button"
                 data-bs-dismiss="modal"
                 onClick={clear}
+            
               >
                 <span className="cancel-text"> Cancel</span>
               </button>
               <button
                 type="button"
                 className="btn save-button"
-                data-bs-dismiss={error ? "" : "modal"}
+                data-bs-target="#projectExampleModal"
+                data-bs-dismiss={!error ? 'modal' : ''}
+                
                 onClick={(e) => handleSubmit(e)}
               >
                 <span className="save-text"> Save</span>

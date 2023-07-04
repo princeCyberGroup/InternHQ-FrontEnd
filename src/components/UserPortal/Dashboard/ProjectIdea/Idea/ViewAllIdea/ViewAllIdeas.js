@@ -13,9 +13,6 @@ import BreadCrumbs from "../../../../../BreadCrumbs/BreadCrumbs";
 
 const ViewAllIdeas = () => {
   // const { idea, setIdea, project, setProject } = useContext(UserContext);
-
-  // const location = useLocation();
-  // const details = idea;
   const [idea, setIdea] = useState([]);
   const [projectIndex, setProjectIndex] = useState(0);
   const [projNameError, setProjNameError] = useState("");
@@ -23,9 +20,11 @@ const ViewAllIdeas = () => {
   const [projName, setProjName] = useState("");
   const [projDescription, setProjDescription] = useState("");
   const [tech, setTech] = useState({});
+  const [error, setError] = useState(true);
   const [dropDown, setDropDown] = useState(false);
   const [textInput, setTextInput] = useState("");
   const [memberNames, setMemberNames] = useState({});
+  const [techNames, seTechNames] = useState({});
 
   const handelIndex = (index) => {
     setProjectIndex(index);
@@ -36,14 +35,25 @@ const ViewAllIdeas = () => {
     setProjName("");
     setProjDescription("");
     setDropDown(false);
+    setProjNameError("");
+    setProjDescriptionError("");
+    setTech({});
+    seTechNames({});
+    
+    const checkboxes = document.querySelectorAll(".tech-checkbox");
+    checkboxes.forEach((checkbox) => {
+      checkbox.checked = false;
+    });
   };
   const handleChangeProjNameError = (event) => {
     event.preventDefault();
     const name = event.target.value;
     setProjName(name);
     if (!name) {
+      setError(true);
       setProjNameError("Project Name is required");
     } else {
+      setError(false);
       setProjNameError("");
     }
   };
@@ -52,8 +62,10 @@ const ViewAllIdeas = () => {
     const description = event.target.value;
     setProjDescription(description);
     if (!description) {
+      setError(true);
       setProjDescriptionError("Project Description is required");
     } else {
+      setError(false);
       setProjDescriptionError("");
     }
   };
@@ -75,30 +87,42 @@ const ViewAllIdeas = () => {
     var storedObject = localStorage.getItem("userData");
     var parsedObject = JSON.parse(storedObject);
     var userId = parsedObject.userId;
-    await axios
-      .post(process.env.REACT_APP_API_URL+"/api/v2/projectIdea", {
-        projName,
-        projDescription,
-        userId,
-        technologyNames: tech,
-        memberNames: memberNames,
-      })
-      .then((res) => {
-        console.log("print", res.data);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-    setTextInput("");
-    setProjName("");
-    setProjDescription("");
-    setDropDown(false);
-  };
+    if (error) {
+      alert("Please fill in the required details");
+    }
+    else {
+      await axios
+        .post(process.env.REACT_APP_API_URL+"/api/v2/projectIdea", {
+          projName,
+          projDescription,
+          userId,
+          technologyNames: tech,
+          memberNames: memberNames,
+        })
+        .then((res) => {
+          console.log("print", res.data);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+      setTextInput("");
+      setProjName("");
+      setProjDescription("");
+      setDropDown(false);
+      setTech({});
+      seTechNames({});
+    
+    const checkboxes = document.querySelectorAll(".tech-checkbox");
+    checkboxes.forEach((checkbox) => {
+      checkbox.checked = false;
+    });
+    }
+   };
 
   useEffect(() => {
     var storedObject = localStorage.getItem("userData");
-      var parsedObject = JSON.parse(storedObject);
-      var userId = parsedObject.userId;
+    var parsedObject = JSON.parse(storedObject);
+    var userId = parsedObject.userId;
     axios
       .get(process.env.REACT_APP_API_URL+`/api/v2/getProjectIdea?userId=${userId}`,
       {
@@ -143,17 +167,16 @@ const ViewAllIdeas = () => {
           <div
             className="add-new-project-wrapper pb-0 me-0"
             data-bs-toggle="modal"
-            data-bs-target="#exampleModal"
-            data-bs-whatever="@mdo"
+            data-bs-target="#viewAllAddModal"
           >
             <p className="add-new-project me-2">Add New Idea</p>
           </div>
 
           <div
             className="modal fade"
-            id="exampleModal"
+            id="viewAllAddModal"
             tabIndex="-1"
-            aria-labelledby="exampleModalLabel"
+            aria-labelledby="viewAllAddModalLabel"
             aria-hidden="true"
           >
             <div className="modal-dialog">
@@ -161,7 +184,7 @@ const ViewAllIdeas = () => {
                 <div className="modal-header">
                   <h1
                     className="modal-title fs-5 add-project-wrapper"
-                    id="exampleModalLabel"
+                    id="viewAllAddModalLabel"
                   >
                     Add your Project Idea
                   </h1>
@@ -260,6 +283,8 @@ const ViewAllIdeas = () => {
                           >
                             <TechDropDown
                               techDataComingChild={techDataComingFrmChild}
+                              seTechNames={seTechNames}
+                              techNames={techNames}
                             />
                           </ul>
                         </div>
@@ -295,7 +320,8 @@ const ViewAllIdeas = () => {
                   <button
                     type="button"
                     className="btn save-button"
-                    data-bs-dismiss="modal"
+                    data-bs-target="#viewAllAddModal"
+                    data-bs-dismiss={!error ? 'modal' : ''}
                     onClick={handleSubmit}
                   >
                     <span className="save-text"> Save </span>

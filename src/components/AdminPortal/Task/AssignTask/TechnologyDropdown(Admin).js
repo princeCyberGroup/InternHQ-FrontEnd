@@ -80,10 +80,12 @@ const TechDropDown = (props) => {
 
   return (
     <div className="drop-tech">
-      {[
-        { techId: "select-all", techName: "Select all" },
-        ...techOptions,
-      ].map((tech) => (
+      {
+      // [
+      //   { techId: "select-all", techName: "Select all" },
+      //   ...techOptions,
+      // ]
+      techOptions.map((tech) => (
         <div
           key={tech.techId}
           className="form-check small checkbox"

@@ -55,6 +55,7 @@
 .project-detail {
     padding: 1.438rem;
     padding-right: 9.688rem;
+    overflow-y: scroll;
 }
 
 .entire-component {
