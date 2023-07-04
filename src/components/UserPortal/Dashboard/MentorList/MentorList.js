@@ -1,7 +1,9 @@
-import { useState, useEffect, useContext } from "react";
+import { useState, useEffect } from "react";
 import "./mentorlist.css";
 import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
+import { useNavigate } from "react-router-dom";
+
 
 const MentorComponent = () => {
   const [mentors, setMentors] = useState([]);
@@ -27,10 +29,9 @@ const MentorComponent = () => {
       );
 
       const data = await response.json();
-      const activeMentors = data.activeMentors
+      const activeMentors = data.activeMentors;
       setMentors(activeMentors);
       setIsLoading(false);
-      // console.log(isLoading, "Fetched data");
     } catch (error) {
       // console.log("Error occurred while fetching mentors:", error);
     }
@@ -53,25 +54,63 @@ const MentorComponent = () => {
         <div className="box-shadow d-flex justify-content-center align-item-center">
           {isLoading ? (
             <div
-              className="card-body pt-3"
-              style={{ width: "329px", height: "239px" }}
+              className="card-body pt-4"
+              style={{ width: "329px", height: "236px" }}
             >
               <div>
                 <div className="d-block rounded-circle">
                   <Skeleton circle={true} width={80} height={80} />
                 </div>
-                <div className="mentor-text d-flex flex-column align-items-center ">
-                  <p className="card-text fs mt-3">
-                    <Skeleton width={180} />
+                <div className="mentor-text d-flex flex-column align-items-center">
+                  <p className="card-text fs mt-2">
+                    <Skeleton width={106.61} height={13} />
                   </p>
                   <p className="role-fs">
-                    <Skeleton width={120} />
+                    <Skeleton width={68} height={10} />
                   </p>
-                  <p className="badge badge-color">
-                    <Skeleton width={260} />
+                  <p className="mx-0 mt-0 p-0" style={{ marginBottom: "10px" }}>
+                    <Skeleton
+                      inline={true}
+                      width={69.72}
+                      height={20.38}
+                      borderRadius={6}
+                      style={{ marginRight: "13px" }}
+                    />
+                    <Skeleton
+                      inline={true}
+                      width={41.41}
+                      height={20.38}
+                      borderRadius={6}
+                      style={{ marginRight: "13px" }}
+                    />
+                    <Skeleton
+                      inline={true}
+                      width={84.75}
+                      height={20.38}
+                      borderRadius={6}
+                    />
                   </p>
-                  <p className="badge badge-color">
-                    <Skeleton width={260} />
+                  <p>
+                    <Skeleton
+                      inline={true}
+                      width={68}
+                      height={20.38}
+                      borderRadius={6}
+                      style={{ marginRight: "13px" }}
+                    />
+                    <Skeleton
+                      inline={true}
+                      width={64}
+                      height={20.38}
+                      borderRadius={6}
+                      style={{ marginRight: "13px" }}
+                    />
+                    <Skeleton
+                      inline={true}
+                      width={38.42}
+                      height={20.38}
+                      borderRadius={6}
+                    />
                   </p>
                 </div>
               </div>
@@ -122,10 +161,11 @@ const MentorComponent = () => {
                           />
                         ) : (
                           <div className="mentor-img">
-                            <p style={{fontSize:"2rem",marginTop:"15px"}}>
-                              {mentor.mentorName.split(" ")
-                            .map((name) => name.charAt(0).toUpperCase())
-                            .join("")}
+                            <p style={{ fontSize: "2rem", marginTop: "15px" }}>
+                              {mentor.mentorName
+                                .split(" ")
+                                .map((name) => name.charAt(0).toUpperCase())
+                                .join("")}
                             </p>
                           </div>
                         )}

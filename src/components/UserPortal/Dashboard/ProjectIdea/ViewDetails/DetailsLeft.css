@@ -1,0 +1,14 @@
+.mentor-assigned-task-badges{
+    width: 8.313rem;
+}
+
+.mentor-assigned-badge{
+    background:#FFB81C;
+    border-radius: 0.25rem;
+    padding: 0.25rem;
+    color: #343435;
+    font-weight: 400;
+    font-size: 0.813rem;
+    line-height: 0.952rem;
+    text-align: center;
+}

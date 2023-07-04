@@ -1,13 +1,15 @@
 import axios from "axios";
-import React, { useEffect, useState, useContext} from "react";
+import React, { useEffect, useState, useContext } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import EmptyProjectView from "../../EmptyStates/EmptyProject/ProjectViewAll";
 import { ReactComponent as ExpandMore } from "../../../../../Assets/expand_more.svg";
 import TechDropDown from "../TechDropDown";
 import { UserContext } from "../../../../../Context/Context";
+import Skeleton from "react-loading-skeleton";
+import "react-loading-skeleton/dist/skeleton.css";
 
 const AddProject = () => {
-  const {project} =useContext(UserContext);
+  const { project } = useContext(UserContext);
   const navigate = useNavigate();
   const [first, ...rest] = project;
   const [projName, setProjName] = useState("");
@@ -23,22 +25,36 @@ const AddProject = () => {
   const [desError, setDesError] = useState("");
   const [projLinkError, setProjLinkError] = useState("");
   const [tech, setTech] = useState({});
+  const [technologyNames, setTechnologyNames] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
 
+  useEffect(() => {
+    setTimeout(() => {
+      setIsLoading(false);
+    }, 1000);
+  }, []);
+  
   const handleProjectNameChange = (event) => {
-    const name = event.target.value;
-    setProjName(name);
-    if (!name) {
+    setProjName(event.target.value);
+    if (projName.length===0) {
+      setError(true);
       setProjNameError("Project name is required");
+      
+      
     } else {
+      setError(false);
       setProjNameError("");
     }
   };
   const handleProjectDescriptionChange = (event) => {
-    const description = event.target.value;
-    setProjDescription(description);
-    if (!description) {
+    setProjDescription(event.target.value);
+    if (projDescription.length < 2) {
+      setError(true);
       setDesError("Project description is required");
+      
+      
     } else {
+      setError(false);
       setDesError("");
     }
   };
@@ -64,6 +80,13 @@ const AddProject = () => {
     setDesError("");
     setProjLinkError("");
     setTech({});
+    seTechNames({});
+    setTechnologyNames([]);
+
+    const checkboxes = document.querySelectorAll(".tech-checkbox");
+    checkboxes.forEach((checkbox) => {
+      checkbox.checked = false;
+    });
   };
   const handleProjectLinkChange = (event) => {
     const link = event.target.value;
@@ -89,9 +112,9 @@ const AddProject = () => {
     var storedObject = localStorage.getItem("userData");
     var parsedObject = JSON.parse(storedObject);
     var userId = parsedObject.userId;
-    if (projName.length === 0 && projDescription.length < 2) {
+    if (error) {
       alert("Please fill in the required details");
-      setError(true);
+     
     } else {
       axios
         .post(process.env.REACT_APP_API_URL+"/api/v2/Project", {
@@ -114,8 +137,13 @@ const AddProject = () => {
       setProjDescription("");
       setProjectLink("");
       setHostedLink("");
-      setError(false);
+   
       setTech({});
+        
+    const checkboxes = document.querySelectorAll(".tech-checkbox");
+    checkboxes.forEach((checkbox) => {
+      checkbox.checked = false;
+    });
     }
   };
 
@@ -155,7 +183,40 @@ const AddProject = () => {
             </button>
           </div>
         </div>
-        {project.length === 0 ? (
+        {isLoading ? (
+          <div className="project-recipe-row pb-3">
+            <div className="recipe-text project-recipe-name">
+              <h5 className="fw-bold">
+                <Skeleton width={252} />
+              </h5>
+              <div className="project-link-1">
+                <p className="project-link-name">
+                  <Skeleton
+                    width={190}
+                    height={10}
+                    highlightColor="#D3E1FA"
+                    borderRadius={10}
+                  />
+                </p>
+              </div>
+
+              <div className="technology-used fw-bold pt-0">
+                <Skeleton width={112} height={16} />
+              </div>
+              <div className="technology-badges">
+                <div className="pe-2">
+                  <Skeleton width={57} height={24} highlightColor="#D3E1FA" />
+                </div>
+                <div className="pe-2">
+                  <Skeleton width={47} height={24} highlightColor="#D3E1FA" />
+                </div>
+                <div>
+                  <Skeleton width={84} height={24} highlightColor="#D3E1FA" />
+                </div>
+              </div>
+            </div>
+          </div>
+        ) : project.length === 0 ? (
           <EmptyProjectView />
         ) : (
           <div className="project-recipe-row pb-3">
@@ -182,10 +243,11 @@ const AddProject = () => {
             </div>
           </div>
         )}
+
         <div
           className="add-project"
           data-bs-toggle="modal"
-          data-bs-target="#exampleModal"
+          data-bs-target="#projectExampleModal"
           data-bs-whatever="@mdo"
         >
           <p className="project-p">
@@ -195,9 +257,9 @@ const AddProject = () => {
       </div>
       <div
         className="modal fade"
-        id="exampleModal"
+        id="projectExampleModal"
         tabindex="-1"
-        aria-labelledby="exampleModalLabel"
+        aria-labelledby="projectExampleModalLabel"
         aria-hidden="true"
       >
         <div className="modal-dialog">
@@ -205,7 +267,7 @@ const AddProject = () => {
             <div className="modal-header">
               <h1
                 className="modal-title fs-5 add-project-wrapper"
-                id="exampleModalLabel"
+                id="projectExampleModalLabel"
               >
                 Add Project
               </h1>
@@ -220,7 +282,10 @@ const AddProject = () => {
             <div className="modal-body">
               <form>
                 <div className="mb-3">
-                  <label for="project-name" className="col-form-label title-text">
+                  <label
+                    for="project-name"
+                    className="col-form-label title-text"
+                  >
                     Project Name<span style={{ color: "red" }}>*</span>{" "}
                     {projNameError && (
                       <span style={{ color: "red", fontSize: "11px" }}>
@@ -261,54 +326,60 @@ const AddProject = () => {
                   ></textarea>
                 </div>
                 <div className="mb-3">
-                      <label
-                        htmlFor="technology-used"
-                        className="col-form-label title-text"
-                        required
+                  <label
+                    htmlFor="technology-used"
+                    className="col-form-label title-text"
+                    required
+                  >
+                    Technology Used <span style={{ color: "red" }}>*</span>
+                  </label>
+                  <div className="container border p-0">
+                    <div className="input-with-button">
+                      <button
+                        type="button"
+                        className="button-for-dropdown"
+                        onClick={() => {
+                          setDropDown(!dropDown);
+                        }}
                       >
-                        Technology Used <span style={{ color: "red" }}>*</span>
-                      </label>
-                      <div className="container border p-0">
-                        <div className="input-with-button">
-                          <button
-                            type="button"
-                            className="button-for-dropdown"
-                            onClick={() => {
-                              setDropDown(!dropDown);
-                            }}
-                          >
-                            <input
-                              type="text"
-                              className="custom-input"
-                              value={Object.values(tech)}
-                              disabled
-                            />
-                          </button>
-                          <button
-                            type="button"
-                            className="expand-more"
-                            onClick={() => {
-                              setDropDown(!dropDown);
-                            }}
-                          >
-                            <ExpandMore />
-                          </button>
-                        </div>
-                        <div>
-                          <ul
-                            style={{ display: dropDown ? "" : "none" }}
-                            className="ul-styling"
-                          >
+                        <input
+                          type="text"
+                          className="custom-input"
+                          value={Object.values(tech)}
+                          disabled
+                        />
+                      </button>
+                      <button
+                        type="button"
+                        className="expand-more"
+                        onClick={() => {
+                          setDropDown(!dropDown);
+                        }}
+                      >
+                        <ExpandMore />
+                      </button>
+                    </div>
+                    <div>
+                      <ul
+                        style={{ display: dropDown ? "" : "none" }}
+                        className="ul-styling"
+                      >
                             <TechDropDown
                               techDataComingChild={techDataComingFrmChild}
+                              seTechNames={seTechNames}
+                              techNames={techNames}
+                              technologyNames={technologyNames}
                             />
                           </ul>
                         </div>
                       </div>
-                    </div>
+                </div>
 
                 <div className="mb-3">
-                  <label for="Project Link" className="col-form-label title-text">
+                  <label
+                    for="Project Link"
+                    className="col-form-label title-text"
+                  >
                     Project Link<span style={{ color: "red" }}>*</span>{" "}
                     {projLinkError && (
                       <span style={{ color: "red", fontSize: "11px" }}>
@@ -363,13 +434,16 @@ const AddProject = () => {
                 className="btn cancel-button"
                 data-bs-dismiss="modal"
                 onClick={clear}
+            
               >
                 <span className="cancel-text"> Cancel</span>
               </button>
               <button
                 type="button"
                 className="btn save-button"
-                data-bs-dismiss={error ? "" : "modal"}
+                data-bs-target="#projectExampleModal"
+                data-bs-dismiss={!error ? 'modal' : ''}
+                
                 onClick={(e) => handleSubmit(e)}
               >
                 <span className="save-text"> Save</span>

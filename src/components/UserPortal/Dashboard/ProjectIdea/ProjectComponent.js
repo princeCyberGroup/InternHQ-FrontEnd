@@ -5,9 +5,11 @@ import "./ProjectComponent.css";
 import "./Idea/AddNewIdea.css";
 import "./Project/AddProject.css";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 import { UserContext } from "../../../../Context/Context";
 
 const ProjectComponent = () => {
+  const navigate = useNavigate();
   const { setIdea, setProject } = useContext(UserContext);
   const [pActive, setPActive] = useState(true);
   // const [projectData, setProjectData] = useState([]);
@@ -27,7 +29,10 @@ const ProjectComponent = () => {
 
       setIdea(response.data.response);
     } catch (error) {
-      console.log("Error ", error.response?.data);
+      if(error.response?.data.statusCode===401){
+       return navigate("/error?statusCode=400");
+      }
+      // console.log("Error ", error.response?.data);
       // console.log(error.response?.data.msg);
     }
   };
@@ -44,6 +49,9 @@ const ProjectComponent = () => {
 
       setProject(response.data.response);
     } catch (error) {
+      if(error.response?.data.statusCode===401){
+        navigate("/error?statusCode=400");
+      }
       // console.log(error.response?.data);
       // console.log(error.response?.data.msg);
     }

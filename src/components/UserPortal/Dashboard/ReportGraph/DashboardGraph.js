@@ -89,7 +89,9 @@ export default function DashboardGraph() {
       })
       .then(async (data) => {
         setTableData(data.response);
-      });
+      }).catch((error)=>{
+        console.log(error)
+      })
   };
 
   function getMonthName(monthNumber) {

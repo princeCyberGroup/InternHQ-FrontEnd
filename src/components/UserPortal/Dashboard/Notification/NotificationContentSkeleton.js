@@ -12,11 +12,11 @@ const NotificationContentSkeleton = () => {
           </div>
           <div className="text-wrapper mt-3">
             <p className="m-0">
-              <Skeleton />
-              <Skeleton />
+              <Skeleton width={253.46} height={12}/>
+              <Skeleton width={120} height={12}/>
             </p>
             <p className="m-0 date-wrapper">
-              <Skeleton width={80}/>
+              <Skeleton width={74} height={10}/>
             </p>
           </div>
         </div>
