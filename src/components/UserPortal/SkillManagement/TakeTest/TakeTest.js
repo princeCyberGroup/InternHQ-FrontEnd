@@ -225,6 +225,7 @@ const TakeTest = ({ test }) => {
                                 className="imageLogo"
                                 width="1.875rem"
                                 height="2.188rem"
+                                alt=""
                               />
                             </div>
                             <div>

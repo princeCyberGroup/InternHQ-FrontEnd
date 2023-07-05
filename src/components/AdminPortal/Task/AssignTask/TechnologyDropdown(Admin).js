@@ -35,38 +35,66 @@ const TechDropDown = (props) => {
     
   }, []);
 
+
   const handleOptionClick = (event) => {
     const { value, id } = event.currentTarget.dataset;
     const isChecked = event.currentTarget.querySelector("input").checked;
   
-    if (value === "Select all") {
-      if (isChecked) {
-        props.setTechnologyNames(techOptions);
-        props.setSelectedTechIds(techOptions.map((tech) => tech.techId));
-      } else {
-        props.setTechnologyNames([]);
-        props.setSelectedTechIds([]);
-      }
-    } else {
-      if (isChecked) {
-        props.setTechnologyNames((prevSelectedTech) => [
-          ...prevSelectedTech,
-          { techName: value },
-        ]);
-        props.setSelectedTechIds((prevSelectedTechIds) => [
-          ...prevSelectedTechIds,
-          id,
-        ]);
-      } else {
-        props.setTechnologyNames((prevSelectedTech) =>
-          prevSelectedTech.filter((techName) => techName.techName !== value)
-        );
-        props.setSelectedTechIds((prevSelectedTechIds) =>
-          prevSelectedTechIds.filter((techId) => techId !== id)
-        );
-      }
+    if (!isChecked && props.technologyNames.some((tech) => tech.techName === value)) {
+      // If the checkbox is unchecked and the value is already in the selected technology names,
+      // remove it from the selected technology names and selected tech ids.
+      props.setTechnologyNames((prevSelectedTech) =>
+        prevSelectedTech.filter((techName) => techName.techName !== value)
+      );
+      props.setSelectedTechIds((prevSelectedTechIds) =>
+        prevSelectedTechIds.filter((techId) => techId !== id)
+      );
+    } else if (isChecked && !props.technologyNames.some((tech) => tech.techName === value)) {
+      // If the checkbox is checked and the value is not in the selected technology names,
+      // add it to the selected technology names and selected tech ids.
+      props.setTechnologyNames((prevSelectedTech) => [
+        ...prevSelectedTech,
+        { techName: value },
+      ]);
+      props.setSelectedTechIds((prevSelectedTechIds) => [
+        ...prevSelectedTechIds,
+        id,
+      ]);
     }
   };
+  
+  // const handleOptionClick = (event) => {
+  //   const { value, id } = event.currentTarget.dataset;
+  //   const isChecked = event.currentTarget.querySelector("input").checked;
+  
+  //   // if (value === "Select all") {
+  //   //   if (isChecked) {
+  //   //     props.setTechnologyNames(techOptions);
+  //   //     props.setSelectedTechIds(techOptions.map((tech) => tech.techId));
+  //   //   } else {
+  //   //     props.setTechnologyNames([]);
+  //   //     props.setSelectedTechIds([]);
+  //   //   }
+  //   // } else {
+  //     if (isChecked && !props.technologyNames.includes(value)) {
+  //       props.setTechnologyNames((prevSelectedTech) => [
+  //         ...prevSelectedTech,
+  //         { techName: value },
+  //       ]);
+  //       props.setSelectedTechIds((prevSelectedTechIds) => [
+  //         ...prevSelectedTechIds,
+  //         id,
+  //       ]);
+  //     } else {
+  //       props.setTechnologyNames((prevSelectedTech) =>
+  //         prevSelectedTech.filter((techName) => techName.techName !== value)
+  //       );
+  //       props.setSelectedTechIds((prevSelectedTechIds) =>
+  //         prevSelectedTechIds.filter((techId) => techId !== id)
+  //       );
+  //     }
+  //   // }
+  // };
   
 
   useEffect(() => {
