@@ -108,7 +108,7 @@ const ViewAllProjects = () => {
     }
     else {
       axios
-        .post("https://cg-interns-hq.azurewebsites.net/Project", {
+        .post(process.env.REACT_APP_API_URL+"/api/v2/Project", {
           projName,
           projDescription,
           userId,
@@ -162,6 +162,7 @@ const ViewAllProjects = () => {
     var userId = parsedObject.userId;
    const firstAPIPromise = axios
       .get(
+
         `https://cg-interns-hq.azurewebsites.net/getProject?userId=${userId}`
       );
 
@@ -178,6 +179,17 @@ const ViewAllProjects = () => {
         setProject(firstAPIData);
         setSecondAPIData(secondAPIData);
 
+      })
+
+      //   process.env.REACT_APP_API_URL+`/api/v2/getProject?userId=${userId}`,
+      //   {
+      //     headers: {
+      //       Authorization:`Bearer ${JSON.parse(localStorage.getItem('userData'))['token']}`,
+      //     },
+      //   }
+      // )
+      .then((response) => {
+        setProject(response.data.response);
       })
       .catch((error) => {
         console.error("Error fetching tasks:", error);

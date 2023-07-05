@@ -21,7 +21,7 @@ const MentorList = () => {
 
   const removeMentor = async (mentorId) => {
     try {
-      await axios.post("https://cg-interns-hq.azurewebsites.net/removeMentor", {
+      await axios.post(process.env.REACT_APP_API_URL+"/api/v2/removeMentor", {
         mentorId: mentorId,
         isAssigned: "Remove",
       });
@@ -39,7 +39,7 @@ const MentorList = () => {
   };
   const assignMentor = async (mentorId) => {
     try {
-      await axios.post("https://cg-interns-hq.azurewebsites.net/removeMentor", {
+      await axios.post(process.env.REACT_APP_API_URL+"/api/v2/removeMentor", {
         mentorId: mentorId,
         isAssigned: "Assign",
       });
@@ -77,7 +77,12 @@ const MentorList = () => {
     try {
       // Make an API request to fetch mentors data
       const response = await fetch(
-        "https://cg-interns-hq.azurewebsites.net/getMentorDetails"
+        process.env.REACT_APP_API_URL+"/api/v2/getMentorDetails",
+        {
+          headers: {
+            Authorization:`Bearer ${JSON.parse(localStorage.getItem('userData'))['token']}`,
+          },
+        }
       );
 
       const data = await response.json();

@@ -24,7 +24,7 @@ export const UploadCsv = () => {
     formData.append("file", file);
     try {
       const response = await axios.post(
-        `https://cg-interns-hq.azurewebsites.net/associateConsultantDetails`,
+        process.env.REACT_APP_API_URL+`/api/v2/associateConsultantDetails`,
         formData,
         {
           headers: {
