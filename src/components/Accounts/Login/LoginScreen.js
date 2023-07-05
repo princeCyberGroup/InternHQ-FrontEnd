@@ -7,6 +7,7 @@ import CarouselImage1 from "../../../Assets/CarouselImage1.svg";
 import CarouselImage2 from "../../../Assets/CarouselImage2.svg";
 import CarouselImage3 from "../../../Assets/CarouselImage3.svg";
 import "bootstrap-icons/font/bootstrap-icons.css";
+import CryptoJS from "crypto-js";
 import { bottom } from "@popperjs/core";
 
 const LoginScreen = () => {
@@ -58,7 +59,14 @@ const LoginScreen = () => {
           randomString: response.data.randomString,
           designation: response.data.designation,
         };
-        localStorage.setItem("userData", JSON.stringify(res));
+        const secretKey = process.env.REACT_APP_USER_KEY;
+        // const userData = JSON.stringify(res);
+        const userDataE = JSON.stringify(res);
+        const encryptedData = CryptoJS.AES.encrypt(
+          userDataE,
+          secretKey
+        ).toString();
+        localStorage.setItem("userData", encryptedData);
         setIsLoading(false);
         let str = res.randomString.toLowerCase();
         str === "07495d"

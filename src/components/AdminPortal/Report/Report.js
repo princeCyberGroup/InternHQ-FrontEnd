@@ -8,30 +8,45 @@ import { Dummydata } from "./Dummydata";
 import Selectlevel from "./Selectlevel";
 import axios from "axios";
 import Header from "../../Header/Header";
+import DropdownD from "./DropdownD";
 const Report = () => {
   //data
+  // const [level, setLevel] = useState({});
   const [tech, setTech] = useState({});
-  const [level, setLevel] = useState({});
   const [dropDownTech, setDropDownTech] = useState(false);
   const [dropDownLevel, setDropDownLevel] = useState(false);
   const [tableData, setTableData] = useState([]);
   const [orgTableData, setOrgTableData] = useState([]);
   const [query, setQuery] = useState("");
   const [isLoading, setIsLoading] = useState(true);
+  const [selectedOption, setSelectedOption] = useState(
+    "Select Deployment Type"
+  );
 
   //functions
+
+  // function for fetching the data level
+  // const dataComingFrmLevel = (data) => {
+  //   setLevel(data);
+  // };
+
   useEffect(() => {
     setTimeout(() => {
       fetchData();
     }, 1000);
   }, []);
+  useEffect(() => {
+    handleFiltersChange();
+  }, [query, dropDownTech, selectedOption]);
   const fetchData = async () => {
     try {
       const response = await axios.get(
-        process.env.REACT_APP_API_URL+`/api/v2/getuserReport`,
+        process.env.REACT_APP_API_URL + `/api/v2/getuserReport`,
         {
           headers: {
-            Authorization:`Bearer ${JSON.parse(localStorage.getItem('userData'))['token']}`,
+            Authorization: `Bearer ${
+              JSON.parse(localStorage.getItem("userData"))["token"]
+            }`,
           },
         }
       );
@@ -54,17 +69,9 @@ const Report = () => {
       console.error("Error fetching data:", error);
     }
   };
-
-  const dataComingFrmLevel = (data) => {
-    setLevel(data);
-  };
   const techDataComingFrmTech = (data) => {
     setTech(data);
   };
-  useEffect(() => {
-    handleFiltersChange();
-  }, [query, dropDownTech, dropDownLevel]);
-
   const handleFiltersChange = () => {
     const getFilterItems = (items, query) => {
       if (query != "") {
@@ -81,14 +88,24 @@ const Report = () => {
       if (Object.keys(tech)?.length > 0) {
         const filteredData = items?.filter((data) => {
           return data?.techNames?.some((element) => {
-            return Object.values(tech)?.includes(element);
+            return tech ? Object.values(tech)?.includes(element) : false;
           });
         });
         return filteredData;
       }
       return items;
     };
+    const getfilterDep = (item, optionVal) => {
+      if (optionVal === "Deployed") {
+        return item.filter((val) => val.isDeployed);
+      } else if (optionVal === "Undeployed") {
+        return item.filter((val) => !val.isDeployed);
+      } else {
+        return item;
+      }
+    };
 
+    //filter for level
     // const getFilterLevel = (items, level) => {
     //   if (Object.keys(level).length > 0) {
     //     const filteredData = items.filter((person) => {
@@ -105,8 +122,13 @@ const Report = () => {
 
     const filterItems = getFilterItems(orgTableData, query);
     const filterTech = getfilterTech(filterItems, tech);
+    const filterDep = getfilterDep(filterTech, selectedOption);
+
     // const filterLevel = getFilterLevel(filterTech, level);
-    setTableData(filterTech);
+    setTableData(filterDep);
+  };
+  const handleChange = (value) => {
+    setSelectedOption(value);
   };
 
   return (
@@ -174,7 +196,8 @@ const Report = () => {
                   )}
                 </div>
               </div>
-              <div className=" report-drop-down-level">
+              {/* below is the code for select level dropdown */}
+              {/* <div className=" report-drop-down-level">
                 <div className="inner-drop-down-level">
                   <div className="input-with-button-level">
                     <button
@@ -213,11 +236,12 @@ const Report = () => {
                     </div>
                   )}
                 </div>
-              </div>
+              </div> */}
+              <DropdownD handleChange={handleChange} />
             </div>
           </div>
           <div className="report-table-wrapper ">
-            <Reporttable tableData={tableData} isLoading={isLoading}/>
+            <Reporttable tableData={tableData} isLoading={isLoading} />
           </div>
         </div>
       </div>
