@@ -9,6 +9,7 @@ import Selectlevel from "./Selectlevel";
 import axios from "axios";
 import Header from "../../Header/Header";
 import DropdownD from "./DropdownD";
+import CryptoJS from "crypto-js";
 const Report = () => {
   //data
   // const [level, setLevel] = useState({});
@@ -22,6 +23,16 @@ const Report = () => {
   const [selectedOption, setSelectedOption] = useState(
     "Select Deployment Type"
   );
+  const secretkeyUser = process.env.REACT_APP_USER_KEY;
+  var parsedObject;
+  const data = localStorage.getItem("userData");
+  if (data) {
+    const bytes = CryptoJS.AES.decrypt(data, secretkeyUser);
+    const decryptedJsonString = bytes.toString(CryptoJS.enc.Utf8);
+    parsedObject = JSON.parse(decryptedJsonString);
+  } else {
+    console.log("No encrypted data found in localStorage.");
+  }
 
   //functions
 
@@ -44,9 +55,7 @@ const Report = () => {
         process.env.REACT_APP_API_URL + `/api/v2/getuserReport`,
         {
           headers: {
-            Authorization: `Bearer ${
-              JSON.parse(localStorage.getItem("userData"))["token"]
-            }`,
+            Authorization: `Bearer ${parsedObject["token"]}`,
           },
         }
       );

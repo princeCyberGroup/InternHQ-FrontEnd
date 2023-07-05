@@ -4,6 +4,7 @@ import { Pie } from "react-chartjs-2";
 import { Link } from "react-router-dom";
 import "./PieChart.css";
 import NoData from "../../../../Assets/NoData.svg";
+import CryptoJS from "crypto-js";
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 
@@ -69,11 +70,22 @@ const PieChart = () => {
   };
 
   const fetchData = async () => {
+    const secretkeyUser = process.env.REACT_APP_USER_KEY;
+    var parsedObject;
+    const data = localStorage.getItem("userData");
+    if (data) {
+      const bytes = CryptoJS.AES.decrypt(data, secretkeyUser);
+      const decryptedJsonString = bytes.toString(CryptoJS.enc.Utf8);
+      parsedObject = JSON.parse(decryptedJsonString);
+    } else {
+      console.log("No encrypted data found in localStorage.");
+    }
     await fetch(
-      process.env.REACT_APP_API_URL+`/api/v2/getDailyTaskTrackerRecords?userId=${piechartId}`,
+      process.env.REACT_APP_API_URL +
+        `/api/v2/getDailyTaskTrackerRecords?userId=${piechartId}`,
       {
         headers: {
-          Authorization:`Bearer ${JSON.parse(localStorage.getItem('userData'))['token']}`,
+          Authorization: `Bearer ${parsedObject["token"]}`,
         },
       }
     )
@@ -338,7 +350,7 @@ const PieChart = () => {
                   height: "220px",
                 }}
               >
-                <Pie data={data} options={options}  />
+                <Pie data={data} options={options} />
               </div>
             )}
           </div>

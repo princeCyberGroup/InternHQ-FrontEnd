@@ -7,7 +7,7 @@ import CarouselImage1 from "../../../Assets/CarouselImage1.svg";
 import CarouselImage2 from "../../../Assets/CarouselImage2.svg";
 import CarouselImage3 from "../../../Assets/CarouselImage3.svg";
 import "bootstrap-icons/font/bootstrap-icons.css";
-import CryptoJS from "crypto-js";
+import CryptoJS, { enc } from "crypto-js";
 import { bottom } from "@popperjs/core";
 
 const LoginScreen = () => {
@@ -43,7 +43,7 @@ const LoginScreen = () => {
     event.preventDefault();
     setIsLoading(true);
     await axios
-      .post(process.env.REACT_APP_API_URL+"/api/v2/internLogin", {
+      .post(process.env.REACT_APP_API_URL + "/api/v2/internLogin", {
         email,
         password,
       })
@@ -95,7 +95,16 @@ const LoginScreen = () => {
   };
   useEffect(() => {
     let login = localStorage.getItem("login");
-    let userData = localStorage.getItem("userData");
+    const secretkeyUser = process.env.REACT_APP_USER_KEY;
+    let userData;
+    const data = localStorage.getItem("userData");
+    if (data) {
+      const bytes = CryptoJS.AES.decrypt(data, secretkeyUser);
+      const decryptedJsonString = bytes.toString(CryptoJS.enc.Utf8);
+      userData = JSON.parse(decryptedJsonString);
+    } else {
+      console.log("No encrypted data found in localStorage.");
+    }
     if (login && userData) {
       let str = JSON.parse(userData).randomString;
       str === "07495d"

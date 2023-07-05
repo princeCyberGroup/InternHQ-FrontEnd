@@ -6,6 +6,7 @@ import { ReactComponent as UserSlash } from "../../../../Assets/user-slashUserSl
 import { ReactComponent as Plus } from "../../../../Assets/+plusbtn.svg";
 import "./AdminMentorList.css";
 import { AddMentorModal } from "./AddMentorModal";
+import CryptoJS from "crypto-js";
 import axios from "axios";
 
 const MentorList = () => {
@@ -21,7 +22,7 @@ const MentorList = () => {
 
   const removeMentor = async (mentorId) => {
     try {
-      await axios.post(process.env.REACT_APP_API_URL+"/api/v2/removeMentor", {
+      await axios.post(process.env.REACT_APP_API_URL + "/api/v2/removeMentor", {
         mentorId: mentorId,
         isAssigned: "Remove",
       });
@@ -39,7 +40,7 @@ const MentorList = () => {
   };
   const assignMentor = async (mentorId) => {
     try {
-      await axios.post(process.env.REACT_APP_API_URL+"/api/v2/removeMentor", {
+      await axios.post(process.env.REACT_APP_API_URL + "/api/v2/removeMentor", {
         mentorId: mentorId,
         isAssigned: "Assign",
       });
@@ -74,13 +75,23 @@ const MentorList = () => {
   };
 
   const fetchMentorList = async () => {
+    const secretkeyUser = process.env.REACT_APP_USER_KEY;
+    var parsedObject;
+    const data = localStorage.getItem("userData");
+    if (data) {
+      const bytes = CryptoJS.AES.decrypt(data, secretkeyUser);
+      const decryptedJsonString = bytes.toString(CryptoJS.enc.Utf8);
+      parsedObject = JSON.parse(decryptedJsonString);
+    } else {
+      console.log("No encrypted data found in localStorage.");
+    }
     try {
       // Make an API request to fetch mentors data
       const response = await fetch(
-        process.env.REACT_APP_API_URL+"/api/v2/getMentorDetails",
+        process.env.REACT_APP_API_URL + "/api/v2/getMentorDetails",
         {
           headers: {
-            Authorization:`Bearer ${JSON.parse(localStorage.getItem('userData'))['token']}`,
+            Authorization: `Bearer ${parsedObject["token"]}`,
           },
         }
       );
@@ -148,7 +159,10 @@ const MentorList = () => {
             return (
               <>
                 <div key={user.mentorId} className="card mentor-head">
-                  <div onClick={() => handleExpand(user.mentorId)} className="mentor-wrapper">
+                  <div
+                    onClick={() => handleExpand(user.mentorId)}
+                    className="mentor-wrapper"
+                  >
                     <div className="image-wrapper1">
                       <div className="image-box1">
                         {user.imageUrl ? (
@@ -162,9 +176,9 @@ const MentorList = () => {
                           <div className="d-flex justify-content-center noMentor-img">
                             <span className="initials">
                               {user.mentorName
-                            .split(" ")
-                            .map((name) => name.charAt(0).toUpperCase())
-                            .join("")}
+                                .split(" ")
+                                .map((name) => name.charAt(0).toUpperCase())
+                                .join("")}
                             </span>
                           </div>
                         )}
@@ -178,7 +192,6 @@ const MentorList = () => {
                       <p className="m-0 pos-wrapper">{user.designation} </p>
                     </div>
                     <div className="arrow-wrapper1">
-                      
                       {user.isActive ? (
                         <button
                           className="remove-btn"
@@ -196,10 +209,7 @@ const MentorList = () => {
                           Assign
                         </button>
                       ) : null}
-                      <span
-                        
-                        className="expand-arrow"
-                      >
+                      <span className="expand-arrow">
                         {expandedMentor === user.mentorId ? (
                           <UpArrow />
                         ) : (

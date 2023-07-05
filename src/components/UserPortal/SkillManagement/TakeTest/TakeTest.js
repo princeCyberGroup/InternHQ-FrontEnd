@@ -6,6 +6,7 @@ import { ReactComponent as Completed } from "../../../../Assets/Testcompleted.sv
 import { ReactComponent as GoldStarOri } from "../../../../Assets/Star-Icon-gold-ori.svg";
 import { ReactComponent as SilverStarOri } from "../../../../Assets/Star-Icon-silver-ori.svg";
 import { ReactComponent as BronzeStarOri } from "../../../../Assets/Star-Icon-bronze-ori.svg";
+import CryptoJS from "crypto-js";
 // import logo from '../../../Assets/image 13.png';
 import "./TakeTest.css";
 import { BsClock } from "react-icons/bs";
@@ -22,7 +23,9 @@ const TakeTest = ({ test }) => {
   const [activeButton, setActiveButton] = useState("all");
   const { score } = useContext(UserContext);
 
-  const [daysDifference, setDaysDifference] = useState(calculateDaysDifference());
+  const [daysDifference, setDaysDifference] = useState(
+    calculateDaysDifference()
+  );
 
   // const [searchQuery, setSearchQuery] = useState("");
   const [tests, setTests] = useState([]);
@@ -37,12 +40,22 @@ const TakeTest = ({ test }) => {
     }, 1000);
   }, []);
   const fetchTests = async (examId) => {
+    const secretkeyUser = process.env.REACT_APP_USER_KEY;
+    var parsedObject;
+    const data = localStorage.getItem("userData");
+    if (data) {
+      const bytes = CryptoJS.AES.decrypt(data, secretkeyUser);
+      const decryptedJsonString = bytes.toString(CryptoJS.enc.Utf8);
+      parsedObject = JSON.parse(decryptedJsonString);
+    } else {
+      console.log("No encrypted data found in localStorage.");
+    }
     try {
       const response = await fetch(
-        process.env.REACT_APP_API_URL+"/api/v2/getAllExam",
+        process.env.REACT_APP_API_URL + "/api/v2/getAllExam",
         {
           headers: {
-            Authorization:`Bearer ${JSON.parse(localStorage.getItem('userData'))['token']}`,
+            Authorization: `Bearer ${parsedObject["token"]}`,
           },
         }
       );
@@ -206,7 +219,11 @@ const TakeTest = ({ test }) => {
             <div className="row cards main-card-inside mx-0">
               <div className="row">
                 {tests?.map((test, key) => (
-                  <div className="exam" style={{marginLeft: "9px", marginRight: "8px"}} key={key}>
+                  <div
+                    className="exam"
+                    style={{ marginLeft: "9px", marginRight: "8px" }}
+                    key={key}
+                  >
                     <div className="card outer-card">
                       <div className="d-flex align-items-center">
                         <div className="ml-3 w-100">
@@ -221,8 +238,15 @@ const TakeTest = ({ test }) => {
                             </div>
                             <div>
                               <div className="Category_box justify-content-center">
-                                <span className="Category">{test.level} &nbsp;
-                                  {test.level === "Beginner" ? <BronzeStarOri /> : (test.level === "Intermediate" ? <SilverStarOri /> : (test.level === "Advance" ? <GoldStarOri /> : null))}
+                                <span className="Category">
+                                  {test.level} &nbsp;
+                                  {test.level === "Beginner" ? (
+                                    <BronzeStarOri />
+                                  ) : test.level === "Intermediate" ? (
+                                    <SilverStarOri />
+                                  ) : test.level === "Advance" ? (
+                                    <GoldStarOri />
+                                  ) : null}
                                 </span>
                               </div>
                               <div className=" About_box justify-content-center">

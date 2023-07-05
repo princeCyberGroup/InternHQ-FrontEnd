@@ -1,22 +1,29 @@
 import React from "react";
 import { useEffect, useState, useContext } from "react";
 import "./TakeYourTest.css";
-import { useNavigate ,useLocation } from "react-router-dom";
-
+import { useNavigate, useLocation } from "react-router-dom";
+import CryptoJS from "crypto-js";
 import { UserContext } from "../../../../Context/Context";
 import { BsCheckLg } from "react-icons/bs";
 import { responsivePropType } from "react-bootstrap/esm/createUtilityClasses";
 
 const TakeYourTest = () => {
-
   // const [score, setScoree] = useState(0);
   // const { score: contextScore, setScore: setContextScore } = useContext(UserContext);
 
- const { score, setScore } = useContext(UserContext);
-//  const [scoreUpdated, setScoreUpdated] = useState(false);
+  const { score, setScore } = useContext(UserContext);
+  //  const [scoreUpdated, setScoreUpdated] = useState(false);
 
-  var storedObject = localStorage.getItem("userData");
-  var parsedObject = JSON.parse(storedObject);
+  const secretkeyUser = process.env.REACT_APP_USER_KEY;
+  var parsedObject;
+  const dataU = localStorage.getItem("userData");
+  if (dataU) {
+    const bytes = CryptoJS.AES.decrypt(dataU, secretkeyUser);
+    const decryptedJsonString = bytes.toString(CryptoJS.enc.Utf8);
+    parsedObject = JSON.parse(decryptedJsonString);
+  } else {
+    console.log("No encrypted data found in localStorage.");
+  }
   var userId = parsedObject.userId;
   // const [testsData, setTestsData] = useState([]);
   // const [allData, setAllData] = useState([]);
@@ -77,10 +84,9 @@ const TakeYourTest = () => {
     }
   };
 
-
   const handleKeyDown = (event) => {
     event.preventDefault();
-    
+
     if (event.key === "Escape" || event.key === "F11") {
       event.disabled = true;
     }
@@ -102,12 +108,11 @@ const TakeYourTest = () => {
           submitTest();
           window.alert("Time's up!");
           clickHandler();
-     
         }
       });
     }, 1000);
   };
-  
+
   useEffect(() => {
     fetchTests();
     handleAnswerSelect();
@@ -126,20 +131,21 @@ const TakeYourTest = () => {
       .padStart(2, "0")}`;
   };
   const fetchTests = async () => {
-    let Quesdata
+    let Quesdata;
     try {
       const response = await fetch(
-        process.env.REACT_APP_API_URL+`/api/v2/getAllQuestions?examId=${examId}`,
+        process.env.REACT_APP_API_URL +
+          `/api/v2/getAllQuestions?examId=${examId}`,
         {
           headers: {
-            Authorization:`Bearer ${JSON.parse(localStorage.getItem('userData'))['token']}`,
+            Authorization: `Bearer ${parsedObject["token"]}`,
           },
         }
       );
       Quesdata = await response.json();
       setAllQuesData(Quesdata);
       setTestsQues(Quesdata.questions);
-      localStorage.setItem("questionToken", Quesdata.token)
+      localStorage.setItem("questionToken", Quesdata.token);
     } catch (e) {
       console.log(e);
     }
@@ -165,11 +171,11 @@ const TakeYourTest = () => {
   const radioButtons = document.querySelectorAll('input[type="radio"]');
   const activeRadioCount = getActiveRadioCount();
   radioButtons.forEach((radioButton) => {
-    radioButton.addEventListener("change", () => { });
+    radioButton.addEventListener("change", () => {});
   });
 
   let submitQuesData;
-  const api = process.env.REACT_APP_API_URL+"/api/v2//submitAnswer";
+  const api = process.env.REACT_APP_API_URL + "/api/v2//submitAnswer";
   const submitTest = async () => {
     try {
       // debugger;
@@ -178,29 +184,25 @@ const TakeYourTest = () => {
           qId: parseInt(questionId),
           choosenOpt: selectedAnswer,
         })
-        );
-        const response = await fetch(
-          api ,
-          {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-              Authorization: `Bearer ${localStorage.getItem("questionToken")}`
-            },
-            body: JSON.stringify({
-              userId: userId,
-              technology: techName,
-              level: level,
-              optRequest: mappedAnswers.splice(0, mappedAnswers.length - 1),
-            }),
-          }
-          );
-          submitQuesData = await response.json();
-          setScore(submitQuesData.scorePercentage);
-        } catch (error) {
+      );
+      const response = await fetch(api, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${localStorage.getItem("questionToken")}`,
+        },
+        body: JSON.stringify({
+          userId: userId,
+          technology: techName,
+          level: level,
+          optRequest: mappedAnswers.splice(0, mappedAnswers.length - 1),
+        }),
+      });
+      submitQuesData = await response.json();
+      setScore(submitQuesData.scorePercentage);
+    } catch (error) {
       console.log(error);
-    }
-    finally {
+    } finally {
       localStorage.removeItem("questionToken");
     }
   };
@@ -257,15 +259,18 @@ const TakeYourTest = () => {
           <div className="modal-dialog modal-dialog-centered">
             <div className="modal-content">
               <div className="modal-header">
-                <span className="modal-title instruction" id="staticBackdropLabel">
+                <span
+                  className="modal-title instruction"
+                  id="staticBackdropLabel"
+                >
                   Submit Test{" "}
                 </span>
-                  <button
-                    type="button"
-                    className="btn-close"
-                    data-bs-dismiss="modal"
-                    aria-label="Close"
-                  ></button>
+                <button
+                  type="button"
+                  className="btn-close"
+                  data-bs-dismiss="modal"
+                  aria-label="Close"
+                ></button>
               </div>
               <div className="modal-body"> Sure Want to submit the test ? </div>
               <div className="modal-footer">
@@ -293,7 +298,6 @@ const TakeYourTest = () => {
             </div>
           </div>
         </div>
-
       </div>
     );
   };
