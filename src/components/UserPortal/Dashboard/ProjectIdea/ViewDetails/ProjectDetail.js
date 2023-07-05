@@ -1,6 +1,16 @@
 import "./ProjectDetail.css";
 import { Link } from "react-router-dom";
 const ProjectDetail = ({ data, indexNumber }) => {
+  {console.log("This is length:", data[indexNumber])}
+  // let memberCount = 0 //8
+  // data[indexNumber].members.map((mem) => {
+  //   if(mem != null) memberCount++;
+  // })
+  // const membersCounts = data.map((item) => item.members.length);
+  // const displayMembersCounts = membersCounts.slice(0,3);
+//   const remainingMembersCounts = memberCount - 3;
+// console.log(data, "This is dara")
+
   return (
     <div className="">
       <h5 className="project-detail-name">{data[indexNumber].projectNames}</h5>
@@ -40,36 +50,34 @@ const ProjectDetail = ({ data, indexNumber }) => {
           </p>
         )}
       </div>
-
-      {data[indexNumber].members && (
-        <p className="members fw-bold mb-2">Members:</p>
-      )}
-      <div className="members-name project-members text-center">
-        {data[indexNumber].members && data[indexNumber].members?.length > 4 ? (
-          data[indexNumber].members.map((curElem, index) => {
+      <div className="members-div pt-0">
+        <div className="member mb pt-1 fw-bold mb-2">Members:</div>
+        <div className="project-members ml-0">
+          {data[indexNumber].members.map((curElem, index) => {
             if (curElem != null) {
-              const nameParts = curElem.split(" ");
-              const initials =
-                nameParts[0][0].toUpperCase() +
-                nameParts[nameParts.length - 1][0].toUpperCase();
+              const [firstName, lastName] = curElem.split(" ");
+              const initials = `${firstName[0]}${lastName[0]}`.toUpperCase();
+
               return (
                 <div className="project-idea-members" key={index}>
                   <p className="name-of-members">{initials}</p>
                 </div>
               );
             }
-          })
-        ) : (
-          data[indexNumber].members && (
+          })}
+          {/* {remainingMembersCounts > 0 ? (
             <div className="project-idea-members">
-              <p className="name-of-members">
-                + {data[indexNumber].members.length}
-              </p>
+              <p className="name-of-members">+ {remainingMembersCounts}</p>
+              {console.log("count: ", remainingMembersCounts)}
             </div>
           )
-        )}
+            :
+            <div>        {console.log("count: ", data)}</div>
+          } */}
+        </div>
+
       </div>
-    </div>
+    </div >
   );
 };
 

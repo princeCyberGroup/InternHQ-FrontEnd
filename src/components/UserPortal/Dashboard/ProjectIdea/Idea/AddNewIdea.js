@@ -22,7 +22,28 @@ const AddNewIdea = () => {
   const [error, setError] = useState(true);
   const [techNames, seTechNames] = useState({});
   const [technologyNames, setTechnologyNames] = useState([]);
+  const [updatedTechNames, setUpdatedTechNames] = useState([]);
+  let memberCount = 0;
+  // {
+  //   first.members.map((mem) => {
 
+  //     if (mem != null) memberCount++;
+  //   })
+  // }
+  // let memberCount = 0 //8
+  // first.members.map((mem) => {
+  //   if(mem != null) memberCount++;
+  // })
+  // const remainingMembersCounts = memberCount - 3;
+  
+// if (first && first.members) {
+//   first.members.map((mem) => {
+//     if (mem != null) memberCount++;
+   
+//   });
+ 
+// }
+const remainingMembersCounts = memberCount - 3;
 
   const handleClickClear = (event) => {
     event.preventDefault();
@@ -118,11 +139,11 @@ const AddNewIdea = () => {
       setDropDown(false);
       setTech({});
       seTechNames([]);
-        
-    const checkboxes = document.querySelectorAll(".tech-checkbox");
-    checkboxes.forEach((checkbox) => {
-      checkbox.checked = false;
-    });
+
+      const checkboxes = document.querySelectorAll(".tech-checkbox");
+      checkboxes.forEach((checkbox) => {
+        checkbox.checked = false;
+      });
     }
   };
 
@@ -172,29 +193,47 @@ const AddNewIdea = () => {
               <div className="members-div pt-0">
                 <div className="member mb pt-1 fw-bold mb-2">Members:</div>
                 <div className="project-members ml-0">
-                  {first.members.length > 9 ? (
-                    first.members.map((curElem, index) => {
-                      if (curElem != null) {
-                        const initials = curElem
-                          .split(" ")
-                          .map((name) => name[0])
-                          .join("")
-                          .toUpperCase();
+                  {first.members.slice(0, 8).map((curElem, index) => {
+                    if (curElem != null) {
+                      const [firstName, lastName] = curElem.split(" ");
+                      const initials = `${firstName[0]}${lastName[0]}`.toUpperCase();
+                      return (
+                        <div className="project-idea-members" key={index}>
+                          <p className="name-of-members" data-title={`${firstName} ${lastName}`}>
+                            {initials}
+                          </p>
+                        </div>
+                      
+                      );
+                    }
+                  })}
 
-                        return (
-                          <div className="project-idea-members" key={index}>
-                            <p className="name-of-members">{initials}</p>
-                          </div>
-                        );
-                      }
-                    })
-                  ) : (
-                    <div className="project-idea-members">
-                      <p className="name-of-members">
-                        + {first.members.length}
-                      </p>
-                    </div>
+                  {first.members.map((mem) => {
+
+                    if (mem != null) memberCount++;
+                    const remainingMembersCounts = memberCount - 8; {
+                    }
+
+                    remainingMembersCounts > 0 ? (
+                      <div className="count-of-members">
+
+                        + {remainingMembersCounts}
+
+
+                      </div>)
+                      :
+                      <></>
+                  }
                   )}
+                  {/* {remainingMembersCounts > 0 ? (
+            <div className="count-of-members">
+              <p className="remaining-members">+{remainingMembersCounts}</p>
+              {console.log("count: ", remainingMembersCounts)}
+            </div>
+          )
+            :
+            <div>        {console.log("count: ")}</div>
+          } */}
                 </div>
               </div>
             </div>
@@ -301,10 +340,10 @@ const AddNewIdea = () => {
                       >
                         <input
                           type="text"
-                          className="custom-input"
+                          className="custom-input border-none"
                           value={Object.values(tech)}
                           disabled
-                        />
+                         />
                       </button>
                       <button
                         type="button"
@@ -364,7 +403,7 @@ const AddNewIdea = () => {
                 className="btn save-button"
                 data-bs-target="#myIdeaModal"
                 data-bs-dismiss={!error ? 'modal' : ''}
-                
+
                 onClick={(e) => {
                   handleSubmit(e);
                 }}
@@ -380,3 +419,7 @@ const AddNewIdea = () => {
 };
 
 export default AddNewIdea;
+
+
+
+

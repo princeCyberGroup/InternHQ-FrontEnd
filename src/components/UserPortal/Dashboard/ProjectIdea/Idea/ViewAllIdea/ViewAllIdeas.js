@@ -127,6 +127,7 @@ const ViewAllIdeas = () => {
       .get(`https://cg-interns-hq.azurewebsites.net/getProjectIdea?userId=${userId}`)
       .then((response) => {
         setIdea(response.data.response);
+        console.log(response.data.response)
       })
       .catch((error) => {
         console.error("Error fetching tasks:", error);

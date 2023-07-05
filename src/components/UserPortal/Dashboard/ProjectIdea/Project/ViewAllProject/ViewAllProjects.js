@@ -27,6 +27,7 @@ const ViewAllProjects = () => {
   const [projLinkError, setProjLinkError] = useState("");
   const [projectIndex, setProjectIndex] = useState(0);
   const [tech, setTech] = useState({});
+  const [secondAPIData, setSecondAPIData] = useState([]);
 
   // const details = project;
 
@@ -159,21 +160,34 @@ const ViewAllProjects = () => {
     var storedObject = localStorage.getItem("userData");
     var parsedObject = JSON.parse(storedObject);
     var userId = parsedObject.userId;
-    axios
+   const firstAPIPromise = axios
       .get(
         `https://cg-interns-hq.azurewebsites.net/getProject?userId=${userId}`
-      )
-      .then((response) => {
-        setProject(response.data.response);
+      );
+
+      const secondAPIPromise =  axios
+      .get(`https://cg-interns-hq.azurewebsites.net/api/v2/getAssignedTask`);
+      Promise.all([firstAPIPromise ,secondAPIPromise])
+      .then((responses) => {
+        const firstAPIData = responses[0].data.response;
+        const secondAPIData = responses[1].data;
+
+        console.log("First API data:", firstAPIData);
+        console.log("Second API data:", secondAPIData);
+        
+        setProject(firstAPIData);
+        setSecondAPIData(secondAPIData);
+
       })
       .catch((error) => {
         console.error("Error fetching tasks:", error);
       });
 
-    // axios
-    //   .get(`https://cg-interns-hq.azurewebsites.net/getAssignedTask`)
+   
     //   .then((responsedata) => {
-    //     setProject(responsedata.data.response);
+    //     const secondAPIData = responsedata.data;
+    //     console.log("Second API data:", secondAPIData);
+    //     setProject(prevData => [...prevData, secondAPIData]);
     //   })
     //   .catch((error) => {
     //     console.error("Error fetching data from another API:", error);
