@@ -77,7 +77,6 @@ const SkillsAdded = () => {
                     <p>{DataUsed.tech_name}</p>
                   </div>
                   <div className="d-flex p-0 stars">
-                    {/* ///////////// */}
                     <div
                       className={`col d-flex flex-column ${
                         DataUsed.examLevels[0] ? "block" : "grey"
@@ -85,8 +84,6 @@ const SkillsAdded = () => {
                     >
                       <div className="my-spacing">
                         {DataUsed.examScores[0] >= 8 ? (
-                          // <GoldStar />
-                          // <SilverStar />
                           <BronzeStar style={{ fontSize: "3.125rem" }} />
                         ) : (
                           <EmptyStar />
@@ -112,8 +109,7 @@ const SkillsAdded = () => {
                     >
                       <div className="my-spacing">
                         {DataUsed.examScores[1] >= 8 ? (
-                          // <GoldStar />
-                          // <SilverStar />
+
                           <SilverStar style={{ fontSize: "3.125rem" }} />
                         ) : (
                           <EmptyStar />
@@ -190,6 +186,7 @@ const SkillsAdded = () => {
                   </div>
                 </div>
               </div>
+              
             </div>
           ))
         )}
