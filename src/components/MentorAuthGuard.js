@@ -15,7 +15,7 @@ const MentorAuthGuard = () => {
   } else {
     console.log("No encrypted data found in localStorage.");
   }
-  const str = decryptedObject.randomString;
+  const str = decryptedObject?.randomString;
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const handleAuth = () => {
     if (localStorage.getItem("login")) {

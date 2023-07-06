@@ -106,7 +106,7 @@ const LoginScreen = () => {
       console.log("No encrypted data found in localStorage.");
     }
     if (login && userData) {
-      let str = JSON.parse(userData).randomString;
+      let str = userData.randomString;
       str === "07495d"
         ? navigate("/dashboard")
         : str === "cb8715"
