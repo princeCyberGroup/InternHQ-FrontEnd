@@ -20,16 +20,12 @@ export default function Status({ data }) {
             >
               <TotalIcon />
               <div
-                style={{
-                  display: "flex",
-                  flexDirection: "row",
-                  marginTop: "0.75rem",
-                }}
+               className="count-info"
               >
                 <p className="count">{data.totalUsers}</p>
                 <p
-                  className="status d-flex justify-content-center"
-                  style={{ marginLeft: "0.625rem" }}
+                  className="status"
+                  style={{ marginLeft: "0.625rem" , marginTop: "0.28rem" }}
                 >
                   Total
                 </p>
@@ -48,16 +44,12 @@ export default function Status({ data }) {
             >
               <ActiveIcon />
               <div
-                style={{
-                  display: "flex",
-                  flexDirection: "row",
-                  marginTop: "0.75rem",
-                }}
+            className="count-info"
               >
                 <p className="count">{data.totalActive}</p>
                 <p
                   className="status d-flex justify-content-center"
-                  style={{ marginLeft: "0.625rem" }}
+                  style={{ marginLeft: "0.625rem" , marginTop: "0.28rem" }}
                 >
                   Active
                 </p>
@@ -78,16 +70,12 @@ export default function Status({ data }) {
             >
               <InActiveIcon />
               <div
-                style={{
-                  display: "flex",
-                  flexDirection: "row",
-                  marginTop: "0.75rem",
-                }}
+         className="count-info"
               >
                 <p className="count">{data.totalInactive}</p>
                 <p
                   className="status d-flex justify-content-center"
-                  style={{ marginLeft: "0.625rem" }}
+                  style={{ marginLeft: "0.625rem" , marginTop: "0.28rem" }}
                 >
                   InActive
                 </p>
@@ -105,17 +93,12 @@ export default function Status({ data }) {
               }}
             >
               <OnProject />
-              <div
-                style={{
-                  display: "flex",
-                  flexDirection: "row",
-                  marginTop: "0.75rem",
-                }}
+              <div className="count-info"
               >
                 <p className="count">{data.onProject}</p>
                 <p
                   className="status d-flex justify-content-center"
-                  style={{ marginLeft: "0.625rem" }}
+                  style={{ marginLeft: "0.625rem" , marginTop: "0.28rem" }}
                 >
                   On Project
                 </p>

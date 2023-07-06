@@ -16,6 +16,7 @@
 
 }
 
+
 .outer-card {
     display: flex;
     flex-direction: column;
@@ -107,23 +108,35 @@
 .activated {
     border-bottom: 0.188rem solid #28519E;
 }
+.takeTest-search-wrapper{
+    margin-top: 0.2rem;
+    border: 1px solid #B2B2B3;
+    border-radius: 5px;
+    padding: 0%;
+    width: fit-content;
+    height: 2.5rem;
+    margin-left: 5rem;
+
+
+  }
 
 .sea {
-    box-sizing: border-box;
-    /* Auto layout */
-    display: flex;
-    flex-direction: row;
-    align-items: flex-end;
-    padding: 8px;
-    gap: 8px;
-    width: 229px;
-    height: 32px;
     background: #FFFFFF;
-    /* Secondary/Gray */
     border: 1px solid #B2B2B3;
-    border-radius: 4px;
-    margin-left: 125px;
-    /* margin-right: 16px; */
+    
+width: 17rem; 
+
+    box-sizing: border-box;
+padding: 0rem 0.5rem;
+
+border-radius: 30%;
+border: none;
+outline: none;
+}
+.search-associate:hover,
+
+.search-associate:focus {
+outline: none;
 }
 
 .exam {
@@ -174,7 +187,7 @@
     padding: 2.5px 8px;
     gap: 8px;
 
-    width: 115px;
+    width: fit-content;
     height: 25px;
     font-size: 13px;
     background: #B8DDE1;
@@ -275,4 +288,8 @@ color: #FFFFFF;
     line-height: 14px;
     color: #FFFFFF;
     
+}
+
+.continuebtn{
+   background-color: #28519E;
 }
