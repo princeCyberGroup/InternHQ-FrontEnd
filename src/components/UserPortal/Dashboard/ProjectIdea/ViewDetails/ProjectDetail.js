@@ -1,7 +1,7 @@
 import "./ProjectDetail.css";
 import { Link } from "react-router-dom";
-const ProjectDetail = ({ data, indexNumber }) => {
-  {console.log("This is length:", data[indexNumber])}
+const ProjectDetail = ({ data,indexNumber }) => {
+  
   // let memberCount = 0 //8
   // data[indexNumber].members.map((mem) => {
   //   if(mem != null) memberCount++;
@@ -14,12 +14,13 @@ const ProjectDetail = ({ data, indexNumber }) => {
   return (
     <div className="">
       <h5 className="project-detail-name">{data[indexNumber].projectNames}</h5>
+     
       <p className="created-at">{data[indexNumber].createdAt}</p>
       <p className="project-detail-text">{data[indexNumber].projectText}</p>
       <p className="project-detail-technology-used mb-2">Technology Used:</p>
 
       <div className="project-detail-technology-badges">
-        {data[indexNumber].technology?.map && data[indexNumber].technology.map((tech) => {
+        {data[indexNumber].technology?.map && data[indexNumber].technology?.map((tech) => {
           if (tech != null) {
             return <p className="technology-badge me-1"> {tech} </p>;
           }
@@ -53,11 +54,11 @@ const ProjectDetail = ({ data, indexNumber }) => {
       <div className="members-div pt-0">
         <div className="member mb pt-1 fw-bold mb-2">Members:</div>
         <div className="project-members ml-0">
-          {data[indexNumber].members.map((curElem, index) => {
+          {data[indexNumber].members?.map((curElem, index) => {
             if (curElem != null) {
               const [firstName, lastName] = curElem.split(" ");
-              const initials = `${firstName[0]}${lastName[0]}`.toUpperCase();
 
+             const initials = `${firstName[0]}${lastName ? lastName[0] : ''}`.toUpperCase();
               return (
                 <div className="project-idea-members" key={index}>
                   <p className="name-of-members">{initials}</p>

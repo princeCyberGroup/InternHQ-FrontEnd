@@ -13,6 +13,7 @@ const DetailsLeft = (props) => {
   };
 
   return (
+    <>
     <div className="all-project-names pt-3 border-end">
       <div className="child-wrapper">
         {props.data?.map((user, index) => {
@@ -33,6 +34,7 @@ const DetailsLeft = (props) => {
               {/* <div className="mentor-assigned-task-badges">
                <p className="mentor-assigned-badge mb-2"> Mentor Assigned</p>
               </div> */}
+               
               <div className="d-flex justify-content-between w-100"         >
                 <h5 className="project-names">{user.projectNames}</h5>
                 <span className="click-arrow">
@@ -50,8 +52,50 @@ const DetailsLeft = (props) => {
             </div>
           );
         })}
-      </div>
+
+      {props.mentorApiData && Array.isArray(props.mentorApiData) && props.mentorApiData.map((user, index) => {
+      
+        const isBorder = index === selectedIdx;
+        return (
+          <div
+            className={
+              "project-names-wrapper mt-3 pb-0 d-flex justify-content-between" +
+              (isBorder ? " project-names-wrapper-border" : "")
+            }
+            key={index}
+            onClick={() => {
+              props.projectDetails(index);
+              setSelectedIdx(index);
+              setIsBorder(true);
+            }}
+          >
+           {user.mentorFirstName ? (
+        <div className="mentor-assigned-task-badges">
+          <p className="mentor-assigned-badge mb-2">Mentor Assigned</p>
+        </div>
+      ) : null}
+             
+            <div className="d-flex justify-content-between w-100"         >
+              <h5 className="project-names">{user.taskName}</h5>
+            
+              <span className="click-arrow">
+                <Arrow />
+              </span>
+            </div>
+
+            <div>
+              <p className="project-text flex-grow-1">
+                {user.taskDescription?.length > 100
+                  ? truncate(user.taskDescription, 100)
+                  : user.taskDescription}
+              </p>
+            </div>
+          </div>
+        );
+      })}
     </div>
+  </div>
+  </>
   );
 };
 

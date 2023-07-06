@@ -24,7 +24,8 @@ const AddNewIdea = () => {
   const [error, setError] = useState(true);
   const [techNames, seTechNames] = useState({});
   const [technologyNames, setTechnologyNames] = useState([]);
-  const [updatedTechNames, setUpdatedTechNames] = useState([]);
+  const [isProjectNameValid, setIsProjectNameValid]= useState(false);
+  const [isProjectDescriptionValid, setIsProjectDescriptionValid]=useState(false);
   let memberCount = 0;
   // {
   //   first.members.map((mem) => {
@@ -79,6 +80,7 @@ const remainingMembersCounts = memberCount - 3;
     event.preventDefault();
     const name = event.target.value;
     setProjName(name);
+    
     if (!name) {
       setError(true);
       setProjNameError("Project Name is required");
@@ -497,7 +499,3 @@ const remainingMembersCounts = memberCount - 3;
 };
 
 export default AddNewIdea;
-
-
-
-

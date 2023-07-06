@@ -27,7 +27,7 @@ const ViewAllProjects = () => {
   const [projLinkError, setProjLinkError] = useState("");
   const [projectIndex, setProjectIndex] = useState(0);
   const [tech, setTech] = useState({});
-  const [secondAPIData, setSecondAPIData] = useState([]);
+  const [mentorAssignData, setMentorAssignData] = useState([]);
 
   // const details = project;
 
@@ -162,22 +162,27 @@ const ViewAllProjects = () => {
     var userId = parsedObject.userId;
    const firstAPIPromise = axios
       .get(
-
-        `https://cg-interns-hq.azurewebsites.net/getProject?userId=${userId}`
+        process.env.REACT_APP_API_URL+ `/api/v2/getProject?userId=${userId}`,{
+          headers: {
+            Authorization:`Bearer ${JSON.parse(localStorage.getItem('userData'))['token']}`,
+          },
+        }
       );
 
       const secondAPIPromise =  axios
-      .get(`https://cg-interns-hq.azurewebsites.net/api/v2/getAssignedTask`);
+      .get(process.env.REACT_APP_API_URL+ "/api/v3/getAssignedTask",{
+        headers: {
+                Authorization:`Bearer ${JSON.parse(localStorage.getItem('userData'))['token']}`,
+              },
+      })
       Promise.all([firstAPIPromise ,secondAPIPromise])
       .then((responses) => {
         const firstAPIData = responses[0].data.response;
-        const secondAPIData = responses[1].data;
+        const mentorAssignData = responses[1].data.response;
 
-        console.log("First API data:", firstAPIData);
-        console.log("Second API data:", secondAPIData);
         
         setProject(firstAPIData);
-        setSecondAPIData(secondAPIData);
+        setMentorAssignData(mentorAssignData);
 
       })
 
@@ -197,9 +202,9 @@ const ViewAllProjects = () => {
 
    
     //   .then((responsedata) => {
-    //     const secondAPIData = responsedata.data;
-    //     console.log("Second API data:", secondAPIData);
-    //     setProject(prevData => [...prevData, secondAPIData]);
+    //     const mentorAssignData = responsedata.data;
+    //     console.log("Second API data:", mentorAssignData);
+    //     setProject(prevData => [...prevData, mentorAssignData]);
     //   })
     //   .catch((error) => {
     //     console.error("Error fetching data from another API:", error);
@@ -218,6 +223,7 @@ const ViewAllProjects = () => {
   const handelIndex = (index) => {
     setProjectIndex(index);
   };
+  
   return (
     <>
       <div className="" style={{ marginBottom: "4rem" }}>
@@ -442,10 +448,10 @@ const ViewAllProjects = () => {
             style={{ overFlowY: "scroll" }}
           >
             <div>
-              <DetailsLeft data={project} projectDetails={handelIndex} />
+              <DetailsLeft data={project} mentorApiData={mentorAssignData} projectDetails={handelIndex}/>
             </div>
             <div className="project-detail">
-              <ProjectDetail data={project} indexNumber={projectIndex} />
+              <ProjectDetail data={project} mentorApiData={mentorAssignData} indexNumber={projectIndex} />
             </div>
           </div>
         )}
