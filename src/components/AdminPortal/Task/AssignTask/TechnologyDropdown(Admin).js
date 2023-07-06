@@ -1,45 +1,55 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import CryptoJS from "crypto-js";
 
 const TechDropDown = (props) => {
-  
   const [techOptions, setTechOptions] = useState([]);
 
   useEffect(() => {
     const fetchTechOptions = async () => {
+      const secretkeyUser = process.env.REACT_APP_USER_KEY;
+    var parsedObject;
+    const data = localStorage.getItem("userData");
+    if (data) {
+      const bytes = CryptoJS.AES.decrypt(data, secretkeyUser);
+      const decryptedJsonString = bytes.toString(CryptoJS.enc.Utf8);
+      parsedObject = JSON.parse(decryptedJsonString);
+    } else {
+      console.log("No encrypted data found in localStorage.");
+    }
       try {
         const response = await axios.get(
-          process.env.REACT_APP_API_URL+"/api/v2/getAllTechnology",
+          process.env.REACT_APP_API_URL + "/api/v2/getAllTechnology",
           {
             headers: {
-              Authorization:`Bearer ${JSON.parse(localStorage.getItem('userData'))['token']}`,
+              Authorization: `Bearer ${parsedObject["token"]}`,
             },
           }
         );
-        setTechOptions(response.data?.response.sort((a, b) => {
-          const nameA = a.techName.toUpperCase();
-          const nameB = b.techName.toUpperCase();
-          if (nameA < nameB) {
-            return -1;
-          }
-          if (nameA > nameB) {
-            return 1;
-          }
-          return 0; // names are equal
-        }) || []);
+        setTechOptions(
+          response.data?.response.sort((a, b) => {
+            const nameA = a.techName.toUpperCase();
+            const nameB = b.techName.toUpperCase();
+            if (nameA < nameB) {
+              return -1;
+            }
+            if (nameA > nameB) {
+              return 1;
+            }
+            return 0; // names are equal
+          }) || []
+        );
       } catch (error) {
         console.error(error);
       }
     };
     fetchTechOptions();
-    
   }, []);
 
 
   const handleOptionClick = (event) => {
     const { value, id } = event.currentTarget.dataset;
     const isChecked = event.currentTarget.querySelector("input").checked;
-  
     if (!isChecked && props.technologyNames.some((tech) => tech.techName === value)) {
       // If the checkbox is unchecked and the value is already in the selected technology names,
       // remove it from the selected technology names and selected tech ids.
@@ -96,43 +106,45 @@ const TechDropDown = (props) => {
   //   // }
   // };
   
-
   useEffect(() => {
     if (props.technologyNames) {
-      const selectedTechNames = props.technologyNames.map((tech) => tech.techName);
+      const selectedTechNames = props.technologyNames.map(
+        (tech) => tech.techName
+      );
       props.techDataComingChild(selectedTechNames);
     }
   }, [props.technologyNames]);
-  
-
 
   return (
     <div className="drop-tech">
       {
-      // [
-      //   { techId: "select-all", techName: "Select all" },
-      //   ...techOptions,
-      // ]
-      techOptions.map((tech) => (
-        <div
-          key={tech.techId}
-          className="form-check small checkbox"
-          onClick={handleOptionClick}
-          data-value={tech.techName}
-          data-id={tech.techId}
-        >
-          <label className="form-check-label tech-label" htmlFor={tech.techName}>
-            {tech.techName}
-          </label>
-          <input
-            className="form-check-input tech-checkbox"
-            type="checkbox"
-            value={tech.techName}
-            id={tech.techId}
-
-          />
-        </div>
-      ))}
+        // [
+        //   { techId: "select-all", techName: "Select all" },
+        //   ...techOptions,
+        // ]
+        techOptions.map((tech) => (
+          <div
+            key={tech.techId}
+            className="form-check small checkbox"
+            onClick={handleOptionClick}
+            data-value={tech.techName}
+            data-id={tech.techId}
+          >
+            <label
+              className="form-check-label tech-label"
+              htmlFor={tech.techName}
+            >
+              {tech.techName}
+            </label>
+            <input
+              className="form-check-input tech-checkbox"
+              type="checkbox"
+              value={tech.techName}
+              id={tech.techId}
+            />
+          </div>
+        ))
+      }
     </div>
   );
 };

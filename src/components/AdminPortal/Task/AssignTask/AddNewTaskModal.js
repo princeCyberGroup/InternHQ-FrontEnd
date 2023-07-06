@@ -4,7 +4,8 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { ReactComponent as ExpandMore } from "../../../../Assets/expand_more.svg";
 import TechnologyDropDown from "./TechnologyDropdown(Admin)";
-import UsersDropdown from "./UsersDropdown";
+import UsersDropdown from "./UsersDropdown"
+import CryptoJS from "crypto-js";
 
 export const AddNewTask = ({ onAddClose }) => {
   const [error, setError] = useState(true);
@@ -62,17 +63,23 @@ export const AddNewTask = ({ onAddClose }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    var storedObject = JSON.parse(localStorage.getItem("userData"));
-    var userId = storedObject.userId;
-    var assignedByDesignation = storedObject.designation;
-    var assignedByfullName =
-      storedObject.firstName + " " + storedObject.lastName;
+    const secretkeyUser = process.env.REACT_APP_USER_KEY;
+    var parsedObject;
+    const data = localStorage.getItem("userData");
+    if (data) {
+      const bytes = CryptoJS.AES.decrypt(data, secretkeyUser);
+      const decryptedJsonString = bytes.toString(CryptoJS.enc.Utf8);
+      parsedObject = JSON.parse(decryptedJsonString);
+    } else {
+      console.log("No encrypted data found in localStorage.");
+    }
+    var userId = parsedObject.userId;
 
     if (error) {
       alert("Please fill out the necessary fields");
     } else {
       await axios
-        .post(process.env.REACT_APP_API_URL+"/api/v2/addNewTask", {
+        .post(process.env.REACT_APP_API_URL + "/api/v2/addNewTask", {
           taskName,
 
           taskDescription,
@@ -189,10 +196,10 @@ export const AddNewTask = ({ onAddClose }) => {
                   >
                     Description<span style={{ color: "red" }}>*</span>
                     {taskDescription.length > 500 && (
-                    <span style={{ color: "red" }}>
-                      Exceeded maximum word limit of 500
-                    </span>
-                  )}
+                      <span style={{ color: "red" }}>
+                        Exceeded maximum word limit of 500
+                      </span>
+                    )}
                   </label>
 
                   <textarea
@@ -203,7 +210,6 @@ export const AddNewTask = ({ onAddClose }) => {
                     value={taskDescription}
                     onChange={(e) => handleDescription(e)}
                   ></textarea>
-                  
                 </div>
 
                 <div className="mb-3">

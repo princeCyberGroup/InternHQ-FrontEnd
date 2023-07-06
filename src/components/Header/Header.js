@@ -4,11 +4,24 @@ import { BsChevronDown } from "react-icons/bs";
 import { ReactComponent as CGlogo } from "../../Assets/CG-Logo (1) 1CGlogo.svg";
 import "./Header.css";
 import MentorAssignedAlerts from "../UserPortal/Dashboard/MentorAssignedAlerts/MentorAssignedAlerts";
+import CryptoJS from "crypto-js";
 
 const Header = () => {
-  const [userData, setUserData] = useState(
-    JSON.parse(localStorage.getItem("userData"))
-  );
+  const secretKey = process.env.REACT_APP_USER_KEY;
+  const [userData, setUserData] = useState({});
+
+  useEffect(() => {
+    const data = localStorage.getItem("userData");
+    if (data) {
+      const bytes = CryptoJS.AES.decrypt(data, secretKey);
+      const decryptedJsonString = bytes.toString(CryptoJS.enc.Utf8);
+      console.log("object", JSON.parse(decryptedJsonString));
+      setUserData(JSON.parse(decryptedJsonString));
+    } else {
+      console.log("No encrypted data found in localStorage.");
+    }
+  }, []);
+
   const [isTodayDate, setIsTodayDate] = useState(false);
   const navigate = useNavigate();
   const handleLogout = (e) => {
@@ -54,7 +67,10 @@ const Header = () => {
           <div className="collapse navbar-collapse border-Side" id="navbarNav">
             {userData.randomString === process.env.REACT_APP_USER_DES_USER ? (
               // user */
-              <ul className="navbar-nav nav-bg d-flex align-items-center" style={{height:"2.7rem"}}>
+              <ul
+                className="navbar-nav nav-bg d-flex align-items-center"
+                style={{ height: "2.7rem" }}
+              >
                 <li className="nav-item ps-1">
                   <NavLink to="/dashboard" className="btn activeBtn">
                     Dashboard
@@ -75,7 +91,10 @@ const Header = () => {
               </ul>
             ) : (
               // Admin */
-              <ul className="navbar-nav nav-bg d-flex align-items-center"  style={{height:"2.7rem"}}>
+              <ul
+                className="navbar-nav nav-bg d-flex align-items-center"
+                style={{ height: "2.7rem" }}
+              >
                 <li className="nav-item ps-1">
                   <NavLink to="/admin/dashboard" className="btn activeBtn">
                     Dashboard
@@ -139,8 +158,8 @@ const Header = () => {
                     {userData.firstName} {userData.lastName} <br />
                   </span>
                   <span className="deployed-status">
-                    {userData.designation.toLowerCase() === "user"
-                      ? userData.deployed
+                    {userData?.designation?.toLowerCase() === "user"
+                      ? userData?.deployed
                         ? "Occupied"
                         : "On Bench"
                       : ""}

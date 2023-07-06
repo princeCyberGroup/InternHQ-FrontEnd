@@ -17,6 +17,7 @@ import ProjectList from "./ProjectList";
 import axios from "axios";
 import PieChart from "./PieChart";
 import Header from "../../../Header/Header";
+import CryptoJS from "crypto-js";
 
 export const DetailedProvider = createContext();
 
@@ -27,12 +28,23 @@ const Detailedreport = () => {
   const idVal = parseInt(sessionStorage.getItem("detailId"));
   //functions
   const fetchData = async () => {
+    const secretkeyUser = process.env.REACT_APP_USER_KEY;
+    var parsedObject;
+    const data = localStorage.getItem("userData");
+    if (data) {
+      const bytes = CryptoJS.AES.decrypt(data, secretkeyUser);
+      const decryptedJsonString = bytes.toString(CryptoJS.enc.Utf8);
+      parsedObject = JSON.parse(decryptedJsonString);
+    } else {
+      console.log("No encrypted data found in localStorage.");
+    }
     try {
       const response = await axios.get(
-        process.env.REACT_APP_API_URL+`/api/v2/getAllDetailsOfIntern?userId=${idVal}`,
+        process.env.REACT_APP_API_URL +
+          `/api/v2/getAllDetailsOfIntern?userId=${idVal}`,
         {
           headers: {
-            Authorization:`Bearer ${JSON.parse(localStorage.getItem('userData'))['token']}`,
+            Authorization: `Bearer ${parsedObject["token"]}`,
           },
         }
       );
@@ -128,7 +140,9 @@ const Detailedreport = () => {
               </div>
             </div>
             <div className="detailrep-table">
-            <div className="progress-div"><span>Progress Report</span></div>
+              <div className="progress-div">
+                <span>Progress Report</span>
+              </div>
               <DailyUpdateTableSection userId={idVal} />
             </div>
           </div>

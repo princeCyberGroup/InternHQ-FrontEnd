@@ -1,35 +1,43 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-
+import CryptoJS from "crypto-js";
 
 const UsersDropdown = (props) => {
   // const [selectedUsers, setSelectedUsers] = useState([]);
   const [allUsers, setAllUsers] = useState([]);
   // const [selectAllChecked, setSelectAllChecked] = useState(false);
 
-
-
-
   useEffect(() => {
+    const secretkeyUser = process.env.REACT_APP_USER_KEY;
+    var parsedObject;
+    const data = localStorage.getItem("userData");
+    if (data) {
+      const bytes = CryptoJS.AES.decrypt(data, secretkeyUser);
+      const decryptedJsonString = bytes.toString(CryptoJS.enc.Utf8);
+      parsedObject = JSON.parse(decryptedJsonString);
+    } else {
+      console.log("No encrypted data found in localStorage.");
+    }
     axios
-      .get(process.env.REACT_APP_API_URL+"/api/v2/getAllUsers",
-      {
+      .get(process.env.REACT_APP_API_URL + "/api/v2/getAllUsers", {
         headers: {
-          Authorization:`Bearer ${JSON.parse(localStorage.getItem('userData'))['token']}`,
+          Authorization: `Bearer ${parsedObject["token"]}`,
         },
       })
       .then((response) => {
-        setAllUsers(response.data.response.sort((a, b) => {
-          const nameA = a.name.toUpperCase();
-          const nameB = b.name.toUpperCase();
-          if (nameA < nameB) {
-            return -1;
-          }
-          if (nameA > nameB) {
-            return 1;
-          }
-          return 0; // names are equal
-        }));
+        setAllUsers(
+          response.data.response.sort((a, b) => {
+            const nameA = a.name.toUpperCase();
+            const nameB = b.name.toUpperCase();
+            if (nameA < nameB) {
+              return -1;
+            }
+            if (nameA > nameB) {
+              return 1;
+            }
+            return 0; // names are equal
+          })
+        );
       })
       .catch((error) => {
         console.error(error);
@@ -42,8 +50,7 @@ const UsersDropdown = (props) => {
   
     if (value === "Select all") {
       props.setSelectAllChecked(isChecked);
-  
-      if (isChecked) {
+        if (isChecked) {
         props.setSelectedUsers(allUsers);
         props.setSelectedUserIds(allUsers.map((user) => user.userId));
       } else {
@@ -51,7 +58,6 @@ const UsersDropdown = (props) => {
         props.setSelectedUserIds([]);
       }
     } else {
-
         // Handle individual user selection
         if (!isChecked && props.selectedUsers.some((user) => user.name === value)) {
           props.setSelectedUsers((prevSelectedUsers) =>
@@ -75,14 +81,12 @@ const UsersDropdown = (props) => {
     }
   };
 
-
   useEffect(() => {
-    if(props.selectedUsers){
-    const selectedUsersNames = props.selectedUsers?.map((user) => user.name);
-    props.usersDataComingChild(selectedUsersNames);
+    if (props.selectedUsers) {
+      const selectedUsersNames = props.selectedUsers?.map((user) => user.name);
+      props.usersDataComingChild(selectedUsersNames);
     }
   }, [props.selectedUsers]);
-  
 
   return (
     <div className="drop-tech">
@@ -118,6 +122,3 @@ const UsersDropdown = (props) => {
 };
 
 export default UsersDropdown;
-
-
-
