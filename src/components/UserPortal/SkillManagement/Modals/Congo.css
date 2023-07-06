@@ -11,11 +11,13 @@
   justify-content: center;
   align-items: center;
   overflow-y: hidden;
+  
 }
 
 .child-congo-wrapper {
   background-color: #ffffff;
   width: 29rem; /* 464px / 16px = 29rem */
+  border-radius: 8px;
 }
 
 .mSize {

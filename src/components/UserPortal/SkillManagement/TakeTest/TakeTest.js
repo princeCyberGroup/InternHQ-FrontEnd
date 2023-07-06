@@ -7,6 +7,7 @@ import { ReactComponent as GoldStarOri } from "../../../../Assets/Star-Icon-gold
 import { ReactComponent as SilverStarOri } from "../../../../Assets/Star-Icon-silver-ori.svg";
 import { ReactComponent as BronzeStarOri } from "../../../../Assets/Star-Icon-bronze-ori.svg";
 import CryptoJS from "crypto-js";
+import { ReactComponent as SearchIcon } from "../../../../Assets/search.svg";
 // import logo from '../../../Assets/image 13.png';
 import "./TakeTest.css";
 import { BsClock } from "react-icons/bs";
@@ -77,13 +78,27 @@ const TakeTest = ({ test }) => {
       }
       return items;
     };
+    
     const filters = getFilterItems(originalTests, searchFilterValue);
-    setTests(filters);
+
+    let filteredTests = [];
+
+    if (activeButton === "all") {
+      filteredTests = filters;
+    } else if (activeButton === "beginner") {
+      filteredTests = filters.filter((test) => test.level === "Beginner");
+    } else if (activeButton === "inter") {
+      filteredTests = filters.filter((test) => test.level === "Intermediate");
+    } else if (activeButton === "advanced") {
+      filteredTests = filters.filter((test) => test.level === "Advance");
+    }
+
+    setTests(filteredTests);
   };
 
   useEffect(() => {
     handleFiltersChange();
-  }, [searchFilterValue]);
+  }, [searchFilterValue, activeButton]);
 
   const navigate = useNavigate();
   const location = useLocation();
@@ -144,7 +159,6 @@ const TakeTest = ({ test }) => {
             }`}
             onClick={() => {
               setActiveButton("all");
-              setTests(allData);
             }}
           >
             <button className="btn-nav p-0">All</button>
@@ -155,7 +169,6 @@ const TakeTest = ({ test }) => {
             }`}
             onClick={() => {
               setActiveButton("beginner");
-              setTests(allData.filter((tests) => tests.level === "Beginner"));
             }}
           >
             <button className="btn-nav p-0">Beginner</button>
@@ -166,9 +179,6 @@ const TakeTest = ({ test }) => {
             }`}
             onClick={() => {
               setActiveButton("inter");
-              setTests(
-                allData.filter((tests) => tests.level === "Intermediate")
-              );
             }}
           >
             <button className="btn-nav p-0">Intermediate</button>
@@ -179,12 +189,13 @@ const TakeTest = ({ test }) => {
             }`}
             onClick={() => {
               setActiveButton("advanced");
-              setTests(allData.filter((tests) => tests.level === "Advance"));
             }}
           >
             <button className="btn-nav p-0">Advanced</button>
           </div>
-          <div className="search-bar" style={{ margin: "auto" }}>
+
+          <div className="d-flex align-items-center ps-1 takeTest-search-wrapper">
+            <SearchIcon />
             <input
               className="sea"
               type="text"
@@ -196,6 +207,18 @@ const TakeTest = ({ test }) => {
               }}
             />
           </div>
+          {/* <div className="search-bar" style={{ margin: "auto" }}>
+            <input
+              className="sea"
+              type="text"
+              value={searchFilterValue}
+              placeholder="Search"
+              onChange={(event) => {
+                event.preventDefault();
+                setSearchFilterValue(event.target.value);
+              }}
+            />
+          </div> */}
         </div>
         {isLoading ? (
           <div className="card-body  p-0">
@@ -234,6 +257,7 @@ const TakeTest = ({ test }) => {
                                 className="imageLogo"
                                 width="1.875rem"
                                 height="2.188rem"
+                                alt=""
                               />
                             </div>
                             <div>
@@ -347,7 +371,7 @@ const TakeTest = ({ test }) => {
                                       type="button"
                                       onClick={() => clickCont()}
                                       data-bs-dismiss="modal"
-                                      className="btn btn-primary"
+                                      className="btn btn-primary continuebtn"
                                     >
                                       Continue
                                     </button>
@@ -371,3 +395,4 @@ const TakeTest = ({ test }) => {
 };
 
 export default TakeTest;
+
