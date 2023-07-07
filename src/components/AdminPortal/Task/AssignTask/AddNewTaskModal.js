@@ -10,20 +10,19 @@ export const AddNewTask = ({ onAddClose }) => {
   const [error, setError] = useState(true);
   const [taskName, setTaskName] = useState("");
   const [taskDescription, setTaskDescription] = useState("");
-  const [taskTech, setTaskTech] = useState([]);
-  const [taskUsers, setTaskUsers] = useState([]);
   const [dropDown, setDropDown] = useState(false);
   const [usersDropDown, setUsersDropDown] = useState(false);
   const [tech, setTech] = useState({});
   const [users, setUsers] = useState({});
   const [selectAllUsers, setSelectAllUsers] = useState(false);
-  const [taskTechIds, setTaskTechIds] = useState([]);
-  const [taskUserIds, setTaskUserIds] = useState([]);
   const [selectedUserIds, setSelectedUserIds] = useState([]);
   const [selectedUsers, setSelectedUsers] = useState([]);
   const [selectedTechIds, setSelectedTechIds] = useState([]);
   const [technologyNames, setTechnologyNames] = useState([]);
   const [selectAllChecked, setSelectAllChecked] = useState(false);
+  const [searchQuery, setSearchQuery] = useState("");
+  const [searchUserQuery, setSearchUserQuery] = useState("");
+
 
   const handleClickClear = (e) => {
     e.preventDefault();
@@ -37,6 +36,8 @@ export const AddNewTask = ({ onAddClose }) => {
     setSelectedUsers([]);
     setTech({});
     setUsers({});
+    // setSearchQuery("");
+    // setSearchUserQuery("");
 
     setSelectAllChecked(false);
 
@@ -64,9 +65,7 @@ export const AddNewTask = ({ onAddClose }) => {
 
     var storedObject = JSON.parse(localStorage.getItem("userData"));
     var userId = storedObject.userId;
-    var assignedByDesignation = storedObject.designation;
-    var assignedByfullName =
-      storedObject.firstName + " " + storedObject.lastName;
+    
 
     if (error) {
       alert("Please fill out the necessary fields");
@@ -127,9 +126,6 @@ export const AddNewTask = ({ onAddClose }) => {
     } else {
       setError(false);
     }
-  };
-  const handleAssignedTo = (e) => {
-    setTaskUsers(e.target.value);
   };
 
   return (
@@ -251,6 +247,8 @@ export const AddNewTask = ({ onAddClose }) => {
                           setSelectedTechIds={setSelectedTechIds}
                           setTechnologyNames={setTechnologyNames}
                           technologyNames={technologyNames}
+                          searchQuery={searchQuery}
+                          setSearchQuery={setSearchQuery}
                         />
                       </ul>
                     </div>
@@ -264,9 +262,10 @@ export const AddNewTask = ({ onAddClose }) => {
                   >
                     Assigned To<span style={{ color: "red" }}>*</span>
                   </label>
-
+                  
                   <div className="container border p-0">
                     <div className="input-with-button">
+                      
                       <button
                         type="button"
                         className="button-for-dropdown"
@@ -294,17 +293,21 @@ export const AddNewTask = ({ onAddClose }) => {
                     </div>
                     <div>
                       <ul
-                        style={{ display: usersDropDown ? "" : "none" }}
+                        style={{maxHeight:"10rem",overflow:"auto", display: usersDropDown ? "" : "none" }}
                         className="ul-styling"
                       >
+
                         <UsersDropdown
                           usersDataComingChild={usersDataComingFrmChild}
                           selectAllUsers={selectAllUsers}
                           setSelectedUserIds={setSelectedUserIds}
+                          selectedUserIds={selectedUserIds}
                           setSelectedUsers={setSelectedUsers}
                           selectedUsers={selectedUsers}
                           selectAllChecked={selectAllChecked}
                           setSelectAllChecked={setSelectAllChecked}
+                          searchUserQuery={searchUserQuery}
+                          setSearchUserQuery={setSearchUserQuery}
                         />
                       </ul>
                     </div>

@@ -11,18 +11,13 @@ import DeleteTask from "../DeleteTask";
 
 
 const AssignTask = () => {
-  const [showOptions, setShowOptions] = useState(false);
   const [tasks, setTasks] = useState([]);
 
   const [taskToEdit, setTaskToEdit] = useState(null);
   const [showDeleteTask, setShowDeleteTask] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
-  const [onDelete, setOnDelete] = useState(false);
   const [taskIdToChild, setTaskIdToChild] = useState(0);
   const [taskVersion, setTaskVersion] = useState(0); // Add task version state
-  const userData = JSON.parse(localStorage.getItem("userData"));
-  const assignedByFirstName = userData ? userData.firstName : null;
-  const assignedByLastName = userData ? userData.lastName : null;
   const [editedTask, setEditedTask] = useState({});
   const [taskName, setTaskName] = useState("");
   const [taskDescription, setTaskDescription] = useState("");
