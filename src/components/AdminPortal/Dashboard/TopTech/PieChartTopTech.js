@@ -9,8 +9,8 @@ const PieChartTopTech = () => {
     await fetch(`https://cg-interns-hq.azurewebsites.net/api/v2/getTop5Tech`, {
       method: "GET",
       headers: {
-        Authorization: `Bearer ${token}`,
-      },
+          Authorization:`Bearer ${JSON.parse(localStorage.getItem('userData'))['token']}`,
+        },
     })
       .then((response) => {
         return response.json();
@@ -121,6 +121,7 @@ const PieChartTopTech = () => {
         <div
           className="col"
           style={{
+            height: "32.25rem",
             boxShadow: "0rem 0.25rem 1.25rem rgba(40, 52, 73, 0.15)",
             borderRadius: "0.5rem",
           }}

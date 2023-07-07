@@ -33,7 +33,7 @@ const MentorAssignedAlerts = (props) => {
   const fetchData = async () => {
     await fetch(
       process.env.REACT_APP_API_URL +
-        `/api/v2/getAssignedNotification?userId=${userId}`,
+        `/api/v3/getAssignedNotification?userId=${userId}`,
       {
         headers: {
           Authorization: `Bearer ${

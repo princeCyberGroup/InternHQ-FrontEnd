@@ -16,21 +16,25 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import { UserContext } from "../../../../Context/Context";
 import TakeTestSkeleton from "./TakeTestSkeleton";
+import { TestContext } from "../SkillManagement";
 
-export const TestContext = createContext();
 
-const TakeTest = ({ test }) => {
+const TakeTest = () => {
+  const {tests, setTests, resultInfo} = useContext(TestContext);
+  console.log(tests, "Here are tests") //first api response
+  console.log(resultInfo, "Here are result info") // second api response
   const [activeButton, setActiveButton] = useState("all");
   const { score } = useContext(UserContext);
 
   const [daysDifference, setDaysDifference] = useState(calculateDaysDifference());
 
   // const [searchQuery, setSearchQuery] = useState("");
-  const [tests, setTests] = useState([]);
+  // const [tests, setTests] = useState([]);
   const [originalTests, setOriginalTests] = useState([]);
-  const [allData, setAllData] = useState([]);
+  // const [allData, setAllData] = useState([]);
   const [data, setdata] = useState();
   const [searchFilterValue, setSearchFilterValue] = useState("");
+  
   const [isLoading, setIsLoading] = useState(true);
   useEffect(() => {
     setTimeout(() => {
@@ -40,7 +44,7 @@ const TakeTest = ({ test }) => {
   const fetchTests = async (examId) => {
     try {
       const response = await fetch(
-        process.env.REACT_APP_API_URL+"/api/v2/getAllExam",
+        process.env.REACT_APP_API_URL+"/api/v3/getAllExam",
         {
           headers: {
             Authorization:`Bearer ${JSON.parse(localStorage.getItem('userData'))['token']}`,
@@ -48,7 +52,6 @@ const TakeTest = ({ test }) => {
         }
       );
       const data = await response.json();
-      setAllData(data);
       setTests(data);
       setOriginalTests(data);
       setIsLoading(false);
@@ -283,6 +286,7 @@ const TakeTest = ({ test }) => {
                                 className="btnclick"
                                 data-bs-toggle="modal"
                                 data-bs-target="#staticBackdrop"
+                                disabled
                               >
                                 Start Test
                               </Button>

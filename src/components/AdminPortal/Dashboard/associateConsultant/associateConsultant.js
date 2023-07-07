@@ -88,7 +88,7 @@ export default function AssociateConsultant(props) {
             </div>
             <div
               onClick={() => {
-                handleOnclick(userData.userId);
+                handleOnclick(userData.intId);
               }}
               className=" col-4 pointer"
             >
@@ -165,7 +165,7 @@ export default function AssociateConsultant(props) {
         </div>
 
         <div className="associate-card">
-          <div className="d-flex align-items-center ps-1 associate-search-wrapper">
+          <div className="d-flex align-items-center ps-3 associate-search-wrapper">
             <SearchIcon />
             <input
               className="search-associate "

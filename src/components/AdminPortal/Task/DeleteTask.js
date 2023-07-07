@@ -14,7 +14,7 @@ const DeleteTask = ({taskId,setIsOpen, setShowDeleteTask, setTaskVersion}) => {
     // setOnDelete(true);
     // if (onDelete === true) {
       await axios
-        .post(process.env.REACT_APP_API_URL+"/api/v2/deleteTask", {
+        .post(process.env.REACT_APP_API_URL+"/api/v3/deleteTask", {
           taskId,
         })
         .then((res) => {

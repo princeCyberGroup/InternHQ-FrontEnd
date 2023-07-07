@@ -14,10 +14,10 @@ import Header from "../../Header/Header";
 const DashboardA = () => {
   const [StatusData, setStatusData] = useState([]);
   const [acData, setAcData] = useState([]);
-  const [insights, setInsights] = useState([]);
+  // const [insights, setInsights] = useState([]);
   useEffect(() => {
     fetchData();
-    InsightData();
+    // InsightData();
   }, []);
 
   const fetchData = async () => {
@@ -37,22 +37,22 @@ const DashboardA = () => {
       console.log(e);
     }
   };
-  const InsightData = async () => {
-    try {
-      const response = await fetch(
-        process.env.REACT_APP_API_URL+`/api/v2/getInsights`,
-        {
-          headers: {
-            Authorization:`Bearer ${JSON.parse(localStorage.getItem('userData'))['token']}`,
-          },
-        }
-      );
-      const insData = await response.json();
-      setInsights(insData.response);
-    } catch (e) {
-      console.log(e);
-    }
-  };
+  // const InsightData = async () => {
+  //   try {
+  //     const response = await fetch(
+  //       process.env.REACT_APP_API_URL+`/api/v2/getInsights`,
+  //       {
+  //         headers: {
+  //           Authorization:`Bearer ${JSON.parse(localStorage.getItem('userData'))['token']}`,
+  //         },
+  //       }
+  //     );
+  //     const insData = await response.json();
+  //     setInsights(insData.response);
+  //   } catch (e) {
+  //     console.log(e);
+  //   }
+  // };
   return (
     <>
       <div className="" style={{ marginBottom: "3rem" }}>
@@ -88,7 +88,7 @@ const DashboardA = () => {
             </div>
             {/* //insights */}
             <div className="col-4 " style={{marginTop:"1rem"}}>
-              <Insights data={insights} />
+              <Insights />
             </div>
           </div>
         </>
