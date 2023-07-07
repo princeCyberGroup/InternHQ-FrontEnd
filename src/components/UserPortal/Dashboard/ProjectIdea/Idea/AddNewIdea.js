@@ -8,7 +8,7 @@ import TechDropDown from "../TechDropDown";
 import { UserContext } from "../../../../../Context/Context";
 import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
-
+import CryptoJS from "crypto-js";
 const AddNewIdea = () => {
   const { idea } = useContext(UserContext);
   const navigate = useNavigate();
@@ -49,7 +49,6 @@ const AddNewIdea = () => {
       checkbox.checked = false;
     });
   };
-
 
   const handleChangeProjNameError = (event) => {
     event.preventDefault();
@@ -100,14 +99,22 @@ const AddNewIdea = () => {
   };
   const handleSubmit = async (e) => {
     e.preventDefault();
-    var storedObject = localStorage.getItem("userData");
-    var parsedObject = JSON.parse(storedObject);
+    const secretkeyUser = process.env.REACT_APP_USER_KEY;
+    var parsedObject;
+    const data = localStorage.getItem("userData");
+    if (data) {
+      const bytes = CryptoJS.AES.decrypt(data, secretkeyUser);
+      const decryptedJsonString = bytes.toString(CryptoJS.enc.Utf8);
+      parsedObject = JSON.parse(decryptedJsonString);
+    } else {
+      console.log("No encrypted data found in localStorage.");
+    }
     var userId = parsedObject.userId;
     if (error) {
       alert("Please fill in the required details");
     } else {
       await axios
-        .post(process.env.REACT_APP_API_URL+"/api/v2/projectIdea", {
+        .post(process.env.REACT_APP_API_URL + "/api/v2/projectIdea", {
           projName,
           projDescription,
           userId,
@@ -126,11 +133,11 @@ const AddNewIdea = () => {
       setDropDown(false);
       setTech({});
       seTechNames([]);
-        
-    const checkboxes = document.querySelectorAll(".tech-checkbox");
-    checkboxes.forEach((checkbox) => {
-      checkbox.checked = false;
-    });
+
+      const checkboxes = document.querySelectorAll(".tech-checkbox");
+      checkboxes.forEach((checkbox) => {
+        checkbox.checked = false;
+      });
     }
   };
 
@@ -438,8 +445,7 @@ const AddNewIdea = () => {
                 type="button"
                 className="btn save-button"
                 data-bs-target="#myIdeaModal"
-                data-bs-dismiss={!error ? 'modal' : ''}
-                
+                data-bs-dismiss={!error ? "modal" : ""}
                 onClick={(e) => {
                   handleSubmit(e);
                 }}

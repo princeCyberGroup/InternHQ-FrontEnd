@@ -1,16 +1,27 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-
+import CryptoJS from "crypto-js";
 const UsersDropdown = (props) => {
   const [allUsers, setAllUsers] = useState([]);
-  // const [searchQuery, setSearchQuery] = useState("");
   const [filteredUsers, setFilteredUsers] = useState([]);
 
+
   useEffect(() => {
+    const secretkeyUser = process.env.REACT_APP_USER_KEY;
+    var parsedObject;
+    const data = localStorage.getItem("userData");
+    if (data) {
+      const bytes = CryptoJS.AES.decrypt(data, secretkeyUser);
+      const decryptedJsonString = bytes.toString(CryptoJS.enc.Utf8);
+      parsedObject = JSON.parse(decryptedJsonString);
+    } else {
+      console.log("No encrypted data found in localStorage.");
+    }
     axios
       .get(process.env.REACT_APP_API_URL + "/api/v2/getAllUsers", {
         headers: {
-          Authorization: `Bearer ${JSON.parse(localStorage.getItem('userData'))['token']}`,
+
+          Authorization: `Bearer ${parsedObject["token"]}`,
         },
       })
       .then((response) => {
@@ -27,11 +38,13 @@ const UsersDropdown = (props) => {
         });
         setAllUsers(sortedUsers);
         setFilteredUsers(sortedUsers);
+
       })
       .catch((error) => {
         console.error(error);
       });
   }, []);
+
 
   const handleCheckAllChange = (e) => {
     if (e.target.checked) {

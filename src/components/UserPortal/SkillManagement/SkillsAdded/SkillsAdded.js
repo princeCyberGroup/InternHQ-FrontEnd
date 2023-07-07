@@ -7,11 +7,20 @@ import "./SkillsAdded.css";
 // import nonActiveimageStar from '../Assets/nonActiveimageStar.png';
 import { ReactComponent as EmptyStar } from "../../../../Assets/emptystar.svg";
 import SkillsAddedSkeleton from "./SkillsAddedSkeleton";
+import CryptoJS from "crypto-js";
 // import { ReactComponent as Star } from "../../../../Assets/Star.svg";
 
 const SkillsAdded = () => {
-  var storedObject = localStorage.getItem("userData");
-  var parsedObject = JSON.parse(storedObject);
+  const secretkeyUser = process.env.REACT_APP_USER_KEY;
+  var parsedObject;
+  const data = localStorage.getItem("userData");
+  if (data) {
+    const bytes = CryptoJS.AES.decrypt(data, secretkeyUser);
+    const decryptedJsonString = bytes.toString(CryptoJS.enc.Utf8);
+    parsedObject = JSON.parse(decryptedJsonString);
+  } else {
+    console.log("No encrypted data found in localStorage.");
+  }
   var userId = parsedObject.userId;
   const [allData, setAllData] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
@@ -26,10 +35,10 @@ const SkillsAdded = () => {
     try {
       //const response = await fetch(`https://cg-interns-hq.azurewebsites.net/skillAdded?userId=41`);
       const response = await fetch(
-        process.env.REACT_APP_API_URL+`/api/v2/skillAdded?userId=${userId}`,
+        process.env.REACT_APP_API_URL + `/api/v2/skillAdded?userId=${userId}`,
         {
           headers: {
-            Authorization:`Bearer ${JSON.parse(localStorage.getItem('userData'))['token']}`,
+            Authorization: `Bearer ${parsedObject["token"]}`,
           },
         }
       );
@@ -49,7 +58,11 @@ const SkillsAdded = () => {
       </div>
       <div
         className="card skill-added-card"
-        style={{ boxShadow: " 0px 4px 20px 0px rgba(40, 52, 73, 0.15)", overflowY: "scroll" , overflowX: "hidden"}}
+        style={{
+          boxShadow: " 0px 4px 20px 0px rgba(40, 52, 73, 0.15)",
+          overflowY: "scroll",
+          overflowX: "hidden",
+        }}
       >
         {isLoading ? (
           <>

@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import CryptoJS from "crypto-js";
 
 const TechDropDown = (props) => {
   const [techOptions, setTechOptions] = useState([]);
@@ -8,12 +9,22 @@ const TechDropDown = (props) => {
 
   useEffect(() => {
     const fetchTechOptions = async () => {
+      const secretkeyUser = process.env.REACT_APP_USER_KEY;
+    var parsedObject;
+    const data = localStorage.getItem("userData");
+    if (data) {
+      const bytes = CryptoJS.AES.decrypt(data, secretkeyUser);
+      const decryptedJsonString = bytes.toString(CryptoJS.enc.Utf8);
+      parsedObject = JSON.parse(decryptedJsonString);
+    } else {
+      console.log("No encrypted data found in localStorage.");
+    }
       try {
         const response = await axios.get(
           process.env.REACT_APP_API_URL + "/api/v2/getAllTechnology",
           {
             headers: {
-              Authorization: `Bearer ${JSON.parse(localStorage.getItem('userData'))['token']}`,
+              Authorization: `Bearer ${parsedObject["token"]}`,
             },
           }
         );
@@ -30,6 +41,7 @@ const TechDropDown = (props) => {
         }) || [];
         setTechOptions(sortedOptions);
         setFilteredTechOptions(sortedOptions);
+
       } catch (error) {
         console.error(error);
       }
@@ -71,7 +83,9 @@ const TechDropDown = (props) => {
 
   useEffect(() => {
     if (props.technologyNames) {
-      const selectedTechNames = props.technologyNames.map((tech) => tech.techName);
+      const selectedTechNames = props.technologyNames.map(
+        (tech) => tech.techName
+      );
       props.techDataComingChild(selectedTechNames);
     }
   }, [props.technologyNames]);
@@ -105,6 +119,7 @@ const TechDropDown = (props) => {
           />
         </div>
       ))}
+
     </div>
   );
 };

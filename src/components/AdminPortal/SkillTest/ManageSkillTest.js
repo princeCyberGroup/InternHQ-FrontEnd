@@ -7,7 +7,7 @@ import axios from "axios";
 import { Link } from "react-router-dom";
 import ManageSkillTestSkeleton from "./ManageSkillTestSkeleton";
 import Header from "../../Header/Header";
-
+import CryptoJS from "crypto-js";
 export const ManageSkillTest = () => {
   //data
   const [data, setData] = useState([]);
@@ -35,12 +35,22 @@ export const ManageSkillTest = () => {
     }, 1000);
   }, []);
   const fetchData = async () => {
+    const secretkeyUser = process.env.REACT_APP_USER_KEY;
+    var parsedObject;
+    const data = localStorage.getItem("userData");
+    if (data) {
+      const bytes = CryptoJS.AES.decrypt(data, secretkeyUser);
+      const decryptedJsonString = bytes.toString(CryptoJS.enc.Utf8);
+      parsedObject = JSON.parse(decryptedJsonString);
+    } else {
+      console.log("No encrypted data found in localStorage.");
+    }
     try {
       const response = await axios.get(
         process.env.REACT_APP_API_URL+`/api/v2/getAllExam`,
         {
           headers: {
-            Authorization:`Bearer ${JSON.parse(localStorage.getItem('userData'))['token']}`,
+            Authorization:`Bearer ${parsedObject['token']}`,
           },
         }
       );
