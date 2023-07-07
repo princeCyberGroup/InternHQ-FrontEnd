@@ -38,12 +38,9 @@ import Error_500 from "./components/ErrorPage/Error_500";
 import Error_404 from "./components/ErrorPage/Error_404";
 import  PieChart  from "./components/AdminPortal/Report/Detailedreport/PieChart";
 import { ManageSkillTest } from "./components/AdminPortal/SkillTest/ManageSkillTest";
+import Log from "./components/AdminPortal/Logs/Log";
 
 function App() {
-  const location = useLocation();
-  const navigate = useNavigate();
-  const [searchParams] = useSearchParams();
-  const userId = searchParams.get("userId");
   const [dataFromDailyUpdate, setDataFromDailyUpdate] = useState("");
   const handleDataFromDailyUpdate = (data) => {
     setDataFromDailyUpdate(data);
@@ -97,6 +94,7 @@ function App() {
             <Route path="/admin/report" element={<Detailedreport />} />
             <Route path="/admin/assign-task" element={<Task />} />
             <Route path="/admin/skill-test" element={<ManageSkillTest />} />
+            <Route path="/admin/logs" element={<Log />} />
               
           </Route>
 
