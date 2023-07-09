@@ -10,7 +10,9 @@
   border-spacing: 0 0.5rem;
   table-layout: fixed;
 }
-
+.deployed-input{
+  accent-color: green;
+}
 .table-report thead {
   /* top: 0;
   position: sticky; */

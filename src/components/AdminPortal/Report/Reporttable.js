@@ -4,6 +4,8 @@ import EmptyDailyUpdateTable from "../../UserPortal/DailyUpdateTable/EmptyDailyU
 import "./Reporttable.css";
 import { ReactComponent as Advance } from "../../../Assets/advance.svg";
 import { ReactComponent as Beginner } from "../../../Assets/beginner.svg";
+import { ReactComponent as Deployed } from "../../../Assets/Deployed.svg";
+import { ReactComponent as Undeployed } from "../../../Assets/Undeployed.svg";
 import { ReactComponent as Intermediate } from "../../../Assets/intermediate.svg";
 import { Data } from "./Fetcheddataobject";
 import { useNavigate } from "react-router-dom";
@@ -14,9 +16,8 @@ const Reporttable = ({ tableData, isLoading }) => {
   const handleOnclick = (index) => {
     // navigate(`/admin/report/userId?id=${tableData[index][Data.ID]}`);
     sessionStorage.setItem("detailId", tableData[index][Data.ID]);
-    navigate(`/admin/report?userId=${tableData[index][Data.ID]}`, {
-      state: "Report",
-    });
+    sessionStorage.setItem("chrumValue", "Report");
+    navigate(`/admin/report?userId=${tableData[index][Data.ID]}`);
   };
 
   return (
@@ -136,8 +137,13 @@ const Reporttable = ({ tableData, isLoading }) => {
                     </div>
                   </td>
                   <td>
-                    <div >
-                      <input type="checkbox" checked={val[Data.DE]} />
+                    <div>
+                      {/* <input
+                        type="checkbox"
+                        checked={val[Data.DE]}
+                        className="deployed-input"
+                      /> */}
+                      {val[Data.DE] ? <Deployed /> : <Undeployed />}
                     </div>
                   </td>
                 </tr>

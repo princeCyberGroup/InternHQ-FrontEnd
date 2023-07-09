@@ -9,6 +9,7 @@ import { AddNewTask } from "./AddNewTaskModal";
 import { EditTaskModal } from "./EditTaskModal";
 import DeleteTask from "../DeleteTask";
 import CryptoJS from "crypto-js";
+import { useNavigate } from "react-router-dom";
 const AssignTask = () => {
   const [showOptions, setShowOptions] = useState(false);
   const [tasks, setTasks] = useState([]);
@@ -22,6 +23,7 @@ const AssignTask = () => {
   const [editedTask, setEditedTask] = useState({});
   const [taskName, setTaskName] = useState("");
   const [taskDescription, setTaskDescription] = useState("");
+  const navigate = useNavigate();
 
   useEffect(() => {
     setEditedTask(taskToEdit);
@@ -54,6 +56,9 @@ const AssignTask = () => {
         setTasks(response.data.response);
       })
       .catch((error) => {
+        if (error.response.status === 401) {
+          navigate("/error/session-expired");
+        }
         console.error("Error fetching tasks:", error);
       });
   }, [taskVersion]);

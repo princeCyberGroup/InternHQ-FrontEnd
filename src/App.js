@@ -38,6 +38,7 @@ import Error_500 from "./components/ErrorPage/Error_500";
 import Error_404 from "./components/ErrorPage/Error_404";
 import  PieChart  from "./components/AdminPortal/Report/Detailedreport/PieChart";
 import { ManageSkillTest } from "./components/AdminPortal/SkillTest/ManageSkillTest";
+import SessionExpired from "./components/ErrorPage/SessionExpired";
 
 function App() {
   const location = useLocation();
@@ -105,8 +106,9 @@ function App() {
             <Route path="/mentor-dashboard" element={<MentorDashboard />} />
           </Route>
 
-          <Route path="/error?statusCode=400" element={<Error_400 />} />
-          <Route path="/error?statusCode=500" element={<Error_500 />} />
+          <Route path="/error/statusCode=400" element={<Error_400 />} />
+          <Route path="/error/statusCode=500" element={<Error_500 />} />
+          <Route path="/error/session-expired" element={<SessionExpired />} />
           <Route path="*" element={<Error_404 />} />
         </Routes>
       </div>

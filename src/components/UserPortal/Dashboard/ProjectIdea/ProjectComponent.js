@@ -42,7 +42,7 @@ const ProjectComponent = () => {
       setIdea(response.data.response);
     } catch (error) {
       if (error.response?.data.statusCode === 401) {
-        return navigate("/error?statusCode=400");
+        return navigate("/error/session-expired");
       }
       // console.log("Error ", error.response?.data);
       // console.log(error.response?.data.msg);
@@ -62,7 +62,7 @@ const ProjectComponent = () => {
       setProject(response.data.response);
     } catch (error) {
       if (error.response?.data.statusCode === 401) {
-        navigate("/error?statusCode=400");
+        navigate("/error/session-expired");
       }
       // console.log(error.response?.data);
       // console.log(error.response?.data.msg);

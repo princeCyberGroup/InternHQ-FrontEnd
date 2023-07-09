@@ -56,9 +56,8 @@ const MentorAssignedAlerts = (props) => {
       })
       .catch((e) => {
         if (e.statusCode === 401) {
-          navigate("/error?statusCode=400");
+          navigate("/error/session-expired");
         }
-        console.log("jjj", e);
       });
   };
 

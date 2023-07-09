@@ -2,7 +2,7 @@ import "../Dashboard/DashboardA.css";
 import Uploadcsv from "./UploadCsv/Uploadcsv";
 import ManageSkillSet from "./ManageSkillSet/manageSkillSet";
 import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Status from "./Status/Status";
 // import TopTech from "./TopTech/topTech";
 import PieChartTopTech from "./TopTech/PieChartTopTech";
@@ -17,6 +17,7 @@ const DashboardA = () => {
   const [acData, setAcData] = useState([]);
   const [insights, setInsights] = useState([]);
   const secretkeyUser = process.env.REACT_APP_USER_KEY;
+  const navigate = useNavigate();
   var parsedObject;
   const data = localStorage.getItem("userData");
   if (data) {
@@ -41,11 +42,15 @@ const DashboardA = () => {
           },
         }
       );
+      if(response.status === 401){
+        console.log("working");
+        navigate("/error/session-expired")
+      }
       const rsp = await response.json();
       setStatusData(rsp);
       setAcData(rsp.response);
     } catch (e) {
-      console.log(e);
+      console.log("this is error", e);
     }
   };
   const InsightData = async () => {
