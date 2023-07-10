@@ -72,7 +72,7 @@ export default function AssociateConsultant(props) {
           <div className=" row mentor-wrapper">
             <div
               onClick={() => {
-                handleOnclick(userData.intId);
+                handleOnclick(userData.userId);
               }}
               className="col-4 frame pointer"
             >
@@ -89,7 +89,7 @@ export default function AssociateConsultant(props) {
             </div>
             <div
               onClick={() => {
-                handleOnclick(userData.intId);
+                handleOnclick(userData.userId);
               }}
               className=" col-4 pointer"
             >
