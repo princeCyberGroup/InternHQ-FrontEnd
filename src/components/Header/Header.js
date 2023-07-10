@@ -3,6 +3,7 @@ import { Link, NavLink, useNavigate } from "react-router-dom";
 import { BsChevronDown } from "react-icons/bs";
 import { ReactComponent as CGlogo } from "../../Assets/CG-Logo (1) 1CGlogo.svg";
 import "./Header.css";
+import axios from "axios";
 import MentorAssignedAlerts from "../UserPortal/Dashboard/MentorAssignedAlerts/MentorAssignedAlerts";
 
 const Header = () => {
@@ -11,10 +12,24 @@ const Header = () => {
   );
   const [isTodayDate, setIsTodayDate] = useState(false);
   const navigate = useNavigate();
-  const handleLogout = (e) => {
+  var storedObject = localStorage.getItem("userData");
+  var parsedObject = JSON.parse(storedObject);
+  var userId = parsedObject.userId;
+  const handleLogout = async (e) => {
     e.preventDefault();
     localStorage.clear("userData");
     navigate("/");
+    await axios
+        .post(process.env.REACT_APP_API_URL+"/api/v3/postLogoutLog", {
+          userId
+        })
+        .then((res) => {
+          console.log("data sent", res);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+
   };
 
   const anotherFunc = (mentorTask) => {

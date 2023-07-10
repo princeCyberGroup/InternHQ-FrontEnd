@@ -1,5 +1,6 @@
 import { ReactComponent as CloudImage } from "../../../Assets/Cloud.svg";
 import { ReactComponent as CloseBtn } from "../../../Assets/Close-admin.svg";
+import {ReactComponent as CSVIcon } from "../../../Assets/CSVIcon.svg"
 import React, { useState, useRef } from "react";
 import "./Modals.css";
 import axios from "axios";
@@ -7,6 +8,7 @@ import { Button } from "bootstrap";
 import { useNavigate } from "react-router-dom";
 // import { Link } from "react-router-dom";
 
+//This needs to be fix
 export const AddNewSkillTest = () => {
   const [technology, setTechnology] = useState("");
   const [name, setName] = useState("");
@@ -188,9 +190,9 @@ export const AddNewSkillTest = () => {
                 </span>
                 <div className="d-flex">
                   <div className="form-check">
-                    <label style={{ marginLeft: "0.313rem" }}>
+                    <label style={{ marginLeft: "0.313rem", fontSize: "16px", fontWeight: "500" }} >
                       <input
-                        className="form-check-input color-of-radio"
+                        className="form-check-input skill-test-color-of-radio"
                         type="radio"
                         name="options"
                         value="Beginner"
@@ -199,9 +201,9 @@ export const AddNewSkillTest = () => {
                       />
                       Beginner
                     </label>
-                    <label style={{ marginLeft: "3.125rem" }}>
+                    <label style={{ marginLeft: "3.125rem", fontSize: "16px", fontWeight: "500" }}>
                       <input
-                        className="form-check-input color-of-radio"
+                        className="form-check-input skill-test-color-of-radio"
                         type="radio"
                         name="options"
                         value="Intermediate"
@@ -210,9 +212,9 @@ export const AddNewSkillTest = () => {
                       />
                       Intermediate
                     </label>
-                    <label style={{ marginLeft: "3.125rem" }}>
+                    <label style={{ marginLeft: "3.125rem", fontSize: "16px", fontWeight: "500" }}>
                       <input
-                        className="form-check-input color-of-radio"
+                        className="form-check-input skill-test-color-of-radio"
                         type="radio"
                         name="options"
                         value="Advance"
@@ -250,6 +252,7 @@ export const AddNewSkillTest = () => {
                           type="button"
                           onClick={handleBrowseClick}
                           className="add-new-skill-test-btn"
+                          style={{width: "246.19px", height: "45px", fontSize: "16px"}}
                         >
                           Browse from your computer
                         </button>
@@ -257,41 +260,39 @@ export const AddNewSkillTest = () => {
                     </div>
                   </div>
                 </div>
-                <div>
-                  <div className="progress-indicator-status">
-                    {" "}
-                    {file && (
-                      <div
-                        style={{
-                          marginLeft: "5.625rem",
-                          marginTop: "0.625rem",
-                          position: "relative",
-                        }}
-                        className="d-flex align-items-center"
-                      >
-                        <div>{file.name}</div>
+                {file && (
+                  <div>
+                    <div className="d-flex align-items-center ps-1 ast-search-wrapper">
+                      <div className="progress-indicator-status">
+                        {" "}
+                        {file && (
+                          <div
+                            style={{
+                              marginLeft: "0.625rem",
+                              marginTop: "0.225rem",
+                              position: "relative",
+                              fontSize: "16px",
+                              fontWeight: "500"
+                            }}
+                            className="d-flex align-items-center"
+                          >
+                            <CSVIcon/>
+                            <div style={{marginLeft: "0.5rem"}}>{file.name}</div>
+                          </div>
+                        )}
                       </div>
-                    )}
-                    {progress > 0 && (
-                      <progress
-                        style={{
-                          marginLeft: "2.813rem",
-                          marginTop: "0.313rem",
+
+                      <div
+                        className=""
+                        onClick={() => {
+                          handleRemoveFile();
                         }}
-                        max="100"
-                        value={progress}
-                      ></progress>
-                    )}
-                    <div
-                      className=""
-                      onClick={() => {
-                        handleRemoveFile();
-                      }}
-                    >
-                      <CloseBtn />{" "}
+                      >
+                        <CloseBtn />{" "}
+                      </div>
                     </div>
                   </div>
-                </div>
+                )}
                 <div className="d-flex justify-content-between">
                   <div>
                     <label

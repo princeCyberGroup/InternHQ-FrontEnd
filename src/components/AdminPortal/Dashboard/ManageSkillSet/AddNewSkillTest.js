@@ -8,6 +8,7 @@ import { Button } from "bootstrap";
 import { useNavigate } from "react-router-dom";
 // import { Link } from "react-router-dom";
 
+//This is already fixed
 export const AddNewSkillTest = () => {
   const [technology, setTechnology] = useState("");
   const [name, setName] = useState("");
@@ -231,7 +232,7 @@ export const AddNewSkillTest = () => {
                   Level<span style={{ color: "red" }}>*</span>
                 </span>
                 <div className="d-flex">
-                  <div className="form-check small fw-normal">
+                  <div className="form-check">
                     <label style={{ marginLeft: "0.313rem" }}>
                       <input
                         className="form-check-input color-of-radio"

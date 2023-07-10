@@ -11,8 +11,7 @@ import { TestContext } from "../SkillManagement";
 // import { ReactComponent as Star } from "../../../../Assets/Star.svg";
 
 const SkillsAdded = () => {
-
-  const {resultInfo, setResultInfo} = useContext(TestContext);
+  const { resultInfo, setResultInfo } = useContext(TestContext);
   var storedObject = localStorage.getItem("userData");
   var parsedObject = JSON.parse(storedObject);
   var userId = parsedObject.userId;
@@ -72,101 +71,103 @@ const SkillsAdded = () => {
         ) : (
           resultInfo?.map((DataUsed, key) => (
             <div style={{ width: "17.9rem" }} key={key}>
-              <div
-                className="p-0"
-                style={{
-                  maxHeight: "calc(100vh - 30vh)",
-                  borderBottom: "1px solid #E9ECEB",
-                }}
-              >
-                <div className="row cards">
-                  <div className="col-12 d-flex mainImg">
-                    <img src={DataUsed.techImageLink} alt="" />
-                    <p>{DataUsed.techName}</p>
-                  </div>
-                  <div className="d-flex p-0 stars">
-                    <div
-                      className={`col d-flex flex-column ${
-                        DataUsed.examScores[0] >= 80 ? "block" : "grey"
-                      }`}
-                    >
-                      <div className="my-spacing">
+              {DataUsed.examScores[0] >= 80 && (
+                <div
+                  className="p-0"
+                  style={{
+                    maxHeight: "calc(100vh - 30vh)",
+                    borderBottom: "1px solid #E9ECEB",
+                  }}
+                >
+                  <div className="row cards">
+                    <div className="col-12 d-flex mainImg">
+                      <img src={DataUsed.techImageLink} alt="" />
+                      <p>{DataUsed.techName}</p>
+                    </div>
+                    <div className="d-flex p-0 stars">
+                      <div
+                        className={`col d-flex flex-column ${
+                          DataUsed.examScores[0] >= 80 ? "block" : "grey"
+                        }`}
+                      >
+                        <div className="my-spacing">
+                          {DataUsed.examScores[0] >= 80 ? (
+                            <BronzeStar style={{ fontSize: "3.125rem" }} />
+                          ) : (
+                            <EmptyStar />
+                          )}
+                        </div>
+                        <p className="m-0">Beginner</p>
                         {DataUsed.examScores[0] >= 80 ? (
-                          <BronzeStar style={{ fontSize: "3.125rem" }} />
+                          <p className="m-0 per">{DataUsed.examScores[0]}%</p>
                         ) : (
-                          <EmptyStar />
+                          <p className="m-0">0%</p>
                         )}
                       </div>
-                      <p className="m-0">{DataUsed.examLevels[0]}</p>
-                      {DataUsed.examScores[0] >= 80 ? (
-                        <p className="m-0 per">{DataUsed.examScores[0]}%</p>
-                      ) : (
-                        <p className="m-0">0%</p>
-                      )}
-                    </div>
 
-                    <div
-                      className={`col d-flex flex-column ${
-                        DataUsed.examScores[1] >= 80 ? "block" : "grey"
-                      }`}
-                    >
-                      <div className="my-spacing">
+                      <div
+                        className={`col d-flex flex-column ${
+                          DataUsed.examScores[1] >= 80 ? "block" : "grey"
+                        }`}
+                      >
+                        <div className="my-spacing">
+                          {DataUsed.examScores[1] >= 80 ? (
+                            <SilverStar style={{ fontSize: "3.125rem" }} />
+                          ) : (
+                            <EmptyStar />
+                          )}
+                        </div>
+                        <p className="m-0">Intermediate</p>
                         {DataUsed.examScores[1] >= 80 ? (
-                          <SilverStar style={{ fontSize: "3.125rem" }} />
+                          <p className="m-0 per">{DataUsed.examScores[1]}%</p>
                         ) : (
-                          <EmptyStar />
+                          <p className="m-0">0%</p>
                         )}
                       </div>
-                      <p className="m-0">{DataUsed.examLevels[1]}</p>
-                      {DataUsed.examScores[1] >= 80 ? (
-                        <p className="m-0 per">{DataUsed.examScores[1]}%</p>
-                      ) : (
-                        <p className="m-0">0%</p>
-                      )}
-                    </div>
 
-                    <div
-                      className={`col d-flex flex-column ${
-                        DataUsed.examScores[2] >= 80 ? "block" : "grey"
-                      }`}
-                    >
-                      <div className="my-spacing">
+                      <div
+                        className={`col d-flex flex-column ${
+                          DataUsed.examScores[2] >= 80 ? "block" : "grey"
+                        }`}
+                      >
+                        <div className="my-spacing">
+                          {DataUsed.examScores[2] >= 80 ? (
+                            <GoldStar style={{ fontSize: "3.125rem" }} />
+                          ) : (
+                            <EmptyStar />
+                          )}
+                        </div>
+                        <p className="m-0">Advance</p>
                         {DataUsed.examScores[2] >= 80 ? (
-                          <GoldStar style={{ fontSize: "3.125rem" }} />
+                          <p className="m-0 per">{DataUsed.examScores[2]}%</p>
                         ) : (
-                          <EmptyStar />
+                          <p className="m-0">0%</p>
                         )}
                       </div>
-                      <p className="m-0">{DataUsed.examLevels[2]}</p>
-                      {DataUsed.examScores[2] >= 80 ? (
-                        <p className="m-0 per">{DataUsed.examScores[2]}%</p>
-                      ) : (
-                        <p className="m-0">0%</p>
-                      )}
-                    </div>
 
-                    <div
-                      className={`col d-flex flex-column ${
-                        DataUsed.examScores[3] >= 80 ? "block" : "grey"
-                      }`}
-                    >
-                      <div className="my-spacing">
+                      <div
+                        className={`col d-flex flex-column ${
+                          DataUsed.examScores[3] >= 80 ? "block" : "grey"
+                        }`}
+                      >
+                        <div className="my-spacing">
+                          {DataUsed.examScores[3] >= 80 ? (
+                            <GoldStar style={{ fontSize: "3.125rem" }} />
+                          ) : (
+                            <EmptyStar />
+                          )}
+                        </div>
+                        <p className="m-0">Project</p>
                         {DataUsed.examScores[3] >= 80 ? (
-                          <GoldStar style={{ fontSize: "3.125rem" }} />
+                          <p className="m-0 per">{DataUsed.examScores[3]}%</p>
                         ) : (
-                          <EmptyStar />
+                          <p className="m-0">0%</p>
                         )}
                       </div>
-                      <p className="m-0">{DataUsed.examLevels[3]}</p>
-                      {DataUsed.examScores[3] >= 80 ? (
-                        <p className="m-0 per">{DataUsed.examScores[3]}%</p>
-                      ) : (
-                        <p className="m-0">0%</p>
-                      )}
                     </div>
                   </div>
                 </div>
-              </div>
+              )}
             </div>
           ))
         )}
