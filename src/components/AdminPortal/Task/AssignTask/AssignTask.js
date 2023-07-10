@@ -8,45 +8,46 @@ import axios from "axios";
 import { AddNewTask } from "./AddNewTaskModal";
 import { EditTaskModal } from "./EditTaskModal";
 import DeleteTask from "../DeleteTask";
-
-
+import CryptoJS from "crypto-js";
+import { useNavigate } from "react-router-dom";
 const AssignTask = () => {
-  const [showOptions, setShowOptions] = useState(false);
   const [tasks, setTasks] = useState([]);
 
   const [taskToEdit, setTaskToEdit] = useState(null);
   const [showDeleteTask, setShowDeleteTask] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
-  const [onDelete, setOnDelete] = useState(false);
   const [taskIdToChild, setTaskIdToChild] = useState(0);
   const [taskVersion, setTaskVersion] = useState(0); // Add task version state
-  const userData = JSON.parse(localStorage.getItem("userData"));
-  const assignedByFirstName = userData ? userData.firstName : null;
-  const assignedByLastName = userData ? userData.lastName : null;
   const [editedTask, setEditedTask] = useState({});
   const [taskName, setTaskName] = useState("");
   const [taskDescription, setTaskDescription] = useState("");
-
+  const navigate = useNavigate();
 
   useEffect(() => {
     setEditedTask(taskToEdit);
-   
   }, [taskToEdit]);
 
   useEffect(() => {
-setTaskName(editedTask?.taskName)
-   setTaskDescription(editedTask?.taskDescription)
+    setTaskName(editedTask?.taskName);
+    setTaskDescription(editedTask?.taskDescription);
   }, [editedTask]);
 
-
-
   useEffect(() => {
+    const secretkeyUser = process.env.REACT_APP_USER_KEY;
+    var parsedObject;
+    const data = localStorage.getItem("userData");
+    if (data) {
+      const bytes = CryptoJS.AES.decrypt(data, secretkeyUser);
+      const decryptedJsonString = bytes.toString(CryptoJS.enc.Utf8);
+      parsedObject = JSON.parse(decryptedJsonString);
+    } else {
+      console.log("No encrypted data found in localStorage.");
+    }
     // Fetch tasks from the API
     axios
-      .get(process.env.REACT_APP_API_URL+"/api/v3/getAssignedTask",
-      {
+      .get(process.env.REACT_APP_API_URL + "/api/v3/getAssignedTask", {
         headers: {
-          Authorization:`Bearer ${JSON.parse(localStorage.getItem('userData'))['token']}`,
+          Authorization: `Bearer ${parsedObject["token"]}`,
         },
       })
       .then((response) => {
@@ -54,12 +55,23 @@ setTaskName(editedTask?.taskName)
         console.log(response.data.response, "This")
       })
       .catch((error) => {
+        if (error.response.status === 401) {
+          navigate("/error/statusCode=401");
+        }
+        if (error.response.status === 400) {
+          navigate("/error/statusCode=400");
+        }
+        if (error.response.status === 500) {
+          navigate("/error/statusCode=500");
+        }
+        if (error.response.status === 404) {
+          navigate("/error/statusCode=404");
+        }
         console.error("Error fetching tasks:", error);
       });
   }, [taskVersion]);
 
-  const handleAddTask = () => {
-  };
+  const handleAddTask = () => {};
 
   const handleEditTask = (task) => {
     setTaskToEdit(task);
@@ -72,26 +84,23 @@ setTaskName(editedTask?.taskName)
     setIsOpen(true);
   };
 
-
   const handleEditCloseModal = () => {
     setTaskToEdit(null);
     setTaskVersion((prevVersion) => prevVersion + 1);
 
-    
     const checkboxes = document.querySelectorAll(".tech-checkbox");
-  checkboxes.forEach((checkbox) => {
-    checkbox.checked = false;
-  });
-  const userCheckboxes = document.querySelectorAll(".user-checkbox");
-  userCheckboxes.forEach((checkbox) => {
-    checkbox.checked = false;
-  });
+    checkboxes.forEach((checkbox) => {
+      checkbox.checked = false;
+    });
+    const userCheckboxes = document.querySelectorAll(".user-checkbox");
+    userCheckboxes.forEach((checkbox) => {
+      checkbox.checked = false;
+    });
   };
 
   const handleAddCloseModal = () => {
     setTaskVersion((prevVersion) => prevVersion + 1); // Update task version when modal is closed
   };
-
 
   return (
     <>
@@ -123,18 +132,17 @@ setTaskName(editedTask?.taskName)
         {tasks.length === 0 ? (
           <div className="card empty-task-state d-flex justify-content-center align-items-center">
             <div
-            className="col-12 d-flex justify-content-center"
-            // style={{ marginTop: "70px" }}
-          >
-            <NoTask />
-          </div>
-          <div className="col-12 d-flex justify-content-center assign-task-empty">
-            <p>No Task Assigned Yet! </p>
-          </div>
+              className="col-12 d-flex justify-content-center"
+              // style={{ marginTop: "70px" }}
+            >
+              <NoTask />
             </div>
-        ) :(
+            <div className="col-12 d-flex justify-content-center assign-task-empty">
+              <p>No Task Assigned Yet! </p>
+            </div>
+          </div>
+        ) : (
           tasks.map((task, index) => (
-            
             <div className="card task-card" key={task.taskId}>
               <div className="dots">
                 <Edit
@@ -176,7 +184,11 @@ setTaskName(editedTask?.taskName)
                     <div className="mentor-wrapper">
                       <div className="image-wrapper1">
                         <div className="assignedBy-img">
-                          {`${task.mentorFirstName} ${task.mentorLastName===null?"":task.mentorLastName}`
+                          {`${task.mentorFirstName} ${
+                            task.mentorLastName === null
+                              ? ""
+                              : task.mentorLastName
+                          }`
                             .split(" ")
                             .map((name) => name.charAt(0).toUpperCase())
                             .join("")}
@@ -245,8 +257,8 @@ setTaskName(editedTask?.taskName)
                 </div>
               </div>
             </div>
-            
-          )))}
+          ))
+        )}
       </div>
       {/* <AddNewTask/> */}
       <EditTaskModal
@@ -269,9 +281,7 @@ setTaskName(editedTask?.taskName)
 
 export default AssignTask;
 
-
 // USE REDUCER CODE BELOW
-
 
 // import React, { useState, useEffect, useReducer } from "react";
 // import "./AssignTask.css";

@@ -1,7 +1,7 @@
 import { ReactComponent as CloudImage } from "../../../Assets/Cloud.svg";
 import { ReactComponent as CloseBtn } from "../../../Assets/Close-admin.svg";
 import {ReactComponent as CSVIcon } from "../../../Assets/CSVIcon.svg"
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import "./Modals.css";
 import axios from "axios";
 import { Button } from "bootstrap";
@@ -29,6 +29,34 @@ export const AddNewSkillTest = () => {
   const [file, setFile] = useState(null);
   const [progress, setProgress] = useState(0);
   const fileInputRef = useRef(null);
+  const [apitechnology, setApiTechnology] = useState([]);
+  useEffect(() => {
+    fetchTopics();
+  }, []);
+
+  const fetchTopics = async () => {
+    try {
+      const response = await axios.get(
+        "https://cg-interns-hq.azurewebsites.net/getAllTechnology"
+      );
+      setApiTechnology(response.data.response);
+    } catch (error) {
+      if (error.response.status === 401) {
+        navigate("/error/statusCode=401");
+      }
+      if (error.response.status === 400) {
+        navigate("/error/statusCode=400");
+      }
+      if (error.response.status === 500) {
+        navigate("/error/statusCode=500");
+      }
+      if (error.response.status === 404) {
+        navigate("/error/statusCode=404");
+      }
+      console.error("Error fetching topics:", error);
+    }
+  };
+
   const handleDrop = (e) => {
     e.preventDefault();
     const droppedFile = e.dataTransfer.files[0];
@@ -66,7 +94,7 @@ export const AddNewSkillTest = () => {
   };
   const handleRemoveFile = () => {
     setFile(null);
-    setProgress(0);
+    // setProgress(0);
   };
 
   const handleBrowseClick = () => {
@@ -93,6 +121,10 @@ export const AddNewSkillTest = () => {
     setDuration("");
     setFile(null);
     handleRemoveFile();
+    // document.getElementById("flexRadioDefault1").checked = false;
+    // setBeginnerChecked(false);
+    // setIntermediateChecked(false);
+    // setAdvancedChecked(false);
   };
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -102,10 +134,16 @@ export const AddNewSkillTest = () => {
       return;
     }
     const formData = new FormData();
+    // formData.append('technology', technology);
+    // formData.append('level', level);
+    // formData.append('name', name);
     formData.append("file", file);
+    // formData.append('question', question);
+    // formData.append('duration', duration);
     try {
       const response = await axios.post(
-        process.env.REACT_APP_API_URL+`/api/v2/questions?technology=${technology}&level=${level}&examName=${name}&noOfQuestion=${question}&examDuration=${duration}`,
+        process.env.REACT_APP_API_URL +
+          `/api/v3/questions?technology=${technology}&level=${level}&examName=${name}&noOfQuestion=${question}&examDuration=${duration}`,
         formData,
         {
           headers: {
@@ -141,7 +179,10 @@ export const AddNewSkillTest = () => {
         <div className="modal-dialog">
           <div className="modal-content">
             <div className="modal-header">
-              <h5 className="modal-title modalheading-text" id="newSkillModalLabel">
+              <h5
+                className="modal-title modalheading-text"
+                id="newSkillModalLabel"
+              >
                 Add New Skill Test
               </h5>
               <button
@@ -149,6 +190,7 @@ export const AddNewSkillTest = () => {
                 className="btn-close"
                 data-bs-dismiss="modal"
                 aria-label="Close"
+                style={{ fontSize: "1rem" }}
               ></button>
             </div>
             <div className="modal-body">
@@ -160,14 +202,27 @@ export const AddNewSkillTest = () => {
                   >
                     Technology<span style={{ color: "red" }}>*</span>
                   </label>
-                  <input
-                    type="text"
-                    className="form-control"
-                    id="technology"
-                    placeholder="Select Technology"
+                  <select
+                    className="form-select "
+                    //   key={resetSelect ? "topicReset" : "topicName"}
+                    //   disabled={disabled}
                     onChange={(e) => handleChangeTechnology(e)}
                     value={technology}
-                  />
+                    defaultValue=""
+                  >
+                    <option value="" disabled hidden>
+                      Select Technology
+                    </option>
+                    {apitechnology.map((tech) => (
+                      <option
+                        className="dtt-opns"
+                        key={tech.techId}
+                        value={tech.techName}
+                      >
+                        {tech.techName}
+                      </option>
+                    ))}
+                  </select>
                 </div>
                 <div className="mb-3">
                   <label
@@ -250,7 +305,9 @@ export const AddNewSkillTest = () => {
                         />
                         <button
                           type="button"
-                          onClick={handleBrowseClick}
+                          onClick={() => {
+                            handleBrowseClick();
+                          }}
                           className="add-new-skill-test-btn"
                           style={{width: "246.19px", height: "45px", fontSize: "16px"}}
                         >
@@ -281,7 +338,6 @@ export const AddNewSkillTest = () => {
                           </div>
                         )}
                       </div>
-
                       <div
                         className=""
                         onClick={() => {

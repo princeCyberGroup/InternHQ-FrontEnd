@@ -17,6 +17,8 @@ export const EditTaskModal = ({ task, onEditClose, technology, assignedTo, edite
   const [selectAllUsers, setSelectAllUsers] = useState(false);
   const [error, setError] = useState(false);
   const [selectAllChecked, setSelectAllChecked] = useState(false);
+  const [searchQuery, setSearchQuery] = useState("");
+  const [searchUserQuery, setSearchUserQuery] = useState("");
 
 
 
@@ -192,6 +194,8 @@ export const EditTaskModal = ({ task, onEditClose, technology, assignedTo, edite
                           setTechnologyNames={setTechnologyNames}
                           technologyNames={technologyNames}
                           selectedTech = {editedTask?.technology}
+                          searchQuery={searchQuery}
+                          setSearchQuery={setSearchQuery}
                         />
                       </ul>
                     </div>
@@ -241,11 +245,14 @@ export const EditTaskModal = ({ task, onEditClose, technology, assignedTo, edite
                         <UsersDropdown
                           usersDataComingChild={usersDataComingFrmChild}
                           selectAllUsers={selectAllUsers}
+                          selectedUserIds={selectedUserIds}
                           setSelectedUserIds={setSelectedUserIds}
                           setSelectedUsers={setSelectedUsers}
                           selectedUsers={selectedUsers}
                           selectAllChecked={selectAllChecked}
                           setSelectAllChecked={setSelectAllChecked}
+                          searchUserQuery={searchUserQuery}
+                          setSearchUserQuery={setSearchUserQuery}
                         />
                       </ul>
                     </div>

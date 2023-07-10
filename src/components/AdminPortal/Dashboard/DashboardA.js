@@ -2,7 +2,7 @@ import "../Dashboard/DashboardA.css";
 import Uploadcsv from "./UploadCsv/Uploadcsv";
 import ManageSkillSet from "./ManageSkillSet/manageSkillSet";
 import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Status from "./Status/Status";
 // import TopTech from "./TopTech/topTech";
 import PieChartTopTech from "./TopTech/PieChartTopTech";
@@ -10,11 +10,23 @@ import AssociateConsultant from "./associateConsultant/associateConsultant";
 import Insights from "./Insights/insights";
 import { ReactComponent as Right } from "../../../Assets/right.svg";
 import Header from "../../Header/Header";
+import CryptoJS from "crypto-js";
 
 const DashboardA = () => {
   const [StatusData, setStatusData] = useState([]);
   const [acData, setAcData] = useState([]);
-  // const [insights, setInsights] = useState([]);
+  const [insights, setInsights] = useState([]);
+  const secretkeyUser = process.env.REACT_APP_USER_KEY;
+  const navigate = useNavigate();
+  var parsedObject;
+  const data = localStorage.getItem("userData");
+  if (data) {
+    const bytes = CryptoJS.AES.decrypt(data, secretkeyUser);
+    const decryptedJsonString = bytes.toString(CryptoJS.enc.Utf8);
+    parsedObject = JSON.parse(decryptedJsonString);
+  } else {
+    console.log("No encrypted data found in localStorage.");
+  }
   useEffect(() => {
     fetchData();
     // InsightData();
@@ -23,36 +35,84 @@ const DashboardA = () => {
   const fetchData = async () => {
     try {
       const response = await fetch(
-        process.env.REACT_APP_API_URL+`/api/v2/getDashboardStatus`,
+        process.env.REACT_APP_API_URL + `/api/v3/getDashboardStatus`,
         {
           headers: {
-            Authorization:`Bearer ${JSON.parse(localStorage.getItem('userData'))['token']}`,
+            Authorization: `Bearer ${parsedObject["token"]}`,
           },
         }
       );
+      if (response.status === 401) {
+        navigate("/error/statusCode=401");
+      }
+      if (response.status === 400) {
+        navigate("/error/statusCode=400");
+      }
+      if (response.status === 500) {
+        navigate("/error/statusCode=500");
+      }
+      if (response.status === 404) {
+        navigate("/error/statusCode=404");
+      }
       const rsp = await response.json();
       setStatusData(rsp);
       setAcData(rsp.response);
-    } catch (e) {
-      console.log(e);
+    } catch (error) {
+      if (error.response.status === 401) {
+        navigate("/error/statusCode=401");
+      }
+      if (error.response.status === 400) {
+        navigate("/error/statusCode=400");
+      }
+      if (error.response.status === 500) {
+        navigate("/error/statusCode=500");
+      }
+      if (error.response.status === 404) {
+        navigate("/error/statusCode=404");
+      }
+      console.log("this is error", error);
     }
   };
-  // const InsightData = async () => {
-  //   try {
-  //     const response = await fetch(
-  //       process.env.REACT_APP_API_URL+`/api/v2/getInsights`,
-  //       {
-  //         headers: {
-  //           Authorization:`Bearer ${JSON.parse(localStorage.getItem('userData'))['token']}`,
-  //         },
-  //       }
-  //     );
-  //     const insData = await response.json();
-  //     setInsights(insData.response);
-  //   } catch (e) {
-  //     console.log(e);
-  //   }
-  // };
+  const InsightData = async () => {
+    try {
+      const response = await fetch(
+        process.env.REACT_APP_API_URL + `/api/v3/getInsights`,
+        {
+          headers: {
+            Authorization: `Bearer ${parsedObject["token"]}`,
+          },
+        }
+      );
+      if (response.status === 401) {
+        navigate("/error/statusCode=401");
+      }
+      if (response.status === 400) {
+        navigate("/error/statusCode=400");
+      }
+      if (response.status === 500) {
+        navigate("/error/statusCode=500");
+      }
+      if (response.status === 404) {
+        navigate("/error/statusCode=404");
+      }
+      const insData = await response.json();
+      setInsights(insData.response);
+    } catch (error) {
+      if (error.response.status === 401) {
+        navigate("/error/statusCode=401");
+      }
+      if (error.response.status === 400) {
+        navigate("/error/statusCode=400");
+      }
+      if (error.response.status === 500) {
+        navigate("/error/statusCode=500");
+      }
+      if (error.response.status === 404) {
+        navigate("/error/statusCode=404");
+      }
+      console.log(error);
+    }
+  };
   return (
     <>
       <div className="" style={{ marginBottom: "3rem" }}>

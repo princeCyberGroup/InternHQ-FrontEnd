@@ -1,8 +1,11 @@
+// className="fw-bold d-flex justify-content-center align-items-center" this is data
 import React from "react";
 import EmptyDailyUpdateTable from "../../UserPortal/DailyUpdateTable/EmptyDailyUpdateTable";
 import "./Reporttable.css";
 import { ReactComponent as Advance } from "../../../Assets/advance.svg";
 import { ReactComponent as Beginner } from "../../../Assets/beginner.svg";
+import { ReactComponent as Deployed } from "../../../Assets/CheckGreen.svg";
+import { ReactComponent as Undeployed } from "../../../Assets/CancelRed.svg";
 import { ReactComponent as Intermediate } from "../../../Assets/intermediate.svg";
 import { Data } from "./Fetcheddataobject";
 import { useNavigate } from "react-router-dom";
@@ -13,7 +16,8 @@ const Reporttable = ({ tableData, isLoading }) => {
   const handleOnclick = (index) => {
     // navigate(`/admin/report/userId?id=${tableData[index][Data.ID]}`);
     sessionStorage.setItem("detailId", tableData[index][Data.ID]);
-    navigate(`/admin/report?userId=${tableData[index][Data.ID]}`, {state: "Report"});
+    sessionStorage.setItem("chrumValue", "Report");
+    navigate(`/admin/report?userId=${tableData[index][Data.ID]}`);
   };
 
   return (
@@ -21,25 +25,26 @@ const Reporttable = ({ tableData, isLoading }) => {
       <table className="table-report" cellPadding="0" cellSpacing="0">
         <thead>
           <tr>
-            <th style={{ width: "2.5rem" }}>S.No</th>
+            <th style={{ width: "2.5rem" }}>#</th>
             <th style={{ width: "13.375rem" }}>Name</th>
-            <th style={{ width: "28.875rem" }}>Technology Tags</th>
-            <th style={{ width: "17.375rem" }}>Skills Achieved</th>
-            <th style={{ width: "6.375rem" }}>Duration</th>
+            <th style={{ width: "20.875rem" }}>Technology Tags</th>
+            <th style={{ width: "23.375rem" }}>Skills Achieved</th>
+            <th style={{ width: "11.375rem" }}>Duration</th>
+            <th style={{ width: "2.5rem" }}>Deployed</th>
           </tr>
         </thead>
         {isLoading ? (
           <>
-          <ReportTableSkeleton/>
-          <ReportTableSkeleton/>
-          <ReportTableSkeleton/>
-          <ReportTableSkeleton/>
-          <ReportTableSkeleton/>
-          <ReportTableSkeleton/>
-          <ReportTableSkeleton/>
-          <ReportTableSkeleton/>
-          <ReportTableSkeleton/>
-          <ReportTableSkeleton/>
+            <ReportTableSkeleton />
+            <ReportTableSkeleton />
+            <ReportTableSkeleton />
+            <ReportTableSkeleton />
+            <ReportTableSkeleton />
+            <ReportTableSkeleton />
+            <ReportTableSkeleton />
+            <ReportTableSkeleton />
+            <ReportTableSkeleton />
+            <ReportTableSkeleton />
           </>
         ) : tableData ? (
           <tbody>
@@ -53,8 +58,8 @@ const Reporttable = ({ tableData, isLoading }) => {
                     handleOnclick(ind);
                   }}
                 >
-                  <td className="fw-bold d-flex justify-content-center align-items-center" style={{height: "54px"}}>{ind+1}</td>
-                  <td style={{ width: "10.375rem" }}>
+                  <td>{ind + 1}.</td>
+                  <td>
                     <div className="name-column">
                       <div className="circle">
                         {val[Data.FN]?.toUpperCase().slice(0, 1)}
@@ -68,7 +73,7 @@ const Reporttable = ({ tableData, isLoading }) => {
                       </div>
                     </div>
                   </td>
-                  <td style={{ width: "20.875rem" }}>
+                  <td>
                     <div className="tech-tags">
                       {val?.[Data.TN]?.slice(0, 5).map((value, index) => {
                         objectKeyCount++;
@@ -100,14 +105,15 @@ const Reporttable = ({ tableData, isLoading }) => {
                           </div>
                         );
                       })}
-                      {objectKeyCount > 4 && val?.[Data.TN].slice(5).length!==0 && (
-                        <div className="all-tech">
-                          <span>+ {val?.[Data.TN].slice(5).length}</span>
-                        </div>
-                      )}
+                      {objectKeyCount > 4 &&
+                        val?.[Data.TN].slice(5).length !== 0 && (
+                          <div className="all-tech">
+                            <span>+ {val?.[Data.TN].slice(5).length}</span>
+                          </div>
+                        )}
                     </div>
                   </td>
-                  <td style={{ width: "20.375rem" }}>
+                  <td>
                     <div className="skills-wrapper">
                       <span className="skills">
                         {val?.[Data.BC] === null ? "0" : val?.[Data.BC]}{" "}
@@ -121,13 +127,22 @@ const Reporttable = ({ tableData, isLoading }) => {
                       </span>
                     </div>
                   </td>
-                  <td style={{ width: "11.375rem" }}>
+                  <td>
                     <div className="duration">
                       <span>
                         {val?.[Data.D] <= 1
                           ? `0${val?.[Data.D]} month  `
                           : `${val?.[Data.D]} months`}
                       </span>
+                    </div>
+                  </td>
+                  <td>
+                    <div>
+                      {val[Data.DE] ? (
+                        <Deployed className="dep-wrapper" />
+                      ) : (
+                        <Undeployed className="dep-wrapper" />
+                      )}
                     </div>
                   </td>
                 </tr>

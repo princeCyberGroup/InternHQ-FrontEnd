@@ -1,69 +1,83 @@
 import React, { useState, useEffect } from "react";
 import "./Report.css";
 import { ReactComponent as Filter } from "../../../Assets/Filter.svg";
-import TechDropDown from "../../UserPortal/Dashboard/ProjectIdea/TechDropDown";
-import { ReactComponent as ExpandMore } from "../../../Assets/expand_more.svg";
 import Reporttable from "./Reporttable";
-import { Dummydata } from "./Dummydata";
-import Selectlevel from "./Selectlevel";
+import Selectlevel from "./SelectLevel/Selectlevel";
 import axios from "axios";
 import Header from "../../Header/Header";
+import DropdownD from "./DropdownD";
+import CryptoJS from "crypto-js";
+import { useNavigate } from "react-router-dom";
+import SelectedTech from "./SelectedTech/SelectedTech";
 const Report = () => {
   //data
-  const [tech, setTech] = useState({});
-  const [level, setLevel] = useState({});
-  const [dropDownTech, setDropDownTech] = useState(false);
-  const [dropDownLevel, setDropDownLevel] = useState(false);
+  const [selectLevel, setSelectLevel] = useState([]);
+  const [selectTech, setSelectTech] = useState([]);
   const [tableData, setTableData] = useState([]);
   const [orgTableData, setOrgTableData] = useState([]);
   const [query, setQuery] = useState("");
   const [isLoading, setIsLoading] = useState(true);
+  const [selectedOption, setSelectedOption] = useState(
+    "Select Deployment Type"
+  );
+  const navigate = useNavigate();
 
   //functions
+  const handleSelectLevel = (val) => {
+    setSelectLevel(val);
+  };
+  const handleSelectTech = (val) => {
+    setSelectTech(val);
+  };
+
   useEffect(() => {
+    const secretkeyUser = process.env.REACT_APP_USER_KEY;
+    var parsedObject;
+    const data = localStorage.getItem("userData");
+    if (data) {
+      const bytes = CryptoJS.AES.decrypt(data, secretkeyUser);
+      const decryptedJsonString = bytes.toString(CryptoJS.enc.Utf8);
+      parsedObject = JSON.parse(decryptedJsonString);
+    } else {
+      console.log("No encrypted data found in localStorage.");
+    }
+    const fetchData = async () => {
+      try {
+        const response = await axios.get(
+          process.env.REACT_APP_API_URL + `/api/v3/getuserReport`,
+          {
+            headers: {
+              Authorization: `Bearer ${parsedObject["token"]}`,
+            },
+          }
+        );
+
+        setOrgTableData(response?.data.response);
+        setTableData(response?.data.response);
+        setIsLoading(false);
+      } catch (error) {
+        if (error.response.status === 401) {
+          navigate("/error/statusCode=401");
+        }
+        if (error.response.status === 400) {
+          navigate("/error/statusCode=400");
+        }
+        if (error.response.status === 500) {
+          navigate("/error/statusCode=500");
+        }
+        if (error.response.status === 404) {
+          navigate("/error/statusCode=404");
+        }
+        console.error("Error fetching data:", error.message);
+      }
+    };
     setTimeout(() => {
       fetchData();
     }, 1000);
   }, []);
-  const fetchData = async () => {
-    try {
-      const response = await axios.get(
-        process.env.REACT_APP_API_URL+`/api/v2/getuserReport`,
-        {
-          headers: {
-            Authorization:`Bearer ${JSON.parse(localStorage.getItem('userData'))['token']}`,
-          },
-        }
-      );
-      setOrgTableData(
-        // response?.data.response
-        response?.data.response.sort(function (a, b) {
-          // if (!b?.techNames) return -1;
-          return b?.techNames?.length - a?.techNames?.length;
-        })
-      );
-      setTableData(
-        // response?.data.response
-        response?.data.response.sort(function (a, b) {
-          // if (!b?.techNames) return -1;
-          return b?.techNames?.length - a?.techNames?.length;
-        })
-      );
-      setIsLoading(false);
-    } catch (error) {
-      console.error("Error fetching data:", error);
-    }
-  };
-
-  const dataComingFrmLevel = (data) => {
-    setLevel(data);
-  };
-  const techDataComingFrmTech = (data) => {
-    setTech(data);
-  };
   useEffect(() => {
     handleFiltersChange();
-  }, [query, dropDownTech, dropDownLevel]);
+  }, [query, selectedOption, selectLevel, selectTech]);
 
   const handleFiltersChange = () => {
     const getFilterItems = (items, query) => {
@@ -77,11 +91,21 @@ const Report = () => {
       return items;
     };
 
-    const getfilterTech = (items, tech) => {
-      if (Object.keys(tech)?.length > 0) {
+    const getfilterTech = (items) => {
+      if (selectTech.length > 0 && selectLevel.length > 0) {
         const filteredData = items?.filter((data) => {
-          return data?.techNames?.some((element) => {
-            return Object.values(tech)?.includes(element);
+          return data?.technames?.some((element, index) => {
+            return (
+              selectTech.includes(element) &&
+              selectLevel.includes(data?.level[index])
+            );
+          });
+        });
+        return filteredData;
+      } else if (selectTech.length > 0) {
+        const filteredData = items?.filter((data) => {
+          return data?.technames?.some((element) => {
+            return selectTech.includes(element);
           });
         });
         return filteredData;
@@ -89,24 +113,22 @@ const Report = () => {
       return items;
     };
 
-    // const getFilterLevel = (items, level) => {
-    //   if (Object.keys(level).length > 0) {
-    //     const filteredData = items.filter((person) => {
-    //       const personSkills = Object.values(person.skills);
-    //       console.log("personal skills",personSkills);
-    //       return personSkills.some((element) =>
-    //         Object.values(level).includes(element)
-    //       );
-    //     });
-    //     return filteredData;
-    //   }
-    //   return items;
-    // };
-
+    const getfilterDep = (item, optionVal) => {
+      if (optionVal === "Deployed") {
+        return item.filter((val) => val.isDeployed);
+      } else if (optionVal === "Undeployed") {
+        return item.filter((val) => !val.isDeployed);
+      } else {
+        return item;
+      }
+    };
     const filterItems = getFilterItems(orgTableData, query);
-    const filterTech = getfilterTech(filterItems, tech);
-    // const filterLevel = getFilterLevel(filterTech, level);
-    setTableData(filterTech);
+    const filterTech = getfilterTech(filterItems);
+    const filterDep = getfilterDep(filterTech, selectedOption);
+    setTableData(filterDep);
+  };
+  const handleChange = (value) => {
+    setSelectedOption(value);
   };
 
   return (
@@ -132,92 +154,13 @@ const Report = () => {
               <div className="report-filter">
                 <Filter /> Filter:
               </div>
-              <div className=" report-drop-down-tech">
-                <div className="inner-drop-down-tech">
-                  <div className="input-with-button-tech">
-                    <button
-                      type="button"
-                      className="button-for-dropdown-tech"
-                      onClick={() => {
-                        setDropDownTech(!dropDownTech);
-                      }}
-                    >
-                      <input
-                        type="text"
-                        className="custom-input-tech"
-                        value={Object.values(tech)}
-                        placeholder="Select Technology"
-                        disabled
-                      />
-                    </button>
-                    <button
-                      className="expand-more-tech"
-                      type="button"
-                      onClick={() => {
-                        setDropDownTech(!dropDownTech);
-                      }}
-                    >
-                      <ExpandMore />
-                    </button>
-                  </div>
-                  {dropDownTech && (
-                    <div
-                      className="data-display-tech"
-                      style={{
-                        top: "1.938rem",
-                      }}
-                    >
-                      <TechDropDown
-                        techDataComingChild={techDataComingFrmTech}
-                      />
-                    </div>
-                  )}
-                </div>
-              </div>
-              <div className=" report-drop-down-level">
-                <div className="inner-drop-down-level">
-                  <div className="input-with-button-level">
-                    <button
-                      type="button"
-                      className="button-for-dropdown-level"
-                      onClick={() => {
-                        setDropDownLevel(!dropDownLevel);
-                      }}
-                    >
-                      <input
-                        type="text"
-                        className="custom-input-level"
-                        value={Object.values(level)}
-                        placeholder="Select level"
-                        disabled
-                      />
-                    </button>
-                    <button
-                      className="expand-more-level"
-                      type="button"
-                      onClick={() => {
-                        setDropDownLevel(!dropDownLevel);
-                      }}
-                    >
-                      <ExpandMore />
-                    </button>
-                  </div>
-                  {dropDownLevel && (
-                    <div
-                      className="data-display-tech"
-                      style={{
-                        top: "1.938rem",
-                      }}
-                    >
-                      <Selectlevel techDataComingChild={dataComingFrmLevel} />
-                    </div>
-                  )}
-                </div>
-              </div>
+              <SelectedTech handleSelectTech={handleSelectTech} />
+              <Selectlevel handleSelectLevel={handleSelectLevel} />
+              <DropdownD handleChange={handleChange} />
             </div>
           </div>
           <div className="report-table-wrapper ">
-            <Reporttable tableData={tableData} isLoading={isLoading}/>
+            <Reporttable tableData={tableData} isLoading={isLoading} />
           </div>
         </div>
       </div>

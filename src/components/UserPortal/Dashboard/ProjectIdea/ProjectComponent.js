@@ -1,12 +1,13 @@
-import  AddNewIdea  from "./Idea/AddNewIdea";
+import AddNewIdea from "./Idea/AddNewIdea";
 import React, { useEffect, useState, useContext } from "react";
-import AddProject  from "./Project/AddProject";
+import AddProject from "./Project/AddProject";
 import "./ProjectComponent.css";
 import "./Idea/AddNewIdea.css";
 import "./Project/AddProject.css";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { UserContext } from "../../../../Context/Context";
+import CryptoJS from "crypto-js";
 
 const ProjectComponent = () => {
   const navigate = useNavigate();
@@ -14,46 +15,73 @@ const ProjectComponent = () => {
   const [pActive, setPActive] = useState(true);
   // const [projectData, setProjectData] = useState([]);
   // const [projectApiData, setProjectApiData] = useState();
-  const storedObject = localStorage.getItem("userData");
-  const parsedObject = JSON.parse(storedObject);
+  const secretkeyUser = process.env.REACT_APP_USER_KEY;
+  var parsedObject;
+  const data = localStorage.getItem("userData");
+  if (data) {
+    const bytes = CryptoJS.AES.decrypt(data, secretkeyUser);
+    const decryptedJsonString = bytes.toString(CryptoJS.enc.Utf8);
+    parsedObject = JSON.parse(decryptedJsonString);
+  } else {
+    console.log("No encrypted data found in localStorage.");
+  }
   const userId = parsedObject.userId;
 
   const MyIdeaComponent = async () => {
     try {
-      const response = await axios.get(process.env.REACT_APP_API_URL+`/api/v2/getProjectIdea?userId=${userId}`,
-      {
-        headers: {
-          Authorization:`Bearer ${JSON.parse(localStorage.getItem('userData'))['token']}`,
-        },
-      });
+      const response = await axios.get(
+        process.env.REACT_APP_API_URL +
+          `/api/v3/getProjectIdea?userId=${userId}`,
+        {
+          headers: {
+            Authorization: `Bearer ${parsedObject["token"]}`,
+          },
+        }
+      );
 
       setIdea(response.data.response);
     } catch (error) {
-      if(error.response?.data.statusCode===401){
-       return navigate("/error?statusCode=400");
+      if (error.response.status === 401) {
+        navigate("/error/statusCode=401");
       }
-      // console.log("Error ", error.response?.data);
-      // console.log(error.response?.data.msg);
+      if (error.response.status === 400) {
+        navigate("/error/statusCode=400");
+      }
+      if (error.response.status === 500) {
+        navigate("/error/statusCode=500");
+      }
+      if (error.response.status === 404) {
+        navigate("/error/statusCode=404");
+      }
+      console.log(error.response?.data.msg);
     }
   };
   const ProjectApi = async () => {
     try {
       const response = await axios.get(
-        process.env.REACT_APP_API_URL+`/api/v2/getProject?userId=${userId}`,
+        process.env.REACT_APP_API_URL + `/api/v3/getProject?userId=${userId}`,
         {
           headers: {
-            Authorization:`Bearer ${JSON.parse(localStorage.getItem('userData'))['token']}`,
+            Authorization: `Bearer ${parsedObject["token"]}`,
           },
         }
       );
 
       setProject(response.data.response);
     } catch (error) {
-      if(error.response?.data.statusCode===401){
-        navigate("/error?statusCode=400");
+      if (error.response.status === 401) {
+        navigate("/error/statusCode=401");
       }
-      // console.log(error.response?.data);
-      // console.log(error.response?.data.msg);
+      if (error.response.status === 400) {
+        navigate("/error/statusCode=400");
+      }
+      if (error.response.status === 500) {
+        navigate("/error/statusCode=500");
+      }
+      if (error.response.status === 404) {
+        navigate("/error/statusCode=404");
+      }
+      console.log(error.response?.data.msg);
     }
   };
   useEffect(() => {
@@ -66,9 +94,7 @@ const ProjectComponent = () => {
         <div className="border-bottom">
           <div className="card-title dtt-hfs-abc m-0 d-flex  d-flex justify-content-center align-item-center">
             <div
-              className={
-                "project-idea-btn " + (pActive ? " p-active" : "")
-              }
+              className={"project-idea-btn " + (pActive ? " p-active" : "")}
               onClick={() => {
                 setPActive(true);
               }}
@@ -85,11 +111,7 @@ const ProjectComponent = () => {
             </div>
           </div>
         </div>
-        {pActive ? (
-          <AddNewIdea />
-        ) : (
-          <AddProject />
-        )}
+        {pActive ? <AddNewIdea /> : <AddProject />}
       </div>
     </>
   );

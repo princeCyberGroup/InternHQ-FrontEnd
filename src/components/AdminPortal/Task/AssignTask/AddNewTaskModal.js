@@ -4,7 +4,8 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { ReactComponent as ExpandMore } from "../../../../Assets/expand_more.svg";
 import TechnologyDropDown from "./TechnologyDropdown(Admin)";
-import UsersDropdown from "./UsersDropdown";
+import UsersDropdown from "./UsersDropdown"
+import CryptoJS from "crypto-js";
 
 export const AddNewTask = ({ onAddClose }) => {
   const [nameError, setNameError] = useState(true);
@@ -22,13 +23,14 @@ export const AddNewTask = ({ onAddClose }) => {
   const [tech, setTech] = useState({});
   const [users, setUsers] = useState({});
   const [selectAllUsers, setSelectAllUsers] = useState(false);
-  const [taskTechIds, setTaskTechIds] = useState([]);
-  const [taskUserIds, setTaskUserIds] = useState([]);
   const [selectedUserIds, setSelectedUserIds] = useState([]);
   const [selectedUsers, setSelectedUsers] = useState([]);
   const [selectedTechIds, setSelectedTechIds] = useState([]);
   const [technologyNames, setTechnologyNames] = useState([]);
   const [selectAllChecked, setSelectAllChecked] = useState(false);
+  const [searchQuery, setSearchQuery] = useState("");
+  const [searchUserQuery, setSearchUserQuery] = useState("");
+
 
   const handleClickClear = (e) => {
     e.preventDefault();
@@ -44,6 +46,8 @@ export const AddNewTask = ({ onAddClose }) => {
     setSelectedUsers([]);
     setTech({});
     setUsers({});
+    // setSearchQuery("");
+    // setSearchUserQuery("");
 
     setSelectAllChecked(false);
 
@@ -69,17 +73,24 @@ export const AddNewTask = ({ onAddClose }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    var storedObject = JSON.parse(localStorage.getItem("userData"));
-    var userId = storedObject.userId;
-    var assignedByDesignation = storedObject.designation;
-    var assignedByfullName =
-      storedObject.firstName + " " + storedObject.lastName;
+    const secretkeyUser = process.env.REACT_APP_USER_KEY;
+    var parsedObject;
+    const data = localStorage.getItem("userData");
+    if (data) {
+      const bytes = CryptoJS.AES.decrypt(data, secretkeyUser);
+      const decryptedJsonString = bytes.toString(CryptoJS.enc.Utf8);
+      parsedObject = JSON.parse(decryptedJsonString);
+    } else {
+      console.log("No encrypted data found in localStorage.");
+    }
+    var userId = parsedObject.userId;
+
 
     if (nameError || descError || startDateError || endDateError) {
       alert("Please fill out the necessary fields");
     } else {
       await axios
-        .post(process.env.REACT_APP_API_URL+"/api/v3/addNewTask", {
+        .post(process.env.REACT_APP_API_URL + "/api/v3/addNewTask", {
           taskName,
           taskDescription,
           startDate,
@@ -217,10 +228,10 @@ export const AddNewTask = ({ onAddClose }) => {
                   >
                     Description<span style={{ color: "red" }}>*</span>
                     {taskDescription.length > 500 && (
-                    <span style={{ color: "red" }}>
-                      Exceeded maximum word limit of 500
-                    </span>
-                  )}
+                      <span style={{ color: "red" }}>
+                        Exceeded maximum word limit of 500
+                      </span>
+                    )}
                   </label>
 
                   <textarea
@@ -231,7 +242,6 @@ export const AddNewTask = ({ onAddClose }) => {
                     value={taskDescription}
                     onChange={(e) => handleDescription(e)}
                   ></textarea>
-                  
                 </div>
 
                 <div className="mb-3">
@@ -296,6 +306,8 @@ export const AddNewTask = ({ onAddClose }) => {
                           setSelectedTechIds={setSelectedTechIds}
                           setTechnologyNames={setTechnologyNames}
                           technologyNames={technologyNames}
+                          searchQuery={searchQuery}
+                          setSearchQuery={setSearchQuery}
                         />
                       </ul>
                     </div>
@@ -309,9 +321,10 @@ export const AddNewTask = ({ onAddClose }) => {
                   >
                     Assigned To<span style={{ color: "red" }}>*</span>
                   </label>
-
+                  
                   <div className="container border p-0">
                     <div className="input-with-button">
+                      
                       <button
                         type="button"
                         className="button-for-dropdown"
@@ -339,17 +352,21 @@ export const AddNewTask = ({ onAddClose }) => {
                     </div>
                     <div>
                       <ul
-                        style={{ display: usersDropDown ? "" : "none" }}
+                        style={{maxHeight:"10rem",overflow:"auto", display: usersDropDown ? "" : "none" }}
                         className="ul-styling"
                       >
+
                         <UsersDropdown
                           usersDataComingChild={usersDataComingFrmChild}
                           selectAllUsers={selectAllUsers}
                           setSelectedUserIds={setSelectedUserIds}
+                          selectedUserIds={selectedUserIds}
                           setSelectedUsers={setSelectedUsers}
                           selectedUsers={selectedUsers}
                           selectAllChecked={selectAllChecked}
                           setSelectAllChecked={setSelectAllChecked}
+                          searchUserQuery={searchUserQuery}
+                          setSearchUserQuery={setSearchUserQuery}
                         />
                       </ul>
                     </div>
