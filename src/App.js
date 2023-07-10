@@ -36,10 +36,10 @@ import MentorAuthGuard from "./components/MentorAuthGuard";
 import Error_400 from "./components/ErrorPage/Error_400";
 import Error_500 from "./components/ErrorPage/Error_500";
 import Error_404 from "./components/ErrorPage/Error_404";
-import  PieChart  from "./components/AdminPortal/Report/Detailedreport/PieChart";
+import PieChart from "./components/AdminPortal/Report/Detailedreport/PieChart";
 import { ManageSkillTest } from "./components/AdminPortal/SkillTest/ManageSkillTest";
 import Log from "./components/AdminPortal/Logs/Log";
-
+import SessionExpired from "./components/ErrorPage/SessionExpired";
 function App() {
   const [dataFromDailyUpdate, setDataFromDailyUpdate] = useState("");
   const handleDataFromDailyUpdate = (data) => {
@@ -95,7 +95,6 @@ function App() {
             <Route path="/admin/assign-task" element={<Task />} />
             <Route path="/admin/skill-test" element={<ManageSkillTest />} />
             <Route path="/admin/logs" element={<Log />} />
-              
           </Route>
 
           {/* Mentor routes */}
@@ -103,8 +102,9 @@ function App() {
             <Route path="/mentor-dashboard" element={<MentorDashboard />} />
           </Route>
 
-          <Route path="/error?statusCode=400" element={<Error_400 />} />
-          <Route path="/error?statusCode=500" element={<Error_500 />} />
+          <Route path="/error/statusCode=400" element={<Error_400 />} />
+          <Route path="/error/statusCode=500" element={<Error_500 />} />
+          <Route path="/error/statusCode=401" element={<SessionExpired />} />
           <Route path="*" element={<Error_404 />} />
         </Routes>
       </div>

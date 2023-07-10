@@ -1,6 +1,7 @@
 import React, { useState, useRef } from "react";
 import { ReactComponent as CloudImage } from "../../../../Assets/Cloud.svg";
 import { ReactComponent as CloseBtn } from "../../../../Assets/Close-admin.svg";
+import {ReactComponent as CSVIcon } from "../../../../Assets/CSVIcon.svg"
 import "../ManageSkillSet/Modals.css";
 import axios from "axios";
 
@@ -24,7 +25,7 @@ export const UploadCsv = () => {
     formData.append("file", file);
     try {
       const response = await axios.post(
-        process.env.REACT_APP_API_URL+`/api/v2/associateConsultantDetails`,
+        process.env.REACT_APP_API_URL+`/api/v3/associateConsultantDetails`,
         formData,
         {
           headers: {
@@ -161,39 +162,37 @@ export const UploadCsv = () => {
                     </div>
                   </div>
                 </div>
-                <div className="progress-indicator-status">
-                  {" "}
-                  {file && (
-                    <div
-                      style={{
-                        marginLeft: "5.625rem",
-                        marginTop: "0.625rem",
-                        position: "relative",
-                      }}
-                      className="d-flex align-items-center"
-                    >
-                      <div>{file.name}</div>
+                {file && (
+                  <div>
+                    <div className="d-flex align-items-center ps-1 ast-search-wrapper">
+                      <div className="progress-indicator-status">
+                        {" "}
+                        {file && (
+                          <div
+                            style={{
+                              marginLeft: "0.125rem",
+                              marginTop: "0.225rem",
+                              position: "relative",
+                            }}
+                            className="d-flex align-items-center"
+                          >
+                            <CSVIcon/>
+                            <div style={{marginLeft: "0.5rem"}}>{file.name}</div>
+                          </div>
+                        )}
+                      </div>
+
+                      <div
+                        className=""
+                        onClick={() => {
+                          handleRemoveFile();
+                        }}
+                      >
+                        <CloseBtn />{" "}
+                      </div>
                     </div>
-                  )}
-                  {progress > 0 && (
-                    <progress
-                      style={{ marginLeft: "2.813rem", marginTop: "0.313rem" }}
-                      max="100"
-                      value={progress}
-                    ></progress>
-                  )}
-                  <div style={{ position: "absolute", right: "21.75rem" }}>
-                    {/* <CloseBtn /> */}
                   </div>
-                  <div
-                    className=""
-                    onClick={() => {
-                      handleRemoveFile();
-                    }}
-                  >
-                    <CloseBtn />{" "}
-                  </div>
-                </div>
+                )}
               </form>
               <div className="saveCancel border-top-0 pb-0 row ">
                 <div className="row mt-3 d-flex justify-content-end">

@@ -17,6 +17,7 @@ export default function AssociateConsultant(props) {
   const navigate = useNavigate();
   const handleOnclick = (id) => {
     sessionStorage.setItem("detailId", id);
+    sessionStorage.setItem("chrumValue", "Dashboard");
     navigate(`/admin/report?userId=${id}`);
   };
   const [searchFilterValue, setSearchFilterValue] = useState("");
@@ -88,7 +89,7 @@ export default function AssociateConsultant(props) {
             </div>
             <div
               onClick={() => {
-                handleOnclick(userData.userId);
+                handleOnclick(userData.intId);
               }}
               className=" col-4 pointer"
             >
@@ -104,9 +105,7 @@ export default function AssociateConsultant(props) {
                 {expandedMentor === userData?.intId ? (
                   <UpArrow />
                 ) : (
-
                   <DownArroww />
-
                 )}
               </span>
             </div>
@@ -116,34 +115,38 @@ export default function AssociateConsultant(props) {
               <div className="technology">
                 <p className="tech">Technology:</p>
 
-
                 {userData &&
                   userData.techNames &&
-                  userData.techNames.slice(0, 4).map((skill, skillIndex) => (
-                    skill && (
-                      <span key={skillIndex} className="tech-div-badge">
-                        {skill.toUpperCase()}
-                        &nbsp;
-                        {renderStars(userData.level[skillIndex])}
-                      </span>
-                    )
-                  ))}
+                  userData.techNames.slice(0, 4).map(
+                    (skill, skillIndex) =>
+                      skill && (
+                        <span key={skillIndex} className="tech-div-badge">
+                          {skill.toUpperCase()}
+                          &nbsp;
+                          {renderStars(userData.level[skillIndex])}
+                        </span>
+                      )
+                  )}
                 {userData &&
                   userData.techNames &&
                   userData.techNames.length > 4 && (
                     <div className="all-tech">
                       {showAllTech ? (
-                        userData.techNames.slice(4).map((skill, skillIndex) => (
-                          skill && (
-                            <span key={skillIndex} className="tech-div-badge">
-                              {skill.toUpperCase()}
-                              &nbsp;
-                              {renderStars(userData.level[skillIndex + 4])}
-                            </span>
-                          )
-                        ))
+                        userData.techNames.slice(4).map(
+                          (skill, skillIndex) =>
+                            skill && (
+                              <span key={skillIndex} className="tech-div-badge">
+                                {skill.toUpperCase()}
+                                &nbsp;
+                                {renderStars(userData.level[skillIndex + 4])}
+                              </span>
+                            )
+                        )
                       ) : (
-                        <button className="more-tech-stacks" onClick={() => setShowAllTech(true)}>
+                        <button
+                          className="more-tech-stacks"
+                          onClick={() => setShowAllTech(true)}
+                        >
                           + {userData.techNames.length - 4}
                         </button>
                       )}
@@ -165,7 +168,7 @@ export default function AssociateConsultant(props) {
         </div>
 
         <div className="associate-card">
-          <div className="d-flex align-items-center ps-1 associate-search-wrapper">
+          <div className="d-flex align-items-center ps-3 associate-search-wrapper">
             <SearchIcon />
             <input
               className="search-associate "

@@ -18,7 +18,7 @@ const UsersDropdown = (props) => {
       console.log("No encrypted data found in localStorage.");
     }
     axios
-      .get(process.env.REACT_APP_API_URL + "/api/v2/getAllUsers", {
+      .get(process.env.REACT_APP_API_URL + "/api/v3/getAllUsers", {
         headers: {
 
           Authorization: `Bearer ${parsedObject["token"]}`,

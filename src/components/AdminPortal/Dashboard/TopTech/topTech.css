@@ -9,3 +9,39 @@
     box-shadow: 0px 0.25rem 1.25rem rgba(40, 52, 73, 0.15);
     border-radius: 0.5rem;
 } */
+
+.pie-val-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+.pie-value {
+  display: flex;
+  justify-content: space-between;
+}
+.val-text {
+  color: var(--primary-gray, #343435);
+  font-family: Roboto;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
+}
+.pie-value-child {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+.col-wrapper {
+  width: 1rem;
+  height: 1rem;
+}
+.pie-chart-parent-wrapper {
+  box-shadow: 0rem 0.25rem 1.25rem rgba(40, 52, 73, 0.15);
+  border-radius: 0.5rem;
+  height: 32.25rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  padding-bottom: 1.5rem;
+}

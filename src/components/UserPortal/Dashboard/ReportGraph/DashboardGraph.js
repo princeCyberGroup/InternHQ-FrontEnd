@@ -9,13 +9,14 @@ import {
   Tooltip,
 } from "recharts";
 import "./graph.css";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import CryptoJS from "crypto-js";
 
 export default function DashboardGraph() {
   const [graphType, setGraphType] = useState("daily");
   const [tableData, setTableData] = useState([]);
   const [currentMonth, setCurrentMonth] = useState(new Date().getMonth());
+  const navigate = useNavigate();
 
   useEffect(() => {
     fetchData();
@@ -87,7 +88,7 @@ export default function DashboardGraph() {
   const fetchData = async () => {
     await fetch(
       process.env.REACT_APP_API_URL +
-        `/api/v2/getDailyTaskTrackerRecords?userId=${userId}`,
+        `/api/v3/getDailyTaskTrackerRecords?userId=${userId}`,
       {
         headers: {
           Authorization: `Bearer ${parsedObject["token"]}`,
@@ -101,6 +102,18 @@ export default function DashboardGraph() {
         setTableData(data.response);
       })
       .catch((error) => {
+        if (error.response.status === 401) {
+          navigate("/error/statusCode=401");
+        }
+        if (error.response.status === 400) {
+          navigate("/error/statusCode=400");
+        }
+        if (error.response.status === 500) {
+          navigate("/error/statusCode=500");
+        }
+        if (error.response.status === 404) {
+          navigate("/error/statusCode=404");
+        }
         console.log(error);
       });
   };
@@ -168,6 +181,7 @@ export default function DashboardGraph() {
     let cgLearningHours = 0;
     let selfLearningHours = 0;
     let mentorHours = 0;
+    let sessionHours = 0;
 
     currentWeekTaskRecords?.forEach((record) => {
       let hours = record.totalTime;
@@ -175,6 +189,7 @@ export default function DashboardGraph() {
       if (record.learning === "CG Learning Videos") cgLearningHours += hours;
       else if (record.learning === "Mentor Assigned Task") mentorHours += hours;
       else if (record.learning === "Self Learning") selfLearningHours += hours;
+      else if(record.learning === "Session") sessionHours += hours;
       else projectHours += hours;
     });
 
@@ -186,6 +201,7 @@ export default function DashboardGraph() {
       cgLearningHours,
       selfLearningHours,
       mentorHours,
+      sessionHours
     });
 
     // Update the start and end dates for the next week
@@ -220,11 +236,18 @@ export default function DashboardGraph() {
           : convertToPercentageMonthly(
               convertDecimalToHours(weeklyTotalHours[0].cgLearningHours)
             ),
+      "Session":
+        weeklyTotalHours[0].sessionHours === 0
+          ? "0"
+          : convertToPercentageMonthly(
+              convertDecimalToHours(weeklyTotalHours[0].sessionHours)
+            ),
       Idle:
         weeklyTotalHours[0].projectHours === 0 &&
         weeklyTotalHours[0].mentorHours === 0 &&
         weeklyTotalHours[0].cgLearningHours === 0 &&
-        weeklyTotalHours[0].selfLearningHours === 0
+        weeklyTotalHours[0].selfLearningHours === 0 &&
+        weeklyTotalHours[0].sessionHours === 0
           ? "0"
           : Number.isInteger(
               100 -
@@ -233,7 +256,8 @@ export default function DashboardGraph() {
                     weeklyTotalHours[0].projectHours +
                       weeklyTotalHours[0].mentorHours +
                       weeklyTotalHours[0].selfLearningHours +
-                      weeklyTotalHours[0].cgLearningHours
+                      weeklyTotalHours[0].cgLearningHours +
+                      weeklyTotalHours[0].sessionHours
                   )
                 )
             )
@@ -243,7 +267,8 @@ export default function DashboardGraph() {
                 weeklyTotalHours[0].projectHours +
                   weeklyTotalHours[0].mentorHours +
                   weeklyTotalHours[0].selfLearningHours +
-                  weeklyTotalHours[0].cgLearningHours
+                  weeklyTotalHours[0].cgLearningHours +
+                  weeklyTotalHours[0].sessionHours
               )
             )
           : (
@@ -253,7 +278,8 @@ export default function DashboardGraph() {
                   weeklyTotalHours[0].projectHours +
                     weeklyTotalHours[0].mentorHours +
                     weeklyTotalHours[0].selfLearningHours +
-                    weeklyTotalHours[0].cgLearningHours
+                    weeklyTotalHours[0].cgLearningHours +
+                    weeklyTotalHours[0].sessionHours
                 )
               )
             ).toFixed(2),
@@ -284,11 +310,18 @@ export default function DashboardGraph() {
           : convertToPercentageMonthly(
               convertDecimalToHours(weeklyTotalHours[1].cgLearningHours)
             ),
+       "Session":
+        weeklyTotalHours[1].sessionHours === 0
+          ? "0"
+          : convertToPercentageMonthly(
+              convertDecimalToHours(weeklyTotalHours[1].sessionHours)
+            ),      
       Idle:
         weeklyTotalHours[1].projectHours === 0 &&
         weeklyTotalHours[1].mentorHours === 0 &&
         weeklyTotalHours[1].cgLearningHours === 0 &&
-        weeklyTotalHours[1].selfLearningHours === 0
+        weeklyTotalHours[1].selfLearningHours === 0 &&
+        weeklyTotalHours[1].sessionHours === 0
           ? "0"
           : Number.isInteger(
               100 -
@@ -297,7 +330,8 @@ export default function DashboardGraph() {
                     weeklyTotalHours[1].projectHours +
                       weeklyTotalHours[1].mentorHours +
                       weeklyTotalHours[1].selfLearningHours +
-                      weeklyTotalHours[1].cgLearningHours
+                      weeklyTotalHours[1].cgLearningHours +
+                      weeklyTotalHours[1].sessionHours
                   )
                 )
             )
@@ -307,7 +341,8 @@ export default function DashboardGraph() {
                 weeklyTotalHours[1].projectHours +
                   weeklyTotalHours[1].mentorHours +
                   weeklyTotalHours[1].selfLearningHours +
-                  weeklyTotalHours[1].cgLearningHours
+                  weeklyTotalHours[1].cgLearningHours +
+                  weeklyTotalHours[1].sessionHours
               )
             )
           : (
@@ -317,7 +352,8 @@ export default function DashboardGraph() {
                   weeklyTotalHours[1].projectHours +
                     weeklyTotalHours[1].mentorHours +
                     weeklyTotalHours[1].selfLearningHours +
-                    weeklyTotalHours[1].cgLearningHours
+                    weeklyTotalHours[1].cgLearningHours +
+                    weeklyTotalHours[1].sessionHours
                 )
               )
             ).toFixed(2),
@@ -348,11 +384,18 @@ export default function DashboardGraph() {
           : convertToPercentageMonthly(
               convertDecimalToHours(weeklyTotalHours[2].cgLearningHours)
             ),
+       "Session":
+        weeklyTotalHours[2].sessionHours === 0
+          ? "0"
+          : convertToPercentageMonthly(
+              convertDecimalToHours(weeklyTotalHours[2].sessionHours)
+            ),  
       Idle:
         weeklyTotalHours[2].projectHours === 0 &&
         weeklyTotalHours[2].mentorHours === 0 &&
         weeklyTotalHours[2].cgLearningHours === 0 &&
-        weeklyTotalHours[2].selfLearningHours === 0
+        weeklyTotalHours[2].selfLearningHours === 0 &&
+        weeklyTotalHours[2].sessionHours === 0
           ? "0"
           : Number.isInteger(
               100 -
@@ -361,7 +404,8 @@ export default function DashboardGraph() {
                     weeklyTotalHours[2].projectHours +
                       weeklyTotalHours[2].mentorHours +
                       weeklyTotalHours[2].selfLearningHours +
-                      weeklyTotalHours[2].cgLearningHours
+                      weeklyTotalHours[2].cgLearningHours +
+                      weeklyTotalHours[2].sessionHours
                   )
                 )
             )
@@ -371,7 +415,8 @@ export default function DashboardGraph() {
                 weeklyTotalHours[2].projectHours +
                   weeklyTotalHours[2].mentorHours +
                   weeklyTotalHours[2].selfLearningHours +
-                  weeklyTotalHours[2].cgLearningHours
+                  weeklyTotalHours[2].cgLearningHours +
+                  weeklyTotalHours[2].sessionHours
               )
             )
           : (
@@ -381,7 +426,8 @@ export default function DashboardGraph() {
                   weeklyTotalHours[2].projectHours +
                     weeklyTotalHours[2].mentorHours +
                     weeklyTotalHours[2].selfLearningHours +
-                    weeklyTotalHours[2].cgLearningHours
+                    weeklyTotalHours[2].cgLearningHours +
+                    weeklyTotalHours[2].sessionHours
                 )
               )
             ).toFixed(2),
@@ -412,11 +458,18 @@ export default function DashboardGraph() {
           : convertToPercentageMonthly(
               convertDecimalToHours(weeklyTotalHours[3].cgLearningHours)
             ),
+       "Session":
+        weeklyTotalHours[3].sessionHours === 0
+          ? "0"
+          : convertToPercentageMonthly(
+              convertDecimalToHours(weeklyTotalHours[3].sessionHours)
+            ),  
       Idle:
         weeklyTotalHours[3].projectHours === 0 &&
         weeklyTotalHours[3].mentorHours === 0 &&
         weeklyTotalHours[3].cgLearningHours === 0 &&
-        weeklyTotalHours[3].selfLearningHours === 0
+        weeklyTotalHours[3].selfLearningHours === 0 &&
+        weeklyTotalHours[3].sessionHours === 0
           ? "0"
           : Number.isInteger(
               100 -
@@ -425,7 +478,8 @@ export default function DashboardGraph() {
                     weeklyTotalHours[3].projectHours +
                       weeklyTotalHours[3].mentorHours +
                       weeklyTotalHours[3].selfLearningHours +
-                      weeklyTotalHours[3].cgLearningHours
+                      weeklyTotalHours[3].cgLearningHours +
+                      weeklyTotalHours[3].sessionHours
                   )
                 )
             )
@@ -435,7 +489,8 @@ export default function DashboardGraph() {
                 weeklyTotalHours[3].projectHours +
                   weeklyTotalHours[3].mentorHours +
                   weeklyTotalHours[3].selfLearningHours +
-                  weeklyTotalHours[3].cgLearningHours
+                  weeklyTotalHours[3].cgLearningHours +
+                  weeklyTotalHours[3].sessionHours
               )
             )
           : (
@@ -445,7 +500,8 @@ export default function DashboardGraph() {
                   weeklyTotalHours[3].projectHours +
                     weeklyTotalHours[3].mentorHours +
                     weeklyTotalHours[3].selfLearningHours +
-                    weeklyTotalHours[3].cgLearningHours
+                    weeklyTotalHours[3].cgLearningHours +
+                    weeklyTotalHours[3].sessionHours
                 )
               )
             ).toFixed(2),
@@ -476,11 +532,18 @@ export default function DashboardGraph() {
           : convertToPercentageMonthly(
               convertDecimalToHours(weeklyTotalHours[4].cgLearningHours)
             ),
+       "Session":
+        weeklyTotalHours[4].sessionHours === 0
+          ? "0"
+          : convertToPercentageMonthly(
+              convertDecimalToHours(weeklyTotalHours[4].sessionHours)
+            ),  
       Idle:
         weeklyTotalHours[4].projectHours === 0 &&
         weeklyTotalHours[4].mentorHours === 0 &&
         weeklyTotalHours[4].cgLearningHours === 0 &&
-        weeklyTotalHours[4].selfLearningHours === 0
+        weeklyTotalHours[4].selfLearningHours === 0 &&
+        weeklyTotalHours[4].sessionHours === 0
           ? "0"
           : Number.isInteger(
               100 -
@@ -489,7 +552,8 @@ export default function DashboardGraph() {
                     weeklyTotalHours[4].projectHours +
                       weeklyTotalHours[4].mentorHours +
                       weeklyTotalHours[4].selfLearningHours +
-                      weeklyTotalHours[4].cgLearningHours
+                      weeklyTotalHours[4].cgLearningHours +
+                      weeklyTotalHours[4].sessionHours
                   )
                 )
             )
@@ -499,7 +563,8 @@ export default function DashboardGraph() {
                 weeklyTotalHours[4].projectHours +
                   weeklyTotalHours[4].mentorHours +
                   weeklyTotalHours[4].selfLearningHours +
-                  weeklyTotalHours[4].cgLearningHours
+                  weeklyTotalHours[4].cgLearningHours +
+                  weeklyTotalHours[4].sessionHours
               )
             )
           : (
@@ -509,7 +574,8 @@ export default function DashboardGraph() {
                   weeklyTotalHours[4].projectHours +
                     weeklyTotalHours[4].mentorHours +
                     weeklyTotalHours[4].selfLearningHours +
-                    weeklyTotalHours[4].cgLearningHours
+                    weeklyTotalHours[4].cgLearningHours +
+                    weeklyTotalHours[4].sessionHours
                 )
               )
             ).toFixed(2),
@@ -580,6 +646,7 @@ export default function DashboardGraph() {
         cgLearningHours: 0,
         selfLearningHours: 0,
         mentorHours: 0,
+        sessionHours: 0,
       };
     }
 
@@ -592,6 +659,8 @@ export default function DashboardGraph() {
       totalHoursByDay[dayOfWeek].selfLearningHours += hours;
     else if (record.learning === "Mentor Assigned Task")
       totalHoursByDay[dayOfWeek].mentorHours += hours;
+    else if (record.learning === "Session")
+      totalHoursByDay[dayOfWeek].sessionHours += hours;
     else totalHoursByDay[dayOfWeek].projectHours += hours;
   });
 
@@ -622,6 +691,12 @@ export default function DashboardGraph() {
           : convertToPercentage(
               convertDecimalToHours(totalHoursByDay.Monday?.cgLearningHours)
             ),
+      "Session":
+        totalHoursByDay.Monday?.sessionHours === undefined
+          ? "0"
+          : convertToPercentage(
+              convertDecimalToHours(totalHoursByDay.Monday?.sessionHours)
+            ),
       Idle:
         totalHoursByDay.Monday === undefined
           ? "0"
@@ -632,7 +707,8 @@ export default function DashboardGraph() {
                     totalHoursByDay.Monday?.projectHours +
                       totalHoursByDay.Monday?.mentorHours +
                       totalHoursByDay.Monday?.selfLearningHours +
-                      totalHoursByDay.Monday?.cgLearningHours
+                      totalHoursByDay.Monday?.cgLearningHours +
+                      totalHoursByDay.Monday?.sessionHours
                   )
                 )
             )
@@ -642,7 +718,8 @@ export default function DashboardGraph() {
                 totalHoursByDay.Monday?.projectHours +
                   totalHoursByDay.Monday?.mentorHours +
                   totalHoursByDay.Monday?.selfLearningHours +
-                  totalHoursByDay.Monday?.cgLearningHours
+                  totalHoursByDay.Monday?.cgLearningHours +
+                  totalHoursByDay.Monday?.sessionHours
               )
             )
           : (
@@ -652,7 +729,8 @@ export default function DashboardGraph() {
                   totalHoursByDay.Monday?.projectHours +
                     totalHoursByDay.Monday?.mentorHours +
                     totalHoursByDay.Monday?.selfLearningHours +
-                    totalHoursByDay.Monday?.cgLearningHours
+                    totalHoursByDay.Monday?.cgLearningHours +
+                    totalHoursByDay.Monday?.sessionHours
                 )
               )
             ).toFixed(2),
@@ -683,6 +761,12 @@ export default function DashboardGraph() {
           : convertToPercentage(
               convertDecimalToHours(totalHoursByDay.Tuesday?.cgLearningHours)
             ),
+      "Session":
+        totalHoursByDay.Tuesday?.sessionHours === undefined
+          ? "0"
+          : convertToPercentage(
+              convertDecimalToHours(totalHoursByDay.Tuesday?.sessionHours)
+            ),
       Idle:
         totalHoursByDay.Tuesday === undefined
           ? "0"
@@ -693,7 +777,8 @@ export default function DashboardGraph() {
                     totalHoursByDay.Tuesday?.projectHours +
                       totalHoursByDay.Tuesday?.mentorHours +
                       totalHoursByDay.Tuesday?.selfLearningHours +
-                      totalHoursByDay.Tuesday?.cgLearningHours
+                      totalHoursByDay.Tuesday?.cgLearningHours +
+                      totalHoursByDay.Tuesday?.sessionHours
                   )
                 )
             )
@@ -703,7 +788,8 @@ export default function DashboardGraph() {
                 totalHoursByDay.Tuesday?.projectHours +
                   totalHoursByDay.Tuesday?.mentorHours +
                   totalHoursByDay.Tuesday?.selfLearningHours +
-                  totalHoursByDay.Tuesday?.cgLearningHours
+                  totalHoursByDay.Tuesday?.cgLearningHours +
+                  totalHoursByDay.Tuesday?.sessionHours
               )
             )
           : (
@@ -713,7 +799,8 @@ export default function DashboardGraph() {
                   totalHoursByDay.Tuesday?.projectHours +
                     totalHoursByDay.Tuesday?.mentorHours +
                     totalHoursByDay.Tuesday?.selfLearningHours +
-                    totalHoursByDay.Tuesday?.cgLearningHours
+                    totalHoursByDay.Tuesday?.cgLearningHours +
+                    totalHoursByDay.Tuesday?.sessionHours
                 )
               )
             ).toFixed(2),
@@ -746,6 +833,12 @@ export default function DashboardGraph() {
           : convertToPercentage(
               convertDecimalToHours(totalHoursByDay.Wednesday?.cgLearningHours)
             ),
+      "Session":
+        totalHoursByDay.Wednesday?.sessionHours === undefined
+          ? "0"
+          : convertToPercentage(
+              convertDecimalToHours(totalHoursByDay.Wednesday?.sessionHours)
+            ),
       Idle:
         totalHoursByDay.Wednesday === undefined
           ? "0"
@@ -756,7 +849,8 @@ export default function DashboardGraph() {
                     totalHoursByDay.Wednesday?.projectHours +
                       totalHoursByDay.Wednesday?.mentorHours +
                       totalHoursByDay.Wednesday?.selfLearningHours +
-                      totalHoursByDay.Wednesday?.cgLearningHours
+                      totalHoursByDay.Wednesday?.cgLearningHours +
+                      totalHoursByDay.Wednesday?.sessionHours
                   )
                 )
             )
@@ -766,7 +860,8 @@ export default function DashboardGraph() {
                 totalHoursByDay.Wednesday?.projectHours +
                   totalHoursByDay.Wednesday?.mentorHours +
                   totalHoursByDay.Wednesday?.selfLearningHours +
-                  totalHoursByDay.Wednesday?.cgLearningHours
+                  totalHoursByDay.Wednesday?.cgLearningHours +
+                  totalHoursByDay.Wednesday?.sessionHours
               )
             )
           : (
@@ -776,7 +871,8 @@ export default function DashboardGraph() {
                   totalHoursByDay.Wednesday?.projectHours +
                     totalHoursByDay.Wednesday?.mentorHours +
                     totalHoursByDay.Wednesday?.selfLearningHours +
-                    totalHoursByDay.Wednesday?.cgLearningHours
+                    totalHoursByDay.Wednesday?.cgLearningHours +
+                    totalHoursByDay.Wednesday?.sessionHours
                 )
               )
             ).toFixed(2),
@@ -807,6 +903,12 @@ export default function DashboardGraph() {
           : convertToPercentage(
               convertDecimalToHours(totalHoursByDay.Thursday?.cgLearningHours)
             ),
+      "Session":
+        totalHoursByDay.Thursday?.sessionHours === undefined
+          ? "0"
+          : convertToPercentage(
+              convertDecimalToHours(totalHoursByDay.Thursday?.sessionHours)
+            ),
       Idle:
         totalHoursByDay.Thursday === undefined
           ? "0"
@@ -817,7 +919,8 @@ export default function DashboardGraph() {
                     totalHoursByDay.Thursday?.projectHours +
                       totalHoursByDay.Thursday?.mentorHours +
                       totalHoursByDay.Thursday?.selfLearningHours +
-                      totalHoursByDay.Thursday?.cgLearningHours
+                      totalHoursByDay.Thursday?.cgLearningHours +
+                      totalHoursByDay.Thursday?.sessionHours
                   )
                 )
             )
@@ -827,7 +930,8 @@ export default function DashboardGraph() {
                 totalHoursByDay.Thursday?.projectHours +
                   totalHoursByDay.Thursday?.mentorHours +
                   totalHoursByDay.Thursday?.selfLearningHours +
-                  totalHoursByDay.Thursday?.cgLearningHours
+                  totalHoursByDay.Thursday?.cgLearningHours +
+                  totalHoursByDay.Thursday?.sessionHours
               )
             )
           : (
@@ -837,7 +941,8 @@ export default function DashboardGraph() {
                   totalHoursByDay.Thursday?.projectHours +
                     totalHoursByDay.Thursday?.mentorHours +
                     totalHoursByDay.Thursday?.selfLearningHours +
-                    totalHoursByDay.Thursday?.cgLearningHours
+                    totalHoursByDay.Thursday?.cgLearningHours +
+                    totalHoursByDay.Thursday?.sessionHours
                 )
               )
             ).toFixed(2),
@@ -868,6 +973,12 @@ export default function DashboardGraph() {
           : convertToPercentage(
               convertDecimalToHours(totalHoursByDay.Friday?.cgLearningHours)
             ),
+      "Session":
+        totalHoursByDay.Friday?.sessionHours === undefined
+          ? "0"
+          : convertToPercentage(
+              convertDecimalToHours(totalHoursByDay.Friday?.sessionHours)
+            ),
       Idle:
         totalHoursByDay.Friday === undefined
           ? "0"
@@ -878,7 +989,8 @@ export default function DashboardGraph() {
                     totalHoursByDay.Friday?.projectHours +
                       totalHoursByDay.Friday?.mentorHours +
                       totalHoursByDay.Friday?.selfLearningHours +
-                      totalHoursByDay.Friday?.cgLearningHours
+                      totalHoursByDay.Friday?.cgLearningHours +
+                      totalHoursByDay.Friday?.sessionHours
                   )
                 )
             )
@@ -888,7 +1000,8 @@ export default function DashboardGraph() {
                 totalHoursByDay.Friday?.projectHours +
                   totalHoursByDay.Friday?.mentorHours +
                   totalHoursByDay.Friday?.selfLearningHours +
-                  totalHoursByDay.Friday?.cgLearningHours
+                  totalHoursByDay.Friday?.cgLearningHours +
+                  totalHoursByDay.Friday?.sessionHours
               )
             )
           : (
@@ -898,7 +1011,8 @@ export default function DashboardGraph() {
                   totalHoursByDay.Friday?.projectHours +
                     totalHoursByDay.Friday?.mentorHours +
                     totalHoursByDay.Friday?.selfLearningHours +
-                    totalHoursByDay.Friday?.cgLearningHours
+                    totalHoursByDay.Friday?.cgLearningHours +
+                    totalHoursByDay.Friday?.sessionHours
                 )
               )
             ).toFixed(2),
@@ -1052,6 +1166,7 @@ export default function DashboardGraph() {
             <Bar dataKey="Task by Mentor" stackId="a" fill="#28519E" />
             <Bar dataKey="Self Learning" stackId="a" fill="#FFB81C" />
             <Bar dataKey="CG Learning Video" stackId="a" fill="#FF8311" />
+            <Bar dataKey="Session" stackId="a" fill="#28FDD6" />
             <Bar dataKey="Idle" stackId="a" fill="#B2B2B3" />
           </BarChart>
         </div>

@@ -21,7 +21,7 @@ const TechDropDown = (props) => {
     }
     //this api call is for admin portal
     axios
-      .get(process.env.REACT_APP_API_URL + `/api/v2/getAllTechnology`, {
+      .get(process.env.REACT_APP_API_URL + `/api/v3/getAllTechnology`, {
         headers: {
           Authorization: `Bearer ${parsedObject["token"]}`,
         },
@@ -49,14 +49,14 @@ const TechDropDown = (props) => {
   const handleOptionClick = (event) => {
     const { value } = event.currentTarget.dataset;
     const isChecked = event.currentTarget.querySelector("input").checked;
-    if (isChecked && !props.technologyNames.includes(value)) {
-      props.technologyNames.push(value);
-      props.technologyNames.forEach((curElem, index) => {
+    if (isChecked && !props.technologyNames?.includes(value)) {
+      props.technologyNames?.push(value);
+      props.technologyNames?.forEach((curElem, index) => {
         props.techNames[`tech${index + 1}`] = curElem;
       });
       setCounter((prevCounter) => prevCounter + 1);
     } else {
-      const index = props.technologyNames.indexOf(value);
+      const index = props.technologyNames?.indexOf(value);
       if (index !== -1) {
         props.technologyNames.splice(index, 1);
       }

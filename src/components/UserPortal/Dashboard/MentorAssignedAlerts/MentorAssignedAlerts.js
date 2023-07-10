@@ -41,7 +41,7 @@ const MentorAssignedAlerts = (props) => {
   const fetchData = async () => {
     await fetch(
       process.env.REACT_APP_API_URL +
-        `/api/v2/getAssignedNotification?userId=${userId}`,
+        `/api/v3/getAssignedNotification?userId=${userId}`,
       {
         headers: {
           Authorization: `Bearer ${parsedObject["token"]}`,
@@ -54,11 +54,19 @@ const MentorAssignedAlerts = (props) => {
       .then(async (data) => {
         setMentorTask(data.response);
       })
-      .catch((e) => {
-        if (e.statusCode === 401) {
-          navigate("/error?statusCode=400");
+      .catch((error) => {
+        if (error.statusCode === 401) {
+          navigate("/error/statusCode=401");
         }
-        console.log("jjj", e);
+        if (error.statusCode === 400) {
+          navigate("/error/statusCode=400");
+        }
+        if (error.statusCode === 500) {
+          navigate("/error/statusCode=500");
+        }
+        if (error.statusCode === 404) {
+          navigate("/error/statusCode=404");
+        }
       });
   };
 

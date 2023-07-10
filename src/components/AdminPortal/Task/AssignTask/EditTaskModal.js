@@ -62,7 +62,7 @@ export const EditTaskModal = ({ task, onEditClose, technology, assignedTo, edite
       } else {
     try {
       await axios.post(
-        process.env.REACT_APP_API_URL+`/api/v2/editTask`,
+        process.env.REACT_APP_API_URL+`/api/v3/editTask`,
         {
             taskId:task.taskId,
             taskName:taskName,
