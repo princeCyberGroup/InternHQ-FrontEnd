@@ -1,73 +1,18 @@
-// import React, { useState, useEffect } from "react";
-// import "./DetailedLog.css";
-// import { ReactComponent as NoTask } from "../../../../Assets/Group 3EmpGraph.svg";
-// import axios from "axios";
-// import CryptoJS from "crypto-js";
-// const DetailedCard = () => {
-
-
- 
-// //   useEffect(() => {
-// //     const secretkeyUser = process.env.REACT_APP_USER_KEY;
-// //     var parsedObject;
-// //     const data = localStorage.getItem("userData");
-// //     if (data) {
-// //       const bytes = CryptoJS.AES.decrypt(data, secretkeyUser);
-// //       const decryptedJsonString = bytes.toString(CryptoJS.enc.Utf8);
-// //       parsedObject = JSON.parse(decryptedJsonString);
-// //     } else {
-// //       console.log("No encrypted data found in localStorage.");
-// //     }
-// //     // Fetch logs from the API
-// //     axios
-// //       .get(process.env.REACT_APP_API_URL + "/api/v2/getAssignedTask", {
-// //         headers: {
-// //           Authorization: `Bearer ${parsedObject["token"]}`,
-// //         },
-// //       })
-// //       .then((response) => {
-// //         setLogs(response.data.response);
-// //       })
-// //       .catch((error) => {
-// //         console.error("Error fetching tasks:", error);
-// //       });
-// //   }, []);
-
-
-
-//   return (
-//     <>
-      
-//           <div className="card empty-log-state d-flex justify-content-center align-items-center" style={{marginTop:"39px"}}>
-//             <div
-//               className="col-12 d-flex justify-content-center"
-//               // style={{ marginTop: "70px" }}
-//             >
-//               <NoTask />
-//             </div>
-//             <div className="col-12 d-flex justify-content-center assign-task-empty">
-//               <p>No Logs Yet! </p>
-//             </div>
-//           </div>
-        
-              
-        
-
-//     </>
-//   );
-// };
-
-// export default DetailedCard;
-
-
-
-import React, { useState, useEffect } from "react";
+import React,{useState} from "react";
 import "./DetailedLog.css";
 import { ReactComponent as NoTask } from "../../../../Assets/Group 3EmpGraph.svg";
-import axios from "axios";
-import CryptoJS from "crypto-js";
+import { ReactComponent as Clock } from "../../../../Assets/clock-regular 1logClock.svg";
+import { ReactComponent as Filter } from "../../../../Assets/Filter.svg";
 
 
+
+function formatDate(dateString) {
+  const date = new Date(dateString);
+  const month = (date.getMonth() + 1).toString().padStart(2, '0');
+  const day = date.getDate().toString().padStart(2, '0');
+  const year = date.getFullYear();
+  return `${day}/${month}/${year}`;
+}
 
 function getInitials(name) {
   const names = name?.split(" ");
@@ -76,41 +21,11 @@ function getInitials(name) {
 }
 
 const DetailedCard = (props) => {
+  const [selectedDateFilter, setSelectedDateFilter] = useState(null);
+
   const initials = getInitials(props.selectedUser?.name);
   console.log(props.logData);
-// const [logs,setLogs]=useState([]);
 
-  // useEffect(() => {
-  //   // Fetch logs from the API based on the selected user
-  //   if (props.selectedUser) {
-  //     const secretkeyUser = process.env.REACT_APP_USER_KEY;
-  //     var parsedObject;
-  //     const data = localStorage.getItem("userData");
-  //     if (data) {
-  //       const bytes = CryptoJS.AES.decrypt(data, secretkeyUser);
-  //       const decryptedJsonString = bytes.toString(CryptoJS.enc.Utf8);
-  //       parsedObject = JSON.parse(decryptedJsonString);
-  //     } else {
-  //       console.log("No encrypted data found in localStorage.");
-  //     }
-
-  //     axios
-  //       .get(
-  //         process.env.REACT_APP_API_URL + "/api/v2/getMentorDetails",
-  //         {
-  //           headers: {
-  //             Authorization: `Bearer ${parsedObject["token"]}`,
-  //           },
-  //         }
-  //       )
-  //       .then((response) => {
-  //         setLogs(response.data.response);
-  //       })
-  //       .catch((error) => {
-  //         console.error("Error fetching tasks:", error);
-  //       });
-  //   }
-  // }, [props.selectedUser]);
 
   return (
     <>
@@ -174,21 +89,47 @@ const DetailedCard = (props) => {
               <div className="frame-id">{props.selectedUser.intId}</div>
             </div>
           </div>
+          <div className="row">
+          <div className="col p-0 report-filter">
+                <Filter /> Filter:
+              </div> 
+      <div className="col filter-container" >
+        <input
+          type="date"
+          value={selectedDateFilter}
+          onChange={(e) => setSelectedDateFilter(e.target.value)}
+        />
+      </div>
+      </div>
+
+
             </div>
-            <div className="card-body" style={{maxHeight:"100vh",overflow:"auto"}}>
-            {props.logData.map((log, index) => (
-        <div key={index}>
-          <p>Date: {log.logDate}</p>
-          <ul>
+            <div className="card-body p-0" style={{maxHeight:"100vh",overflow:"auto",width:"58vw"}}>
+            {props.logData
+            .filter((log) =>
+            selectedDateFilter ? log.logDate === selectedDateFilter : true
+          )
+            .map((log, index) => (
+        <div className="pb-3 mb-4" style={{borderBottom:"1px solid #E9ECEB"}} key={index}>
+          <p className="log-date">{formatDate(log.logDate)}</p>
+          
             {log.logTime.map((timeActivity, i) => {
               const [time, activity] = Object.entries(timeActivity)[0];
               return (
-                <li key={i}>
-                  Time: {time}, Activity: {activity}
-                </li>
+                <div className="row mx-2 mb-3">
+                 <div className="clock-icon col-1 p-0">
+                  <Clock/> 
+                  </div>
+                  <div className="clock-time col-2 p-0">
+                  {time} 
+                  </div>
+                  <div className="log-item col-9 p-0"> 
+                  {activity}
+                  </div>
+                 </div>
               );
             })}
-          </ul>
+          
         </div>
       ))}
             </div>

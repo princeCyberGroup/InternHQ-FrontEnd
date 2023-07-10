@@ -32,17 +32,17 @@ line-height: normal;
     border-radius: 0.25rem; /* Converted from 4px */
     cursor: pointer;
   }
-  .associate-search-wrapper{
+  .associate-search-log-wrapper{
     border: 1px solid #B2B2B3;
     border-radius: 5px;
     padding: 0%;
     width: 24rem;
 
   }
-  .search-associate {
+  .search-associate-log {
   box-sizing: border-box;
   padding: 0rem 0.5rem; 
-  height: 2.5rem; 
+  height: 2rem; 
   border-radius: 30%;
   border: none;
   outline: none;
