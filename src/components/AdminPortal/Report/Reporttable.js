@@ -4,8 +4,8 @@ import EmptyDailyUpdateTable from "../../UserPortal/DailyUpdateTable/EmptyDailyU
 import "./Reporttable.css";
 import { ReactComponent as Advance } from "../../../Assets/advance.svg";
 import { ReactComponent as Beginner } from "../../../Assets/beginner.svg";
-import { ReactComponent as Deployed } from "../../../Assets/Deployed.svg";
-import { ReactComponent as Undeployed } from "../../../Assets/Undeployed.svg";
+import { ReactComponent as Deployed } from "../../../Assets/CheckGreen.svg";
+import { ReactComponent as Undeployed } from "../../../Assets/CancelRed.svg";
 import { ReactComponent as Intermediate } from "../../../Assets/intermediate.svg";
 import { Data } from "./Fetcheddataobject";
 import { useNavigate } from "react-router-dom";
@@ -138,12 +138,11 @@ const Reporttable = ({ tableData, isLoading }) => {
                   </td>
                   <td>
                     <div>
-                      {/* <input
-                        type="checkbox"
-                        checked={val[Data.DE]}
-                        className="deployed-input"
-                      /> */}
-                      {val[Data.DE] ? <Deployed /> : <Undeployed />}
+                      {val[Data.DE] ? (
+                        <Deployed className="dep-wrapper" />
+                      ) : (
+                        <Undeployed className="dep-wrapper" />
+                      )}
                     </div>
                   </td>
                 </tr>

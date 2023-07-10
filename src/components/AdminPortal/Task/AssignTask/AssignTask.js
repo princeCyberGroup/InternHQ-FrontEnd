@@ -47,7 +47,7 @@ const AssignTask = () => {
     }
     // Fetch tasks from the API
     axios
-      .get(process.env.REACT_APP_API_URL + "/api/v2/getAssignedTask", {
+      .get(process.env.REACT_APP_API_URL + "/api/v3/getAssignedTask", {
         headers: {
           Authorization: `Bearer ${parsedObject["token"]}`,
         },
@@ -58,6 +58,15 @@ const AssignTask = () => {
       .catch((error) => {
         if (error.response.status === 401) {
           navigate("/error/session-expired");
+        }
+        if (error.response.status === 400) {
+          navigate("/error/statusCode=400");
+        }
+        if (error.response.status === 500) {
+          navigate("/error/statusCode=500");
+        }
+        if (error.response.status === 404) {
+          navigate("/error/statusCode=404");
         }
         console.error("Error fetching tasks:", error);
       });

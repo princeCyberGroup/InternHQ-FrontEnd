@@ -9,6 +9,7 @@ import DurationClock from "../../../Assets/DurationClock.svg";
 import ImageTooltip from "./ImageTooltip";
 import DailyUpdateTableSectionSkeleton from "./DailyUpdateTableSectionSkeleton";
 import CryptoJS from "crypto-js";
+import { useNavigate } from "react-router-dom";
 
 const DailyUpdateTableSection = (props) => {
   const [tableData, setTableData] = useState([]);
@@ -22,6 +23,7 @@ const DailyUpdateTableSection = (props) => {
   const [selectedItem, setSelectedItem] = useState(null);
   const [modalSaveFlag, setModalSaveFlag] = useState(true);
   const [isLoading, setIsLoading] = useState(true);
+  const navigate = useNavigate();
 
   useEffect(() => {
     setTimeout(() => {
@@ -42,7 +44,7 @@ const DailyUpdateTableSection = (props) => {
     }
     await fetch(
       process.env.REACT_APP_API_URL +
-        `/api/v2/getDailyTaskTrackerRecords?userId=${props.userId}`,
+        `/api/v3/getDailyTaskTrackerRecords?userId=${props.userId}`,
       {
         headers: {
           Authorization: `Bearer ${parsedObject["token"]}`,
@@ -56,6 +58,20 @@ const DailyUpdateTableSection = (props) => {
         setTableData(data.response);
         setOriginalTableData(data.response);
         setIsLoading(false);
+      })
+      .catch((error) => {
+        if (error.response.status === 401) {
+          navigate("/error/session-expired");
+        }
+        if (error.response.status === 400) {
+          navigate("/error/statusCode=400");
+        }
+        if (error.response.status === 500) {
+          navigate("/error/statusCode=500");
+        }
+        if (error.response.status === 404) {
+          navigate("/error/statusCode=404");
+        }
       });
   };
 

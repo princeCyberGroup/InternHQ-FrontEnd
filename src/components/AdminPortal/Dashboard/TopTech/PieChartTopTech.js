@@ -30,6 +30,15 @@ const PieChartTopTech = () => {
         setPData(data.response);
       })
       .catch((error) => {
+        if (error.response?.data.status === 400) {
+          navigate("/error/statusCode=400");
+        }
+        if (error.response?.data.status === 500) {
+          navigate("/error/statusCode=500");
+        }
+        if (error.response?.data.status === 404) {
+          navigate("/error/statusCode=404");
+        }
         if (error.response?.data.statusCode === 401) {
           navigate("/error/session-expired");
         }

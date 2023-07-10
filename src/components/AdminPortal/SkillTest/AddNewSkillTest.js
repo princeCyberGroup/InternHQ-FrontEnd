@@ -39,6 +39,18 @@ export const AddNewSkillTest = () => {
       );
       setApiTechnology(response.data.response);
     } catch (error) {
+      if (error.response.status === 401) {
+        navigate("/error/session-expired");
+      }
+      if (error.response.status === 400) {
+        navigate("/error/statusCode=400");
+      }
+      if (error.response.status === 500) {
+        navigate("/error/statusCode=500");
+      }
+      if (error.response.status === 404) {
+        navigate("/error/statusCode=404");
+      }
       console.error("Error fetching topics:", error);
     }
   };
@@ -129,7 +141,7 @@ export const AddNewSkillTest = () => {
     try {
       const response = await axios.post(
         process.env.REACT_APP_API_URL +
-          `/api/v2/questions?technology=${technology}&level=${level}&examName=${name}&noOfQuestion=${question}&examDuration=${duration}`,
+          `/api/v3/questions?technology=${technology}&level=${level}&examName=${name}&noOfQuestion=${question}&examDuration=${duration}`,
         formData,
         {
           headers: {

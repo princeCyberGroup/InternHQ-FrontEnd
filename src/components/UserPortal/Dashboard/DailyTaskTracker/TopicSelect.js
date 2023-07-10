@@ -2,6 +2,7 @@ import React, { useState, useEffect, useContext } from "react";
 import axios from "axios";
 import CryptoJS from "crypto-js";
 import { UserContext } from "../../../../Context/Context";
+import { useNavigate } from "react-router-dom";
 
 const cgData = [
   "Angular",
@@ -29,6 +30,7 @@ const TopicSelect = (props) => {
   const { onChange, disabled, resetSelect, learningType, topicName } = props;
   const [topics, setTopics] = useState([]);
   const [myProjects, setMyProjects] = useState();
+  const navigate = useNavigate();
 
   useEffect(() => {
     Projects();
@@ -38,7 +40,7 @@ const TopicSelect = (props) => {
   const fetchTopics = async () => {
     try {
       const response = await axios.get(
-        process.env.REACT_APP_API_URL + "/api/v2/getAllTechnology",
+        process.env.REACT_APP_API_URL + "/api/v3/getAllTechnology",
         {
           headers: {
             Authorization: `Bearer ${parsedObject["token"]}`,
@@ -59,6 +61,18 @@ const TopicSelect = (props) => {
         })
       );
     } catch (error) {
+      if (error.response.status === 401) {
+        navigate("/error/session-expired");
+      }
+      if (error.response.status === 400) {
+        navigate("/error/statusCode=400");
+      }
+      if (error.response.status === 500) {
+        navigate("/error/statusCode=500");
+      }
+      if (error.response.status === 404) {
+        navigate("/error/statusCode=404");
+      }
       console.error("Error fetching topics:", error);
     }
   };
@@ -67,7 +81,7 @@ const TopicSelect = (props) => {
   const Projects = async () => {
     try {
       const response = await axios.get(
-        process.env.REACT_APP_API_URL + `/api/v2/getProject?userId=${userId}`,
+        process.env.REACT_APP_API_URL + `/api/v3/getProject?userId=${userId}`,
         {
           headers: {
             Authorization: `Bearer ${parsedObject["token"]}`,
@@ -77,6 +91,18 @@ const TopicSelect = (props) => {
 
       setMyProjects(response.data.response);
     } catch (error) {
+      if (error.response.status === 401) {
+        navigate("/error/session-expired");
+      }
+      if (error.response.status === 400) {
+        navigate("/error/statusCode=400");
+      }
+      if (error.response.status === 500) {
+        navigate("/error/statusCode=500");
+      }
+      if (error.response.status === 404) {
+        navigate("/error/statusCode=404");
+      }
       console.error("Error fetching projects:", error);
     }
   };

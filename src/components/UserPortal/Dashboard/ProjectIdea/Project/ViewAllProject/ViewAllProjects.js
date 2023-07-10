@@ -10,6 +10,7 @@ import EmptyProjectView from "../../../EmptyStates/EmptyProject/ProjectViewAll";
 import { ReactComponent as ExpandMore } from "../../../../../../Assets/expand_more.svg";
 import BreadCrumbs from "../../../../../BreadCrumbs/BreadCrumbs";
 import CryptoJS from "crypto-js";
+import { useNavigate } from "react-router-dom";
 
 const ViewAllProjects = () => {
   // const { project } = useContext(UserContext);
@@ -28,6 +29,7 @@ const ViewAllProjects = () => {
   const [projLinkError, setProjLinkError] = useState("");
   const [projectIndex, setProjectIndex] = useState(0);
   const [tech, setTech] = useState({});
+  const navigate = useNavigate();
 
   // const details = project;
 
@@ -114,7 +116,7 @@ const ViewAllProjects = () => {
       alert("Please fill in the required details");
     } else {
       axios
-        .post(process.env.REACT_APP_API_URL + "/api/v2/Project", {
+        .post(process.env.REACT_APP_API_URL + "/api/v3/Project", {
           projName,
           projDescription,
           userId,
@@ -176,7 +178,7 @@ const ViewAllProjects = () => {
     var userId = parsedObject.userId;
     axios
       .get(
-        process.env.REACT_APP_API_URL + `/api/v2/getProject?userId=${userId}`,
+        process.env.REACT_APP_API_URL + `/api/v3/getProject?userId=${userId}`,
         {
           headers: {
             Authorization: `Bearer ${parsedObject["token"]}`,
@@ -187,6 +189,18 @@ const ViewAllProjects = () => {
         setProject(response.data.response);
       })
       .catch((error) => {
+        if (error.response.status === 401) {
+          navigate("/error/session-expired");
+        }
+        if (error.response.status === 400) {
+          navigate("/error/statusCode=400");
+        }
+        if (error.response.status === 500) {
+          navigate("/error/statusCode=500");
+        }
+        if (error.response.status === 404) {
+          navigate("/error/statusCode=404");
+        }
         console.error("Error fetching tasks:", error);
       });
 

@@ -41,7 +41,7 @@ const Detailedreport = () => {
     try {
       const response = await axios.get(
         process.env.REACT_APP_API_URL +
-          `/api/v2/getAllDetailsOfIntern?userId=${idVal}`,
+          `/api/v3/getAllDetailsOfIntern?userId=${idVal}`,
         {
           headers: {
             Authorization: `Bearer ${parsedObject["token"]}`,
@@ -50,7 +50,18 @@ const Detailedreport = () => {
       );
       setData(response.data?.userDetails);
     } catch (error) {
-      if (error.response.status === 401) navigate("/error/session-expired");
+      if (error.response.status === 401) {
+        navigate("/error/session-expired");
+      }
+      if (error.response.status === 400) {
+        navigate("/error/statusCode=400");
+      }
+      if (error.response.status === 500) {
+        navigate("/error/statusCode=500");
+      }
+      if (error.response.status === 404) {
+        navigate("/error/statusCode=404");
+      }
       navigate("/pagenotfound");
     }
   };

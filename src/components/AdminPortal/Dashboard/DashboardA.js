@@ -35,38 +35,82 @@ const DashboardA = () => {
   const fetchData = async () => {
     try {
       const response = await fetch(
-        process.env.REACT_APP_API_URL + `/api/v2/getDashboardStatus`,
+        process.env.REACT_APP_API_URL + `/api/v3/getDashboardStatus`,
         {
           headers: {
             Authorization: `Bearer ${parsedObject["token"]}`,
           },
         }
       );
-      if(response.status === 401){
-        console.log("working");
-        navigate("/error/session-expired")
+      if (response.status === 401) {
+        navigate("/error/session-expired");
+      }
+      if (response.status === 400) {
+        navigate("/error/statusCode=400");
+      }
+      if (response.status === 500) {
+        navigate("/error/statusCode=500");
+      }
+      if (response.status === 404) {
+        navigate("/error/statusCode=404");
       }
       const rsp = await response.json();
       setStatusData(rsp);
       setAcData(rsp.response);
-    } catch (e) {
-      console.log("this is error", e);
+    } catch (error) {
+      if (error.response.status === 401) {
+        navigate("/error/session-expired");
+      }
+      if (error.response.status === 400) {
+        navigate("/error/statusCode=400");
+      }
+      if (error.response.status === 500) {
+        navigate("/error/statusCode=500");
+      }
+      if (error.response.status === 404) {
+        navigate("/error/statusCode=404");
+      }
+      console.log("this is error", error);
     }
   };
   const InsightData = async () => {
     try {
       const response = await fetch(
-        process.env.REACT_APP_API_URL + `/api/v2/getInsights`,
+        process.env.REACT_APP_API_URL + `/api/v3/getInsights`,
         {
           headers: {
             Authorization: `Bearer ${parsedObject["token"]}`,
           },
         }
       );
+      if (response.status === 401) {
+        navigate("/error/session-expired");
+      }
+      if (response.status === 400) {
+        navigate("/error/statusCode=400");
+      }
+      if (response.status === 500) {
+        navigate("/error/statusCode=500");
+      }
+      if (response.status === 404) {
+        navigate("/error/statusCode=404");
+      }
       const insData = await response.json();
       setInsights(insData.response);
-    } catch (e) {
-      console.log(e);
+    } catch (error) {
+      if (error.response.status === 401) {
+        navigate("/error/session-expired");
+      }
+      if (error.response.status === 400) {
+        navigate("/error/statusCode=400");
+      }
+      if (error.response.status === 500) {
+        navigate("/error/statusCode=500");
+      }
+      if (error.response.status === 404) {
+        navigate("/error/statusCode=404");
+      }
+      console.log(error);
     }
   };
   return (

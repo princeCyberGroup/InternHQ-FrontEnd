@@ -3,6 +3,7 @@ import "./Notification.css";
 import NotificationContentSkeleton from "./NotificationContentSkeleton";
 import EmptyNotification from "../EmptyStates/EmptyNoti/EmptyNoti";
 import CryptoJS from "crypto-js";
+import { useNavigate } from "react-router-dom";
 export const NotificationComponent = () => {
   return (
     <div className=" notification-card card">
@@ -20,6 +21,7 @@ export const NotificationComponent = () => {
 export const NewNotifications = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [notifications, setNotifications] = useState([]);
+  const navigate = useNavigate();
   useEffect(() => {
     setTimeout(() => {
       fetchNotifications();
@@ -40,7 +42,7 @@ export const NewNotifications = () => {
     try {
       // Make an API request to fetch data
       const response = await fetch(
-        process.env.REACT_APP_API_URL + "/api/v2/getNotification",
+        process.env.REACT_APP_API_URL + "/api/v3/getNotification",
         {
           headers: {
             Authorization: `Bearer ${parsedObject["token"]}`,
@@ -51,6 +53,18 @@ export const NewNotifications = () => {
       setNotifications(data.response);
       setIsLoading(false);
     } catch (error) {
+      if (error.response.status === 401) {
+        navigate("/error/session-expired");
+      }
+      if (error.response.status === 400) {
+        navigate("/error/statusCode=400");
+      }
+      if (error.response.status === 500) {
+        navigate("/error/statusCode=500");
+      }
+      if (error.response.status === 404) {
+        navigate("/error/statusCode=404");
+      }
       console.log("Error occurred while fetching notificatons:", error);
     }
   };

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from "chart.js";
 import { Pie } from "react-chartjs-2";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import "./PieChart.css";
 import NoData from "../../../../Assets/NoData.svg";
 import CryptoJS from "crypto-js";
@@ -12,7 +12,7 @@ const PieChart = () => {
   const [tableData, setTableData] = useState([]);
   const [currentMonth, setCurrentMonth] = useState(new Date().getMonth());
   const piechartId = sessionStorage.getItem("detailId");
-
+  const navigate = useNavigate();
   const data = {
     labels: [],
     datasets: [
@@ -82,7 +82,7 @@ const PieChart = () => {
     }
     await fetch(
       process.env.REACT_APP_API_URL +
-        `/api/v2/getDailyTaskTrackerRecords?userId=${piechartId}`,
+        `/api/v3/getDailyTaskTrackerRecords?userId=${piechartId}`,
       {
         headers: {
           Authorization: `Bearer ${parsedObject["token"]}`,
@@ -94,6 +94,20 @@ const PieChart = () => {
       })
       .then(async (data) => {
         setTableData(data.response);
+      })
+      .catch((error) => {
+        if (error.response.status === 401) {
+          navigate("/error/session-expired");
+        }
+        if (error.response.status === 400) {
+          navigate("/error/statusCode=400");
+        }
+        if (error.response.status === 500) {
+          navigate("/error/statusCode=500");
+        }
+        if (error.response.status === 404) {
+          navigate("/error/statusCode=404");
+        }
       });
   };
 

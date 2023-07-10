@@ -121,7 +121,7 @@ const AddProject = () => {
       alert("Please fill in the required details");
     } else {
       axios
-        .post(process.env.REACT_APP_API_URL + "/api/v2/Project", {
+        .post(process.env.REACT_APP_API_URL + "/api/v3/Project", {
           projName,
           projDescription,
           userId,

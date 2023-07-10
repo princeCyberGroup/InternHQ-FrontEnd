@@ -47,7 +47,7 @@ export const ManageSkillTest = () => {
     }
     try {
       const response = await axios.get(
-        process.env.REACT_APP_API_URL + `/api/v2/getAllExam`,
+        process.env.REACT_APP_API_URL + `/api/v3/getAllExam`,
         {
           headers: {
             Authorization: `Bearer ${parsedObject["token"]}`,
@@ -59,6 +59,15 @@ export const ManageSkillTest = () => {
     } catch (error) {
       if (error.response.status === 401) {
         navigate("/error/session-expired");
+      }
+      if (error.response.status === 400) {
+        navigate("/error/statusCode=400");
+      }
+      if (error.response.status === 500) {
+        navigate("/error/statusCode=500");
+      }
+      if (error.response.status === 404) {
+        navigate("/error/statusCode=404");
       }
       console.error("Error while fetching the data is ", error);
     }

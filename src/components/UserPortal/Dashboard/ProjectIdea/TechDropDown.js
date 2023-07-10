@@ -21,7 +21,7 @@ const TechDropDown = (props) => {
     }
     //this api call is for admin portal
     axios
-      .get(process.env.REACT_APP_API_URL + `/api/v2/getAllTechnology`, {
+      .get(process.env.REACT_APP_API_URL + `/api/v3/getAllTechnology`, {
         headers: {
           Authorization: `Bearer ${parsedObject["token"]}`,
         },

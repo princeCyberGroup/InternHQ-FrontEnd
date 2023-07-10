@@ -43,7 +43,7 @@ const LoginScreen = () => {
     event.preventDefault();
     setIsLoading(true);
     await axios
-      .post(process.env.REACT_APP_API_URL + "/api/v2/internLogin", {
+      .post(process.env.REACT_APP_API_URL + "/api/v3/internLogin", {
         email,
         password,
       })

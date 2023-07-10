@@ -3,11 +3,12 @@ import CryptoJS from "crypto-js";
 import axios from "axios";
 import "./SelectedTech.css";
 import { ReactComponent as ExpandMore } from "../../../../Assets/expand_more.svg";
+import { useNavigate } from "react-router-dom";
 const SelectedTech = ({ handleSelectTech }) => {
   const [selectedOptions, setSelectedOptions] = useState([]);
   const [showDropdown, setShowDropdown] = useState(false);
   const [techOptions, setTechOptions] = useState([]);
-
+  const navigate = useNavigate();
   useEffect(()=>{
     handleSelectTech(selectedOptions);
   },
@@ -26,7 +27,7 @@ const SelectedTech = ({ handleSelectTech }) => {
       }
       try {
         const response = await axios.get(
-          process.env.REACT_APP_API_URL + "/api/v2/getAllTechnology",
+          process.env.REACT_APP_API_URL + "/api/v3/getAllTechnology",
           {
             headers: {
               Authorization: `Bearer ${parsedObject["token"]}`,
@@ -39,6 +40,18 @@ const SelectedTech = ({ handleSelectTech }) => {
           })
         );
       } catch (error) {
+        if (error.response.status === 401) {
+          navigate("/error/session-expired");
+        }
+        if (error.response.status === 400) {
+          navigate("/error/statusCode=400");
+        }
+        if (error.response.status === 500) {
+          navigate("/error/statusCode=500");
+        }
+        if (error.response.status === 404) {
+          navigate("/error/statusCode=404");
+        }
         console.error(error);
       }
     };

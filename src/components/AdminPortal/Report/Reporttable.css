@@ -1,37 +1,31 @@
 .container-table {
   padding: 0;
   width: inherit;
-  margin: 0px 43px;
+  margin: -9px 43px 20px 43px;
 }
-.table-report{
+.table-report {
   width: inherit;
   position: relative;
   border-collapse: separate;
   border-spacing: 0 0.5rem;
   table-layout: fixed;
 }
-.deployed-input{
-  accent-color: green;
-}
 .table-report thead {
-  /* top: 0;
-  position: sticky; */
+  top: 0;
+  position: sticky;
   border-collapse: separate;
   border-spacing: 0 0;
   background-color: #f9f9f9;
 }
-
 .table-report th,
 .table-report td {
   padding: 0.5rem;
 }
-
 .table-report th {
   background-color: #002c3f;
   color: white;
   font-weight: 500;
 }
-
 .table-report .circle {
   border-radius: 50%;
   width: 2.375rem;
@@ -49,13 +43,11 @@
   text-align: center;
   color: #ffffff;
 }
-
 .tech-tags {
   display: flex;
   border-radius: 2px;
   gap: 8px;
 }
-
 .tech-tags .tag-tech {
   background: #f4f6f5;
   border: 1px solid #b2b2b3;
@@ -68,7 +60,6 @@
   font-size: 12px;
   line-height: 14px;
 }
-
 .tech-tags .all-tech {
   font-family: "Roboto";
   font-style: normal;
@@ -152,4 +143,8 @@
 }
 .no-data-body {
   position: absolute;
+}
+.dep-wrapper {
+  width: 1.5rem;
+  height: 1.5rem;
 }
