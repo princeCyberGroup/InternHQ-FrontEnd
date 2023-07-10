@@ -58,7 +58,7 @@ export const ManageSkillTest = () => {
       setIsLoading(false);
     } catch (error) {
       if (error.response.status === 401) {
-        navigate("/error/session-expired");
+        navigate("/error/statusCode=401");
       }
       if (error.response.status === 400) {
         navigate("/error/statusCode=400");
@@ -114,14 +114,14 @@ export const ManageSkillTest = () => {
             </div>
           </div>
         </div>
-        <div className="mb-3">
-          <div className="col-12 manage-skill-table-style p-0">
+        <div className="mb-3 manageskilltest-table-container">
+          <div className="col-12 manage-skill-table-style p-0 ">
             <div
               className="table-responsive"
               style={{ overflow: "visible" }}
             ></div>
             <table id="example" className="table table-striped">
-              <thead>
+              <thead className="manageskilltest-thead">
                 <tr className="color-table">
                   <th className="column-technology" style={{ width: "1rem" }}>
                     S.No

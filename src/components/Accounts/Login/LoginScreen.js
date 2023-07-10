@@ -88,6 +88,12 @@ const LoginScreen = () => {
         if (error.response?.data.statusCode == 400) {
           navigate("/error/statusCode=400");
         }
+        if (error.response?.data.statusCode == 401) {
+          navigate("/error/statusCode=401");
+        }
+        if (error.response?.data.statusCode == 404) {
+          navigate("/error/statusCode=404");
+        }
         if (error.response?.data.statusCode == 500) {
           navigate("/error/statusCode=500");
         }

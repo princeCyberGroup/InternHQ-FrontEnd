@@ -57,7 +57,7 @@ const AssignTask = () => {
       })
       .catch((error) => {
         if (error.response.status === 401) {
-          navigate("/error/session-expired");
+          navigate("/error/statusCode=401");
         }
         if (error.response.status === 400) {
           navigate("/error/statusCode=400");

@@ -40,7 +40,7 @@ const PieChartTopTech = () => {
           navigate("/error/statusCode=404");
         }
         if (error.response?.data.statusCode === 401) {
-          navigate("/error/session-expired");
+          navigate("/error/statusCode=401");
         }
         console.log("this is error", error?.statusCode);
       });

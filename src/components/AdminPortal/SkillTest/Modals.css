@@ -61,6 +61,12 @@
 
 .manage-skill-table-style {
   box-shadow: 0rem 0.25rem 1.25rem rgba(40, 52, 73, 0.15);
+  height: -webkit-fill-available;
+  overflow: auto;
+}
+.manageskilltest-table-container {
+  height: -webkit-fill-available;
+  overflow: hidden;
 }
 
 .manage-skill-test-heading {
@@ -79,12 +85,17 @@
   color: #343435;
   margin-top: 1.125rem;
 }
+.manageskilltest-thead {
+  position: sticky;
+  top: 0;
+}
 
 .manage-skill-test-container {
   background-color: #fbfbfb;
-  height: 100vh;
+  height: calc(100vh - 90px);
   padding-left: 3.5rem;
   padding-right: 3.5rem;
+  overflow: hidden;
 }
 
 .column-technology {
@@ -143,7 +154,7 @@
   font-family: "Roboto";
   font-weight: 500;
   font-size: 0.913rem;
- line-height: 1.25rem;
+  line-height: 1.25rem;
   text-align: center;
 }
 

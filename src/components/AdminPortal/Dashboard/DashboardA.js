@@ -43,7 +43,7 @@ const DashboardA = () => {
         }
       );
       if (response.status === 401) {
-        navigate("/error/session-expired");
+        navigate("/error/statusCode=401");
       }
       if (response.status === 400) {
         navigate("/error/statusCode=400");
@@ -59,7 +59,7 @@ const DashboardA = () => {
       setAcData(rsp.response);
     } catch (error) {
       if (error.response.status === 401) {
-        navigate("/error/session-expired");
+        navigate("/error/statusCode=401");
       }
       if (error.response.status === 400) {
         navigate("/error/statusCode=400");
@@ -84,7 +84,7 @@ const DashboardA = () => {
         }
       );
       if (response.status === 401) {
-        navigate("/error/session-expired");
+        navigate("/error/statusCode=401");
       }
       if (response.status === 400) {
         navigate("/error/statusCode=400");
@@ -99,7 +99,7 @@ const DashboardA = () => {
       setInsights(insData.response);
     } catch (error) {
       if (error.response.status === 401) {
-        navigate("/error/session-expired");
+        navigate("/error/statusCode=401");
       }
       if (error.response.status === 400) {
         navigate("/error/statusCode=400");
