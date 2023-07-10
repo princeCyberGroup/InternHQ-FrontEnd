@@ -14,7 +14,6 @@ import ReportTableSkeleton from "./ReportTableSkeleton";
 const Reporttable = ({ tableData, isLoading }) => {
   const navigate = useNavigate();
   const handleOnclick = (index) => {
-    // navigate(`/admin/report/userId?id=${tableData[index][Data.ID]}`);
     sessionStorage.setItem("detailId", tableData[index][Data.ID]);
     sessionStorage.setItem("chrumValue", "Report");
     navigate(`/admin/report?userId=${tableData[index][Data.ID]}`);
