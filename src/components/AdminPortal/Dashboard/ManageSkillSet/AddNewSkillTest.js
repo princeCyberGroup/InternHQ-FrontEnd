@@ -1,5 +1,6 @@
 import { ReactComponent as CloudImage } from "../../../../Assets/Cloud.svg";
 import { ReactComponent as CloseBtn } from "../../../../Assets/Close-admin.svg";
+import {ReactComponent as CSVIcon } from "../../../../Assets/CSVIcon.svg"
 import React, { useEffect, useState, useRef } from "react";
 import "./Modals.css";
 import axios from "axios";
@@ -165,7 +166,7 @@ export const AddNewSkillTest = () => {
       console.log(error);
     }
   };
-  return (
+    return (
     <div>
       <div
         className="modal fade"
@@ -242,7 +243,7 @@ export const AddNewSkillTest = () => {
                   Level<span style={{ color: "red" }}>*</span>
                 </span>
                 <div className="d-flex">
-                  <div className="form-check small fw-normal">
+                  <div className="form-check">
                     <label style={{ marginLeft: "0.313rem" }}>
                       <input
                         className="form-check-input color-of-radio"
@@ -322,16 +323,18 @@ export const AddNewSkillTest = () => {
                         {file && (
                           <div
                             style={{
-                              marginLeft: "5.625rem",
-                              marginTop: "0.625rem",
+                              marginLeft: "0.625rem",
+                              marginTop: "0.225rem",
                               position: "relative",
                             }}
                             className="d-flex align-items-center"
                           >
-                            <div>{file.name}</div>
+                            <CSVIcon/>
+                            <div style={{marginLeft: "0.5rem"}}>{file.name}</div>
                           </div>
                         )}
                       </div>
+
                       <div
                         className=""
                         onClick={() => {

@@ -21,7 +21,7 @@
 .insights-card {
     margin-top: 0.7rem;
     display: flex;
-    height: 43.3rem;
+    height: 52.063rem;
     flex-direction: column;
     /* height: 109vh; */
     /* height: 44rem; */
@@ -41,7 +41,6 @@
 .insights {
     align-items: flex-center;
     padding: 1rem;
-    margin-left: 0.5rem;
     overflow-y: scroll;
 
 }
@@ -55,7 +54,7 @@
     box-sizing: border-box;
     margin-left: 0.5rem;
     width: 20rem;
-    height: 2.5rem;
+    height: 2rem;
     border-radius: 30%;
     border: none;
     outline: none;
@@ -98,12 +97,13 @@
     line-height: 1rem;
     /* Converted from 16px */
     color: #262626;
+    margin-bottom: 0.5rem;
 }
 
 .number-of-test {
     margin-top: 0.25rem;
     /* Converted from 10px */
-    width: 16.25rem;
+    width: 17.5rem;
     /* Converted from 260px */
     height: 0.5625rem;
     /* Converted from 9px */
@@ -132,7 +132,8 @@
 
 .image-div img {
     width: 2rem;
-    height: 1.25rem;
+    height: 2.5rem;
+    /* height: 1.25rem; */
     padding: 0rem;
 
 }

@@ -72,7 +72,7 @@ const PieChartTopTech = () => {
     labels: techDataWithCounts ? Object.keys(techDataWithCounts) : [],
     datasets: [
       {
-        radius: "70%",
+        radius: "80%",
         data: techDataWithCounts ? Object.values(techDataWithCounts) : [],
         backgroundColor: colorArray,
         borderWidth: 2,
@@ -151,9 +151,8 @@ const PieChartTopTech = () => {
         <div className="col pie-chart-parent-wrapper">
           <div
             style={{
-              width: "250px",
-              height: "250px",
-              margin: "auto",
+              width: "350px",
+              height: "350px",
             }}
           >
             <Pie data={data} options={options} />

@@ -187,7 +187,7 @@ const TakeYourTest = () => {
   const submitTest = async () => {
     try {
       // debugger;
-      const mappedAnswers = Object.entries(userAnswers).map(
+      const mappedAnswers = Object.entries(userAnswers)?.map(
         ([questionId, selectedAnswer]) => ({
           qId: parseInt(questionId),
           choosenOpt: selectedAnswer,
@@ -220,13 +220,13 @@ const TakeYourTest = () => {
   const renderQuestions = () => {
     return (
       <div>
-        {Ques.map((quest, index) => (
+        {Ques?.map((quest, index) => (
           <div key={quest.questionId}>
             <div className="ques-of-quiz">
               {index + 1} {"."} {quest.question}
             </div>
             <div>
-              {quest.options.map((option, index) => (
+              {quest.options?.map((option, index) => (
                 <div
                   key={index}
                   style={{ display: "flex", alignItems: "center" }}
