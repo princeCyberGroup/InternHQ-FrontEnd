@@ -1,16 +1,25 @@
 import React, { useEffect, useState } from "react";
 import { Pie } from "react-chartjs-2";
+import CryptoJS from "crypto-js";
 const PieChartTopTech = () => {
   const [pData, setPData] = useState();
 
   const fetchData = async () => {
-    const token =
-      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkYXRhIjp7InN0YXR1c0NvZGUiOjIwMCwibWVzc2FnZSI6IkxvZ2luIFN1Y2Nlc3NmdWxsIiwidXNlcklkIjo5MywiZmlyc3ROYW1lIjoiQWRtaW4iLCJsYXN0TmFtZSI6bnVsbCwiZW1haWwiOiJhZG1pbkBjZ2luZmluaXR5LmNvbSIsImlzRGVwbG95ZWQiOmZhbHNlLCJyYW5kb21TdHJpbmciOiJjYjg3MTUifSwiZXhwIjoxNjg4NTc0MDc0LCJpYXQiOjE2ODg0MDEyNzR9.FdkvzcoUcYpqilUqnBog_yS1iSyrI8V8gtuahhhZqdE";
+    const secretkeyUser = process.env.REACT_APP_USER_KEY;
+    var parsedObject;
+    const data = localStorage.getItem("userData");
+    if (data) {
+      const bytes = CryptoJS.AES.decrypt(data, secretkeyUser);
+      const decryptedJsonString = bytes.toString(CryptoJS.enc.Utf8);
+      parsedObject = JSON.parse(decryptedJsonString);
+    } else {
+      console.log("No encrypted data found in localStorage.");
+    }
     await fetch(`https://cg-interns-hq.azurewebsites.net/api/v2/getTop5Tech`, {
       method: "GET",
       headers: {
-          Authorization:`Bearer ${JSON.parse(localStorage.getItem('userData'))['token']}`,
-        },
+        Authorization: `Bearer ${parsedObject["token"]}`,
+      },
     })
       .then((response) => {
         return response.json();

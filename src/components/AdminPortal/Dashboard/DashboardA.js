@@ -10,11 +10,22 @@ import AssociateConsultant from "./associateConsultant/associateConsultant";
 import Insights from "./Insights/insights";
 import { ReactComponent as Right } from "../../../Assets/right.svg";
 import Header from "../../Header/Header";
+import CryptoJS from "crypto-js";
 
 const DashboardA = () => {
   const [StatusData, setStatusData] = useState([]);
   const [acData, setAcData] = useState([]);
-  // const [insights, setInsights] = useState([]);
+  const [insights, setInsights] = useState([]);
+  const secretkeyUser = process.env.REACT_APP_USER_KEY;
+  var parsedObject;
+  const data = localStorage.getItem("userData");
+  if (data) {
+    const bytes = CryptoJS.AES.decrypt(data, secretkeyUser);
+    const decryptedJsonString = bytes.toString(CryptoJS.enc.Utf8);
+    parsedObject = JSON.parse(decryptedJsonString);
+  } else {
+    console.log("No encrypted data found in localStorage.");
+  }
   useEffect(() => {
     fetchData();
     // InsightData();
@@ -23,10 +34,10 @@ const DashboardA = () => {
   const fetchData = async () => {
     try {
       const response = await fetch(
-        process.env.REACT_APP_API_URL+`/api/v2/getDashboardStatus`,
+        process.env.REACT_APP_API_URL + `/api/v2/getDashboardStatus`,
         {
           headers: {
-            Authorization:`Bearer ${JSON.parse(localStorage.getItem('userData'))['token']}`,
+            Authorization: `Bearer ${parsedObject["token"]}`,
           },
         }
       );
@@ -37,22 +48,22 @@ const DashboardA = () => {
       console.log(e);
     }
   };
-  // const InsightData = async () => {
-  //   try {
-  //     const response = await fetch(
-  //       process.env.REACT_APP_API_URL+`/api/v2/getInsights`,
-  //       {
-  //         headers: {
-  //           Authorization:`Bearer ${JSON.parse(localStorage.getItem('userData'))['token']}`,
-  //         },
-  //       }
-  //     );
-  //     const insData = await response.json();
-  //     setInsights(insData.response);
-  //   } catch (e) {
-  //     console.log(e);
-  //   }
-  // };
+  const InsightData = async () => {
+    try {
+      const response = await fetch(
+        process.env.REACT_APP_API_URL + `/api/v2/getInsights`,
+        {
+          headers: {
+            Authorization: `Bearer ${parsedObject["token"]}`,
+          },
+        }
+      );
+      const insData = await response.json();
+      setInsights(insData.response);
+    } catch (e) {
+      console.log(e);
+    }
+  };
   return (
     <>
       <div className="" style={{ marginBottom: "3rem" }}>

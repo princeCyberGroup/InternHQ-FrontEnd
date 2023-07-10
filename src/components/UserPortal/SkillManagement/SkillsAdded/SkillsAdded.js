@@ -8,12 +8,21 @@ import "./SkillsAdded.css";
 import { ReactComponent as EmptyStar } from "../../../../Assets/emptystar.svg";
 import SkillsAddedSkeleton from "./SkillsAddedSkeleton";
 import { TestContext } from "../SkillManagement";
+import CryptoJS from "crypto-js";
 // import { ReactComponent as Star } from "../../../../Assets/Star.svg";
 
 const SkillsAdded = () => {
   const { resultInfo, setResultInfo } = useContext(TestContext);
-  var storedObject = localStorage.getItem("userData");
-  var parsedObject = JSON.parse(storedObject);
+  const secretkeyUser = process.env.REACT_APP_USER_KEY;
+  var parsedObject;
+  const data = localStorage.getItem("userData");
+  if (data) {
+    const bytes = CryptoJS.AES.decrypt(data, secretkeyUser);
+    const decryptedJsonString = bytes.toString(CryptoJS.enc.Utf8);
+    parsedObject = JSON.parse(decryptedJsonString);
+  } else {
+    console.log("No encrypted data found in localStorage.");
+  }
   var userId = parsedObject.userId;
   const [isLoading, setIsLoading] = useState(true);
 
@@ -30,9 +39,7 @@ const SkillsAdded = () => {
         process.env.REACT_APP_API_URL + `/api/v3/skillAdded?userId=${userId}`,
         {
           headers: {
-            Authorization: `Bearer ${
-              JSON.parse(localStorage.getItem("userData"))["token"]
-            }`,
+            Authorization: `Bearer ${parsedObject["token"]}`,
           },
         }
       );

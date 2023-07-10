@@ -6,6 +6,7 @@ import { ReactComponent as Completed } from "../../../../Assets/Testcompleted.sv
 import { ReactComponent as GoldStarOri } from "../../../../Assets/Star-Icon-gold-ori.svg";
 import { ReactComponent as SilverStarOri } from "../../../../Assets/Star-Icon-silver-ori.svg";
 import { ReactComponent as BronzeStarOri } from "../../../../Assets/Star-Icon-bronze-ori.svg";
+import CryptoJS from "crypto-js";
 import { ReactComponent as SearchIcon } from "../../../../Assets/search.svg";
 import { ReactComponent as TakeTestSmallCheck } from "../../../../Assets/TakeTestSmallCheck.svg";
 // import logo from '../../../Assets/image 13.png';
@@ -29,10 +30,8 @@ const scoreIndex = {
 const TakeTest = () => {
   const { tests, setTests, resultInfo } = useContext(TestContext);
   // console.log(new Date(resultInfo[0]?.date[0]), "This is date")
-  console.log(resultInfo, "These are result Infos");
   const [activeButton, setActiveButton] = useState("all");
   const { score } = useContext(UserContext);
-
   // const [daysDifference, setDaysDifference] = useState(calculateDaysDifference());
   const [originalTests, setOriginalTests] = useState([]);
   const [data, setdata] = useState();
@@ -46,14 +45,22 @@ const TakeTest = () => {
   }, []);
 
   const fetchTests = async (examId) => {
+    const secretkeyUser = process.env.REACT_APP_USER_KEY;
+    var parsedObject;
+    const data = localStorage.getItem("userData");
+    if (data) {
+      const bytes = CryptoJS.AES.decrypt(data, secretkeyUser);
+      const decryptedJsonString = bytes.toString(CryptoJS.enc.Utf8);
+      parsedObject = JSON.parse(decryptedJsonString);
+    } else {
+      console.log("No encrypted data found in localStorage.");
+    }
     try {
       const response = await fetch(
         process.env.REACT_APP_API_URL + "/api/v3/getAllExam",
         {
           headers: {
-            Authorization: `Bearer ${
-              JSON.parse(localStorage.getItem("userData"))["token"]
-            }`,
+            Authorization: `Bearer ${parsedObject["token"]}`,
           },
         }
       );
@@ -211,7 +218,7 @@ const TakeTest = () => {
   //     </div>
   //   );
   // }
-  return (
+ return (
     <>
       <div className="TTheading">
         <p>Take The Test</p>

@@ -10,6 +10,7 @@ import {
 } from "recharts";
 import "./graph.css";
 import { Link } from "react-router-dom";
+import CryptoJS from "crypto-js";
 
 export default function DashboardGraph() {
   const [graphType, setGraphType] = useState("daily");
@@ -72,15 +73,24 @@ export default function DashboardGraph() {
     }
   };
 
-  var storedObject = localStorage.getItem("userData");
-  var parsedObject = JSON.parse(storedObject);
+  const secretkeyUser = process.env.REACT_APP_USER_KEY;
+  var parsedObject;
+  const dataU = localStorage.getItem("userData");
+  if (dataU) {
+    const bytes = CryptoJS.AES.decrypt(dataU, secretkeyUser);
+    const decryptedJsonString = bytes.toString(CryptoJS.enc.Utf8);
+    parsedObject = JSON.parse(decryptedJsonString);
+  } else {
+    console.log("No encrypted data found in localStorage.");
+  }
   var userId = parsedObject.userId;
   const fetchData = async () => {
     await fetch(
-      process.env.REACT_APP_API_URL+`/api/v2/getDailyTaskTrackerRecords?userId=${userId}`,
+      process.env.REACT_APP_API_URL +
+        `/api/v2/getDailyTaskTrackerRecords?userId=${userId}`,
       {
         headers: {
-          Authorization:`Bearer ${JSON.parse(localStorage.getItem('userData'))['token']}`,
+          Authorization: `Bearer ${parsedObject["token"]}`,
         },
       }
     )
@@ -89,9 +99,10 @@ export default function DashboardGraph() {
       })
       .then(async (data) => {
         setTableData(data.response);
-      }).catch((error)=>{
-        console.log(error)
       })
+      .catch((error) => {
+        console.log(error);
+      });
   };
 
   function getMonthName(monthNumber) {
@@ -1070,7 +1081,11 @@ export default function DashboardGraph() {
           <BarChart
             width={700}
             height={350}
-            style={{ fontSize: "0.938rem", position: "relative", left: "0.5rem" }}
+            style={{
+              fontSize: "0.938rem",
+              position: "relative",
+              left: "0.5rem",
+            }}
             data={graphType === "daily" ? data : dataMonthly}
             margin={{
               top: 10,

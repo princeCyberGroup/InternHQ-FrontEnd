@@ -28,7 +28,7 @@ const Skillsachieved = () => {
               </div>
               <div>
                 <span className="count">{data[ApiObj.AC]}</span>
-                <span>Advance</span>
+                <span>Advanced</span>
               </div>
             </div>
         </div>
@@ -74,7 +74,7 @@ const Skillsachieved = () => {
         <div>
           <Advance />
         </div>
-        <span>Advance</span>
+        <span>Advanced</span>
       </div>
     </div>
   );
