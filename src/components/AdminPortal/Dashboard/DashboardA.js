@@ -73,46 +73,46 @@ const DashboardA = () => {
       console.log("this is error", error);
     }
   };
-  const InsightData = async () => {
-    try {
-      const response = await fetch(
-        process.env.REACT_APP_API_URL + `/api/v3/getInsights`,
-        {
-          headers: {
-            Authorization: `Bearer ${parsedObject["token"]}`,
-          },
-        }
-      );
-      if (response.status === 401) {
-        navigate("/error/statusCode=401");
-      }
-      if (response.status === 400) {
-        navigate("/error/statusCode=400");
-      }
-      if (response.status === 500) {
-        navigate("/error/statusCode=500");
-      }
-      if (response.status === 404) {
-        navigate("/error/statusCode=404");
-      }
-      const insData = await response.json();
-      setInsights(insData.response);
-    } catch (error) {
-      if (error.response.status === 401) {
-        navigate("/error/statusCode=401");
-      }
-      if (error.response.status === 400) {
-        navigate("/error/statusCode=400");
-      }
-      if (error.response.status === 500) {
-        navigate("/error/statusCode=500");
-      }
-      if (error.response.status === 404) {
-        navigate("/error/statusCode=404");
-      }
-      console.log(error);
-    }
-  };
+  // const InsightData = async () => {
+  //   try {
+  //     const response = await fetch(
+  //       process.env.REACT_APP_API_URL + `/api/v3/getInsights`,
+  //       {
+  //         headers: {
+  //           Authorization: `Bearer ${parsedObject["token"]}`,
+  //         },
+  //       }
+  //     );
+  //     if (response.status === 401) {
+  //       navigate("/error/statusCode=401");
+  //     }
+  //     if (response.status === 400) {
+  //       navigate("/error/statusCode=400");
+  //     }
+  //     if (response.status === 500) {
+  //       navigate("/error/statusCode=500");
+  //     }
+  //     if (response.status === 404) {
+  //       navigate("/error/statusCode=404");
+  //     }
+  //     const insData = await response.json();
+  //     setInsights(insData.response);
+  //   } catch (error) {
+  //     if (error.response.status === 401) {
+  //       navigate("/error/statusCode=401");
+  //     }
+  //     if (error.response.status === 400) {
+  //       navigate("/error/statusCode=400");
+  //     }
+  //     if (error.response.status === 500) {
+  //       navigate("/error/statusCode=500");
+  //     }
+  //     if (error.response.status === 404) {
+  //       navigate("/error/statusCode=404");
+  //     }
+  //     console.log(error);
+  //   }
+  // };
   return (
     <>
       <div className="" style={{ marginBottom: "3rem" }}>

@@ -5,6 +5,7 @@ import React, { useEffect, useState } from "react";
 import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
 import InsightsSkeleton from "./InsightsSkeleton";
+import CryptoJS from "crypto-js";
 
 export default function Insights(props) {
   const [searchFilterValue, setSearchFilterValue] = useState("");
@@ -12,6 +13,17 @@ export default function Insights(props) {
   const [insights, setInsights] = useState([]);
   const [originalInsights, setOriginalInsights] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
+  const secretkeyUser = process.env.REACT_APP_USER_KEY;
+
+  var parsedObject;
+  const data = localStorage.getItem("userData");
+  if (data) {
+    const bytes = CryptoJS.AES.decrypt(data, secretkeyUser);
+    const decryptedJsonString = bytes.toString(CryptoJS.enc.Utf8);
+    parsedObject = JSON.parse(decryptedJsonString);
+  } else {
+    console.log("No encrypted data found in localStorage.");
+  }
 
   const handleFiltersChange = () => {
     const getFilterItems = (items, searchValue) => {
@@ -44,9 +56,7 @@ export default function Insights(props) {
         process.env.REACT_APP_API_URL + `/api/v2/getInsights`,
         {
           headers: {
-            Authorization: `Bearer ${
-              JSON.parse(localStorage.getItem("userData"))["token"]
-            }`,
+            Authorization: `Bearer ${parsedObject["token"]}`,
           },
         }
       );
