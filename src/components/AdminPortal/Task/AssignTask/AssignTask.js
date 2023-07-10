@@ -11,13 +11,11 @@ import DeleteTask from "../DeleteTask";
 import CryptoJS from "crypto-js";
 import { useNavigate } from "react-router-dom";
 const AssignTask = () => {
-  const [showOptions, setShowOptions] = useState(false);
   const [tasks, setTasks] = useState([]);
 
   const [taskToEdit, setTaskToEdit] = useState(null);
   const [showDeleteTask, setShowDeleteTask] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
-  const [onDelete, setOnDelete] = useState(false);
   const [taskIdToChild, setTaskIdToChild] = useState(0);
   const [taskVersion, setTaskVersion] = useState(0); // Add task version state
   const [editedTask, setEditedTask] = useState({});

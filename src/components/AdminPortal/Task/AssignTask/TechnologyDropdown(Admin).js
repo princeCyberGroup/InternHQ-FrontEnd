@@ -6,6 +6,9 @@ import { useNavigate } from "react-router-dom";
 const TechDropDown = (props) => {
   const [techOptions, setTechOptions] = useState([]);
   const navigate = useNavigate();
+  // const [searchQuery, setSearchQuery] = useState("");
+  const [filteredTechOptions, setFilteredTechOptions] = useState([]);
+
 
   useEffect(() => {
     const fetchTechOptions = async () => {
@@ -28,19 +31,20 @@ const TechDropDown = (props) => {
             },
           }
         );
-        setTechOptions(
-          response.data?.response.sort((a, b) => {
-            const nameA = a.techName.toUpperCase();
-            const nameB = b.techName.toUpperCase();
-            if (nameA < nameB) {
-              return -1;
-            }
-            if (nameA > nameB) {
-              return 1;
-            }
-            return 0; // names are equal
-          }) || []
-        );
+        const sortedOptions = response.data?.response.sort((a, b) => {
+          const nameA = a.techName.toUpperCase();
+          const nameB = b.techName.toUpperCase();
+          if (nameA < nameB) {
+            return -1;
+          }
+          if (nameA > nameB) {
+            return 1;
+          }
+          return 0; // names are equal
+        }) || [];
+        setTechOptions(sortedOptions);
+        setFilteredTechOptions(sortedOptions);
+
       } catch (error) {
         if (error.response.status === 401) {
           navigate("/error/statusCode=401");
@@ -60,10 +64,10 @@ const TechDropDown = (props) => {
     fetchTechOptions();
   }, []);
 
-
   const handleOptionClick = (event) => {
     const { value, id } = event.currentTarget.dataset;
     const isChecked = event.currentTarget.querySelector("input").checked;
+
     if (!isChecked && props.technologyNames.some((tech) => tech.techName === value)) {
       // If the checkbox is unchecked and the value is already in the selected technology names,
       // remove it from the selected technology names and selected tech ids.
@@ -80,46 +84,18 @@ const TechDropDown = (props) => {
         ...prevSelectedTech,
         { techName: value },
       ]);
-      props.setSelectedTechIds((prevSelectedTechIds) => [
-        ...prevSelectedTechIds,
-        id,
-      ]);
+      props.setSelectedTechIds((prevSelectedTechIds) => [...prevSelectedTechIds, id]);
     }
   };
-  
-  // const handleOptionClick = (event) => {
-  //   const { value, id } = event.currentTarget.dataset;
-  //   const isChecked = event.currentTarget.querySelector("input").checked;
-  
-  //   // if (value === "Select all") {
-  //   //   if (isChecked) {
-  //   //     props.setTechnologyNames(techOptions);
-  //   //     props.setSelectedTechIds(techOptions.map((tech) => tech.techId));
-  //   //   } else {
-  //   //     props.setTechnologyNames([]);
-  //   //     props.setSelectedTechIds([]);
-  //   //   }
-  //   // } else {
-  //     if (isChecked && !props.technologyNames.includes(value)) {
-  //       props.setTechnologyNames((prevSelectedTech) => [
-  //         ...prevSelectedTech,
-  //         { techName: value },
-  //       ]);
-  //       props.setSelectedTechIds((prevSelectedTechIds) => [
-  //         ...prevSelectedTechIds,
-  //         id,
-  //       ]);
-  //     } else {
-  //       props.setTechnologyNames((prevSelectedTech) =>
-  //         prevSelectedTech.filter((techName) => techName.techName !== value)
-  //       );
-  //       props.setSelectedTechIds((prevSelectedTechIds) =>
-  //         prevSelectedTechIds.filter((techId) => techId !== id)
-  //       );
-  //     }
-  //   // }
-  // };
-  
+
+  const handleSearchChange = (e) => {
+    props.setSearchQuery(e.target.value);
+    const filtered = techOptions.filter((tech) =>
+      tech.techName.toLowerCase().startsWith(e.target.value.toLowerCase())
+    );
+    setFilteredTechOptions(filtered);
+  };
+
   useEffect(() => {
     if (props.technologyNames) {
       const selectedTechNames = props.technologyNames.map(
@@ -131,34 +107,34 @@ const TechDropDown = (props) => {
 
   return (
     <div className="drop-tech">
-      {
-        // [
-        //   { techId: "select-all", techName: "Select all" },
-        //   ...techOptions,
-        // ]
-        techOptions.map((tech) => (
-          <div
-            key={tech.techId}
-            className="form-check small checkbox"
-            onClick={handleOptionClick}
-            data-value={tech.techName}
-            data-id={tech.techId}
-          >
-            <label
-              className="form-check-label tech-label"
-              htmlFor={tech.techName}
-            >
-              {tech.techName}
-            </label>
-            <input
-              className="form-check-input tech-checkbox"
-              type="checkbox"
-              value={tech.techName}
-              id={tech.techId}
-            />
-          </div>
-        ))
-      }
+      <input
+        style={{float:"right", marginRight:"1rem"}}
+        type="text"
+        // className="form-control"
+        placeholder="Search tech..."
+        value={props.searchQuery}
+        onChange={handleSearchChange}
+      />
+      {filteredTechOptions.map((tech) => (
+        <div
+          key={tech.techId}
+          className="form-check small checkbox"
+          onClick={handleOptionClick}
+          data-value={tech.techName}
+          data-id={tech.techId}
+        >
+          <label className="form-check-label tech-label" htmlFor={tech.techName}>
+            {tech.techName}
+          </label>
+          <input
+            className="form-check-input tech-checkbox"
+            type="checkbox"
+            value={tech.techName}
+            id={tech.techId}
+          />
+        </div>
+      ))}
+
     </div>
   );
 };
