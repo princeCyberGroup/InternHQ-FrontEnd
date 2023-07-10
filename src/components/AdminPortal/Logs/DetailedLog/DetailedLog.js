@@ -94,7 +94,8 @@ const DetailedCard = (props) => {
                 <Filter /> Filter:
               </div> 
       <div className="col filter-container" >
-        <input
+      <input
+        className="log-date-filter"
           type="date"
           value={selectedDateFilter}
           onChange={(e) => setSelectedDateFilter(e.target.value)}
