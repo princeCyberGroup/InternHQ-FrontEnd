@@ -31,7 +31,7 @@ const ProjectComponent = () => {
     try {
       const response = await axios.get(
         process.env.REACT_APP_API_URL +
-          `/api/v2/getProjectIdea?userId=${userId}`,
+          `/api/v3/getProjectIdea?userId=${userId}`,
         {
           headers: {
             Authorization: `Bearer ${parsedObject["token"]}`,
@@ -41,17 +41,25 @@ const ProjectComponent = () => {
 
       setIdea(response.data.response);
     } catch (error) {
-      if (error.response?.data.statusCode === 401) {
-        return navigate("/error?statusCode=400");
+      if (error.response.status === 401) {
+        navigate("/error/statusCode=401");
       }
-      // console.log("Error ", error.response?.data);
-      // console.log(error.response?.data.msg);
+      if (error.response.status === 400) {
+        navigate("/error/statusCode=400");
+      }
+      if (error.response.status === 500) {
+        navigate("/error/statusCode=500");
+      }
+      if (error.response.status === 404) {
+        navigate("/error/statusCode=404");
+      }
+      console.log(error.response?.data.msg);
     }
   };
   const ProjectApi = async () => {
     try {
       const response = await axios.get(
-        process.env.REACT_APP_API_URL + `/api/v2/getProject?userId=${userId}`,
+        process.env.REACT_APP_API_URL + `/api/v3/getProject?userId=${userId}`,
         {
           headers: {
             Authorization: `Bearer ${parsedObject["token"]}`,
@@ -61,11 +69,19 @@ const ProjectComponent = () => {
 
       setProject(response.data.response);
     } catch (error) {
-      if (error.response?.data.statusCode === 401) {
-        navigate("/error?statusCode=400");
+      if (error.response.status === 401) {
+        navigate("/error/statusCode=401");
       }
-      // console.log(error.response?.data);
-      // console.log(error.response?.data.msg);
+      if (error.response.status === 400) {
+        navigate("/error/statusCode=400");
+      }
+      if (error.response.status === 500) {
+        navigate("/error/statusCode=500");
+      }
+      if (error.response.status === 404) {
+        navigate("/error/statusCode=404");
+      }
+      console.log(error.response?.data.msg);
     }
   };
   useEffect(() => {

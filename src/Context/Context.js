@@ -2,7 +2,6 @@ import React, { useState, useEffect, createContext } from "react";
 
 export const UserContext = createContext();
 const Context = (props) => {
-
   const [score, setScore] = useState(-1);
   const [isRunning, setIsRunning] = useState(false);
   const [isPaused, setIsPaused] = useState(false);

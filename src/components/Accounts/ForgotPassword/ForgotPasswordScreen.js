@@ -26,7 +26,7 @@ const ForgotPasswordScreen = () => {
     event.preventDefault();
     setIsLoading(true);
     axios
-      .post(process.env.REACT_APP_API_URL+"/api/v2/forgetPassword", { email })
+      .post(process.env.REACT_APP_API_URL+"/api/v3/forgetPassword", { email })
       .then((response) => {
         localStorage.setItem("token", response.data.token);
         localStorage.setItem("email", response.data.email);

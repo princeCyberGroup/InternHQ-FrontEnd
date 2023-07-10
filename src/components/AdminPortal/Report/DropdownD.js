@@ -3,9 +3,7 @@ import "./DropdownD.css";
 
 const DropdownD = ({ handleChange }) => {
   //data
-  const [selectedOption, setSelectedOption] = useState(
-    "Select Deployment Type"
-  );
+  const [selectedOption, setSelectedOption] = useState("None");
 
   //function
   const handlechange = (value) => {
@@ -15,21 +13,27 @@ const DropdownD = ({ handleChange }) => {
   return (
     <div className="deploy-parent-wrapper">
       <select
-        value={selectedOption}
+        value={
+          selectedOption === "None" ? "Select Deployment Type" : selectedOption
+        }
         onChange={(event) => {
           handlechange(event.target.value);
           handleChange(event.target.value);
         }}
         style={{
-          color:
-            selectedOption === "Select Deployment Type"
-              ? "rgb(53, 53, 54, 0.7)"
-              : "#343435",
+          color: selectedOption === "None" ? "rgb(53, 53, 54, 0.7)" : "#343435",
         }}
         className="dropdown-deploy dropdown-default"
       >
-        <option className="dropdown-default " value="Select Deployment Type">
-          Select Deployment Type
+        <option
+          className="dropdown-default "
+          value="selectdep"
+          style={{ display: "none" }}
+        >
+          Status type
+        </option>
+        <option className="dropdown-default " value="None">
+          None
         </option>
         <option className="option-wrapper" value="Deployed">
           Deployed

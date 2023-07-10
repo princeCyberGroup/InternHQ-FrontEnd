@@ -43,7 +43,7 @@ const LoginScreen = () => {
     event.preventDefault();
     setIsLoading(true);
     await axios
-      .post(process.env.REACT_APP_API_URL + "/api/v2/internLogin", {
+      .post(process.env.REACT_APP_API_URL + "/api/v3/internLogin", {
         email,
         password,
       })
@@ -86,10 +86,16 @@ const LoginScreen = () => {
         }
         setIsLoading(false);
         if (error.response?.data.statusCode == 400) {
-          navigate("/error?statusCode=400");
+          navigate("/error/statusCode=400");
+        }
+        if (error.response?.data.statusCode == 401) {
+          navigate("/error/statusCode=401");
+        }
+        if (error.response?.data.statusCode == 404) {
+          navigate("/error/statusCode=404");
         }
         if (error.response?.data.statusCode == 500) {
-          navigate("/error?statusCode=500");
+          navigate("/error/statusCode=500");
         }
       });
   };

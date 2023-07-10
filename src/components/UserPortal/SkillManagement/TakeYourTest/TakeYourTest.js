@@ -131,7 +131,7 @@ const TakeYourTest = () => {
     try {
       const response = await fetch(
         process.env.REACT_APP_API_URL +
-          `/api/v2/getAllQuestions?examId=${examId}`,
+          `/api/v3/getAllQuestions?examId=${examId}`,
         {
           headers: {
             Authorization: `Bearer ${parsedObject["token"]}`,
@@ -142,8 +142,20 @@ const TakeYourTest = () => {
       setAllQuesData(Quesdata);
       setTestsQues(Quesdata.questions);
       localStorage.setItem("questionToken", Quesdata.token);
-    } catch (e) {
-      console.log(e);
+    } catch (error) {
+      if (error.response.status === 401) {
+        navigate("/error/statusCode=401");
+      }
+      if (error.response.status === 400) {
+        navigate("/error/statusCode=400");
+      }
+      if (error.response.status === 500) {
+        navigate("/error/statusCode=500");
+      }
+      if (error.response.status === 404) {
+        navigate("/error/statusCode=404");
+      }
+      console.log(error);
     }
   };
   const handleAnswerSelect = (questionId, selectedAnswer) => {
@@ -171,7 +183,7 @@ const TakeYourTest = () => {
   });
 
   let submitQuesData;
-  const api = process.env.REACT_APP_API_URL + "/api/v2//submitAnswer";
+  const api = process.env.REACT_APP_API_URL + "/api/v3//submitAnswer";
   const submitTest = async () => {
     try {
       // debugger;

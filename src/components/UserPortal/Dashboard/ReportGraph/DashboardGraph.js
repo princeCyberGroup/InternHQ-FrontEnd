@@ -9,13 +9,14 @@ import {
   Tooltip,
 } from "recharts";
 import "./graph.css";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import CryptoJS from "crypto-js";
 
 export default function DashboardGraph() {
   const [graphType, setGraphType] = useState("daily");
   const [tableData, setTableData] = useState([]);
   const [currentMonth, setCurrentMonth] = useState(new Date().getMonth());
+  const navigate = useNavigate();
 
   useEffect(() => {
     fetchData();
@@ -87,7 +88,7 @@ export default function DashboardGraph() {
   const fetchData = async () => {
     await fetch(
       process.env.REACT_APP_API_URL +
-        `/api/v2/getDailyTaskTrackerRecords?userId=${userId}`,
+        `/api/v3/getDailyTaskTrackerRecords?userId=${userId}`,
       {
         headers: {
           Authorization: `Bearer ${parsedObject["token"]}`,
@@ -101,6 +102,18 @@ export default function DashboardGraph() {
         setTableData(data.response);
       })
       .catch((error) => {
+        if (error.response.status === 401) {
+          navigate("/error/statusCode=401");
+        }
+        if (error.response.status === 400) {
+          navigate("/error/statusCode=400");
+        }
+        if (error.response.status === 500) {
+          navigate("/error/statusCode=500");
+        }
+        if (error.response.status === 404) {
+          navigate("/error/statusCode=404");
+        }
         console.log(error);
       });
   };

@@ -186,7 +186,7 @@ const DailyTaskTracker = () => {
   const sendStartDataToBackend = async () => {
     try {
       const response = await axios.post(
-        process.env.REACT_APP_API_URL + "/api/v2/dailyTaskTrackerStartCheck",
+        process.env.REACT_APP_API_URL + "/api/v3/dailyTaskTrackerStartCheck",
         {
           userId,
           learningType,
@@ -195,10 +195,18 @@ const DailyTaskTracker = () => {
       );
       localStorage.setItem("DTT-token", response.data.token);
     } catch (error) {
-      navigate({
-        pathname: "/error",
-        search: `statusCode=${error.response.status}`,
-      });
+      if (error.response.status === 401) {
+        navigate("/error/statusCode=401");
+      }
+      if (error.response.status === 400) {
+        navigate("/error/statusCode=400");
+      }
+      if (error.response.status === 500) {
+        navigate("/error/statusCode=500");
+      }
+      if (error.response.status === 404) {
+        navigate("/error/statusCode=404");
+      }
       console.error("Error sending start data to backend:", error);
     }
   };
@@ -207,7 +215,7 @@ const DailyTaskTracker = () => {
     try {
       const dttToken = localStorage.getItem("DTT-token");
       const response = await axios.post(
-        process.env.REACT_APP_API_URL + "/api/v2/dailyTaskTrackerPauseCheck",
+        process.env.REACT_APP_API_URL + "/api/v3/dailyTaskTrackerPauseCheck",
         {},
         {
           headers: {
@@ -217,6 +225,18 @@ const DailyTaskTracker = () => {
         }
       );
     } catch (error) {
+      if (error.response.status === 401) {
+        navigate("/error/statusCode=401");
+      }
+      if (error.response.status === 400) {
+        navigate("/error/statusCode=400");
+      }
+      if (error.response.status === 500) {
+        navigate("/error/statusCode=500");
+      }
+      if (error.response.status === 404) {
+        navigate("/error/statusCode=404");
+      }
       console.error("Error sending pause data to backend:", error);
     }
   };
@@ -225,7 +245,7 @@ const DailyTaskTracker = () => {
     try {
       const token = localStorage.getItem("DTT-token");
       const response = await axios.post(
-        process.env.REACT_APP_API_URL + "/api/v2/dailyTaskTrackerEndCheck",
+        process.env.REACT_APP_API_URL + "/api/v3/dailyTaskTrackerEndCheck",
         {
           comments,
           elapsedTime,
@@ -237,10 +257,18 @@ const DailyTaskTracker = () => {
         }
       );
     } catch (error) {
-      navigate({
-        pathname: "/error",
-        search: `statusCode=${error.response.status}`,
-      });
+      if (error.response.status === 401) {
+        navigate("/error/statusCode=401");
+      }
+      if (error.response.status === 400) {
+        navigate("/error/statusCode=400");
+      }
+      if (error.response.status === 500) {
+        navigate("/error/statusCode=500");
+      }
+      if (error.response.status === 404) {
+        navigate("/error/statusCode=404");
+      }
       console.error("Error sending stop data to backend:", error);
     } finally {
       localStorage.removeItem("tD8kFi5j");

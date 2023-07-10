@@ -53,7 +53,7 @@ const TakeTest = ({ test }) => {
     }
     try {
       const response = await fetch(
-        process.env.REACT_APP_API_URL + "/api/v2/getAllExam",
+        process.env.REACT_APP_API_URL + "/api/v3/getAllExam",
         {
           headers: {
             Authorization: `Bearer ${parsedObject["token"]}`,
@@ -65,8 +65,20 @@ const TakeTest = ({ test }) => {
       setTests(data);
       setOriginalTests(data);
       setIsLoading(false);
-    } catch (e) {
-      console.error("Error fetching exam details:", e);
+    } catch (error) {
+      if (error.response.status === 401) {
+        navigate("/error/statusCode=401");
+      }
+      if (error.response.status === 400) {
+        navigate("/error/statusCode=400");
+      }
+      if (error.response.status === 500) {
+        navigate("/error/statusCode=500");
+      }
+      if (error.response.status === 404) {
+        navigate("/error/statusCode=404");
+      }
+      console.error("Error fetching exam details:", error);
     }
   };
   const handleFiltersChange = () => {
