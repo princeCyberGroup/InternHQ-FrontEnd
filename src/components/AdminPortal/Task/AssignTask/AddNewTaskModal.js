@@ -90,7 +90,7 @@ export const AddNewTask = ({ onAddClose }) => {
       alert("Please fill out the necessary fields");
     } else {
       await axios
-        .post(process.env.REACT_APP_API_URL+"/api/v3/addNewTask", {
+        .post(process.env.REACT_APP_API_URL + "/api/v3/addNewTask", {
           taskName,
           taskDescription,
           startDate,

@@ -8,7 +8,6 @@ import { Button } from "bootstrap";
 import { useNavigate } from "react-router-dom";
 // import { Link } from "react-router-dom";
 
-//This is already fixed
 export const AddNewSkillTest = () => {
   const [technology, setTechnology] = useState("");
   const [name, setName] = useState("");
@@ -41,6 +40,18 @@ export const AddNewSkillTest = () => {
       );
       setApiTechnology(response.data.response);
     } catch (error) {
+      if (error.response.status === 401) {
+        navigate("/error/statusCode=401");
+      }
+      if (error.response.status === 400) {
+        navigate("/error/statusCode=400");
+      }
+      if (error.response.status === 500) {
+        navigate("/error/statusCode=500");
+      }
+      if (error.response.status === 404) {
+        navigate("/error/statusCode=404");
+      }
       console.error("Error fetching topics:", error);
     }
   };
@@ -131,7 +142,7 @@ export const AddNewSkillTest = () => {
     try {
       const response = await axios.post(
         process.env.REACT_APP_API_URL +
-          `/api/v2/questions?technology=${technology}&level=${level}&examName=${name}&noOfQuestion=${question}&examDuration=${duration}`,
+          `/api/v3/questions?technology=${technology}&level=${level}&examName=${name}&noOfQuestion=${question}&examDuration=${duration}`,
         formData,
         {
           headers: {
@@ -155,7 +166,7 @@ export const AddNewSkillTest = () => {
       console.log(error);
     }
   };
-  return (
+    return (
     <div>
       <div
         className="modal fade"

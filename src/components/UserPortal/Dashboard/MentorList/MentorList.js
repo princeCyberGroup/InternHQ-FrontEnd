@@ -7,6 +7,7 @@ import CryptoJS from "crypto-js";
 
 const MentorComponent = () => {
   const [mentors, setMentors] = useState([]);
+  const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(true);
   useEffect(() => {
     // setMentors(MentorData);
@@ -30,10 +31,10 @@ const MentorComponent = () => {
     try {
       // Make an API request to fetch mentors data
       const response = await fetch(
-        process.env.REACT_APP_API_URL+"/api/v2/getMentorDetails",
+        process.env.REACT_APP_API_URL + "/api/v3/getMentorDetails",
         {
           headers: {
-            Authorization:`Bearer ${parsedObject['token']}`,
+            Authorization: `Bearer ${parsedObject["token"]}`,
           },
         }
       );
@@ -43,7 +44,19 @@ const MentorComponent = () => {
       setMentors(activeMentors);
       setIsLoading(false);
     } catch (error) {
-      // console.log("Error occurred while fetching mentors:", error);
+      if (error.response.status === 401) {
+        navigate("/error/statusCode=401");
+      }
+      if (error.response.status === 400) {
+        navigate("/error/statusCode=400");
+      }
+      if (error.response.status === 500) {
+        navigate("/error/statusCode=500");
+      }
+      if (error.response.status === 404) {
+        navigate("/error/statusCode=404");
+      }
+      console.log("Error occurred while fetching mentors:", error);
     }
   };
 

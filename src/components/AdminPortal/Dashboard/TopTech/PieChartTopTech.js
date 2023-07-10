@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { Pie } from "react-chartjs-2";
 import CryptoJS from "crypto-js";
+import { useNavigate } from "react-router-dom";
+import "./topTech.css";
 const PieChartTopTech = () => {
   const [pData, setPData] = useState();
-
+  const navigate = useNavigate();
   const fetchData = async () => {
     const secretkeyUser = process.env.REACT_APP_USER_KEY;
     var parsedObject;
@@ -15,7 +17,7 @@ const PieChartTopTech = () => {
     } else {
       console.log("No encrypted data found in localStorage.");
     }
-    await fetch(`https://cg-interns-hq.azurewebsites.net/api/v2/getTop5Tech`, {
+    await fetch(`https://cg-interns-hq.azurewebsites.net/api/v3/getTop5Tech`, {
       method: "GET",
       headers: {
         Authorization: `Bearer ${parsedObject["token"]}`,
@@ -28,7 +30,19 @@ const PieChartTopTech = () => {
         setPData(data.response);
       })
       .catch((error) => {
-        console.log("this is error", error);
+        if (error.response?.data.status === 400) {
+          navigate("/error/statusCode=400");
+        }
+        if (error.response?.data.status === 500) {
+          navigate("/error/statusCode=500");
+        }
+        if (error.response?.data.status === 404) {
+          navigate("/error/statusCode=404");
+        }
+        if (error.response?.data.statusCode === 401) {
+          navigate("/error/statusCode=401");
+        }
+        console.log("this is error", error?.statusCode);
       });
   };
   useEffect(() => {
@@ -46,32 +60,35 @@ const PieChartTopTech = () => {
     accumulator[item.techName] = percentage;
     return accumulator;
   }, {});
-
+  let techDataWithColor = pData ? pData : [];
+  const colorArray = ["#28519E", "#3B82F6", "#99CC00", "#E23237", "#FFB81C"];
+  colorArray.forEach((val, index) => {
+    if (index >= techDataWithColor.length) return;
+    techDataWithColor[index]["color"] = val;
+    techDataWithColor[index]["techCount"] =
+      techDataWithCounts[techDataWithColor[index]["techName"]];
+  });
   const data = {
     labels: techDataWithCounts ? Object.keys(techDataWithCounts) : [],
     datasets: [
       {
         radius: "70%",
         data: techDataWithCounts ? Object.values(techDataWithCounts) : [],
-        backgroundColor: [
-          "#28519E",
-          "#3B82F6",
-          "#99CC00",
-          "#E23237",
-          "#FFB81C",
-        ],
+        backgroundColor: colorArray,
         borderWidth: 2,
       },
     ],
   };
+
   const options = {
     plugins: {
       legend: {
-        display: true,
+        display: false,
         position: "bottom",
         labels: {
           boxWidth: 17,
           boxHeight: 17,
+          // code for options tag in pie chart if needed in future
           generateLabels: (chart) => {
             let array = techDataWithCounts
               ? Object.keys(techDataWithCounts)
@@ -93,6 +110,10 @@ const PieChartTopTech = () => {
             });
           },
           fontColor: "#343435",
+          responsive: true,
+          maintainAspectRatio: false,
+          width: 300,
+          height: 300,
         },
       },
       tooltips: {
@@ -122,20 +143,38 @@ const PieChartTopTech = () => {
               color: "#002C3F",
             }}
           >
-            Top 5 Technology
+            Top {pData?.length} Technology
           </h2>
         </div>
       </div>
       <div className="row">
-        <div
-          className="col"
-          style={{
-            height: "32.25rem",
-            boxShadow: "0rem 0.25rem 1.25rem rgba(40, 52, 73, 0.15)",
-            borderRadius: "0.5rem",
-          }}
-        >
-          <Pie data={data} options={options} />
+        <div className="col pie-chart-parent-wrapper">
+          <div
+            style={{
+              width: "250px",
+              height: "250px",
+              margin: "auto",
+            }}
+          >
+            <Pie data={data} options={options} />
+          </div>
+          <div className="pie-val-wrapper">
+            {techDataWithColor.map((val, index) => {
+              return (
+                <div className="pie-value" key={index}>
+                  <div className="pie-value-child">
+                    <div
+                      className="col-wrapper"
+                      style={{ backgroundColor: val?.color }}
+                    />
+                    <div className="val-text">{val?.techName}</div>
+                  </div>
+
+                  <div className="val-text">{val?.techCount}%</div>
+                </div>
+              );
+            })}
+          </div>
         </div>
       </div>
     </div>

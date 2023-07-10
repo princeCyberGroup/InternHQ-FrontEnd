@@ -26,6 +26,7 @@ const ViewAllIdeas = () => {
   const [textInput, setTextInput] = useState("");
   const [memberNames, setMemberNames] = useState({});
   const [techNames, seTechNames] = useState({});
+  const navigate = useNavigate();
 
   const handelIndex = (index) => {
     setProjectIndex(index);
@@ -100,7 +101,7 @@ const ViewAllIdeas = () => {
       alert("Please fill in the required details");
     } else {
       await axios
-        .post(process.env.REACT_APP_API_URL + "/api/v2/projectIdea", {
+        .post(process.env.REACT_APP_API_URL + "/api/v3/projectIdea", {
           projName,
           projDescription,
           userId,
@@ -142,7 +143,7 @@ const ViewAllIdeas = () => {
     axios
       .get(
         process.env.REACT_APP_API_URL +
-          `/api/v2/getProjectIdea?userId=${userId}`,
+          `/api/v3/getProjectIdea?userId=${userId}`,
         {
           headers: {
             Authorization: `Bearer ${parsedObject["token"]}`,
@@ -153,6 +154,18 @@ const ViewAllIdeas = () => {
         setIdea(response.data.response);
       })
       .catch((error) => {
+        if (error.response.status === 401) {
+          navigate("/error/statusCode=401");
+        }
+        if (error.response.status === 400) {
+          navigate("/error/statusCode=400");
+        }
+        if (error.response.status === 500) {
+          navigate("/error/statusCode=500");
+        }
+        if (error.response.status === 404) {
+          navigate("/error/statusCode=404");
+        }
         console.error("Error fetching tasks:", error);
       });
   }, []);

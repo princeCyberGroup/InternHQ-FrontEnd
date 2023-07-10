@@ -1,11 +1,14 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import CryptoJS from "crypto-js";
+import { useNavigate } from "react-router-dom";
 
 const TechDropDown = (props) => {
   const [techOptions, setTechOptions] = useState([]);
+  const navigate = useNavigate();
   // const [searchQuery, setSearchQuery] = useState("");
   const [filteredTechOptions, setFilteredTechOptions] = useState([]);
+
 
   useEffect(() => {
     const fetchTechOptions = async () => {
@@ -21,7 +24,7 @@ const TechDropDown = (props) => {
     }
       try {
         const response = await axios.get(
-          process.env.REACT_APP_API_URL + "/api/v2/getAllTechnology",
+          process.env.REACT_APP_API_URL + "/api/v3/getAllTechnology",
           {
             headers: {
               Authorization: `Bearer ${parsedObject["token"]}`,
@@ -43,6 +46,18 @@ const TechDropDown = (props) => {
         setFilteredTechOptions(sortedOptions);
 
       } catch (error) {
+        if (error.response.status === 401) {
+          navigate("/error/statusCode=401");
+        }
+        if (error.response.status === 400) {
+          navigate("/error/statusCode=400");
+        }
+        if (error.response.status === 500) {
+          navigate("/error/statusCode=500");
+        }
+        if (error.response.status === 404) {
+          navigate("/error/statusCode=404");
+        }
         console.error(error);
       }
     };

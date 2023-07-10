@@ -8,9 +8,11 @@ import "./AdminMentorList.css";
 import { AddMentorModal } from "./AddMentorModal";
 import CryptoJS from "crypto-js";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 const MentorList = () => {
   const [expandedMentor, setExpandedMentor] = useState(null);
+  const navigate = useNavigate();
   const [mentor, setMentor] = useState([]);
   // const [modalOpen, setModalOpen] = useState(false);
 
@@ -22,7 +24,7 @@ const MentorList = () => {
 
   const removeMentor = async (mentorId) => {
     try {
-      await axios.post(process.env.REACT_APP_API_URL + "/api/v2/removeMentor", {
+      await axios.post(process.env.REACT_APP_API_URL + "/api/v3/removeMentor", {
         mentorId: mentorId,
         isAssigned: "Remove",
       });
@@ -40,7 +42,7 @@ const MentorList = () => {
   };
   const assignMentor = async (mentorId) => {
     try {
-      await axios.post(process.env.REACT_APP_API_URL + "/api/v2/removeMentor", {
+      await axios.post(process.env.REACT_APP_API_URL + "/api/v3/removeMentor", {
         mentorId: mentorId,
         isAssigned: "Assign",
       });
@@ -88,7 +90,7 @@ const MentorList = () => {
     try {
       // Make an API request to fetch mentors data
       const response = await fetch(
-        process.env.REACT_APP_API_URL + "/api/v2/getMentorDetails",
+        process.env.REACT_APP_API_URL + "/api/v3/getMentorDetails",
         {
           headers: {
             Authorization: `Bearer ${parsedObject["token"]}`,
@@ -101,6 +103,18 @@ const MentorList = () => {
       setMentor(mentors);
       // console.log(isLoading, "Fetched data");
     } catch (error) {
+      if (error.response.status === 401) {
+        navigate("/error/statusCode=401");
+      }
+      if (error.response.status === 400) {
+        navigate("/error/statusCode=400");
+      }
+      if (error.response.status === 500) {
+        navigate("/error/statusCode=500");
+      }
+      if (error.response.status === 404) {
+        navigate("/error/statusCode=404");
+      }
       // console.log("Error occurred while fetching mentors:", error);
     }
   };

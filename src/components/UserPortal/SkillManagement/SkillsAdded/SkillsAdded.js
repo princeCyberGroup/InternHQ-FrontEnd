@@ -9,6 +9,7 @@ import { ReactComponent as EmptyStar } from "../../../../Assets/emptystar.svg";
 import SkillsAddedSkeleton from "./SkillsAddedSkeleton";
 import { TestContext } from "../SkillManagement";
 import CryptoJS from "crypto-js";
+import { useNavigate } from "react-router-dom";
 // import { ReactComponent as Star } from "../../../../Assets/Star.svg";
 
 const SkillsAdded = () => {
@@ -25,6 +26,7 @@ const SkillsAdded = () => {
   }
   var userId = parsedObject.userId;
   const [isLoading, setIsLoading] = useState(true);
+  const navigate = useNavigate();
 
   useEffect(() => {
     setTimeout(() => {
@@ -48,7 +50,18 @@ const SkillsAdded = () => {
       setResultInfo(data.response);
       setIsLoading(false);
     } catch (error) {
-      console.log(error);
+      if (error.response.status === 401) {
+        navigate("/error/statusCode=401");
+      }
+      if (error.response.status === 400) {
+        navigate("/error/statusCode=400");
+      }
+      if (error.response.status === 500) {
+        navigate("/error/statusCode=500");
+      }
+      if (error.response.status === 404) {
+        navigate("/error/statusCode=404");
+      }
     }
   };
 

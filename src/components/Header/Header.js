@@ -16,7 +16,6 @@ const Header = () => {
     if (data) {
       const bytes = CryptoJS.AES.decrypt(data, secretKey);
       const decryptedJsonString = bytes.toString(CryptoJS.enc.Utf8);
-      console.log("object", JSON.parse(decryptedJsonString));
       setUserData(JSON.parse(decryptedJsonString));
     } else {
       console.log("No encrypted data found in localStorage.");
