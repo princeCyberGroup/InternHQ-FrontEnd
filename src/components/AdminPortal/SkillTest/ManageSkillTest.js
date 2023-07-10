@@ -54,6 +54,7 @@ export const ManageSkillTest = () => {
           },
         }
       );
+      console.log("object", response.data);
       setData(response.data);
       setIsLoading(false);
     } catch (error) {
@@ -158,10 +159,10 @@ export const ManageSkillTest = () => {
                       options
                     );
                     const dateObj = new Date(currentTimeIST);
+                    const date = dateObj?.toISOString().split("T")[0];
                     {
-                      /* const date = dateObj?.toISOString().split("T")[0]; */
+                      /* const time = date?.toTimeString().split(" ")[0]; */
                     }
-                    const time = dateObj?.toTimeString().split(" ")[0];
                     return (
                       <tr key={index}>
                         <td className="technology-rows">{index + 1}</td>
@@ -172,7 +173,7 @@ export const ManageSkillTest = () => {
                           {item?.numberOfQuestion}
                         </td>
                         <td className="duration-row">{`${item?.examDuration} mins`}</td>
-                        <td className="uploaded-on-row">{` ${time}`}</td>
+                        <td className="uploaded-on-row">{`${date}`}</td>
                         <td className="delete-btn-row">
                           <button
                             type="button"

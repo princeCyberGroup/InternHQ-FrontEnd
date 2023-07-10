@@ -68,7 +68,6 @@ const PieChartTopTech = () => {
     techDataWithColor[index]["techCount"] =
       techDataWithCounts[techDataWithColor[index]["techName"]];
   });
-  console.log("object", techDataWithColor);
   const data = {
     labels: techDataWithCounts ? Object.keys(techDataWithCounts) : [],
     datasets: [
