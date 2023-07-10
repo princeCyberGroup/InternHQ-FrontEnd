@@ -116,14 +116,7 @@ const Header = () => {
                     Report
                   </NavLink>
                 </li>
-                <li
-                  className="nav-item pe-1"
-                  onClick={(e) => {
-                    e.preventDefault();
-                    alert("Developement is in progress");
-                    navigate("/");
-                  }}
-                >
+                <li className="nav-item pe-1">
                   <NavLink to="/admin/logs" className="btn activeBtn ">
                     Logs
                   </NavLink>
