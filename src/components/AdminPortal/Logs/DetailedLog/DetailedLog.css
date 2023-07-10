@@ -74,6 +74,17 @@ margin-left: 0.5rem;
   border: 2px solid;
   height: inherit;
 }
+.log-date-filter{
+  display: flex;
+  height: 32px;
+  padding: 6px 8px;
+  align-items: center;
+  gap: 8px;
+  border-radius: 4px;
+  border: 1px solid var(--secondary-gray, #B2B2B3);
+  background: var(--primary-white, #FFF);
+}
+
 .assign-task-container {
   display: flex;
   flex-direction: row;
