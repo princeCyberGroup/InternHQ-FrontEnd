@@ -1,224 +1,3 @@
-// import React, { useState, useEffect } from "react";
-// import "./LogCard.css"
-// import { ReactComponent as SearchIcon } from "../../../../Assets/search.svg";
-// import { useNavigate } from "react-router-dom";
-// import CryptoJS from "crypto-js";
-
-// function getInitials(name) {
-//   const names = name.split(" ");
-//   const initials = names.map((n) => n.charAt(0).toUpperCase());
-//   return initials.join("");
-// }
-// export default function AssociateConsultant(props) {
-//   const navigate = useNavigate();
-//   const handleOnclick = (id) => {
-//     sessionStorage.setItem("detailId", id);
-//     navigate(`/admin/report?userId=${id}`);
-//   };
-//   const [searchFilterValue, setSearchFilterValue] = useState("");
-//   const [showAllTech, setShowAllTech] = useState(false);
-//   const [expandedMentor, setExpandedMentor] = useState(null);
-//   const [StatusData, setStatusData] = useState([]);
-//   const [acData, setAcData] = useState([]);
-//   const [activeButton, setActiveButton] = useState("Associates");
-
-//   const secretkeyUser = process.env.REACT_APP_USER_KEY;
-//   var parsedObject;
-//   const data = localStorage.getItem("userData");
-//   if (data) {
-//     const bytes = CryptoJS.AES.decrypt(data, secretkeyUser);
-//     const decryptedJsonString = bytes.toString(CryptoJS.enc.Utf8);
-//     parsedObject = JSON.parse(decryptedJsonString);
-//   } else {
-//     console.log("No encrypted data found in localStorage.");
-//   }
-
-//   const handleFiltersChange = () => {
-//     const getFilterItems = (items, searchValue) => {
-//       if (searchValue) {
-//         let filterData = items.filter((item) =>
-//           item.name?.toLowerCase().includes(searchValue.toLowerCase())
-//         );
-//         return filterData;
-//       }
-//       return items;
-//     };
-//     const filters = getFilterItems(acData, searchFilterValue);
-//     setAcData(filters);
-//   };
-//   useEffect(() => {
-//     handleFiltersChange();
-//     // handleExpand();
-//   }, [searchFilterValue]);
-
-//   useEffect(() => {
-//     fetchData();
-//   }, []);
-
-//   const fetchData = async () => {
-//     try {
-//       const response = await fetch(
-//         process.env.REACT_APP_API_URL + `/api/v2/getDashboardStatus`,
-//         {
-//           headers: {
-//             Authorization: `Bearer ${parsedObject["token"]}`,
-//           },
-//         }
-//       );
-//       const rsp = await response.json();
-//       setStatusData(rsp);
-//       setAcData(rsp.response);
-//     } catch (e) {
-//       console.log(e);
-//     }
-//   };
-
-//   function renderAssociates(userData) {
-//     const initials = getInitials(userData.name);
-//     return (
-//       <>
-//         <div
-//           key={userData.intId}
-//           className="card associate-mapped-card"
-//         >
-//           <div className=" row mentor-wrapper">
-//             <div
-//               onClick={() => {
-//                 handleOnclick(userData.intId);
-//               }}
-//               className="col-4 frame pointer"
-//             >
-//               <p
-//                 style={{
-//                   display: "flex",
-//                   justifyContent: "center",
-//                   alignItems: "center",
-//                   marginTop: "0.938rem",
-//                 }}
-//               >
-//                 {initials}
-//               </p>
-//             </div>
-//             <div
-//               onClick={() => {
-//                 handleOnclick(userData.userId);
-//               }}
-//               className=" col-4 pointer"
-//             >
-//               <div className="frame-text">{userData.name}</div>
-//               <div className="frame-id">{userData.intId}</div>
-//             </div>
-
-//           </div>
-//           {expandedMentor === userData?.intId && (
-//             <div className="row mt-3">
-//               <div className="technology">
-//                 <p className="tech">Technology:</p>
-
-//                 {userData &&
-//                   userData.techNames &&
-//                   userData.techNames.slice(0, 4).map((skill, skillIndex) => (
-//                     skill && (
-//                       <span key={skillIndex} className="tech-div-badge">
-//                         {skill.toUpperCase()}
-//                         &nbsp;
-//                       </span>
-//                     )
-//                   ))}
-//                 {userData &&
-//                   userData.techNames &&
-//                   userData.techNames.length > 4 && (
-//                     <div className="all-tech">
-//                       {showAllTech ? (
-//                         userData.techNames.slice(4).map((skill, skillIndex) => (
-//                           skill && (
-//                             <span key={skillIndex} className="tech-div-badge">
-//                               {skill.toUpperCase()}
-//                               &nbsp;
-//                             </span>
-//                           )
-//                         ))
-//                       ) : (
-//                         <button className="more-tech-stacks" onClick={() => setShowAllTech(true)}>
-//                           + {userData.techNames.length - 4}
-//                         </button>
-//                       )}
-//                     </div>
-//                   )}
-//               </div>
-//             </div>
-//           )}
-//         </div>
-//       </>
-//     );
-//   }
-
-//   return (
-//     <>
-//       <div>
-//       <div
-//         className="assign-task-container"
-//         style={{
-//           display: "flex",
-//           alignItems: "center",
-//           justifyContent: "space-between",
-//         }}
-//       >
-//         <p>Activity Logs</p>
-
-//       </div>
-
-//         <div
-//         className="card mentor-card pt-0"
-//         style={{ maxHeight: "80vh", width: "420px", overflow: "auto" }}
-//       >
-//                 <div className="log-header-nav">
-//           <div
-//             className={`nav-btn pointer ${
-//               activeButton === "Associates" ? "activated" : ""
-//             }`}
-//             onClick={() => {
-//               setActiveButton("Associates");
-//             }}
-//           >
-//             <button className="btn-nav p-0">Associates</button>
-//           </div>
-//           <div
-//             className={`nav-btn pointer ${
-//               activeButton === "Mentors" ? "activated" : ""
-//             }`}
-//             onClick={() => {
-//               setActiveButton("Mentors");
-//             }}
-//           >
-//             <button className="btn-nav p-0">Mentors</button>
-//           </div>
-
-//         </div>
-//           <div className="d-flex align-items-center ps-1 associate-search-wrapper">
-//             <SearchIcon />
-//             <input
-//               className="search-associate "
-//               type="text"
-//               value={searchFilterValue}
-//               placeholder="Search"
-//               onChange={(event) => {
-//                 event.preventDefault();
-//                 setSearchFilterValue(event.target.value);
-//               }}
-//             />
-//           </div>
-//           <div style={{ overflow: "auto" }}>
-//             {
-//                acData?.map((userData) => renderAssociates(userData))
-//              }
-//           </div>
-//         </div>
-//       </div>
-//     </>
-//   );
-// }
-
 import React, { useState, useEffect } from "react";
 import "./LogCard.css";
 import { ReactComponent as SearchIcon } from "../../../../Assets/search.svg";
@@ -234,9 +13,6 @@ function getInitials(name) {
 
 export default function AssociateConsultant(props) {
   const [searchFilterValue, setSearchFilterValue] = useState("");
-  const [showAllTech, setShowAllTech] = useState(false);
-  const [expandedMentor, setExpandedMentor] = useState(null);
-  //   const [statusData, setStatusData] = useState([]);
   const [acData, setAcData] = useState([]);
   const [filterAcData, setFilterAcData] = useState([]);
   const [mentorData, setMentorData] = useState([]);
@@ -377,7 +153,7 @@ export default function AssociateConsultant(props) {
     const initials = getInitials(userData.name);
     return (
       <>
-        <div key={userData.userId} className="card associate-mapped-card">
+        <div key={userData.userId} className="card associate-mapped-card-log">
           <div className=" row mentor-wrapper">
             <div
               onClick={() => {
@@ -414,13 +190,13 @@ export default function AssociateConsultant(props) {
     const initials = getInitials(data.mentorName);
     return (
       <>
-        <div key={data.mentorId} className="card associate-mapped-card">
+        <div key={data.mentorId} className="card associate-mapped-card-log">
           <div className="row mentor-wrapper">
             <div
               // onClick={() => {
               //   handleOnMentorclick(data.mentorId);
               // }}
-              className="col-4 frame pointer"
+              className="col-4 frame-log pointer"
             >
               <div className="image-box1">
                 {data.imageUrl ? (
@@ -441,8 +217,8 @@ export default function AssociateConsultant(props) {
               // }}
               className="col-4 pointer"
             >
-              <div className="frame-text">{data.mentorName}</div>
-              <div className="frame-id">{data.designation}</div>
+              <div className="frame-text-log">{data.mentorName}</div>
+              <div className="frame-id-log">{data.designation}</div>
             </div>
           </div>
         </div>
