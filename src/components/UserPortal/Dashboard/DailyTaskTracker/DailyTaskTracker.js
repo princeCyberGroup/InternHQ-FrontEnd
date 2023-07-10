@@ -93,12 +93,14 @@ const DailyTaskTracker = () => {
   }, [learningType, topicName]);
 
   useEffect(() => {
-    if (comments.length >= 150) {
+    const commentsWithoutSpaces = comments.replace(/\s/g, ''); // Remove spaces from the comments
+    if (commentsWithoutSpaces.length >= MAX_COMMENT_LENGTH) {
       setStopBtnDisabled(false);
-    } else if (comments.length < 150) {
+    } else {
       setStopBtnDisabled(true);
     }
   }, [comments]);
+  
 
   useEffect(() => {
     const encryptedData = localStorage.getItem("tD8kFi5j");
@@ -358,11 +360,18 @@ const DailyTaskTracker = () => {
     if (topicName.length <= 1) setBtnDisabled(true);
   };
 
+  // const onCommentsChange = (e) => {
+  //   const inputComments = e.target.value;
+  //   setComments(inputComments);
+  //   setCommentLength(inputComments.length);
+  // };
   const onCommentsChange = (e) => {
     const inputComments = e.target.value;
+    const commentsWithoutSpaces = inputComments.replace(/\s/g, ''); // Remove spaces from the input
     setComments(inputComments);
-    setCommentLength(inputComments.length);
+    setCommentLength(commentsWithoutSpaces.length);
   };
+  
 
   const formatTime = (timeInMs) => {
     const totalSeconds = Math.floor(timeInMs / 1000);

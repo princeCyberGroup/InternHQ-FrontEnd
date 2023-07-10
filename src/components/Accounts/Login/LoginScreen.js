@@ -12,7 +12,7 @@ import { bottom } from "@popperjs/core";
 
 const LoginScreen = () => {
   const navigate = useNavigate();
-
+//login screen
   const [email, setEmail] = useState("");
   const [isEmailValid, setIsEmailValid] = useState(false);
   const [password, setPassword] = useState("");

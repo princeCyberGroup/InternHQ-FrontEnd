@@ -27,6 +27,7 @@ export const AddMentorModal = ({ isOpen, onClose, onAddMentor }) => {
   const [dropDown, setDropDown] = useState(false);
   const [tech, setTech] = useState({});
   const [selectedTechIds, setSelectedTechIds] = useState([]);
+  const [searchQuery, setSearchQuery] = useState("");
 
 
   const position = [
@@ -359,6 +360,8 @@ export const AddMentorModal = ({ isOpen, onClose, onAddMentor }) => {
                               setTechnologyNames={setTechnologyNames}
                               technologyNames={technologyNames}
                               setSelectedTechIds={setSelectedTechIds}
+                              searchQuery={searchQuery}
+                              setSearchQuery={setSearchQuery}
                             />
                           </ul>
                         </div>

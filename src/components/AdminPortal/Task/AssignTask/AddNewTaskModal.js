@@ -8,9 +8,16 @@ import UsersDropdown from "./UsersDropdown"
 import CryptoJS from "crypto-js";
 
 export const AddNewTask = ({ onAddClose }) => {
-  const [error, setError] = useState(true);
+  const [nameError, setNameError] = useState(true);
+  const [descError, setDescError] = useState(true);
+  const [startDateError, setStartDateError] = useState(true);
+  const [endDateError, setEndDateError] = useState(true);
   const [taskName, setTaskName] = useState("");
   const [taskDescription, setTaskDescription] = useState("");
+  const [startDate, setStartDate] = useState("");
+  const [endDate, setEndDate] = useState("");
+  const [taskTech, setTaskTech] = useState([]);
+  const [taskUsers, setTaskUsers] = useState([]);
   const [dropDown, setDropDown] = useState(false);
   const [usersDropDown, setUsersDropDown] = useState(false);
   const [tech, setTech] = useState({});
@@ -30,6 +37,8 @@ export const AddNewTask = ({ onAddClose }) => {
 
     onAddClose();
     setTaskName("");
+    setStartDate("")
+    setEndDate("")
     setTaskDescription("");
     setSelectedTechIds([]);
     setSelectedUserIds([]);
@@ -77,15 +86,15 @@ export const AddNewTask = ({ onAddClose }) => {
     var userId = parsedObject.userId;
 
 
-    if (error) {
+    if (nameError || descError || startDateError || endDateError) {
       alert("Please fill out the necessary fields");
     } else {
       await axios
         .post(process.env.REACT_APP_API_URL + "/api/v3/addNewTask", {
           taskName,
-
           taskDescription,
-
+          startDate,
+          endDate,
           taskTech: selectedTechIds, // Send the array of tech IDs
           taskUsers: selectedUserIds, // Send the array of user IDs
           assignedBy: userId,
@@ -100,13 +109,18 @@ export const AddNewTask = ({ onAddClose }) => {
 
       setTaskName("");
       setTaskDescription("");
+      setStartDate("");
+      setEndDate("");
       setSelectedTechIds([]);
       setSelectedUserIds([]);
       setTechnologyNames([]);
       setSelectedUsers([]);
       setTech({});
       setUsers({});
-      setError(true);
+      setNameError(true);
+      setDescError(true);
+      setStartDateError(true);
+      setEndDateError(true);
 
       const userCheckboxes = document.querySelectorAll(".user-checkbox");
       userCheckboxes.forEach((checkbox) => {
@@ -122,20 +136,39 @@ export const AddNewTask = ({ onAddClose }) => {
 
   const handleTaskTitle = (e) => {
     setTaskName(e.target.value);
+    console.log(taskName)
     if (taskName.length === 0) {
-      setError(true);
+      setNameError(true);
     } else {
-      setError(false);
+      setNameError(false);
     }
   };
 
   const handleDescription = (e) => {
     setTaskDescription(e.target.value);
     if (taskDescription.length < 2 || taskDescription.length > 500) {
-      setError(true);
+      setDescError(true);
     } else {
-      setError(false);
+      setDescError(false);
     }
+  };
+
+  const handleStartDate = (e) => {
+    setStartDate(e.target.value);
+    if(startDate.length === 0) setStartDateError(true);
+    else {
+      setStartDateError(false)
+    };
+  }
+
+  const handleEndDate = (e) => {
+    setEndDate(e.target.value);
+    if(endDate.length === 0) setEndDateError(true);
+    else setEndDateError(false);
+  }
+
+  const handleAssignedTo = (e) => {
+    setTaskUsers(e.target.value);
   };
 
   return (
@@ -209,6 +242,23 @@ export const AddNewTask = ({ onAddClose }) => {
                     value={taskDescription}
                     onChange={(e) => handleDescription(e)}
                   ></textarea>
+                </div>
+
+                <div className="mb-3">
+                  <div className="row">
+                    <div className="col">
+                    <label htmlFor="start-date" className="col-form-label form-title-names">
+                    Start Date<span style={{ color: "red" }}>*</span>
+                  </label>
+                  <input type="date" className="form-control" value={startDate} onChange={(e) => handleStartDate(e)}/>
+                    </div>
+                    <div className="col">
+                    <label htmlFor="end-date" className="col-form-label form-title-names">
+                    End Date<span style={{ color: "red" }}>*</span>
+                  </label>
+                  <input type="date" className="form-control" value={endDate} onChange={(e) => handleEndDate(e)}/>
+                    </div>
+                  </div>
                 </div>
 
                 <div className="mb-3">
@@ -338,7 +388,7 @@ export const AddNewTask = ({ onAddClose }) => {
               <button
                 type="button"
                 className="btn modal-save-button"
-                data-bs-dismiss={!error ? "modal" : ""}
+                data-bs-dismiss={(!nameError && !descError && !startDateError && !endDateError) ? "modal" : ""}
                 data-bs-target="#addTaskModal"
                 onClick={(e) => handleSubmit(e)}
               >

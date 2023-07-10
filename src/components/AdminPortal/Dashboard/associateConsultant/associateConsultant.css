@@ -18,12 +18,13 @@
   border: 1px solid #B2B2B3;
   border-radius: 5px;
   padding: 0%;
+  width: 25rem;
 }
 .search-associate {
 box-sizing: border-box;
 padding: 0rem 0.5rem;
-width: 23.5rem; 
-height: 2.5rem; 
+width: 24rem; 
+height: 2rem; 
 border-radius: 30%;
 border: none;
 outline: none;
@@ -76,7 +77,7 @@ margin-top: 0.6rem;
 }
 .associate-card {
 margin-top: 0.5rem;
-height: 23.5rem;
+height: 32.25rem;
 width: 27rem;
 overflow: auto;
 display: flex;
