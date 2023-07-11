@@ -3,7 +3,7 @@ import { Link, NavLink, useNavigate } from "react-router-dom";
 import { BsChevronDown } from "react-icons/bs";
 import { ReactComponent as CGlogo } from "../../Assets/CG-Logo (1) 1CGlogo.svg";
 import "./Header.css";
-import MentorAssignedAlerts from "../UserPortal/Dashboard/MentorAssignedAlerts/MentorAssignedAlerts";
+// import MentorAssignedAlerts from "../UserPortal/Dashboard/MentorAssignedAlerts/MentorAssignedAlerts";
 
 const Header = () => {
   const [userData, setUserData] = useState(
@@ -114,13 +114,13 @@ const Header = () => {
             )}
           </div>
 
-          {userData.randomString === "07495d" ? (
+          {/* {userData.randomString === "07495d" ? (
             <>
               <MentorAssignedAlerts func={anotherFunc} setState={isTodayDate} />
             </>
           ) : (
             ""
-          )}
+          )} */}
 
           <div
             className="d-flex margin"

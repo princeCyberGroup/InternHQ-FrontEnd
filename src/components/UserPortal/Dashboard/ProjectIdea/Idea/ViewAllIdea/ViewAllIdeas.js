@@ -10,6 +10,7 @@ import TechDropDown from "../../TechDropDown";
 import axios from "axios";
 import { UserContext } from "../../../../../../Context/Context";
 import BreadCrumbs from "../../../../../BreadCrumbs/BreadCrumbs";
+import IdeaDetails from "../../ViewDetails/IdeaDetails";
 
 const ViewAllIdeas = () => {
   // const { idea, setIdea, project, setProject } = useContext(UserContext);
@@ -25,6 +26,8 @@ const ViewAllIdeas = () => {
   const [textInput, setTextInput] = useState("");
   const [memberNames, setMemberNames] = useState({});
   const [techNames, seTechNames] = useState({});
+  const [isProjectNameValid, setIsProjectNameValid] = useState(false);
+  const [isProjectDescriptionValid, setIsProjectDescriptionValid] = useState(false);
 
   const handelIndex = (index) => {
     setProjectIndex(index);
@@ -45,10 +48,11 @@ const ViewAllIdeas = () => {
       checkbox.checked = false;
     });
   };
-  const handleChangeProjNameError = (event) => {
-    event.preventDefault();
-    const name = event.target.value;
+  const handleChangeProjNameError = (e) => {
+    e.preventDefault();
+    const name = e.target.value;
     setProjName(name);
+    setIsProjectNameValid(name.match(/^[a-zA-Z\s]{1,100}$/) ? true : false);
     if (!name) {
       setError(true);
       setProjNameError("Project Name is required");
@@ -57,10 +61,11 @@ const ViewAllIdeas = () => {
       setProjNameError("");
     }
   };
-  const handleChangeProjDescriptionError = (event) => {
-    event.preventDefault();
-    const description = event.target.value;
+  const handleChangeProjDescriptionError = (e) => {
+    e.preventDefault();
+    const description = e.target.value;
     setProjDescription(description);
+    setIsProjectDescriptionValid(description.match(/^.{50,750}$/) ? true : false);
     if (!description) {
       setError(true);
       setProjDescriptionError("Project Description is required");
@@ -124,7 +129,7 @@ const ViewAllIdeas = () => {
     var parsedObject = JSON.parse(storedObject);
     var userId = parsedObject.userId;
     axios
-      .get(process.env.REACT_APP_API_URL+`/api/v2/getProjectIdea?userId=${userId}`,
+      .get(process.env.REACT_APP_API_URL+`/api/v3/getProjectIdea?userId=${userId}`,
       {
         headers: {
           Authorization:`Bearer ${JSON.parse(localStorage.getItem('userData'))['token']}`,
@@ -133,7 +138,7 @@ const ViewAllIdeas = () => {
       )
       .then((response) => {
         setIdea(response.data.response);
-        console.log(response.data.response)
+        {console.log("Api",response.data)}
       })
       .catch((error) => {
         console.error("Error fetching tasks:", error);
@@ -166,11 +171,11 @@ const ViewAllIdeas = () => {
           </div>
 
           <div
-            className="add-new-project-wrapper pb-0 me-0"
+            className="add-new-project-wrapper me-0"
             data-bs-toggle="modal"
             data-bs-target="#viewAllAddModal"
           >
-            <p className="add-new-project me-2">Add New Idea</p>
+            <p className="add-new-project">Add New Idea</p>
           </div>
 
           <div
@@ -205,11 +210,6 @@ const ViewAllIdeas = () => {
                         className="col-form-label title-text"
                       >
                         Project Name<span style={{ color: "red" }}>*</span>{" "}
-                        {projNameError && (
-                          <span style={{ color: "red", fontSize: "11px" }}>
-                            ({projNameError})
-                          </span>
-                        )}
                       </label>
                       <input
                         type="text"
@@ -219,6 +219,11 @@ const ViewAllIdeas = () => {
                         placeholder="Enter Project Name"
                         onChange={handleChangeProjNameError}
                       />
+                      {!isProjectNameValid && projName &&(
+                    <span style={{ color: "red", fontSize: "11px" }}>
+                      Please enter a name with only letters and spaces, between 1 and 100 characters.
+                    </span>
+                  )}
                     </div>
                     <div className="mb-3">
                       <label
@@ -227,20 +232,20 @@ const ViewAllIdeas = () => {
                       >
                         Project Description
                         <span style={{ color: "red" }}>*</span>{" "}
-                        {projDescriptionError && (
-                          <span style={{ color: "red", fontSize: "11px" }}>
-                            ({projDescriptionError})
-                          </span>
-                        )}
                       </label>
                       <textarea
                         className="form-control"
                         value={projDescription}
                         id="project-description"
                         placeholder="Write Here.."
-                        onChange={handleChangeProjDescriptionError}
+                        onChange={ (e) => handleChangeProjDescriptionError(e)}
                         rows={3}
-                      ></textarea>
+                      />
+                        {!isProjectDescriptionValid && projDescription &&(
+                      <span style={{ color: "red", fontSize: "11px" }}>
+                       Please enter a description with a length between 50 and 750 characters.
+                      </span>
+                    )}
                     </div>
 
                     <div className="mb-3">
@@ -343,7 +348,7 @@ const ViewAllIdeas = () => {
               <DetailsLeft data={idea} projectDetails={handelIndex} />
             </div>
             <div className="project-detail">
-              <ProjectDetail data={idea} indexNumber={projectIndex} />
+              <IdeaDetails data={idea} indexNumber={projectIndex} />
             </div>
           </div>
         )}

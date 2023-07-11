@@ -231,6 +231,7 @@ p.card-textt {
     border: 0.25rem;
     justify-content: center;
     align-items: center;
+    cursor: not-allowed;
 }
 
 .save-text {
@@ -291,7 +292,8 @@ p.card-textt {
     font-size: 0.875rem;
     line-height: 1rem;
     text-align: center;
-
+    margin-top: 0.5rem;
+    margin-bottom: 0.5rem;
     color: #FFFFFF;
 }
 .add-new-project-wrapper{

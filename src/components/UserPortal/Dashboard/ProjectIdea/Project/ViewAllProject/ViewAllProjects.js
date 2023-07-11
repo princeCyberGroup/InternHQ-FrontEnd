@@ -26,8 +26,12 @@ const ViewAllProjects = () => {
   const [desError, setDesError] = useState("");
   const [projLinkError, setProjLinkError] = useState("");
   const [projectIndex, setProjectIndex] = useState(0);
+  const [mentorIndex, setMentorIndex] = useState(0);
   const [tech, setTech] = useState({});
   const [mentorAssignData, setMentorAssignData] = useState([]);
+  const [isProjectNameValid, setIsProjectNameValid] = useState(false);
+  const [isProjectDescriptionValid, setIsProjectDescriptionValid] = useState(false);
+  const [isProjectLinkValid, setIsProjectLinkValid] = useState(false);
 
   // const details = project;
 
@@ -35,9 +39,11 @@ const ViewAllProjects = () => {
     return setTech(data);
   };
 
-  const handleProjectNameChange = (event) => {
-    const name = event.target.value;
+  const handleProjectNameChange = (e) => {
+    e.preventDefault();
+    const name = e.target.value;
     setProjName(name);
+    setIsProjectNameValid(name.match(/^[a-zA-Z\s]{1,100}$/) ? true : false);
     if (!name) {
       setError(true);
       setProjNameError("Project name is required");
@@ -46,9 +52,10 @@ const ViewAllProjects = () => {
       setProjNameError("");
     }
   };
-  const handleProjectDescriptionChange = (event) => {
-    const description = event.target.value;
+  const handleProjectDescriptionChange = (e) => {
+    const description = e.target.value;
     setProjDescription(description);
+    setIsProjectDescriptionValid(description.match(/^.{50,750}$/) ? true : false);
     if (!description) {
       setError(true);
       setDesError("Project description is required");
@@ -57,6 +64,19 @@ const ViewAllProjects = () => {
       setDesError("");
     }
   };
+  const handleProjectLinkChange = (e) => {
+    const link = e.target.value;
+    setProjectLink(link);
+    setIsProjectLinkValid(link.match(/^https?:\/\//) ? true : false)
+    if (!link) {
+      setError(true);
+      setProjLinkError("Project link is required");
+    } else {
+      setError(false);
+      setProjLinkError("");
+    }
+  };
+
   const handleInputChange = (event) => {
     setTextInput(event.target.value);
   };
@@ -70,23 +90,13 @@ const ViewAllProjects = () => {
     setDropDown(false);
     setTech({});
     seTechNames({});
-    
+
     const checkboxes = document.querySelectorAll(".tech-checkbox");
     checkboxes.forEach((checkbox) => {
       checkbox.checked = false;
     });
   };
-  const handleProjectLinkChange = (event) => {
-    const link = event.target.value;
-    setProjectLink(link);
-    if (!link) {
-      setError(true);
-      setProjLinkError("Project link is required");
-    } else {
-      setError(false);
-      setProjLinkError("");
-    }
-  };
+ 
 
   const isObjectEmpty = (object) => {
     if (object.member1.length > 0) {
@@ -108,7 +118,7 @@ const ViewAllProjects = () => {
     }
     else {
       axios
-        .post(process.env.REACT_APP_API_URL+"/api/v2/Project", {
+        .post(process.env.REACT_APP_API_URL + "/api/v2/Project", {
           projName,
           projDescription,
           userId,
@@ -117,9 +127,9 @@ const ViewAllProjects = () => {
           technologyNames: techNames,
           memberNames: memberNames,
         })
-      .catch((err) => {
-        console.log(err);
-      });
+        .catch((err) => {
+          console.log(err);
+        });
       setTextInput("");
       setProjName("");
       setProjDescription("");
@@ -127,11 +137,11 @@ const ViewAllProjects = () => {
       setHostedLink("");
       setTech({});
       seTechNames({});
-    
-    const checkboxes = document.querySelectorAll(".tech-checkbox");
-    checkboxes.forEach((checkbox) => {
-      checkbox.checked = false;
-    });
+
+      const checkboxes = document.querySelectorAll(".tech-checkbox");
+      checkboxes.forEach((checkbox) => {
+        checkbox.checked = false;
+      });
     }
   };
 
@@ -160,29 +170,28 @@ const ViewAllProjects = () => {
     var storedObject = localStorage.getItem("userData");
     var parsedObject = JSON.parse(storedObject);
     var userId = parsedObject.userId;
-   const firstAPIPromise = axios
+    const firstAPIPromise = axios
       .get(
-        process.env.REACT_APP_API_URL+ `/api/v2/getProject?userId=${userId}`,{
-          headers: {
-            Authorization:`Bearer ${JSON.parse(localStorage.getItem('userData'))['token']}`,
-          },
-        }
+        process.env.REACT_APP_API_URL + `/api/v3/getProject?userId=${userId}`, {
+        headers: {
+          Authorization: `Bearer ${JSON.parse(localStorage.getItem('userData'))['token']}`,
+        },
+      }
       );
 
-      const secondAPIPromise =  axios
-      .get(process.env.REACT_APP_API_URL+ "/api/v3/getAssignedTask",{
+    const secondAPIPromise = axios
+      .get(process.env.REACT_APP_API_URL + `/api/v3/getAssignedNotification?userId=${userId}`, {
         headers: {
-                Authorization:`Bearer ${JSON.parse(localStorage.getItem('userData'))['token']}`,
-              },
+          Authorization: `Bearer ${JSON.parse(localStorage.getItem('userData'))['token']}`,
+        },
       })
-      Promise.all([firstAPIPromise ,secondAPIPromise])
+    Promise.all([firstAPIPromise, secondAPIPromise])
       .then((responses) => {
         const firstAPIData = responses[0].data.response;
-        const mentorAssignData = responses[1].data.response;
-
-        
+        const mentorAssignedData = responses[1].data.response;
+{console.log("Forst:", mentorAssignData)}
         setProject(firstAPIData);
-        setMentorAssignData(mentorAssignData);
+        setMentorAssignData(mentorAssignedData);
 
       })
 
@@ -195,12 +204,13 @@ const ViewAllProjects = () => {
       // )
       .then((response) => {
         setProject(response.data.response);
+        setMentorAssignData(response);
       })
       .catch((error) => {
         console.error("Error fetching tasks:", error);
       });
 
-   
+
     //   .then((responsedata) => {
     //     const mentorAssignData = responsedata.data;
     //     console.log("Second API data:", mentorAssignData);
@@ -220,10 +230,12 @@ const ViewAllProjects = () => {
     isObjectEmpty(membersObj);
   }, [textInput, tech]);
 
-  const handelIndex = (index) => {
+  const handelIndex = (index, indexForMentor) => {
     setProjectIndex(index);
+    setMentorIndex(indexForMentor);
+   
   };
-  
+
   return (
     <>
       <div className="" style={{ marginBottom: "4rem" }}>
@@ -281,11 +293,6 @@ const ViewAllProjects = () => {
                         className="col-form-label title-text"
                       >
                         Project Name<span style={{ color: "red" }}>*</span>{" "}
-                        {projNameError && (
-                          <span style={{ color: "red", fontSize: "11px" }}>
-                            ({projNameError})
-                          </span>
-                        )}
                       </label>
                       <input
                         type="text"
@@ -295,6 +302,11 @@ const ViewAllProjects = () => {
                         placeholder="Enter Project Name"
                         onChange={handleProjectNameChange}
                       />
+                      {!isProjectNameValid && projName && (
+                        <span style={{ color: "red", fontSize: "11px" }}>
+                          Please enter a name with only letters and spaces, between 1 and 100 characters.
+                        </span>
+                      )}
                     </div>
 
                     <div className="mb-3">
@@ -304,11 +316,6 @@ const ViewAllProjects = () => {
                       >
                         Project Description
                         <span style={{ color: "red" }}>*</span>{" "}
-                        {desError && (
-                          <span style={{ color: "red", fontSize: "11px" }}>
-                            ({desError})
-                          </span>
-                        )}
                       </label>
                       <textarea
                         className="form-control"
@@ -317,7 +324,12 @@ const ViewAllProjects = () => {
                         placeholder="Write Here..."
                         onChange={handleProjectDescriptionChange}
                         rows={3}
-                      ></textarea>
+                      />
+                      {!isProjectDescriptionValid && projDescription && (
+                        <span style={{ color: "red", fontSize: "11px" }}>
+                          Please enter a description with a length between 50 and 750 characters.
+                        </span>
+                      )}
                     </div>
                     <div className="mb-3">
                       <label
@@ -373,11 +385,6 @@ const ViewAllProjects = () => {
                         className="col-form-label title-text"
                       >
                         Project Link<span style={{ color: "red" }}>*</span>{" "}
-                        {projLinkError && (
-                          <span style={{ color: "red", fontSize: "11px" }}>
-                            ({projLinkError})
-                          </span>
-                        )}
                       </label>
                       <input
                         className="form-control"
@@ -385,6 +392,11 @@ const ViewAllProjects = () => {
                         value={projectLink}
                         onChange={handleProjectLinkChange}
                       />
+                      {!isProjectLinkValid && projectLink && (
+                        <span style={{ color: "red", fontSize: "11px" }}>
+                          Invalid project link. Please enter a valid URL starting with http:// or https://.
+                        </span>
+                      )}
                     </div>
                     <div className="mb-3">
                       <label
@@ -448,10 +460,10 @@ const ViewAllProjects = () => {
             style={{ overFlowY: "scroll" }}
           >
             <div>
-              <DetailsLeft data={project} mentorApiData={mentorAssignData} projectDetails={handelIndex}/>
+              <DetailsLeft data={project} mentorApiData={mentorAssignData} projectDetails={handelIndex} />
             </div>
             <div className="project-detail">
-              <ProjectDetail data={project} mentorApiData={mentorAssignData} indexNumber={projectIndex} />
+              <ProjectDetail data={project} mentorApiData={mentorAssignData} indexNumber={projectIndex} mentorIndexNumber={mentorIndex} />
             </div>
           </div>
         )}
