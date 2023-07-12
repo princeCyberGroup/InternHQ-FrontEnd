@@ -4,13 +4,13 @@ import "./ViewAllIdea.css";
 import Header from "../../../../../Header/Header";
 import EmptyIdea from "../../../EmptyStates/EmptyProject/MyIdeaViewAll";
 import DetailsLeft from "../../ViewDetails/DetailsLeft";
-import ProjectDetail from "../../ViewDetails/ProjectDetail";
 import { ReactComponent as ExpandMore } from "../../../../../../Assets/expand_more.svg";
 import TechDropDown from "../../TechDropDown";
 import axios from "axios";
 import { UserContext } from "../../../../../../Context/Context";
 import BreadCrumbs from "../../../../../BreadCrumbs/BreadCrumbs";
 import IdeaDetails from "../../ViewDetails/IdeaDetails";
+
 
 const ViewAllIdeas = () => {
   // const { idea, setIdea, project, setProject } = useContext(UserContext);
@@ -28,6 +28,7 @@ const ViewAllIdeas = () => {
   const [techNames, seTechNames] = useState({});
   const [isProjectNameValid, setIsProjectNameValid] = useState(false);
   const [isProjectDescriptionValid, setIsProjectDescriptionValid] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   const handelIndex = (index) => {
     setProjectIndex(index);
@@ -52,7 +53,7 @@ const ViewAllIdeas = () => {
     e.preventDefault();
     const name = e.target.value;
     setProjName(name);
-    setIsProjectNameValid(name.match(/^[a-zA-Z\s]{1,100}$/) ? true : false);
+    setIsProjectNameValid(name.match(/^.{1,100}$/) ? true : false);
     if (!name) {
       setError(true);
       setProjNameError("Project Name is required");
@@ -221,7 +222,7 @@ const ViewAllIdeas = () => {
                       />
                       {!isProjectNameValid && projName &&(
                     <span style={{ color: "red", fontSize: "11px" }}>
-                      Please enter a name with only letters and spaces, between 1 and 100 characters.
+                      Please enter a text with a length between 1 and 100 characters.
                     </span>
                   )}
                     </div>
@@ -232,6 +233,7 @@ const ViewAllIdeas = () => {
                       >
                         Project Description
                         <span style={{ color: "red" }}>*</span>{" "}
+                        <span style={{color: "grey"}}>(Minimum 50 characters)</span>
                       </label>
                       <textarea
                         className="form-control"
@@ -243,7 +245,7 @@ const ViewAllIdeas = () => {
                       />
                         {!isProjectDescriptionValid && projDescription &&(
                       <span style={{ color: "red", fontSize: "11px" }}>
-                       Please enter a description with a length between 50 and 750 characters.
+                       Maximum description can be of 750 characters.
                       </span>
                     )}
                     </div>
@@ -255,6 +257,7 @@ const ViewAllIdeas = () => {
                         required
                       >
                         Technology Used <span style={{ color: "red" }}>*</span>
+                        <span style={{color: "grey"}}>(Select atleast 1 technology)</span>
                       </label>
                       <div className="container border p-0">
                         <div className="input-with-button">
@@ -295,6 +298,11 @@ const ViewAllIdeas = () => {
                           </ul>
                         </div>
                       </div>
+                      {!Object.values(tech).length && (
+                          <span style={{ color: "grey", fontSize: "11px" }}>
+                           Maximum 10 technologies
+                          </span>
+                        )}
                     </div>
 
                     <div className="mb-3">
@@ -303,6 +311,7 @@ const ViewAllIdeas = () => {
                         className="col-form-label title-text"
                       >
                         Members(Optional)
+                        <span style={{color: "grey"}}>(Minimum 8 members)</span>
                       </label>
                       <input
                         className="form-control"
@@ -325,10 +334,14 @@ const ViewAllIdeas = () => {
                   </button>
                   <button
                     type="button"
-                    className="btn save-button"
+                    class="btn btn-primary save-button"
+                    disabled={!isProjectNameValid || !isProjectDescriptionValid || isModalOpen}
                     data-bs-target="#viewAllAddModal"
                     data-bs-dismiss={!error ? 'modal' : ''}
-                    onClick={handleSubmit}
+                    onClick={(e) => {
+                      handleSubmit(e);
+                      setIsModalOpen(true);
+                    }}
                   >
                     <span className="save-text"> Save </span>
                   </button>

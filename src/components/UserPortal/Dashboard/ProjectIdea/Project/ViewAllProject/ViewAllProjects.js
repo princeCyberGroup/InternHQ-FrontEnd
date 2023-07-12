@@ -32,6 +32,7 @@ const ViewAllProjects = () => {
   const [isProjectNameValid, setIsProjectNameValid] = useState(false);
   const [isProjectDescriptionValid, setIsProjectDescriptionValid] = useState(false);
   const [isProjectLinkValid, setIsProjectLinkValid] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   // const details = project;
 
@@ -43,7 +44,7 @@ const ViewAllProjects = () => {
     e.preventDefault();
     const name = e.target.value;
     setProjName(name);
-    setIsProjectNameValid(name.match(/^[a-zA-Z\s]{1,100}$/) ? true : false);
+    setIsProjectNameValid(name.match(/^.{1,100}$/) ? true : false);
     if (!name) {
       setError(true);
       setProjNameError("Project name is required");
@@ -96,7 +97,7 @@ const ViewAllProjects = () => {
       checkbox.checked = false;
     });
   };
- 
+
 
   const isObjectEmpty = (object) => {
     if (object.member1.length > 0) {
@@ -189,7 +190,7 @@ const ViewAllProjects = () => {
       .then((responses) => {
         const firstAPIData = responses[0].data.response;
         const mentorAssignedData = responses[1].data.response;
-{console.log("Forst:", mentorAssignData)}
+        { console.log("Forst:", mentorAssignData) }
         setProject(firstAPIData);
         setMentorAssignData(mentorAssignedData);
 
@@ -233,7 +234,7 @@ const ViewAllProjects = () => {
   const handelIndex = (index, indexForMentor) => {
     setProjectIndex(index);
     setMentorIndex(indexForMentor);
-   
+
   };
 
   return (
@@ -316,6 +317,7 @@ const ViewAllProjects = () => {
                       >
                         Project Description
                         <span style={{ color: "red" }}>*</span>{" "}
+                        <span style={{color: "grey"}}>(Minimum 50 characters)</span>
                       </label>
                       <textarea
                         className="form-control"
@@ -338,6 +340,7 @@ const ViewAllProjects = () => {
                         required
                       >
                         Technology Used <span style={{ color: "red" }}>*</span>
+                        <span style={{color: "grey"}}>(Select atleast 1 technology)</span>
                       </label>
                       <div className="container border p-0">
                         <div className="input-with-button">
@@ -378,6 +381,11 @@ const ViewAllProjects = () => {
                           </ul>
                         </div>
                       </div>
+                      {!Object.values(tech).length && (
+                          <span style={{ color: "grey", fontSize: "11px" }}>
+                            Maximum 10 technologies
+                          </span>
+                        )}
                     </div>
                     <div className="mb-3">
                       <label
@@ -418,6 +426,7 @@ const ViewAllProjects = () => {
                         className="col-form-label title-text"
                       >
                         Members(Optional)
+                        <span style={{color: "grey"}}>(Minimum 8 members)</span>
                       </label>
                       <input
                         className="form-control"
@@ -440,10 +449,13 @@ const ViewAllProjects = () => {
                   </button>
                   <button
                     type="button"
-                    className="btn save-button"
+                    className="btn btn-primary save-button"
+                    disabled={!isProjectNameValid || !isProjectDescriptionValid || !isProjectLinkValid || isModalOpen}
                     data-bs-target="#xampleModal"
                     data-bs-dismiss={!error ? 'modal' : ''}
-                    onClick={handleSubmit}
+                    onClick={(e) => {
+                      handleSubmit(e);
+                      setIsModalOpen(true);}}
                   >
                     <span className="save-text"> Save</span>
                   </button>

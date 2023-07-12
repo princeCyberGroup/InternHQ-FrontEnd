@@ -30,6 +30,7 @@ const AddProject = () => {
   const [isProjectNameValid, setIsProjectNameValid] = useState(false);
   const [isProjectDescriptionValid, setIsProjectDescriptionValid] = useState(false);
   const [isProjectLinkValid, setIsProjectLinkValid] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   useEffect(() => {
     setTimeout(() => {
@@ -41,7 +42,7 @@ const AddProject = () => {
     e.preventDefault();
     const name = e.target.value;
     setProjName(name);
-    setIsProjectNameValid(name.match(/^[a-zA-Z\s]{1,100}$/) ? true : false);
+    setIsProjectNameValid(name.match(/^.{1,100}$/) ? true : false);
     if (!name) {
       setError(true);
       setProjNameError("Project Name is required");
@@ -321,6 +322,7 @@ const AddProject = () => {
                   >
                     Project Description
                     <span style={{ color: "red" }}>*</span>{" "}
+                    <span style={{color: "grey"}}>(Minimum 50 characters)</span>
                   </label>
                   <textarea
                     className="form-control"
@@ -343,7 +345,7 @@ const AddProject = () => {
                     required
                   >
                     Technology Used <span style={{ color: "red" }}>*</span>
-                   
+                    <span style={{color: "grey"}}>(Select atleast 1 technology)</span>
                   </label>
                   <div className="container border p-0">
                     <div className="input-with-button">
@@ -386,8 +388,8 @@ const AddProject = () => {
                     </div>
                   </div>
                   {!Object.values(tech).length && (
-                          <span style={{ color: "red", fontSize: "11px" }}>
-                            Please select atleast one technology. Maximum 10 technologies
+                          <span style={{ color: "grey", fontSize: "11px" }}>
+                           Maximum 10 technologies
                           </span>
                         )}
                 </div>
@@ -433,7 +435,7 @@ const AddProject = () => {
                     className="col-form-label title-text"
                   >
                     Members(Optional)
-                    
+                    <span style={{color: "grey"}}>(Minimum 8 members)</span>
                   </label>
                   <input
                     className="form-control"
@@ -458,11 +460,13 @@ const AddProject = () => {
               </button>
               <button
                 type="button"
-                className="btn save-button"
+                className="btn btn-primary save-button"
+                disabled={!isProjectNameValid || !isProjectDescriptionValid || !isProjectLinkValid || isModalOpen}
                 data-bs-target="#projectExampleModal"
                 data-bs-dismiss={!error ? 'modal' : ''}
-
-                onClick={(e) => handleSubmit(e)}
+                onClick={(e) => {
+                  handleSubmit(e);
+                  setIsModalOpen(true);}}
               >
                 <span className="save-text"> Save</span>
               </button>

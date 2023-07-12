@@ -27,6 +27,7 @@ const AddNewIdea = () => {
   const [isProjectNameValid, setIsProjectNameValid] = useState(false);
   const [isProjectDescriptionValid, setIsProjectDescriptionValid] = useState(false);
   const [technologySelected, setTechnologySelected] = useState("");
+  const [isModalOpen, setIsModalOpen] = useState(false);
   let memberCount = 0;
   // {
   //   first.members.map((mem) => {
@@ -81,7 +82,7 @@ const AddNewIdea = () => {
     event.preventDefault();
     const name = event.target.value;
     setProjName(name);
-    setIsProjectNameValid(name.match(/^[a-zA-Z\s]{1,100}$/) ? true : false);
+    setIsProjectNameValid(name.match(/^.{1,100}$/) ? true : false);
     if (!name) {
       setError(true);
       setProjNameError("Project Name is required");
@@ -394,6 +395,7 @@ const AddNewIdea = () => {
                     className="col-form-label title-text"
                   >
                     Project Description<span style={{ color: "red" }}>*</span>{" "}
+                    <span style={{color: "grey"}}>(Minimum 50 characters)</span>
 
                   </label>
                   <textarea
@@ -418,6 +420,7 @@ const AddNewIdea = () => {
                     required
                   >
                     Technology Used <span style={{ color: "red" }}>*</span>
+                    <span style={{color: "grey"}}>(Select atleast 1 technology)</span>
                   </label>
                   <div className="container border p-0">
                     <div className="input-with-button">
@@ -459,13 +462,13 @@ const AddNewIdea = () => {
                       </ul>
                     </div>
                     {/* </div> */}
-
+                
                   </div>
                   {!Object.values(tech).length && (
-                    <span style={{ color: "red", fontSize: "11px" }}>
-                      Please select atleast one technology. Maximum 10 technologies
-                    </span>
-                  )}
+                          <span style={{ color: "grey", fontSize: "11px" }}>
+                          Maximum 10 technologies
+                          </span>
+                        )}
                 </div>
 
                 <div className="mb-3">
@@ -474,7 +477,7 @@ const AddNewIdea = () => {
                     className="col-form-label title-text"
                   >
                     Members(Optional)
-                    <span style={{ color: "black", fontSize: "11px" }}>Maximum 10 members</span>
+                    <span style={{color: "grey"}}>(Minimum 8 members)</span>
                   </label>
                   <input
                     className="form-control"
@@ -497,16 +500,17 @@ const AddNewIdea = () => {
               </button>
               <button
                 type="button"
-                className={`btn save-button ${!isProjectNameValid || !isProjectDescriptionValid ? 'disabled' : ''}`}
+                class="btn btn-primary save-button"
+                disabled={!isProjectNameValid || !isProjectDescriptionValid || isModalOpen}
                 data-bs-target="#myIdeaModal"
                 data-bs-dismiss={!error ? 'modal' : ''}
                 onClick={(e) => {
-                  if (isProjectNameValid && isProjectDescriptionValid) {
-                    handleSubmit(e);
-                  }
+                  handleSubmit(e);
+                  setIsModalOpen(true);
                 }}
+             
               >
-                <span className="save-text">Save</span>
+                <span className="save-text"> Save </span>
               </button>
             </div>
           </div>
