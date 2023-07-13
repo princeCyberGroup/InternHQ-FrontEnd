@@ -9,6 +9,7 @@ import TechDropDown from "../../TechDropDown";
 import EmptyProjectView from "../../../EmptyStates/EmptyProject/ProjectViewAll";
 import { ReactComponent as ExpandMore } from "../../../../../../Assets/expand_more.svg";
 import BreadCrumbs from "../../../../../BreadCrumbs/BreadCrumbs";
+import {ReactComponent as VectorAdd} from "../../../../../../Assets/Vectoradd.svg";
 
 const ViewAllProjects = () => {
   // const { project } = useContext(UserContext);
@@ -259,7 +260,7 @@ const ViewAllProjects = () => {
               data-bs-toggle="modal"
               data-bs-target="#xampleModal"
             >
-              <p className="me-2 add-your-project">Add Project</p>
+              <p className="me-2 add-your-project"><VectorAdd/> Add Project</p>
             </button>
           </div>
           <div

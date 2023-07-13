@@ -311,4 +311,5 @@ p.card-textt {
     order: 1;
     flex-grow: 0;
     cursor: pointer;
+    width: 9.67rem;
 }

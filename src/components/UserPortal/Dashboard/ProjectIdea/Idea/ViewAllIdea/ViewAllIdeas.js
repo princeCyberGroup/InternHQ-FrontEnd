@@ -10,6 +10,7 @@ import axios from "axios";
 import { UserContext } from "../../../../../../Context/Context";
 import BreadCrumbs from "../../../../../BreadCrumbs/BreadCrumbs";
 import IdeaDetails from "../../ViewDetails/IdeaDetails";
+import {ReactComponent as VectorAdd} from "../../../../../../Assets/Vectoradd.svg";
 
 
 const ViewAllIdeas = () => {
@@ -176,7 +177,7 @@ const ViewAllIdeas = () => {
             data-bs-toggle="modal"
             data-bs-target="#viewAllAddModal"
           >
-            <p className="add-new-project">Add New Idea</p>
+            <p className="add-new-project"><VectorAdd/> Add New Idea</p>
           </div>
 
           <div

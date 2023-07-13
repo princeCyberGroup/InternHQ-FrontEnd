@@ -322,7 +322,7 @@ const AddProject = () => {
                   >
                     Project Description
                     <span style={{ color: "red" }}>*</span>{" "}
-                    <span style={{color: "grey"}}>(Minimum 50 characters)</span>
+                    <span style={{ color: "grey" }}>(Minimum 50 characters)</span>
                   </label>
                   <textarea
                     className="form-control"
@@ -345,7 +345,7 @@ const AddProject = () => {
                     required
                   >
                     Technology Used <span style={{ color: "red" }}>*</span>
-                    <span style={{color: "grey"}}>(Select atleast 1 technology)</span>
+                    <span style={{ color: "grey" }}>(Select atleast 1 technology)</span>
                   </label>
                   <div className="container border p-0">
                     <div className="input-with-button">
@@ -388,10 +388,10 @@ const AddProject = () => {
                     </div>
                   </div>
                   {!Object.values(tech).length && (
-                          <span style={{ color: "grey", fontSize: "11px" }}>
-                           Maximum 10 technologies
-                          </span>
-                        )}
+                    <span style={{ color: "grey", fontSize: "11px" }}>
+                      Maximum 10 technologies
+                    </span>
+                  )}
                 </div>
 
                 <div className="mb-3">
@@ -409,10 +409,10 @@ const AddProject = () => {
                     onChange={handleProjectLinkChange}
                   />
                   {!isProjectLinkValid && projectLink && (
-                      <span style={{ color: "red", fontSize: "11px" }}>
-                        Invalid project link. Please enter a valid URL starting with http:// or https://.
-                      </span>
-                    )}
+                    <span style={{ color: "red", fontSize: "11px" }}>
+                      Invalid project link. Please enter a valid URL starting with http:// or https://.
+                    </span>
+                  )}
                 </div>
                 <div className="mb-3">
                   <label
@@ -435,7 +435,7 @@ const AddProject = () => {
                     className="col-form-label title-text"
                   >
                     Members(Optional)
-                    <span style={{color: "grey"}}>(Minimum 8 members)</span>
+                    <span style={{ color: "grey" }}>(Minimum 8 members)</span>
                   </label>
                   <input
                     className="form-control"
@@ -466,7 +466,8 @@ const AddProject = () => {
                 data-bs-dismiss={!error ? 'modal' : ''}
                 onClick={(e) => {
                   handleSubmit(e);
-                  setIsModalOpen(true);}}
+                  setIsModalOpen(true);
+                }}
               >
                 <span className="save-text"> Save</span>
               </button>

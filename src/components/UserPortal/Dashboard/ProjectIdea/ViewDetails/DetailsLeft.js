@@ -21,7 +21,7 @@ const DetailsLeft = (props) => {
   }, [props.data]);
   return (
     <>
-      <div className="all-project-names pt-3 border-end">
+      <div className="all-project-names border-end">
         <div className="child-wrapper-1">
           {props.mentorApiData && Array.isArray(props.mentorApiData) && props.mentorApiData.map((user, indexForMentor) => {
 
