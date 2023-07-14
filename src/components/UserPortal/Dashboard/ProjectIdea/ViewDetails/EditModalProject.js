@@ -16,8 +16,8 @@ const ProjectModalEdit = ({projectName,projectDescriptions,indexNumber,projectTe
     const [projNameError, setProjNameError] = useState("");
     const [desError, setDesError] = useState("");
     const [projLinkError, setProjLinkError] = useState("");
-    const [tech, setTech] = useState({});
-    const [technologyNames, setTechnologyNames] = useState([projectTechnology]);
+    const [tech, setTech] = useState({projectTechnology});
+    const [technologyNames, setTechnologyNames] = useState([]);
     const [isProjectNameValid, setIsProjectNameValid] = useState(false);
     const [isProjectDescriptionValid, setIsProjectDescriptionValid] = useState(false);
     const [isProjectLinkValid, setIsProjectLinkValid] = useState(false);
@@ -151,6 +151,7 @@ const ProjectModalEdit = ({projectName,projectDescriptions,indexNumber,projectTe
         setMemberNames(editProject?.memberNames);
         setTechnologyNames(editProject?.technologyNames);
       }, [editProject]);
+
       useEffect(() => {
         setProjName(projectName)
         setDescription(projectDescriptions);
@@ -158,8 +159,9 @@ const ProjectModalEdit = ({projectName,projectDescriptions,indexNumber,projectTe
         setHostedLink(hostedLinks);
         setMemberNames(memberName);
         setTechnologyNames(projectTechnology);
-        {console.log("names",projName)}
-    }, [indexNumber])
+        {console.log("names",memberName)}
+    }, [indexNumber]);
+
       const handleEditProject = (project) => {
         setProjectToEdit(project);
       }
@@ -191,11 +193,11 @@ const ProjectModalEdit = ({projectName,projectDescriptions,indexNumber,projectTe
                                     placeholder="Enter Project Name"
                                     onChange={handleProjectNameChange}
                                 />
-                                {!isProjectNameValid && projName && (
+                                {/* {!isProjectNameValid && projName && (
                                     <span style={{ color: "red", fontSize: "11px" }}>
                                         Please enter a name with only letters and spaces, between 1 and 100 characters.
                                     </span>
-                                )}
+                                )} */}
                             </div>
                             <div class="mb-3">
                                 <label
@@ -214,11 +216,11 @@ const ProjectModalEdit = ({projectName,projectDescriptions,indexNumber,projectTe
                                     onChange={handleProjectDescriptionChange}
                                     rows={3}
                                 />
-                                {!isProjectDescriptionValid && description && (
+                                {/* {!isProjectDescriptionValid && description && (
                                     <span style={{ color: "red", fontSize: "11px" }}>
                                         Please enter a description with a length between 50 and 750 characters.
                                     </span>
-                                )}
+                                )} */}
                             </div>
                             <div className="mb-3">
                                 <label
@@ -265,15 +267,16 @@ const ProjectModalEdit = ({projectName,projectDescriptions,indexNumber,projectTe
                                                 seTechNames={seTechNames}
                                                 techNames={techNames}
                                                 technologyNames={technologyNames}
+                                                selectedTech={editProject?.technologyNames}
                                             />
                                         </ul>
                                     </div>
                                 </div>
-                                {!Object.values(tech).length && (
+                                {/* {!Object.values(tech).length && (
                                     <span style={{ color: "grey", fontSize: "11px" }}>
                                         Maximum 10 technologies
                                     </span>
-                                )}
+                                )} */}
                             </div>
                             <div className="mb-3">
                                 <label
@@ -289,11 +292,11 @@ const ProjectModalEdit = ({projectName,projectDescriptions,indexNumber,projectTe
                                     value={projectLink}
                                     onChange={handleProjectLinkChange}
                                 />
-                                {!isProjectLinkValid && projectLink && (
+                                {/* {!isProjectLinkValid && projectLink && (
                                     <span style={{ color: "red", fontSize: "11px" }}>
                                         Invalid project link. Please enter a valid URL starting with http:// or https://.
                                     </span>
-                                )}
+                                )} */}
                             </div>
                             <div className="mb-3">
                                 <label
