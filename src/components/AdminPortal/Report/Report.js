@@ -9,6 +9,7 @@ import DropdownD from "./DropdownD";
 import CryptoJS from "crypto-js";
 import { useNavigate } from "react-router-dom";
 import SelectedTech from "./SelectedTech/SelectedTech";
+import { Data } from "./Fetcheddataobject";
 const Report = () => {
   //data
   const [selectLevel, setSelectLevel] = useState([]);
@@ -51,7 +52,6 @@ const Report = () => {
             },
           }
         );
-
         setOrgTableData(response?.data.response);
         setTableData(response?.data.response);
         setIsLoading(false);
@@ -83,7 +83,7 @@ const Report = () => {
     const getFilterItems = (items, query) => {
       if (query != "") {
         return items.filter((item) =>
-          `${item.firstName} ${item.lastName}`
+          `${item[Data.FN]} ${item[Data.LN]}`
             .toLowerCase()
             .includes(query.toLowerCase())
         );
@@ -97,7 +97,7 @@ const Report = () => {
           return data?.technames?.some((element, index) => {
             return (
               selectTech.includes(element) &&
-              selectLevel.includes(data?.level[index])
+              selectLevel.includes(data[Data.L][index])
             );
           });
         });
@@ -107,6 +107,23 @@ const Report = () => {
           return data?.technames?.some((element) => {
             return selectTech.includes(element);
           });
+        });
+        return filteredData;
+      } else if (selectLevel.length > 0) {
+        const filteredData = items?.filter((data) => {
+          if (
+            (data[Data.BC] !== null &&
+              data[Data.BC] > 0 &&
+              selectLevel.includes("Beginner")) ||
+            (data[Data.IC] !== null &&
+              data[Data.IC] > 0 &&
+              selectLevel.includes("Intermediate")) ||
+            (data[Data.AC] !== null &&
+              data[Data.AC] > 0 &&
+              selectLevel.includes("Advanced"))
+          )
+            return true;
+          return false;
         });
         return filteredData;
       }
