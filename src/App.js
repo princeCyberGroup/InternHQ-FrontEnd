@@ -17,7 +17,7 @@ import PasswordChangedScreen from "./components/Accounts/ForgotPassword/Password
 
 import Dashboard from "./components/UserPortal/Dashboard/Dashboard";
 import ViewAllProjects from "./components/UserPortal/Dashboard/ProjectIdea/Project/ViewAllProject/ViewAllProjects";
-import AuthGuard from "./components/AuthGuard";
+import AuthGuard from "./components/_guard/AuthGuard";
 import TakeYourTest from "./components/UserPortal/SkillManagement/TakeYourTest/TakeYourTest";
 import DailyUpdateTable from "./components/UserPortal/DailyUpdateTable/DailyUpdateTable";
 import SkillManagement from "./components/UserPortal/SkillManagement/SkillManagement";
@@ -31,8 +31,8 @@ import Task from "./components/AdminPortal/Task/Task";
 import DashboardA from "./components/AdminPortal/Dashboard/DashboardA";
 import Detailedreport from "./components/AdminPortal/Report/Detailedreport/Detailedreport";
 import MentorDashboard from "./components/MentorPortal/MentorDashboard";
-import AdminAuthGuard from "./components/AdminAuthGuard";
-import MentorAuthGuard from "./components/MentorAuthGuard";
+import AdminAuthGuard from "./components/_guard/AdminAuthGuard";
+import MentorAuthGuard from "./components/_guard/MentorAuthGuard";
 import Error_400 from "./components/ErrorPage/Error_400";
 import Error_500 from "./components/ErrorPage/Error_500";
 import Error_404 from "./components/ErrorPage/Error_404";

@@ -1,16 +1,15 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
 import CryptoJS from "crypto-js";
-import { UserContext } from "../../../../Context/Context";
 import { useNavigate } from "react-router-dom";
 
 const cgData = [
   "Angular",
   "React",
-  ".Net",
-  "C Sharp",
+  "DotNet",
+  "CSharp",
   "Salesforce",
-  "MSSQL",
+  "MsSQL",
   "JavaScript",
   "Azure",
 ];
@@ -26,7 +25,6 @@ const TopicSelect = (props) => {
   } else {
     console.log("No encrypted data found in localStorage.");
   }
-  const { projectApiData, setProjectApiData } = useContext(UserContext);
   const { onChange, disabled, resetSelect, learningType, topicName } = props;
   const [topics, setTopics] = useState([]);
   const [myProjects, setMyProjects] = useState();

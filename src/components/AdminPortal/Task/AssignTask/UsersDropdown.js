@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import CryptoJS from "crypto-js";
+import { ReactComponent as SearchIcon } from "../../../../Assets/search.svg";
+
 const UsersDropdown = (props) => {
   const [allUsers, setAllUsers] = useState([]);
   const [filteredUsers, setFilteredUsers] = useState([]);
-
 
   useEffect(() => {
     const secretkeyUser = process.env.REACT_APP_USER_KEY;
@@ -20,7 +21,6 @@ const UsersDropdown = (props) => {
     axios
       .get(process.env.REACT_APP_API_URL + "/api/v3/getAllUsers", {
         headers: {
-
           Authorization: `Bearer ${parsedObject["token"]}`,
         },
       })
@@ -38,13 +38,11 @@ const UsersDropdown = (props) => {
         });
         setAllUsers(sortedUsers);
         setFilteredUsers(sortedUsers);
-
       })
       .catch((error) => {
         console.error(error);
       });
   }, []);
-
 
   const handleCheckAllChange = (e) => {
     if (e.target.checked) {
@@ -61,9 +59,14 @@ const UsersDropdown = (props) => {
     if (e.target.checked) {
       props.setSelectedUsers([...props.selectedUsers, c.name]);
       props.setSelectedUserIds([...props.selectedUserIds, c.userId]);
-    } else {
-      props.setSelectedUsers(props.selectedUsers.filter((item) => item !== c.name));
-      props.setSelectedUserIds(props.selectedUserIds.filter((item) => item !== c.userId));
+    } else if(!e.target.checked) {
+      props.setSelectedUsers(
+        props.selectedUsers.filter((item) => item !== c.name)
+      );
+      props.setSelectedUserIds(
+        props.selectedUserIds.filter((item) => item !== c.userId)
+        );
+        console.log("this is users id",props.selectedUserIds);
     }
   };
 
@@ -80,40 +83,54 @@ const UsersDropdown = (props) => {
       user.name.toLowerCase().startsWith(e.target.value.toLowerCase())
     );
     setFilteredUsers(filtered);
+  
+    const searchInputValue = e.target.value;
+    const selectAllCheckbox = document.querySelector("#selectAll");
+    if (searchInputValue === "") {
+      selectAllCheckbox.style.display = "block";
+    } else {
+      selectAllCheckbox.checked=false;
+    }
   };
 
   return (
     <>
-    
-      <div className="form-check">
-        
+      <div
+        className="d-flex align-items-center ps-1 associate-search-log-wrapper mb-2"
+        style={{ width: "50%"}}
+      >
+        <SearchIcon />
+        <input
+          style={{ width: "100%",height:"1.5rem" }}
+          className="search-associate-log"
+          type="text"
+          placeholder="Search users..."
+          value={props.searchUserQuery}
+          onChange={handleSearchChange}
+        />
+      </div>
+      <div style={{maxHeight:"6rem",overflow:"auto"}}>
+      {!props.searchUserQuery && (
+      <div className="form-check small checkbox">
         <input
           className="form-check-input"
           type="checkbox"
           id="selectAll"
-          checked={props.selectedUsers.length === filteredUsers.length}
+          checked={props.selectedUsers?.length === filteredUsers.length}
           onChange={handleCheckAllChange}
         />
         <label className="form-check-label" htmlFor="selectAll">
           Select all
         </label>
-        <input
-        style={{float:"right", marginRight:"1rem"}}
-        type="text"
-        // className="form-control"
-        placeholder="Search users..."
-        value={props.searchUserQuery}
-        onChange={handleSearchChange}
-      />
-      </div>
-      
+      </div>)}
+
       {filteredUsers.map((c) => (
-        <div className="form-check form-check" key={c.userId}>
+        <div className="form-check small checkbox" key={c.userId}>
           <input
             className="form-check-input"
             type="checkbox"
             id={c.userId}
-            checked={props.selectedUsers.includes(c.name)}
+            checked={props.selectedUsers?.includes(c.name)}
             onChange={(e) => handleUsersChange(e, c)}
           />
           <label className="form-check-label" htmlFor={c.userId}>
@@ -121,12 +138,14 @@ const UsersDropdown = (props) => {
           </label>
         </div>
       ))}
+      
       <input
         type="text"
         className="custom-input"
-        value={props.selectedUsers.join(", ")}
+        value={props.selectedUsers?.join(", ")}
         disabled
       />
+      </div>
     </>
   );
 };
