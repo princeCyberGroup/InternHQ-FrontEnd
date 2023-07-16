@@ -428,6 +428,7 @@ export default function DashboardGraph() {
                     weeklyTotalHours[2].selfLearningHours +
                     weeklyTotalHours[2].cgLearningHours +
                     weeklyTotalHours[2].sessionHours
+
                 )
               )
             ).toFixed(2),
@@ -1166,7 +1167,7 @@ export default function DashboardGraph() {
             <Bar dataKey="Task by Mentor" stackId="a" fill="#28519E" />
             <Bar dataKey="Self Learning" stackId="a" fill="#FFB81C" />
             <Bar dataKey="CG Learning Video" stackId="a" fill="#FF8311" />
-            <Bar dataKey="Session" stackId="a" fill="#28FDD6" />
+            <Bar dataKey="Session" stackId="a" fill="rgba(0, 44, 63, 1)" />
             <Bar dataKey="Idle" stackId="a" fill="#B2B2B3" />
           </BarChart>
         </div>

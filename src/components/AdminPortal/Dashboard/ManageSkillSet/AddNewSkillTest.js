@@ -11,6 +11,7 @@ import { useNavigate } from "react-router-dom";
 export const AddNewSkillTest = () => {
   const [technology, setTechnology] = useState("");
   const [name, setName] = useState("");
+  const [fileError, setFileError] = useState("");
   const navigate = useNavigate();
 
   const [question, setQuestion] = useState("");
@@ -65,12 +66,20 @@ export const AddNewSkillTest = () => {
     e.preventDefault();
   };
   const handleFileChange = (selectedFile) => {
-    setFile(selectedFile);
-    setProgress(0);
-
     if (selectedFile) {
+      // Check file extension
+      if (!selectedFile.name.endsWith(".csv")) {
+        setFileError(
+          "Unsupported File Format. Please select .csv files only."
+        );
+        setFile(null);
+      } else {
+        setFileError("");
+        setFile(selectedFile);
+      }
       readFileData(selectedFile);
     }
+    setProgress(0);
   };
   const readFileData = (file) => {
     const reader = new FileReader();
@@ -119,6 +128,7 @@ export const AddNewSkillTest = () => {
     setQuestion("");
     setDuration("");
     setFile(null);
+    setFileError("");
     handleRemoveFile();
     // document.getElementById("flexRadioDefault1").checked = false;
     // setBeginnerChecked(false);
@@ -346,6 +356,7 @@ export const AddNewSkillTest = () => {
                     </div>
                   </div>
                 )}
+                {fileError && <p style={{ color: "red", fontSize: "1rem" }}>{fileError}</p>}
                 <div className="d-flex justify-content-between">
                   <div>
                     <label
@@ -396,7 +407,7 @@ export const AddNewSkillTest = () => {
             <div className="modal-footer border-top-0">
               <button
                 type="button"
-                className="btn cancel-button fw-bold"
+                className="btn add-new-skill-test-cancel-btn"
                 data-bs-dismiss="modal"
                 onClick={(e) => handleClickClear(e)}
               >
@@ -404,17 +415,19 @@ export const AddNewSkillTest = () => {
               </button>
               <button
                 type="button"
-                className="btn save-button"
+                className="btn save-button add-new-skill-test-save-btn"
                 data-bs-dismiss={"modal" ? false : true}
-              >
-                <span
+                disabled={!file}
+                onClick={(e) => {
+                  handleSubmit(e);
+                }}
+              >Save
+                {/* <span
                   className="save-text"
-                  onClick={(e) => {
-                    handleSubmit(e);
-                  }}
+                  
                 >
-                  Save
-                </span>
+                  
+                </span> */}
               </button>
             </div>
           </div>

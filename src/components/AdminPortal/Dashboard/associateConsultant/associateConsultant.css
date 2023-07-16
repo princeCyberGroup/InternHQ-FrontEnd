@@ -46,6 +46,16 @@ background: #b8dde1;
 border-radius: 100%;
 }
 
+.frame-skeleton-loading {
+  display: flex;
+margin-left: 0.5rem;
+align-items: center;
+justify-content: center;
+width: 2.25rem; /* Converted from 36px */
+height: 2.25rem; /* Converted from 36px */
+border-radius: 100%;
+}
+
 .frame-text {
   width: 8.75rem; /* Converted from 140px */
   height: 1.25rem; /* Converted from 20px */

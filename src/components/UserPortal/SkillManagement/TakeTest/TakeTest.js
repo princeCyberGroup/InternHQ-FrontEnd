@@ -29,6 +29,7 @@ const scoreIndex = {
 
 const TakeTest = () => {
   const { tests, setTests, resultInfo } = useContext(TestContext);
+  console.log(resultInfo, "This is results")
   // console.log(new Date(resultInfo[0]?.date[0]), "This is date")
   const [activeButton, setActiveButton] = useState("all");
   const { score } = useContext(UserContext);

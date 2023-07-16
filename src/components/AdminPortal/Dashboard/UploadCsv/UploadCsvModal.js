@@ -8,6 +8,7 @@ import axios from "axios";
 export const UploadCsv = () => {
   const [selectedFile, setSelectedFile] = useState(null);
   const [file, setFile] = useState(null);
+  const [fileError, setFileError] = useState("");
   const [progress, setProgress] = useState(0);
   const fileInputRef = useRef(null);
 
@@ -15,6 +16,7 @@ export const UploadCsv = () => {
     e.preventDefault();
     setSelectedFile(null);
     setFile(null);
+    setFileError("");
     handleRemoveFile();
   };
 
@@ -52,12 +54,20 @@ export const UploadCsv = () => {
   };
 
   const handleFileChange = (selectedFile) => {
-    setFile(selectedFile);
-    setProgress(0);
-
     if (selectedFile) {
-      readFileData(selectedFile);
+      // Check file extension
+      if (!selectedFile.name.endsWith(".csv")) {
+        setFileError(
+          "Unsupported File Format. Please select .csv files only."
+        );
+        setFile(null);
+      } else {
+        setFileError("");
+        setFile(selectedFile);
+      }
+    readFileData(selectedFile);
     }
+    setProgress(0);
   };
 
   const readFileData = (file) => {
@@ -101,9 +111,9 @@ export const UploadCsv = () => {
         aria-labelledby="uploadCsvLabel"
         aria-hidden="true"
       >
-        <div className="modal-dialog">
-          <div className="modal-content">
-            <div className="modal-header border-bottom-1">
+        <div className="modal-dialog"   >
+          <div className="modal-content " >
+            <div className="modal-header border-bottom-1" >
               <h5 className="modal-title modalheading-text" id="uploadCsvLabel">
                 Upload CSV
               </h5>
@@ -193,12 +203,14 @@ export const UploadCsv = () => {
                     </div>
                   </div>
                 )}
+                {fileError && <p style={{ color: "red", fontSize: "1rem" }}>{fileError}</p>}
               </form>
               <div className="saveCancel border-top-0 pb-0 row ">
                 <div className="row mt-3 d-flex justify-content-end">
                   <button
                     style={{ width: "8rem" }}
                     data-bs-dismiss="modal"
+                    className="btn upload-csv-cancel-btn"
                     onClick={(e) => handleCancelClick(e)}
                   >
                     Cancel
@@ -206,6 +218,8 @@ export const UploadCsv = () => {
                   <button
                     style={{ width: "8rem", marginLeft: "0.625rem" }}
                     onClick={(e) => handleSaveClick(e)}
+                    disabled={!file}
+                    className="btn upload-csv-save-btn"
                     data-bs-dismiss="modal"
                   >
                     Save

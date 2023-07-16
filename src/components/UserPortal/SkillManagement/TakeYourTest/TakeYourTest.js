@@ -131,7 +131,7 @@ const TakeYourTest = () => {
     try {
       const response = await fetch(
         process.env.REACT_APP_API_URL +
-          `/api/v3/getAllQuestions?examId=${examId}`,
+          `/api/v3/getAllQuestions?examId=${examId}&userId=${userId}`,
         {
           headers: {
             Authorization: `Bearer ${parsedObject["token"]}`,
@@ -183,7 +183,7 @@ const TakeYourTest = () => {
   });
 
   let submitQuesData;
-  const api = process.env.REACT_APP_API_URL + "/api/v3//submitAnswer";
+  const api = process.env.REACT_APP_API_URL + "/api/v3/submitAnswer";
   const submitTest = async () => {
     try {
       // debugger;
@@ -202,7 +202,7 @@ const TakeYourTest = () => {
               Authorization: `Bearer ${localStorage.getItem("questionToken")}`
             },
             body: JSON.stringify({
-              userId: userId,
+              // userId: userId,
               technology: techName,
               level: level,
               optRequest: mappedAnswers.splice(0, mappedAnswers.length - 1),

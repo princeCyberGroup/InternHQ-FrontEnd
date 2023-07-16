@@ -7,10 +7,10 @@ import { useNavigate } from "react-router-dom";
 const cgData = [
   "Angular",
   "React",
-  ".Net",
-  "C Sharp",
+  "DotNet",
+  "CSharp",
   "Salesforce",
-  "MSSQL",
+  "MsSQL",
   "JavaScript",
   "Azure",
 ];

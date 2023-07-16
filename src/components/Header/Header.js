@@ -5,6 +5,9 @@ import { ReactComponent as CGlogo } from "../../Assets/CG-Logo (1) 1CGlogo.svg";
 import "./Header.css";
 import MentorAssignedAlerts from "../UserPortal/Dashboard/MentorAssignedAlerts/MentorAssignedAlerts";
 import CryptoJS from "crypto-js";
+import { ReactComponent as UploadCsvv } from "../../Assets/upload.svg";
+import { UploadCsv } from "../AdminPortal/Dashboard/UploadCsv/UploadCsvModal";
+import "../AdminPortal/Dashboard/UploadCsv/uploadCsv.css"
 
 const Header = () => {
   const secretKey = process.env.REACT_APP_USER_KEY;
@@ -130,7 +133,16 @@ const Header = () => {
               <MentorAssignedAlerts func={anotherFunc} setState={isTodayDate} />
             </>
           ) : (
-            ""
+            <>
+            <button
+              className="upload-list-button"
+              data-bs-toggle="modal"
+              data-bs-target="#uploadCsv"
+              style={{marginRight: "24px"}}
+            >
+              <UploadCsvv />Upload CSV
+            </button>
+          </>
           )}
 
           <div
@@ -183,6 +195,7 @@ const Header = () => {
           </div>
         </nav>
       </div>
+      <UploadCsv />
     </>
   );
 };

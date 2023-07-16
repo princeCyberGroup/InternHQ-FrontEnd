@@ -29,13 +29,13 @@
     color: #FFFFFF;
 }
 
-.modal-cancel-button {
+.md-cancel-btn {
     width: 92px;
     border: 1px solid #28519E;
     border-radius: 0.25rem;
 }
 
-.modal-cancel-button:hover {
+.md-cancel-btn:hover {
     width: 92px;
     border: 1px solid #28519E;
     border-radius: 0.25rem;
@@ -266,7 +266,7 @@
     color: #23262B;
 }
 
-.csv-upload-button {
+/* .csv-upload-button {
     display: flex;
     flex-direction: row;
     justify-content: center;
@@ -280,7 +280,7 @@
     flex: none;
     order: 1;
     flex-grow: 0;
-}
+} */
 
 /* .csv-upload-button:hover {
     background: #28519E;
@@ -328,4 +328,19 @@ background: var(--primary-white, #FFF);
     margin-top: 1.5rem;
     padding: 1rem;
     margin-right: 0.4rem;
+  }
+  .add-new-skill-test-save-btn:disabled {
+    background: #28519E;
+    color: #FFF;
+  }
+  
+  .add-new-skill-test-cancel-btn {
+  border: 1px solid #28519e;
+  border-radius: 0.25rem;
+  height: 36px;
+  /* width: 4.625rem; */
+  }
+
+  .add-new-skill-test-cancel-btn:hover {
+    border: 1px solid #28519e;
   }
