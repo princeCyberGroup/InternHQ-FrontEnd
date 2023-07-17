@@ -134,11 +134,13 @@ const DetailedCard = (props) => {
                 />
               </div>
             </div>
+
           </div>
           <div
             className="card-body p-0"
             style={{ maxHeight: "100vh", overflow: "auto", width: "49rem" }}
           >
+
             {props.logData
               .filter((log) =>
                 selectedDateFilter

@@ -38,7 +38,6 @@ const LoginScreen = () => {
   const handleTogglePasswordVisibility = () => {
     setShowPassword(!showPassword);
   };
-  let firstNaming;
   const handleSubmit = async (event) => {
     event.preventDefault();
     setIsLoading(true);
@@ -85,18 +84,18 @@ const LoginScreen = () => {
           setIsPasswordValid(false);
         }
         setIsLoading(false);
-        if (error.response?.data.statusCode == 400) {
-          navigate("/error/statusCode=400");
-        }
-        if (error.response?.data.statusCode == 401) {
-          navigate("/error/statusCode=401");
-        }
-        if (error.response?.data.statusCode == 404) {
-          navigate("/error/statusCode=404");
-        }
-        if (error.response?.data.statusCode == 500) {
-          navigate("/error/statusCode=500");
-        }
+        // if (error.response?.data.statusCode == 400) {
+        //   navigate("/error/statusCode=400");
+        // }
+        // if (error.response?.data.statusCode == 401) {
+        //   navigate("/error/statusCode=401");
+        // }
+        // if (error.response?.data.statusCode == 404) {
+        //   navigate("/error/statusCode=404");
+        // }
+        // if (error.response?.data.statusCode == 500) {
+        //   navigate("/error/statusCode=500");
+        // }
       });
   };
   useEffect(() => {
