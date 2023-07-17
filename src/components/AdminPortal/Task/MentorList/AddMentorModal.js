@@ -19,7 +19,8 @@ export const AddMentorModal = ({ onAddMentor }) => {
   const [isValidEmail, setIsValidEmail] = useState(true);
   const [designation, setDesignation] = useState("");
   const [imageUrl, setImageUrl] = useState(null);
-  const [error, setError] = useState(true);
+  const [nameError, setNameError] = useState(true);
+  const [emailError, setEmailError] = useState(true);
   const [isCleared, setIsCleared] = useState(false);
   const [dropDown, setDropDown] = useState(false);
   const [tech, setTech] = useState({});
@@ -87,7 +88,12 @@ export const AddMentorModal = ({ onAddMentor }) => {
   const handleFormSubmit = async (e) => {
     e.preventDefault();
 
-    if (error) {
+    if (
+      nameError ||
+      !designation ||
+      emailError ||
+      selectedTechIds.length === 0
+    ) {
       alert("Please fill out the necessary fields");
     } else {
       try {
@@ -98,7 +104,7 @@ export const AddMentorModal = ({ onAddMentor }) => {
             emailId,
             imageUrl,
             designation,
-            skills: Object.values(tech),
+            skills: technologyNames,
           }
         );
         onAddMentor({
@@ -114,16 +120,9 @@ export const AddMentorModal = ({ onAddMentor }) => {
         setEmailId("");
         setImageUrl("");
         setDesignation("");
-        setError(false);
+        setNameError(true);
         setTech({});
-        setError(true);
-
-        if (!error) {
-          const closeButton = document.querySelector(
-            "#addMentorModal .btn-close"
-          );
-          closeButton.click();
-        }
+        setEmailError(true);
       } catch (err) {
         console.log(err);
       }
@@ -133,19 +132,14 @@ export const AddMentorModal = ({ onAddMentor }) => {
   const handleMentorName = (e) => {
     setMentorName(e.target.value);
     if (mentorName.length === 0) {
-      setError(true);
+      setNameError(true);
     } else {
-      setError(false);
+      setNameError(false);
     }
   };
 
   const handleDesignation = (e) => {
     setDesignation(e.target.value);
-    if (!designation) {
-      setError(true);
-    } else {
-      setError(false);
-    }
   };
 
   const handleEmailId = (e) => {
@@ -153,9 +147,9 @@ export const AddMentorModal = ({ onAddMentor }) => {
     setEmailId(enteredEmail);
     setIsValidEmail(validateEmail(enteredEmail));
     if (emailId.length < 2) {
-      setError(true);
+      setEmailError(true);
     } else {
-      setError(false);
+      setEmailError(false);
     }
   };
 
@@ -349,6 +343,7 @@ export const AddMentorModal = ({ onAddMentor }) => {
                             techDataComingChild={techDataComingFrmChild}
                             setTechnologyNames={setTechnologyNames}
                             technologyNames={technologyNames}
+                            selectedTechIds={selectedTechIds}
                             setSelectedTechIds={setSelectedTechIds}
                             searchQuery={searchQuery}
                             setSearchQuery={setSearchQuery}
@@ -374,7 +369,14 @@ export const AddMentorModal = ({ onAddMentor }) => {
               <button
                 type="button"
                 className="btn save-button fw-bold"
-                data-bs-dismiss={error ? "" : "modal"}
+                data-bs-dismiss={
+                  !nameError &&
+                  designation &&
+                  !emailError &&
+                  selectedTechIds.length !== 0
+                    ? "modal"
+                    : ""
+                }
                 onClick={handleFormSubmit}
               >
                 <span className="save-text">Save</span>

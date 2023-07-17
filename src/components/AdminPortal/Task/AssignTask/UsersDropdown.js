@@ -66,7 +66,6 @@ const UsersDropdown = (props) => {
       props.setSelectedUserIds(
         props.selectedUserIds.filter((item) => item !== c.userId)
         );
-        console.log("this is users id",props.selectedUserIds);
     }
   };
 

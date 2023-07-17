@@ -265,7 +265,6 @@ export const AddNewTask = ({
                       <DatePicker
                         selected={startDate}
                         onChange={(date) => {
-                          console.log("data", startDate);
                           setStartDate(date);
                         }}
                         dateFormat="MM-dd-yyyy"
