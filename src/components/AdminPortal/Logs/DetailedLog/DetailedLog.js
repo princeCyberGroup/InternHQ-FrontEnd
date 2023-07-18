@@ -60,7 +60,6 @@ const DetailedCard = (props) => {
   const [selectedDateFilter, setSelectedDateFilter] = useState(null);
 
   const initials = getInitials(props.selectedUser?.name);
-  console.log(props.logData);
 
   return (
     <>
