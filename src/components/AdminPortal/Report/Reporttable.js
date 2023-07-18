@@ -8,9 +8,15 @@ import { Data } from "./Fetcheddataobject";
 import { useNavigate } from "react-router-dom";
 import ReportTableSkeleton from "./ReportTableSkeleton";
 
-const Reporttable = ({ tableData, isLoading, handleDeployChange }) => {
+const Reporttable = ({
+  tableData,
+  isLoading,
+  deployData,
+  handleDeployChange,
+}) => {
   //data
   const navigate = useNavigate();
+  const [indexOfUserId, setIndexOfUserId] = useState(-1);
   const [selectedIndex, setSelectedIndex] = useState(-1);
   //function
   const handleOnclick = (index) => {
@@ -18,6 +24,7 @@ const Reporttable = ({ tableData, isLoading, handleDeployChange }) => {
     sessionStorage.setItem("chrumValue", "Report");
     navigate(`/admin/report/detail`);
   };
+  console.log(deployData);
   return (
     <div className="container-fluid container-table">
       <table className="table-report" cellPadding="0" cellSpacing="0">
@@ -149,7 +156,15 @@ const Reporttable = ({ tableData, isLoading, handleDeployChange }) => {
                         onChange={() => {
                           handleDeployChange(val.userId);
                         }}
-                        checked={val[Data.DE]}
+                        checked={
+                          deployData.some(
+                            (value) => value?.userId === val?.userId
+                          )
+                            ? deployData.find(
+                                (value) => value?.userId === val?.userId
+                              ).status
+                            : val[Data.DE]
+                        }
                       />
                     </div>
                   </td>
