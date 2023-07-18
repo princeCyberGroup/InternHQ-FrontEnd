@@ -4,15 +4,18 @@ import axios from "axios";
 import "./SelectedTech.css";
 import { ReactComponent as ExpandMore } from "../../../../Assets/expand_more.svg";
 import { useNavigate } from "react-router-dom";
-const SelectedTech = ({ handleSelectTech }) => {
+const SelectedTech = ({ loadFilter, handleSelectTech }) => {
   const [selectedOptions, setSelectedOptions] = useState([]);
   const [showDropdown, setShowDropdown] = useState(false);
   const [techOptions, setTechOptions] = useState([]);
   const navigate = useNavigate();
-  useEffect(()=>{
+  useEffect(() => {
+    setShowDropdown(false);
+    // setSelectedOptions([]);
+  }, [loadFilter]);
+  useEffect(() => {
     handleSelectTech(selectedOptions);
-  },
-  [selectedOptions])
+  }, [selectedOptions]);
   useEffect(() => {
     const fetchTechOptions = async () => {
       const secretkeyUser = process.env.REACT_APP_USER_KEY;

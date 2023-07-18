@@ -1,10 +1,13 @@
 import React, { useState, useEffect } from "react";
 import "./Selectlevel.css";
 import { ReactComponent as ExpandMore } from "../../../../Assets/expand_more.svg";
-const Selectlevel = ({ handleSelectLevel }) => {
+const Selectlevel = ({ loadFilter, handleSelectLevel }) => {
   const [selectedOptions, setSelectedOptions] = useState([]);
   const [showDropdown, setShowDropdown] = useState(false);
-
+  useEffect(() => {
+    setShowDropdown(false);
+    // setSelectedOptions([]);
+  }, [loadFilter]);
   useEffect(() => {
     handleSelectLevel(selectedOptions);
   }, [selectedOptions]);
