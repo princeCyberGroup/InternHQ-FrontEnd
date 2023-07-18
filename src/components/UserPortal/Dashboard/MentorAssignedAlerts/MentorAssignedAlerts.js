@@ -149,8 +149,9 @@ const MentorAssignedAlerts = (props) => {
                 return (
                   <div
                     className="notification-wrapper px-0"
-                    style={{ width: "18.9rem", alignItems: "center" }}
+                    style={{ width: "18.9rem", alignItems: "center", cursor: "pointer" }}
                     key={key}
+                    onClick={() => {navigate("/all-projects")}}
                   >
                     <div
                       className=""

@@ -48,6 +48,7 @@ const SkillsAdded = () => {
       const data = await response.json();
 
       setResultInfo(data.response);
+      console.log(data.response, "This is resp")
       setIsLoading(false);
     } catch (error) {
       if (error.response.status === 401) {
@@ -106,6 +107,9 @@ const SkillsAdded = () => {
                     </div>
                     <div className="d-flex p-0 stars">
                       <div
+                      data-toogle="tooltip"
+                      data-placement="bottom"
+                      title={`No Of Attempts: ${DataUsed.noOfAttempt[0]}`}
                         className={`col d-flex flex-column ${
                           DataUsed.examScores[0] >= 80 ? "block" : "grey"
                         }`}
@@ -126,6 +130,9 @@ const SkillsAdded = () => {
                       </div>
 
                       <div
+                      data-toogle="tooltip"
+                      data-placement="bottom"
+                      title={`No Of Attempts: ${DataUsed.noOfAttempt[1]}`}
                         className={`col d-flex flex-column ${
                           DataUsed.examScores[1] >= 80 ? "block" : "grey"
                         }`}
@@ -146,6 +153,9 @@ const SkillsAdded = () => {
                       </div>
 
                       <div
+                      data-toogle="tooltip"
+                      data-placement="bottom"
+                      title={`No Of Attempts: ${DataUsed.noOfAttempt[2]}`}
                         className={`col d-flex flex-column ${
                           DataUsed.examScores[2] >= 80 ? "block" : "grey"
                         }`}
@@ -166,6 +176,9 @@ const SkillsAdded = () => {
                       </div>
 
                       <div
+                      data-toogle="tooltip"
+                      data-placement="bottom"
+                      title={`No Of Attempts: ${DataUsed.noOfAttempt[3]}`}
                         className={`col d-flex flex-column ${
                           DataUsed.examScores[3] >= 80 ? "block" : "grey"
                         }`}

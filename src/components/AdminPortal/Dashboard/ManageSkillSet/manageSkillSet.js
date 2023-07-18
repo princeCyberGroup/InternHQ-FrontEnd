@@ -1,13 +1,22 @@
 import "../ManageSkillSet/manageSkillSet.css";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { ReactComponent as Add } from "../../../../Assets/add.svg";
 import { ReactComponent as Right } from "../../../../Assets/right.svg";
 import { AddNewSkillTest } from "./AddNewSkillTest";
 import "../ManageSkillSet/Modals.css";
 import { Link } from "react-router-dom";
+import Skeleton from "react-loading-skeleton";
+import "react-loading-skeleton/dist/skeleton.css";
 
 // import { ReactComponent as Pipe } from "../Assets/pipe.svg"
 export default function ManageSkillSet({ data }) {
+  const [isLoading, setIsLoading] = useState(true)
+  useEffect(() => {
+    setTimeout(() => {
+      setIsLoading(false)
+    }, 1000);
+  }, [])
+  
   return (
     <>
       <div className="about">
@@ -26,7 +35,7 @@ export default function ManageSkillSet({ data }) {
         </div>
 
         <div className="beg-int-advance col-7 d-flex ">
-          <div className="col-4 insideContent-totalTest">
+          {isLoading ? <Skeleton width={633.6} height={59} highlightColor="#fff" style={{marginBottom: "0.3rem"}}/> : <><div className="col-4 insideContent-totalTest">
             <div className="row inside-manage-skills justify-content-center">
               <div className="col-2 inside-manage-skills-number">
                 {data.beginner}
@@ -55,7 +64,8 @@ export default function ManageSkillSet({ data }) {
               </div>
               <div className="col-10 inside-manage-skills-text">Advanced</div>
             </div>
-          </div>
+          </div></>}
+          
         </div>
       </div>
       <AddNewSkillTest />
