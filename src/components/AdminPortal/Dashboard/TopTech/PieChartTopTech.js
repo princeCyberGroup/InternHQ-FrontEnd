@@ -53,10 +53,11 @@ const PieChartTopTech = () => {
           ...prev,
           {
             techName: val?.techName,
-            techCount:
-              val?.totalTime.hours * 3600 +
-              val?.totalTime.minutes * 60 +
-              val?.totalTime.seconds,
+            techCount: val?.totalTime
+              ? val?.totalTime.hours * 3600 +
+                val?.totalTime.minutes * 60 +
+                val?.totalTime.seconds
+              : 0,
           },
         ];
         return temp;

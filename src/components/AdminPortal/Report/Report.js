@@ -10,6 +10,7 @@ import CryptoJS from "crypto-js";
 import { useNavigate } from "react-router-dom";
 import SelectedTech from "./SelectedTech/SelectedTech";
 import { Data } from "./Fetcheddataobject";
+import Confirmation from "../Confirmation";
 const Report = () => {
   //data
   const [selectLevel, setSelectLevel] = useState([]);
@@ -21,64 +22,76 @@ const Report = () => {
   const [selectedOption, setSelectedOption] = useState(
     "Select Deployment Type"
   );
+  const [deployData, setDeployData] = useState([]);
+  const [confirmChange, setConfirmChange] = useState(false);
   const navigate = useNavigate();
-
+  const secretkeyUser = process.env.REACT_APP_USER_KEY;
+  var parsedObject;
+  const data = localStorage.getItem("userData");
   //functions
+
   const handleSelectLevel = (val) => {
     setSelectLevel(val);
   };
   const handleSelectTech = (val) => {
     setSelectTech(val);
   };
-
-  useEffect(() => {
-    const secretkeyUser = process.env.REACT_APP_USER_KEY;
-    var parsedObject;
-    const data = localStorage.getItem("userData");
-    if (data) {
-      const bytes = CryptoJS.AES.decrypt(data, secretkeyUser);
-      const decryptedJsonString = bytes.toString(CryptoJS.enc.Utf8);
-      parsedObject = JSON.parse(decryptedJsonString);
+  const handleChange = (value) => {
+    setSelectedOption(value);
+  };
+  const handleDeployChange = (userId) => {
+    const index = tableData.findIndex((item) => item.userId === userId);
+    const containValue = deployData?.some(
+      (value) => value?.userId === orgTableData[index].userId
+    );
+    if (containValue) {
+      const tempData = deployData.map((value) => {
+        if (value.userId === orgTableData[index].userId) {
+          return { ...value, status: !tableData[index].isDeployed };
+        }
+        return value;
+      });
+      setDeployData(tempData);
     } else {
-      console.log("No encrypted data found in localStorage.");
+      const tempData = [...deployData];
+      tempData.push({
+        userId: orgTableData[index].userId,
+        status: !tableData[index].isDeployed,
+      });
+      setDeployData(tempData);
     }
-    const fetchData = async () => {
-      try {
-        const response = await axios.get(
-          process.env.REACT_APP_API_URL + `/api/v3/getuserReport`,
-          {
-            headers: {
-              Authorization: `Bearer ${parsedObject["token"]}`,
-            },
-          }
-        );
-        setOrgTableData(response?.data.response);
-        setTableData(response?.data.response);
-        setIsLoading(false);
-      } catch (error) {
-        if (error.response.status === 401) {
-          navigate("/error/statusCode=401");
-        }
-        if (error.response.status === 400) {
-          navigate("/error/statusCode=400");
-        }
-        if (error.response.status === 500) {
-          navigate("/error/statusCode=500");
-        }
-        if (error.response.status === 404) {
-          navigate("/error/statusCode=404");
-        }
-        console.error("Error fetching data:", error.message);
-      }
-    };
-    setTimeout(() => {
-      fetchData();
-    }, 1000);
-  }, []);
-  useEffect(() => {
-    handleFiltersChange();
-  }, [query, selectedOption, selectLevel, selectTech]);
+    const updatedValues = tableData.map((val) => {
+      if (val.userId === userId) return { ...val, isDeployed: !val.isDeployed };
+      return val;
+    });
+    setTableData(updatedValues);
+  };
+  const handleCancel = () => {
+    let tempDeployedTable = [];
+    orgTableData.forEach((value) => {
+      tempDeployedTable.push({ ...value });
+    });
+    setTableData(tempDeployedTable);
+    setConfirmChange(false);
+    setDeployData([]);
+  };
+  const handleConfirm = async () => {
+    setIsLoading(true);
+    try {
+      const response = await axios.post(
+        "https://cg-interns-hq.azurewebsites.net/api/v3/update-deployed",
+        deployData.map((value) => {
+          return { ...value, status: value.status.toString() };
+        })
+      );
+      console.log("response api data", response.data);
+    } catch (error) {
+      console.log("this is error in report post api", error);
+    }
 
+    setConfirmChange(false);
+    fetchData();
+  };
   const handleFiltersChange = () => {
     const getFilterItems = (items, query) => {
       if (query != "") {
@@ -142,20 +155,80 @@ const Report = () => {
     const filterItems = getFilterItems(orgTableData, query);
     const filterTech = getfilterTech(filterItems);
     const filterDep = getfilterDep(filterTech, selectedOption);
+    const workingData = filterDep.map((value, index) => {
+      return { ...value, isDeployed: tableData[index].isDeployed };
+    });
     setTableData(filterDep);
   };
-  const handleChange = (value) => {
-    setSelectedOption(value);
+  if (data) {
+    const bytes = CryptoJS.AES.decrypt(data, secretkeyUser);
+    const decryptedJsonString = bytes.toString(CryptoJS.enc.Utf8);
+    parsedObject = JSON.parse(decryptedJsonString);
+  } else {
+    console.log("No encrypted data found in localStorage.");
+  }
+  const fetchData = async () => {
+    try {
+      const response = await axios.get(
+        process.env.REACT_APP_API_URL + `/api/v3/getuserReport`,
+        {
+          headers: {
+            Authorization: `Bearer ${parsedObject["token"]}`,
+          },
+        }
+      );
+      setOrgTableData(response?.data.response);
+      setTableData(response?.data.response);
+      setIsLoading(false);
+    } catch (error) {
+      if (error.response.status === 401) {
+        navigate("/error/statusCode=401");
+      }
+      if (error.response.status === 400) {
+        navigate("/error/statusCode=400");
+      }
+      if (error.response.status === 500) {
+        navigate("/error/statusCode=500");
+      }
+      if (error.response.status === 404) {
+        navigate("/error/statusCode=404");
+      }
+      console.error("Error fetching data:", error.message);
+    }
   };
-
+  useEffect(() => {
+    fetchData();
+  }, []);
+  useEffect(() => {
+    handleFiltersChange();
+  }, [query, selectedOption, selectLevel, selectTech]);
   return (
     <>
+      {confirmChange && (
+        <Confirmation
+          confirmationValue={"report"}
+          handleCancel={handleCancel}
+          handleConfirm={handleConfirm}
+        />
+      )}
       <div className="" style={{ marginBottom: "5rem" }}>
         <Header />
       </div>
       <div className="report-parent-wrapper">
         <div className="report-child-wrapper">
-          <div className="report-header">Report</div>
+          <div className="report-header">
+            <span>Report</span>
+            {deployData.length > 0 && (
+              <button
+                className="report-deploy-btn"
+                onClick={() => {
+                  setConfirmChange(true);
+                }}
+              >
+                Update Status
+              </button>
+            )}
+          </div>
           <div className="report-filter-wrapper ">
             <div className="report-search">
               <div className="search-icon" />
@@ -177,7 +250,11 @@ const Report = () => {
             </div>
           </div>
           <div className="report-table-wrapper ">
-            <Reporttable tableData={tableData} isLoading={isLoading} />
+            <Reporttable
+              tableData={tableData}
+              isLoading={isLoading}
+              handleDeployChange={handleDeployChange}
+            />
           </div>
         </div>
       </div>

@@ -44,7 +44,7 @@ const DailyUpdateTableSection = (props) => {
     }
     await fetch(
       process.env.REACT_APP_API_URL +
-        `/api/v3/getDailyTaskTrackerRecords?userId=${props.userId}`,
+        `/api/v2/getDailyTaskTrackerRecords?userId=${props.userId}`,
       {
         headers: {
           Authorization: `Bearer ${parsedObject["token"]}`,
@@ -60,6 +60,7 @@ const DailyUpdateTableSection = (props) => {
         setIsLoading(false);
       })
       .catch((error) => {
+        console.log("this is error", error.response.status);
         if (error.response.status === 401) {
           navigate("/error/statusCode=401");
         }

@@ -1,28 +1,27 @@
 // className="fw-bold d-flex justify-content-center align-items-center" this is data
-import React, { useState } from "react";
-import EmptyDailyUpdateTable from "../../UserPortal/DailyUpdateTable/EmptyDailyUpdateTable";
+import React, { useState, useEffect } from "react";
 import "./Reporttable.css";
 import { ReactComponent as Advance } from "../../../Assets/advance.svg";
 import { ReactComponent as Beginner } from "../../../Assets/beginner.svg";
-import { ReactComponent as Deployed } from "../../../Assets/CheckGreen.svg";
-import { ReactComponent as Undeployed } from "../../../Assets/CancelRed.svg";
 import { ReactComponent as Intermediate } from "../../../Assets/intermediate.svg";
 import { Data } from "./Fetcheddataobject";
 import { useNavigate } from "react-router-dom";
 import ReportTableSkeleton from "./ReportTableSkeleton";
 
-const Reporttable = ({ tableData, isLoading }) => {
+const Reporttable = ({ tableData, isLoading, handleDeployChange }) => {
+  //data
   const navigate = useNavigate();
   const [selectedIndex, setSelectedIndex] = useState(-1);
+  //function
   const handleOnclick = (index) => {
     sessionStorage.setItem("detailId", tableData[index][Data.ID]);
     sessionStorage.setItem("chrumValue", "Report");
-    navigate(`/admin/report?userId=${tableData[index][Data.ID]}`);
+    navigate(`/admin/report/detail`);
   };
   return (
     <div className="container-fluid container-table">
       <table className="table-report" cellPadding="0" cellSpacing="0">
-        <thead>
+        <thead style={{ zIndex: 100 }}>
           <tr>
             <th style={{ width: "2.5rem" }}>#</th>
             <th style={{ width: "13.375rem" }}>Name</th>
@@ -81,7 +80,7 @@ const Reporttable = ({ tableData, isLoading }) => {
                       {val?.[Data.TN]
                         ?.slice(
                           0,
-                          selectedIndex === ind ? val?.[Data.TN]?.length : 4
+                          selectedIndex === ind ? val?.[Data.TN]?.length : 3
                         )
                         .map((value, index) => {
                           objectKeyCount++;
@@ -106,10 +105,10 @@ const Reporttable = ({ tableData, isLoading }) => {
                           );
                         })}
                       {selectedIndex !== ind &&
-                        objectKeyCount > 3 &&
+                        objectKeyCount > 2 &&
                         val?.[Data.TN].slice(4).length !== 0 && (
                           <div className="all-tech">
-                            <span>+ {val?.[Data.TN].slice(4).length}</span>
+                            <span>+ {val?.[Data.TN].slice(3).length}</span>
                           </div>
                         )}
                     </div>
@@ -144,16 +143,13 @@ const Reporttable = ({ tableData, isLoading }) => {
                     }}
                   >
                     <div>
-                      {/* {val[Data.DE] ? (
-                        <Deployed className="dep-wrapper" />
-                      ) : (
-                        <Undeployed className="dep-wrapper" />
-                      )} */}
                       <input
                         type="checkbox"
                         className="status-input"
-                        // checked={val[Data.DE]}
-                        //put a onchange property to send the data to backend to deploy the person
+                        onChange={() => {
+                          handleDeployChange(val.userId);
+                        }}
+                        checked={val[Data.DE]}
                       />
                     </div>
                   </td>

@@ -66,12 +66,10 @@ const Detailedreport = () => {
       }
       navigate("/pagenotfound");
     }
+    setIsLoading(false);
   };
   useEffect(() => {
     fetchData();
-    setTimeout(() => {
-      setIsLoading(false);
-    }, 1000);
   }, []);
 
   return (
