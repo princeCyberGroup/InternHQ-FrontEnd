@@ -44,7 +44,7 @@ const DailyUpdateTableSection = (props) => {
     }
     await fetch(
       process.env.REACT_APP_API_URL +
-        `/api/v3/getDailyTaskTrackerRecords?userId=${props.userId}`,
+        `/api/v2/getDailyTaskTrackerRecords?userId=${props.userId}`,
       {
         headers: {
           Authorization: `Bearer ${parsedObject["token"]}`,
@@ -57,9 +57,11 @@ const DailyUpdateTableSection = (props) => {
       .then(async (data) => {
         setTableData(data.response);
         setOriginalTableData(data.response);
+        console.log(data.response, "This is data")
         setIsLoading(false);
       })
       .catch((error) => {
+        console.log("this is error", error.response.status);
         if (error.response.status === 401) {
           navigate("/error/statusCode=401");
         }
@@ -310,23 +312,23 @@ const DailyUpdateTableSection = (props) => {
                           }
                           thirdActivity={
                             activityLength >= 3
-                              ? convertTime(item.activityTime[0].startedAt) +
+                              ? convertTime(item.activityTime[2].startedAt) +
                                 " - " +
-                                convertTime(item.activityTime[0].endedAt)
+                                convertTime(item.activityTime[2].endedAt)
                               : ""
                           }
                           fourthActivity={
                             activityLength >= 4
-                              ? convertTime(item.activityTime[0].startedAt) +
+                              ? convertTime(item.activityTime[3].startedAt) +
                                 " - " +
-                                convertTime(item.activityTime[0].endedAt)
+                                convertTime(item.activityTime[3].endedAt)
                               : ""
                           }
                           fifthActivity={
                             activityLength >= 5
-                              ? convertTime(item.activityTime[0].startedAt) +
+                              ? convertTime(item.activityTime[4].startedAt) +
                                 " - " +
-                                convertTime(item.activityTime[0].endedAt)
+                                convertTime(item.activityTime[4].endedAt)
                               : ""
                           }
                           styleclassName={tooltipClassName}

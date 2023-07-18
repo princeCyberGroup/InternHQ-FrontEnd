@@ -30,7 +30,6 @@ import Report from "./components/AdminPortal/Report/Report";
 import Task from "./components/AdminPortal/Task/Task";
 import DashboardA from "./components/AdminPortal/Dashboard/DashboardA";
 import Detailedreport from "./components/AdminPortal/Report/Detailedreport/Detailedreport";
-import MentorDashboard from "./components/MentorPortal/MentorDashboard";
 import AdminAuthGuard from "./components/_guard/AdminAuthGuard";
 import MentorAuthGuard from "./components/_guard/MentorAuthGuard";
 import Error_400 from "./components/ErrorPage/Error_400";
@@ -40,6 +39,12 @@ import PieChart from "./components/AdminPortal/Report/Detailedreport/PieChart";
 import { ManageSkillTest } from "./components/AdminPortal/SkillTest/ManageSkillTest";
 import Log from "./components/AdminPortal/Logs/Log";
 import SessionExpired from "./components/ErrorPage/SessionExpired";
+
+//mentor import
+import MentorDashboard from "./components/MentorPortal/MentorDashboard/MentorDashboard";
+import MentorAssignTask from "./components/MentorPortal/MentorAssignTask/MentorAssignTask";
+import MentorReview from "./components/MentorPortal/MentorReviewAssociates/MentorReview";
+
 function App() {
   const [dataFromDailyUpdate, setDataFromDailyUpdate] = useState("");
   const handleDataFromDailyUpdate = (data) => {
@@ -91,7 +96,7 @@ function App() {
           <Route element={<AdminAuthGuard />}>
             <Route path="/admin/dashboard" element={<DashboardA />} />
             <Route path="/admin/reports" element={<Report />} />
-            <Route path="/admin/report" element={<Detailedreport />} />
+            <Route path="/admin/report/detail" element={<Detailedreport />} />
             <Route path="/admin/assign-task" element={<Task />} />
             <Route path="/admin/skill-test" element={<ManageSkillTest />} />
             <Route path="/admin/logs" element={<Log />} />
@@ -99,7 +104,9 @@ function App() {
 
           {/* Mentor routes */}
           <Route element={<MentorAuthGuard />}>
-            <Route path="/mentor-dashboard" element={<MentorDashboard />} />
+            <Route path="/mentor/dashboard" element={<MentorDashboard />} />
+            <Route path="/mentor/assign-task" element={<MentorAssignTask />} />
+            <Route path="/mentor/review-associates" element={<MentorReview />} />
           </Route>
 
           <Route path="/error/statusCode=400" element={<Error_400 />} />

@@ -116,7 +116,7 @@ const LoginScreen = () => {
         ? navigate("/dashboard")
         : str === "cb8715"
         ? navigate("/admin/dashboard")
-        : navigate("/mentor-dashboard");
+        : navigate("/mentor/dashboard");
     }
   }, []);
   return (

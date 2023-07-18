@@ -82,7 +82,7 @@ const PieChart = () => {
     }
     await fetch(
       process.env.REACT_APP_API_URL +
-        `/api/v3/getDailyTaskTrackerRecords?userId=${piechartId}`,
+        `/api/v2/getDailyTaskTrackerRecords?userId=${piechartId}`,
       {
         headers: {
           Authorization: `Bearer ${parsedObject["token"]}`,
@@ -135,8 +135,8 @@ const PieChart = () => {
   function convertToPercentageMonthly(timeString) {
     const regex = /(\d+)\s*hrs\s*(\d+)\s*min/;
     const matches = timeString.match(regex);
-    const hours = parseInt(matches[1]);
-    const minutes = parseInt(matches[2]);
+    const hours = parseInt(matches != null ? matches[1] : 0);
+    const minutes = parseInt(matches != null ? matches[2] : 0);
     const totalMinutes = hours * 60 + minutes;
     const percentage = (totalMinutes / 2400) * 100;
     return Number.isInteger(percentage) ? percentage : percentage.toFixed(2);

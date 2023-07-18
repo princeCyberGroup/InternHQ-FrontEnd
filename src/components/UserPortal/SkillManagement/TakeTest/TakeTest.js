@@ -29,6 +29,7 @@ const scoreIndex = {
 
 const TakeTest = () => {
   const { tests, setTests, resultInfo } = useContext(TestContext);
+  // console.log(tests, "This is results");
   // console.log(new Date(resultInfo[0]?.date[0]), "This is date")
   const [activeButton, setActiveButton] = useState("all");
   const { score } = useContext(UserContext);
@@ -36,6 +37,7 @@ const TakeTest = () => {
   const [originalTests, setOriginalTests] = useState([]);
   const [data, setdata] = useState();
   const [searchFilterValue, setSearchFilterValue] = useState("");
+  
 
   const [isLoading, setIsLoading] = useState(true);
   useEffect(() => {
@@ -149,35 +151,62 @@ const TakeTest = () => {
           return true;
         }
       }
-    } else if (currentScoreIndex === 1) {
+    } else {
       // If the current level is Intermediate
       const previousScoreIndex = currentScoreIndex - 1;
+      // console.log(results.examScores[5], "Index out of bound")
 
-      if (
-        results.examScores[previousScoreIndex] >= 80 &&
-        new Date(results.date[previousScoreIndex]) <= twoDaysAgoDate
-      ) {
-        // If the previous level is passed and 2 days have passed, enable the current level
-        return false;
-      } else {
-        // If the previous level is not passed or 2 days have not passed, disable the current level
+      if (results.examScores[previousScoreIndex] === undefined) {
         return true;
-      }
-    } else {
-      // If the current level is Advance or Project
-      const previousScoreIndex = currentScoreIndex - 1;
-
-      if (
-        results.examScores[previousScoreIndex] >= 80 &&
-        new Date(results.date[previousScoreIndex]) <= twoDaysAgoDate
-      ) {
-        // If the previous level is passed and 2 days have passed, enable the current level
-        return false;
       } else {
-        // If the previous level is not passed or 2 days have not passed, disable the current level
-        return true;
+        let flag;
+        if (results.examScores[previousScoreIndex] >= 80) {
+          // If the previous level is passed and 2 days have passed, enable the current level
+          flag = false;
+        }
+        if (results.examScores[previousScoreIndex] < 80) {
+          // If the previous level is passed and 2 days have passed, enable the current level
+          flag = true;
+        }
+        if (
+          results.examScores[currentScoreIndex] !== undefined &&
+          results.examScores[currentScoreIndex] >= 80
+        ) {
+          flag = false;
+        }
+        if (
+          results.examScores[currentScoreIndex] !== undefined &&
+          results.examScores[currentScoreIndex] < 80 &&
+          new Date(results.date[currentScoreIndex]) <= twoDaysAgoDate
+        ) {
+          flag = false;
+        }
+        if (
+          results.examScores[currentScoreIndex] !== undefined &&
+          results.examScores[currentScoreIndex] < 80 &&
+          new Date(results.date[currentScoreIndex]) > twoDaysAgoDate
+        ) {
+          // If the previous level is not passed or 2 days have not passed, disable the current level
+          flag = true;
+        }
+        return flag;
       }
     }
+    // else {
+    //   // If the current level is Advance or Project
+    //   const previousScoreIndex = currentScoreIndex - 1;
+
+    //   if (
+    //     results.examScores[previousScoreIndex] >= 80 &&
+    //     new Date(results.date[previousScoreIndex]) <= twoDaysAgoDate
+    //   ) {
+    //     // If the previous level is passed and 2 days have passed, enable the current level
+    //     return false;
+    //   } else {
+    //     // If the previous level is not passed or 2 days have not passed, disable the current level
+    //     return true;
+    //   }
+    // }
   };
 
   useEffect(() => {
@@ -230,7 +259,7 @@ const TakeTest = () => {
   //     </div>
   //   );
   // }
- return (
+  return (
     <>
       <div className="TTheading">
         <p>Test Your Skills</p>
@@ -339,7 +368,14 @@ const TakeTest = () => {
                     (currentDate.getTime() - dateOfTest.getTime()) /
                       (1000 * 60 * 60 * 24)
                   );
-                  console.log(`${daysDifference} score ${currentScore}  of ${test.examName}`)
+                  // const currentDate = new Date();
+                  currentDate.setDate(currentDate.getDate() - 2);
+                  const twoDaysAgoDate = new Date(
+                    currentDate.getFullYear(),
+                    currentDate.getMonth(),
+                    currentDate.getDate()
+                  );
+                  // console.log(`${daysDifference} score ${currentScore}  of ${test.examName}`)
                   return (
                     <div
                       className="exam"
@@ -350,13 +386,15 @@ const TakeTest = () => {
                       {/* {func(test.examName, test.level)} */}
                       <div className="card outer-card">
                         {/* days left to give test */}
-                        {currentScore < 80 && (2 - daysDifference >= 0 && 2 - daysDifference <= 2) && (
-                          <div className="test-badge" key={test.examName}>
-                            <p className="test-badge-text">{`${
-                              2 - daysDifference
-                            } Days left to retake`}</p>
-                          </div>
-                        )}{" "}
+                        {currentScore < 80 &&
+                          2 - daysDifference >= 0 &&
+                          2 - daysDifference <= 2 && (
+                            <div className="test-badge" key={test.examName}>
+                              <p className="test-badge-text">{`${
+                                2 - daysDifference
+                              } Days left to retake`}</p>
+                            </div>
+                          )}{" "}
                         {currentScore >= 80 && (
                           <div
                             className="test-badge d-flex flex-row"
@@ -438,30 +476,30 @@ const TakeTest = () => {
                                       (currentScore >= 80 &&
                                         !func(test.examName, test.level)) ||
                                       (currentScore < 80 &&
-                                        2 - daysDifference < 2)
-                                        ? "rgba(255, 184, 28, 1)"
+                                        twoDaysAgoDate >= dateOfTest)
+                                        ? "rgba(255, 184, 28, 1)" //yellow
                                         : currentScore < 80 &&
-                                          2 - daysDifference >= 2
-                                        ? "rgba(178, 178, 179, 1)"
+                                          twoDaysAgoDate < dateOfTest
+                                        ? "rgba(178, 178, 179, 1)" //gray
                                         : "rgba(40, 81, 158, 1)",
                                     color:
                                       (currentScore >= 80 &&
                                         !func(test.examName, test.level)) ||
                                       (currentScore < 80 &&
-                                        2 - daysDifference < 2)
+                                        twoDaysAgoDate >= dateOfTest)
                                         ? "rgba(52, 52, 53, 1)"
                                         : currentScore < 80 &&
-                                          2 - daysDifference >= 2
+                                          twoDaysAgoDate < dateOfTest
                                         ? "rgba(255, 255, 255, 1)"
                                         : "rgba(255, 255, 255, 1)",
                                     borderColor:
                                       (currentScore >= 80 &&
                                         !func(test.examName, test.level)) ||
                                       (currentScore < 80 &&
-                                        2 - daysDifference < 2)
+                                        twoDaysAgoDate >= dateOfTest)
                                         ? "rgba(255, 184, 28, 1)"
                                         : currentScore < 80 &&
-                                          2 - daysDifference >= 2
+                                          twoDaysAgoDate < dateOfTest
                                         ? "rgba(178, 178, 179, 1)"
                                         : "rgba(40, 81, 158, 1)",
                                   }}

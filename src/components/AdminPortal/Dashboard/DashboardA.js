@@ -11,11 +11,11 @@ import Insights from "./Insights/insights";
 import { ReactComponent as Right } from "../../../Assets/right.svg";
 import Header from "../../Header/Header";
 import CryptoJS from "crypto-js";
+import AssignReviewer from "./AssignReviewer/AssignReviewer";
 
 const DashboardA = () => {
   const [StatusData, setStatusData] = useState([]);
-  const [acData, setAcData] = useState([]);
-  const [insights, setInsights] = useState([]);
+  // const [insights, setInsights] = useState([]);
   const secretkeyUser = process.env.REACT_APP_USER_KEY;
   const navigate = useNavigate();
   var parsedObject;
@@ -55,8 +55,8 @@ const DashboardA = () => {
         navigate("/error/statusCode=404");
       }
       const rsp = await response.json();
+      console.log(rsp, "This is dashboard statuis")
       setStatusData(rsp);
-      setAcData(rsp.response);
     } catch (error) {
       if (error.response.status === 401) {
         navigate("/error/statusCode=401");
@@ -73,46 +73,7 @@ const DashboardA = () => {
       console.log("this is error", error);
     }
   };
-  // const InsightData = async () => {
-  //   try {
-  //     const response = await fetch(
-  //       process.env.REACT_APP_API_URL + `/api/v3/getInsights`,
-  //       {
-  //         headers: {
-  //           Authorization: `Bearer ${parsedObject["token"]}`,
-  //         },
-  //       }
-  //     );
-  //     if (response.status === 401) {
-  //       navigate("/error/statusCode=401");
-  //     }
-  //     if (response.status === 400) {
-  //       navigate("/error/statusCode=400");
-  //     }
-  //     if (response.status === 500) {
-  //       navigate("/error/statusCode=500");
-  //     }
-  //     if (response.status === 404) {
-  //       navigate("/error/statusCode=404");
-  //     }
-  //     const insData = await response.json();
-  //     setInsights(insData.response);
-  //   } catch (error) {
-  //     if (error.response.status === 401) {
-  //       navigate("/error/statusCode=401");
-  //     }
-  //     if (error.response.status === 400) {
-  //       navigate("/error/statusCode=400");
-  //     }
-  //     if (error.response.status === 500) {
-  //       navigate("/error/statusCode=500");
-  //     }
-  //     if (error.response.status === 404) {
-  //       navigate("/error/statusCode=404");
-  //     }
-  //     console.log(error);
-  //   }
-  // };
+
   return (
     <>
       <div className="" style={{ marginBottom: "3rem" }}>
@@ -126,14 +87,11 @@ const DashboardA = () => {
                
               </div>
               <div className="row div-staus-upload">
-                 <Link to="/admin/reports" className="about-link">
-                  Manage Consultant <Right style={{ marginBottom: "2px" }} />
-                </Link>
                 <div className="col-6 outer-row-info">
                   <Status data={StatusData} />
                 </div>
-                <div className="col-6 upload-list">
-                  <Uploadcsv />
+                <div className="col-6">
+                  <AssignReviewer />
                 </div>
               </div>
               <ManageSkillSet data={StatusData} />
@@ -142,7 +100,7 @@ const DashboardA = () => {
                   <PieChartTopTech />
                 </div>
                 <div className="col-6 associate-div " style={{ padding: 0 }}>
-                  <AssociateConsultant data={acData} />
+                  <AssociateConsultant />
                 </div>
               </div>
             </div>
