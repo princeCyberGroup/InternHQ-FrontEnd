@@ -1,6 +1,5 @@
 import React, { useState, useEffect, useContext } from "react";
 import CryptoJS, { AES, enc } from "crypto-js";
-// import dotenv from 'dotenv';
 import "./DailyTaskTracker.css";
 import { ReactComponent as Tick } from "../../../../Assets/tick.svg";
 import axios from "axios";
@@ -21,12 +20,7 @@ const learningTypeOptions = [
   "Session",
 ];
 
-// dotenv.config();
-
 const secretKey = process.env.REACT_APP_SECRET_KEY;
-
-// const url =
-// console.log(url);
 
 const MAX_COMMENT_LENGTH = 150;
 
@@ -48,7 +42,6 @@ const DailyTaskTracker = () => {
   const [topicName, setTopicName] = useState(
     localStorage.getItem("topicName") || ""
   );
-  // const [startTime, setStartTime] = useState( localStorage.getItem("startTime") ? parseInt(localStorage.getItem("startTime")) : null);
   const [comments, setComments] = useState(
     localStorage.getItem("comments") || ""
   );
@@ -72,9 +65,6 @@ const DailyTaskTracker = () => {
       // Chrome requires the returnValue property to be set
       e.returnValue =
         "You have an active timer. Are you sure you want to leave this page?";
-      // let leaving= confirm("You have an active timer. Are you sure you want to leave this page?");
-      // leaving?return confirmationMessage:"";
-      // Show the confirmation dialog
     }
   };
 
@@ -93,14 +83,13 @@ const DailyTaskTracker = () => {
   }, [learningType, topicName]);
 
   useEffect(() => {
-    const commentsWithoutSpaces = comments.replace(/\s/g, ''); // Remove spaces from the comments
+    const commentsWithoutSpaces = comments.replace(/\s/g, ""); // Remove spaces from the comments
     if (commentsWithoutSpaces.length >= MAX_COMMENT_LENGTH) {
       setStopBtnDisabled(false);
     } else {
       setStopBtnDisabled(true);
     }
   }, [comments]);
-  
 
   useEffect(() => {
     const encryptedData = localStorage.getItem("tD8kFi5j");
@@ -135,22 +124,6 @@ const DailyTaskTracker = () => {
         setFirstCount(firstCount);
       }
     }
-
-    // const storedData = localStorage.getItem('tD8kFi5j');
-    // if (storedData) {
-    //   const { isRunning, disabled, comDisabled, learningType, topicName, comments, startTime, isPaused, pauseClickCount, firstCount} = JSON.parse(storedData);
-    //   setIsRunning(isRunning);
-    //   setDisabled(disabled);
-    //   setComDisabled(comDisabled)
-    //   setLearningType(learningType);
-    //   setTopicName(topicName);
-    //   setComments(comments);
-    //   setStartTime(startTime);
-    //   // setElapsedTime(elapsedTime);
-    //   setIsPaused(isPaused);
-    //   setPauseClickCount(pauseClickCount);
-    //   setFirstCount(firstCount);
-    // }
   }, []);
 
   useEffect(() => {
@@ -169,9 +142,6 @@ const DailyTaskTracker = () => {
     });
     const encryptedData = AES.encrypt(tD8kFi5j, secretKey).toString();
     localStorage.setItem("tD8kFi5j", encryptedData);
-
-    // const tD8kFi5j = JSON.stringify({ isRunning, disabled, comDisabled, learningType, topicName, comments, startTime, elapsedTime, isPaused, pauseClickCount, firstCount });
-    // localStorage.setItem('tD8kFi5j', tD8kFi5j);
   }, [isRunning, startTime, elapsedTime, isPaused, comments]);
 
   const secretkeyUser = process.env.REACT_APP_USER_KEY;
@@ -360,18 +330,12 @@ const DailyTaskTracker = () => {
     if (topicName.length <= 1) setBtnDisabled(true);
   };
 
-  // const onCommentsChange = (e) => {
-  //   const inputComments = e.target.value;
-  //   setComments(inputComments);
-  //   setCommentLength(inputComments.length);
-  // };
   const onCommentsChange = (e) => {
     const inputComments = e.target.value;
-    const commentsWithoutSpaces = inputComments.replace(/\s/g, ''); // Remove spaces from the input
+    const commentsWithoutSpaces = inputComments.replace(/\s/g, ""); // Remove spaces from the input
     setComments(inputComments);
     setCommentLength(commentsWithoutSpaces.length);
   };
-  
 
   const formatTime = (timeInMs) => {
     const totalSeconds = Math.floor(timeInMs / 1000);
@@ -418,7 +382,6 @@ const DailyTaskTracker = () => {
           <TopicSelect
             disabled={disabled}
             resetSelect={resetSelect}
-            // value={topicName}
             learningType={learningType}
             topicName={topicName}
             onChange={(e) => onTopicChange(e)}

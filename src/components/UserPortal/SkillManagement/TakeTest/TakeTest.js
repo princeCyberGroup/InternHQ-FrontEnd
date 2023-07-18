@@ -262,7 +262,7 @@ const TakeTest = () => {
   return (
     <>
       <div className="TTheading">
-        <p>Take The Test</p>
+        <p>Test Your Skills</p>
       </div>
       <div className="card maincard">
         <div className="card-header-nav mt-1">

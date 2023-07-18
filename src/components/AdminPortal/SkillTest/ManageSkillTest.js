@@ -8,7 +8,7 @@ import { Link, useNavigate } from "react-router-dom";
 import ManageSkillTestSkeleton from "./ManageSkillTestSkeleton";
 import Header from "../../Header/Header";
 import CryptoJS from "crypto-js";
-import Confirmation from "./Confirmation";
+import Confirmation from "../Confirmation";
 export const ManageSkillTest = () => {
   //data
   const [data, setData] = useState([]);
@@ -84,6 +84,7 @@ export const ManageSkillTest = () => {
           handleCancel={handleCancel}
           id={confirmId}
           handleDel={handleDel}
+          confirmationValue = "manageskill"
         />
       )}
       <div style={{ marginBottom: "5.5rem" }}>

@@ -45,6 +45,7 @@
 }
 .tech-tags {
   display: flex;
+  flex-wrap: wrap;
   border-radius: 2px;
   gap: 8px;
 }
@@ -147,4 +148,7 @@
 .dep-wrapper {
   width: 1.5rem;
   height: 1.5rem;
+}
+.status-input {
+  accent-color: green;
 }

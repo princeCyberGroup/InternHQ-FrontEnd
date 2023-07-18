@@ -34,12 +34,18 @@
 .alert-wrapper {
   margin-bottom: 1rem;
 }
-.delete-task {
-  color: #f82c44;
+.delete-task,
+.confirm-task {
   font-size: 20px;
   font-style: normal;
   font-weight: 600;
   line-height: 150%;
+}
+.delete-task {
+  color: #f82c44;
+}
+.confirm-task {
+  color: #28519e;
 }
 .text-wrapper-confirm {
   color: var(--gray, #565555);
@@ -58,7 +64,7 @@
 .confirm-cancel-btn {
   color: var(--blue, #28519e);
   border-radius: 0.25rem;
-  border: 1px solid var(--blue, #28519e);
+  border: 1px solid #28519e;
   font-weight: 600;
   background: var(--white, #fff);
 }
@@ -67,8 +73,14 @@
   border-radius: 0.25rem;
   background: var(--red, #f82c44);
 }
+.confirm-deploy-btn {
+  color: #ffffff;
+  border-radius: 0.25rem;
+  background-color: #28519e;
+}
 .confirm-cancel-btn,
-.confirm-delete-btn {
+.confirm-delete-btn,
+.confirm-deploy-btn {
   width: 8.5rem;
   text-align: center;
   font-family: Roboto;
@@ -76,4 +88,5 @@
   font-style: normal;
   line-height: 14px;
   padding: 10px 16px;
+  cursor: pointer;
 }

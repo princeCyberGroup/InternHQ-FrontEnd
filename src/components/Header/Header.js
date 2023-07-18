@@ -91,7 +91,8 @@ const Header = () => {
                   </NavLink>
                 </li>
               </ul>
-            ) : (
+            ) : (userData.randomString ===
+              process.env.REACT_APP_USER_DES_ADMIN) ? (
               // Admin */
               <ul
                 className="navbar-nav nav-bg d-flex align-items-center"
@@ -102,7 +103,6 @@ const Header = () => {
                     Dashboard
                   </NavLink>
                 </li>
-
                 <li className="nav-item mx-2">
                   <NavLink to="/admin/assign-task" className="btn activeBtn">
                     Assign Task
@@ -122,6 +122,30 @@ const Header = () => {
                 <li className="nav-item pe-1">
                   <NavLink to="/admin/logs" className="btn activeBtn ">
                     Logs
+                  </NavLink>
+                </li>
+              </ul>
+            ) : (
+              // Mentor */
+              <ul
+                className="navbar-nav nav-bg d-flex align-items-center"
+                style={{ height: "2.7rem" }}
+              >
+                <li className="nav-item ps-1">
+                  <NavLink to="/mentor/dashboard" className="btn activeBtn">
+                    Dashboard
+                  </NavLink>
+                </li>
+
+                <li className="nav-item mx-2">
+                  <NavLink to="/mentor/assign-task" className="btn activeBtn">
+                    Assign Task
+                  </NavLink>
+                </li>
+
+                <li className="nav-item">
+                  <NavLink to="/mentor/review-associates" className="btn activeBtn ">
+                    Review Associates
                   </NavLink>
                 </li>
               </ul>

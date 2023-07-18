@@ -21,7 +21,7 @@ export default function AssociateConsultant() {
   const handleOnclick = (id) => {
     sessionStorage.setItem("detailId", id);
     sessionStorage.setItem("chrumValue", "Dashboard");
-    navigate(`/admin/report?userId=${id}`);
+    navigate(`/admin/report/detail`);
   };
   const [searchFilterValue, setSearchFilterValue] = useState("");
   const [acData, setAcData] = useState([]);

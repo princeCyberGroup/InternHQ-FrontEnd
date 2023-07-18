@@ -46,29 +46,23 @@ export default function AssociateConsultant(props) {
       );
 
       props.setLogData(response.data.response);
-      //   console.log(response.data.response);
     } catch (error) {
-      //uncomment it after merging
-      // if (error.response?.data.statusCode === 401) {
-      //   return navigate("/error/statusCode=401");
-      // }
-      // if (error.response?.data.statusCode === 400) {
-      //   return navigate("/error/session-expired");
-      // }
-      // if (error.response?.data.statusCode === 500) {
-      //   return navigate("/error/statusCode=500");
-      // }
-      // if (error.response?.data.statusCode === 404) {
-      //   return navigate("/error/statusCode=404");
-      // }
       if (error.response?.data.statusCode === 401) {
-        return navigate("/error?statusCode=401");
+        return navigate("/error/statusCode=401");
       }
-
-      // console.log("Error ", error.response?.data);
-      // console.log(error.response?.data.msg);
+      if (error.response?.data.statusCode === 400) {
+        return navigate("/error/session-expired");
+      }
+      if (error.response?.data.statusCode === 500) {
+        return navigate("/error/statusCode=500");
+      }
+      if (error.response?.data.statusCode === 404) {
+        return navigate("/error/statusCode=404");
+      }
     }
   };
+
+  //After Mentor Portal
   const handleOnMentorclick = (id) => {
     const selectedMentorData = mentorData.find(
       (mentor) => mentor.mentorId === id
@@ -118,7 +112,6 @@ export default function AssociateConsultant(props) {
         }
       );
       const rsp = await response.json();
-      //   setStatusData(rsp);
       setAcData(rsp.response);
       setFilterAcData(rsp.response);
       setIsLoading(false);
@@ -139,7 +132,6 @@ export default function AssociateConsultant(props) {
         }
       );
       const rsp = await response.json();
-      //   setStatusData(rsp);
 
       setMentorData(rsp.activeMentors);
       setIsLoading(false);

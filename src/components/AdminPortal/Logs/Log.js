@@ -23,10 +23,7 @@ const Log = () => {
                 setLogData={setLogData}
               />
             </div>
-            <div
-              className=" col-md-8 p-0 "
-              // style={{ height: "100vh" }}
-            >
+            <div className=" col-md-8 p-0 ">
               <DetailedCard
                 selectedUser={selectedUser}
                 selectedMentor={selectedMentor}
