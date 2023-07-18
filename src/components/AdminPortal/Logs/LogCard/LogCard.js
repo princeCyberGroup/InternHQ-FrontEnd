@@ -6,9 +6,9 @@ import CryptoJS from "crypto-js";
 import axios from "axios";
 
 function getInitials(name) {
-  const names = name.split(" ");
-  const initials = names.map((n) => n.charAt(0).toUpperCase());
-  return initials.join("");
+  const names = name?.split(" ");
+  const initials = names?.map((n) => n.charAt(0).toUpperCase());
+  return initials?.join("");
 }
 
 export default function AssociateConsultant(props) {
@@ -16,6 +16,7 @@ export default function AssociateConsultant(props) {
   const [acData, setAcData] = useState([]);
   const [filterAcData, setFilterAcData] = useState([]);
   const [mentorData, setMentorData] = useState([]);
+  const [filterMentorData, setFilterMentorData] = useState([]);
   const [activeButton, setActiveButton] = useState("Associates");
   const [isLoading, setIsLoading] = useState(false);
 
@@ -70,24 +71,23 @@ export default function AssociateConsultant(props) {
     props.setSelectedMentor(selectedMentorData);
   };
 
+
   const handleFiltersChange = () => {
-    const getFilterItems = (items, searchValue) => {
+    const getFilterItems = (items, searchValue, keyValue) => {
       if (searchValue) {
-        let filterData = acData.filter((item) =>
-          item.name?.toLowerCase().includes(searchValue.toLowerCase())
+        return items.filter((item) =>
+          item?.[keyValue].toLowerCase().includes(searchValue.toLowerCase())
         );
-        return filterData;
       }
       return items;
     };
-    const filters = getFilterItems(
-      activeButton === "Associates" ? filterAcData : mentorData,
-      searchFilterValue
-    );
+
     if (activeButton === "Associates") {
+      const filters = getFilterItems(acData, searchFilterValue, "name");
       setFilterAcData(filters);
-    } else {
-      setMentorData(filters);
+    } else if (activeButton === "Mentors") {
+      const filters = getFilterItems(mentorData, searchFilterValue, "mentorName");
+      setFilterMentorData(filters);
     }
   };
 
@@ -134,6 +134,7 @@ export default function AssociateConsultant(props) {
       const rsp = await response.json();
 
       setMentorData(rsp.activeMentors);
+      setFilterMentorData(rsp.activeMentors);
       setIsLoading(false);
     } catch (e) {
       console.log(e);
@@ -165,6 +166,7 @@ export default function AssociateConsultant(props) {
               </p>
             </div>
             <div
+              style={{ width: "21rem" }}
               onClick={() => {
                 handleOnUserclick(userData.userId);
               }}
@@ -179,7 +181,7 @@ export default function AssociateConsultant(props) {
     );
   }
   function renderMentors(data) {
-    const initials = getInitials(data.mentorName);
+    const mentorInitials = getInitials(data.mentorName);
     return (
       <>
         <div key={data.mentorId} className="card associate-mapped-card-log">
@@ -199,7 +201,7 @@ export default function AssociateConsultant(props) {
                     alt=""
                   />
                 ) : (
-                  { initials }
+                  <p>{mentorInitials}</p>
                 )}
               </div>
             </div>
@@ -265,7 +267,7 @@ export default function AssociateConsultant(props) {
           <div style={{ overflow: "auto" }}>
             {activeButton === "Associates"
               ? filterAcData?.map((userData) => renderAssociates(userData))
-              : mentorData?.map((data) => renderMentors(data))}
+              : filterMentorData?.map((data) => renderMentors(data))}
           </div>
         </div>
       </div>
