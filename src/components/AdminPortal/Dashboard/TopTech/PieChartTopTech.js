@@ -1,10 +1,11 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { Pie } from "react-chartjs-2";
 import CryptoJS from "crypto-js";
 import { useNavigate } from "react-router-dom";
 import "./topTech.css";
 const PieChartTopTech = () => {
-  const [pData, setPData] = useState();
+  const [pieData, setPieData] = useState([]);
+  const [pData, setPData] = useState([]);
   const navigate = useNavigate();
   const fetchData = async () => {
     const secretkeyUser = process.env.REACT_APP_USER_KEY;
@@ -27,7 +28,7 @@ const PieChartTopTech = () => {
         return response.json();
       })
       .then(async (data) => {
-        setPData(data.response);
+        setPieData(data.response);
       })
       .catch((error) => {
         if (error.response?.data.status === 400) {
@@ -45,13 +46,36 @@ const PieChartTopTech = () => {
         console.log("this is error", error?.statusCode);
       });
   };
+  const setDataToPie = () => {
+    pieData?.forEach((val, ind) => {
+      setPData((prev) => {
+        let temp = [
+          ...prev,
+          {
+            techName: val?.techName,
+            techCount: val?.totalTime
+              ? val?.totalTime.hours * 3600 +
+                val?.totalTime.minutes * 60 +
+                val?.totalTime.seconds
+              : 0,
+          },
+        ];
+        return temp;
+      });
+    });
+  };
   useEffect(() => {
     fetchData();
   }, []);
+  useMemo(() => {
+    setDataToPie();
+  }, [pieData]);
+
   const totalTechCount = pData?.reduce(
     (accumulator, item) => accumulator + parseInt(item.techCount),
     0
   );
+
   const techDataWithCounts = pData?.reduce((accumulator, item) => {
     const percentage = (
       (parseInt(item.techCount) / totalTechCount) *
@@ -60,7 +84,11 @@ const PieChartTopTech = () => {
     accumulator[item.techName] = percentage;
     return accumulator;
   }, {});
-  let techDataWithColor = pData ? pData : [];
+  let techDataWithColor = pData
+    ? pData.map((val, ind) => {
+        return { ...val };
+      })
+    : [];
   const colorArray = ["#28519E", "#3B82F6", "#99CC00", "#E23237", "#FFB81C"];
   colorArray.forEach((val, index) => {
     if (index >= techDataWithColor.length) return;

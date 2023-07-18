@@ -17,6 +17,7 @@ import axios from "axios";
 import PieChart from "./PieChart";
 import Header from "../../../Header/Header";
 import CryptoJS from "crypto-js";
+import Detailreportskeleton from "./Detailreportskeleton";
 
 export const DetailedProvider = createContext();
 
@@ -26,6 +27,7 @@ const Detailedreport = () => {
   const navigate = useNavigate();
   const [data, setData] = useState([]);
   const idVal = parseInt(sessionStorage.getItem("detailId"));
+  const [isLoading, setIsLoading] = useState(true);
   //functions
   const fetchData = async () => {
     const secretkeyUser = process.env.REACT_APP_USER_KEY;
@@ -64,6 +66,7 @@ const Detailedreport = () => {
       }
       navigate("/pagenotfound");
     }
+    setIsLoading(false);
   };
   useEffect(() => {
     fetchData();
@@ -107,58 +110,64 @@ const Detailedreport = () => {
               </div>
             </div>
             <div className="detail-info-wrapper">
-              <div className="detailrep-user-info">
-                <div className="use-info">
-                  <span>User Information</span>
-                </div>
-                <div className="info-detail">
-                  <div className="user-name">
-                    <Usercircle />
-                    <span>{`${data[ApiObj.FN]} ${data[ApiObj.LN]}`}</span>
-                  </div>
-                  <div className="other-info">
-                    <div className="icon-pair">
-                      <Profile />
-                      <span>{data.internId}</span>
+              {isLoading ? (
+                <Detailreportskeleton />
+              ) : (
+                <>
+                  <div className="detailrep-user-info">
+                    <div className="use-info">
+                      <span>User Information</span>
                     </div>
-                    <div className="det-dot" />
-                    <div className="icon-pair">
-                      <Clock />
-                      <span>{`${data[ApiObj.DOI]} months`}</span>
+                    <div className="info-detail">
+                      <div className="user-name">
+                        <Usercircle />
+                        <span>{`${data[ApiObj.FN]} ${data[ApiObj.LN]}`}</span>
+                      </div>
+                      <div className="other-info">
+                        <div className="icon-pair">
+                          <Profile />
+                          <span>{data.internId}</span>
+                        </div>
+                        <div className="det-dot" />
+                        <div className="icon-pair">
+                          <Clock />
+                          <span>{`${data[ApiObj.DOI]} months`}</span>
+                        </div>
+                        <div className="det-dot" />
+                        <div className="icon-pair">
+                          <Mail />
+                          <span>{data[ApiObj.EID]}</span>
+                        </div>
+                        <div className="det-dot" />
+                        <div className="icon-pair">
+                          <Call />
+                          <span>{data[ApiObj.PN]}</span>
+                        </div>
+                      </div>
                     </div>
-                    <div className="det-dot" />
-                    <div className="icon-pair">
-                      <Mail />
-                      <span>{data[ApiObj.EID]}</span>
+                  </div>
+                  <div className="detailrep-second-child">
+                    <div className="detail-child spent-hours">
+                      <span>Most Spent Hours</span>
+                      <div className="most-skill-hr">
+                        <PieChart />
+                      </div>
                     </div>
-                    <div className="det-dot" />
-                    <div className="icon-pair">
-                      <Call />
-                      <span>{data[ApiObj.PN]}</span>
+                    <div className="detail-child">
+                      <span>Skills Achieved</span>
+                      <div className="skills-achieved">
+                        <Skillsachieved />
+                      </div>
+                    </div>
+                    <div className="detail-child">
+                      <span>Project Details</span>
+                      <div className="project-details">
+                        <ProjectList />
+                      </div>
                     </div>
                   </div>
-                </div>
-              </div>
-              <div className="detailrep-second-child">
-                <div className="detail-child spent-hours">
-                  <span>Most Spent Hours</span>
-                  <div className="most-skill-hr">
-                    <PieChart />
-                  </div>
-                </div>
-                <div className="detail-child">
-                  <span>Skills Achieved</span>
-                  <div className="skills-achieved">
-                    <Skillsachieved />
-                  </div>
-                </div>
-                <div className="detail-child">
-                  <span>Project Details</span>
-                  <div className="project-details">
-                    <ProjectList />
-                  </div>
-                </div>
-              </div>
+                </>
+              )}
               <div className="detailrep-table">
                 <div className="progress-div">
                   <span>Progress Report</span>
