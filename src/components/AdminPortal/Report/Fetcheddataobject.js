@@ -11,6 +11,7 @@ export const Data = {
   IC: "intermediateCount",
   AC: "advancedCount",
   D: "durationOfInternship",
+  DE: "isDeployed",
 };
 
 // export const Data = {

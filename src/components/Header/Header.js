@@ -4,11 +4,26 @@ import { BsChevronDown } from "react-icons/bs";
 import { ReactComponent as CGlogo } from "../../Assets/CG-Logo (1) 1CGlogo.svg";
 import "./Header.css";
 import MentorAssignedAlerts from "../UserPortal/Dashboard/MentorAssignedAlerts/MentorAssignedAlerts";
+import CryptoJS from "crypto-js";
+import { ReactComponent as UploadCsvv } from "../../Assets/upload.svg";
+import { UploadCsv } from "../AdminPortal/Dashboard/UploadCsv/UploadCsvModal";
+import "../AdminPortal/Dashboard/UploadCsv/uploadCsv.css"
 
 const Header = () => {
-  const [userData, setUserData] = useState(
-    JSON.parse(localStorage.getItem("userData"))
-  );
+  const secretKey = process.env.REACT_APP_USER_KEY;
+  const [userData, setUserData] = useState({});
+
+  useEffect(() => {
+    const data = localStorage.getItem("userData");
+    if (data) {
+      const bytes = CryptoJS.AES.decrypt(data, secretKey);
+      const decryptedJsonString = bytes.toString(CryptoJS.enc.Utf8);
+      setUserData(JSON.parse(decryptedJsonString));
+    } else {
+      console.log("No encrypted data found in localStorage.");
+    }
+  }, []);
+
   const [isTodayDate, setIsTodayDate] = useState(false);
   const navigate = useNavigate();
   const handleLogout = (e) => {
@@ -54,7 +69,10 @@ const Header = () => {
           <div className="collapse navbar-collapse border-Side" id="navbarNav">
             {userData.randomString === process.env.REACT_APP_USER_DES_USER ? (
               // user */
-              <ul className="navbar-nav nav-bg d-flex align-items-center" style={{height:"2.7rem"}}>
+              <ul
+                className="navbar-nav nav-bg d-flex align-items-center"
+                style={{ height: "2.7rem" }}
+              >
                 <li className="nav-item ps-1">
                   <NavLink to="/dashboard" className="btn activeBtn">
                     Dashboard
@@ -73,15 +91,18 @@ const Header = () => {
                   </NavLink>
                 </li>
               </ul>
-            ) : (
+            ) : (userData.randomString ===
+              process.env.REACT_APP_USER_DES_ADMIN) ? (
               // Admin */
-              <ul className="navbar-nav nav-bg d-flex align-items-center"  style={{height:"2.7rem"}}>
+              <ul
+                className="navbar-nav nav-bg d-flex align-items-center"
+                style={{ height: "2.7rem" }}
+              >
                 <li className="nav-item ps-1">
                   <NavLink to="/admin/dashboard" className="btn activeBtn">
                     Dashboard
                   </NavLink>
                 </li>
-
                 <li className="nav-item mx-2">
                   <NavLink to="/admin/assign-task" className="btn activeBtn">
                     Assign Task
@@ -98,16 +119,33 @@ const Header = () => {
                     Report
                   </NavLink>
                 </li>
-                <li
-                  className="nav-item pe-1"
-                  onClick={(e) => {
-                    e.preventDefault();
-                    alert("Developement is in progress");
-                    navigate("/");
-                  }}
-                >
+                <li className="nav-item pe-1">
                   <NavLink to="/admin/logs" className="btn activeBtn ">
                     Logs
+                  </NavLink>
+                </li>
+              </ul>
+            ) : (
+              // Mentor */
+              <ul
+                className="navbar-nav nav-bg d-flex align-items-center"
+                style={{ height: "2.7rem" }}
+              >
+                <li className="nav-item ps-1">
+                  <NavLink to="/mentor/dashboard" className="btn activeBtn">
+                    Dashboard
+                  </NavLink>
+                </li>
+
+                <li className="nav-item mx-2">
+                  <NavLink to="/mentor/assign-task" className="btn activeBtn">
+                    Assign Task
+                  </NavLink>
+                </li>
+
+                <li className="nav-item">
+                  <NavLink to="/mentor/review-associates" className="btn activeBtn ">
+                    Review Associates
                   </NavLink>
                 </li>
               </ul>
@@ -119,7 +157,16 @@ const Header = () => {
               <MentorAssignedAlerts func={anotherFunc} setState={isTodayDate} />
             </>
           ) : (
-            ""
+            <>
+            <button
+              className="upload-list-button"
+              data-bs-toggle="modal"
+              data-bs-target="#uploadCsv"
+              style={{marginRight: "24px"}}
+            >
+              <UploadCsvv />Upload CSV
+            </button>
+          </>
           )}
 
           <div
@@ -139,8 +186,8 @@ const Header = () => {
                     {userData.firstName} {userData.lastName} <br />
                   </span>
                   <span className="deployed-status">
-                    {userData.designation.toLowerCase() === "user"
-                      ? userData.deployed
+                    {userData?.designation?.toLowerCase() === "user"
+                      ? userData?.deployed
                         ? "Occupied"
                         : "On Bench"
                       : ""}
@@ -172,6 +219,7 @@ const Header = () => {
           </div>
         </nav>
       </div>
+      <UploadCsv />
     </>
   );
 };

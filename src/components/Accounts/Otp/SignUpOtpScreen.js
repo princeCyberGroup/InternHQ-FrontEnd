@@ -35,7 +35,7 @@ const SignUpOtpScreen = () => {
     const email = localStorage.getItem("email");
     axios
       .post(
-        process.env.REACT_APP_API_URL+"/api/v2/verifyOtp",
+        process.env.REACT_APP_API_URL+"/api/v3/verifyOtp",
         { email, otp },
         {
           headers: {
@@ -60,10 +60,10 @@ const SignUpOtpScreen = () => {
         setIsOtpValid(true);
         setIsLoading(false);
         if (error.response?.data.statusCode == 400) {
-          navigate("/error?statusCode=400");
+          navigate("/error/statusCode=400");
         }
         if (error.response?.data.statusCode == 500) {
-          navigate("/error?statusCode=500");
+          navigate("/error/statusCode=500");
         }
       });
   };

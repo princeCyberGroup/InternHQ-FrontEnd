@@ -1,4 +1,4 @@
-/* Congo MODAL */
+/* Sorry MODAL */
 
 .sorry-parent-wrapper {
   position: fixed;
@@ -10,13 +10,13 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  overflow-y: hidden;
-  
+  overflow-y: hidden;  
 }
+
 
 .sorry-child-wrapper {
   background-color: #ffffff;
-  width: 464px;
+  width: 29rem;
   border-radius: 8px;
 }
 

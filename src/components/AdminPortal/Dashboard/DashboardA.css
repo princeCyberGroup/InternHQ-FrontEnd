@@ -1,3 +1,10 @@
+.responsivenessA{
+  max-width: 80rem;
+  margin: 0 auto;
+  max-height: 80vh;
+  padding: 0rem;
+  /* border:1px solid black; */
+}
 .about {
   /* margin-left: 80px; */
   display: flex;
@@ -10,7 +17,6 @@
   order: 0;
   flex-grow: 0;
 }
-.about-div,
 .about-link {
   text-decoration: none;
   font-family: "Roboto";
@@ -28,8 +34,8 @@
   margin-top: 0.625rem; /* 10px / 16px */
   padding-left: 0.625rem;
   align-items: flex-start;
-  width: 11.456rem; /* 183.3px / 16px */
-  height: 4.5rem; 
+  width: 11.9rem; /* 183.3px / 16px */
+  height: 5.67rem; 
   background: #ffffff;
   box-shadow: 0px 0.25rem 1.25rem rgba(40, 52, 73, 0.15); /* 4px / 16px, 20px / 16px */
   border-radius: 0.5rem;
@@ -37,15 +43,12 @@
 }
 
 .main-div {
-  /* display: flex; */
-  /* justify-content: space-evenly; */
+
   justify-content: start;
 }
 /* ////////////////////////////////////////////// */
 
 .associate-consultant-heading {
-  /* width: 154px;
-height: 19px; */
 left: 0px;
 top: 0.281rem;
   font-family: "Roboto";

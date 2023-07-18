@@ -1,109 +1,105 @@
 .text-added-successfull {
-    color: #198754;
-    font-family: 'Roboto';
-    font-style: normal;
-    font-weight: 600;
-    font-size: 20px;
-    line-height: 150%;
-    display: flex;
-    align-items: center;
-    text-align: center;
-    flex-direction: column;
+  color: #198754;
+  font-family: "Roboto";
+  font-style: normal;
+  font-weight: 600;
+  font-size: 20px;
+  line-height: 150%;
+  display: flex;
+  align-items: center;
+  text-align: center;
+  flex-direction: column;
 }
 
 .ok-button {
-    padding: 10px 16px;
-    gap: 10px;
-    width: 85px;
-    background: #28519E;
-    border-radius: 4px;
-    margin-bottom: 2rem;
-   
+  padding: 10px 16px;
+  gap: 10px;
+  width: 85px;
+  background: #28519e;
+  border-radius: 4px;
+  margin-bottom: 2rem;
 }
 
 .ok-button:hover {
-    background: #28519E;
-   
+  background: #28519e;
 }
 
 .ok-text {
-    font-family: 'Roboto';
-    font-style: normal;
-    font-weight: 600;
-    font-size: 14px;
-    line-height: 20px;
-    text-align: center;
-    color: #FFFFFF;
+  font-family: "Roboto";
+  font-style: normal;
+  font-weight: 600;
+  font-size: 14px;
+  line-height: 20px;
+  text-align: center;
+  color: #ffffff;
 }
 
-
-
 .no-cancel-button {
-    width: 136.5px;
-    height: 40px;
-    padding: 10px 1rem;
-    background: #FFFFFF;
-    border: 1px solid #28519E;
-    border-radius: 4px;
-    margin-bottom: 2rem;
+  width: 136.5px;
+  height: 40px;
+  padding: 10px 1rem;
+  background: #ffffff;
+  border: 1px solid #28519e;
+  border-radius: 4px;
+  margin-bottom: 2rem;
 }
 
 .no-cancel-button:hover {
-    background: #FFFFFF;
-    border: 1px solid #28519E;
+  background: #ffffff;
+  border: 1px solid #28519e;
 }
 
 .yes-delete-button {
-    padding: 10px 16px;
-    gap: 10px;
-    width: 136.5px;
-    height: 40px;
-    background: #F82C44;
-    border-radius: 4px;
-    margin-bottom: 2rem;
-    margin-left: 1rem;
+  padding: 10px 16px;
+  gap: 10px;
+  width: 136.5px;
+  height: 40px;
+  background: #f82c44;
+  border-radius: 4px;
+  margin-bottom: 2rem;
+  margin-left: 1rem;
 }
 
 .yes-delete-button:hover {
-    background: #F82C44;
+  background: #f82c44;
 }
 
 .delete-task-text {
-    font-family: 'Roboto';
-    font-style: normal;
-    font-weight: 600;
-    font-size: 20px;
-    line-height: 150%;
-    text-align: center;
-    color: #F82C44;
+  font-family: "Roboto";
+  font-style: normal;
+  font-weight: 600;
+  font-size: 20px;
+  line-height: 150%;
+  text-align: center;
+  color: #f82c44;
 }
 
 .some-text-styling {
-    font-family: 'Roboto';
-    font-style: normal;
-    font-weight: 400;
-    font-size: 16px;
-    line-height: 20px;
-    text-align: center;
-    color: #565555;
+  font-family: "Roboto";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 20px;
+  text-align: center;
+  color: #565555;
 }
 
 .no-cancel-text {
-    font-family: 'Roboto';
-    font-style: normal;
-    font-weight: 600;
-    font-size: 14px;
-    line-height: 20px;
-    text-align: center;
-    color: #28519E;
+  font-family: "Roboto";
+  font-style: normal;
+  font-weight: 600;
+  font-size: 14px;
+  line-height: 20px;
+  text-align: center;
+  color: #28519e;
 }
 
 .yes-delete-text {
-    font-family: 'Roboto';
-    font-style: normal;
-    font-weight: 600;
-    font-size: 14px;
-    line-height: 20px;
-    text-align: center;
-    color: #FFFFFF;
+  font-family: "Roboto";
+  font-style: normal;
+  font-weight: 600;
+  font-size: 14px;
+  line-height: 20px;
+  text-align: center;
+  color: #ffffff;
 }

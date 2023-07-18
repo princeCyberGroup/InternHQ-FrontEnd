@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import "../ProjectIdea/TechDropDown.css"
+import "../ProjectIdea/TechDropDown.css";
+import CryptoJS from "crypto-js";
 const TechDropDown = (props) => {
   const [counter, setCounter] = useState(1);
   // const [props.technologyNames, setTechnologyNames] = useState([]);
@@ -8,26 +9,37 @@ const TechDropDown = (props) => {
   const [allTech, setAllTech] = useState();
 
   useEffect(() => {
+    const secretkeyUser = process.env.REACT_APP_USER_KEY;
+    var parsedObject;
+    const data = localStorage.getItem("userData");
+    if (data) {
+      const bytes = CryptoJS.AES.decrypt(data, secretkeyUser);
+      const decryptedJsonString = bytes.toString(CryptoJS.enc.Utf8);
+      parsedObject = JSON.parse(decryptedJsonString);
+    } else {
+      console.log("No encrypted data found in localStorage.");
+    }
     //this api call is for admin portal
     axios
-      .get(process.env.REACT_APP_API_URL+`/api/v2/getAllTechnology`,
-      {
+      .get(process.env.REACT_APP_API_URL + `/api/v3/getAllTechnology`, {
         headers: {
-          Authorization:`Bearer ${JSON.parse(localStorage.getItem('userData'))['token']}`,
+          Authorization: `Bearer ${parsedObject["token"]}`,
         },
       })
       .then((response) => {
-        setAllTech(response.data.response.sort((a, b) => {
-          const nameA = a.techName.toUpperCase();
-          const nameB = b.techName.toUpperCase();
-          if (nameA < nameB) {
-            return -1;
-          }
-          if (nameA > nameB) {
-            return 1;
-          }
-          return 0; // names are equal
-        }));
+        setAllTech(
+          response.data.response.sort((a, b) => {
+            const nameA = a.techName.toUpperCase();
+            const nameB = b.techName.toUpperCase();
+            if (nameA < nameB) {
+              return -1;
+            }
+            if (nameA > nameB) {
+              return 1;
+            }
+            return 0; // names are equal
+          })
+        );
       })
       .catch((error) => {
         console.error(error);
@@ -37,14 +49,14 @@ const TechDropDown = (props) => {
   const handleOptionClick = (event) => {
     const { value } = event.currentTarget.dataset;
     const isChecked = event.currentTarget.querySelector("input").checked;
-    if (isChecked && !props.technologyNames.includes(value)) {
-      props.technologyNames.push(value);
-      props.technologyNames.forEach((curElem, index) => {
+    if (isChecked && !props.technologyNames?.includes(value)) {
+      props.technologyNames?.push(value);
+      props.technologyNames?.forEach((curElem, index) => {
         props.techNames[`tech${index + 1}`] = curElem;
       });
       setCounter((prevCounter) => prevCounter + 1);
     } else {
-      const index = props.technologyNames.indexOf(value);
+      const index = props.technologyNames?.indexOf(value);
       if (index !== -1) {
         props.technologyNames.splice(index, 1);
       }
@@ -59,12 +71,10 @@ const TechDropDown = (props) => {
       });
     }
     props.techDataComingChild(props.techNames);
-   
   };
   return (
     <div className="drop-tech">
       {allTech?.map((value, index) => {
-       
         return (
           <div
             key={index}
@@ -88,5 +98,5 @@ const TechDropDown = (props) => {
     </div>
   );
 };
-  
+
 export default TechDropDown;

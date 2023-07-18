@@ -17,7 +17,7 @@ import PasswordChangedScreen from "./components/Accounts/ForgotPassword/Password
 
 import Dashboard from "./components/UserPortal/Dashboard/Dashboard";
 import ViewAllProjects from "./components/UserPortal/Dashboard/ProjectIdea/Project/ViewAllProject/ViewAllProjects";
-import AuthGuard from "./components/AuthGuard";
+import AuthGuard from "./components/_guard/AuthGuard";
 import TakeYourTest from "./components/UserPortal/SkillManagement/TakeYourTest/TakeYourTest";
 import DailyUpdateTable from "./components/UserPortal/DailyUpdateTable/DailyUpdateTable";
 import SkillManagement from "./components/UserPortal/SkillManagement/SkillManagement";
@@ -30,20 +30,22 @@ import Report from "./components/AdminPortal/Report/Report";
 import Task from "./components/AdminPortal/Task/Task";
 import DashboardA from "./components/AdminPortal/Dashboard/DashboardA";
 import Detailedreport from "./components/AdminPortal/Report/Detailedreport/Detailedreport";
-import MentorDashboard from "./components/MentorPortal/MentorDashboard";
-import AdminAuthGuard from "./components/AdminAuthGuard";
-import MentorAuthGuard from "./components/MentorAuthGuard";
+import AdminAuthGuard from "./components/_guard/AdminAuthGuard";
+import MentorAuthGuard from "./components/_guard/MentorAuthGuard";
 import Error_400 from "./components/ErrorPage/Error_400";
 import Error_500 from "./components/ErrorPage/Error_500";
 import Error_404 from "./components/ErrorPage/Error_404";
-import  PieChart  from "./components/AdminPortal/Report/Detailedreport/PieChart";
+import PieChart from "./components/AdminPortal/Report/Detailedreport/PieChart";
 import { ManageSkillTest } from "./components/AdminPortal/SkillTest/ManageSkillTest";
+import Log from "./components/AdminPortal/Logs/Log";
+import SessionExpired from "./components/ErrorPage/SessionExpired";
+
+//mentor import
+import MentorDashboard from "./components/MentorPortal/MentorDashboard/MentorDashboard";
+import MentorAssignTask from "./components/MentorPortal/MentorAssignTask/MentorAssignTask";
+import MentorReview from "./components/MentorPortal/MentorReviewAssociates/MentorReview";
 
 function App() {
-  const location = useLocation();
-  const navigate = useNavigate();
-  const [searchParams] = useSearchParams();
-  const userId = searchParams.get("userId");
   const [dataFromDailyUpdate, setDataFromDailyUpdate] = useState("");
   const handleDataFromDailyUpdate = (data) => {
     setDataFromDailyUpdate(data);
@@ -94,19 +96,22 @@ function App() {
           <Route element={<AdminAuthGuard />}>
             <Route path="/admin/dashboard" element={<DashboardA />} />
             <Route path="/admin/reports" element={<Report />} />
-            <Route path="/admin/report" element={<Detailedreport />} />
+            <Route path="/admin/report/detail" element={<Detailedreport />} />
             <Route path="/admin/assign-task" element={<Task />} />
             <Route path="/admin/skill-test" element={<ManageSkillTest />} />
-              
+            <Route path="/admin/logs" element={<Log />} />
           </Route>
 
           {/* Mentor routes */}
           <Route element={<MentorAuthGuard />}>
-            <Route path="/mentor-dashboard" element={<MentorDashboard />} />
+            <Route path="/mentor/dashboard" element={<MentorDashboard />} />
+            <Route path="/mentor/assign-task" element={<MentorAssignTask />} />
+            <Route path="/mentor/review-associates" element={<MentorReview />} />
           </Route>
 
-          <Route path="/error?statusCode=400" element={<Error_400 />} />
-          <Route path="/error?statusCode=500" element={<Error_500 />} />
+          <Route path="/error/statusCode=400" element={<Error_400 />} />
+          <Route path="/error/statusCode=500" element={<Error_500 />} />
+          <Route path="/error/statusCode=401" element={<SessionExpired />} />
           <Route path="*" element={<Error_404 />} />
         </Routes>
       </div>

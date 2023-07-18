@@ -1,34 +1,81 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { Pie } from "react-chartjs-2";
+import CryptoJS from "crypto-js";
+import { useNavigate } from "react-router-dom";
+import "./topTech.css";
 const PieChartTopTech = () => {
-  const [pData, setPData] = useState();
-
+  const [pieData, setPieData] = useState([]);
+  const [pData, setPData] = useState([]);
+  const navigate = useNavigate();
   const fetchData = async () => {
-    const token =
-      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkYXRhIjp7InN0YXR1c0NvZGUiOjIwMCwibWVzc2FnZSI6IkxvZ2luIFN1Y2Nlc3NmdWxsIiwidXNlcklkIjo5MywiZmlyc3ROYW1lIjoiQWRtaW4iLCJsYXN0TmFtZSI6bnVsbCwiZW1haWwiOiJhZG1pbkBjZ2luZmluaXR5LmNvbSIsImlzRGVwbG95ZWQiOmZhbHNlLCJyYW5kb21TdHJpbmciOiJjYjg3MTUifSwiZXhwIjoxNjg4NTc0MDc0LCJpYXQiOjE2ODg0MDEyNzR9.FdkvzcoUcYpqilUqnBog_yS1iSyrI8V8gtuahhhZqdE";
-    await fetch(`https://cg-interns-hq.azurewebsites.net/api/v2/getTop5Tech`, {
+    const secretkeyUser = process.env.REACT_APP_USER_KEY;
+    var parsedObject;
+    const data = localStorage.getItem("userData");
+    if (data) {
+      const bytes = CryptoJS.AES.decrypt(data, secretkeyUser);
+      const decryptedJsonString = bytes.toString(CryptoJS.enc.Utf8);
+      parsedObject = JSON.parse(decryptedJsonString);
+    } else {
+      console.log("No encrypted data found in localStorage.");
+    }
+    await fetch(`https://cg-interns-hq.azurewebsites.net/api/v3/getTop5Tech`, {
       method: "GET",
       headers: {
-        Authorization: `Bearer ${token}`,
+        Authorization: `Bearer ${parsedObject["token"]}`,
       },
     })
       .then((response) => {
         return response.json();
       })
       .then(async (data) => {
-        setPData(data.response);
+        setPieData(data.response);
       })
       .catch((error) => {
-        console.log("this is error", error);
+        if (error.response?.data.status === 400) {
+          navigate("/error/statusCode=400");
+        }
+        if (error.response?.data.status === 500) {
+          navigate("/error/statusCode=500");
+        }
+        if (error.response?.data.status === 404) {
+          navigate("/error/statusCode=404");
+        }
+        if (error.response?.data.statusCode === 401) {
+          navigate("/error/statusCode=401");
+        }
+        console.log("this is error", error?.statusCode);
       });
+  };
+  const setDataToPie = () => {
+    pieData?.forEach((val, ind) => {
+      setPData((prev) => {
+        let temp = [
+          ...prev,
+          {
+            techName: val?.techName,
+            techCount: val?.totalTime
+              ? val?.totalTime.hours * 3600 +
+                val?.totalTime.minutes * 60 +
+                val?.totalTime.seconds
+              : 0,
+          },
+        ];
+        return temp;
+      });
+    });
   };
   useEffect(() => {
     fetchData();
   }, []);
+  useMemo(() => {
+    setDataToPie();
+  }, [pieData]);
+
   const totalTechCount = pData?.reduce(
     (accumulator, item) => accumulator + parseInt(item.techCount),
     0
   );
+
   const techDataWithCounts = pData?.reduce((accumulator, item) => {
     const percentage = (
       (parseInt(item.techCount) / totalTechCount) *
@@ -37,32 +84,39 @@ const PieChartTopTech = () => {
     accumulator[item.techName] = percentage;
     return accumulator;
   }, {});
-
+  let techDataWithColor = pData
+    ? pData.map((val, ind) => {
+        return { ...val };
+      })
+    : [];
+  const colorArray = ["#28519E", "#3B82F6", "#99CC00", "#E23237", "#FFB81C"];
+  colorArray.forEach((val, index) => {
+    if (index >= techDataWithColor.length) return;
+    techDataWithColor[index]["color"] = val;
+    techDataWithColor[index]["techCount"] =
+      techDataWithCounts[techDataWithColor[index]["techName"]];
+  });
   const data = {
     labels: techDataWithCounts ? Object.keys(techDataWithCounts) : [],
     datasets: [
       {
-        radius: "70%",
+        radius: "80%",
         data: techDataWithCounts ? Object.values(techDataWithCounts) : [],
-        backgroundColor: [
-          "#28519E",
-          "#3B82F6",
-          "#99CC00",
-          "#E23237",
-          "#FFB81C",
-        ],
+        backgroundColor: colorArray,
         borderWidth: 2,
       },
     ],
   };
+
   const options = {
     plugins: {
       legend: {
-        display: true,
+        display: false,
         position: "bottom",
         labels: {
           boxWidth: 17,
           boxHeight: 17,
+          // code for options tag in pie chart if needed in future
           generateLabels: (chart) => {
             let array = techDataWithCounts
               ? Object.keys(techDataWithCounts)
@@ -84,6 +138,10 @@ const PieChartTopTech = () => {
             });
           },
           fontColor: "#343435",
+          responsive: true,
+          maintainAspectRatio: false,
+          width: 300,
+          height: 300,
         },
       },
       tooltips: {
@@ -113,19 +171,37 @@ const PieChartTopTech = () => {
               color: "#002C3F",
             }}
           >
-            Top 5 Technology
+            Top {pData?.length} Technology
           </h2>
         </div>
       </div>
       <div className="row">
-        <div
-          className="col"
-          style={{
-            boxShadow: "0rem 0.25rem 1.25rem rgba(40, 52, 73, 0.15)",
-            borderRadius: "0.5rem",
-          }}
-        >
-          <Pie data={data} options={options} />
+        <div className="col pie-chart-parent-wrapper">
+          <div
+            style={{
+              width: "350px",
+              height: "350px",
+            }}
+          >
+            <Pie data={data} options={options} />
+          </div>
+          <div className="pie-val-wrapper">
+            {techDataWithColor.map((val, index) => {
+              return (
+                <div className="pie-value" key={index}>
+                  <div className="pie-value-child">
+                    <div
+                      className="col-wrapper"
+                      style={{ backgroundColor: val?.color }}
+                    />
+                    <div className="val-text">{val?.techName}</div>
+                  </div>
+
+                  <div className="val-text">{val?.techCount}%</div>
+                </div>
+              );
+            })}
+          </div>
         </div>
       </div>
     </div>
