@@ -92,11 +92,21 @@ p.card-textt {
     margin-left: -0.5rem;
 }
 
-.project-idea-members:last-child {
+/* .project-idea-members:last-child {
+    background-color: rgba(40, 81, 158, 0.2);
+} */
+.project-idea-members-aditional{
+    width: 2.5rem;
+    height: 2.5rem;
+    border-radius: 50%;
+    background-color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     background-color: rgba(40, 81, 158, 0.2);
 }
 
-.project-idea-members:last-child p {
+.project-idea-members-aditional p {
     font-size: 1.1rem;
 }
 

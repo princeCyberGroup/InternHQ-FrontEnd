@@ -6,29 +6,26 @@ import uploadImage from "../../../../Assets/VectorUpload.svg";
 import { ReactComponent as AlertImage } from "../../../../Assets/Vectoralert.svg";
 import { ReactComponent as CameraIcon } from "../../../../Assets/Cameracamera.svg";
 import { ReactComponent as ExpandMore } from "../../../../Assets/expand_more.svg";
-// import TechDropDown from "../../../UserPortal/Dashboard/ProjectIdea/TechDropDown";
 import TechnologyDropDown from "../AssignTask/TechnologyDropdown(Admin)";
 
 import { storage } from "../config/firebase";
 
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 
-export const AddMentorModal = ({ isOpen, onClose, onAddMentor }) => {
-  const navigate = useNavigate();
-
+export const AddMentorModal = ({ onAddMentor }) => {
   const [mentorName, setMentorName] = useState("");
   const [technologyNames, setTechnologyNames] = useState([]);
   const [emailId, setEmailId] = useState("");
   const [isValidEmail, setIsValidEmail] = useState(true);
   const [designation, setDesignation] = useState("");
   const [imageUrl, setImageUrl] = useState(null);
-  const [error, setError] = useState(true);
+  const [nameError, setNameError] = useState(true);
+  const [emailError, setEmailError] = useState(true);
   const [isCleared, setIsCleared] = useState(false);
   const [dropDown, setDropDown] = useState(false);
   const [tech, setTech] = useState({});
   const [selectedTechIds, setSelectedTechIds] = useState([]);
   const [searchQuery, setSearchQuery] = useState("");
-
 
   const position = [
     "Principal 1",
@@ -55,10 +52,9 @@ export const AddMentorModal = ({ isOpen, onClose, onAddMentor }) => {
     setIsCleared(true);
     setTech({});
     const checkboxes = document.querySelectorAll(".tech-checkbox");
-  checkboxes.forEach((checkbox) => {
-    checkbox.checked = false;
-  });
-
+    checkboxes.forEach((checkbox) => {
+      checkbox.checked = false;
+    });
   };
 
   const handleImageUpload = (data) => {
@@ -73,86 +69,77 @@ export const AddMentorModal = ({ isOpen, onClose, onAddMentor }) => {
 
     uploadBytes(imageRef, data.target.files[0]).then((snapshot) => {
       getDownloadURL(snapshot.ref).then((url) => {
-        // console.log("URL:", url);
-
         setImageUrl(url);
       });
     });
   };
 
-
   const handleSkillsChange = (event) => {
-    const selectedSkills = Array.from(event.target.selectedOptions, (option) => option.value.trim());
+    const selectedSkills = Array.from(event.target.selectedOptions, (option) =>
+      option.value.trim()
+    );
     setTechnologyNames(selectedSkills);
   };
-  
+
   const techDataComingFrmChild = (data) => {
     return setTech(data);
-    
   };
 
   const handleFormSubmit = async (e) => {
     e.preventDefault();
-    
-  
-    if (error) {
+
+    if (
+      nameError ||
+      !designation ||
+      emailError ||
+      selectedTechIds.length === 0
+    ) {
       alert("Please fill out the necessary fields");
-      // setError(true);
-    }
-    else{
-  
-    try {
-      await axios.post(process.env.REACT_APP_API_URL+"/api/v3/postMentorDetails", {
-        mentorName,
-        emailId,
-        imageUrl,
-        designation,
-        skills:Object.values(tech)
-      });
-      onAddMentor({ mentorName, emailId, imageUrl, designation,technologyNames });
-  
-      setTechnologyNames([]);
-      setMentorName("");
-      setEmailId("");
-      setImageUrl("");
-      setDesignation("");
-      setError(false);
-      setTech({});
-      setError(true);
-      // onClose();
-  
-      if (!error) {
-        const closeButton = document.querySelector("#addMentorModal .btn-close");
-        closeButton.click();
+    } else {
+      try {
+        await axios.post(
+          process.env.REACT_APP_API_URL + "/api/v3/postMentorDetails",
+          {
+            mentorName,
+            emailId,
+            imageUrl,
+            designation,
+            skills: technologyNames,
+          }
+        );
+        onAddMentor({
+          mentorName,
+          emailId,
+          imageUrl,
+          designation,
+          technologyNames,
+        });
+
+        setTechnologyNames([]);
+        setMentorName("");
+        setEmailId("");
+        setImageUrl("");
+        setDesignation("");
+        setNameError(true);
+        setTech({});
+        setEmailError(true);
+      } catch (err) {
+        console.log(err);
       }
-    } catch (err) {
-      // console.log(err);
     }
-  }
-  };
-  
-
-
-  const handleSkillTest = (e) => {
-    e.preventDefault();
-
-    navigate("/manage-skill-test");
   };
 
   const handleMentorName = (e) => {
     setMentorName(e.target.value);
     if (mentorName.length === 0) {
-      setError(true)
+      setNameError(true);
+    } else {
+      setNameError(false);
     }
-    else{setError(false)}
   };
 
   const handleDesignation = (e) => {
     setDesignation(e.target.value);
-    if(!designation){
-      setError(true)
-    }
-    else{setError(false)}
   };
 
   const handleEmailId = (e) => {
@@ -160,9 +147,10 @@ export const AddMentorModal = ({ isOpen, onClose, onAddMentor }) => {
     setEmailId(enteredEmail);
     setIsValidEmail(validateEmail(enteredEmail));
     if (emailId.length < 2) {
-      setError(true)
+      setEmailError(true);
+    } else {
+      setEmailError(false);
     }
-    else{setError(false)}
   };
 
   const validateEmail = (email) => {
@@ -173,20 +161,13 @@ export const AddMentorModal = ({ isOpen, onClose, onAddMentor }) => {
 
   return (
     <div className="">
-
-
-
       <div
-
-
         className="modal fade"
         id="addMentorModal"
         tabindex="-1"
         aria-labelledby="skillModalLabel"
         aria-hidden="true"
-        // data-bs-backdrop="static"
-        data-bs-keyboard="false" 
-
+        data-bs-keyboard="false"
       >
         <div className="modal-dialog modal-dialog-centered">
           <div className="modal-content">
@@ -218,7 +199,10 @@ export const AddMentorModal = ({ isOpen, onClose, onAddMentor }) => {
                   </div>
 
                   <div>
-                    <label for="fileUpload" className="file-upload btn btn-block">
+                    <label
+                      for="fileUpload"
+                      className="file-upload btn btn-block"
+                    >
                       <CameraIcon />
                       <span className="upload-image-text fw-bold">
                         Upload Image
@@ -235,17 +219,17 @@ export const AddMentorModal = ({ isOpen, onClose, onAddMentor }) => {
                 </div>
 
                 <div
-
                   class="alert alert-info mb-0 box-for-alert-message mt-1"
-
                   role="alert"
                 >
                   <div>
-                  <AlertImage />
+                    <AlertImage />
                   </div>
                   <div className="text-for-alert">
-                    <p className="m-0 mx-2">Please upload recent image ensuring that the face is clearly
-                    visible.</p> 
+                    <p className="m-0 mx-2">
+                      Please upload recent image ensuring that the face is
+                      clearly visible.
+                    </p>
                     <p className="m-0 mx-2">Allowed format is JPEG,PNG.</p>
                   </div>
                 </div>
@@ -323,50 +307,50 @@ export const AddMentorModal = ({ isOpen, onClose, onAddMentor }) => {
                     </label>
 
                     <div className="container border p-0">
-                        <div className="input-with-button">
-                          <button
-                            type="button"
-                            className="button-for-dropdown"
-                            onClick={() => {
-                              setDropDown(!dropDown);
-                            }}
-                          >
-                            <input
-                              type="text"
-                              className="custom-input"
-                              placeholder="Select Technology"
-                              onChange={(e) => handleSkillsChange(e)}
-                              value={Object.values(tech)}
-                              disabled
-                            />
-                          </button>
-                          <button
-                            type="button"
-                            className="expand-more"
-                            onClick={() => {
-                              setDropDown(!dropDown);
-                            }}
-                          >
-                            <ExpandMore />
-                          </button>
-                        </div>
-                        <div>
-                          <ul
-                            style={{ display: dropDown ? "" : "none" }}
-                            className="ul-styling"
-                          >
-                            <TechnologyDropDown
-                              techDataComingChild={techDataComingFrmChild}
-                              setTechnologyNames={setTechnologyNames}
-                              technologyNames={technologyNames}
-                              setSelectedTechIds={setSelectedTechIds}
-                              searchQuery={searchQuery}
-                              setSearchQuery={setSearchQuery}
-                            />
-                          </ul>
-                        </div>
-                        {/* </div> */}
+                      <div className="input-with-button">
+                        <button
+                          type="button"
+                          className="button-for-dropdown"
+                          onClick={() => {
+                            setDropDown(!dropDown);
+                          }}
+                        >
+                          <input
+                            type="text"
+                            className="custom-input"
+                            placeholder="Select Technology"
+                            onChange={(e) => handleSkillsChange(e)}
+                            value={Object.values(tech)}
+                            disabled
+                          />
+                        </button>
+                        <button
+                          type="button"
+                          className="expand-more"
+                          onClick={() => {
+                            setDropDown(!dropDown);
+                          }}
+                        >
+                          <ExpandMore />
+                        </button>
                       </div>
+                      <div>
+                        <ul
+                          style={{ display: dropDown ? "" : "none" }}
+                          className="ul-styling"
+                        >
+                          <TechnologyDropDown
+                            techDataComingChild={techDataComingFrmChild}
+                            setTechnologyNames={setTechnologyNames}
+                            technologyNames={technologyNames}
+                            selectedTechIds={selectedTechIds}
+                            setSelectedTechIds={setSelectedTechIds}
+                            searchQuery={searchQuery}
+                            setSearchQuery={setSearchQuery}
+                          />
+                        </ul>
+                      </div>
+                    </div>
                   </div>
                 </form>
               </div>
@@ -385,7 +369,14 @@ export const AddMentorModal = ({ isOpen, onClose, onAddMentor }) => {
               <button
                 type="button"
                 className="btn save-button fw-bold"
-                data-bs-dismiss={error?"":"modal"}
+                data-bs-dismiss={
+                  !nameError &&
+                  designation &&
+                  !emailError &&
+                  selectedTechIds.length !== 0
+                    ? "modal"
+                    : ""
+                }
                 onClick={handleFormSubmit}
               >
                 <span className="save-text">Save</span>

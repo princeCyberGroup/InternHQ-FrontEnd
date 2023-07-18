@@ -7,11 +7,10 @@ import { useNavigate } from "react-router-dom";
 export const NotificationComponent = () => {
   return (
     <div className=" notification-card card">
-      {/* <div className="card-header-notification">Notifications</div> */}
       <div className="border-bottom ">
         <h5 className="card-title dtt-hfs ">Skill Alerts</h5>
       </div>
-      <div className="abc">
+      <div className="notification-cover">
         <NewNotifications />
       </div>
     </div>

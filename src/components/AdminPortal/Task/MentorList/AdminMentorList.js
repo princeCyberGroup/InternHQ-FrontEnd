@@ -14,10 +14,8 @@ const MentorList = () => {
   const [expandedMentor, setExpandedMentor] = useState(null);
   const navigate = useNavigate();
   const [mentor, setMentor] = useState([]);
-  // const [modalOpen, setModalOpen] = useState(false);
 
   useEffect(() => {
-    // setMentors(MentorData);
     // Fetch mentors data from the API
     fetchMentorList();
   }, []);
@@ -37,7 +35,7 @@ const MentorList = () => {
         })
       );
     } catch (err) {
-      // console.log(err);
+      console.log(err);
     }
   };
   const assignMentor = async (mentorId) => {
@@ -55,22 +53,16 @@ const MentorList = () => {
         })
       );
     } catch (err) {
-      // console.log(err);
+      console.log(err);
     }
   };
-  // const addMentor = (newMentor) => {
-  //   // Update the mentor list after adding a new mentor
-  //   setMentor(prevMentor => [...prevMentor, newMentor]);
-  // };
+
   const addMentor = async (newMentor) => {
     try {
-      // Assign the mentor immediately after adding
-      // await assignMentor(newMentor.mentorId);
-
       // Update the mentor list after adding a new mentor
       setMentor((prevMentor) => [...prevMentor, newMentor]);
     } catch (err) {
-      // console.log(err);
+      console.log(err);
     } finally {
       fetchMentorList();
     }
@@ -101,7 +93,6 @@ const MentorList = () => {
       const data = await response.json();
       const mentors = [...data.activeMentors, ...data.inActiveMentors];
       setMentor(mentors);
-      // console.log(isLoading, "Fetched data");
     } catch (error) {
       if (error.response.status === 401) {
         navigate("/error/statusCode=401");
@@ -115,7 +106,6 @@ const MentorList = () => {
       if (error.response.status === 404) {
         navigate("/error/statusCode=404");
       }
-      // console.log("Error occurred while fetching mentors:", error);
     }
   };
 
@@ -126,15 +116,6 @@ const MentorList = () => {
       setExpandedMentor(mentorId);
     }
   };
-
-  // const handleAddMentor = (e) => {
-  //   e.preventDefault();
-  //   setModalOpen(true);
-  // };
-
-  // const handleCloseModal = () => {
-  //   setModalOpen(false);
-  // };
 
   return (
     <>
@@ -159,16 +140,11 @@ const MentorList = () => {
         </button>
       </div>
 
-      {/* //main card  */}
-
       <div
         className="card mentor-card"
         style={{ maxHeight: "80vh", width: "420px", overflow: "auto" }}
       >
-        <div
-          className="card-body p-0"
-          // style={{ maxHeight: "640px", overflow: "auto" }}
-        >
+        <div className="card-body p-0">
           {mentor?.map((user) => {
             return (
               <>
@@ -231,32 +207,14 @@ const MentorList = () => {
                         )}
                       </span>
                     </div>
-
-                    {/* <div className="arrow-wrapper1">
-                      <button className="remove-btn">
-                        Remove
-                      </button>
-                      <span
-                        onClick={() => handleExpand(user.mentorId)}
-                        className="expand-arrow"
-                      >
-                        {expandedMentor === user.mentorId ? (
-                          <UpArrow />
-                        ) : (
-                          <DownArrow />
-                        )}
-                      </span>
-                    </div> */}
                   </div>
                   {expandedMentor === user.mentorId && (
                     <div className="row mt-2">
                       <div className="technology">
                         <p className="tech">Skilled In:</p>
-                        {/* {console.log(mentor.skills[0].length <8 && mentor.skills[1].length <8? "true"+mentor.skills[0]: mentor.skills )} */}
                         {user.skills.map((skill, skillIndex) => (
                           <span key={skillIndex} className="badge tech-badge">
                             {skill.toUpperCase()}{" "}
-                            {/*Replace with mentorskills from API response */}
                           </span>
                         ))}
                       </div>
@@ -268,10 +226,7 @@ const MentorList = () => {
           })}
         </div>
       </div>
-      <AddMentorModal
-        // isOpen={modalOpen} onClose={handleCloseModal}
-        onAddMentor={addMentor}
-      />
+      <AddMentorModal onAddMentor={addMentor} />
     </>
   );
 };
