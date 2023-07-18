@@ -24,6 +24,7 @@ const Report = () => {
   );
   const [deployData, setDeployData] = useState([]);
   const [confirmChange, setConfirmChange] = useState(false);
+  const [loadFilter, setLoadFilter] = useState(true);
   const navigate = useNavigate();
   const secretkeyUser = process.env.REACT_APP_USER_KEY;
   var parsedObject;
@@ -88,9 +89,10 @@ const Report = () => {
     } catch (error) {
       console.log("this is error in report post api", error);
     }
-
-    setConfirmChange(false);
-    fetchData();
+    // setConfirmChange(false);
+    // setLoadFilter((prev) => !prev);
+    // fetchData();
+    window.location.reload();
   };
   const handleFiltersChange = () => {
     const getFilterItems = (items, query) => {
@@ -98,7 +100,7 @@ const Report = () => {
         return items.filter((item) =>
           `${item[Data.FN]} ${item[Data.LN]}`
             .toLowerCase()
-            .includes(query.toLowerCase())
+            .startsWith(query.toLowerCase())
         );
       }
       return items;
@@ -155,9 +157,9 @@ const Report = () => {
     const filterItems = getFilterItems(orgTableData, query);
     const filterTech = getfilterTech(filterItems);
     const filterDep = getfilterDep(filterTech, selectedOption);
-    const workingData = filterDep.map((value, index) => {
-      return { ...value, isDeployed: tableData[index].isDeployed };
-    });
+    // const workingData = filterDep.map((value, index) => {
+    //   return { ...value, isDeployed: tableData[index].isDeployed };
+    // });
     setTableData(filterDep);
   };
   if (data) {
@@ -222,6 +224,7 @@ const Report = () => {
               <button
                 className="report-deploy-btn"
                 onClick={() => {
+                  setLoadFilter((prev) => !prev);
                   setConfirmChange(true);
                 }}
               >
@@ -244,9 +247,15 @@ const Report = () => {
               <div className="report-filter">
                 <Filter /> Filter:
               </div>
-              <SelectedTech handleSelectTech={handleSelectTech} />
-              <Selectlevel handleSelectLevel={handleSelectLevel} />
-              <DropdownD handleChange={handleChange} />
+              <SelectedTech
+                loadFilter={loadFilter}
+                handleSelectTech={handleSelectTech}
+              />
+              <Selectlevel
+                loadFilter={loadFilter}
+                handleSelectLevel={handleSelectLevel}
+              />
+              <DropdownD loadFilter={loadFilter} handleChange={handleChange} />
             </div>
           </div>
           <div className="report-table-wrapper ">

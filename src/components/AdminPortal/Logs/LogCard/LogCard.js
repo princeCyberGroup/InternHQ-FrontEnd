@@ -6,9 +6,10 @@ import CryptoJS from "crypto-js";
 import axios from "axios";
 
 function getInitials(name) {
-  const names = name.split(" ");
-  const initials = names.map((n) => n.charAt(0).toUpperCase());
-  return initials.join("");
+  const names = name?.split(" ");
+  const initials = names?.map((n) => n.charAt(0).toUpperCase());
+  console.log("react object", initials);
+  return initials?.join("");
 }
 
 export default function AssociateConsultant(props) {
@@ -179,7 +180,8 @@ export default function AssociateConsultant(props) {
     );
   }
   function renderMentors(data) {
-    const initials = getInitials(data.mentorName);
+    const initials = getInitials(data?.mentorName);
+    console.log("render mentor", initials);
     return (
       <>
         <div key={data.mentorId} className="card associate-mapped-card-log">
@@ -199,7 +201,7 @@ export default function AssociateConsultant(props) {
                     alt=""
                   />
                 ) : (
-                  { initials }
+                   initials 
                 )}
               </div>
             </div>
