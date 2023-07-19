@@ -1,10 +1,12 @@
 import React, { useState } from "react";
 import "./DropdownD.css";
 
-const DropdownD = ({ handleChange }) => {
+const DropdownD = ({ loadFilter, handleChange }) => {
   //data
   const [selectedOption, setSelectedOption] = useState("None");
-
+  // useEffect(() => {
+  //   setSelectedOption([]);
+  // }, [loadFilter]);
   //function
   const handlechange = (value) => {
     setSelectedOption(value);

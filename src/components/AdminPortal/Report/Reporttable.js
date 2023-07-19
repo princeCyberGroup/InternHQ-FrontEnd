@@ -21,7 +21,7 @@ const Reporttable = ({ tableData, isLoading, handleDeployChange }) => {
   return (
     <div className="container-fluid container-table">
       <table className="table-report" cellPadding="0" cellSpacing="0">
-        <thead style={{ zIndex: 100 }}>
+        <thead style={{ zIndex: 50 }}>
           <tr>
             <th style={{ width: "2.5rem" }}>#</th>
             <th style={{ width: "13.375rem" }}>Name</th>
