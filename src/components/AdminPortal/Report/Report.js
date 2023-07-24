@@ -56,11 +56,6 @@ const Report = () => {
       });
       setDeployData(tempData);
     }
-    const updatedValues = tableData.map((val) => {
-      if (val.userId === userId) return { ...val, isDeployed: !val.isDeployed };
-      return val;
-    });
-    setTableData(updatedValues);
   };
   const handleCancel = () => {
     let tempDeployedTable = [];
@@ -84,9 +79,6 @@ const Report = () => {
     } catch (error) {
       console.log("this is error in report post api", error);
     }
-    // setConfirmChange(false);
-    // setLoadFilter((prev) => !prev);
-    // fetchData();
     window.location.reload();
   };
   const handleFiltersChange = () => {
@@ -139,23 +131,9 @@ const Report = () => {
       }
       return items;
     };
-
-    const getfilterDep = (item, optionVal) => {
-      if (optionVal === "Deployed") {
-        return item.filter((val) => val.isDeployed);
-      } else if (optionVal === "Undeployed") {
-        return item.filter((val) => !val.isDeployed);
-      } else {
-        return item;
-      }
-    };
     const filterItems = getFilterItems(orgTableData, query);
     const filterTech = getfilterTech(filterItems);
-    const filterDep = getfilterDep(filterTech, selectedOption);
-    // const workingData = filterDep.map((value, index) => {
-    //   return { ...value, isDeployed: tableData[index].isDeployed };
-    // });
-    setTableData(filterDep);
+    setTableData(filterTech);
   };
   if (data) {
     const bytes = CryptoJS.AES.decrypt(data, secretkeyUser);

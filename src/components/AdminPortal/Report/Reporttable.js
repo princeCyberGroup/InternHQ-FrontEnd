@@ -81,6 +81,10 @@ const Reporttable = ({
                   <td>
                     <div
                       className="tech-tags"
+                      // onClick={(e) => {
+                      //   e.stopPropagation();
+                      //   setSelectedIndex((prev) => (prev === -1 ? ind : -1));
+                      // }}
                       onMouseEnter={() => setSelectedIndex(ind)}
                       onMouseLeave={() => setSelectedIndex(-1)}
                     >
@@ -113,7 +117,7 @@ const Reporttable = ({
                         })}
                       {selectedIndex !== ind &&
                         objectKeyCount > 2 &&
-                        val?.[Data.TN].slice(4).length !== 0 && (
+                        val?.[Data.TN].slice(3).length !== 0 && (
                           <div className="all-tech">
                             <span>+ {val?.[Data.TN].slice(3).length}</span>
                           </div>
@@ -160,10 +164,23 @@ const Reporttable = ({
                           deployData.some(
                             (value) => value?.userId === val?.userId
                           )
-                            ? deployData.find(
-                                (value) => value?.userId === val?.userId
-                              ).status
-                            : val[Data.DE]
+                            ? deployData.find((value) => {
+                                console.log(
+                                  "value deploy ",
+                                  value?.userId,
+                                  " value user ",
+                                  val?.userId,
+                                  " equal ? ",
+                                  value?.userId === val?.userId
+                                );
+
+                                return value?.userId === val?.userId;
+                              }).status
+                            : (() => {
+                                const dataDEValue = val[Data.DE];
+                                console.log("val[Data.DE]: ", dataDEValue);
+                                return dataDEValue;
+                              })()
                         }
                       />
                     </div>
