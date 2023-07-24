@@ -9,7 +9,7 @@ const ProjectModalEdit = ({projectName,projectDescriptions,indexNumber,projectTe
     const [projectLink, setProjectLink] = useState(projectLinks);
     const [hostedLink, setHostedLink] = useState(hostedLinks);
     const [textInput, setTextInput] = useState("");
-    const [memberNames, setMemberNames] = useState({memberName});
+    const [memberNames, setMemberNames] = useState([memberName]);
     const [techNames, seTechNames] = useState({});
     const [dropDown, setDropDown] = useState(false);
     const [error, setError] = useState(true);
@@ -41,7 +41,9 @@ const ProjectModalEdit = ({projectName,projectDescriptions,indexNumber,projectTe
     const handleProjectDescriptionChange = (e) => {
        setDescription(e.target.value);
     };
-
+    const handleChangeTechnology = (e)=>{
+        setTech(e.target.value);
+    }
    
     const handleProjectLinkChange = (e) => {
         const link = e.target.value;
@@ -58,27 +60,9 @@ const ProjectModalEdit = ({projectName,projectDescriptions,indexNumber,projectTe
     const techDataComingFrmChild = (data) => {
         return setTech(data);
     };
-    const handleInputChange = (event) => {
-        setTextInput(event.target.value);
-    };
-    const clear = () => {
-        setTextInput("");
-        setProjName("");
-        setDescription("");
-        setProjectLink("");
-        setHostedLink("");
-        setDropDown(false);
-        setProjNameError("");
-        setDesError("");
-        setProjLinkError("");
-        setTech({});
-        seTechNames({});
-        setTechnologyNames([]);
-
-        const checkboxes = document.querySelectorAll(".tech-checkbox");
-        checkboxes.forEach((checkbox) => {
-            checkbox.checked = false;
-        });
+    const handleInputChange = (e) => {
+        
+        setMemberNames(e.target.value);
     };
     const isObjectEmpty = (object) => {
         if (object.member1.length > 0) {
@@ -110,24 +94,14 @@ const ProjectModalEdit = ({projectName,projectDescriptions,indexNumber,projectTe
                     technologyNames: techNames,
                     memberNames: memberNames,
                 })
+               
                 .then((res) => {
                     console.log("print", res.data);
+                     handleEditCloseModal();
                 })
                 .catch((err) => {
                     console.log(err);
                 });
-            setTextInput("");
-            setProjName("");
-            setDescription("");
-            setProjectLink("");
-            setHostedLink("");
-
-            setTech({});
-
-            const checkboxes = document.querySelectorAll(".tech-checkbox");
-            checkboxes.forEach((checkbox) => {
-                checkbox.checked = false;
-            });
         }
     };
     useEffect(() => {
@@ -243,7 +217,8 @@ const ProjectModalEdit = ({projectName,projectDescriptions,indexNumber,projectTe
                                             <input
                                                 type="text"
                                                 className="custom-input"
-                                                value={Object.values(tech)}
+                                                value={technologyNames}
+                                                onChange={handleChangeTechnology}
                                                 disabled
                                             />
                                         </button>
@@ -325,14 +300,14 @@ const ProjectModalEdit = ({projectName,projectDescriptions,indexNumber,projectTe
                                     className="form-control"
                                     id="project-description"
                                     placeholder="Member Name"
-                                    value={textInput}
+                                    value={memberNames}
                                     onChange={handleInputChange}
                                 />
                             </div>
                         </form>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" onClick={()=>handleEditCloseModal()}>Cancel</button>
                         <button type="button" class="btn btn-primary" onClick={()=>handleSubmit()}> Edit</button>
                     </div>
                 </div>

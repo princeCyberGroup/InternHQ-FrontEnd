@@ -78,7 +78,7 @@ const TechDropDown = (props) => {
             data-value={value.techName}
           >
             <label className="form-check-label" for={value.techName}>
-            {Array.isArray(value.techName) ? value.techName.join(", ") : value.techName}
+            {Array.isArray(value.techName) ? value.techName.join(",") : value.techName}
             </label>
             <input
               className="form-check-input tech-checkbox"

@@ -260,7 +260,8 @@ const ViewAllProjects = () => {
               data-bs-toggle="modal"
               data-bs-target="#xampleModal"
             >
-              <p className="me-2 add-your-project"><VectorAdd/> Add Project</p>
+              <p className="me-2 add-your-project"><VectorAdd/> 
+              <span className="text-for-the-modal">Add Project</span></p>
             </button>
           </div>
           <div

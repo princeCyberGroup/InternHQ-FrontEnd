@@ -5,7 +5,7 @@ import "./DetailsLeft.css";
 
 const DetailsLeft = (props) => {
 
-  const [isBorder, setIsBorder] = useState(false);
+  const [isBorder, setIsBorder] = useState(true);
   const [selectedIdx, setSelectedIdx] = useState(null);
   const [mentorSelectedIndex, setMentorSelectedIndex] = useState(null);
   const [test, settes] = useState(false)
@@ -15,7 +15,7 @@ const DetailsLeft = (props) => {
   };
   useEffect(() => {
     if (selectedIdx === null && mentorSelectedIndex === null && props.data.length > 0) {
-      setSelectedIdx(0);
+      setSelectedIdx(-1);
       setMentorSelectedIndex(0);
     }
   }, [props.data]);
@@ -25,21 +25,18 @@ const DetailsLeft = (props) => {
         <div className="child-wrapper-1">
           {props.mentorApiData && Array.isArray(props.mentorApiData) && props.mentorApiData.map((user, indexForMentor) => {
 
-            const isBorder = indexForMentor === mentorSelectedIndex;
+            const isSelected = mentorSelectedIndex === indexForMentor;
+            const isBorder = isSelected && mentorSelectedIndex === indexForMentor;
             return (
               <div
-                className={
-                  "project-names-wrapper mt-3 pb-0 d-flex justify-content-between" +
-                  (isBorder ? " project-names-wrapper-border" : "")
-                }
+                className={`project-names-wrapper mt-3 pb-0 d-flex justify-content-between ${isBorder ? "project-names-wrapper-border" : ""}`}
                 key={indexForMentor}
                 onClick={(e) => {
                   e.preventDefault();
+                 
                   props.projectDetails("MT", indexForMentor);
-                  // props.settest(true)
-                  setMentorSelectedIndex(indexForMentor);
                   setSelectedIdx(-1);
-
+                  setMentorSelectedIndex(indexForMentor);
                 }}
               >
                 {user.firstName ? (
@@ -67,21 +64,18 @@ const DetailsLeft = (props) => {
             );
           })}
           {props.data?.map((user, index) => {
-            const isBorder = index === selectedIdx;
+            const isSelected = selectedIdx === index;
+            const isBorder = isSelected && selectedIdx === index;
             return (
               <div
-                className={
-                  "project-names-wrapper mt-3 pb-0 d-flex justify-content-between" +
-                  (isBorder ? " project-names-wrapper-border" : "")
-                }
+                className={`project-names-wrapper mt-3 pb-0 d-flex justify-content-between ${isBorder ? "project-names-wrapper-border" : ""}`}
                 key={index}
                 onClick={(e) => {
                   e.preventDefault();
+                
                   props.projectDetails(index, "MT");
-                  { console.log("Index Value:", index) }
-                  setSelectedIdx(index);
                   setMentorSelectedIndex(-1);
-
+                  setSelectedIdx(index);
                 }}
               >
 

@@ -281,7 +281,9 @@ const AddNewIdea = () => {
                   : first.projectText}
               </p>
               <div className="members-div pt-0">
-                <div className="member mb pt-1 fw-bold mb-2">Members:</div>
+              {first?.members && !(first?.members?.every((value) => value === null)) && (
+          <div className="member mb pt-1 fw-bold mb-2">Members:</div>
+        )}
                 <div className="project-members ml-0">
                   {first.members.slice(0, 8)?.map((curElem, index) => {
                     if (curElem != null) {

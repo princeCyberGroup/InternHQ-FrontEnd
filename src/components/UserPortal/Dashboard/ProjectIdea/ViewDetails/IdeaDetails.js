@@ -6,8 +6,9 @@ const IdeaDetails = ({data, indexNumber}) =>{
        
         <p className="created-at">{data[indexNumber]?.createdAt}</p>
         <p className="project-detail-text">{data[indexNumber]?.projectText}</p>
+        {data[indexNumber]?.technology && !(data[indexNumber]?.technology?.every((value) => value === null)) && (
         <p className="project-detail-technology-used mb-2">Technology Used:</p>
-  
+        )}
         <div className="project-detail-technology-badges">
           {data[indexNumber]?.technology?.map && data[indexNumber]?.technology?.map((tech) => {
             if (tech != null) {

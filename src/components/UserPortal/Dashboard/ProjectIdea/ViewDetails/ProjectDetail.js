@@ -6,6 +6,11 @@ import { ReactComponent as DeleteButton } from "../../../../../Assets/Buttondele
 import ProjectModalEdit from "./EditModalProject";
 import AddProject from "../Project/AddProject";
 const ProjectDetail = ({ data, mentorApiData, indexNumber, mentorIndexNumber }) => {
+  const [taskIdToChild, setTaskIdToChild] = useState(0);
+  const deleteTask = (e, projectId, index) => {
+    e.preventDefault();
+    setTaskIdToChild(projectId);
+  };
 
   useEffect(() => {
     setTimeout(() => {
@@ -15,7 +20,6 @@ const ProjectDetail = ({ data, mentorApiData, indexNumber, mentorIndexNumber }) 
       }
     }, 5000);
   }, [data, mentorApiData]);
-
   // let test=useState(false)  
   // let memberCount = 0 //8
   // data[indexNumber].members.map((mem) => {
@@ -33,7 +37,7 @@ const ProjectDetail = ({ data, mentorApiData, indexNumber, mentorIndexNumber }) 
           <div className="d-flex">
             <h5 className="project-detail-name">{data[indexNumber]?.projectNames}</h5>
             <div>
-              <button>
+              <button className="border-0 bg-transparent">
                 <EditButton
                   className="mx-3"
                   data-bs-toggle="modal"
@@ -50,17 +54,26 @@ const ProjectDetail = ({ data, mentorApiData, indexNumber, mentorIndexNumber }) 
                 memberName = {data[indexNumber]?.members}
                 indexNumber={indexNumber}
               />
-              <button className="ms-3"><DeleteButton /></button>
+              <button  
+                projectId={data[indexNumber].projectId}
+                onClick = {(e) => {
+                  deleteTask(e,data[indexNumber].projectId,indexNumber)
+                }}>
+                <DeleteButton 
+               
+                /></button>
             </div>
           </div>
           <p className="created-at">{data[indexNumber]?.createdAt}</p>
           <p className="project-detail-text">{data[indexNumber]?.projectText}</p>
-          <p className="project-detail-technology-used mb-2">Technology Used:</p>
+          {data[indexNumber]?.technology && !(data[indexNumber]?.technology?.every((value) => value === null)) && (
+        <p className="project-detail-technology-used mb-2">Technology Used:</p>
+        )}
 
           <div className="project-detail-technology-badges">
             {data[indexNumber]?.technology?.map && data[indexNumber]?.technology?.map((tech) => {
               if (tech != null) {
-                return <p className="technology-badge me-1"> {tech} </p>;
+                return <p className="technology-badge me-1"> {tech} </p>
               }
             })}
           </div>
@@ -124,7 +137,7 @@ const ProjectDetail = ({ data, mentorApiData, indexNumber, mentorIndexNumber }) 
 
       {mentorIndexNumber !== null && mentorApiData !== null ? (
 
-        <div className="">{console.log("ApiData:", mentorApiData)}
+        <div className="">
           <h5 className="project-detail-name">{mentorApiData[mentorIndexNumber]?.taskName}</h5>
           <p className="created-at">{mentorApiData[mentorIndexNumber]?.assignedDate}</p>
           <p className="project-detail-text">{mentorApiData[mentorIndexNumber]?.taskDescription}</p>
