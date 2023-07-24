@@ -24,7 +24,6 @@ const Reporttable = ({
     sessionStorage.setItem("chrumValue", "Report");
     navigate(`/admin/report/detail`);
   };
-  console.log(deployData);
   return (
     <div className="container-fluid container-table">
       <table className="table-report" cellPadding="0" cellSpacing="0">
@@ -165,22 +164,9 @@ const Reporttable = ({
                             (value) => value?.userId === val?.userId
                           )
                             ? deployData.find((value) => {
-                                console.log(
-                                  "value deploy ",
-                                  value?.userId,
-                                  " value user ",
-                                  val?.userId,
-                                  " equal ? ",
-                                  value?.userId === val?.userId
-                                );
-
                                 return value?.userId === val?.userId;
                               }).status
-                            : (() => {
-                                const dataDEValue = val[Data.DE];
-                                console.log("val[Data.DE]: ", dataDEValue);
-                                return dataDEValue;
-                              })()
+                            : val[Data.DE]
                         }
                       />
                     </div>
