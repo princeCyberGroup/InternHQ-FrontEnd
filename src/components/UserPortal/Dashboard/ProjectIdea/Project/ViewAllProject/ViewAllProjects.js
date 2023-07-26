@@ -222,7 +222,7 @@ const ViewAllProjects = () => {
     const secondAPIPromise = axios
       .get(process.env.REACT_APP_API_URL + `/api/v3/getAssignedNotification?userId=${userId}`, {
         headers: {
-          Authorization: `Bearer ${JSON.parse(localStorage.getItem('userData'))['token']}`,
+          Authorization: `Bearer ${parsedObject['token']}`,
         },
       })
     Promise.all([firstAPIPromise, secondAPIPromise])
