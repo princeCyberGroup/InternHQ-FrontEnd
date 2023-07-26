@@ -120,7 +120,7 @@ const MentorList = () => {
   return (
     <>
       <div
-        className="assign-task-container"
+        className="mentor-list-container"
         style={{
           display: "flex",
           alignItems: "center",
@@ -129,7 +129,7 @@ const MentorList = () => {
       >
         <p>Mentor List</p>
         <button
-          style={{ marginRight: "8px" }}
+          // style={{ marginRight: "8px" }}
           type="button"
           className="add-mentor-button"
           data-bs-toggle="modal"
@@ -142,7 +142,7 @@ const MentorList = () => {
 
       <div
         className="card mentor-card"
-        style={{ maxHeight: "80vh", width: "420px", overflow: "auto" }}
+        // style={{ maxHeight: "80vh", width: "396px", overflow: "auto" }}
       >
         <div className="card-body p-0">
           {mentor?.map((user) => {

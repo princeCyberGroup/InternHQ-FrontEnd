@@ -166,7 +166,7 @@ export default function AssociateConsultant(props) {
               </p>
             </div>
             <div
-              style={{ width: "21rem" }}
+              style={{ width: "19.75rem" }}
               onClick={() => {
                 handleOnUserclick(userData.userId);
               }}
@@ -227,7 +227,7 @@ export default function AssociateConsultant(props) {
 
         <div
           className="card mentor-card pt-0"
-          style={{ maxHeight: "80vh", width: "420px", overflow: "auto" }}
+          // style={{ maxHeight: "80vh", width: "420px", overflow: "auto" }}
         >
           <div className="log-header-nav">
             <div

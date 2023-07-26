@@ -15,6 +15,18 @@ function formatDate(dateString) {
   return `${month}/${day}/${year}`;
 }
 
+function makeWordsInQuotesBold(activity) {
+  // Regular expression to find words enclosed in double quotes
+  const regex = /'([^']+)'/g;
+  const ofRegex = / of (.+)/g;
+
+
+  // Replace words in quotes with bold tags
+  activity= activity.replace(regex, "<strong>$1</strong>");
+  activity = activity.replace(ofRegex, ' of <strong>$1</strong>');
+  return activity;
+}
+
 function getInitials(name) {
   const names = name?.split(" ");
   const initials = names?.map((n) => n.charAt(0).toUpperCase());
@@ -50,7 +62,7 @@ function CustomInput({ value, onClick }) {
         readOnly
       />
       <span className="col-1 p-0">
-        <CalendarIcon />
+        {value?"":<CalendarIcon />}
       </span>
     </div>
   );
@@ -130,16 +142,15 @@ const DetailedCard = (props) => {
                   onChange={(date) => setSelectedDateFilter(date)}
                   dateFormat="MM/dd/yyyy"
                   customInput={<CustomInput />}
+                  isClearable="true"
                 />
               </div>
             </div>
-
           </div>
           <div
             className="card-body p-0"
-            style={{ maxHeight: "100vh", overflow: "auto", width: "49rem" }}
+            style={{ maxHeight: "100vh", overflow: "auto", width: "725px" }}
           >
-
             {props.logData
               .filter((log) =>
                 selectedDateFilter
@@ -157,6 +168,7 @@ const DetailedCard = (props) => {
                   {log.logTime.map((timeActivity, i) => {
                     const [time, activity] = Object.entries(timeActivity)[0];
                     const convertedTime = convertTo12HourFormat(time);
+                    const boldActivity = makeWordsInQuotesBold(activity); // Make words in quotes bold
                     return (
                       <div className="row mx-2 mb-3">
                         <div className="clock-icon col-1 p-0">
@@ -165,7 +177,10 @@ const DetailedCard = (props) => {
                         <div className="clock-time col-2 p-0">
                           {convertedTime}
                         </div>
-                        <div className="log-item col-9 p-0">{activity}</div>
+                        <div
+                          className="log-item col-9 p-0"
+                          dangerouslySetInnerHTML={{ __html: boldActivity }}
+                        ></div>
                       </div>
                     );
                   })}

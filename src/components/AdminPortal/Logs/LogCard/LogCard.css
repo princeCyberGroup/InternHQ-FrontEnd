@@ -1,5 +1,5 @@
 .log-header-nav {
-  width: 24rem;
+  width: 364px;
   max-height: 3.188rem;
   display: flex;
   flex: 1;
@@ -22,7 +22,7 @@
   display: flex;
   padding: 0.5rem 0.75rem;
   background: #ffffff;
-  width: 24rem;
+  width: 364px;
   border: 0.0625rem solid #e9eceb;
   border-radius: 0.25rem;
   cursor: pointer;
@@ -31,7 +31,7 @@
   border: 1px solid #b2b2b3;
   border-radius: 5px;
   padding: 0%;
-  width: 24rem;
+  width: 364px;
 }
 .search-associate-log {
   box-sizing: border-box;
@@ -40,7 +40,7 @@
   border-radius: 30%;
   border: none;
   outline: none;
-  width: 24rem;
+  width: 364px;
 }
 
 .frame-log {

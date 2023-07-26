@@ -1,4 +1,5 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState,useContext } from "react";
+import { UserContext } from "../../Context/Context";
 import { Link, NavLink, useNavigate } from "react-router-dom";
 import { BsChevronDown } from "react-icons/bs";
 import { ReactComponent as CGlogo } from "../../Assets/CG-Logo (1) 1CGlogo.svg";
@@ -10,6 +11,7 @@ import { UploadCsv } from "../AdminPortal/Dashboard/UploadCsv/UploadCsvModal";
 import "../AdminPortal/Dashboard/UploadCsv/uploadCsv.css";
 
 const Header = () => {
+  const { resetTimer } = useContext(UserContext);
   const secretKey = process.env.REACT_APP_USER_KEY;
   const [userData, setUserData] = useState({});
 
@@ -65,6 +67,8 @@ const Header = () => {
       });
     }
     localStorage.clear("userData");
+    localStorage.clear("tD8kFi5j");
+    resetTimer();
     navigate("/");
   };
 
