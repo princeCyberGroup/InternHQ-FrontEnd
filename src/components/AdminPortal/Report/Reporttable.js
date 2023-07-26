@@ -1,5 +1,5 @@
-import React from "react";
-import EmptyDailyUpdateTable from "../../UserPortal/DailyUpdateTable/EmptyDailyUpdateTable";
+// className="fw-bold d-flex justify-content-center align-items-center" this is data
+import React, { useState, useEffect } from "react";
 import "./Reporttable.css";
 import { ReactComponent as Advance } from "../../../Assets/advance.svg";
 import { ReactComponent as Beginner } from "../../../Assets/beginner.svg";
@@ -8,38 +8,41 @@ import { Data } from "./Fetcheddataobject";
 import { useNavigate } from "react-router-dom";
 import ReportTableSkeleton from "./ReportTableSkeleton";
 
-const Reporttable = ({ tableData, isLoading }) => {
+const Reporttable = ({ tableData, isLoading, handleDeployChange }) => {
+  //data
   const navigate = useNavigate();
+  const [selectedIndex, setSelectedIndex] = useState(-1);
+  //function
   const handleOnclick = (index) => {
-    // navigate(`/admin/report/userId?id=${tableData[index][Data.ID]}`);
     sessionStorage.setItem("detailId", tableData[index][Data.ID]);
-    navigate(`/admin/report?userId=${tableData[index][Data.ID]}`);
+    sessionStorage.setItem("chrumValue", "Report");
+    navigate(`/admin/report/detail`);
   };
-
   return (
     <div className="container-fluid container-table">
       <table className="table-report" cellPadding="0" cellSpacing="0">
-        <thead>
+        <thead style={{ zIndex: 50 }}>
           <tr>
-            <th style={{ width: "2.5rem" }}>S.No</th>
+            <th style={{ width: "2.5rem" }}>#</th>
             <th style={{ width: "13.375rem" }}>Name</th>
-            <th style={{ width: "28.875rem" }}>Technology Tags</th>
-            <th style={{ width: "17.375rem" }}>Skills Achieved</th>
-            <th style={{ width: "6.375rem" }}>Duration</th>
+            <th style={{ width: "20.875rem" }}>Technology Tags</th>
+            <th style={{ width: "23.375rem" }}>Skills Achieved</th>
+            <th style={{ width: "11.375rem" }}>Duration</th>
+            <th style={{ width: "2.5rem" }}>Status</th>
           </tr>
         </thead>
         {isLoading ? (
           <>
-          <ReportTableSkeleton/>
-          <ReportTableSkeleton/>
-          <ReportTableSkeleton/>
-          <ReportTableSkeleton/>
-          <ReportTableSkeleton/>
-          <ReportTableSkeleton/>
-          <ReportTableSkeleton/>
-          <ReportTableSkeleton/>
-          <ReportTableSkeleton/>
-          <ReportTableSkeleton/>
+            <ReportTableSkeleton />
+            <ReportTableSkeleton />
+            <ReportTableSkeleton />
+            <ReportTableSkeleton />
+            <ReportTableSkeleton />
+            <ReportTableSkeleton />
+            <ReportTableSkeleton />
+            <ReportTableSkeleton />
+            <ReportTableSkeleton />
+            <ReportTableSkeleton />
           </>
         ) : tableData ? (
           <tbody>
@@ -53,8 +56,8 @@ const Reporttable = ({ tableData, isLoading }) => {
                     handleOnclick(ind);
                   }}
                 >
-                  <td className="fw-bold d-flex justify-content-center align-items-center" style={{height: "54px"}}>{ind+1}</td>
-                  <td style={{ width: "10.375rem" }}>
+                  <td>{ind + 1}.</td>
+                  <td>
                     <div className="name-column">
                       <div className="circle">
                         {val[Data.FN]?.toUpperCase().slice(0, 1)}
@@ -68,46 +71,49 @@ const Reporttable = ({ tableData, isLoading }) => {
                       </div>
                     </div>
                   </td>
-                  <td style={{ width: "20.875rem" }}>
-                    <div className="tech-tags">
-                      {val?.[Data.TN]?.slice(0, 5).map((value, index) => {
-                        objectKeyCount++;
-                        // {
-                        //    if (objectCount > 3) {
-                        //   objectCount = 0;
-                        //   return;
-                        // } else {
-                        //   objectCount++;
-                        // }
-                        // }
-                        return value === null ? (
-                          <div key={index}></div>
-                        ) : (
-                          <div
-                            key={index}
-                            className="tag-tech d-flex justify-content-center align-items-center"
-                          >
-                            <span>{value}</span>
-                            <div>
-                              {val[Data.L][index] === "Beginner" ? (
-                                <Beginner />
-                              ) : val[Data.L][index] === "Intermediate" ? (
-                                <Intermediate />
-                              ) : (
-                                <Advance />
-                              )}
+                  <td>
+                    <div
+                      className="tech-tags"
+                      onMouseEnter={() => setSelectedIndex(ind)}
+                      onMouseLeave={() => setSelectedIndex(-1)}
+                    >
+                      {val?.[Data.TN]
+                        ?.slice(
+                          0,
+                          selectedIndex === ind ? val?.[Data.TN]?.length : 3
+                        )
+                        .map((value, index) => {
+                          objectKeyCount++;
+                          return value === null ? (
+                            <div key={index}></div>
+                          ) : (
+                            <div
+                              key={index}
+                              className="tag-tech d-flex justify-content-center align-items-center"
+                            >
+                              <span>{value}</span>
+                              <div>
+                                {val[Data.L][index] === "Beginner" ? (
+                                  <Beginner />
+                                ) : val[Data.L][index] === "Intermediate" ? (
+                                  <Intermediate />
+                                ) : (
+                                  <Advance />
+                                )}
+                              </div>
                             </div>
+                          );
+                        })}
+                      {selectedIndex !== ind &&
+                        objectKeyCount > 2 &&
+                        val?.[Data.TN].slice(4).length !== 0 && (
+                          <div className="all-tech">
+                            <span>+ {val?.[Data.TN].slice(3).length}</span>
                           </div>
-                        );
-                      })}
-                      {objectKeyCount > 4 && val?.[Data.TN].slice(5).length!==0 && (
-                        <div className="all-tech">
-                          <span>+ {val?.[Data.TN].slice(5).length}</span>
-                        </div>
-                      )}
+                        )}
                     </div>
                   </td>
-                  <td style={{ width: "20.375rem" }}>
+                  <td>
                     <div className="skills-wrapper">
                       <span className="skills">
                         {val?.[Data.BC] === null ? "0" : val?.[Data.BC]}{" "}
@@ -121,13 +127,30 @@ const Reporttable = ({ tableData, isLoading }) => {
                       </span>
                     </div>
                   </td>
-                  <td style={{ width: "11.375rem" }}>
+                  <td>
                     <div className="duration">
                       <span>
                         {val?.[Data.D] <= 1
                           ? `0${val?.[Data.D]} month  `
                           : `${val?.[Data.D]} months`}
                       </span>
+                    </div>
+                  </td>
+                  <td
+                    // style={{ border: "1px solid black" }}
+                    onClick={(e) => {
+                      e.stopPropagation();
+                    }}
+                  >
+                    <div>
+                      <input
+                        type="checkbox"
+                        className="status-input"
+                        onChange={() => {
+                          handleDeployChange(val.userId);
+                        }}
+                        checked={val[Data.DE]}
+                      />
                     </div>
                   </td>
                 </tr>

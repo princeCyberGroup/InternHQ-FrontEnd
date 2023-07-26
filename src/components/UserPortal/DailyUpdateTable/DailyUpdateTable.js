@@ -10,17 +10,26 @@ import DurationClock from "../../../Assets/DurationClock.svg";
 import ImageTooltip from "./ImageTooltip";
 import BreadCrumbs from "../../BreadCrumbs/BreadCrumbs";
 import DailyUpdateTableSection from "./DailyUpdateTableSection";
+import CryptoJS from "crypto-js";
 
 const DailyUpdateTable = (props) => {
-    // const sendDataToParent = () => {
+  // const sendDataToParent = () => {
   //   const data = "Hello World From Daily Update Component";
   //   props.sendData(data);
   // }
   // sendDataToParent();
   // const [loading, setLoading] = useState(false);
 
-  var storedObject = localStorage.getItem("userData");
-  var parsedObject = JSON.parse(storedObject);
+  const secretkeyUser = process.env.REACT_APP_USER_KEY;
+  var parsedObject;
+  const data = localStorage.getItem("userData");
+  if (data) {
+    const bytes = CryptoJS.AES.decrypt(data, secretkeyUser);
+    const decryptedJsonString = bytes.toString(CryptoJS.enc.Utf8);
+    parsedObject = JSON.parse(decryptedJsonString);
+  } else {
+    console.log("No encrypted data found in localStorage.");
+  }
   var userId = parsedObject.userId;
 
   return (
@@ -45,7 +54,7 @@ const DailyUpdateTable = (props) => {
               </div>
             </div>
           </div>
-          < DailyUpdateTableSection userId = {userId} />
+          <DailyUpdateTableSection userId={userId} />
         </div>
       </div>
     </>

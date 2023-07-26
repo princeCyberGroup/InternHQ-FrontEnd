@@ -1,0 +1,79 @@
+.log-header-nav {
+  width: 24rem;
+  max-height: 3.188rem;
+  display: flex;
+  flex: 1;
+  background-color: #ffffff;
+  border-bottom: 1px solid #e9eceb;
+}
+
+.log-head {
+  color: var(--primary-royal-blue, #002c3f);
+  font-family: Roboto;
+  font-size: 18px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
+}
+
+.associate-mapped-card-log {
+  box-sizing: border-box;
+  margin-bottom: 10px;
+  display: flex;
+  padding: 0.5rem 0.75rem;
+  background: #ffffff;
+  width: 24rem;
+  border: 0.0625rem solid #e9eceb;
+  border-radius: 0.25rem;
+  cursor: pointer;
+}
+.associate-search-log-wrapper {
+  border: 1px solid #b2b2b3;
+  border-radius: 5px;
+  padding: 0%;
+  width: 24rem;
+}
+.search-associate-log {
+  box-sizing: border-box;
+  padding: 0rem 0.5rem;
+  height: 2rem;
+  border-radius: 30%;
+  border: none;
+  outline: none;
+  width: 24rem;
+}
+
+.frame-log {
+  display: flex;
+  margin-left: 0.5rem;
+  align-items: center;
+  justify-content: center;
+  width: 2.25rem;
+  height: 2.25rem;
+  background: #b8dde1;
+  border-radius: 100%;
+}
+
+.frame-text-log {
+  width: 8.75rem;
+  height: 1.25rem;
+  font-family: "Roboto";
+  font-style: normal;
+  font-weight: 700;
+  font-size: 0.875rem;
+  line-height: 1rem;
+  color: #343435;
+}
+
+.frame-id-log {
+  width: 4.75rem;
+  height: 0.875rem;
+  font-family: "Roboto";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 0.875rem;
+  line-height: 0.875rem;
+  flex: none;
+  order: 1;
+  flex-grow: 0;
+}

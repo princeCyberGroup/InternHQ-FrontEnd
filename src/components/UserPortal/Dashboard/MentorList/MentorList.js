@@ -1,13 +1,15 @@
-import { useState, useEffect, useContext } from "react";
+import { useState, useEffect } from "react";
 import "./mentorlist.css";
 import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
+import { useNavigate } from "react-router-dom";
+import CryptoJS from "crypto-js";
 
 const MentorComponent = () => {
   const [mentors, setMentors] = useState([]);
+  const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(true);
   useEffect(() => {
-    // setMentors(MentorData);
     // Fetch mentors data from the API
     setTimeout(() => {
       fetchMentors();
@@ -15,13 +17,23 @@ const MentorComponent = () => {
   }, []);
 
   const fetchMentors = async () => {
+    const secretkeyUser = process.env.REACT_APP_USER_KEY;
+    var parsedObject;
+    const data = localStorage.getItem("userData");
+    if (data) {
+      const bytes = CryptoJS.AES.decrypt(data, secretkeyUser);
+      const decryptedJsonString = bytes.toString(CryptoJS.enc.Utf8);
+      parsedObject = JSON.parse(decryptedJsonString);
+    } else {
+      console.log("No encrypted data found in localStorage.");
+    }
     try {
       // Make an API request to fetch mentors data
       const response = await fetch(
-        process.env.REACT_APP_API_URL+"/api/v2/getMentorDetails",
+        process.env.REACT_APP_API_URL + "/api/v3/getMentorDetails",
         {
           headers: {
-            Authorization:`Bearer ${JSON.parse(localStorage.getItem('userData'))['token']}`,
+            Authorization: `Bearer ${parsedObject["token"]}`,
           },
         }
       );
@@ -30,9 +42,20 @@ const MentorComponent = () => {
       const activeMentors = data.activeMentors;
       setMentors(activeMentors);
       setIsLoading(false);
-      // console.log(isLoading, "Fetched data");
     } catch (error) {
-      // console.log("Error occurred while fetching mentors:", error);
+      if (error.response.status === 401) {
+        navigate("/error/statusCode=401");
+      }
+      if (error.response.status === 400) {
+        navigate("/error/statusCode=400");
+      }
+      if (error.response.status === 500) {
+        navigate("/error/statusCode=500");
+      }
+      if (error.response.status === 404) {
+        navigate("/error/statusCode=404");
+      }
+      console.log("Error occurred while fetching mentors:", error);
     }
   };
 
@@ -147,11 +170,6 @@ const MentorComponent = () => {
                       style={{ width: "329px", height: "236px" }}
                     >
                       <div>
-                        {/* <img
-                          src={mentor.imageUrl} // Replace with mentor image URL from API response
-                          className="d-block rounded-circle"
-                          alt="Mentor"
-                        /> */}
                         {mentor.imageUrl ? (
                           <img
                             src={mentor.imageUrl}
@@ -171,20 +189,16 @@ const MentorComponent = () => {
                         <div className="mentor-text">
                           <p className="card-text fs">
                             <b>{mentor.mentorName}</b>{" "}
-                            {/* Replace with mentor name from API response */}
                           </p>
                           <p className="role-fs">{mentor.designation}</p>
-                          {/* Replace with mentor position from API response */}
                           <div className="row">
                             <div className=" flex">
-                              {/* {console.log(mentor.skills[0].length <8 && mentor.skills[1].length <8? "true"+mentor.skills[0]: mentor.skills )} */}
                               {mentor.skills.map((skill, skillIndex) => (
                                 <span
                                   key={skillIndex}
                                   className="badge badge-color"
                                 >
                                   {skill.toUpperCase()}{" "}
-                                  {/*Replace with mentorskills from API response */}
                                 </span>
                               ))}
                             </div>

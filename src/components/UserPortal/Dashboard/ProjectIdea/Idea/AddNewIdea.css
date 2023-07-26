@@ -92,9 +92,6 @@ p.card-textt {
     margin-left: -0.5rem;
 }
 
-/* .project-idea-members:last-child {
-    background-color: rgba(40, 81, 158, 0.2);
-} */
 .count-of-members{
     background-color: rgba(40, 81, 158, 0.2);
     width: 2.5rem;
@@ -106,6 +103,7 @@ p.card-textt {
     justify-content: center;
     align-items: center;
 }
+
 .project-idea-members:last-child p {
     font-size: 1.1rem;
 }

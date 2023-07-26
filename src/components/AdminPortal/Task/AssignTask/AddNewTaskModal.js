@@ -1,34 +1,62 @@
 import "./OtherModals.css";
 
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import axios from "axios";
 import { ReactComponent as ExpandMore } from "../../../../Assets/expand_more.svg";
 import TechnologyDropDown from "./TechnologyDropdown(Admin)";
 import UsersDropdown from "./UsersDropdown";
+import CryptoJS from "crypto-js";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
+import { ReactComponent as CalendarIcon } from "../../../../Assets/eventcalender-icon.svg";
 
-export const AddNewTask = ({ onAddClose }) => {
-  const [error, setError] = useState(true);
+function CustomInput({ value, onClick }) {
+  return (
+    <div className="row addTask-date-filter m-0" onClick={onClick}>
+      <input
+        placeholder="Select Date"
+        type="text"
+        value={value}
+        className="col-11 addTask-date-filter-input m-0"
+        readOnly
+      />
+      <span className="col-1 p-0">
+        <CalendarIcon />
+      </span>
+    </div>
+  );
+}
+
+export const AddNewTask = ({
+  onAddClose,
+  startDate,
+  setStartDate,
+  endDate,
+  setEndDate,
+}) => {
+  const [nameError, setNameError] = useState(true);
+  const [descError, setDescError] = useState(true);
   const [taskName, setTaskName] = useState("");
   const [taskDescription, setTaskDescription] = useState("");
-  const [taskTech, setTaskTech] = useState([]);
-  const [taskUsers, setTaskUsers] = useState([]);
   const [dropDown, setDropDown] = useState(false);
   const [usersDropDown, setUsersDropDown] = useState(false);
   const [tech, setTech] = useState({});
   const [users, setUsers] = useState({});
   const [selectAllUsers, setSelectAllUsers] = useState(false);
-  const [taskTechIds, setTaskTechIds] = useState([]);
-  const [taskUserIds, setTaskUserIds] = useState([]);
   const [selectedUserIds, setSelectedUserIds] = useState([]);
   const [selectedUsers, setSelectedUsers] = useState([]);
   const [selectedTechIds, setSelectedTechIds] = useState([]);
   const [technologyNames, setTechnologyNames] = useState([]);
-
+  const [selectAllChecked, setSelectAllChecked] = useState(false);
+  const [searchQuery, setSearchQuery] = useState("");
+  const [searchUserQuery, setSearchUserQuery] = useState("");
   const handleClickClear = (e) => {
     e.preventDefault();
 
     onAddClose();
     setTaskName("");
+    setStartDate("");
+    setEndDate("");
     setTaskDescription("");
     setSelectedTechIds([]);
     setSelectedUserIds([]);
@@ -36,6 +64,12 @@ export const AddNewTask = ({ onAddClose }) => {
     setSelectedUsers([]);
     setTech({});
     setUsers({});
+    setSearchQuery("");
+    setSearchUserQuery("");
+    setDropDown(false);
+    setUsersDropDown(false);
+
+    setSelectAllChecked(false);
 
     const userCheckboxes = document.querySelectorAll(".user-checkbox");
     userCheckboxes.forEach((checkbox) => {
@@ -59,21 +93,34 @@ export const AddNewTask = ({ onAddClose }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    var storedObject = JSON.parse(localStorage.getItem("userData"));
-    var userId = storedObject.userId;
-    var assignedByDesignation = storedObject.designation;
-    var assignedByfullName =
-      storedObject.firstName + " " + storedObject.lastName;
+    const secretkeyUser = process.env.REACT_APP_USER_KEY;
+    var parsedObject;
+    const data = localStorage.getItem("userData");
+    if (data) {
+      const bytes = CryptoJS.AES.decrypt(data, secretkeyUser);
+      const decryptedJsonString = bytes.toString(CryptoJS.enc.Utf8);
+      parsedObject = JSON.parse(decryptedJsonString);
+    } else {
+      console.log("No encrypted data found in localStorage.");
+    }
+    var userId = parsedObject.userId;
 
-    if (error) {
+    if (
+      nameError ||
+      descError ||
+      !startDate ||
+      !endDate ||
+      selectedTechIds.length === 0 ||
+      selectedUserIds.length === 0
+    ) {
       alert("Please fill out the necessary fields");
     } else {
       await axios
-        .post(process.env.REACT_APP_API_URL+"/api/v2/addNewTask", {
+        .post(process.env.REACT_APP_API_URL + "/api/v3/addNewTask", {
           taskName,
-
           taskDescription,
-
+          startDate,
+          endDate,
           taskTech: selectedTechIds, // Send the array of tech IDs
           taskUsers: selectedUserIds, // Send the array of user IDs
           assignedBy: userId,
@@ -88,13 +135,21 @@ export const AddNewTask = ({ onAddClose }) => {
 
       setTaskName("");
       setTaskDescription("");
+      setStartDate("");
+      setEndDate("");
       setSelectedTechIds([]);
       setSelectedUserIds([]);
       setTechnologyNames([]);
       setSelectedUsers([]);
       setTech({});
       setUsers({});
-      setError(true);
+      setNameError(true);
+      setDescError(true);
+      setSearchQuery("");
+      setSearchUserQuery("");
+      setDropDown(false);
+      setUsersDropDown(false);
+      setSelectAllChecked(false);
 
       const userCheckboxes = document.querySelectorAll(".user-checkbox");
       userCheckboxes.forEach((checkbox) => {
@@ -111,22 +166,19 @@ export const AddNewTask = ({ onAddClose }) => {
   const handleTaskTitle = (e) => {
     setTaskName(e.target.value);
     if (taskName.length === 0) {
-      setError(true);
+      setNameError(true);
     } else {
-      setError(false);
+      setNameError(false);
     }
   };
 
   const handleDescription = (e) => {
     setTaskDescription(e.target.value);
     if (taskDescription.length < 2 || taskDescription.length > 500) {
-      setError(true);
+      setDescError(true);
     } else {
-      setError(false);
+      setDescError(false);
     }
-  };
-  const handleAssignedTo = (e) => {
-    setTaskUsers(e.target.value);
   };
 
   return (
@@ -134,13 +186,12 @@ export const AddNewTask = ({ onAddClose }) => {
       <div
         className="modal fade"
         id="addTaskModal"
-        data-bs-backdrop="static"
         tabindex="-1"
         data-bs-keyboard="false"
         aria-labelledby="staticBackdropLabel"
         aria-hidden="true"
       >
-        <div className="modal-dialog">
+        <div className="modal-dialog modal-dialog-centered">
           <div className="modal-content">
             <div className="modal-header border-bottom-1">
               <h5
@@ -186,10 +237,10 @@ export const AddNewTask = ({ onAddClose }) => {
                   >
                     Description<span style={{ color: "red" }}>*</span>
                     {taskDescription.length > 500 && (
-                    <span style={{ color: "red" }}>
-                      Exceeded maximum word limit of 500
-                    </span>
-                  )}
+                      <span style={{ color: "red" }}>
+                        Exceeded maximum word limit of 500
+                      </span>
+                    )}
                   </label>
 
                   <textarea
@@ -200,7 +251,41 @@ export const AddNewTask = ({ onAddClose }) => {
                     value={taskDescription}
                     onChange={(e) => handleDescription(e)}
                   ></textarea>
-                  
+                </div>
+
+                <div className="mb-3">
+                  <div className="row">
+                    <div className="col">
+                      <label
+                        htmlFor="start-date"
+                        className="col-form-label form-title-names"
+                      >
+                        Start Date<span style={{ color: "red" }}>*</span>
+                      </label>
+                      <DatePicker
+                        selected={startDate}
+                        onChange={(date) => {
+                          setStartDate(date);
+                        }}
+                        dateFormat="MM-dd-yyyy"
+                        customInput={<CustomInput />}
+                      />
+                    </div>
+                    <div className="col">
+                      <label
+                        htmlFor="end-date"
+                        className="col-form-label form-title-names"
+                      >
+                        End Date<span style={{ color: "red" }}>*</span>
+                      </label>
+                      <DatePicker
+                        selected={endDate}
+                        onChange={(date) => setEndDate(date)}
+                        dateFormat="MM-dd-yyyy"
+                        customInput={<CustomInput />}
+                      />
+                    </div>
+                  </div>
                 </div>
 
                 <div className="mb-3">
@@ -245,9 +330,12 @@ export const AddNewTask = ({ onAddClose }) => {
                       >
                         <TechnologyDropDown
                           techDataComingChild={techDataComingFrmChild}
+                          selectedTechIds={selectedTechIds}
                           setSelectedTechIds={setSelectedTechIds}
                           setTechnologyNames={setTechnologyNames}
                           technologyNames={technologyNames}
+                          searchQuery={searchQuery}
+                          setSearchQuery={setSearchQuery}
                         />
                       </ul>
                     </div>
@@ -291,15 +379,23 @@ export const AddNewTask = ({ onAddClose }) => {
                     </div>
                     <div>
                       <ul
-                        style={{ display: usersDropDown ? "" : "none" }}
+                        style={{
+                          height: "10rem",
+                          display: usersDropDown ? "" : "none",
+                        }}
                         className="ul-styling"
                       >
                         <UsersDropdown
                           usersDataComingChild={usersDataComingFrmChild}
                           selectAllUsers={selectAllUsers}
                           setSelectedUserIds={setSelectedUserIds}
+                          selectedUserIds={selectedUserIds}
                           setSelectedUsers={setSelectedUsers}
                           selectedUsers={selectedUsers}
+                          selectAllChecked={selectAllChecked}
+                          setSelectAllChecked={setSelectAllChecked}
+                          searchUserQuery={searchUserQuery}
+                          setSearchUserQuery={setSearchUserQuery}
                         />
                       </ul>
                     </div>
@@ -321,7 +417,16 @@ export const AddNewTask = ({ onAddClose }) => {
               <button
                 type="button"
                 className="btn modal-save-button"
-                data-bs-dismiss={!error ? "modal" : ""}
+                data-bs-dismiss={
+                  !nameError &&
+                  !descError &&
+                  startDate &&
+                  endDate &&
+                  selectedTechIds.length !== 0 &&
+                  selectedUserIds.length !== 0
+                    ? "modal"
+                    : ""
+                }
                 data-bs-target="#addTaskModal"
                 onClick={(e) => handleSubmit(e)}
               >

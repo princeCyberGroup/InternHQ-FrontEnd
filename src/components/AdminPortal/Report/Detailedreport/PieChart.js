@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from "chart.js";
 import { Pie } from "react-chartjs-2";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import "./PieChart.css";
 import NoData from "../../../../Assets/NoData.svg";
+import CryptoJS from "crypto-js";
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 
@@ -11,7 +12,7 @@ const PieChart = () => {
   const [tableData, setTableData] = useState([]);
   const [currentMonth, setCurrentMonth] = useState(new Date().getMonth());
   const piechartId = sessionStorage.getItem("detailId");
-
+  const navigate = useNavigate();
   const data = {
     labels: [],
     datasets: [
@@ -69,11 +70,22 @@ const PieChart = () => {
   };
 
   const fetchData = async () => {
+    const secretkeyUser = process.env.REACT_APP_USER_KEY;
+    var parsedObject;
+    const data = localStorage.getItem("userData");
+    if (data) {
+      const bytes = CryptoJS.AES.decrypt(data, secretkeyUser);
+      const decryptedJsonString = bytes.toString(CryptoJS.enc.Utf8);
+      parsedObject = JSON.parse(decryptedJsonString);
+    } else {
+      console.log("No encrypted data found in localStorage.");
+    }
     await fetch(
-      process.env.REACT_APP_API_URL+`/api/v2/getDailyTaskTrackerRecords?userId=${piechartId}`,
+      process.env.REACT_APP_API_URL +
+        `/api/v2/getDailyTaskTrackerRecords?userId=${piechartId}`,
       {
         headers: {
-          Authorization:`Bearer ${JSON.parse(localStorage.getItem('userData'))['token']}`,
+          Authorization: `Bearer ${parsedObject["token"]}`,
         },
       }
     )
@@ -82,6 +94,20 @@ const PieChart = () => {
       })
       .then(async (data) => {
         setTableData(data.response);
+      })
+      .catch((error) => {
+        if (error.response.status === 401) {
+          navigate("/error/statusCode=401");
+        }
+        if (error.response.status === 400) {
+          navigate("/error/statusCode=400");
+        }
+        if (error.response.status === 500) {
+          navigate("/error/statusCode=500");
+        }
+        if (error.response.status === 404) {
+          navigate("/error/statusCode=404");
+        }
       });
   };
 
@@ -109,8 +135,8 @@ const PieChart = () => {
   function convertToPercentageMonthly(timeString) {
     const regex = /(\d+)\s*hrs\s*(\d+)\s*min/;
     const matches = timeString.match(regex);
-    const hours = parseInt(matches[1]);
-    const minutes = parseInt(matches[2]);
+    const hours = parseInt(matches != null ? matches[1] : 0);
+    const minutes = parseInt(matches != null ? matches[2] : 0);
     const totalMinutes = hours * 60 + minutes;
     const percentage = (totalMinutes / 2400) * 100;
     return Number.isInteger(percentage) ? percentage : percentage.toFixed(2);
@@ -236,7 +262,7 @@ const PieChart = () => {
           font: {
             family: "Roboto",
             style: "normal",
-            weight: "bold", 
+            weight: "bold",
             size: 12,
             lineHeight: 16,
           },
@@ -281,8 +307,9 @@ const PieChart = () => {
     },
     responsive: true,
     maintainAspectRatio: false,
+    width: 410,
+    height: 220,
   };
-
 
   return (
     <div className="container" style={{ height: "inherit" }}>
@@ -333,12 +360,11 @@ const PieChart = () => {
             ) : (
               <div
                 style={{
-                  width: "394px",
+                  width: "410px",
                   height: "220px",
-                  // position: "absolute",
                 }}
               >
-                <Pie data={data} options={options} width={158} height={158} />
+                <Pie data={data} options={options} />
               </div>
             )}
           </div>

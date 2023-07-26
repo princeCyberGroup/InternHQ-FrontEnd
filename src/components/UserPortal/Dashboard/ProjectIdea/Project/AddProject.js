@@ -7,6 +7,7 @@ import TechDropDown from "../TechDropDown";
 import { UserContext } from "../../../../../Context/Context";
 import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
+import CryptoJS from "crypto-js";
 
 const AddProject = () => {
   const { project } = useContext(UserContext);
@@ -121,15 +122,22 @@ const AddProject = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    var storedObject = localStorage.getItem("userData");
-    var parsedObject = JSON.parse(storedObject);
+    const secretkeyUser = process.env.REACT_APP_USER_KEY;
+    var parsedObject;
+    const data = localStorage.getItem("userData");
+    if (data) {
+      const bytes = CryptoJS.AES.decrypt(data, secretkeyUser);
+      const decryptedJsonString = bytes.toString(CryptoJS.enc.Utf8);
+      parsedObject = JSON.parse(decryptedJsonString);
+    } else {
+      console.log("No encrypted data found in localStorage.");
+    }
     var userId = parsedObject.userId;
     if (error) {
       alert("Please fill in the required details");
-
     } else {
       axios
-        .post(process.env.REACT_APP_API_URL + "/api/v2/Project", {
+        .post(process.env.REACT_APP_API_URL + "/api/v3/Project", {
           projName,
           projDescription,
           userId,
@@ -454,7 +462,6 @@ const AddProject = () => {
                 className="btn cancel-button"
                 data-bs-dismiss="modal"
                 onClick={clear}
-
               >
                 <span className="cancel-text"> Cancel</span>
               </button>

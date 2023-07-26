@@ -1,30 +1,35 @@
 import React from "react";
 import { useEffect, useState, useContext } from "react";
 import "./TakeYourTest.css";
+import CryptoJS from "crypto-js";
 import { useNavigate ,useLocation } from "react-router-dom";
-
+// import { ReactCompont as Dot } from "../../../../Assets/Ellipsestakeyourtest.svg";
+import { ReactComponent as DotTYT } from "../../../../Assets/Ellipsestakeyourtest.svg";
 import { UserContext } from "../../../../Context/Context";
 import { BsCheckLg } from "react-icons/bs";
 import { responsivePropType } from "react-bootstrap/esm/createUtilityClasses";
 
 const TakeYourTest = () => {
-
   // const [score, setScoree] = useState(0);
   // const { score: contextScore, setScore: setContextScore } = useContext(UserContext);
 
- const { score, setScore } = useContext(UserContext);
-//  const [scoreUpdated, setScoreUpdated] = useState(false);
+  const { score, setScore } = useContext(UserContext);
+  //  const [scoreUpdated, setScoreUpdated] = useState(false);
 
-  var storedObject = localStorage.getItem("userData");
-  var parsedObject = JSON.parse(storedObject);
+  const secretkeyUser = process.env.REACT_APP_USER_KEY;
+  var parsedObject;
+  const dataU = localStorage.getItem("userData");
+  if (dataU) {
+    const bytes = CryptoJS.AES.decrypt(dataU, secretkeyUser);
+    const decryptedJsonString = bytes.toString(CryptoJS.enc.Utf8);
+    parsedObject = JSON.parse(decryptedJsonString);
+  } else {
+    console.log("No encrypted data found in localStorage.");
+  }
   var userId = parsedObject.userId;
-  // const [testsData, setTestsData] = useState([]);
-  // const [allData, setAllData] = useState([]);
   const navigate = useNavigate();
   const location = useLocation();
   const data = location.state;
-  // const location = useLocation();
-  // const { data } = location.state;
   const { examId, examName, examDuration, numberOfQuestion, techName, level } =
     data;
   const [Ques, setTestsQues] = useState([]);
@@ -34,60 +39,57 @@ const TakeYourTest = () => {
   const [fullscreen, setFullscreen] = useState(false);
   // const [score, setScore] = useState(0);
   const [submitted, setSubmitted] = useState(false);
-  // const [submitAnswer, setSubmitAnswer] = useState({});
-
   const clickHandler = () => {
     navigate("/skill-Management");
     setFullscreen(false);
-    exitFullscreen();
+    // exitFullscreen();
   };
 
-  useEffect(() => {
-    if (fullscreen) {
-      enterFullscreen();
-      window.addEventListener("keydown", handleKeyDown);
-    } else {
-      exitFullscreen();
-      window.removeEventListener("keydown", handleKeyDown);
-    }
-  }, [fullscreen]);
+  // useEffect(() => {
+  //   if (fullscreen) {
+  //     enterFullscreen();
+  //     window.addEventListener("keydown", handleKeyDown);
+  //   } else {
+  //     exitFullscreen();
+  //     window.removeEventListener("keydown", handleKeyDown);
+  //   }
+  // }, [fullscreen]);
 
-  const enterFullscreen = () => {
-    const element = document.documentElement;
-    if (element.requestFullscreen) {
-      element.requestFullscreen();
-    } else if (element.mozRequestFullScreen) {
-      element.mozRequestFullScreen();
-    } else if (element.webkitRequestFullscreen) {
-      element.webkitRequestFullscreen();
-    } else if (element.msRequestFullscreen) {
-      element.msRequestFullscreen();
-    }
-  };
+  // const enterFullscreen = () => {
+  //   const element = document.documentElement;
+  //   if (element.requestFullscreen) {
+  //     element.requestFullscreen();
+  //   } else if (element.mozRequestFullScreen) {
+  //     element.mozRequestFullScreen();
+  //   } else if (element.webkitRequestFullscreen) {
+  //     element.webkitRequestFullscreen();
+  //   } else if (element.msRequestFullscreen) {
+  //     element.msRequestFullscreen();
+  //   }
+  // };
 
-  const exitFullscreen = () => {
-    if (document.exitFullscreen) {
-      document.exitFullscreen();
-    } else if (document.mozCancelFullScreen) {
-      document.mozCancelFullScreen();
-    } else if (document.webkitExitFullscreen) {
-      document.webkitExitFullscreen();
-    } else if (document.msExitFullscreen) {
-      document.msExitFullscreen();
-    }
-  };
+  // const exitFullscreen = () => {
+  //   if (document.exitFullscreen) {
+  //     document.exitFullscreen();
+  //   } else if (document.mozCancelFullScreen) {
+  //     document.mozCancelFullScreen();
+  //   } else if (document.webkitExitFullscreen) {
+  //     document.webkitExitFullscreen();
+  //   } else if (document.msExitFullscreen) {
+  //     document.msExitFullscreen();
+  //   }
+  //   console.log("is this working after escaping");
+  // };
 
 
-  const handleKeyDown = (event) => {
-    event.preventDefault();
+  // const handleKeyDown = (event) => {
+  //   event.preventDefault();
     
-    if (event.key === "Escape" || event.key === "F11") {
-      event.disabled = true;
-    }
-  };
-
+  //   if (event.key === "Escape" || event.key === "F11") {
+  //     event.disabled = true;
+  //   }
+  // };
   const [time, setTime] = useState(0);
-  //main use effect
   let timer;
 
   const startTimer = () => {
@@ -102,12 +104,11 @@ const TakeYourTest = () => {
           submitTest();
           window.alert("Time's up!");
           clickHandler();
-     
         }
       });
     }, 1000);
   };
-  
+
   useEffect(() => {
     fetchTests();
     handleAnswerSelect();
@@ -126,22 +127,35 @@ const TakeYourTest = () => {
       .padStart(2, "0")}`;
   };
   const fetchTests = async () => {
-    let Quesdata
+    let Quesdata;
     try {
       const response = await fetch(
-        process.env.REACT_APP_API_URL+`/api/v2/getAllQuestions?examId=${examId}`,
+        process.env.REACT_APP_API_URL +
+          `/api/v3/getAllQuestions?examId=${examId}&userId=${userId}`,
         {
           headers: {
-            Authorization:`Bearer ${JSON.parse(localStorage.getItem('userData'))['token']}`,
+            Authorization: `Bearer ${parsedObject["token"]}`,
           },
         }
       );
       Quesdata = await response.json();
       setAllQuesData(Quesdata);
       setTestsQues(Quesdata.questions);
-      localStorage.setItem("questionToken", Quesdata.token)
-    } catch (e) {
-      console.log(e);
+      localStorage.setItem("questionToken", Quesdata.token);
+    } catch (error) {
+      if (error.response.status === 401) {
+        navigate("/error/statusCode=401");
+      }
+      if (error.response.status === 400) {
+        navigate("/error/statusCode=400");
+      }
+      if (error.response.status === 500) {
+        navigate("/error/statusCode=500");
+      }
+      if (error.response.status === 404) {
+        navigate("/error/statusCode=404");
+      }
+      console.log(error);
     }
   };
   const handleAnswerSelect = (questionId, selectedAnswer) => {
@@ -165,15 +179,15 @@ const TakeYourTest = () => {
   const radioButtons = document.querySelectorAll('input[type="radio"]');
   const activeRadioCount = getActiveRadioCount();
   radioButtons.forEach((radioButton) => {
-    radioButton.addEventListener("change", () => { });
+    radioButton.addEventListener("change", () => {});
   });
 
   let submitQuesData;
-  const api = process.env.REACT_APP_API_URL+"/api/v2//submitAnswer";
+  const api = process.env.REACT_APP_API_URL + "/api/v3/submitAnswer";
   const submitTest = async () => {
     try {
       // debugger;
-      const mappedAnswers = Object.entries(userAnswers).map(
+      const mappedAnswers = Object.entries(userAnswers)?.map(
         ([questionId, selectedAnswer]) => ({
           qId: parseInt(questionId),
           choosenOpt: selectedAnswer,
@@ -188,7 +202,7 @@ const TakeYourTest = () => {
               Authorization: `Bearer ${localStorage.getItem("questionToken")}`
             },
             body: JSON.stringify({
-              userId: userId,
+              // userId: userId,
               technology: techName,
               level: level,
               optRequest: mappedAnswers.splice(0, mappedAnswers.length - 1),
@@ -196,24 +210,23 @@ const TakeYourTest = () => {
           }
           );
           submitQuesData = await response.json();
-          setScore(submitQuesData.scorePercentage);
+          setScore(Math.floor(submitQuesData.scorePercentage));
         } catch (error) {
       console.log(error);
-    }
-    finally {
+    } finally {
       localStorage.removeItem("questionToken");
     }
   };
   const renderQuestions = () => {
     return (
       <div>
-        {Ques.map((quest, index) => (
+        {Ques?.map((quest, index) => (
           <div key={quest.questionId}>
             <div className="ques-of-quiz">
               {index + 1} {"."} {quest.question}
             </div>
             <div>
-              {quest.options.map((option, index) => (
+              {quest.options?.map((option, index) => (
                 <div
                   key={index}
                   style={{ display: "flex", alignItems: "center" }}
@@ -257,15 +270,18 @@ const TakeYourTest = () => {
           <div className="modal-dialog modal-dialog-centered">
             <div className="modal-content">
               <div className="modal-header">
-                <span className="modal-title instruction" id="staticBackdropLabel">
+                <span
+                  className="modal-title instruction"
+                  id="staticBackdropLabel"
+                >
                   Submit Test{" "}
                 </span>
-                  <button
-                    type="button"
-                    className="btn-close"
-                    data-bs-dismiss="modal"
-                    aria-label="Close"
-                  ></button>
+                <button
+                  type="button"
+                  className="btn-close"
+                  data-bs-dismiss="modal"
+                  aria-label="Close"
+                ></button>
               </div>
               <div className="modal-body"> Sure Want to submit the test ? </div>
               <div className="modal-footer">
@@ -280,7 +296,7 @@ const TakeYourTest = () => {
                   type="button"
                   onClick={() => {
                     setFullscreen(false);
-                    exitFullscreen();
+                    // exitFullscreen();
                     submitTest();
                     clickHandler();
                   }}
@@ -293,22 +309,19 @@ const TakeYourTest = () => {
             </div>
           </div>
         </div>
-
       </div>
     );
   };
   return (
     <>
       <div className="resp">
-        <div className="container-fluid ">
-          <div className="row"></div>
           <div className="row testhHeading-and-Timer-Div">
             <div className="col-3">
               <div className="main-heading">
                 <p> Take The Test </p>
               </div>
-              <div className="quiz-description mx-5 ">
-                {examName} {"\u2B24"} {examDuration} mins {"\u2B24"}{" "}
+              <div className="quiz-description ">
+                {examName} &nbsp; <DotTYT/> &nbsp; {examDuration} mins &nbsp; <DotTYT/> &nbsp;
                 {numberOfQuestion} Questions
               </div>
             </div>
@@ -317,18 +330,14 @@ const TakeYourTest = () => {
                 <p>{formatTime(time)}</p>
               </div>
               <div className="col-3 active-Radio-Buttons attempted-Ques">
-                {/* Attempted Questions: {activeRadioButtons}/{testDetails.numberOfQuestion} */}
-                Attempted Questions: {activeRadioCount}/{numberOfQuestion}
+               &nbsp; Attempted Questions: {activeRadioCount}/{numberOfQuestion}
               </div>
             </div>
           </div>
-          <div className="ques.card ">
-            <div className="card insidecard" style={{ width: "76.25rem" }}>
+            <div className="card insidecard" >
               {fullscreen && !submitted && <div> {renderQuestions()} </div>}
             </div>
-          </div>
         </div>
-      </div>
     </>
   );
 };

@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import "../ProjectIdea/TechDropDown.css"
+import "../ProjectIdea/TechDropDown.css";
+import CryptoJS from "crypto-js";
 const TechDropDown = (props) => {
   const [counter, setCounter] = useState(1);
   // const [props.technologyNames, setTechnologyNames] = useState([]);
@@ -8,26 +9,37 @@ const TechDropDown = (props) => {
   const [allTech, setAllTech] = useState();
 
   useEffect(() => {
+    const secretkeyUser = process.env.REACT_APP_USER_KEY;
+    var parsedObject;
+    const data = localStorage.getItem("userData");
+    if (data) {
+      const bytes = CryptoJS.AES.decrypt(data, secretkeyUser);
+      const decryptedJsonString = bytes.toString(CryptoJS.enc.Utf8);
+      parsedObject = JSON.parse(decryptedJsonString);
+    } else {
+      console.log("No encrypted data found in localStorage.");
+    }
     //this api call is for admin portal
     axios
-      .get(process.env.REACT_APP_API_URL+`/api/v2/getAllTechnology`,
-      {
+      .get(process.env.REACT_APP_API_URL + `/api/v3/getAllTechnology`, {
         headers: {
-          Authorization:`Bearer ${JSON.parse(localStorage.getItem('userData'))['token']}`,
+          Authorization: `Bearer ${parsedObject["token"]}`,
         },
       })
       .then((response) => {
-        setAllTech(response.data.response.sort((a, b) => {
-          const nameA = a.techName.toUpperCase();
-          const nameB = b.techName.toUpperCase();
-          if (nameA < nameB) {
-            return -1;
-          }
-          if (nameA > nameB) {
-            return 1;
-          }
-          return 0; // names are equal
-        }));
+        setAllTech(
+          response.data.response.sort((a, b) => {
+            const nameA = a.techName.toUpperCase();
+            const nameB = b.techName.toUpperCase();
+            if (nameA < nameB) {
+              return -1;
+            }
+            if (nameA > nameB) {
+              return 1;
+            }
+            return 0; // names are equal
+          })
+        );
       })
       .catch((error) => {
         console.error(error);
@@ -62,12 +74,10 @@ const TechDropDown = (props) => {
     // const inputTag = document.getElementById("inputTag");
     // inputTag.value = selectedValues;
     props.techDataComingChild(props.techNames);
-
   };
   return (
     <div className="drop-tech">
       {allTech?.map((value, index) => {
-
         return (
           <div
             key={index}

@@ -10,6 +10,8 @@ import EmptyProjectView from "../../../EmptyStates/EmptyProject/ProjectViewAll";
 import { ReactComponent as ExpandMore } from "../../../../../../Assets/expand_more.svg";
 import BreadCrumbs from "../../../../../BreadCrumbs/BreadCrumbs";
 import {ReactComponent as VectorAdd} from "../../../../../../Assets/Vectoradd.svg";
+import CryptoJS from "crypto-js";
+import { useNavigate } from "react-router-dom";
 
 const ViewAllProjects = () => {
   // const { project } = useContext(UserContext);
@@ -34,6 +36,8 @@ const ViewAllProjects = () => {
   const [isProjectDescriptionValid, setIsProjectDescriptionValid] = useState(false);
   const [isProjectLinkValid, setIsProjectLinkValid] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  
+  const navigate = useNavigate();
 
   // const details = project;
 
@@ -111,16 +115,22 @@ const ViewAllProjects = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    var storedObject = localStorage.getItem("userData");
-    var parsedObject = JSON.parse(storedObject);
+    const secretkeyUser = process.env.REACT_APP_USER_KEY;
+    var parsedObject;
+    const data = localStorage.getItem("userData");
+    if (data) {
+      const bytes = CryptoJS.AES.decrypt(data, secretkeyUser);
+      const decryptedJsonString = bytes.toString(CryptoJS.enc.Utf8);
+      parsedObject = JSON.parse(decryptedJsonString);
+    } else {
+      console.log("No encrypted data found in localStorage.");
+    }
     var userId = parsedObject.userId;
     if (error) {
       alert("Please fill in the required details");
-
-    }
-    else {
+    } else {
       axios
-        .post(process.env.REACT_APP_API_URL + "/api/v2/Project", {
+        .post(process.env.REACT_APP_API_URL + "/api/v3/Project", {
           projName,
           projDescription,
           userId,
@@ -169,17 +179,45 @@ const ViewAllProjects = () => {
   // }, []);
 
   useEffect(() => {
-    var storedObject = localStorage.getItem("userData");
-    var parsedObject = JSON.parse(storedObject);
+    const secretkeyUser = process.env.REACT_APP_USER_KEY;
+    var parsedObject;
+    const data = localStorage.getItem("userData");
+    if (data) {
+      const bytes = CryptoJS.AES.decrypt(data, secretkeyUser);
+      const decryptedJsonString = bytes.toString(CryptoJS.enc.Utf8);
+      parsedObject = JSON.parse(decryptedJsonString);
+    } else {
+      console.log("No encrypted data found in localStorage.");
+    }
     var userId = parsedObject.userId;
     const firstAPIPromise = axios
       .get(
-        process.env.REACT_APP_API_URL + `/api/v3/getProject?userId=${userId}`, {
-        headers: {
-          Authorization: `Bearer ${JSON.parse(localStorage.getItem('userData'))['token']}`,
-        },
-      }
-      );
+        process.env.REACT_APP_API_URL + `/api/v3/getProject?userId=${userId}`,
+        {
+          headers: {
+            Authorization: `Bearer ${parsedObject["token"]}`,
+          },
+        }
+      )
+      .then((response) => {
+        setProject(response.data.response);
+        setMentorAssignData(response);
+      })
+      .catch((error) => {
+        if (error.response.status === 401) {
+          navigate("/error/statusCode=401");
+        }
+        if (error.response.status === 400) {
+          navigate("/error/statusCode=400");
+        }
+        if (error.response.status === 500) {
+          navigate("/error/statusCode=500");
+        }
+        if (error.response.status === 404) {
+          navigate("/error/statusCode=404");
+        }
+        console.error("Error fetching tasks:", error);
+      });
 
     const secondAPIPromise = axios
       .get(process.env.REACT_APP_API_URL + `/api/v3/getAssignedNotification?userId=${userId}`, {
@@ -204,13 +242,6 @@ const ViewAllProjects = () => {
       //     },
       //   }
       // )
-      .then((response) => {
-        setProject(response.data.response);
-        setMentorAssignData(response);
-      })
-      .catch((error) => {
-        console.error("Error fetching tasks:", error);
-      });
 
 
     //   .then((responsedata) => {

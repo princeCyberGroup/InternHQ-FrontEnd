@@ -11,7 +11,7 @@ import { UserContext } from "../../../../../../Context/Context";
 import BreadCrumbs from "../../../../../BreadCrumbs/BreadCrumbs";
 import IdeaDetails from "../../ViewDetails/IdeaDetails";
 import {ReactComponent as VectorAdd} from "../../../../../../Assets/Vectoradd.svg";
-
+import CryptoJS from "crypto-js";
 
 const ViewAllIdeas = () => {
   // const { idea, setIdea, project, setProject } = useContext(UserContext);
@@ -30,6 +30,7 @@ const ViewAllIdeas = () => {
   const [isProjectNameValid, setIsProjectNameValid] = useState(false);
   const [isProjectDescriptionValid, setIsProjectDescriptionValid] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const navigate = useNavigate();
 
   const handelIndex = (index) => {
     setProjectIndex(index);
@@ -44,7 +45,7 @@ const ViewAllIdeas = () => {
     setProjDescriptionError("");
     setTech({});
     seTechNames({});
-    
+
     const checkboxes = document.querySelectorAll(".tech-checkbox");
     checkboxes.forEach((checkbox) => {
       checkbox.checked = false;
@@ -91,15 +92,22 @@ const ViewAllIdeas = () => {
   };
   const handleSubmit = async (e) => {
     e.preventDefault();
-    var storedObject = localStorage.getItem("userData");
-    var parsedObject = JSON.parse(storedObject);
+    const secretkeyUser = process.env.REACT_APP_USER_KEY;
+    var parsedObject;
+    const data = localStorage.getItem("userData");
+    if (data) {
+      const bytes = CryptoJS.AES.decrypt(data, secretkeyUser);
+      const decryptedJsonString = bytes.toString(CryptoJS.enc.Utf8);
+      parsedObject = JSON.parse(decryptedJsonString);
+    } else {
+      console.log("No encrypted data found in localStorage.");
+    }
     var userId = parsedObject.userId;
     if (error) {
       alert("Please fill in the required details");
-    }
-    else {
+    } else {
       await axios
-        .post(process.env.REACT_APP_API_URL+"/api/v2/projectIdea", {
+        .post(process.env.REACT_APP_API_URL + "/api/v3/projectIdea", {
           projName,
           projDescription,
           userId,
@@ -118,31 +126,59 @@ const ViewAllIdeas = () => {
       setDropDown(false);
       setTech({});
       seTechNames({});
-    
-    const checkboxes = document.querySelectorAll(".tech-checkbox");
-    checkboxes.forEach((checkbox) => {
-      checkbox.checked = false;
-    });
+
+      const checkboxes = document.querySelectorAll(".tech-checkbox");
+      checkboxes.forEach((checkbox) => {
+        checkbox.checked = false;
+      });
     }
-   };
+  };
 
   useEffect(() => {
-    var storedObject = localStorage.getItem("userData");
-    var parsedObject = JSON.parse(storedObject);
+    const secretkeyUser = process.env.REACT_APP_USER_KEY;
+    var parsedObject;
+    const data = localStorage.getItem("userData");
+    if (data) {
+      const bytes = CryptoJS.AES.decrypt(data, secretkeyUser);
+      const decryptedJsonString = bytes.toString(CryptoJS.enc.Utf8);
+      parsedObject = JSON.parse(decryptedJsonString);
+    } else {
+      console.log("No encrypted data found in localStorage.");
+    }
     var userId = parsedObject.userId;
     axios
-      .get(process.env.REACT_APP_API_URL+`/api/v3/getProjectIdea?userId=${userId}`,
+     /* .get(process.env.REACT_APP_API_URL+`/api/v3/getProjectIdea?userId=${userId}`,
       {
         headers: {
           Authorization:`Bearer ${JSON.parse(localStorage.getItem('userData'))['token']}`,
         },
-      }
+      } */
+      .get(
+        process.env.REACT_APP_API_URL +
+          `/api/v3/getProjectIdea?userId=${userId}`,
+        {
+          headers: {
+            Authorization: `Bearer ${parsedObject["token"]}`,
+          },
+        }
       )
       .then((response) => {
         setIdea(response.data.response);
         {console.log("Api",response.data)}
       })
       .catch((error) => {
+        if (error.response.status === 401) {
+          navigate("/error/statusCode=401");
+        }
+        if (error.response.status === 400) {
+          navigate("/error/statusCode=400");
+        }
+        if (error.response.status === 500) {
+          navigate("/error/statusCode=500");
+        }
+        if (error.response.status === 404) {
+          navigate("/error/statusCode=404");
+        }
         console.error("Error fetching tasks:", error);
       });
   }, []);

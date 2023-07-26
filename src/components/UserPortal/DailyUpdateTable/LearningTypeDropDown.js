@@ -7,6 +7,7 @@ const LearningTypeDropDown = ({ dropdownfunc }) => {
     "Self Learning",
     "Mentor Assigned Task",
     "Project",
+    "Session"
   ];
   const [learningType, setLearningType] = useState("");
 

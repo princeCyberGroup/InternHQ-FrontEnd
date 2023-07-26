@@ -4,8 +4,10 @@
   border: 1px solid #b2b2b3;
   border-radius: 4px;
   padding-left: 8px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
-
 .dropdown-button::after {
   margin-left: 1rem;
 }
@@ -17,13 +19,10 @@
   height: 274px;
   /* border: 1px solid black; */
 }
-.no-data-div{
+.no-data-div {
   height: 220px;
   text-align: center;
 }
-.no-data-img{
+.no-data-img {
   height: 166px;
 }
-
-/* width: 394px;
- height: 274px; */
