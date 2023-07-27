@@ -16,14 +16,16 @@ const Log = () => {
       <div className="assign-task-page">
         <div className="container-fluid ">
           <div className="row mt-4">
-            <div className=" col-md-4 p-0 ">
+            <div className=" col-md-4 p-0 " 
+            style={{marginLeft:"56px"}}
+            >
               <LogCard
                 setSelectedUser={setSelectedUser}
                 setSelectedMentor={setSelectedMentor}
                 setLogData={setLogData}
               />
             </div>
-            <div className=" col-md-8 p-0 ">
+            <div className=" col-md-7 p-0 " style={{marginLeft:"-16px"}}>
               <DetailedCard
                 selectedUser={selectedUser}
                 selectedMentor={selectedMentor}
