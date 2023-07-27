@@ -41,31 +41,21 @@ const Report = () => {
     setSelectedOption(value);
   };
   const handleDeployChange = (userId) => {
-    const index = tableData.findIndex((item) => item.userId === userId);
+    const index = orgTableData.findIndex((item) => item.userId === userId);
     const containValue = deployData?.some(
       (value) => value?.userId === orgTableData[index].userId
     );
     if (containValue) {
-      const tempData = deployData.map((value) => {
-        if (value.userId === orgTableData[index].userId) {
-          return { ...value, status: !tableData[index].isDeployed };
-        }
-        return value;
-      });
+      const tempData = deployData.filter((value) => value.userId !== userId);
       setDeployData(tempData);
     } else {
       const tempData = [...deployData];
       tempData.push({
         userId: orgTableData[index].userId,
-        status: !tableData[index].isDeployed,
+        status: !orgTableData[index].isDeployed,
       });
       setDeployData(tempData);
     }
-    const updatedValues = tableData.map((val) => {
-      if (val.userId === userId) return { ...val, isDeployed: !val.isDeployed };
-      return val;
-    });
-    setTableData(updatedValues);
   };
   const handleCancel = () => {
     let tempDeployedTable = [];
@@ -100,7 +90,7 @@ const Report = () => {
         return items.filter((item) =>
           `${item[Data.FN]} ${item[Data.LN]}`
             .toLowerCase()
-            .startsWith(query.toLowerCase())
+            .includes(query.toLowerCase())
         );
       }
       return items;
@@ -157,9 +147,6 @@ const Report = () => {
     const filterItems = getFilterItems(orgTableData, query);
     const filterTech = getfilterTech(filterItems);
     const filterDep = getfilterDep(filterTech, selectedOption);
-    // const workingData = filterDep.map((value, index) => {
-    //   return { ...value, isDeployed: tableData[index].isDeployed };
-    // });
     setTableData(filterDep);
   };
   if (data) {
@@ -179,8 +166,17 @@ const Report = () => {
           },
         }
       );
-      setOrgTableData(response?.data.response);
-      setTableData(response?.data.response);
+      // console.log("object");
+      setOrgTableData(
+        response?.data.response.sort((a, b) => {
+          return a.firstName.localeCompare(b.firstName);
+        })
+      );
+      setTableData(
+        response?.data.response.sort((a, b) => {
+          return a.firstName.localeCompare(b.firstName);
+        })
+      );
       setIsLoading(false);
     } catch (error) {
       if (error.response.status === 401) {
@@ -262,6 +258,7 @@ const Report = () => {
             <Reporttable
               tableData={tableData}
               isLoading={isLoading}
+              deployData={deployData}
               handleDeployChange={handleDeployChange}
             />
           </div>
