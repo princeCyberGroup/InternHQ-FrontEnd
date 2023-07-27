@@ -80,11 +80,6 @@ const Reporttable = ({
                   <td>
                     <div
                       className="tech-tags"
-                      // onClick={(e) => {
-                      //   e.stopPropagation();
-                      //   setSelectedIndex((prev) => (prev === -1 ? ind : -1));
-                      // }}
-                      onMouseEnter={() => setSelectedIndex(ind)}
                       onMouseLeave={() => setSelectedIndex(-1)}
                     >
                       {val?.[Data.TN]
@@ -117,7 +112,10 @@ const Reporttable = ({
                       {selectedIndex !== ind &&
                         objectKeyCount > 2 &&
                         val?.[Data.TN].slice(3).length !== 0 && (
-                          <div className="all-tech">
+                          <div
+                            className="all-tech"
+                            onMouseEnter={() => setSelectedIndex(ind)}
+                          >
                             <span>+ {val?.[Data.TN].slice(3).length}</span>
                           </div>
                         )}
