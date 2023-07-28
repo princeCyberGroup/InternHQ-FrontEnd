@@ -54,7 +54,7 @@ const CreateNewPasswordScreen = () => {
 
     await axios
       .post(
-        process.env.REACT_APP_API_URL+"/api/v2/changePassword",
+        process.env.REACT_APP_API_URL+"/api/v3/changePassword",
         {
           newPassword,
           confirmPassword,
@@ -80,10 +80,10 @@ const CreateNewPasswordScreen = () => {
         setIsPasswordSame(true);
         setIsLoading(false);
         if (error.response?.data.statusCode == 400) {
-          navigate("/error?statusCode=400");
+          navigate("/error/statusCode=400");
         }
         if (error.response?.data.statusCode == 500) {
-          navigate("/error?statusCode=500");
+          navigate("/error/statusCode=500");
         }
       });
   };

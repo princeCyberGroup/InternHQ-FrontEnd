@@ -7,6 +7,7 @@ import TechDropDown from "../TechDropDown";
 import { UserContext } from "../../../../../Context/Context";
 import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
+import CryptoJS from "crypto-js";
 
 const AddProject = () => {
   const { project } = useContext(UserContext);
@@ -27,37 +28,57 @@ const AddProject = () => {
   const [tech, setTech] = useState({});
   const [technologyNames, setTechnologyNames] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [isProjectNameValid, setIsProjectNameValid] = useState(false);
+  const [isProjectDescriptionValid, setIsProjectDescriptionValid] = useState(false);
+  const [isProjectLinkValid, setIsProjectLinkValid] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   useEffect(() => {
     setTimeout(() => {
       setIsLoading(false);
     }, 1000);
   }, []);
-  
-  const handleProjectNameChange = (event) => {
-    setProjName(event.target.value);
-    if (projName.length===0) {
+
+  const handleProjectNameChange = (e) => {
+    e.preventDefault();
+    const name = e.target.value;
+    setProjName(name);
+    setIsProjectNameValid(name.match(/^.{1,100}$/) ? true : false);
+    if (!name) {
       setError(true);
-      setProjNameError("Project name is required");
-      
-      
+      setProjNameError("Project Name is required");
     } else {
       setError(false);
       setProjNameError("");
     }
   };
-  const handleProjectDescriptionChange = (event) => {
-    setProjDescription(event.target.value);
-    if (projDescription.length < 2) {
+  const handleProjectDescriptionChange = (e) => {
+    e.preventDefault();
+    const description = e.target.value;
+    setProjDescription(description);
+    setIsProjectDescriptionValid(description.match(/^.{50,750}$/) ? true : false);
+    if (!description) {
       setError(true);
-      setDesError("Project description is required");
-      
-      
+      setDesError("Project Description is required");
     } else {
-      setError(false);
       setDesError("");
+      setError(false);
     }
   };
+
+  const handleProjectLinkChange = (e) => {
+    const link = e.target.value;
+    setProjectLink(link);
+    setIsProjectLinkValid(link.match(/^https?:\/\//) ? true : false)
+    if (!link) {
+      setError(true);
+      setProjLinkError("Project link is required");
+    } else {
+      setProjLinkError("");
+      setError(false);
+    }
+  };
+
   const techDataComingFrmChild = (data) => {
     return setTech(data);
   };
@@ -88,15 +109,7 @@ const AddProject = () => {
       checkbox.checked = false;
     });
   };
-  const handleProjectLinkChange = (event) => {
-    const link = event.target.value;
-    setProjectLink(link);
-    if (!link) {
-      setProjLinkError("Project link is required");
-    } else {
-      setProjLinkError("");
-    }
-  };
+
 
   const isObjectEmpty = (object) => {
     if (object.member1.length > 0) {
@@ -109,15 +122,22 @@ const AddProject = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    var storedObject = localStorage.getItem("userData");
-    var parsedObject = JSON.parse(storedObject);
+    const secretkeyUser = process.env.REACT_APP_USER_KEY;
+    var parsedObject;
+    const data = localStorage.getItem("userData");
+    if (data) {
+      const bytes = CryptoJS.AES.decrypt(data, secretkeyUser);
+      const decryptedJsonString = bytes.toString(CryptoJS.enc.Utf8);
+      parsedObject = JSON.parse(decryptedJsonString);
+    } else {
+      console.log("No encrypted data found in localStorage.");
+    }
     var userId = parsedObject.userId;
     if (error) {
       alert("Please fill in the required details");
-     
     } else {
       axios
-        .post(process.env.REACT_APP_API_URL+"/api/v2/Project", {
+        .post(process.env.REACT_APP_API_URL + "/api/v3/Project", {
           projName,
           projDescription,
           userId,
@@ -137,13 +157,13 @@ const AddProject = () => {
       setProjDescription("");
       setProjectLink("");
       setHostedLink("");
-   
+
       setTech({});
-        
-    const checkboxes = document.querySelectorAll(".tech-checkbox");
-    checkboxes.forEach((checkbox) => {
-      checkbox.checked = false;
-    });
+
+      const checkboxes = document.querySelectorAll(".tech-checkbox");
+      checkboxes.forEach((checkbox) => {
+        checkbox.checked = false;
+      });
     }
   };
 
@@ -287,11 +307,6 @@ const AddProject = () => {
                     className="col-form-label title-text"
                   >
                     Project Name<span style={{ color: "red" }}>*</span>{" "}
-                    {projNameError && (
-                      <span style={{ color: "red", fontSize: "11px" }}>
-                        ({projNameError})
-                      </span>
-                    )}
                   </label>
                   <input
                     type="text"
@@ -301,6 +316,11 @@ const AddProject = () => {
                     placeholder="Enter Project Name"
                     onChange={handleProjectNameChange}
                   />
+                  {!isProjectNameValid && projName && (
+                    <span style={{ color: "red", fontSize: "11px" }}>
+                      Please enter a name with only letters and spaces, between 1 and 100 characters.
+                    </span>
+                  )}
                 </div>
 
                 <div className="mb-3">
@@ -310,11 +330,7 @@ const AddProject = () => {
                   >
                     Project Description
                     <span style={{ color: "red" }}>*</span>{" "}
-                    {desError && (
-                      <span style={{ color: "red", fontSize: "11px" }}>
-                        ({desError})
-                      </span>
-                    )}
+                    <span style={{ color: "grey" }}>(Minimum 50 characters)</span>
                   </label>
                   <textarea
                     className="form-control"
@@ -323,7 +339,12 @@ const AddProject = () => {
                     placeholder="Write Here..."
                     onChange={handleProjectDescriptionChange}
                     rows={3}
-                  ></textarea>
+                  />
+                  {!isProjectDescriptionValid && projDescription && (
+                    <span style={{ color: "red", fontSize: "11px" }}>
+                      Please enter a description with a length between 50 and 750 characters.
+                    </span>
+                  )}
                 </div>
                 <div className="mb-3">
                   <label
@@ -332,6 +353,7 @@ const AddProject = () => {
                     required
                   >
                     Technology Used <span style={{ color: "red" }}>*</span>
+                    <span style={{ color: "grey" }}>(Select atleast 1 technology)</span>
                   </label>
                   <div className="container border p-0">
                     <div className="input-with-button">
@@ -364,15 +386,20 @@ const AddProject = () => {
                         style={{ display: dropDown ? "" : "none" }}
                         className="ul-styling"
                       >
-                            <TechDropDown
-                              techDataComingChild={techDataComingFrmChild}
-                              seTechNames={seTechNames}
-                              techNames={techNames}
-                              technologyNames={technologyNames}
-                            />
-                          </ul>
-                        </div>
-                      </div>
+                        <TechDropDown
+                          techDataComingChild={techDataComingFrmChild}
+                          seTechNames={seTechNames}
+                          techNames={techNames}
+                          technologyNames={technologyNames}
+                        />
+                      </ul>
+                    </div>
+                  </div>
+                  {!Object.values(tech).length && (
+                    <span style={{ color: "grey", fontSize: "11px" }}>
+                      Maximum 10 technologies
+                    </span>
+                  )}
                 </div>
 
                 <div className="mb-3">
@@ -381,11 +408,6 @@ const AddProject = () => {
                     className="col-form-label title-text"
                   >
                     Project Link<span style={{ color: "red" }}>*</span>{" "}
-                    {projLinkError && (
-                      <span style={{ color: "red", fontSize: "11px" }}>
-                        ({projLinkError})
-                      </span>
-                    )}
                   </label>
                   <input
                     className="form-control"
@@ -394,6 +416,11 @@ const AddProject = () => {
                     value={projectLink}
                     onChange={handleProjectLinkChange}
                   />
+                  {!isProjectLinkValid && projectLink && (
+                    <span style={{ color: "red", fontSize: "11px" }}>
+                      Invalid project link. Please enter a valid URL starting with http:// or https://.
+                    </span>
+                  )}
                 </div>
                 <div className="mb-3">
                   <label
@@ -416,6 +443,7 @@ const AddProject = () => {
                     className="col-form-label title-text"
                   >
                     Members(Optional)
+                    <span style={{ color: "grey" }}>(Minimum 8 members)</span>
                   </label>
                   <input
                     className="form-control"
@@ -434,17 +462,19 @@ const AddProject = () => {
                 className="btn cancel-button"
                 data-bs-dismiss="modal"
                 onClick={clear}
-            
               >
                 <span className="cancel-text"> Cancel</span>
               </button>
               <button
                 type="button"
-                className="btn save-button"
+                className="btn btn-primary save-button"
+                disabled={!isProjectNameValid || !isProjectDescriptionValid || !isProjectLinkValid || isModalOpen}
                 data-bs-target="#projectExampleModal"
                 data-bs-dismiss={!error ? 'modal' : ''}
-                
-                onClick={(e) => handleSubmit(e)}
+                onClick={(e) => {
+                  handleSubmit(e);
+                  setIsModalOpen(true);
+                }}
               >
                 <span className="save-text"> Save</span>
               </button>

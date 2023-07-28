@@ -29,13 +29,13 @@
     color: #FFFFFF;
 }
 
-.modal-cancel-button {
+.md-cancel-btn {
     width: 92px;
     border: 1px solid #28519E;
     border-radius: 0.25rem;
 }
 
-.modal-cancel-button:hover {
+.md-cancel-btn:hover {
     width: 92px;
     border: 1px solid #28519E;
     border-radius: 0.25rem;
@@ -242,7 +242,7 @@
     justify-content: center;
     align-items: center;
     padding: 20px 1rem;
-    gap: 0-.5rem;
+    gap: 0.5rem;
     width: 201.77px;
     height: 40px;
     background: #28519E;
@@ -266,7 +266,7 @@
     color: #23262B;
 }
 
-.csv-upload-button {
+/* .csv-upload-button {
     display: flex;
     flex-direction: row;
     justify-content: center;
@@ -280,7 +280,7 @@
     flex: none;
     order: 1;
     flex-grow: 0;
-}
+} */
 
 /* .csv-upload-button:hover {
     background: #28519E;
@@ -305,22 +305,42 @@ color: white;
 }
 
 .progress-indicator-status{
-    justify-content: space-between;
-    margin-top: 1rem;
+
 display: flex;
-padding: 0rem 0.5rem;
-height:2.5rem ;
-width: 28.8rem;
+margin-bottom: 0.2rem;
 align-items: center;
-gap: 1rem;
+margin-right: 2rem;
 flex: 1 0 0;
 align-self: stretch;
-border-radius: 4px;
-border: 1px solid var(--secondary-gray, #B2B2B3);
 background: var(--primary-white, #FFF);
 }
 
-close-button-addSkill{
+.close-button-addSkill{
     border: 0px;
     background-color: white;
 }
+
+.ast-search-wrapper{
+  
+    border: 1px solid #B2B2B3;
+    border-radius: 5px;
+    height: 2.5rem;
+    margin-top: 1.5rem;
+    padding: 1rem;
+    margin-right: 0.4rem;
+  }
+  .add-new-skill-test-save-btn:disabled {
+    background: #28519E;
+    color: #FFF;
+  }
+  
+  .add-new-skill-test-cancel-btn {
+  border: 1px solid #28519e;
+  border-radius: 0.25rem;
+  height: 36px;
+  /* width: 4.625rem; */
+  }
+
+  .add-new-skill-test-cancel-btn:hover {
+    border: 1px solid #28519e;
+  }

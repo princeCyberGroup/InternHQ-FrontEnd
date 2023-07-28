@@ -34,7 +34,7 @@ const ForgotPasswordOtpScreen = () => {
     const email = localStorage.getItem("email");
     axios
       .post(
-        process.env.REACT_APP_API_URL+"/api/v2/forgetOtpVerify",
+        process.env.REACT_APP_API_URL+"/api/v3/forgetOtpVerify",
         { email, otp },
         {
           headers: {

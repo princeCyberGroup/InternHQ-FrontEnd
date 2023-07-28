@@ -3,90 +3,119 @@ import axios from "axios";
 import TechnologyDropDown from "./TechnologyDropdown(Admin)";
 import UsersDropdown from "./UsersDropdown";
 import { ReactComponent as ExpandMore } from "../../../../Assets/expand_more.svg";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
+import { ReactComponent as CalendarIcon } from "../../../../Assets/eventcalender-icon.svg";
 
-export const EditTaskModal = ({ task, onEditClose, technology, assignedTo, editedTask,taskName,setTaskName, taskDescription,setTaskDescription }) => {
+function CustomInput({ value, onClick }) {
+  return (
+    <div className="row addTask-date-filter m-0" onClick={onClick}>
+      <input
+        placeholder="Select Date"
+        type="text"
+        value={value}
+        className="col-11 addTask-date-filter-input m-0"
+        readOnly
+      />
+      <span className="col-1 p-0">
+        <CalendarIcon />
+      </span>
+    </div>
+  );
+}
 
+export const EditTaskModal = (props) => {
   const [dropDown, setDropDown] = useState(false);
   const [usersDropDown, setUsersDropDown] = useState(false);
   const [tech, setTech] = useState({});
   const [users, setUsers] = useState({});
-  const [selectedUserIds, setSelectedUserIds] = useState([]);
-  const [selectedUsers, setSelectedUsers] = useState([]);
-  const [selectedTechIds, setSelectedTechIds] = useState([]);
-  const [technologyNames, setTechnologyNames] = useState([]);
   const [selectAllUsers, setSelectAllUsers] = useState(false);
   const [error, setError] = useState(false);
   const [selectAllChecked, setSelectAllChecked] = useState(false);
-
-
-
+  const [searchQuery, setSearchQuery] = useState("");
+  const [searchUserQuery, setSearchUserQuery] = useState("");
+  const [nameError, setNameError] = useState(false);
+  const [descError, setDescError] = useState(false);
   const techDataComingFrmChild = (data) => {
     setTech(data);
   };
 
   const usersDataComingFrmChild = (data) => {
     setUsers(data);
-
   };
   const handleOnEditClose = () => {
     setSelectAllChecked(false);
-    setTech(editedTask?.technology);
-    setUsers(editedTask?.name);
-    onEditClose();
-  }
+    setTech(props.editedTask?.technology);
+    setUsers(props.editedTask?.name);
+    props.onEditClose();
+  };
 
   const handleTaskTitle = (e) => {
-    setTaskName(e.target.value);
-
-    if (e.target.value.length > 0) {
-        setError(false);
-      }
-      else{setError(true)}
+    props.setTaskName(e.target.value);
+    if (props.taskName.length === 0) {
+      setNameError(true);
+    } else {
+      setNameError(false);
+    }
+    // if (e.target.value.length > 0) {
+    //   setError(false);
+    // } else {
+    //   setError(true);
+    // }
   };
 
   const handleDescription = (e) => {
-    setTaskDescription(e.target.value);
-    if (e.target.value.length > 2) {
-        setError(false);
-      }
-      else{setError(true)}
+    props.setTaskDescription(e.target.value);
+    if (props.taskDescription.length < 2 || props.taskDescription.length > 500) {
+      setDescError(true);
+    } else {
+      setDescError(false);
+    }
+    // if (e.target.value.length > 2) {
+    //   setError(false);
+    // } else {
+    //   setError(true);
+    // }
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    
-    if (error) {
-        alert("Please fill out the necessary fields");
-      } else {
-    try {
-      await axios.post(
-        process.env.REACT_APP_API_URL+`/api/v2/editTask`,
-        {
-            taskId:task.taskId,
-            taskName:taskName,
-            taskDescription:taskDescription,
-            taskTech:selectedTechIds,
-            taskUsers:selectedUserIds
-        }
-      );
 
-      // Handle success, update the task or display a success message
-      console.log("Task updated successfully");
-      onEditClose();
-    } catch (error) {
-      console.log("Error updating task:", error);
-      // Handle error, display an error message or show an error notification
+    if (
+      nameError ||
+      descError ||
+      !props.startEditDate ||
+      !props.endEditDate ||
+      props.selectedTechIds?.length === 0 ||
+      props.selectedUserIds?.length === 0
+    ) {
+      alert("Please fill out the necessary fields");
+    } else {
+      try {
+        await axios.post(process.env.REACT_APP_API_URL + `/api/v3/editTask`, {
+          taskId: props.task.taskId,
+          taskName: props.taskName,
+          taskDescription: props.taskDescription,
+          startDate: props.startEditDate,
+          endDate: props.endEditDate,
+          taskTech: props.selectedTechIds,
+          taskUsers: props.selectedUserIds,
+        });
+
+        // Handle success, update the task or display a success message
+        console.log("Task updated successfully");
+        props.onEditClose();
+      } catch (error) {
+        console.log("Error updating task:", error);
+        // Handle error, display an error message or show an error notification
+      }
     }
-}
-
   };
-
   return (
     <div>
       <div
         className="modal fade"
         id="editTaskModal"
-        // data-bs-backdrop="static"
         tabIndex="-1"
         aria-labelledby="editTaskModalLabel"
         aria-hidden="true"
@@ -105,7 +134,7 @@ export const EditTaskModal = ({ task, onEditClose, technology, assignedTo, edite
                 className="btn-close"
                 data-bs-dismiss="modal"
                 aria-label="Close"
-                onClick={onEditClose}
+                onClick={props.onEditClose}
               ></button>
             </div>
 
@@ -124,7 +153,7 @@ export const EditTaskModal = ({ task, onEditClose, technology, assignedTo, edite
                     className="form-control"
                     id="edit-task-title"
                     placeholder="Enter task name"
-                    value={taskName}
+                    value={props.taskName}
                     onChange={handleTaskTitle}
                   />
                 </div>
@@ -142,9 +171,42 @@ export const EditTaskModal = ({ task, onEditClose, technology, assignedTo, edite
                     id="edit-description"
                     rows={3}
                     placeholder="Enter description"
-                    value={taskDescription}
+                    value={props.taskDescription}
                     onChange={handleDescription}
                   ></textarea>
+                </div>
+
+                <div className="mb-3">
+                  <div className="row">
+                    <div className="col">
+                      <label
+                        htmlFor="start-date"
+                        className="col-form-label form-title-names"
+                      >
+                        Start Date<span style={{ color: "red" }}>*</span>
+                      </label>
+                      <DatePicker
+                        selected={props.startEditDate}
+                        onChange={(date) => props.setStartEditDate(date)}
+                        dateFormat="MM-dd-yyyy"
+                        customInput={<CustomInput />}
+                      />
+                    </div>
+                    <div className="col">
+                      <label
+                        htmlFor="end-date"
+                        className="col-form-label form-title-names"
+                      >
+                        End Date<span style={{ color: "red" }}>*</span>
+                      </label>
+                      <DatePicker
+                        selected={props.endEditDate}
+                        onChange={(date) => props.setEndEditDate(date)}
+                        dateFormat="MM-dd-yyyy"
+                        customInput={<CustomInput />}
+                      />
+                    </div>
+                  </div>
                 </div>
 
                 <div className="mb-3">
@@ -167,7 +229,12 @@ export const EditTaskModal = ({ task, onEditClose, technology, assignedTo, edite
                         <input
                           type="text"
                           className="custom-input"
-                          value={ (Object.values(tech).length === 0 ? null : Object.values(tech)) || editedTask?.technology}
+                          value={
+                            (Object.values(tech).length === 0
+                              ? null
+                              : Object.values(tech)) ||
+                            props.editedTask?.technology
+                          }
                           disabled
                         />
                       </button>
@@ -188,14 +255,16 @@ export const EditTaskModal = ({ task, onEditClose, technology, assignedTo, edite
                       >
                         <TechnologyDropDown
                           techDataComingChild={techDataComingFrmChild}
-                          setSelectedTechIds={setSelectedTechIds}
-                          setTechnologyNames={setTechnologyNames}
-                          technologyNames={technologyNames}
-                          selectedTech = {editedTask?.technology}
+                          selectedTechIds={props.selectedTechIds}
+                          setSelectedTechIds={props.setSelectedTechIds}
+                          setTechnologyNames={props.setTechnologyNames}
+                          technologyNames={props.technologyNames}
+                          selectedTech={props.editedTask?.technology}
+                          searchQuery={searchQuery}
+                          setSearchQuery={setSearchQuery}
                         />
                       </ul>
                     </div>
-                    {/* </div> */}
                   </div>
                 </div>
 
@@ -219,7 +288,11 @@ export const EditTaskModal = ({ task, onEditClose, technology, assignedTo, edite
                         <input
                           type="text"
                           className="custom-input"
-                          value={ (Object.values(users).length === 0 ? null : Object.values(users)) || editedTask?.name}
+                          value={
+                            (Object.values(users).length === 0
+                              ? null
+                              : Object.values(users)) || props.editedTask?.name
+                          }
                           disabled
                         />
                       </button>
@@ -241,11 +314,14 @@ export const EditTaskModal = ({ task, onEditClose, technology, assignedTo, edite
                         <UsersDropdown
                           usersDataComingChild={usersDataComingFrmChild}
                           selectAllUsers={selectAllUsers}
-                          setSelectedUserIds={setSelectedUserIds}
-                          setSelectedUsers={setSelectedUsers}
-                          selectedUsers={selectedUsers}
+                          selectedUserIds={props.selectedUserIds}
+                          setSelectedUserIds={props.setSelectedUserIds}
+                          setSelectedUsers={props.setSelectedUsers}
+                          selectedUsers={props.selectedUsers}
                           selectAllChecked={selectAllChecked}
                           setSelectAllChecked={setSelectAllChecked}
+                          searchUserQuery={searchUserQuery}
+                          setSearchUserQuery={setSearchUserQuery}
                         />
                       </ul>
                     </div>
@@ -267,8 +343,18 @@ export const EditTaskModal = ({ task, onEditClose, technology, assignedTo, edite
               <button
                 type="button"
                 className="btn modal-save-button"
-                data-bs-target ="#editTaskModal"
-                data-bs-dismiss={!error ? 'modal': ''  }
+                data-bs-target="#editTaskModal"
+                // data-bs-dismiss={!error ? "modal" : ""}
+                data-bs-dismiss={
+                  !nameError &&
+                  !descError &&
+                  props.startEditDate &&
+                  props.endEditDate &&
+                  props.selectedTechIds?.length !== 0 &&
+                  props.selectedUserIds?.length !== 0
+                    ? "modal"
+                    : ""
+                }
                 onClick={handleSubmit}
               >
                 <span className="save-text-field">Save</span>

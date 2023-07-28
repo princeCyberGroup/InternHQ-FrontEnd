@@ -1,10 +1,21 @@
 import React, { useEffect, useState } from "react";
 import { Navigate, Outlet, useLocation, useNavigate } from "react-router-dom";
+import CryptoJS from "crypto-js";
 
 const AuthGuard = () => {
   const navigate = useNavigate();
   const location = useLocation();
-  const str = JSON.parse(localStorage.getItem("userData")).randomString;
+  const secretKey = process.env.REACT_APP_USER_KEY;
+  const data = localStorage.getItem("userData");
+  let decryptedObject;
+  if (data) {
+    const bytes = CryptoJS.AES.decrypt(data, secretKey);
+    const decryptedJsonString = bytes.toString(CryptoJS.enc.Utf8);
+    decryptedObject = JSON.parse(decryptedJsonString);
+  } else {
+    console.log("No encrypted data found in localStorage.");
+  }
+  const str = decryptedObject?.randomString;
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const handleAuth = () => {
     if (localStorage.getItem("login")) {
@@ -12,9 +23,13 @@ const AuthGuard = () => {
         navigate("/");
         setIsAuthenticated(false);
       } else {
-        str === "07495d" ? navigate(location.pathname) : (str === "cb8715" ? navigate("/admin/dashboard") : navigate("/mentor/dashboard"));
+        str === "07495d"
+          ? navigate(location.pathname)
+          : str === "cb8715"
+          ? navigate("/admin/dashboard")
+          : navigate("/mentor/dashboard");
         setIsAuthenticated(true);
-      } 
+      }
     } else {
       navigate("/");
       setIsAuthenticated(false);

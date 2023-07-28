@@ -7,11 +7,12 @@ import CarouselImage1 from "../../../Assets/CarouselImage1.svg";
 import CarouselImage2 from "../../../Assets/CarouselImage2.svg";
 import CarouselImage3 from "../../../Assets/CarouselImage3.svg";
 import "bootstrap-icons/font/bootstrap-icons.css";
+import CryptoJS, { enc } from "crypto-js";
 import { bottom } from "@popperjs/core";
 
 const LoginScreen = () => {
   const navigate = useNavigate();
-
+//login screen
   const [email, setEmail] = useState("");
   const [isEmailValid, setIsEmailValid] = useState(false);
   const [password, setPassword] = useState("");
@@ -37,12 +38,11 @@ const LoginScreen = () => {
   const handleTogglePasswordVisibility = () => {
     setShowPassword(!showPassword);
   };
-  let firstNaming;
   const handleSubmit = async (event) => {
     event.preventDefault();
     setIsLoading(true);
     await axios
-      .post(process.env.REACT_APP_API_URL+"/api/v2/internLogin", {
+      .post(process.env.REACT_APP_API_URL + "/api/v3/internLogin", {
         email,
         password,
       })
@@ -58,7 +58,14 @@ const LoginScreen = () => {
           randomString: response.data.randomString,
           designation: response.data.designation,
         };
-        localStorage.setItem("userData", JSON.stringify(res));
+        const secretKey = process.env.REACT_APP_USER_KEY;
+        // const userData = JSON.stringify(res);
+        const userDataE = JSON.stringify(res);
+        const encryptedData = CryptoJS.AES.encrypt(
+          userDataE,
+          secretKey
+        ).toString();
+        localStorage.setItem("userData", encryptedData);
         setIsLoading(false);
         let str = res.randomString.toLowerCase();
         str === "07495d"
@@ -77,24 +84,39 @@ const LoginScreen = () => {
           setIsPasswordValid(false);
         }
         setIsLoading(false);
-        if (error.response?.data.statusCode == 400) {
-          navigate("/error?statusCode=400");
-        }
-        if (error.response?.data.statusCode == 500) {
-          navigate("/error?statusCode=500");
-        }
+        // if (error.response?.data.statusCode == 400) {
+        //   navigate("/error/statusCode=400");
+        // }
+        // if (error.response?.data.statusCode == 401) {
+        //   navigate("/error/statusCode=401");
+        // }
+        // if (error.response?.data.statusCode == 404) {
+        //   navigate("/error/statusCode=404");
+        // }
+        // if (error.response?.data.statusCode == 500) {
+        //   navigate("/error/statusCode=500");
+        // }
       });
   };
   useEffect(() => {
     let login = localStorage.getItem("login");
-    let userData = localStorage.getItem("userData");
+    const secretkeyUser = process.env.REACT_APP_USER_KEY;
+    let userData;
+    const data = localStorage.getItem("userData");
+    if (data) {
+      const bytes = CryptoJS.AES.decrypt(data, secretkeyUser);
+      const decryptedJsonString = bytes.toString(CryptoJS.enc.Utf8);
+      userData = JSON.parse(decryptedJsonString);
+    } else {
+      console.log("No encrypted data found in localStorage.");
+    }
     if (login && userData) {
-      let str = JSON.parse(userData).randomString;
+      let str = userData.randomString;
       str === "07495d"
         ? navigate("/dashboard")
         : str === "cb8715"
         ? navigate("/admin/dashboard")
-        : navigate("/mentor-dashboard");
+        : navigate("/mentor/dashboard");
     }
   }, []);
   return (

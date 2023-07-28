@@ -9,6 +9,9 @@ import TechDropDown from "../../TechDropDown";
 import EmptyProjectView from "../../../EmptyStates/EmptyProject/ProjectViewAll";
 import { ReactComponent as ExpandMore } from "../../../../../../Assets/expand_more.svg";
 import BreadCrumbs from "../../../../../BreadCrumbs/BreadCrumbs";
+import {ReactComponent as VectorAdd} from "../../../../../../Assets/Vectoradd.svg";
+import CryptoJS from "crypto-js";
+import { useNavigate } from "react-router-dom";
 
 const ViewAllProjects = () => {
   // const { project } = useContext(UserContext);
@@ -26,7 +29,15 @@ const ViewAllProjects = () => {
   const [desError, setDesError] = useState("");
   const [projLinkError, setProjLinkError] = useState("");
   const [projectIndex, setProjectIndex] = useState(0);
+  const [mentorIndex, setMentorIndex] = useState(0);
   const [tech, setTech] = useState({});
+  const [mentorAssignData, setMentorAssignData] = useState([]);
+  const [isProjectNameValid, setIsProjectNameValid] = useState(false);
+  const [isProjectDescriptionValid, setIsProjectDescriptionValid] = useState(false);
+  const [isProjectLinkValid, setIsProjectLinkValid] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  
+  const navigate = useNavigate();
 
   // const details = project;
 
@@ -34,9 +45,11 @@ const ViewAllProjects = () => {
     return setTech(data);
   };
 
-  const handleProjectNameChange = (event) => {
-    const name = event.target.value;
+  const handleProjectNameChange = (e) => {
+    e.preventDefault();
+    const name = e.target.value;
     setProjName(name);
+    setIsProjectNameValid(name.match(/^.{1,100}$/) ? true : false);
     if (!name) {
       setError(true);
       setProjNameError("Project name is required");
@@ -45,9 +58,10 @@ const ViewAllProjects = () => {
       setProjNameError("");
     }
   };
-  const handleProjectDescriptionChange = (event) => {
-    const description = event.target.value;
+  const handleProjectDescriptionChange = (e) => {
+    const description = e.target.value;
     setProjDescription(description);
+    setIsProjectDescriptionValid(description.match(/^.{50,750}$/) ? true : false);
     if (!description) {
       setError(true);
       setDesError("Project description is required");
@@ -56,6 +70,19 @@ const ViewAllProjects = () => {
       setDesError("");
     }
   };
+  const handleProjectLinkChange = (e) => {
+    const link = e.target.value;
+    setProjectLink(link);
+    setIsProjectLinkValid(link.match(/^https?:\/\//) ? true : false)
+    if (!link) {
+      setError(true);
+      setProjLinkError("Project link is required");
+    } else {
+      setError(false);
+      setProjLinkError("");
+    }
+  };
+
   const handleInputChange = (event) => {
     setTextInput(event.target.value);
   };
@@ -69,23 +96,13 @@ const ViewAllProjects = () => {
     setDropDown(false);
     setTech({});
     seTechNames({});
-    
+
     const checkboxes = document.querySelectorAll(".tech-checkbox");
     checkboxes.forEach((checkbox) => {
       checkbox.checked = false;
     });
   };
-  const handleProjectLinkChange = (event) => {
-    const link = event.target.value;
-    setProjectLink(link);
-    if (!link) {
-      setError(true);
-      setProjLinkError("Project link is required");
-    } else {
-      setError(false);
-      setProjLinkError("");
-    }
-  };
+
 
   const isObjectEmpty = (object) => {
     if (object.member1.length > 0) {
@@ -98,16 +115,22 @@ const ViewAllProjects = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    var storedObject = localStorage.getItem("userData");
-    var parsedObject = JSON.parse(storedObject);
+    const secretkeyUser = process.env.REACT_APP_USER_KEY;
+    var parsedObject;
+    const data = localStorage.getItem("userData");
+    if (data) {
+      const bytes = CryptoJS.AES.decrypt(data, secretkeyUser);
+      const decryptedJsonString = bytes.toString(CryptoJS.enc.Utf8);
+      parsedObject = JSON.parse(decryptedJsonString);
+    } else {
+      console.log("No encrypted data found in localStorage.");
+    }
     var userId = parsedObject.userId;
     if (error) {
       alert("Please fill in the required details");
-
-    }
-    else {
+    } else {
       axios
-        .post(process.env.REACT_APP_API_URL+"/api/v2/Project", {
+        .post(process.env.REACT_APP_API_URL + "/api/v3/Project", {
           projName,
           projDescription,
           userId,
@@ -116,9 +139,9 @@ const ViewAllProjects = () => {
           technologyNames: techNames,
           memberNames: memberNames,
         })
-      .catch((err) => {
-        console.log(err);
-      });
+        .catch((err) => {
+          console.log(err);
+        });
       setTextInput("");
       setProjName("");
       setProjDescription("");
@@ -126,11 +149,11 @@ const ViewAllProjects = () => {
       setHostedLink("");
       setTech({});
       seTechNames({});
-    
-    const checkboxes = document.querySelectorAll(".tech-checkbox");
-    checkboxes.forEach((checkbox) => {
-      checkbox.checked = false;
-    });
+
+      const checkboxes = document.querySelectorAll(".tech-checkbox");
+      checkboxes.forEach((checkbox) => {
+        checkbox.checked = false;
+      });
     }
   };
 
@@ -156,29 +179,75 @@ const ViewAllProjects = () => {
   // }, []);
 
   useEffect(() => {
-    var storedObject = localStorage.getItem("userData");
-    var parsedObject = JSON.parse(storedObject);
+    const secretkeyUser = process.env.REACT_APP_USER_KEY;
+    var parsedObject;
+    const data = localStorage.getItem("userData");
+    if (data) {
+      const bytes = CryptoJS.AES.decrypt(data, secretkeyUser);
+      const decryptedJsonString = bytes.toString(CryptoJS.enc.Utf8);
+      parsedObject = JSON.parse(decryptedJsonString);
+    } else {
+      console.log("No encrypted data found in localStorage.");
+    }
     var userId = parsedObject.userId;
-    axios
+    const firstAPIPromise = axios
       .get(
-        process.env.REACT_APP_API_URL+`/api/v2/getProject?userId=${userId}`,
+        process.env.REACT_APP_API_URL + `/api/v3/getProject?userId=${userId}`,
         {
           headers: {
-            Authorization:`Bearer ${JSON.parse(localStorage.getItem('userData'))['token']}`,
+            Authorization: `Bearer ${parsedObject["token"]}`,
           },
         }
       )
       .then((response) => {
         setProject(response.data.response);
+        setMentorAssignData(response);
       })
       .catch((error) => {
+        if (error.response.status === 401) {
+          navigate("/error/statusCode=401");
+        }
+        if (error.response.status === 400) {
+          navigate("/error/statusCode=400");
+        }
+        if (error.response.status === 500) {
+          navigate("/error/statusCode=500");
+        }
+        if (error.response.status === 404) {
+          navigate("/error/statusCode=404");
+        }
         console.error("Error fetching tasks:", error);
       });
 
-    // axios
-    //   .get(`https://cg-interns-hq.azurewebsites.net/getAssignedTask`)
+    const secondAPIPromise = axios
+      .get(process.env.REACT_APP_API_URL + `/api/v3/getAssignedNotification?userId=${userId}`, {
+        headers: {
+          Authorization: `Bearer ${parsedObject['token']}`,
+        },
+      })
+    Promise.all([firstAPIPromise, secondAPIPromise])
+      .then((responses) => {
+        const firstAPIData = responses[0].data.response;
+        const mentorAssignedData = responses[1].data.response;
+        { console.log("Forst:", mentorAssignData) }
+        setProject(firstAPIData);
+        setMentorAssignData(mentorAssignedData);
+
+      })
+
+      //   process.env.REACT_APP_API_URL+`/api/v2/getProject?userId=${userId}`,
+      //   {
+      //     headers: {
+      //       Authorization:`Bearer ${JSON.parse(localStorage.getItem('userData'))['token']}`,
+      //     },
+      //   }
+      // )
+
+
     //   .then((responsedata) => {
-    //     setProject(responsedata.data.response);
+    //     const mentorAssignData = responsedata.data;
+    //     console.log("Second API data:", mentorAssignData);
+    //     setProject(prevData => [...prevData, mentorAssignData]);
     //   })
     //   .catch((error) => {
     //     console.error("Error fetching data from another API:", error);
@@ -194,9 +263,12 @@ const ViewAllProjects = () => {
     isObjectEmpty(membersObj);
   }, [textInput, tech]);
 
-  const handelIndex = (index) => {
+  const handelIndex = (index, indexForMentor) => {
     setProjectIndex(index);
+    setMentorIndex(indexForMentor);
+
   };
+
   return (
     <>
       <div className="" style={{ marginBottom: "4rem" }}>
@@ -219,7 +291,8 @@ const ViewAllProjects = () => {
               data-bs-toggle="modal"
               data-bs-target="#xampleModal"
             >
-              <p className="me-2 add-your-project">Add Project</p>
+              <p className="me-2 add-your-project"><VectorAdd/> 
+              <span className="text-for-the-modal">Add Project</span></p>
             </button>
           </div>
           <div
@@ -254,11 +327,6 @@ const ViewAllProjects = () => {
                         className="col-form-label title-text"
                       >
                         Project Name<span style={{ color: "red" }}>*</span>{" "}
-                        {projNameError && (
-                          <span style={{ color: "red", fontSize: "11px" }}>
-                            ({projNameError})
-                          </span>
-                        )}
                       </label>
                       <input
                         type="text"
@@ -268,6 +336,11 @@ const ViewAllProjects = () => {
                         placeholder="Enter Project Name"
                         onChange={handleProjectNameChange}
                       />
+                      {!isProjectNameValid && projName && (
+                        <span style={{ color: "red", fontSize: "11px" }}>
+                          Please enter a name with only letters and spaces, between 1 and 100 characters.
+                        </span>
+                      )}
                     </div>
 
                     <div className="mb-3">
@@ -277,11 +350,7 @@ const ViewAllProjects = () => {
                       >
                         Project Description
                         <span style={{ color: "red" }}>*</span>{" "}
-                        {desError && (
-                          <span style={{ color: "red", fontSize: "11px" }}>
-                            ({desError})
-                          </span>
-                        )}
+                        <span style={{color: "grey"}}>(Minimum 50 characters)</span>
                       </label>
                       <textarea
                         className="form-control"
@@ -290,7 +359,12 @@ const ViewAllProjects = () => {
                         placeholder="Write Here..."
                         onChange={handleProjectDescriptionChange}
                         rows={3}
-                      ></textarea>
+                      />
+                      {!isProjectDescriptionValid && projDescription && (
+                        <span style={{ color: "red", fontSize: "11px" }}>
+                          Please enter a description with a length between 50 and 750 characters.
+                        </span>
+                      )}
                     </div>
                     <div className="mb-3">
                       <label
@@ -299,6 +373,7 @@ const ViewAllProjects = () => {
                         required
                       >
                         Technology Used <span style={{ color: "red" }}>*</span>
+                        <span style={{color: "grey"}}>(Select atleast 1 technology)</span>
                       </label>
                       <div className="container border p-0">
                         <div className="input-with-button">
@@ -339,6 +414,11 @@ const ViewAllProjects = () => {
                           </ul>
                         </div>
                       </div>
+                      {!Object.values(tech).length && (
+                          <span style={{ color: "grey", fontSize: "11px" }}>
+                            Maximum 10 technologies
+                          </span>
+                        )}
                     </div>
                     <div className="mb-3">
                       <label
@@ -346,11 +426,6 @@ const ViewAllProjects = () => {
                         className="col-form-label title-text"
                       >
                         Project Link<span style={{ color: "red" }}>*</span>{" "}
-                        {projLinkError && (
-                          <span style={{ color: "red", fontSize: "11px" }}>
-                            ({projLinkError})
-                          </span>
-                        )}
                       </label>
                       <input
                         className="form-control"
@@ -358,6 +433,11 @@ const ViewAllProjects = () => {
                         value={projectLink}
                         onChange={handleProjectLinkChange}
                       />
+                      {!isProjectLinkValid && projectLink && (
+                        <span style={{ color: "red", fontSize: "11px" }}>
+                          Invalid project link. Please enter a valid URL starting with http:// or https://.
+                        </span>
+                      )}
                     </div>
                     <div className="mb-3">
                       <label
@@ -379,6 +459,7 @@ const ViewAllProjects = () => {
                         className="col-form-label title-text"
                       >
                         Members(Optional)
+                        <span style={{color: "grey"}}>(Minimum 8 members)</span>
                       </label>
                       <input
                         className="form-control"
@@ -401,10 +482,13 @@ const ViewAllProjects = () => {
                   </button>
                   <button
                     type="button"
-                    className="btn save-button"
+                    className="btn btn-primary save-button"
+                    disabled={!isProjectNameValid || !isProjectDescriptionValid || !isProjectLinkValid || isModalOpen}
                     data-bs-target="#xampleModal"
                     data-bs-dismiss={!error ? 'modal' : ''}
-                    onClick={handleSubmit}
+                    onClick={(e) => {
+                      handleSubmit(e);
+                      setIsModalOpen(true);}}
                   >
                     <span className="save-text"> Save</span>
                   </button>
@@ -421,10 +505,10 @@ const ViewAllProjects = () => {
             style={{ overFlowY: "scroll" }}
           >
             <div>
-              <DetailsLeft data={project} projectDetails={handelIndex} />
+              <DetailsLeft data={project} mentorApiData={mentorAssignData} projectDetails={handelIndex} />
             </div>
             <div className="project-detail">
-              <ProjectDetail data={project} indexNumber={projectIndex} />
+              <ProjectDetail data={project} mentorApiData={mentorAssignData} indexNumber={projectIndex} mentorIndexNumber={mentorIndex} />
             </div>
           </div>
         )}

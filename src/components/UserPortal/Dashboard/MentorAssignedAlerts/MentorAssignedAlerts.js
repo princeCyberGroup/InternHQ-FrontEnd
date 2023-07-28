@@ -3,7 +3,7 @@ import { faBell } from "@fortawesome/free-solid-svg-icons";
 import "../Notification/Notification.css";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-
+import CryptoJS from "crypto-js";
 import { ReactComponent as EmptyMentorAssigned } from "../../../../Assets/EmptyMentorAssigned.svg";
 
 const MentorAssignedAlerts = (props) => {
@@ -21,8 +21,16 @@ const MentorAssignedAlerts = (props) => {
     setNotification(!notification);
   };
 
-  var storedObject = localStorage.getItem("userData");
-  var parsedObject = JSON.parse(storedObject);
+  const secretkeyUser = process.env.REACT_APP_USER_KEY;
+  var parsedObject;
+  const data = localStorage.getItem("userData");
+  if (data) {
+    const bytes = CryptoJS.AES.decrypt(data, secretkeyUser);
+    const decryptedJsonString = bytes.toString(CryptoJS.enc.Utf8);
+    parsedObject = JSON.parse(decryptedJsonString);
+  } else {
+    console.log("No encrypted data found in localStorage.");
+  }
   var userId = parsedObject.userId;
 
   useEffect(() => {
@@ -33,12 +41,10 @@ const MentorAssignedAlerts = (props) => {
   const fetchData = async () => {
     await fetch(
       process.env.REACT_APP_API_URL +
-        `/api/v2/getAssignedNotification?userId=${userId}`,
+        `/api/v3/getAssignedNotification?userId=${userId}`,
       {
         headers: {
-          Authorization: `Bearer ${
-            JSON.parse(localStorage.getItem("userData"))["token"]
-          }`,
+          Authorization: `Bearer ${parsedObject["token"]}`,
         },
       }
     )
@@ -48,11 +54,19 @@ const MentorAssignedAlerts = (props) => {
       .then(async (data) => {
         setMentorTask(data.response);
       })
-      .catch((e) => {
-        if(e.statusCode===401){
-          navigate("/error?statusCode=400");
+      .catch((error) => {
+        if (error.statusCode === 401) {
+          navigate("/error/statusCode=401");
         }
-        console.log("jjj",e)
+        if (error.statusCode === 400) {
+          navigate("/error/statusCode=400");
+        }
+        if (error.statusCode === 500) {
+          navigate("/error/statusCode=500");
+        }
+        if (error.statusCode === 404) {
+          navigate("/error/statusCode=404");
+        }
       });
   };
 
@@ -135,8 +149,9 @@ const MentorAssignedAlerts = (props) => {
                 return (
                   <div
                     className="notification-wrapper px-0"
-                    style={{ width: "18.9rem", alignItems: "center" }}
+                    style={{ width: "18.9rem", alignItems: "center", cursor: "pointer" }}
                     key={key}
+                    onClick={() => {navigate("/all-projects")}}
                   >
                     <div
                       className=""

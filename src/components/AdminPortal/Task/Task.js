@@ -5,11 +5,9 @@ import "./Task.css";
 
 import Header from "../../Header/Header";
 
-
 const Task = () => {
   return (
     <>
-
       <div className="" style={{ marginBottom: "5rem" }}>
         <Header />
       </div>
@@ -17,13 +15,10 @@ const Task = () => {
       <div className="assign-task-page">
         <div className="container-fluid ">
           <div className="row mt-4">
-            <div className=" col-md-8 p-0 ">
+            <div className=" col-md-7 p-0" style={{marginLeft:"56px"}}>
               <AssignTask />
             </div>
-            <div
-              className=" col-md-4 p-0 "
-              // style={{ height: "100vh" }}
-            >
+            <div className=" col-md-4 p-0 " style={{marginLeft:"16px"}}>
               <MentorList />
             </div>
           </div>

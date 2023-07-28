@@ -61,6 +61,12 @@
 
 .manage-skill-table-style {
   box-shadow: 0rem 0.25rem 1.25rem rgba(40, 52, 73, 0.15);
+  height: -webkit-fill-available;
+  overflow: auto;
+}
+.manageskilltest-table-container {
+  height: -webkit-fill-available;
+  overflow: hidden;
 }
 
 .manage-skill-test-heading {
@@ -79,12 +85,17 @@
   color: #343435;
   margin-top: 1.125rem;
 }
+.manageskilltest-thead {
+  position: sticky;
+  top: 0;
+}
 
 .manage-skill-test-container {
   background-color: #fbfbfb;
-  height: 100vh;
+  height: calc(100vh - 90px);
   padding-left: 3.5rem;
   padding-right: 3.5rem;
+  overflow: hidden;
 }
 
 .column-technology {
@@ -119,7 +130,6 @@
 
 .column-questions {
   width: 6.75rem;
-  /* text-align: left; */
   font-family: "Roboto";
   font-style: normal;
   font-weight: 500;
@@ -129,7 +139,6 @@
 }
 .column-duration {
   width: 7.063rem;
-  /* text-align: left; */
   font-style: normal;
   font-family: "Roboto";
   font-weight: 500;
@@ -143,7 +152,7 @@
   font-family: "Roboto";
   font-weight: 500;
   font-size: 0.913rem;
- line-height: 1.25rem;
+  line-height: 1.25rem;
   text-align: center;
 }
 
@@ -216,8 +225,9 @@
   text-align: center;
 }
 
-.color-of-radio {
+.skill-test-color-of-radio {
   border-color: #28519e;
+  font-size: 16px;
 }
 
 .drag-drop-text {
@@ -269,7 +279,6 @@
   color: #ffffff;
   font-size: 16px;
   font-family: Roboto;
-  /* font-weight: 600; */
   border: none;
 }
 
@@ -301,3 +310,5 @@
   background: #28519e;
   color: #ffffff;
 }
+
+

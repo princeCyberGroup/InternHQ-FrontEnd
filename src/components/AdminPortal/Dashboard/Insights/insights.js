@@ -4,15 +4,29 @@ import { ReactComponent as SearchIcon } from "../../../../Assets/search.svg";
 import React, { useEffect, useState } from "react";
 import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
+import InsightsSkeleton from "./InsightsSkeleton";
+import CryptoJS from "crypto-js";
 
 export default function Insights(props) {
-    
-  const [isLoading, setIsLoading] = useState(true);
   const [searchFilterValue, setSearchFilterValue] = useState("");
-  const [originalTests, setOriginalTests] = useState(props.data);
-  
+  // const [originalTests, setOriginalTests] = useState(props.data);
+  const [insights, setInsights] = useState([]);
+  const [originalInsights, setOriginalInsights] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const secretkeyUser = process.env.REACT_APP_USER_KEY;
+
+  var parsedObject;
+  const data = localStorage.getItem("userData");
+  if (data) {
+    const bytes = CryptoJS.AES.decrypt(data, secretkeyUser);
+    const decryptedJsonString = bytes.toString(CryptoJS.enc.Utf8);
+    parsedObject = JSON.parse(decryptedJsonString);
+  } else {
+    console.log("No encrypted data found in localStorage.");
+  }
+
   const handleFiltersChange = () => {
-   const getFilterItems = (items, searchValue) => {
+    const getFilterItems = (items, searchValue) => {
       if (searchValue) {
         let fitlerData = items.filter((item) =>
           item.techName?.toLowerCase().includes(searchValue.toLowerCase())
@@ -21,46 +35,48 @@ export default function Insights(props) {
       }
       return items;
     };
-    const filters = getFilterItems(props.data, searchFilterValue);
-    setOriginalTests(filters);
+    const filters = getFilterItems(originalInsights, searchFilterValue);
+    setInsights(filters);
   };
+
+  useEffect(() => {
+    setTimeout(() => {
+      InsightData();
+      setIsLoading(false);
+    }, 1000);
+  }, []);
+
   useEffect(() => {
     handleFiltersChange();
   }, [searchFilterValue]);
 
-  function renderInsights(insights) {
-    return (
-      <>
-        <div className="div-insights">
-          <div className="row d-flex justify-content-center align-items-center">
-            <div className="col image-div">
-              <img src={insights.techLink} alt="Description of the image" />
-            </div>
-            <div className="col">
-              <div className="exam-name">{insights.techName}</div>
-              <div className="number-of-test">
-                {insights.beginner} Beginner <Bullet /> {insights.intermediate}{" "}
-                Intermediate <Bullet /> {insights.advanced} Advanced
-              </div>
-            </div>
-          </div>
-        </div>
-      </>
-    );
-  }
+  const InsightData = async () => {
+    try {
+      const response = await fetch(
+        process.env.REACT_APP_API_URL + `/api/v2/getInsights`,
+        {
+          headers: {
+            Authorization: `Bearer ${parsedObject["token"]}`,
+          },
+        }
+      );
+      const insData = await response.json();
+      setInsights(insData.response);
+      setOriginalInsights(insData.response);
+      console.log(insights, "Thois");
+    } catch (e) {
+      console.log(e);
+    }
+  };
 
   return (
-    ///need to change rem one
-    <div style={{ maxHeight: "46rem", overflowY: "scroll" }}>
+    <div>
       <div className="about-insight col">Insights</div>
-      <div
-        className=" insights"
-        style={{ maxHeight: "90vh", overflowY: "scroll" }}
-      >
-        <div className="d-flex align-items-center ps-1 insights-search-wrapper">
-            <SearchIcon/>
+      <div className="insights-card">
+        <div className="d-flex align-items-center ps-3 insights-search-wrapper mb-0">
+          <SearchIcon />
           <input
-            className="search-insights border-none"
+            className="search-insights"
             type="text"
             value={searchFilterValue}
             placeholder="Search"
@@ -70,9 +86,49 @@ export default function Insights(props) {
             }}
           />
         </div>
-        {originalTests?.length === 0
-          ? props.data?.map((insights) => renderInsights(insights))
-          : originalTests?.map((insights) => renderInsights(insights))}
+        <div
+          className=" insights"
+        >
+          {isLoading ? (
+            <>
+            <InsightsSkeleton/>
+            <InsightsSkeleton/>
+            <InsightsSkeleton/>
+            <InsightsSkeleton/>
+            <InsightsSkeleton/>
+            <InsightsSkeleton/>
+            <InsightsSkeleton/>
+            <InsightsSkeleton/>
+            <InsightsSkeleton/>
+            <InsightsSkeleton/>
+            <InsightsSkeleton/>
+            <InsightsSkeleton/>
+            </>
+          ) : (
+            insights?.map((insights) => {
+              return (
+                <div className="div-insights">
+                  <div className="row">
+                    <div className="col image-div">
+                      <img
+                        src={insights.techLink}
+                        alt="Description of the image"
+                      />
+                    </div>
+                    <div className="col ps-0">
+                      <div className="exam-name">{insights.techName}</div>
+                      <div className="number-of-test">
+                        {insights.beginner} Beginner <Bullet />{" "}
+                        {insights.intermediate} Intermediate <Bullet />{" "}
+                        {insights.advanced} Advanced
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              );
+            })
+          )}
+        </div>
       </div>
     </div>
   );

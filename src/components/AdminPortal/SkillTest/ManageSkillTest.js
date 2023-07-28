@@ -4,49 +4,72 @@ import { ReactComponent as DeleteStroke } from "../../../Assets/Delete.svg";
 import { AddNewSkillTest } from "./AddNewSkillTest";
 import { ReactComponent as VectorAdd } from "../../../Assets/Vectoradd.svg";
 import axios from "axios";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import ManageSkillTestSkeleton from "./ManageSkillTestSkeleton";
 import Header from "../../Header/Header";
-
+import CryptoJS from "crypto-js";
+import Confirmation from "../Confirmation";
 export const ManageSkillTest = () => {
   //data
   const [data, setData] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
-  const handleDelete = (id) => {
-    console.log("this is id and it is working", id);
-    axios
-      .post(process.env.REACT_APP_API_URL+`/api/v2/removeExam`, {
-        examId: id,
-      })
-      .then((response) => {
-        console.log(response.data);
-      })
-      .catch((error) => {
-        console.error(error);
-      });
-    setData(data.filter((item) => item.examId !== id));
-  };
+  const navigate = useNavigate();
   const [showComponent, setShowComponent] = useState(false);
-
+  const [showConfirm, setShowConfirm] = useState(false);
+  const [confirmId, setconfirmId] = useState(-1);
   //function
   useEffect(() => {
     setTimeout(() => {
       fetchData();
     }, 1000);
   }, []);
+  const handleConfirm = (id) => {
+    setconfirmId(id);
+    setShowConfirm(true);
+  };
+  const handleCancel = () => {
+    setconfirmId(-1);
+    setShowConfirm(false);
+  };
+  const handleDel = (id) => {
+    setData(data.filter((item) => item.examId !== id));
+  };
   const fetchData = async () => {
+    const secretkeyUser = process.env.REACT_APP_USER_KEY;
+    var parsedObject;
+    const data = localStorage.getItem("userData");
+    if (data) {
+      const bytes = CryptoJS.AES.decrypt(data, secretkeyUser);
+      const decryptedJsonString = bytes.toString(CryptoJS.enc.Utf8);
+      parsedObject = JSON.parse(decryptedJsonString);
+    } else {
+      console.log("No encrypted data found in localStorage.");
+    }
     try {
       const response = await axios.get(
-        process.env.REACT_APP_API_URL+`/api/v2/getAllExam`,
+        process.env.REACT_APP_API_URL + `/api/v3/getAllExam`,
         {
           headers: {
-            Authorization:`Bearer ${JSON.parse(localStorage.getItem('userData'))['token']}`,
+            Authorization: `Bearer ${parsedObject["token"]}`,
           },
         }
       );
+      console.log("object", response.data);
       setData(response.data);
       setIsLoading(false);
     } catch (error) {
+      if (error.response.status === 401) {
+        navigate("/error/statusCode=401");
+      }
+      if (error.response.status === 400) {
+        navigate("/error/statusCode=400");
+      }
+      if (error.response.status === 500) {
+        navigate("/error/statusCode=500");
+      }
+      if (error.response.status === 404) {
+        navigate("/error/statusCode=404");
+      }
       console.error("Error while fetching the data is ", error);
     }
   };
@@ -55,23 +78,20 @@ export const ManageSkillTest = () => {
   };
 
   return (
-    <>
-      <div className="" style={{ marginBottom: "3.5rem" }}>
+    <div style={{ backgroundColor: "#fbfbfb" }}>
+      {showConfirm && (
+        <Confirmation
+          handleCancel={handleCancel}
+          id={confirmId}
+          handleDel={handleDel}
+          confirmationValue="manageskill"
+        />
+      )}
+      <div style={{ marginBottom: "5.5rem", border: "0.1px solid" }}>
         <Header />
       </div>
       <div className="container-fluid manage-skill-test-container d-flex flex-column">
-        <div className=" ">
-          <div className="row ">
-            <div className="col-12">
-              <div className="manage-skill-test-nav-bar d-flex">
-                <Link to="/admin/dashboard" className="breadcrum-link">
-                  Dashboard
-                </Link>
-                &nbsp; &gt; &nbsp;<p>Manage Skill Test</p>
-              </div>
-            </div>
-          </div>
-
+        <div>
           <div className="row">
             <div className="col-12">
               <div className="manage-skill-test-heading d-flex justify-content-between mb-0">
@@ -96,25 +116,27 @@ export const ManageSkillTest = () => {
             </div>
           </div>
         </div>
-          <div className="mb-3">
-            <div className="col-12 manage-skill-table-style p-0">
-              <div
-                className="table-responsive"
-                style={{ overflow: "visible" }}
-              ></div>
-              <table id="example" className="table table-striped">
-                <thead>
-                  <tr className="color-table">
-                    <th className="column-technology" style={{width:"1rem"}}>S.No</th>
-                    <th className="column-technology">Technology</th>
-                    <th className="column-name">Name</th>
-                    <th className="column-level">Level</th>
-                    <th className="column-questions">Questions</th>
-                    <th className="column-duration">Duration</th>
-                    <th className="column-uploaded-on">Uploaded On</th>
-                    <th className="column-actions">Action</th>
-                  </tr>
-                </thead>
+        <div className="mb-3 manageskilltest-table-container">
+          <div className="col-12 manage-skill-table-style p-0 ">
+            <div
+              className="table-responsive"
+              style={{ overflow: "visible" }}
+            ></div>
+            <table id="example" className="table table-striped">
+              <thead className="manageskilltest-thead">
+                <tr className="color-table">
+                  <th className="column-technology" style={{ width: "1rem" }}>
+                    S.No
+                  </th>
+                  <th className="column-technology">Technology</th>
+                  <th className="column-name">Name</th>
+                  <th className="column-level">Level</th>
+                  <th className="column-questions">Questions</th>
+                  <th className="column-duration">Duration</th>
+                  <th className="column-uploaded-on">Uploaded On</th>
+                  <th className="column-actions">Action</th>
+                </tr>
+              </thead>
               <tbody>
                 {isLoading ? (
                   <>
@@ -138,11 +160,13 @@ export const ManageSkillTest = () => {
                       options
                     );
                     const dateObj = new Date(currentTimeIST);
-                    {/* const date = dateObj?.toISOString().split("T")[0]; */}
-                    const time = dateObj?.toTimeString().split(" ")[0];
+                    const date = dateObj?.toISOString().split("T")[0];
+                    {
+                      /* const time = date?.toTimeString().split(" ")[0]; */
+                    }
                     return (
                       <tr key={index}>
-                        <td className="technology-rows">{index+1}</td>
+                        <td className="technology-rows">{index + 1}</td>
                         <td className="technology-rows">{item?.techName}</td>
                         <td className="name-row">{item?.examName}</td>
                         <td className="levels-row">{item?.level}</td>
@@ -150,12 +174,14 @@ export const ManageSkillTest = () => {
                           {item?.numberOfQuestion}
                         </td>
                         <td className="duration-row">{`${item?.examDuration} mins`}</td>
-                        <td className="uploaded-on-row">{` ${time}`}</td>
+                        <td className="uploaded-on-row">{`${date}`}</td>
                         <td className="delete-btn-row">
                           <button
                             type="button"
                             style={{ border: "none", background: "none" }}
-                            onClick={() => handleDelete(item?.examId)}
+                            onClick={() => {
+                              handleConfirm(item?.examId);
+                            }}
                           >
                             <DeleteStroke />
                           </button>
@@ -169,6 +195,6 @@ export const ManageSkillTest = () => {
           </div>
         </div>
       </div>
-    </>
+    </div>
   );
 };

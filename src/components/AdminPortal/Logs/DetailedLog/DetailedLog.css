@@ -1,0 +1,105 @@
+.empty-log-state {
+  /* margin-top: 7rem; */
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 1rem;
+  gap: 1rem;
+  /* margin-left: 2rem; */
+  height: 80vh;
+  width: 757px;
+  /* max-height: 270px; */
+
+  background: #ffffff;
+  /* Shadow */
+
+  box-shadow: 0px 4px 20px rgba(40, 52, 73, 0.15);
+  border-radius: 8px;
+}
+
+.log-header-detailed {
+  /* padding-left: 1rem; */
+  display: flex;
+  justify-content: space-between;
+  width: 725px;
+  /* margin-left: 100px; */
+  height: 3rem;
+  min-height: 3rem;
+  display: flex;
+  background-color: #ffffff;
+  border-bottom: 1px solid #e9eceb;
+}
+
+.log-date {
+  color: #000;
+  font-family: Roboto;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
+}
+
+.clock-icon {
+  color: #747474;
+  font-family: Roboto;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  margin-left: 0.5rem;
+}
+.clock-time {
+  margin-left: -2rem;
+  color: #747474;
+  font-family: Roboto;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+}
+
+.log-item {
+  width: 32rem;
+  margin-left: -3rem;
+  color: var(--primary-gray, #343435);
+  font-family: Roboto;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+}
+
+.inner-datelog-wrapper {
+  position: absolute;
+  width: 1px;
+  border: 2px solid;
+  height: inherit;
+}
+.log-date-filter {
+  /* border: hidden;
+  display: flex; */
+  width: 139px;
+  height: 32px;
+  /* padding: 6px 8px; */
+  align-items: center;
+  gap: 8px;
+  border-radius: 4px;
+  border: 1px solid var(--secondary-gray, #b2b2b3);
+  background: var(--primary-white, #fff);
+}
+.log-date-filter-input {
+  outline: none;
+  box-shadow: none;
+  border: none;
+  display: flex;
+  width: 109px;
+  height: 30px;
+  padding: 6px 8px;
+  align-items: center;
+  gap: 8px;
+  border-radius: 4px;
+  background: var(--primary-white, #fff);
+}
+
+
+

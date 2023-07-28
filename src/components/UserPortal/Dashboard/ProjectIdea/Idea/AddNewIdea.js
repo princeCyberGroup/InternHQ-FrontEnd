@@ -8,7 +8,7 @@ import TechDropDown from "../TechDropDown";
 import { UserContext } from "../../../../../Context/Context";
 import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
-
+import CryptoJS from "crypto-js";
 const AddNewIdea = () => {
   const { idea } = useContext(UserContext);
   const navigate = useNavigate();
@@ -24,6 +24,32 @@ const AddNewIdea = () => {
   const [error, setError] = useState(true);
   const [techNames, seTechNames] = useState({});
   const [technologyNames, setTechnologyNames] = useState([]);
+  const [isProjectNameValid, setIsProjectNameValid] = useState(false);
+  const [isProjectDescriptionValid, setIsProjectDescriptionValid] = useState(false);
+  const [technologySelected, setTechnologySelected] = useState("");
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  let memberCount = 0;
+  // {
+  //   first.members.map((mem) => {
+
+  //     if (mem != null) memberCount++;
+  //   })
+  // }
+  // let memberCount = 0 //8
+  // first.members.map((mem) => {
+  //   if(mem != null) memberCount++;
+  // })
+  // const remainingMembersCounts = memberCount - 3;
+
+  // if (first && first.members) {
+  //   first.members.map((mem) => {
+  //     if (mem != null) memberCount++;
+
+  //   });
+
+  // }
+  const remainingMembersCounts = memberCount - 3;
+
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
@@ -31,6 +57,7 @@ const AddNewIdea = () => {
       setIsLoading(false);
     }, 1000);
   }, []);
+
 
   const handleClickClear = (event) => {
     event.preventDefault();
@@ -50,11 +77,11 @@ const AddNewIdea = () => {
     });
   };
 
-
   const handleChangeProjNameError = (event) => {
     event.preventDefault();
     const name = event.target.value;
     setProjName(name);
+    setIsProjectNameValid(name.match(/^.{1,100}$/) ? true : false);
     if (!name) {
       setError(true);
       setProjNameError("Project Name is required");
@@ -68,6 +95,7 @@ const AddNewIdea = () => {
     event.preventDefault();
     const description = event.target.value;
     setProjDescription(description);
+    setIsProjectDescriptionValid(description.match(/^.{50,750}$/) ? true : false);
     if (!description) {
       setError(true);
       setProjDescriptionError("Project Description is required");
@@ -76,6 +104,12 @@ const AddNewIdea = () => {
       setError(false);
     }
   };
+  const handleChangeTechnology = (e) => {
+    e.preventDefault();
+    const technology = e.target.value;
+    setTechnologySelected(technology);
+
+  }
   const truncate = (str, maxLength) => {
     if (str.length > maxLength) return str.slice(0, maxLength) + "...";
     else return str;
@@ -100,14 +134,22 @@ const AddNewIdea = () => {
   };
   const handleSubmit = async (e) => {
     e.preventDefault();
-    var storedObject = localStorage.getItem("userData");
-    var parsedObject = JSON.parse(storedObject);
+    const secretkeyUser = process.env.REACT_APP_USER_KEY;
+    var parsedObject;
+    const data = localStorage.getItem("userData");
+    if (data) {
+      const bytes = CryptoJS.AES.decrypt(data, secretkeyUser);
+      const decryptedJsonString = bytes.toString(CryptoJS.enc.Utf8);
+      parsedObject = JSON.parse(decryptedJsonString);
+    } else {
+      console.log("No encrypted data found in localStorage.");
+    }
     var userId = parsedObject.userId;
     if (error) {
       alert("Please fill in the required details");
     } else {
       await axios
-        .post(process.env.REACT_APP_API_URL+"/api/v2/projectIdea", {
+        .post(process.env.REACT_APP_API_URL + "/api/v3/projectIdea", {
           projName,
           projDescription,
           userId,
@@ -115,7 +157,7 @@ const AddNewIdea = () => {
           memberNames: memberNames,
         })
         .then((res) => {
-          // console.log("print", res.data);
+          console.log("print", res.data);
         })
         .catch((err) => {
           console.log(err);
@@ -126,11 +168,11 @@ const AddNewIdea = () => {
       setDropDown(false);
       setTech({});
       seTechNames([]);
-        
-    const checkboxes = document.querySelectorAll(".tech-checkbox");
-    checkboxes.forEach((checkbox) => {
-      checkbox.checked = false;
-    });
+
+      const checkboxes = document.querySelectorAll(".tech-checkbox");
+      checkboxes.forEach((checkbox) => {
+        checkbox.checked = false;
+      });
     }
   };
 
@@ -246,31 +288,51 @@ const AddNewIdea = () => {
                   : first.projectText}
               </p>
               <div className="members-div pt-0">
-                <div className="member mb pt-1 fw-bold mb-2">Members:</div>
+              {first?.members && !(first?.members?.every((value) => value === null)) && (
+          <div className="member mb pt-1 fw-bold mb-2">Members:</div>
+        )}
                 <div className="project-members ml-0">
-                  {first.members.length > 9 ? (
-                    first.members.map((curElem, index) => {
-                      if (curElem != null) {
-                        const initials = curElem
-                          .split(" ")
-                          .map((name) => name[0])
-                          .join("")
-                          .toUpperCase();
+                  {first.members.slice(0, 8)?.map((curElem, index) => {
+                    if (curElem != null) {
+                      const [firstName, lastName] = curElem.split(" ");
+                      const initials = `${firstName[0]}${lastName ? lastName[0] : ''}`.toUpperCase();
+                      return (
+                        <div className="project-idea-members" key={index}>
+                          <p className="name-of-members" data-title={`${firstName} ${lastName}`}>
+                            {initials}
+                          </p>
+                        </div>
 
-                        return (
-                          <div className="project-idea-members" key={index}>
-                            <p className="name-of-members">{initials}</p>
-                          </div>
-                        );
-                      }
-                    })
-                  ) : (
-                    <div className="project-idea-members">
-                      <p className="name-of-members">
-                        + {first.members.length}
-                      </p>
-                    </div>
+                      );
+                    }
+                  })}
+
+                  {first.members?.map((mem) => {
+
+                    if (mem != null) memberCount++;
+                    const remainingMembersCounts = memberCount - 8; {
+                    }
+
+                    remainingMembersCounts > 0 ? (
+                      <div className="count-of-members">
+
+                        + {remainingMembersCounts}
+
+
+                      </div>)
+                      :
+                      <></>
+                  }
                   )}
+                  {/* {remainingMembersCounts > 0 ? (
+            <div className="count-of-members">
+              <p className="remaining-members">+{remainingMembersCounts}</p>
+              {console.log("count: ", remainingMembersCounts)}
+            </div>
+          )
+            :
+            <div>        {console.log("count: ")}</div>
+          } */}
                 </div>
               </div>
             </div>
@@ -320,11 +382,7 @@ const AddNewIdea = () => {
                     className="col-form-label title-text"
                   >
                     Project Name<span style={{ color: "red" }}>*</span>{" "}
-                    {projNameError && (
-                      <span style={{ color: "red", fontSize: "11px" }}>
-                        ({projNameError})
-                      </span>
-                    )}
+
                   </label>
                   <input
                     type="text"
@@ -334,6 +392,11 @@ const AddNewIdea = () => {
                     placeholder="Enter Project Name"
                     onChange={handleChangeProjNameError}
                   />
+                  {!isProjectNameValid && projName && (
+                    <span style={{ color: "red", fontSize: "11px" }}>
+                      Please enter a name with only letters and spaces, between 1 and 100 characters.
+                    </span>
+                  )}
                 </div>
                 <div className="mb-3">
                   <label
@@ -341,11 +404,8 @@ const AddNewIdea = () => {
                     className="col-form-label title-text"
                   >
                     Project Description<span style={{ color: "red" }}>*</span>{" "}
-                    {projDescriptionError && (
-                      <span style={{ color: "red", fontSize: "11px" }}>
-                        ({projDescriptionError})
-                      </span>
-                    )}
+                    <span style={{color: "grey"}}>(Minimum 50 characters)</span>
+
                   </label>
                   <textarea
                     className="form-control"
@@ -355,6 +415,11 @@ const AddNewIdea = () => {
                     onChange={(e) => handleChangeProjDescriptionError(e)}
                     rows={3}
                   ></textarea>
+                  {!isProjectDescriptionValid && projDescription && (
+                    <span style={{ color: "red", fontSize: "11px" }}>
+                      Please enter a description with a length between 50 and 750 characters.
+                    </span>
+                  )}
                 </div>
 
                 <div className="mb-3">
@@ -364,6 +429,7 @@ const AddNewIdea = () => {
                     required
                   >
                     Technology Used <span style={{ color: "red" }}>*</span>
+                    <span style={{color: "grey"}}>(Select atleast 1 technology)</span>
                   </label>
                   <div className="container border p-0">
                     <div className="input-with-button">
@@ -376,7 +442,7 @@ const AddNewIdea = () => {
                       >
                         <input
                           type="text"
-                          className="custom-input"
+                          className="custom-input border-none"
                           value={Object.values(tech)}
                           disabled
                         />
@@ -405,7 +471,13 @@ const AddNewIdea = () => {
                       </ul>
                     </div>
                     {/* </div> */}
+                
                   </div>
+                  {!Object.values(tech).length && (
+                          <span style={{ color: "grey", fontSize: "11px" }}>
+                          Maximum 10 technologies
+                          </span>
+                        )}
                 </div>
 
                 <div className="mb-3">
@@ -414,6 +486,7 @@ const AddNewIdea = () => {
                     className="col-form-label title-text"
                   >
                     Members(Optional)
+                    <span style={{color: "grey"}}>(Minimum 8 members)</span>
                   </label>
                   <input
                     className="form-control"
@@ -436,13 +509,15 @@ const AddNewIdea = () => {
               </button>
               <button
                 type="button"
-                className="btn save-button"
+                class="btn btn-primary save-button"
+                disabled={!isProjectNameValid || !isProjectDescriptionValid || isModalOpen}
                 data-bs-target="#myIdeaModal"
                 data-bs-dismiss={!error ? 'modal' : ''}
-                
                 onClick={(e) => {
                   handleSubmit(e);
+                  setIsModalOpen(true);
                 }}
+             
               >
                 <span className="save-text"> Save </span>
               </button>

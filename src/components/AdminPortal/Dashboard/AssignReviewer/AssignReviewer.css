@@ -1,0 +1,43 @@
+.assign-review-box {
+  margin-top: 0.688rem; /* 11px / 16px */
+  margin-left: 1.1rem;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  /* //need a change  */
+  width: 27.1rem;
+  height: 11.9rem;
+  background: #eaeef6;
+
+  border: 1px solid #28519e;
+  border-radius: 8px;
+  flex: none;
+  order: 1;
+  align-self: stretch;
+  flex-grow: 0;
+}
+
+.assign-review-text {
+  color: var(--primary-gray, #343435);
+  font-family: Roboto;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: normal;
+}
+
+.assign-review-button {
+    width: 100%;
+    border-radius: 4px;
+    background: var(--blue, #28519E);
+    border-color: var(--blue, #28519E);
+    margin-top: 10px;
+}
+.assign-review-button:hover {
+    background: var(--blue, #28519E);
+    border-color: var(--blue, #28519E);
+}
+.assign-review-outer {
+    width: 412px;
+    max-width: 412px;
+}

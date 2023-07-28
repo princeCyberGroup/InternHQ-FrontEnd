@@ -1,27 +1,34 @@
-import React, { useState, useEffect,useContext } from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { UserContext } from "../../../../Context/Context";
-
+import CryptoJS from "crypto-js";
+import { useNavigate } from "react-router-dom";
 
 const cgData = [
   "Angular",
   "React",
-  ".Net",
-  "C Sharp",
+  "DotNet",
+  "CSharp",
   "Salesforce",
-  "MSSQL",
+  "MsSQL",
   "JavaScript",
   "Azure",
 ];
 
-
-
 const TopicSelect = (props) => {
-    const {projectApiData,setProjectApiData}=useContext(UserContext);
+  const secretkeyUser = process.env.REACT_APP_USER_KEY;
+  var parsedObject;
+  const data = localStorage.getItem("userData");
+  if (data) {
+    const bytes = CryptoJS.AES.decrypt(data, secretkeyUser);
+    const decryptedJsonString = bytes.toString(CryptoJS.enc.Utf8);
+    parsedObject = JSON.parse(decryptedJsonString);
+  } else {
+    console.log("No encrypted data found in localStorage.");
+  }
   const { onChange, disabled, resetSelect, learningType, topicName } = props;
   const [topics, setTopics] = useState([]);
-  const [myProjects, setMyProjects]=useState();
-
+  const [myProjects, setMyProjects] = useState();
+  const navigate = useNavigate();
 
   useEffect(() => {
     Projects();
@@ -31,50 +38,72 @@ const TopicSelect = (props) => {
   const fetchTopics = async () => {
     try {
       const response = await axios.get(
-        process.env.REACT_APP_API_URL+"/api/v2/getAllTechnology",
+        process.env.REACT_APP_API_URL + "/api/v3/getAllTechnology",
         {
           headers: {
-            Authorization:`Bearer ${JSON.parse(localStorage.getItem('userData'))['token']}`,
+            Authorization: `Bearer ${parsedObject["token"]}`,
           },
         }
       );
-      setTopics(response.data.response.sort((a, b) => {
-        const nameA = a.techName.toUpperCase();
-        const nameB = b.techName.toUpperCase();
-        if (nameA < nameB) {
-          return -1;
-        }
-        if (nameA > nameB) {
-          return 1;
-        }
-        return 0; // names are equal
-      }));
+      setTopics(
+        response.data.response.sort((a, b) => {
+          const nameA = a.techName.toUpperCase();
+          const nameB = b.techName.toUpperCase();
+          if (nameA < nameB) {
+            return -1;
+          }
+          if (nameA > nameB) {
+            return 1;
+          }
+          return 0; // names are equal
+        })
+      );
     } catch (error) {
+      if (error.response.status === 401) {
+        navigate("/error/statusCode=401");
+      }
+      if (error.response.status === 400) {
+        navigate("/error/statusCode=400");
+      }
+      if (error.response.status === 500) {
+        navigate("/error/statusCode=500");
+      }
+      if (error.response.status === 404) {
+        navigate("/error/statusCode=404");
+      }
       console.error("Error fetching topics:", error);
     }
   };
 
-
-const storedObject = localStorage.getItem("userData");
-  const parsedObject = JSON.parse(storedObject);
   const userId = parsedObject.userId;
   const Projects = async () => {
     try {
       const response = await axios.get(
-        process.env.REACT_APP_API_URL+`/api/v2/getProject?userId=${userId}`,
+        process.env.REACT_APP_API_URL + `/api/v3/getProject?userId=${userId}`,
         {
           headers: {
-            Authorization:`Bearer ${JSON.parse(localStorage.getItem('userData'))['token']}`,
+            Authorization: `Bearer ${parsedObject["token"]}`,
           },
         }
       );
 
       setMyProjects(response.data.response);
     } catch (error) {
+      if (error.response.status === 401) {
+        navigate("/error/statusCode=401");
+      }
+      if (error.response.status === 400) {
+        navigate("/error/statusCode=400");
+      }
+      if (error.response.status === 500) {
+        navigate("/error/statusCode=500");
+      }
+      if (error.response.status === 404) {
+        navigate("/error/statusCode=404");
+      }
       console.error("Error fetching projects:", error);
     }
   };
-
 
   const learningTypeSelected = (val) => {
     switch (val) {
@@ -82,7 +111,7 @@ const storedObject = localStorage.getItem("userData");
         return (
           <>
             <label htmlFor="topic" className="form-label dtt-t">
-              Topic <span style={{ color: 'red' }}>*</span>
+              Topic <span style={{ color: "red" }}>*</span>
             </label>
             <select
               className="form-select dtt-selector"
@@ -108,7 +137,7 @@ const storedObject = localStorage.getItem("userData");
         return (
           <>
             <label htmlFor="topic" className="form-label dtt-t">
-              Task Name <span style={{ color: 'red' }}>*</span>
+              Task Name <span style={{ color: "red" }}>*</span>
             </label>
             <input
               type="text"
@@ -125,9 +154,8 @@ const storedObject = localStorage.getItem("userData");
       case "Project":
         return (
           <>
-
             <label htmlFor="topic" className="form-label dtt-t">
-              Project Name <span style={{ color: 'red' }}>*</span>
+              Project Name <span style={{ color: "red" }}>*</span>
             </label>
             <select
               className="form-select dtt-selector"
@@ -140,22 +168,30 @@ const storedObject = localStorage.getItem("userData");
               <option value="" disabled hidden>
                 Select Project
               </option>
-              {myProjects?.length===0 ? (<option value="default" disabled >
-                No Project Added
-              </option>) : myProjects?.map((topic, index) => (
-                <option className="dtt-opns" key={index} value={topic.projectNames}>
-                  {topic.projectNames}
+              {myProjects?.length === 0 ? (
+                <option value="default" disabled>
+                  No Project Added
                 </option>
-              ))}
+              ) : (
+                myProjects?.map((topic, index) => (
+                  <option
+                    className="dtt-opns"
+                    key={index}
+                    value={topic.projectNames}
+                  >
+                    {topic.projectNames}
+                  </option>
+                ))
+              )}
             </select>
           </>
         );
 
-        case "Session":
+      case "Session":
         return (
           <>
             <label htmlFor="topic" className="form-label dtt-t">
-              Session Name <span style={{ color: 'red' }}>*</span>
+              Session Name <span style={{ color: "red" }}>*</span>
             </label>
             <input
               type="text"
@@ -173,7 +209,7 @@ const storedObject = localStorage.getItem("userData");
         return (
           <>
             <label htmlFor="topic" className="form-label dtt-t">
-              Topic <span style={{ color: 'red' }}>*</span>
+              Topic <span style={{ color: "red" }}>*</span>
             </label>
             <select
               className="form-select dtt-selector"
