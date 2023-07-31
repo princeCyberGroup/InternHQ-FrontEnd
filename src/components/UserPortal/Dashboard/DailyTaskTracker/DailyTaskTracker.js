@@ -54,6 +54,7 @@ const DailyTaskTracker = () => {
   const [firstCount, setFirstCount] = useState(true);
   const [commentLength, setCommentLength] = useState(comments.length);
   const [pauseClickCount, setPauseClickCount] = useState(0);
+  const [showError,setShowError]=useState(false);
 
   const navigate = useNavigate();
 
@@ -84,7 +85,7 @@ const DailyTaskTracker = () => {
 
   useEffect(() => {
     const commentsWithoutSpaces = comments.replace(/\s/g, ""); // Remove spaces from the comments
-    if (commentsWithoutSpaces.length >= MAX_COMMENT_LENGTH) {
+    if (commentsWithoutSpaces.length >= MAX_COMMENT_LENGTH && comments.length<800) {
       setStopBtnDisabled(false);
     } else {
       setStopBtnDisabled(true);
@@ -332,6 +333,10 @@ const DailyTaskTracker = () => {
 
   const onCommentsChange = (e) => {
     const inputComments = e.target.value;
+    if(inputComments.length>800){
+      setShowError(true);
+    }
+    else{setShowError(false)}
     const commentsWithoutSpaces = inputComments.replace(/\s/g, ""); // Remove spaces from the input
     setComments(inputComments);
     setCommentLength(commentsWithoutSpaces.length);
@@ -404,14 +409,23 @@ const DailyTaskTracker = () => {
           <span
             className="charLen"
             style={{
-              color: "grey",
               display: "flex",
-              justifyContent: "flex-end",
+              // justifyContent: "flex-end",
+              justifyContent:"space-between",
               marginRight: "1rem",
             }}
           >
-            {commentLength}/{MAX_COMMENT_LENGTH}
+            
+            <span 
+              style={{
+              color: "grey",
+              display: "flex",
+              justifyContent: "flex-end",
+              // marginRight: "1rem",
+            }}>{commentLength}/{MAX_COMMENT_LENGTH}</span>
+          {showError && <span style={{color:"red"}}>Max length exceeded !</span>}
           </span>
+          {/* {showError && <p style={{ color: "red" }}>Max length exceeded ! </p>} */}
         </div>
 
         <div className="d-flex align-items-center justify-content-end dtt-gap ">

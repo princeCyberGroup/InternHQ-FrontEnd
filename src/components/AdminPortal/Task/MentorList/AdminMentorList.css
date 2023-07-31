@@ -1,12 +1,57 @@
+.mentor-list-container {
+  width:397px ;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: flex-end;
+  padding: 0px;
+}
+
+.mentor-list-container p {
+  /* width: 6.813rem; */
+  height: 1.438rem;
+
+  font-family: "Roboto";
+  font-style: normal;
+  font-weight: 600;
+  font-size: 1.25rem;
+  line-height: 1.438rem;
+
+  /* Primary/Gray */
+
+  color: #343435;
+}
+
+.add-mentor-button {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  padding: 1.25rem 1rem;
+  gap: 8px;
+  margin-bottom: 8px;
+  border: none;
+
+  width: 9.861rem;
+  height: 2.5rem;
+  color: white;
+  /* Primary/Blue */
+
+  background: #28519e;
+  border-radius: 4px;
+}
+
 .mentor-card {
+  /* margin-left: 1rem; */
   display: flex;
   flex-direction: column;
   align-items: center;
   padding: 1rem;
   gap: 1rem;
   isolation: isolate;
-  width: 24.75rem;
-  height: 90vh;
+  height: 80vh;
+  width: 396px;
+  overflow: auto;
   /* height: 698px; */
 
   background: #ffffff;
@@ -43,7 +88,7 @@
   padding: 8px 12px;
   gap: 8px;
   margin-bottom: 8px;
-  width: 23.75rem;
+  width: 364px;
   /* height: 59px; */
 
   /* Primary/White */

@@ -56,7 +56,7 @@ const TechDropDown = (props) => {
       });
       setCounter((prevCounter) => prevCounter + 1);
     } else {
-      const index = props.technologyNames?.indexOf(value);
+      const index = props?.technologyNames.indexOf(value);
       if (index !== -1) {
         props.technologyNames.splice(index, 1);
       }
@@ -64,12 +64,15 @@ const TechDropDown = (props) => {
       const keys = Object.keys(props.techNames);
       keys.forEach((curElem, index) => {
         if (props.techNames[`tech${index + 1}`] === value) {
-          const t = delete props.techNames[`tech${index + 1}`];
+          delete props.techNames[`tech${index + 1}`];
           setCounter((prevCounter) => prevCounter - 1);
           // console.log(t);
         }
       });
-    }
+    } 
+    // const selectedValues = props.technologyNames.join(", ");
+    // const inputTag = document.getElementById("inputTag");
+    // inputTag.value = selectedValues;
     props.techDataComingChild(props.techNames);
   };
   return (
@@ -85,13 +88,14 @@ const TechDropDown = (props) => {
             data-value={value.techName}
           >
             <label className="form-check-label" for={value.techName}>
-              {value?.techName}
+            {Array.isArray(value.techName) ? value.techName.join(",") : value.techName}
             </label>
             <input
               className="form-check-input tech-checkbox"
               type="checkbox"
-              value={value.techName}
+              id="inputTag"
             />
+            
           </div>
         );
       })}

@@ -71,7 +71,7 @@ const MentorComponent = () => {
         }}
       >
         <div className="border-bottom ">
-          <h5 className="card-title dtt-hfs">Know Your Mentors</h5>
+          <h5 className="card-title dtt-hfs-ml">Know Your Mentors</h5>
         </div>
         <div className="box-shadow d-flex justify-content-center align-item-center">
           {isLoading ? (
