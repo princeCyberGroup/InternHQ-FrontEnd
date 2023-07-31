@@ -23,14 +23,15 @@
     padding-left: 3.5rem;
     padding-bottom: 2.031rem;
     padding-top: 1.031rem;
+    margin-bottom: 0;
 }
 
 .add-your-project-wrapper {
-    justify-content: center;
-    align-items: center;
+    width: 8.67rem;
     background: #28519E;
     border: none;
     border-radius: 0.25rem;
+
 }
 
 .add-your-project {
@@ -60,7 +61,7 @@
 
 .entire-component {
     width: 73rem;
-    height: 28.125rem;
+    height: 30.125rem;
     background-color: #FFFFFF;
     box-shadow: 0px 4px 20px rgba(40, 52, 73, 0.15);
     border-radius: 0.5rem;
@@ -72,7 +73,8 @@
     overflow-y: scroll;
     height: 28.125rem;
     padding-left: 0.938rem;
-    padding-right: 0.938rem;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
 }
 
 .border-between {
@@ -115,4 +117,7 @@
     background: transparent;
     color: #28519E;
     width: 0.491rem;
+}
+.text-for-the-modal{
+    margin-left: 0.55rem;
 }
