@@ -46,7 +46,7 @@ const TopicSelect = (props) => {
         }
       );
       setTopics(
-        response.data.response.sort((a, b) => {
+        response.data?.response.sort((a, b) => {
           const nameA = a.techName.toUpperCase();
           const nameB = b.techName.toUpperCase();
           if (nameA < nameB) {

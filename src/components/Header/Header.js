@@ -9,6 +9,7 @@ import CryptoJS from "crypto-js";
 import { ReactComponent as UploadCsvv } from "../../Assets/upload.svg";
 import { UploadCsv } from "../AdminPortal/Dashboard/UploadCsv/UploadCsvModal";
 import "../AdminPortal/Dashboard/UploadCsv/uploadCsv.css";
+import axios from "axios";
 
 const Header = () => {
   const { resetTimer } = useContext(UserContext);
@@ -42,13 +43,11 @@ const Header = () => {
         console.log("No encrypted data found in localStorage.");
       }
       var userId = parsedObject.userId;
-      await fetch(
+      await axios.post(
         process.env.REACT_APP_API_URL +
-          `/api/v3/postLogoutLog?userId=${userId}}`,
+          "/api/v3/postLogoutLog",
         {
-          headers: {
-            Authorization: `Bearer ${parsedObject["token"]}`,
-          },
+          userId,
         }
       ).catch((error) => {
         console.log("this is error", error.response.status);

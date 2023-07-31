@@ -48,7 +48,7 @@ const SkillsAdded = () => {
       const data = await response.json();
 
       setResultInfo(data.response);
-      console.log(data.response, "This is resp")
+      console.log(data.response, "This is something")
       setIsLoading(false);
     } catch (error) {
       if (error.response.status === 401) {
@@ -65,7 +65,6 @@ const SkillsAdded = () => {
       }
     }
   };
-
   return (
     <>
       <div className="heading">
@@ -87,7 +86,7 @@ const SkillsAdded = () => {
             <SkillsAddedSkeleton />
             <SkillsAddedSkeleton />
           </>
-        ) : resultInfo?.length === 0 ? (
+        ) : (resultInfo?.length === 0 || (resultInfo.filter((results) => {return results.examScores[0] >= 80})).length === 0) ? (
           <EmptySkillsAdded />
         ) : (
           resultInfo?.map((DataUsed, key) => (

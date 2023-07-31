@@ -90,7 +90,7 @@ const TakeTest = () => {
     const getFilterItems = (items, searchValue) => {
       if (searchValue) {
         return items.filter((item) =>
-          item.techName?.toLowerCase().includes(searchValue.toLowerCase())
+          item.techName?.toLowerCase().startsWith(searchValue.toLowerCase())
         );
       }
       return items;
