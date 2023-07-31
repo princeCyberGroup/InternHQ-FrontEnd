@@ -23,7 +23,7 @@ const DailyUpdateTableSection = (props) => {
   const [selectedItem, setSelectedItem] = useState(null);
   const [modalSaveFlag, setModalSaveFlag] = useState(true);
   const [isLoading, setIsLoading] = useState(true);
-  const [arrayCurrentResults, setArrayCurrentResults] = useState([])
+  // const [arrayCurrentResults, setArrayCurrentResults] = useState([])
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -45,7 +45,7 @@ const DailyUpdateTableSection = (props) => {
     }
     await fetch(
       process.env.REACT_APP_API_URL +
-        `/api/v2/getDailyTaskTrackerRecords?userId=${props.userId}`,
+        `/api/v3/getDailyTaskTrackerRecords?userId=${props.userId}`,
       {
         headers: {
           Authorization: `Bearer ${parsedObject["token"]}`,
@@ -83,15 +83,11 @@ const DailyUpdateTableSection = (props) => {
     setSelectedItem(item);
     setShowModal(true);
   };
-  useEffect(() => {
-    setArrayCurrentResults(tableData?.slice(arrayStartIndex, arrayEndIndex))
-  }, [tableData])
-  
 
   const totalPaginationPages = Math.ceil(tableData?.length / resultsPerPage);
   const arrayStartIndex = (currentPage - 1) * resultsPerPage;
   const arrayEndIndex = arrayStartIndex + resultsPerPage;
-  // const arrayCurrentResults = tableData?.slice(arrayStartIndex, arrayEndIndex);
+  const arrayCurrentResults = tableData?.slice(arrayStartIndex, arrayEndIndex);
   const handlePageChange = (pageNumber) => {
     setCurrentPage(pageNumber);
     window.scrollTo(0, 0); //To scroll all the way up whenever page gets clicked
