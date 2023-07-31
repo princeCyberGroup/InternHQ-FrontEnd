@@ -38,7 +38,7 @@ const SelectedTech = ({ loadFilter, handleSelectTech }) => {
           }
         );
         setTechOptions(
-          response.data.response.map((value, index) => {
+          response?.data?.response?.map((value, index) => {
             return value.techName;
           })
         );

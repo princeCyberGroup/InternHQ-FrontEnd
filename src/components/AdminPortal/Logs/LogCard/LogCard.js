@@ -76,7 +76,7 @@ export default function AssociateConsultant(props) {
     const getFilterItems = (items, searchValue, keyValue) => {
       if (searchValue) {
         return items.filter((item) =>
-          item?.[keyValue].toLowerCase().includes(searchValue.toLowerCase())
+          item?.[keyValue].toLowerCase().startsWith(searchValue.toLowerCase())
         );
       }
       return items;

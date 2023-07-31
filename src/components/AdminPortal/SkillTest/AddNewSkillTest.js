@@ -39,7 +39,7 @@ export const AddNewSkillTest = () => {
       const response = await axios.get(
         "https://cg-interns-hq.azurewebsites.net/getAllTechnology"
       );
-      setApiTechnology(response.data.response);
+      setApiTechnology(response?.data?.response);
     } catch (error) {
       if (error.response.status === 401) {
         navigate("/error/statusCode=401");

@@ -7,7 +7,8 @@ import MentorAssignedAlerts from "../UserPortal/Dashboard/MentorAssignedAlerts/M
 import CryptoJS from "crypto-js";
 import { ReactComponent as UploadCsvv } from "../../Assets/upload.svg";
 import { UploadCsv } from "../AdminPortal/Dashboard/UploadCsv/UploadCsvModal";
-import "../AdminPortal/Dashboard/UploadCsv/uploadCsv.css"
+import "../AdminPortal/Dashboard/UploadCsv/uploadCsv.css";
+import axios from "axios";
 
 const Header = () => {
   const secretKey = process.env.REACT_APP_USER_KEY;
@@ -26,8 +27,42 @@ const Header = () => {
 
   const [isTodayDate, setIsTodayDate] = useState(false);
   const navigate = useNavigate();
-  const handleLogout = (e) => {
+  const handleLogout = async (e) => {
     e.preventDefault();
+    if (userData.randomString !== process.env.REACT_APP_USER_DES_ADMIN) {
+      const secretkeyUser = process.env.REACT_APP_USER_KEY;
+      var parsedObject;
+      const data = localStorage.getItem("userData");
+      if (data) {
+        const bytes = CryptoJS.AES.decrypt(data, secretkeyUser);
+        const decryptedJsonString = bytes.toString(CryptoJS.enc.Utf8);
+        parsedObject = JSON.parse(decryptedJsonString);
+      } else {
+        console.log("No encrypted data found in localStorage.");
+      }
+      var userId = parsedObject.userId;
+      await axios.post(
+        process.env.REACT_APP_API_URL +
+          "/api/v3/postLogoutLog",
+        {
+          userId,
+        }
+      ).catch((error) => {
+        console.log("this is error", error.response.status);
+        if (error.response.status === 401) {
+          navigate("/error/statusCode=401");
+        }
+        if (error.response.status === 400) {
+          navigate("/error/statusCode=400");
+        }
+        if (error.response.status === 500) {
+          navigate("/error/statusCode=500");
+        }
+        if (error.response.status === 404) {
+          navigate("/error/statusCode=404");
+        }
+      });
+    }
     localStorage.clear("userData");
     navigate("/");
   };
@@ -91,8 +126,8 @@ const Header = () => {
                   </NavLink>
                 </li>
               </ul>
-            ) : (userData.randomString ===
-              process.env.REACT_APP_USER_DES_ADMIN) ? (
+            ) : userData.randomString ===
+              process.env.REACT_APP_USER_DES_ADMIN ? (
               // Admin */
               <ul
                 className="navbar-nav nav-bg d-flex align-items-center"
@@ -144,7 +179,10 @@ const Header = () => {
                 </li>
 
                 <li className="nav-item">
-                  <NavLink to="/mentor/review-associates" className="btn activeBtn ">
+                  <NavLink
+                    to="/mentor/review-associates"
+                    className="btn activeBtn "
+                  >
                     Review Associates
                   </NavLink>
                 </li>
@@ -156,17 +194,18 @@ const Header = () => {
             <>
               <MentorAssignedAlerts func={anotherFunc} setState={isTodayDate} />
             </>
-          ) : (
-            <>
+          ) : userData.randomString === process.env.REACT_APP_USER_DES_ADMIN ? (
             <button
               className="upload-list-button"
               data-bs-toggle="modal"
               data-bs-target="#uploadCsv"
-              style={{marginRight: "24px"}}
+              style={{ marginRight: "24px" }}
             >
-              <UploadCsvv />Upload CSV
+              <UploadCsvv />
+              Upload CSV
             </button>
-          </>
+          ) : (
+            ""
           )}
 
           <div

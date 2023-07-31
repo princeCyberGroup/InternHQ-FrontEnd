@@ -123,7 +123,7 @@ export const ManageSkillTest = () => {
               style={{ overflow: "visible" }}
             ></div>
             <table id="example" className="table table-striped">
-              <thead className="manageskilltest-thead">
+              <thead className="manageskilltest-thead" style={{zIndex: "5"}}>
                 <tr className="color-table">
                   <th className="column-technology" style={{ width: "1rem" }}>
                     S.No
