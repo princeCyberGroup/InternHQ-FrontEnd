@@ -1,0 +1,212 @@
+.mentortask-parent-div {
+  background: #fbfbfb;
+  border: 0.1px solid transparent;
+  height: 100vh;
+}
+.mentortask-parent-wrapper {
+  height: calc(100vh - 82px);
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  align-items: center;
+  width: 80rem;
+  margin: auto;
+  padding: 0 3.5rem 1.375rem 3.5rem;
+  overflow-y: auto;
+}
+.mentortask-header-wrapper {
+  width: -webkit-fill-available;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.mentortask-heading-style,
+.mentortask-header-wrapper > span {
+  color: var(--primary-gray, #343435);
+  font-size: 20px;
+  font-weight: 600;
+  line-height: normal;
+}
+.mentortask-data-wrapper {
+  width: -webkit-fill-available;
+  display: flex;
+  padding: 1.5rem 1.5rem 0.5rem 1.5rem;
+  height: inherit;
+  border-radius: 8px;
+  background: #fff;
+  box-shadow: 0px 4px 20px 0px rgba(40, 52, 73, 0.15);
+  overflow-y: hidden;
+}
+.task-heading-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  min-width: 23.5rem;
+  overflow-y: auto;
+}
+.task-heading-inner-wrapper {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  cursor: pointer;
+  border-radius: 0.5rem;
+  background: #eef1f8;
+  padding: 0.75rem 0.5rem;
+  box-sizing: border-box;
+  overflow: hidden;
+  max-width: 23.5rem;
+}
+.selected-task-style {
+  background-color: #28519e;
+  position: absolute;
+  width: 3px;
+  height: -webkit-fill-available;
+  top: 0;
+  left: 0;
+}
+.task-heading-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.task-seperation-line {
+  width: 0;
+  border-left: 1px solid;
+  background: #000;
+  margin-left: 1.375rem;
+  margin-right: 1.5rem;
+  opacity: 0.10000000149011612;
+}
+.task-detail-wrapper {
+  width: inherit;
+  display: flex;
+  flex-direction: column;
+  color: var(--primary-gray, #343435);
+  font-family: Roboto;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 140.188%;
+  margin-bottom: 1.5rem;
+}
+.mentortask-duration-style {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+.mentortask-meta-heading {
+  color: var(--primary-gray, #343435);
+  font-family: Roboto;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+  opacity: 0.699999988079071;
+}
+.mentortask-heading-style {
+  margin-bottom: 1rem;
+}
+.mentortask-duration-wrapper,
+.mentortask-technology-wrapper,
+.mentortask-assign-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+}
+.mentortask-assign-wrapper {
+  gap: 0.625rem;
+}
+.tech-used-wrapper {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+.tech-used-div-box {
+  border-radius: 4px;
+  background: #d3e1fa;
+  display: flex;
+  padding: 0px 12px;
+  align-items: center;
+  line-height: 2rem;
+}
+.mentortask-assigned-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 0.625rem;
+  overflow-y: auto;
+  height: -webkit-fill-available;
+}
+.assign-header-style {
+  width: -webkit-fill-available;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  opacity: 1;
+}
+.assign-header-style > span {
+  opacity: 0.699999988079071;
+}
+.assign-header-style > button {
+  font-weight: bold;
+  display: flex;
+  padding: 9px 16px;
+  border-radius: 4px;
+  background: #28519e;
+  border: none;
+  color: #ffffff;
+}
+.assigned-to-wrapper {
+  display: flex;
+  padding: 0.625rem;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.625rem;
+  border-radius: 0.5rem;
+  border: 1px solid var(--secondary-light-gray, #e9eceb);
+  background: #fff;
+}
+.assigned-list-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 0.625rem;
+  overflow-y: auto;
+}
+.name-percentage-wrapper {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+  font-weight: bold;
+}
+.name-status-wrapper {
+  display: flex;
+  justify-content: space-between;
+  width: -webkit-fill-available;
+  align-items: center;
+}
+.name-percentage-wrapper > div {
+  padding: 4px 6px;
+  border-radius: 4px;
+  background: var(--primary-yellow, #ffb81c);
+}
+.assigned-to-wrapper .task-status-wrapper {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+}
+.task-completed-wrapper,
+.task-ongoing-wrapper,
+.task-overdue-wrapper {
+  color: var(--primary-gray, #343435);
+  font-family: Roboto;
+  font-size: 0.75rem;
+  line-height: normal;
+  border-radius: 0.25rem;
+  background: #cef0dc;
+  display: flex;
+  padding: 0.25rem 0.3753rem;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 0.188rem;
+}

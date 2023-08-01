@@ -37,24 +37,23 @@ const MentorComponent = () => {
           },
         }
       );
-
+      if (response.status === 401) {
+        navigate("/error/statusCode=401");
+      }
+      if (response.status === 400) {
+        navigate("/error/statusCode=400");
+      }
+      if (response.status === 500) {
+        navigate("/error/statusCode=500");
+      }
+      if (response.status === 404) {
+        navigate("/error/statusCode=404");
+      }
       const data = await response.json();
       const activeMentors = data.activeMentors;
       setMentors(activeMentors);
       setIsLoading(false);
     } catch (error) {
-      if (error.response.status === 401) {
-        navigate("/error/statusCode=401");
-      }
-      if (error.response.status === 400) {
-        navigate("/error/statusCode=400");
-      }
-      if (error.response.status === 500) {
-        navigate("/error/statusCode=500");
-      }
-      if (error.response.status === 404) {
-        navigate("/error/statusCode=404");
-      }
       console.log("Error occurred while fetching mentors:", error);
     }
   };

@@ -1,0 +1,32 @@
+.custom-form .form-group {
+    margin-bottom: 20px;
+    border: 1px solid black;
+  }
+  .custom-form .form-label {
+    margin-bottom: 6px;
+  }
+  .custom-form .form-control {
+    margin-bottom: 6px;
+  }
+  .custom-form .compact-button {
+    padding: 12px 28.5px;
+  }
+  .custom-cancel-button {
+    background-color: white;
+    color: #28519e;
+    border: 1px solid #28519e;
+  }
+  .custom-form-label {
+    color: var(--primary-gray, #343435);
+    font-family: Roboto;
+    font-size: 13px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+    margin-bottom: 20px;
+  }
+  .custom-switch-container{
+      text-align: right;
+  }
+  
+  

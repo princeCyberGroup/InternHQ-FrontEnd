@@ -179,16 +179,17 @@ const Report = () => {
       );
       setIsLoading(false);
     } catch (error) {
-      if (error.response.status === 401) {
+      const errorCode = error.response.status;
+      if (errorCode === 401) {
         navigate("/error/statusCode=401");
       }
-      if (error.response.status === 400) {
+      if (errorCode === 400) {
         navigate("/error/statusCode=400");
       }
-      if (error.response.status === 500) {
+      if (errorCode === 500) {
         navigate("/error/statusCode=500");
       }
-      if (error.response.status === 404) {
+      if (errorCode === 404) {
         navigate("/error/statusCode=404");
       }
       console.error("Error fetching data:", error.message);

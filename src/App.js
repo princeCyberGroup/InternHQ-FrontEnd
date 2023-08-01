@@ -44,6 +44,7 @@ import SessionExpired from "./components/ErrorPage/SessionExpired";
 import MentorDashboard from "./components/MentorPortal/MentorDashboard/MentorDashboard";
 import MentorAssignTask from "./components/MentorPortal/MentorAssignTask/MentorAssignTask";
 import MentorReview from "./components/MentorPortal/MentorReviewAssociates/MentorReview";
+import InstructorRating from "./components/MentorPortal/MentorAssignTask/RateAssignment/InstructorRating";
 
 function App() {
   const [dataFromDailyUpdate, setDataFromDailyUpdate] = useState("");
@@ -107,6 +108,7 @@ function App() {
             <Route path="/mentor/dashboard" element={<MentorDashboard />} />
             <Route path="/mentor/assign-task" element={<MentorAssignTask />} />
             <Route path="/mentor/review-associates" element={<MentorReview />} />
+            <Route path="/mentor/project-rating" element={<InstructorRating />} />
           </Route>
 
           <Route path="/error/statusCode=400" element={<Error_400 />} />
