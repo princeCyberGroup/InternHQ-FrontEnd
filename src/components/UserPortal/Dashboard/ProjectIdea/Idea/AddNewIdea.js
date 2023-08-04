@@ -4,11 +4,12 @@ import React, { useEffect, useState, useContext } from "react";
 import axios from "axios";
 import EmptyProject from "../../EmptyStates/EmptyProject/MyIdea";
 import { ReactComponent as ExpandMore } from "../../../../../Assets/expand_more.svg";
-import TechDropDown from "../TechDropDown";
+import TechDropDown from "../../../../AdminPortal/Task/AssignTask/TechnologyDropdown(Admin)";
 import { UserContext } from "../../../../../Context/Context";
 import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
 import CryptoJS from "crypto-js";
+
 const AddNewIdea = () => {
   const { idea } = useContext(UserContext);
   const navigate = useNavigate();
@@ -28,6 +29,8 @@ const AddNewIdea = () => {
   const [isProjectDescriptionValid, setIsProjectDescriptionValid] = useState(false);
   const [technologySelected, setTechnologySelected] = useState("");
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [searchQuery, setSearchQuery] = useState("");
+  const [selectedTechIds, setSelectedTechIds] = useState([]);
   let memberCount = 0;
   // {
   //   first.members.map((mem) => {
@@ -464,9 +467,12 @@ const AddNewIdea = () => {
                       >
                         <TechDropDown
                           techDataComingChild={techDataComingFrmChild}
-                          seTechNames={seTechNames}
-                          techNames={techNames}
+                          selectedTechIds={selectedTechIds}
+                          setSelectedTechIds={setSelectedTechIds}
+                          setTechnologyNames={setTechnologyNames}
                           technologyNames={technologyNames}
+                          searchQuery={searchQuery}
+                          setSearchQuery={setSearchQuery}
                         />
                       </ul>
                     </div>
@@ -486,7 +492,7 @@ const AddNewIdea = () => {
                     className="col-form-label title-text"
                   >
                     Members(Optional)
-                    <span style={{color: "grey"}}>(Minimum 8 members)</span>
+                    <span style={{color: "grey"}}>(Maximum 8 members)</span>
                   </label>
                   <input
                     className="form-control"

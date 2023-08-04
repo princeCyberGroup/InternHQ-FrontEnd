@@ -5,11 +5,11 @@ import Header from "../../../../../Header/Header";
 import EmptyProjectState from "../../../EmptyStates/EmptyProject/Project";
 import DetailsLeft from "../../ViewDetails/DetailsLeft";
 import { UserContext } from "../../../../../../Context/Context";
-import TechDropDown from "../../TechDropDown";
+import TechDropDown from "../../../../../AdminPortal/Task/AssignTask/TechnologyDropdown(Admin)";
 import EmptyProjectView from "../../../EmptyStates/EmptyProject/ProjectViewAll";
 import { ReactComponent as ExpandMore } from "../../../../../../Assets/expand_more.svg";
 import BreadCrumbs from "../../../../../BreadCrumbs/BreadCrumbs";
-import {ReactComponent as VectorAdd} from "../../../../../../Assets/Vectoradd.svg";
+import { ReactComponent as VectorAdd } from "../../../../../../Assets/Vectoradd.svg";
 import CryptoJS from "crypto-js";
 import { useNavigate } from "react-router-dom";
 
@@ -36,7 +36,10 @@ const ViewAllProjects = () => {
   const [isProjectDescriptionValid, setIsProjectDescriptionValid] = useState(false);
   const [isProjectLinkValid, setIsProjectLinkValid] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  
+  const [searchQuery, setSearchQuery] = useState("");
+  const [selectedTechIds, setSelectedTechIds] = useState([]);
+  const [technologyNames, setTechnologyNames] = useState([]);
+
   const navigate = useNavigate();
 
   // const details = project;
@@ -96,6 +99,7 @@ const ViewAllProjects = () => {
     setDropDown(false);
     setTech({});
     seTechNames({});
+    setTechnologyNames([]);
 
     const checkboxes = document.querySelectorAll(".tech-checkbox");
     checkboxes.forEach((checkbox) => {
@@ -201,7 +205,7 @@ const ViewAllProjects = () => {
       )
       .then((response) => {
         setProject(response.data.response);
-        setMentorAssignData(response);
+        // setMentorAssignData(response);
       })
       .catch((error) => {
         if (error.response.status === 401) {
@@ -227,21 +231,23 @@ const ViewAllProjects = () => {
       })
     Promise.all([firstAPIPromise, secondAPIPromise])
       .then((responses) => {
-        const firstAPIData = responses[0].data.response;
-        const mentorAssignedData = responses[1].data.response;
-        { console.log("Forst:", mentorAssignData) }
-        setProject(firstAPIData);
+        const firstAPIData = responses[0]?.data.response;
+        const mentorAssignedData = responses[1]?.data.response;
+        // setProject(firstAPIData);
         setMentorAssignData(mentorAssignedData);
 
       })
+      .catch((error) => {
+        console.log(error);
+      });
 
-      //   process.env.REACT_APP_API_URL+`/api/v2/getProject?userId=${userId}`,
-      //   {
-      //     headers: {
-      //       Authorization:`Bearer ${JSON.parse(localStorage.getItem('userData'))['token']}`,
-      //     },
-      //   }
-      // )
+    //   process.env.REACT_APP_API_URL+`/api/v2/getProject?userId=${userId}`,
+    //   {
+    //     headers: {
+    //       Authorization:`Bearer ${JSON.parse(localStorage.getItem('userData'))['token']}`,
+    //     },
+    //   }
+    // )
 
 
     //   .then((responsedata) => {
@@ -291,8 +297,8 @@ const ViewAllProjects = () => {
               data-bs-toggle="modal"
               data-bs-target="#xampleModal"
             >
-              <p className="me-2 add-your-project"><VectorAdd/> 
-              <span className="text-for-the-modal">Add Project</span></p>
+              <p className="me-2 add-your-project"><VectorAdd />
+                <span className="text-for-the-modal">Add Project</span></p>
             </button>
           </div>
           <div
@@ -350,7 +356,7 @@ const ViewAllProjects = () => {
                       >
                         Project Description
                         <span style={{ color: "red" }}>*</span>{" "}
-                        <span style={{color: "grey"}}>(Minimum 50 characters)</span>
+                        <span style={{ color: "grey" }}>(Minimum 50 characters)</span>
                       </label>
                       <textarea
                         className="form-control"
@@ -373,7 +379,7 @@ const ViewAllProjects = () => {
                         required
                       >
                         Technology Used <span style={{ color: "red" }}>*</span>
-                        <span style={{color: "grey"}}>(Select atleast 1 technology)</span>
+                        <span style={{ color: "grey" }}>(Select atleast 1 technology)</span>
                       </label>
                       <div className="container border p-0">
                         <div className="input-with-button">
@@ -408,17 +414,21 @@ const ViewAllProjects = () => {
                           >
                             <TechDropDown
                               techDataComingChild={techDataComingFrmChild}
-                              seTechNames={seTechNames}
-                              techNames={techNames}
+                              selectedTechIds={selectedTechIds}
+                              setSelectedTechIds={setSelectedTechIds}
+                              setTechnologyNames={setTechnologyNames}
+                              technologyNames={technologyNames}
+                              searchQuery={searchQuery}
+                              setSearchQuery={setSearchQuery}
                             />
                           </ul>
                         </div>
                       </div>
                       {!Object.values(tech).length && (
-                          <span style={{ color: "grey", fontSize: "11px" }}>
-                            Maximum 10 technologies
-                          </span>
-                        )}
+                        <span style={{ color: "grey", fontSize: "11px" }}>
+                          Maximum 10 technologies
+                        </span>
+                      )}
                     </div>
                     <div className="mb-3">
                       <label
@@ -459,7 +469,7 @@ const ViewAllProjects = () => {
                         className="col-form-label title-text"
                       >
                         Members(Optional)
-                        <span style={{color: "grey"}}>(Minimum 8 members)</span>
+                        <span style={{ color: "grey" }}>(Minimum 8 members)</span>
                       </label>
                       <input
                         className="form-control"
@@ -488,7 +498,8 @@ const ViewAllProjects = () => {
                     data-bs-dismiss={!error ? 'modal' : ''}
                     onClick={(e) => {
                       handleSubmit(e);
-                      setIsModalOpen(true);}}
+                      setIsModalOpen(true);
+                    }}
                   >
                     <span className="save-text"> Save</span>
                   </button>

@@ -1,50 +1,62 @@
 import { useEffect, useState } from "react";
 import { ReactComponent as ExpandMore } from "../../../../../Assets/expand_more.svg";
-import TechDropDown from "../TechDropDown";
+import TechDropDown from "../../../../AdminPortal/Task/AssignTask/TechnologyDropdown(Admin)";
 import axios from "axios";
 
-const ProjectModalEdit = ({projectName,projectDescriptions,indexNumber,projectTechnology,projectLinks,hostedLinks,memberName}) => {
+const ProjectModalEdit = ({ projectName, projectDescriptions, indexNumber, projectTechnology, projectLinks, hostedLinks, memberName, projectId, selectedTechIds, setSelectedTechIds }) => {
     const [projName, setProjName] = useState(projectName);
     const [description, setDescription] = useState(projectDescriptions);
     const [projectLink, setProjectLink] = useState(projectLinks);
     const [hostedLink, setHostedLink] = useState(hostedLinks);
     const [textInput, setTextInput] = useState("");
-    const [memberNames, setMemberNames] = useState([memberName]);
-    const [techNames, seTechNames] = useState({});
     const [dropDown, setDropDown] = useState(false);
     const [error, setError] = useState(true);
-    const [projNameError, setProjNameError] = useState("");
-    const [desError, setDesError] = useState("");
     const [projLinkError, setProjLinkError] = useState("");
-    const [tech, setTech] = useState({projectTechnology});
     const [technologyNames, setTechnologyNames] = useState([]);
-    const [isProjectNameValid, setIsProjectNameValid] = useState(false);
-    const [isProjectDescriptionValid, setIsProjectDescriptionValid] = useState(false);
     const [isProjectLinkValid, setIsProjectLinkValid] = useState(false);
-    const [editProject, setEditProject] = useState({});
+    const [editProject,setEditProject]=useState({});
     const [projectToEdit, setProjectToEdit] = useState(null);
-    const [projectId,setProjectId] =useState();
+    const [searchQuery, setSearchQuery] = useState("");
+    // const [memberNames, setMemberNames] = useState({memberName});
+    const techArray = Object.entries(projectTechnology)
+        .filter(([key, value]) => value !== null)
+        .map(([key, value]) => (value
+        ));
+    const [tech, setTech] = useState(techArray);
+    let techObj = {};
+    technologyNames?.forEach((val, ind) => {
+        techObj[`tech${ind + 1}`] = (val === null) ? '' : val;
+    })
     
-
+    const memberArray = Object.entries(memberName)
+    .filter(([key,value]) => value !== null)
+    .map(([key, value]) => (value));
+    const [memberNames, setMemberNames] = useState(memberArray);
+    const texts = textInput.split(",").map((text) => text.trim());
+        const membersObj = {};
+        memberArray.forEach((text, index) => {
+            membersObj[`member${index + 1}`] = text;
+        });
+       
+   
     const handleProjectNameChange = (e) => {
 
         setProjName(e.target.value);
-        if(e.target.value > 0){
+        if (e.target.value > 0) {
             setError(false);
         }
-        else{
+        else {
             setError(true);
         }
-        // setIsProjectNameValid(name.match(/^.{1,100}$/) ? true : false);
-       
+
     };
     const handleProjectDescriptionChange = (e) => {
-       setDescription(e.target.value);
+        setDescription(e.target.value);
     };
-    const handleChangeTechnology = (e)=>{
+    const handleChangeTechnology = (e) => {
         setTech(e.target.value);
     }
-   
+
     const handleProjectLinkChange = (e) => {
         const link = e.target.value;
         setProjectLink(link);
@@ -58,10 +70,10 @@ const ProjectModalEdit = ({projectName,projectDescriptions,indexNumber,projectTe
         }
     };
     const techDataComingFrmChild = (data) => {
-        return setTech(data);
+        if (JSON.stringify(data) !== JSON.stringify(tech))
+            setTech(data);
     };
-    const handleInputChange = (e) => {
-        
+    const handleMemberChange = (e) => {
         setMemberNames(e.target.value);
     };
     const isObjectEmpty = (object) => {
@@ -72,38 +84,16 @@ const ProjectModalEdit = ({projectName,projectDescriptions,indexNumber,projectTe
             return setMemberNames("");
         }
     };
-    // const handleOnEditClose = () => {
-    //     onEditClose();
-    //   }
-    const handleSubmit = (e) => {
-        
-        // var storedObject = localStorage.getItem("userData");
-        // var parsedObject = JSON.parse(storedObject);
-        // var projectId = parsedObject.projectId;
-        if (error) {
-            alert("Please fill in the required details");
-
-        } else {
-            axios
-                .post(process.env.REACT_APP_API_URL + "/api/v3/editProject", {
-                    projectId,
-                    projName,
-                    description,
-                    projectLink,
-                    hostedLink,
-                    technologyNames: techNames,
-                    memberNames: memberNames,
-                })
-               
-                .then((res) => {
-                    console.log("print", res.data);
-                     handleEditCloseModal();
-                })
-                .catch((err) => {
-                    console.log(err);
-                });
-        }
-    };
+    const handleEditCloseModal = () => {
+        setProjectToEdit(null);
+        const checkboxes = document.querySelectorAll(".tech-checkbox");
+        checkboxes.forEach((checkbox) => {
+            checkbox.checked = false;
+        });
+    }
+    const handleProjectTask=(task) =>{
+        setProjectToEdit(task);
+    }
     useEffect(() => {
         const texts = textInput.split(",").map((text) => text.trim());
         const membersObj = {};
@@ -111,37 +101,62 @@ const ProjectModalEdit = ({projectName,projectDescriptions,indexNumber,projectTe
             membersObj[`member${index + 1}`] = text;
         });
 
-        isObjectEmpty(membersObj);
+        // isObjectEmpty(membersObj);
     }, [textInput]);
+
+    const handleSubmit =  (e) => {
+
+        // var storedObject = localStorage.getItem("userData");
+        // var parsedObject = JSON.parse(storedObject);
+        // var projectId = parsedObject.projectId;
+       if(projectId !== null){
+        axios
+            .put(process.env.REACT_APP_API_URL +"/api/v4/project-task", {
+                projectId,
+                projName,
+                description,
+                projectLink,
+                hostedLink,
+                technologyNames: techObj,
+                memberNames: membersObj
+            })
+
+            .then((res) => {
+                console.log("print", res.data);
+
+            })
+            .catch((err) => {
+                console.log(err);
+            });
+        }
+    };
+
     useEffect(() => {
         setEditProject(projectToEdit);
-      }, [projectToEdit]);
+    }, [projectToEdit]);
 
-      useEffect(() => {
+    useEffect(() => {
         setProjName(editProject?.projName);
         setDescription(editProject?.description);
         setProjectLink(editProject?.projectLink);
         setHostedLink(editProject?.hostedLink);
-        setMemberNames(editProject?.memberNames);
-        setTechnologyNames(editProject?.technologyNames);
-      }, [editProject]);
+        // setMemberNames(editProject?.memberNames);
+        setTechnologyNames(editProject?.tech);
+    }, [editProject]);
 
-      useEffect(() => {
-        setProjName(projectName)
+    useEffect(() => {
+        setProjName(projectName);
         setDescription(projectDescriptions);
         setProjectLink(projectLinks);
         setHostedLink(hostedLinks);
-        setMemberNames(memberName);
+        const memberArray = Object.entries(memberName)
+        .filter(([key,value]) => value !== null)
+        .map(([key, value]) => (value));
+        setMemberNames(memberArray);
         setTechnologyNames(projectTechnology);
-        {console.log("names",memberName)}
     }, [indexNumber]);
 
-      const handleEditProject = (project) => {
-        setProjectToEdit(project);
-      }
-      const handleEditCloseModal = () => {
-        setProjectToEdit(null);
-      }
+    
     return (
         <div class="modal fade" id="editProjectModal" tabindex="-1" aria-labelledby="editProjectModalLabel" aria-hidden="true">
             <div class="modal-dialog">
@@ -167,11 +182,6 @@ const ProjectModalEdit = ({projectName,projectDescriptions,indexNumber,projectTe
                                     placeholder="Enter Project Name"
                                     onChange={handleProjectNameChange}
                                 />
-                                {/* {!isProjectNameValid && projName && (
-                                    <span style={{ color: "red", fontSize: "11px" }}>
-                                        Please enter a name with only letters and spaces, between 1 and 100 characters.
-                                    </span>
-                                )} */}
                             </div>
                             <div class="mb-3">
                                 <label
@@ -190,11 +200,6 @@ const ProjectModalEdit = ({projectName,projectDescriptions,indexNumber,projectTe
                                     onChange={handleProjectDescriptionChange}
                                     rows={3}
                                 />
-                                {/* {!isProjectDescriptionValid && description && (
-                                    <span style={{ color: "red", fontSize: "11px" }}>
-                                        Please enter a description with a length between 50 and 750 characters.
-                                    </span>
-                                )} */}
                             </div>
                             <div className="mb-3">
                                 <label
@@ -217,8 +222,8 @@ const ProjectModalEdit = ({projectName,projectDescriptions,indexNumber,projectTe
                                             <input
                                                 type="text"
                                                 className="custom-input"
-                                                value={technologyNames}
-                                                onChange={handleChangeTechnology}
+                                                value={tech}
+                                                onChange={(e) => handleChangeTechnology(e)}
                                                 disabled
                                             />
                                         </button>
@@ -239,19 +244,16 @@ const ProjectModalEdit = ({projectName,projectDescriptions,indexNumber,projectTe
                                         >
                                             <TechDropDown
                                                 techDataComingChild={techDataComingFrmChild}
-                                                seTechNames={seTechNames}
-                                                techNames={techNames}
-                                                technologyNames={technologyNames}
-                                                selectedTech={editProject?.technologyNames}
+                                                selectedTechIds={selectedTechIds}
+                                                setSelectedTechIds={setSelectedTechIds}
+                                                setTechnologyNames={setTech}
+                                                technologyNames={tech}
+                                                searchQuery={searchQuery}
+                                                setSearchQuery={setSearchQuery}
                                             />
                                         </ul>
                                     </div>
                                 </div>
-                                {/* {!Object.values(tech).length && (
-                                    <span style={{ color: "grey", fontSize: "11px" }}>
-                                        Maximum 10 technologies
-                                    </span>
-                                )} */}
                             </div>
                             <div className="mb-3">
                                 <label
@@ -267,11 +269,6 @@ const ProjectModalEdit = ({projectName,projectDescriptions,indexNumber,projectTe
                                     value={projectLink}
                                     onChange={handleProjectLinkChange}
                                 />
-                                {/* {!isProjectLinkValid && projectLink && (
-                                    <span style={{ color: "red", fontSize: "11px" }}>
-                                        Invalid project link. Please enter a valid URL starting with http:// or https://.
-                                    </span>
-                                )} */}
                             </div>
                             <div className="mb-3">
                                 <label
@@ -297,18 +294,18 @@ const ProjectModalEdit = ({projectName,projectDescriptions,indexNumber,projectTe
                                     <span style={{ color: "grey" }}>(Minimum 8 members)</span>
                                 </label>
                                 <input
-                                    className="form-control"
+                                    className="form-control"    
                                     id="project-description"
                                     placeholder="Member Name"
-                                    value={memberNames}
-                                    onChange={handleInputChange}
+                                    value={ memberNames}
+                                    onChange={handleMemberChange}
                                 />
                             </div>
                         </form>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" onClick={()=>handleEditCloseModal()}>Cancel</button>
-                        <button type="button" class="btn btn-primary" onClick={()=>handleSubmit()}> Edit</button>
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" onClick={() => handleEditCloseModal()}>Cancel</button>
+                        <button type="button" class="btn btn-primary" data-bs-dismiss="modal" onClick={handleSubmit}> Edit</button>
                     </div>
                 </div>
             </div>

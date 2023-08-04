@@ -4,12 +4,14 @@ import { Link } from "react-router-dom";
 import { ReactComponent as EditButton } from "../../../../../Assets/Buttonedit.svg";
 import { ReactComponent as DeleteButton } from "../../../../../Assets/Buttondelete.svg";
 import ProjectModalEdit from "./EditModalProject";
-import AddProject from "../Project/AddProject";
+
 const ProjectDetail = ({ data, mentorApiData, indexNumber, mentorIndexNumber }) => {
-  const [taskIdToChild, setTaskIdToChild] = useState(0);
-  const deleteTask = (e, projectId, index) => {
-    e.preventDefault();
-    setTaskIdToChild(projectId);
+  const [deleteProject, setDeleteProject] = useState({});
+  const [selectedTechIds, setSelectedTechIds] = useState([]);
+  // const [editable,setEditable]=useState(false);
+  const deleteTask = (projectId) => {
+
+    setDeleteProject(data.filter((id)=> id !== data[indexNumber]?.projectId));
   };
 
   useEffect(() => {
@@ -20,16 +22,6 @@ const ProjectDetail = ({ data, mentorApiData, indexNumber, mentorIndexNumber }) 
       }
     }, 5000);
   }, [data, mentorApiData]);
-  // let test=useState(false)  
-  // let memberCount = 0 //8
-  // data[indexNumber].members.map((mem) => {
-  //   if(mem != null) memberCount++;
-  // })
-  // const membersCounts = data.map((item) => item.members.length);
-  // const displayMembersCounts = membersCounts.slice(0,3);
-  //   const remainingMembersCounts = memberCount - 3;
-  // console.log(data, "This is dara")
-
   return (
     <>
       {data !== null && Array.isArray(data) && data.length > indexNumber && mentorIndexNumber != 0 ? (
@@ -42,33 +34,33 @@ const ProjectDetail = ({ data, mentorApiData, indexNumber, mentorIndexNumber }) 
                   className="mx-3"
                   data-bs-toggle="modal"
                   data-bs-target="#editProjectModal"
-
                 />
               </button>
               <ProjectModalEdit
+                projectId={data[indexNumber]?.projectId}
                 projectName={data[indexNumber]?.projectNames}
                 projectDescriptions={data[indexNumber]?.projectText}
                 projectTechnology={data[indexNumber]?.technology}
                 projectLinks={data[indexNumber]?.projectLink}
                 hostedLinks={data[indexNumber]?.hostedLink}
-                memberName = {data[indexNumber]?.members}
+                memberName={data[indexNumber]?.members}
                 indexNumber={indexNumber}
+                selectedTechIds={selectedTechIds}
+                setSelectedTechIds={setSelectedTechIds}
               />
-              <button  
-                projectId={data[indexNumber].projectId}
-                onClick = {(e) => {
-                  deleteTask(e,data[indexNumber].projectId,indexNumber)
-                }}>
-                <DeleteButton 
-               
-                /></button>
+              <button
+                type="button"
+                onClick={() => {deleteTask(data[indexNumber]?.projectId)}}
+              >
+                <DeleteButton />
+              </button>
             </div>
           </div>
           <p className="created-at">{data[indexNumber]?.createdAt}</p>
           <p className="project-detail-text">{data[indexNumber]?.projectText}</p>
           {data[indexNumber]?.technology && !(data[indexNumber]?.technology?.every((value) => value === null)) && (
-        <p className="project-detail-technology-used mb-2">Technology Used:</p>
-        )}
+            <p className="project-detail-technology-used mb-2">Technology Used:</p>
+          )}
 
           <div className="project-detail-technology-badges">
             {data[indexNumber]?.technology?.map && data[indexNumber]?.technology?.map((tech) => {

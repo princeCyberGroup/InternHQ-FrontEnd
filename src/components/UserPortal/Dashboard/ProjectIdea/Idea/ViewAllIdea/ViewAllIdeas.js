@@ -5,7 +5,7 @@ import Header from "../../../../../Header/Header";
 import EmptyIdea from "../../../EmptyStates/EmptyProject/MyIdeaViewAll";
 import DetailsLeft from "../../ViewDetails/DetailsLeft";
 import { ReactComponent as ExpandMore } from "../../../../../../Assets/expand_more.svg";
-import TechDropDown from "../../TechDropDown";
+import TechDropDown from "../../../../../AdminPortal/Task/AssignTask/TechnologyDropdown(Admin)";
 import axios from "axios";
 import { UserContext } from "../../../../../../Context/Context";
 import BreadCrumbs from "../../../../../BreadCrumbs/BreadCrumbs";
@@ -30,6 +30,9 @@ const ViewAllIdeas = () => {
   const [isProjectNameValid, setIsProjectNameValid] = useState(false);
   const [isProjectDescriptionValid, setIsProjectDescriptionValid] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [searchQuery, setSearchQuery] = useState("");
+  const [selectedTechIds, setSelectedTechIds] = useState([]);
+  const [technologyNames, setTechnologyNames] = useState([]);
   const navigate = useNavigate();
 
   const handelIndex = (index) => {
@@ -45,6 +48,7 @@ const ViewAllIdeas = () => {
     setProjDescriptionError("");
     setTech({});
     seTechNames({});
+    setTechnologyNames([]);
 
     const checkboxes = document.querySelectorAll(".tech-checkbox");
     checkboxes.forEach((checkbox) => {
@@ -327,11 +331,15 @@ const ViewAllIdeas = () => {
                             style={{ display: dropDown ? "" : "none" }}
                             className="ul-styling"
                           >
-                            <TechDropDown
-                              techDataComingChild={techDataComingFrmChild}
-                              seTechNames={seTechNames}
-                              techNames={techNames}
-                            />
+                           <TechDropDown
+                          techDataComingChild={techDataComingFrmChild}
+                          selectedTechIds={selectedTechIds}
+                          setSelectedTechIds={setSelectedTechIds}
+                          setTechnologyNames={setTechnologyNames}
+                          technologyNames={technologyNames}
+                          searchQuery={searchQuery}
+                          setSearchQuery={setSearchQuery}
+                        />
                           </ul>
                         </div>
                       </div>
@@ -348,7 +356,7 @@ const ViewAllIdeas = () => {
                         className="col-form-label title-text"
                       >
                         Members(Optional)
-                        <span style={{color: "grey"}}>(Minimum 8 members)</span>
+                        <span style={{color: "grey"}}>(Maximum 8 members)</span>
                       </label>
                       <input
                         className="form-control"

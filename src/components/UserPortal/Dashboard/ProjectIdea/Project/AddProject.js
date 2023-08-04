@@ -3,7 +3,7 @@ import React, { useEffect, useState, useContext } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import EmptyProjectView from "../../EmptyStates/EmptyProject/ProjectViewAll";
 import { ReactComponent as ExpandMore } from "../../../../../Assets/expand_more.svg";
-import TechDropDown from "../TechDropDown";
+import TechDropDown from "../../../../AdminPortal/Task/AssignTask/TechnologyDropdown(Admin)";
 import { UserContext } from "../../../../../Context/Context";
 import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
@@ -32,6 +32,9 @@ const AddProject = () => {
   const [isProjectDescriptionValid, setIsProjectDescriptionValid] = useState(false);
   const [isProjectLinkValid, setIsProjectLinkValid] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [selectAllChecked, setSelectAllChecked] = useState(false);
+  const [searchQuery, setSearchQuery] = useState("");
+  const [selectedTechIds, setSelectedTechIds] = useState([]);
 
   useEffect(() => {
     setTimeout(() => {
@@ -132,6 +135,11 @@ const AddProject = () => {
     } else {
       console.log("No encrypted data found in localStorage.");
     }
+    let techObj = {};
+    technologyNames.forEach((val,ind) =>{
+      techObj[`tech${ind + 1}`] = val;
+    })
+    {console.log("name",techObj)}
     var userId = parsedObject.userId;
     if (error) {
       alert("Please fill in the required details");
@@ -143,7 +151,7 @@ const AddProject = () => {
           userId,
           projectLink,
           hostedLink,
-          technologyNames: techNames,
+          technologyNames: techObj,
           memberNames: memberNames,
         })
         .then((res) => {
@@ -388,9 +396,12 @@ const AddProject = () => {
                       >
                         <TechDropDown
                           techDataComingChild={techDataComingFrmChild}
-                          seTechNames={seTechNames}
-                          techNames={techNames}
+                          selectedTechIds={selectedTechIds}
+                          setSelectedTechIds={setSelectedTechIds}
+                          setTechnologyNames={setTechnologyNames}
                           technologyNames={technologyNames}
+                          searchQuery={searchQuery}
+                          setSearchQuery={setSearchQuery}
                         />
                       </ul>
                     </div>

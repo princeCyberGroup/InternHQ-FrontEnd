@@ -57,6 +57,8 @@
     padding: 1.438rem;
     padding-right: 9.688rem;
     overflow-y: scroll;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
 }
 
 .entire-component {
