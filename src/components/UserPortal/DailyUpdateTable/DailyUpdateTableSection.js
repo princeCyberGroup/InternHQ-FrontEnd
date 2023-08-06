@@ -23,6 +23,7 @@ const DailyUpdateTableSection = (props) => {
   const [selectedItem, setSelectedItem] = useState(null);
   const [modalSaveFlag, setModalSaveFlag] = useState(true);
   const [isLoading, setIsLoading] = useState(true);
+  // const [arrayCurrentResults, setArrayCurrentResults] = useState([])
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -44,7 +45,7 @@ const DailyUpdateTableSection = (props) => {
     }
     await fetch(
       process.env.REACT_APP_API_URL +
-        `/api/v2/getDailyTaskTrackerRecords?userId=${props.userId}`,
+        `/api/v3/getDailyTaskTrackerRecords?userId=${props.userId}`,
       {
         headers: {
           Authorization: `Bearer ${parsedObject["token"]}`,
@@ -152,7 +153,7 @@ const DailyUpdateTableSection = (props) => {
     const getFilterItems = (items, searchValue) => {
       if (searchValue) {
         return items?.filter((item) =>
-          item.topicName.toLowerCase().includes(searchValue.toLowerCase())
+          item.topicName.toLowerCase().startsWith(searchValue.toLowerCase())
         );
       }
 
@@ -192,6 +193,7 @@ const DailyUpdateTableSection = (props) => {
     const filterItems = getFilterItems(filterItemsDropDown, searchFilterValue);
     const filterDate = getFilterDate(filterItems, dateFilterValue);
     setTableData(filterDate);
+    console.log(tableData, "This is table data")
   };
 
   useEffect(() => {

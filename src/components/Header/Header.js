@@ -1,4 +1,5 @@
-import React, { useEffect, useState, useMemo } from "react";
+import React, { useEffect, useState, useContext, useMemo } from "react";
+import { UserContext } from "../../Context/Context";
 import { Link, NavLink, useNavigate } from "react-router-dom";
 import { BsChevronDown } from "react-icons/bs";
 import { ReactComponent as CGlogo } from "../../Assets/CG-Logo (1) 1CGlogo.svg";
@@ -8,8 +9,10 @@ import CryptoJS from "crypto-js";
 import { ReactComponent as UploadCsvv } from "../../Assets/upload.svg";
 import { UploadCsv } from "../AdminPortal/Dashboard/UploadCsv/UploadCsvModal";
 import "../AdminPortal/Dashboard/UploadCsv/uploadCsv.css";
+import axios from "axios";
 
 const Header = () => {
+  const { resetTimer } = useContext(UserContext);
   const secretKey = process.env.REACT_APP_USER_KEY;
   const [userData, setUserData] = useState({});
   let permission = new Set();
@@ -27,9 +30,43 @@ const Header = () => {
 
   const [isTodayDate, setIsTodayDate] = useState(false);
   const navigate = useNavigate();
-  const handleLogout = (e) => {
+  const handleLogout = async (e) => {
     e.preventDefault();
+    if (userData.randomString !== process.env.REACT_APP_USER_DES_ADMIN) {
+      const secretkeyUser = process.env.REACT_APP_USER_KEY;
+      var parsedObject;
+      const data = localStorage.getItem("userData");
+      if (data) {
+        const bytes = CryptoJS.AES.decrypt(data, secretkeyUser);
+        const decryptedJsonString = bytes.toString(CryptoJS.enc.Utf8);
+        parsedObject = JSON.parse(decryptedJsonString);
+      } else {
+        console.log("No encrypted data found in localStorage.");
+      }
+      var userId = parsedObject.userId;
+      await axios
+        .post(process.env.REACT_APP_API_URL + "/api/v3/postLogoutLog", {
+          userId,
+        })
+        .catch((error) => {
+          console.log("this is error", error.response.status);
+          if (error.response.status === 401) {
+            navigate("/error/statusCode=401");
+          }
+          if (error.response.status === 400) {
+            navigate("/error/statusCode=400");
+          }
+          if (error.response.status === 500) {
+            navigate("/error/statusCode=500");
+          }
+          if (error.response.status === 404) {
+            navigate("/error/statusCode=404");
+          }
+        });
+    }
     localStorage.clear("userData");
+    localStorage.clear("tD8kFi5j");
+    resetTimer();
     navigate("/");
   };
 
@@ -64,7 +101,7 @@ const Header = () => {
           className="navbar navbar-expand-lg navbar-light  border-bottom"
           style={{ backgroundColor: "#FFFFFF" }}
         >
-        {/* NavLink is converted to div because of authentication and work needs to be done in it */}
+          {/* NavLink is converted to div because of authentication and work needs to be done in it */}
           <NavLink
             className="navbar-brand"
             to="/dashboard"
@@ -86,7 +123,6 @@ const Header = () => {
                       Dashboard
                     </NavLink>
                   </li>
-
                   <li className="nav-item mx-2">
                     <NavLink to="/daily-Update" className="btn activeBtn">
                       Daily Update

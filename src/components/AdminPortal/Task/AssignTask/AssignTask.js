@@ -152,7 +152,7 @@ const AssignTask = () => {
         <p>Assigned Task</p>
         <button
           type="button"
-          className="add-mentor-button"
+          className="add-task-button"
           data-bs-toggle="modal"
           data-bs-target="#addTaskModal"
           onClick={() => handleAddTask()}
@@ -161,7 +161,7 @@ const AssignTask = () => {
           Add New Task
         </button>
       </div>
-      <div style={{ maxHeight: "80vh", overflow: "auto", width: "820px" }}>
+      <div style={{ maxHeight: "80vh", overflow: "auto"}}>
         {tasks.length === 0 ? (
           <div className="card empty-task-state d-flex justify-content-center align-items-center">
             <div className="col-12 d-flex justify-content-center">
@@ -196,7 +196,7 @@ const AssignTask = () => {
                   {formatDate(task.startDate)} - {formatDate(task.endDate)}
                 </div>
               </div>
-              <div className="card-body p-0 mt-2" style={{ width: "780px" }}>
+              <div className="card-body p-0 mt-2">
                 <h6>Description</h6>
                 <p className="card-text">{task.taskDescription}</p>
                 <h6>Technology</h6>

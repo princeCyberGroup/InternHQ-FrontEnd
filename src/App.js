@@ -46,6 +46,7 @@ import MentorDashboard from "./components/MentorPortal/MentorDashboard/MentorDas
 import MentorAssignTask from "./components/MentorPortal/MentorAssignTask/MentorAssignTask";
 import MentorReview from "./components/MentorPortal/MentorReviewAssociates/MentorReview";
 import InstructorRating from "./components/MentorPortal/MentorAssignTask/RateAssignment/InstructorRating";
+import InterPerformanceReview from "./components/MentorPortal/MentorReviewAssociates/InterPerformanceReview/InterPerformanceReview"
 
 function App() {
   const [dataFromDailyUpdate, setDataFromDailyUpdate] = useState("");
@@ -110,6 +111,7 @@ function App() {
             <Route path="/mentor/assign-task" element={<MentorAssignTask />} />
             <Route path="/mentor/review-associates" element={<MentorReview />} />
             <Route path="/mentor/project-rating" element={<InstructorRating />} />
+            <Route path="/mentor/review-associates/inter-performance-review" element={<InterPerformanceReview/>}/>
           </Route>
 
           <Route path="/session-calendar" element={<SessionCalendar />} />

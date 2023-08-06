@@ -16,6 +16,17 @@ const Context = (props) => {
   );
   const [idea, setIdea] = useState([]);
   const [project, setProject] = useState([]);
+
+ const resetTimer = () => {
+    // Reset elapsed time and other state variables
+    setElapsedTime(0);
+    setScore(-1);
+    setIsRunning(false);
+    setIsPaused(false);
+    localStorage.removeItem("elapsedTimeMain");
+  };
+
+
   useEffect(() => {
     let interval;
     let timerStartTime;
@@ -74,6 +85,7 @@ const Context = (props) => {
           setIdea,
           project,
           setProject,
+          resetTimer
         }}
       >
         {props.children}
