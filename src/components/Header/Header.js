@@ -49,21 +49,7 @@ const Header = () => {
         {
           userId,
         }
-      ).catch((error) => {
-        console.log("this is error", error.response.status);
-        if (error.response.status === 401) {
-          navigate("/error/statusCode=401");
-        }
-        if (error.response.status === 400) {
-          navigate("/error/statusCode=400");
-        }
-        if (error.response.status === 500) {
-          navigate("/error/statusCode=500");
-        }
-        if (error.response.status === 404) {
-          navigate("/error/statusCode=404");
-        }
-      });
+      )
     }
     localStorage.clear("userData");
     localStorage.clear("tD8kFi5j");

@@ -1,20 +1,27 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import CircleRadioButton from "./CircleRadioButton";
 
-const InterPerformanceReviewSection = (props) => {
+const InterPerformanceReviewSection = ({ onDataSent, isFirst, heading, text }) => {
+  const [comment, setComment] = useState("");
     const [selectedValue, setSelectedValue] = useState(null);
 
   const handleRadioButtonClick = (value) => {
     setSelectedValue(value);
   };
+
+  useEffect(() => {
+    onDataSent(comment, selectedValue);
+  }, [comment, selectedValue])
+  
+ 
   return (
-    <div className="row px-0 mx-0" style={{ marginTop: props.isFirst==="true" ? "" : "24px" }}>
+    <div className="row px-0 mx-0" style={{ marginTop: isFirst==="true" ? "" : "24px" }}>
       <div className="row productivity-parameter mx-0">
-        <h6 className="productivity-parameter-text mb-0 ps-0">{props.heading}</h6>
+        <h6 className="productivity-parameter-text mb-0 ps-0">{heading}</h6>
       </div>
       <div className="row px-0 mx-0" style={{ width: "47rem" }}>
         <p className="productivity-parameter-subtext px-0">
-          {props.text}
+          {text}
         </p>
       </div>
       <div className="row px-0 mx-0">
@@ -32,6 +39,7 @@ const InterPerformanceReviewSection = (props) => {
             id="comment"
             cols="30"
             rows="4"
+            onChange={(e) => setComment(e.target.value)}
           ></textarea>
         </div>
         <div

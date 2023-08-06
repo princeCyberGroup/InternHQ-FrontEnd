@@ -192,6 +192,7 @@
 .rating-card {
   padding: 26px 24px 27px 24px;
   gap: 16px;
+  height: 8.8rem;
   border-radius: 8px;
   border: 1px solid var(--secondary-light-gray, #e9eceb);
   background: #fbfbfb;
