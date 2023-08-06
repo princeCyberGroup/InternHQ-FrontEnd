@@ -16,24 +16,31 @@ const MentorTaskDetail = ({ detail }) => {
   const month = todayDate.getMonth() + 1; // Note: January is 0, so we add 1 to get the correct month number
   const day = todayDate.getDate();
   // Create a string representation of today's date in the format "YYYY-MM-DD"
-  const todayDateString = `${month.toString().padStart(2, "0")}-${day
+  const todayDateString = `${month.toString().padStart(2, "0")}/${day
     .toString()
-    .padStart(2, "0")}-${year}`;
+    .padStart(2, "0")}/${year}`;
   //function
   const changeDate = (date) => {
     if (date === null || date === undefined) return "";
     const updatedDate = date?.split("T")[0]?.split("-");
-    return `${updatedDate[1]}-${updatedDate[2]}-${updatedDate[0]}`;
+    return `${updatedDate[1]}/${updatedDate[2]}/${updatedDate[0]}`;
   };
   const checkOverDue = () => {
-    const dateval = endDate.split("-");
-    if (
-      parseInt(dateval[2]) > year ||
-      parseInt(dateval[0]) > month ||
-      parseInt(dateval[1]) > day
-    )
-      return true;
-    return false;
+    console.log("this is date", endDate);
+    console.log("year", year, month, day);
+    const endDateValue = endDate.split("/");
+    console.log(
+      "year",
+      parseInt(endDateValue[2]),
+      parseInt(endDateValue[0]),
+      parseInt(endDateValue[1])
+    );
+    if (parseInt(endDateValue[2]) > year) return false;
+    if (parseInt(endDateValue[2]) === year && parseInt(endDateValue[0]) > month)
+      return false;
+    if (parseInt(endDateValue[0]) === month && parseInt(endDateValue[1]) > day)
+      return false;
+    return true;
   };
   const handleNavigate = () => {
     const taskId = CryptoJS.AES.encrypt(
@@ -90,7 +97,9 @@ const MentorTaskDetail = ({ detail }) => {
                   <div className="name-status-wrapper">
                     <div className="name-percentage-wrapper">
                       <span>{info?.[TASKDATA.N]}</span>
-                      <div>{`${info?.[TASKDATA.OS]} %`}</div>
+                      {info?.[TASKDATA.OS] && (
+                        <div>{`${info?.[TASKDATA.OS]} %`}</div>
+                      )}
                     </div>
                     {info?.[TASKDATA.TD] ? ( // condition if completed
                       <div className="task-status-wrapper">
@@ -105,7 +114,7 @@ const MentorTaskDetail = ({ detail }) => {
                         </div>
                         <div>{"Jul 23, 2023"}</div>
                       </div>
-                    ) : taskOngoing ? ( // to check if it is over last date
+                    ) : !checkOverDue() ? ( // to check if it is over last date
                       <div className="task-status-wrapper">
                         <div
                           className="task-ongoing-wrapper"

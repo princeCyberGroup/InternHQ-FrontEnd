@@ -17,6 +17,31 @@ const MentorAuthGuard = () => {
   }
   const str = decryptedObject?.randomString;
   const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const navigateAccordingToPermission = (str) => {
+    const path = location.pathname;
+    const permissionArray = str.split(",");
+    let session, review, project;
+    permissionArray.forEach((element) => {
+      if (element === "Session") session = true;
+      if (element === "Project") project = true;
+      if (element === "Review") review = true;
+    });
+    // in below conditions Nikhil and Karan pages will also be added after merging
+    if (path === "/mentor/dashboard" && session) {
+      navigate(path);
+    } else if (
+      (path === "/mentor/assign-task" || "/mentor/project-rating") &&
+      (project || session)
+    ) {
+      navigate(path);
+    } else if (path === "/mentor/review-associates" && review) {
+      navigate(path);
+    } else {
+      if (session) navigate("/mentor/dashboard");
+      else if (project) navigate("/mentor/assign-task");
+      else if (review) navigate("/mentor/review-associates");
+    }
+  };
   const handleAuth = () => {
     if (localStorage.getItem("login")) {
       if (localStorage.getItem("login") === "false") {
@@ -27,7 +52,7 @@ const MentorAuthGuard = () => {
           ? navigate("/dashboard")
           : str === "cb8715"
           ? navigate("/admin/dashboard")
-          : navigate(location.pathname);
+          : navigateAccordingToPermission(decryptedObject?.mentorType);
         setIsAuthenticated(true);
       }
     } else {

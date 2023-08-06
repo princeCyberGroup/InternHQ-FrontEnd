@@ -2,39 +2,79 @@ import React, { useState } from "react";
 import { Col, Form, Row, Button } from "react-bootstrap";
 import "./MentorAssignNewTask.css";
 import axios from "axios";
-const MentorAssignNewTask = () => {
+import { ReactComponent as ExpandMore } from "../../../Assets/expand_more.svg";
+import UsersDropdown from "../../AdminPortal/Task/AssignTask/UsersDropdown";
+import TechnologyDropDown from "../../AdminPortal/Task/AssignTask/TechnologyDropdown(Admin)";
+const MentorAssignNewTask = ({ mentorId, fetchData }) => {
   //data
   const [taskTitle, setTaskTitle] = useState("");
   const [description, setDescription] = useState("");
   const [startDate, setStartDate] = useState("");
   const [endDate, setEndDate] = useState("");
-  const [technologyTag, setTechnologyTag] = useState("");
-  const [assignedTo, setAssignedTo] = useState("");
+  // const [technologyTag, setTechnologyTag] = useState("");
+  // const [assignedTo, setAssignedTo] = useState("");
   const [selectAllAssociate, setSelectAllAssociate] = useState(false);
   const [ratedTask, setRatedTask] = useState(false);
 
+  const [dropDown, setDropDown] = useState(false);
+  const [usersDropDown, setUsersDropDown] = useState(false);
+  const [tech, setTech] = useState({});
+  const [users, setUsers] = useState({});
+  const [selectAllUsers, setSelectAllUsers] = useState(false);
+  const [selectedUserIds, setSelectedUserIds] = useState([]);
+  const [selectedUsers, setSelectedUsers] = useState([]);
+  const [selectedTechIds, setSelectedTechIds] = useState([]);
+  const [technologyNames, setTechnologyNames] = useState([]);
+  const [selectAllChecked, setSelectAllChecked] = useState(false);
+  const [searchQuery, setSearchQuery] = useState("");
+  const [searchUserQuery, setSearchUserQuery] = useState("");
   //function
+  const techDataComingFrmChild = (data) => {
+    setTech(data);
+  };
+
+  const usersDataComingFrmChild = (data) => {
+    setUsers(data);
+  };
   const handleCancel = () => {
     // Clear all form fields
+    setStartDate("");
+    setEndDate("");
     setTaskTitle("");
     setDescription("");
-    setSelectAllAssociate(false);
+    // setSelectAllAssociate(false);
     setRatedTask(false);
+    setSelectedTechIds([]);
+    setSelectedUserIds([]);
+    setTechnologyNames([]);
+    setSelectedUsers([]);
+    setTech({});
+    setUsers({});
+    setSearchQuery("");
+    setSearchUserQuery("");
+    setDropDown(false);
+    setUsersDropDown(false);
+    setSelectAllChecked(false);
   };
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
     // Prepare the form data as a JSON object
     const formData = {
-      taskTitle,
-      description,
-      selectAllAssociate,
+      taskName: taskTitle,
+      taskDescription: description,
       ratedTask,
+      assignedBy: mentorId,
+      taskTech: selectedTechIds,
+      taskUsers: selectedUserIds,
+      startDate: startDate,
+      endDate: endDate,
     };
 
+    console.log("this is sending data", formData);
     // Send the form data to the backend API
-    axios
-      .post("/api/endpoint", formData)
+    await axios
+      .post(process.env.REACT_APP_API_URL + "/api/v4/tasks", formData)
       .then((response) => {
         // Handle the API response if needed
         console.log("API response:", response.data);
@@ -43,15 +83,19 @@ const MentorAssignNewTask = () => {
         // Handle errors if any
         console.error("API error:", error);
       });
+    handleCancel();
+    fetchData();
+    // window.location.reload();
   };
   return (
     <>
       <button
-        className="btn btn-primary"
+        className="mentor-task-btn"
         data-bs-toggle="modal"
         data-bs-target="#mentorAssignModal"
       >
-        + Assign New Task
+        <span className="plus-style">+</span>
+        <span>Assign New Task</span>
       </button>
       <div className="modal fade" id="mentorAssignModal">
         <div className="modal-dialog modal-dialog-centered">
@@ -121,27 +165,121 @@ const MentorAssignNewTask = () => {
                 </Row>
 
                 <Form.Group controlId="technologyTag">
-                  <Form.Label className="mb-1 custom-form-label">
-                    Technology Tag
-                  </Form.Label>
-                  <Form.Control
-                    type="text"
-                    placeholder="Enter technology tag"
-                    value={technologyTag}
-                    onChange={(e) => setTechnologyTag(e.target.value)}
-                  />
+                  <div className="mb-3">
+                    <label
+                      for="technology-tag"
+                      className="col-form-label form-title-names"
+                    >
+                      Technology Tag<span style={{ color: "red" }}>*</span>
+                    </label>
+
+                    <div className="container border p-0">
+                      <div className="input-with-button">
+                        <button
+                          type="button"
+                          className="button-for-dropdown"
+                          onClick={() => {
+                            setDropDown(!dropDown);
+                          }}
+                        >
+                          <input
+                            type="text"
+                            className="custom-input"
+                            placeholder="Select Technology"
+                            value={Object.values(tech)}
+                            disabled
+                          />
+                        </button>
+                        <button
+                          type="button"
+                          className="expand-more"
+                          onClick={() => {
+                            setDropDown(!dropDown);
+                          }}
+                        >
+                          <ExpandMore />
+                        </button>
+                      </div>
+                      <div>
+                        <ul
+                          style={{ display: dropDown ? "" : "none" }}
+                          className="ul-styling"
+                        >
+                          <TechnologyDropDown
+                            techDataComingChild={techDataComingFrmChild}
+                            selectedTechIds={selectedTechIds}
+                            setSelectedTechIds={setSelectedTechIds}
+                            setTechnologyNames={setTechnologyNames}
+                            technologyNames={technologyNames}
+                            searchQuery={searchQuery}
+                            setSearchQuery={setSearchQuery}
+                          />
+                        </ul>
+                      </div>
+                    </div>
+                  </div>
                 </Form.Group>
 
                 <Form.Group controlId="assignedTo">
-                  <Form.Label className="mb-1 custom-form-label">
-                    Assigned To
-                  </Form.Label>
-                  <Form.Control
-                    type="text"
-                    placeholder="Enter assigned to"
-                    value={assignedTo}
-                    onChange={(e) => setAssignedTo(e.target.value)}
-                  />
+                  <div className="mb-3">
+                    <label
+                      for="assigned-to"
+                      className="col-form-label form-title-names"
+                    >
+                      Assigned To<span style={{ color: "red" }}>*</span>
+                    </label>
+
+                    <div className="container border p-0">
+                      <div className="input-with-button">
+                        <button
+                          type="button"
+                          className="button-for-dropdown"
+                          onClick={() => {
+                            setUsersDropDown(!usersDropDown);
+                          }}
+                        >
+                          <input
+                            type="text"
+                            className="custom-input"
+                            placeholder="Select Assigned To"
+                            value={Object.values(users)}
+                            disabled
+                          />
+                        </button>
+                        <button
+                          type="button"
+                          className="expand-more"
+                          onClick={() => {
+                            setUsersDropDown(!usersDropDown);
+                          }}
+                        >
+                          <ExpandMore />
+                        </button>
+                      </div>
+                      <div>
+                        <ul
+                          style={{
+                            height: "10rem",
+                            display: usersDropDown ? "" : "none",
+                          }}
+                          className="ul-styling"
+                        >
+                          <UsersDropdown
+                            usersDataComingChild={usersDataComingFrmChild}
+                            selectAllUsers={selectAllUsers}
+                            setSelectedUserIds={setSelectedUserIds}
+                            selectedUserIds={selectedUserIds}
+                            setSelectedUsers={setSelectedUsers}
+                            selectedUsers={selectedUsers}
+                            selectAllChecked={selectAllChecked}
+                            setSelectAllChecked={setSelectAllChecked}
+                            searchUserQuery={searchUserQuery}
+                            setSearchUserQuery={setSearchUserQuery}
+                          />
+                        </ul>
+                      </div>
+                    </div>
+                  </div>
                 </Form.Group>
                 {/* <Row className="mb-3 d-flex align-items-center">
                   <Col md={10}>
@@ -178,25 +316,27 @@ const MentorAssignNewTask = () => {
                     />
                   </Col>
                 </Row>
-
-                <div className="d-flex justify-content-end mb-3">
-                  <Button
-                    variant="secondary"
-                    type="button"
-                    className="custom-cancel-button me-2 "
-                    onClick={handleCancel}
-                  >
-                    Cancel
-                  </Button>
-                  <Button
-                    variant="primary"
-                    type="submit"
-                    onClick={handleSubmit}
-                  >
-                    Save
-                  </Button>
-                </div>
               </Form>
+            </div>
+            <div className="modal-footer border-top-0">
+              <button
+                type="button"
+                className="btn modal-cancel-button fw-bold"
+                data-bs-dismiss="modal"
+                onClick={(e) => handleCancel(e)}
+              >
+                <span className="cancel-text">Cancel</span>
+              </button>
+
+              <button
+                type="button"
+                className="btn modal-save-button"
+                data-bs-dismiss={"modal"}
+                data-bs-target="#addTaskModal"
+                onClick={(e) => handleSubmit(e)}
+              >
+                <span className="save-text-field">Save</span>
+              </button>
             </div>
           </div>
         </div>

@@ -49,12 +49,14 @@
   display: flex;
   flex-direction: column;
   gap: 0.25rem;
+  font-size: 12px;
+  line-height: 16px;
 }
 .desc-child-two div {
   font-weight: 400;
   display: flex;
 }
-.rate-info-wrapper{
+.rate-info-wrapper {
   display: flex;
   gap: 1rem;
 }
@@ -75,16 +77,19 @@
   border: 1px solid var(--secondary-gray, #b2b2b3);
   padding: 8px;
   text-align: center;
+  font-weight: 400;
 }
 .custom-table td.align-left {
   text-align: left;
-  width: 150px;
+  min-width: 150px;
 }
 .custom-table th:first-child {
   background-color: unset;
   color: #002c3f;
   text-align: left;
   border-right: 1px solid var(--secondary-gray, #b2b2b3);
+  width: 150px;
+  font-weight: 600;
 }
 .custom-table th:not(:first-child) {
   border: 1px solid #064561;
@@ -109,4 +114,14 @@
   font-size: 1rem;
   line-height: normal;
   border: none;
+  cursor: pointer;
+}
+.inst-save-button-wrapper button:disabled{
+  cursor: default;
+  opacity: 0.5;
+}
+.error-message {
+  color: red;
+  font-size: 14px;
+  margin-top: 10px;
 }

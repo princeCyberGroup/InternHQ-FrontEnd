@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useMemo } from "react";
 import { Link, NavLink, useNavigate } from "react-router-dom";
 import { BsChevronDown } from "react-icons/bs";
 import { ReactComponent as CGlogo } from "../../Assets/CG-Logo (1) 1CGlogo.svg";
@@ -7,11 +7,12 @@ import MentorAssignedAlerts from "../UserPortal/Dashboard/MentorAssignedAlerts/M
 import CryptoJS from "crypto-js";
 import { ReactComponent as UploadCsvv } from "../../Assets/upload.svg";
 import { UploadCsv } from "../AdminPortal/Dashboard/UploadCsv/UploadCsvModal";
-import "../AdminPortal/Dashboard/UploadCsv/uploadCsv.css"
+import "../AdminPortal/Dashboard/UploadCsv/uploadCsv.css";
 
 const Header = () => {
   const secretKey = process.env.REACT_APP_USER_KEY;
   const [userData, setUserData] = useState({});
+  let permission = new Set();
 
   useEffect(() => {
     const data = localStorage.getItem("userData");
@@ -49,6 +50,12 @@ const Header = () => {
     });
     setIsTodayDate(isToday);
   };
+  if (userData?.mentorType !== undefined) {
+    const arr = userData?.mentorType.split(",");
+    arr.forEach((element) => {
+      permission.add(`${element}`);
+    });
+  }
 
   return (
     <>
@@ -57,6 +64,7 @@ const Header = () => {
           className="navbar navbar-expand-lg navbar-light  border-bottom"
           style={{ backgroundColor: "#FFFFFF" }}
         >
+        {/* NavLink is converted to div because of authentication and work needs to be done in it */}
           <NavLink
             className="navbar-brand"
             to="/dashboard"
@@ -67,89 +75,100 @@ const Header = () => {
             </div>
           </NavLink>
           <div className="collapse navbar-collapse border-Side" id="navbarNav">
-            {userData.randomString === process.env.REACT_APP_USER_DES_USER ? (
-              // user */
-              <ul
-                className="navbar-nav nav-bg d-flex align-items-center"
-                style={{ height: "2.7rem" }}
-              >
-                <li className="nav-item ps-1">
-                  <NavLink to="/dashboard" className="btn activeBtn">
-                    Dashboard
-                  </NavLink>
-                </li>
+            <ul
+              className="navbar-nav nav-bg d-flex align-items-center"
+              style={{ height: "2.7rem" }}
+            >
+              {userData.randomString === process.env.REACT_APP_USER_DES_USER ? (
+                <>
+                  <li className="nav-item ps-1">
+                    <NavLink to="/dashboard" className="btn activeBtn">
+                      Dashboard
+                    </NavLink>
+                  </li>
 
-                <li className="nav-item mx-2">
-                  <NavLink to="/daily-Update" className="btn activeBtn">
-                    Daily Update
-                  </NavLink>
-                </li>
+                  <li className="nav-item mx-2">
+                    <NavLink to="/daily-Update" className="btn activeBtn">
+                      Daily Update
+                    </NavLink>
+                  </li>
 
-                <li className="nav-item pe-1">
-                  <NavLink to="/skill-Management" className="btn activeBtn ">
-                    Skill Management
-                  </NavLink>
-                </li>
-              </ul>
-            ) : (userData.randomString ===
-              process.env.REACT_APP_USER_DES_ADMIN) ? (
-              // Admin */
-              <ul
-                className="navbar-nav nav-bg d-flex align-items-center"
-                style={{ height: "2.7rem" }}
-              >
-                <li className="nav-item ps-1">
-                  <NavLink to="/admin/dashboard" className="btn activeBtn">
-                    Dashboard
-                  </NavLink>
-                </li>
-                <li className="nav-item mx-2">
-                  <NavLink to="/admin/assign-task" className="btn activeBtn">
-                    Assign Task
-                  </NavLink>
-                </li>
-
+                  <li className="nav-item pe-1">
+                    <NavLink to="/skill-Management" className="btn activeBtn ">
+                      Skill Management
+                    </NavLink>
+                  </li>
+                </>
+              ) : userData.randomString ===
+                process.env.REACT_APP_USER_DES_ADMIN ? (
+                <>
+                  <li className="nav-item ps-1">
+                    <NavLink to="/admin/dashboard" className="btn activeBtn">
+                      Dashboard
+                    </NavLink>
+                  </li>
+                  <li className="nav-item mx-2">
+                    <NavLink to="/admin/assign-task" className="btn activeBtn">
+                      Assign Task
+                    </NavLink>
+                  </li>
+                  <li className="nav-item">
+                    <NavLink to="/admin/skill-test" className="btn activeBtn ">
+                      Skill Test
+                    </NavLink>
+                  </li>
+                  <li className="nav-item mx-2">
+                    <NavLink to="/admin/reports" className="btn activeBtn ">
+                      Report
+                    </NavLink>
+                  </li>
+                  <li className="nav-item pe-1">
+                    <NavLink to="/admin/logs" className="btn activeBtn ">
+                      Logs
+                    </NavLink>
+                  </li>
+                </>
+              ) : (
+                <>
+                  {permission.has("Session") && (
+                    <li className="nav-item ps-1">
+                      <NavLink to="/mentor/dashboard" className="btn activeBtn">
+                        Dashboard
+                      </NavLink>
+                    </li>
+                  )}
+                  {(permission.has("Session") || permission.has("Project")) && (
+                    <li className="nav-item mx-2">
+                      <NavLink
+                        to="/mentor/assign-task"
+                        className="btn activeBtn"
+                      >
+                        Assign Task
+                      </NavLink>
+                    </li>
+                  )}
+                  {permission.has("Review") && (
+                    <li className="nav-item">
+                      <NavLink
+                        to="/mentor/review-associates"
+                        className="btn activeBtn "
+                      >
+                        Review Associates
+                      </NavLink>
+                    </li>
+                  )}
+                </>
+              )}
+              {(userData?.mentorType === undefined ||
+                (userData?.mentorType !== null &&
+                  permission.has("Session"))) && (
                 <li className="nav-item">
-                  <NavLink to="/admin/skill-test" className="btn activeBtn ">
-                    Skill Test
+                  <NavLink to="/session-calendar" className="btn activeBtn ">
+                    Session Calendar
                   </NavLink>
                 </li>
-                <li className="nav-item mx-2">
-                  <NavLink to="/admin/reports" className="btn activeBtn ">
-                    Report
-                  </NavLink>
-                </li>
-                <li className="nav-item pe-1">
-                  <NavLink to="/admin/logs" className="btn activeBtn ">
-                    Logs
-                  </NavLink>
-                </li>
-              </ul>
-            ) : (
-              // Mentor */
-              <ul
-                className="navbar-nav nav-bg d-flex align-items-center"
-                style={{ height: "2.7rem" }}
-              >
-                <li className="nav-item ps-1">
-                  <NavLink to="/mentor/dashboard" className="btn activeBtn">
-                    Dashboard
-                  </NavLink>
-                </li>
-
-                <li className="nav-item mx-2">
-                  <NavLink to="/mentor/assign-task" className="btn activeBtn">
-                    Assign Task
-                  </NavLink>
-                </li>
-
-                <li className="nav-item">
-                  <NavLink to="/mentor/review-associates" className="btn activeBtn ">
-                    Review Associates
-                  </NavLink>
-                </li>
-              </ul>
-            )}
+              )}
+            </ul>
           </div>
 
           {userData.randomString === process.env.REACT_APP_USER_DES_USER ? (
@@ -157,16 +176,19 @@ const Header = () => {
               <MentorAssignedAlerts func={anotherFunc} setState={isTodayDate} />
             </>
           ) : (
-            <>
-            <button
-              className="upload-list-button"
-              data-bs-toggle="modal"
-              data-bs-target="#uploadCsv"
-              style={{marginRight: "24px"}}
-            >
-              <UploadCsvv />Upload CSV
-            </button>
-          </>
+            userData.randomString === process.env.REACT_APP_USER_DES_ADMIN && (
+              <>
+                <button
+                  className="upload-list-button"
+                  data-bs-toggle="modal"
+                  data-bs-target="#uploadCsv"
+                  style={{ marginRight: "24px" }}
+                >
+                  <UploadCsvv />
+                  Upload CSV
+                </button>
+              </>
+            )
           )}
 
           <div

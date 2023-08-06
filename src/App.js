@@ -14,6 +14,7 @@ import ForgotPasswordScreen from "./components/Accounts/ForgotPassword/ForgotPas
 import ForgotPasswordOtpScreen from "./components/Accounts/Otp/ForgotPasswordOtpScreen";
 import CreateNewPasswordScreen from "./components/Accounts/ForgotPassword/CreateNewPasswordScreen";
 import PasswordChangedScreen from "./components/Accounts/ForgotPassword/PasswordChangedSuccessfulScreen";
+import SessionCalendar from "./components/Utilities/SessionCalendar";
 
 import Dashboard from "./components/UserPortal/Dashboard/Dashboard";
 import ViewAllProjects from "./components/UserPortal/Dashboard/ProjectIdea/Project/ViewAllProject/ViewAllProjects";
@@ -111,6 +112,7 @@ function App() {
             <Route path="/mentor/project-rating" element={<InstructorRating />} />
           </Route>
 
+          <Route path="/session-calendar" element={<SessionCalendar />} />
           <Route path="/error/statusCode=400" element={<Error_400 />} />
           <Route path="/error/statusCode=500" element={<Error_500 />} />
           <Route path="/error/statusCode=401" element={<SessionExpired />} />

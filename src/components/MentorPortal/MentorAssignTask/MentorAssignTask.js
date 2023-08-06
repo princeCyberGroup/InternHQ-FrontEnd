@@ -33,51 +33,49 @@ const MentorAssignTask = () => {
   const navigate = useNavigate();
   const [adminTask, setAdminTask] = useState([]);
   const [taskInd, setTaskInd] = useState(0);
+  const data = localStorage.getItem("userData");
+  const secretkeyUser = process.env.REACT_APP_USER_KEY;
+  let parsedObject;
+  if (data) {
+    const bytes = CryptoJS.AES.decrypt(data, secretkeyUser);
+    const decryptedJsonString = bytes.toString(CryptoJS.enc.Utf8);
+    parsedObject = JSON.parse(decryptedJsonString);
+  } else {
+    console.log("No encrypted data found in localStorage.");
+  }
+  const mentorId = parsedObject["userId"];
+  const cancelToken = axios.CancelToken.source();
+  const fetchData = () => {
+    axios
+      .get(
+        process.env.REACT_APP_API_URL +
+          `/api/v4/mentor-tasks?mentorId=${parsedObject["userId"]}`,
+        {
+          headers: { Authorization: `Bearer ${parsedObject["token"]}` },
+          cancelToken: cancelToken.token,
+        }
+      )
+      .then((res) => {
+        setAdminTask(res.data.response);
+      })
+      .catch((error) => {
+        const errorCode = error.response.status;
+        if (errorCode === 401) {
+          navigate("/error/statusCode=401");
+        }
+        if (errorCode === 400) {
+          navigate("/error/statusCode=400");
+        }
+        if (errorCode === 500) {
+          navigate("/error/statusCode=500");
+        }
+        if (errorCode === 404) {
+          navigate("/error/statusCode=404");
+        }
+      });
+  };
   //function
   useEffect(() => {
-    const data = localStorage.getItem("userData");
-    const secretkeyUser = process.env.REACT_APP_USER_KEY;
-    var parsedObject;
-    const cancelToken = axios.CancelToken.source();
-    const fetchData = () => {
-      if (data) {
-        const bytes = CryptoJS.AES.decrypt(data, secretkeyUser);
-        const decryptedJsonString = bytes.toString(CryptoJS.enc.Utf8);
-        parsedObject = JSON.parse(decryptedJsonString);
-      } else {
-        console.log("No encrypted data found in localStorage.");
-      }
-      axios
-        .get(
-          process.env.REACT_APP_API_URL +
-            `/api/v4/mentor-tasks?mentorId=${parsedObject["userId"]}`,
-          {
-            headers: { Authorization: `Bearer ${parsedObject["token"]}` },
-            cancelToken: cancelToken.token,
-          }
-        )
-        .then((res) => {
-          setAdminTask(res.data.response);
-        })
-        .catch((error) => {
-          if (axios.isCancel(error)) {
-            console.log("cancelled");
-          }
-          const errorCode = error.response.status;
-          if (errorCode === 401) {
-            navigate("/error/statusCode=401");
-          }
-          if (errorCode === 400) {
-            navigate("/error/statusCode=400");
-          }
-          if (errorCode === 500) {
-            navigate("/error/statusCode=500");
-          }
-          if (errorCode === 404) {
-            navigate("/error/statusCode=404");
-          }
-        });
-    };
     fetchData();
     return () => {
       cancelToken.cancel("request cancelled");
@@ -91,7 +89,7 @@ const MentorAssignTask = () => {
       <div className="mentortask-parent-wrapper">
         <div className="mentortask-header-wrapper">
           <span>Assign Task</span>
-          <MentorAssignNewTask />
+          <MentorAssignNewTask mentorId={mentorId} fetchData={fetchData} />
         </div>
         <div className="mentortask-data-wrapper">
           <div className="task-heading-wrapper">

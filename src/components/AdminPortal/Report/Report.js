@@ -68,21 +68,18 @@ const Report = () => {
   };
   const handleConfirm = async () => {
     setIsLoading(true);
+    let response;
     try {
-      const response = await axios.post(
-        "https://cg-interns-hq.azurewebsites.net/api/v3/update-deployed",
+      response = await axios.post(
+        process.env.REACT_APP_API_URL + "/api/v3/update-deployed",
         deployData.map((value) => {
           return { ...value, status: value.status.toString() };
         })
       );
-      console.log("response api data", response.data);
     } catch (error) {
       console.log("this is error in report post api", error);
     }
-    // setConfirmChange(false);
-    // setLoadFilter((prev) => !prev);
-    // fetchData();
-    window.location.reload();
+    if (response.status === 200) fetchData();
   };
   const handleFiltersChange = () => {
     const getFilterItems = (items, query) => {
