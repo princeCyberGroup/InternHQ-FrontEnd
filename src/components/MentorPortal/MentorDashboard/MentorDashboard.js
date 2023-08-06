@@ -31,7 +31,7 @@ const MentorDashboard = () => {
   const fetchData = async () => {
     try {
       const response = await fetch(
-        process.env.REACT_APP_API_URL + `/api/v3/getDashboardStatus`,
+        process.env.REACT_APP_API_URL + `/api/v4/dashboard-status`,
         {
           headers: {
             Authorization: `Bearer ${parsedObject["token"]}`,
