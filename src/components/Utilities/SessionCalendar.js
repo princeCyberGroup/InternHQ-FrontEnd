@@ -15,12 +15,6 @@ const SessionCalendar = () => {
   const tooltipRef = useRef(null);
   const data = localStorage.getItem("userData");
   const secretkeyUser = process.env.REACT_APP_USER_KEY;
-  const taskIdValue = parseInt(
-    CryptoJS.AES.decrypt(
-      sessionStorage.getItem("taskId"),
-      process.env.REACT_APP_TASK_ID
-    ).toString(CryptoJS.enc.Utf8)
-  );
   var parsedObject;
   const bytes = CryptoJS.AES.decrypt(data, secretkeyUser);
   const decryptedJsonString = bytes.toString(CryptoJS.enc.Utf8);
