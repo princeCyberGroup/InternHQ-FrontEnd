@@ -35,16 +35,21 @@ export const SkillAlerts = () => {
       const bytes = CryptoJS.AES.decrypt(data, secretkeyUser);
       const decryptedJsonString = bytes.toString(CryptoJS.enc.Utf8);
       parsedObject = JSON.parse(decryptedJsonString);
+      // console.log(parsedObject);
+      let mentorEmail=parsedObject.email;
+            console.log(parsedObject.email);
+
     } else {
       console.log("No encrypted data found in localStorage.");
     }
     try {
       // Make an API request to fetch data
       const response = await fetch(
-        process.env.REACT_APP_API_URL + "/api/v4/mentor-notification",
+        process.env.REACT_APP_API_URL + `/api/v4/mentor-notification?mentorEmail=${parsedObject["email"]}`,
         {
           headers: {
             Authorization: `Bearer ${parsedObject["token"]}`,
+            
           },
         }
       );
@@ -71,9 +76,9 @@ export const SkillAlerts = () => {
 
   return (
     <>
-      <Link to="" className="about-link p-0 mb-3">
+      <p className="about-link p-0 mb-3">
         Skill Alerts
-      </Link>
+      </p>
       {isLoading ? (
         <>
         <div className="notification-pass card">
