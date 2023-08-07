@@ -1,0 +1,151 @@
+.review-container-table {
+  padding: 0;
+  width: inherit;
+  margin: -9px 43px 20px 43px;
+}
+.review-table-report {
+  width: inherit;
+  position: relative;
+  border-collapse: separate;
+  border-spacing: 0 0.5rem;
+  table-layout: fixed;
+}
+.review-table-report thead {
+  top: 0;
+  position: sticky;
+  border-collapse: separate;
+  border-spacing: 0 0;
+  background-color: #f9f9f9;
+}
+.review-table-report th,
+.review-table-report td {
+  padding: 0.5rem;
+}
+.review-table-report th {
+  background-color: #002c3f;
+  color: white;
+  font-weight: 500;
+}
+.review-table-report .circle {
+  border-radius: 50%;
+  width: 2.375rem;
+  height: 2.375rem;
+  background-color: #97c0c5;
+  margin-right: 0.5rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family: "Roboto";
+  font-style: normal;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 16px;
+  text-align: center;
+  color: #ffffff;
+}
+.review-tech-tags {
+  display: flex;
+  flex-wrap: wrap;
+  border-radius: 2px;
+  gap: 8px;
+}
+.review-tech-tags .review-tag-tech {
+  background: #f4f6f5;
+  border: 1px solid #b2b2b3;
+  border-radius: 4px;
+  padding: 6px;
+  gap: 4px;
+  font-family: "Roboto";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 12px;
+  line-height: 14px;
+}
+.review-tech-tags .review-all-tech {
+  font-family: "Roboto";
+  font-style: normal;
+  font-weight: 600;
+  font-size: 12px;
+  line-height: 14px;
+  color: #ffffff;
+  padding: 6px 8px;
+  background: #28519e;
+  border-radius: 2px;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+.review-status {
+  font-family: "Roboto";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 14px;
+  color: #343435;
+}
+.review-table-report tbody tr {
+  box-shadow: 0px 2px 12px rgba(40, 52, 73, 0.15);
+  cursor: pointer;
+}
+.review-name-column {
+  display: flex;
+  gap: 14px;
+}
+.review-name-column .review-tags {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  gap: 4px;
+}
+.review-name-column .review-tags .review-tag1 {
+  font-family: "Roboto";
+  font-style: normal;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 19px;
+  color: #28519e;
+}
+.review-int {
+  font-family: "Roboto";
+  font-style: normal;
+  color: #343435;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 14px;
+}
+.review-no-data-body {
+  position: relative;
+}
+.review-no-data-body {
+  position: absolute;
+}
+.review-status-card {
+  width: 102px;
+  display: flex;
+  border-radius: 4px;
+  background: #cef0dc;
+  padding: 4px 6px;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 11px;
+  color: var(--primary-gray, #343435);
+  text-align: right;
+  font-family: Roboto;
+  font-size: 13px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+}
+
+.review-status-date {
+  display: flex;
+  justify-content: end;
+  width: 102px;
+  color: #6d6d6d;
+  font-family: Roboto;
+  font-size: 13px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+}

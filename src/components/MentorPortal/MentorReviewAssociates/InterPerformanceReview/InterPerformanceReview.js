@@ -1,11 +1,10 @@
 import React, { useState } from "react";
 import Header from "../../../Header/Header";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { ReactComponent as Chevron } from "../../../../Assets/Vectorchevron.svg";
 import { ReactComponent as Usercircle } from "../../../../Assets/Usercircle.svg";
 import { ReactComponent as ReviewInfoIcon } from "../../../../Assets/ReviewInfoIcon.svg";
 import { ReactComponent as Clock } from "../../../../Assets/Clock.svg";
-import { ReactComponent as OverallIcon } from "../../../../Assets/OverallIcon.svg";
 import { ReactComponent as Profile } from "../../../../Assets/Profile.svg";
 import { ReactComponent as ReviewNo } from "../../../../Assets/ReviewNo.svg";
 import { ReactComponent as ReviewNoRed } from "../../../../Assets/ReviewNoRed.svg";
@@ -14,12 +13,61 @@ import { ReactComponent as ReviewYesGreen } from "../../../../Assets/ReviewYesGr
 import "./InterPerformanceReview.css";
 import InterPerformanceReviewSection from "./InterPerformanceReviewSection";
 
-const MentorReview = () => {
-  const [selectedOption, setSelectedOption] = useState(null);
+const InterPerformanceReview = () => {
+  // const [selectedValue, setSelectedValue] = useState(null); // 1-2-3-4-5
+  
+  const [productivity, setProductivity] = useState("");
+  const [productivityOption, setProductivityOption] = useState(null);
+
+  const [quality, setQuality] = useState("");
+  const [qualityOption, setQualityOption] = useState(null);
+
+  const [behaviour, setBehaviour] = useState("");
+  const [behaviourOption, setBehaviourOption] = useState(null);
+
+  const [subject, setSubject] = useState("");
+  const [subjectOption, setSubjectOption] = useState(null);
+
+  const [willingness, setWillingness] = useState("");
+  const [willingnessOption, setWillingnessOption] = useState(null);
+
+  const [communication, setCommunication] = useState("");
+  const [communicationOption, setCommunicationOption] = useState(null);
+
+  const [comment, setComment] = useState("");
+  const [commentOption, setCommentOption] = useState(null); // YES OR NO
 
   const handleButtonClick = (option) => {
-    setSelectedOption(option);
+    setCommentOption(option);
   };
+
+  // const handleChildData= (comment, selectedValue) => {
+  //   console.log(comment, "This is comment")
+  //   console.log(selectedValue, "This is selected value")
+  //   setComment(comment);
+  //   setSelectedValue(selectedValue);
+  // }
+
+  const handleSave = () => {
+    console.log("Productivity", productivity)
+    console.log("ProductivityOption", productivityOption)
+    console.log("Quality", quality)
+    console.log("QualityOption", qualityOption)
+    console.log("Behaviour", behaviour)
+    console.log("BehaviourOption", behaviourOption)
+    console.log("Subject", subject)
+    console.log("SubjectOption", subjectOption)
+    console.log("Willingness", willingness)
+    console.log("WillingnessOption", willingnessOption)
+    console.log("Communication", communication)
+    console.log("CommunicationOption", communicationOption)
+    console.log("Comment", comment)
+    console.log("CommentOption", commentOption)
+  }
+
+  const handleSubmit = () => {
+    
+  }
 
   return (
     <>
@@ -55,6 +103,7 @@ const MentorReview = () => {
                   <div className="interper-det-dot" />
                   <div className="interper-icon-pair">
                     <Clock />
+
                     <span>{`08 months`}</span>
                   </div>
                 </div>
@@ -105,36 +154,60 @@ const MentorReview = () => {
                     text="Meets productivity standards; completes work in a quick and timely
           manner; strives to increase productivity."
                     isFirst="true"
+                    onDataSent={(comment, selectedValue) => {
+                      setProductivity(comment);
+                      setProductivityOption(selectedValue)
+                    }}
                   />
                   <InterPerformanceReviewSection
                     heading="Quality of Work"
                     text="Demonstrates accuracy and thoroughness; displays commitment to excellence; looks for ways to improve and promote 
                     quality; shows good attention to detail."
                     isFirst="false"
+                    onDataSent={(comment, selectedValue) => {
+                      setQuality(comment);
+                      setQualityOption(selectedValue)
+                    }}
                   />
                   <InterPerformanceReviewSection
                     heading="Behavior at Work"
                     text="Demonstrates a good work ethic, displays positive outlook and pleasant manner; Is disciplined, offers assistance and 
                     support to coworkers; willing to go the extra mile; makes maximum use of time."
                     isFirst="false"
+                    onDataSent={(comment, selectedValue) => {
+                      setBehaviour(comment);
+                      setBehaviourOption(selectedValue)
+                    }}
                   />
                   <InterPerformanceReviewSection
                     heading="Subject Knowledge"
                     text="Competent in required job skills and knowledge; exhibits ability to learn and apply new skills; keeps abreast of current 
                     developments in the project; requires minimal supervision."
                     isFirst="false"
+                    onDataSent={(comment, selectedValue) => {
+                      setSubject(comment);
+                      setSubjectOption(selectedValue)
+                    }}
                   />
                   <InterPerformanceReviewSection
                     heading="Willingness to Learn"
                     text="Shows an openness and eagerness to learn from others; accepts criticism and feedback; applies feedback to improve 
                     performance; effectively deals with issues before they become problems; asks for help when needed."
                     isFirst="false"
+                    onDataSent={(comment, selectedValue) => {
+                      setWillingness(comment);
+                      setWillingnessOption(selectedValue)
+                    }}
                   />
                   <InterPerformanceReviewSection
                     heading="Communication"
                     text="Exhibits good listening and comprehension; expresses ideas and thoughts effectively; keeps other adequately informed;
                     resolves conflict effectively and timely."
                     isFirst="false"
+                    onDataSent={(comment, selectedValue) => {
+                      setCommunication(comment);
+                      setCommunicationOption(selectedValue)
+                    }}
                   />
                   <div className="row px-0 mx-0" style={{ marginTop: "24px" }}>
                     <div className="row px-0 mx-0">
@@ -150,6 +223,7 @@ const MentorReview = () => {
                           id="comment"
                           cols="30"
                           rows="4"
+                          onChange={(e) => {setComment(e.target.value)}}
                         ></textarea>
                       </div>
                       <div
@@ -161,16 +235,16 @@ const MentorReview = () => {
                             <button
                               className="btn final-review-btn bg-white"
                               onClick={() => handleButtonClick("Yes")}
-                              style={{border: `${selectedOption === "Yes" ? "1px solid var(--other-green, #2DC26B)" : "1px solid var(--primary-gray, #343435)"}`}}
+                              style={{border: `${commentOption === "Yes" ? "1px solid var(--other-green, #2DC26B)" : "1px solid var(--primary-gray, #343435)"}`}}
                             >
-                             {selectedOption === "Yes" ? <ReviewYesGreen/> : <ReviewYes/>}<span style={{marginLeft: "16px"}}>Yes</span>
+                             {commentOption === "Yes" ? <ReviewYesGreen/> : <ReviewYes/>}<span style={{marginLeft: "16px"}}>Yes</span>
                             </button>
                             <button
                               className="btn final-review-btn bg-white"
                               onClick={() => handleButtonClick("No")}
-                              style={{border: `${selectedOption === "No" ? "1px solid var(--other-red, #E03E2D)" : "1px solid var(--primary-gray, #343435)"}`}}
+                              style={{border: `${commentOption === "No" ? "1px solid var(--other-red, #E03E2D)" : "1px solid var(--primary-gray, #343435)"}`}}
                             >
-                             {selectedOption === "No" ? <ReviewNoRed/> : <ReviewNo/>}<span style={{marginLeft: "16px"}}>No</span>
+                             {commentOption === "No" ? <ReviewNoRed/> : <ReviewNo/>}<span style={{marginLeft: "16px"}}>No</span>
                             </button>
                           </div>
                         </div>
@@ -187,11 +261,11 @@ const MentorReview = () => {
         <button className="btn btn-outline-primary review-outline-btn">
           Cancel
         </button>
-        <button className="btn btn-primary mx-3 review-btns">Save</button>
-        <button className="btn btn-primary review-btns">Submit</button>
+        <button className="btn btn-primary mx-3 review-btns" onClick={() => {handleSave()}} >Save</button>
+        <button className="btn btn-primary review-btns" onClick={() => {handleSubmit()}}>Submit</button>
       </div>
     </>
   );
 };
 
-export default MentorReview;
+export default InterPerformanceReview;
