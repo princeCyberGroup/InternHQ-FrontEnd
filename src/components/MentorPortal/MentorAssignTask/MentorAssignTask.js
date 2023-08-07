@@ -102,7 +102,7 @@ const MentorAssignTask = () => {
                 >
                   {taskInd === index && <div className="selected-task-style" />}
                   <div className="task-heading-head">
-                    <h5>{task?.[TASKDATA.TN]}</h5>
+                    <h5 style={{ marginBottom: "0" }}>{task?.[TASKDATA.TN]}</h5>
                     <Arrorforward />
                   </div>
                   <div className="task-heading-body">
