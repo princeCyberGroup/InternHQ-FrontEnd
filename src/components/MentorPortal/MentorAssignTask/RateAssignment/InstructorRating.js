@@ -29,6 +29,10 @@ const InstructorRating = () => {
       process.env.REACT_APP_TASK_ID
     ).toString(CryptoJS.enc.Utf8)
   );
+  const taskTitle = CryptoJS.AES.decrypt(
+    sessionStorage.getItem("title"),
+    process.env.REACT_APP_TASK_ID
+  ).toString(CryptoJS.enc.Utf8);
   var parsedObject;
   const cancelToken = axios.CancelToken.source();
   //function
@@ -206,7 +210,7 @@ const InstructorRating = () => {
         </div>
         <div className="inst-rating-data-wrapper">
           <div className="inst-heading-style">
-            <h3>Instructor Rating</h3>
+            <h3>Instructor Rating - {taskTitle}</h3>
           </div>
           <div className="inst-table-box-style">
             <div className="table-description-style">

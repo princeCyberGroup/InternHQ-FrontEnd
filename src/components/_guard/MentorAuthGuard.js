@@ -30,7 +30,7 @@ const MentorAuthGuard = () => {
     if (path === "/mentor/dashboard" && session) {
       navigate(path);
     } else if (
-      (path === "/mentor/assign-task" || "/mentor/project-rating") &&
+      (path === "/mentor/assign-task" || path === "/mentor/project-rating") &&
       (project || session)
     ) {
       navigate(path);

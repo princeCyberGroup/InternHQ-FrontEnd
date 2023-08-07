@@ -26,15 +26,7 @@ const MentorTaskDetail = ({ detail }) => {
     return `${updatedDate[1]}/${updatedDate[2]}/${updatedDate[0]}`;
   };
   const checkOverDue = () => {
-    console.log("this is date", endDate);
-    console.log("year", year, month, day);
     const endDateValue = endDate.split("/");
-    console.log(
-      "year",
-      parseInt(endDateValue[2]),
-      parseInt(endDateValue[0]),
-      parseInt(endDateValue[1])
-    );
     if (parseInt(endDateValue[2]) > year) return false;
     if (parseInt(endDateValue[2]) === year && parseInt(endDateValue[0]) > month)
       return false;
@@ -47,7 +39,12 @@ const MentorTaskDetail = ({ detail }) => {
       (detail?.[TASKDATA.TID]).toString(),
       process.env.REACT_APP_TASK_ID
     ).toString();
+    const taskName = CryptoJS.AES.encrypt(
+      detail?.[TASKDATA.TN],
+      process.env.REACT_APP_TASK_ID
+    ).toString();
     sessionStorage.setItem("taskId", taskId);
+    sessionStorage.setItem("title", taskName);
     navigate("/mentor/project-rating");
   };
   startDate = changeDate(detail?.[TASKDATA.SD]);

@@ -147,6 +147,11 @@ const SessionCalendar = () => {
     setHoveredEvent(event);
     setShowTooltip(true);
     positionTooltip(e);
+    console.log(
+      "this is the value of setshow and hovered event",
+      showTooltip,
+      hoveredEvent
+    );
   };
 
   const handleEventMouseLeave = () => {
