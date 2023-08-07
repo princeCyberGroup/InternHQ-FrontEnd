@@ -28,6 +28,7 @@ const PieChartTopTech = () => {
         return response.json();
       })
       .then(async (data) => {
+        console.log("this is data", data.response);
         setPieData(data.response);
       })
       .catch((error) => {
@@ -49,15 +50,25 @@ const PieChartTopTech = () => {
   const setDataToPie = () => {
     pieData?.forEach((val, ind) => {
       setPData((prev) => {
+        let hr =
+          val?.totalTime.hours !== null && val?.totalTime.hours !== undefined
+            ? val?.totalTime.hours
+            : 0;
+        let min =
+          val?.totalTime.minutes !== null &&
+          val?.totalTime.minutes !== undefined
+            ? val?.totalTime.minutes
+            : 0;
+        let sec =
+          val?.totalTime.seconds !== null &&
+          val?.totalTime.seconds !== undefined
+            ? val?.totalTime.seconds
+            : 0;
         let temp = [
           ...prev,
           {
             techName: val?.techName,
-            techCount: val?.totalTime
-              ? val?.totalTime.hours * 3600 +
-                val?.totalTime.minutes * 60 +
-                val?.totalTime.seconds
-              : 0,
+            techCount: val?.totalTime ? hr * 3600 + min * 60 + sec : 0,
           },
         ];
         return temp;
@@ -71,6 +82,7 @@ const PieChartTopTech = () => {
     setDataToPie();
   }, [pieData]);
 
+  // totaltechcount, techdatawithcounts, techdatawithcolor these needs to be put inside usememo as with each render values keeps on adding in them
   const totalTechCount = pData?.reduce(
     (accumulator, item) => accumulator + parseInt(item.techCount),
     0

@@ -1,6 +1,6 @@
 import { ReactComponent as CloudImage } from "../../../Assets/Cloud.svg";
 import { ReactComponent as CloseBtn } from "../../../Assets/Close-admin.svg";
-import {ReactComponent as CSVIcon } from "../../../Assets/CSVIcon.svg"
+import { ReactComponent as CSVIcon } from "../../../Assets/CSVIcon.svg";
 import React, { useState, useRef, useEffect } from "react";
 import "./Modals.css";
 import axios from "axios";
@@ -13,6 +13,7 @@ export const AddNewSkillTest = () => {
   const [technology, setTechnology] = useState("");
   const [name, setName] = useState("");
   const navigate = useNavigate();
+  const [formData, setFormData] = useState("");
 
   const [question, setQuestion] = useState("");
   const [duration, setDuration] = useState("");
@@ -66,9 +67,20 @@ export const AddNewSkillTest = () => {
     e.preventDefault();
   };
   const handleFileChange = (selectedFile) => {
+    const file = selectedFile.target.files[0];
+
+    const reader = new FileReader();
+    reader.onload = (e) => {
+      const contents = e.target.result;
+      setFormData(contents);
+    };
+    reader.onerror = (e) => {
+      console.log("error in reader", e);
+    };
+    reader.readAsText(file);
+
     setFile(selectedFile);
     setProgress(0);
-
     if (selectedFile) {
       readFileData(selectedFile);
     }
@@ -127,27 +139,30 @@ export const AddNewSkillTest = () => {
     // setAdvancedChecked(false);
   };
   const handleSubmit = async (e) => {
+    // debugger;
     e.preventDefault();
     if (technology.length === 0 || name.length < 2) {
       alert("Please fill out the necessary details");
       setError(true);
       return;
     }
-    const formData = new FormData();
+    // const formData = new FormData();
     // formData.append('technology', technology);
     // formData.append('level', level);
     // formData.append('name', name);
-    formData.append("file", file);
+    // formData.append("file", file);
     // formData.append('question', question);
     // formData.append('duration', duration);
     try {
       const response = await axios.post(
         process.env.REACT_APP_API_URL +
-          `/api/v3/questions?technology=${technology}&level=${level}&examName=${name}&noOfQuestion=${question}&examDuration=${duration}`,
+          // `/api/v3/questions?technology=${technology}&level=${level}&examName=${name}&noOfQuestion=${question}&examDuration=${duration}`,
+          `/testQuestions?technology=${technology}&level=${level}&examName=${name}&noOfQuestion=${question}&examDuration=${duration}`,
         formData,
         {
           headers: {
-            "Content-Type": "multipart/form-data",
+            // "Content-Type": "multipart/form-data",
+            "Content-Type": "text/csv",
           },
         }
       );
@@ -245,7 +260,13 @@ export const AddNewSkillTest = () => {
                 </span>
                 <div className="d-flex">
                   <div className="form-check">
-                    <label style={{ marginLeft: "0.313rem", fontSize: "16px", fontWeight: "500" }} >
+                    <label
+                      style={{
+                        marginLeft: "0.313rem",
+                        fontSize: "16px",
+                        fontWeight: "500",
+                      }}
+                    >
                       <input
                         className="form-check-input skill-test-color-of-radio"
                         type="radio"
@@ -256,7 +277,13 @@ export const AddNewSkillTest = () => {
                       />
                       Beginner
                     </label>
-                    <label style={{ marginLeft: "3.125rem", fontSize: "16px", fontWeight: "500" }}>
+                    <label
+                      style={{
+                        marginLeft: "3.125rem",
+                        fontSize: "16px",
+                        fontWeight: "500",
+                      }}
+                    >
                       <input
                         className="form-check-input skill-test-color-of-radio"
                         type="radio"
@@ -267,7 +294,13 @@ export const AddNewSkillTest = () => {
                       />
                       Intermediate
                     </label>
-                    <label style={{ marginLeft: "3.125rem", fontSize: "16px", fontWeight: "500" }}>
+                    <label
+                      style={{
+                        marginLeft: "3.125rem",
+                        fontSize: "16px",
+                        fontWeight: "500",
+                      }}
+                    >
                       <input
                         className="form-check-input skill-test-color-of-radio"
                         type="radio"
@@ -309,7 +342,11 @@ export const AddNewSkillTest = () => {
                             handleBrowseClick();
                           }}
                           className="add-new-skill-test-btn"
-                          style={{width: "246.19px", height: "45px", fontSize: "16px"}}
+                          style={{
+                            width: "246.19px",
+                            height: "45px",
+                            fontSize: "16px",
+                          }}
                         >
                           Browse from your computer
                         </button>
@@ -329,12 +366,14 @@ export const AddNewSkillTest = () => {
                               marginTop: "0.225rem",
                               position: "relative",
                               fontSize: "16px",
-                              fontWeight: "500"
+                              fontWeight: "500",
                             }}
                             className="d-flex align-items-center"
                           >
-                            <CSVIcon/>
-                            <div style={{marginLeft: "0.5rem"}}>{file.name}</div>
+                            <CSVIcon />
+                            <div style={{ marginLeft: "0.5rem" }}>
+                              {file.name}
+                            </div>
                           </div>
                         )}
                       </div>
