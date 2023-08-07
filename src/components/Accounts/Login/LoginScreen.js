@@ -12,7 +12,7 @@ import { bottom } from "@popperjs/core";
 
 const LoginScreen = () => {
   const navigate = useNavigate();
-//login screen
+  //login screen
   const [email, setEmail] = useState("");
   const [isEmailValid, setIsEmailValid] = useState(false);
   const [password, setPassword] = useState("");
@@ -42,7 +42,7 @@ const LoginScreen = () => {
     event.preventDefault();
     setIsLoading(true);
     await axios
-      .post(process.env.REACT_APP_API_URL + "/api/v3/internLogin", {
+      .post(process.env.REACT_APP_API_URL + "/api/v3/login", {
         email,
         password,
       })
@@ -57,6 +57,10 @@ const LoginScreen = () => {
           deployed: response.data.isDeployed,
           randomString: response.data.randomString,
           designation: response.data.designation,
+          ...(response.data.mentorType !== undefined &&
+          response.data.mentorType !== null
+            ? { mentorType: response.data.mentorType }
+            : {}),
         };
         const secretKey = process.env.REACT_APP_USER_KEY;
         // const userData = JSON.stringify(res);
@@ -76,7 +80,7 @@ const LoginScreen = () => {
         localStorage.setItem("token");
       })
       .catch((error) => {
-        console.log(error.response?.data);
+        console.log("this is the error ", error.response?.data);
         if (error.response?.data.msg === "Error: Email does not exist") {
           setIsEmailValid(false);
           setIncorrectemail(true);
@@ -84,21 +88,21 @@ const LoginScreen = () => {
           setIsPasswordValid(false);
         }
         setIsLoading(false);
-        // if (error.response?.data.statusCode == 400) {
-        //   navigate("/error/statusCode=400");
-        // }
-        // if (error.response?.data.statusCode == 401) {
-        //   navigate("/error/statusCode=401");
-        // }
-        // if (error.response?.data.statusCode == 404) {
-        //   navigate("/error/statusCode=404");
-        // }
-        // if (error.response?.data.statusCode == 500) {
-        //   navigate("/error/statusCode=500");
-        // }
       });
   };
   useEffect(() => {
+    const navigateAccordingToPermission = (str) => {
+      const permissionArray = str.split(",");
+      let session, review, project;
+      permissionArray.forEach((element) => {
+        if (element === "Session") session = true;
+        if (element === "Project") project = true;
+        if (element === "Review") review = true;
+      });
+      if (session) navigate("/mentor/dashboard");
+      else if (project) navigate("/mentor/assign-task");
+      else if (review) navigate("/mentor/review-associates");
+    };
     let login = localStorage.getItem("login");
     const secretkeyUser = process.env.REACT_APP_USER_KEY;
     let userData;
@@ -116,7 +120,7 @@ const LoginScreen = () => {
         ? navigate("/dashboard")
         : str === "cb8715"
         ? navigate("/admin/dashboard")
-        : navigate("/mentor/dashboard");
+        : navigateAccordingToPermission(userData?.mentorType);
     }
   }, []);
   return (

@@ -17,6 +17,18 @@ const AuthGuard = () => {
   }
   const str = decryptedObject?.randomString;
   const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const navigateAccordingToPermission = (str) => {
+    const permissionArray = str.split(",");
+    let session, review, project;
+    permissionArray.forEach((element) => {
+      if (element === "Session") session = true;
+      if (element === "Project") project = true;
+      if (element === "Review") review = true;
+    });
+    if (session) navigate("/mentor/dashboard");
+    else if (project) navigate("/mentor/assign-task");
+    else if (review) navigate("/mentor/review-associates");
+  };
   const handleAuth = () => {
     if (localStorage.getItem("login")) {
       if (localStorage.getItem("login") === "false") {
@@ -27,7 +39,7 @@ const AuthGuard = () => {
           ? navigate(location.pathname)
           : str === "cb8715"
           ? navigate("/admin/dashboard")
-          : navigate("/mentor/dashboard");
+          : navigateAccordingToPermission(decryptedObject?.mentorType);
         setIsAuthenticated(true);
       }
     } else {

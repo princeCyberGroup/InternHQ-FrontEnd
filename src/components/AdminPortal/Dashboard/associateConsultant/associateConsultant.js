@@ -105,7 +105,6 @@ export default function AssociateConsultant() {
         navigate("/error/statusCode=404");
       }
       const data = await response.json();
-      console.log(data.response, "This is dashboard statuis")
       setAcData(data.response);
       setOriginalTests(data.response);
     } catch (error) {

@@ -68,21 +68,18 @@ const Report = () => {
   };
   const handleConfirm = async () => {
     setIsLoading(true);
+    let response;
     try {
-      const response = await axios.post(
-        "https://cg-interns-hq.azurewebsites.net/api/v3/update-deployed",
+      response = await axios.post(
+        process.env.REACT_APP_API_URL + "/api/v3/update-deployed",
         deployData.map((value) => {
           return { ...value, status: value.status.toString() };
         })
       );
-      console.log("response api data", response.data);
     } catch (error) {
       console.log("this is error in report post api", error);
     }
-    // setConfirmChange(false);
-    // setLoadFilter((prev) => !prev);
-    // fetchData();
-    window.location.reload();
+    if (response.status === 200) fetchData();
   };
   const handleFiltersChange = () => {
     const getFilterItems = (items, query) => {
@@ -179,16 +176,17 @@ const Report = () => {
       );
       setIsLoading(false);
     } catch (error) {
-      if (error.response.status === 401) {
+      const errorCode = error.response.status;
+      if (errorCode === 401) {
         navigate("/error/statusCode=401");
       }
-      if (error.response.status === 400) {
+      if (errorCode === 400) {
         navigate("/error/statusCode=400");
       }
-      if (error.response.status === 500) {
+      if (errorCode === 500) {
         navigate("/error/statusCode=500");
       }
-      if (error.response.status === 404) {
+      if (errorCode === 404) {
         navigate("/error/statusCode=404");
       }
       console.error("Error fetching data:", error.message);

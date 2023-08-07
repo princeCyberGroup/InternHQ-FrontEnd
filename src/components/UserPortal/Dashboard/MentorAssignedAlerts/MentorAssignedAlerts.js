@@ -55,6 +55,7 @@ const MentorAssignedAlerts = (props) => {
         setMentorTask(data.response);
       })
       .catch((error) => {
+        console.log("error inside mentor", error.statusCode);
         if (error.statusCode === 401) {
           navigate("/error/statusCode=401");
         }

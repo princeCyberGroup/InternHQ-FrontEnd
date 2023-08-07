@@ -14,6 +14,7 @@ import ForgotPasswordScreen from "./components/Accounts/ForgotPassword/ForgotPas
 import ForgotPasswordOtpScreen from "./components/Accounts/Otp/ForgotPasswordOtpScreen";
 import CreateNewPasswordScreen from "./components/Accounts/ForgotPassword/CreateNewPasswordScreen";
 import PasswordChangedScreen from "./components/Accounts/ForgotPassword/PasswordChangedSuccessfulScreen";
+import SessionCalendar from "./components/Utilities/SessionCalendar";
 
 import Dashboard from "./components/UserPortal/Dashboard/Dashboard";
 import ViewAllProjects from "./components/UserPortal/Dashboard/ProjectIdea/Project/ViewAllProject/ViewAllProjects";
@@ -44,6 +45,7 @@ import SessionExpired from "./components/ErrorPage/SessionExpired";
 import MentorDashboard from "./components/MentorPortal/MentorDashboard/MentorDashboard";
 import MentorAssignTask from "./components/MentorPortal/MentorAssignTask/MentorAssignTask";
 import MentorReview from "./components/MentorPortal/MentorReviewAssociates/MentorReview";
+import InstructorRating from "./components/MentorPortal/MentorAssignTask/RateAssignment/InstructorRating";
 import InterPerformanceReview from "./components/MentorPortal/MentorReviewAssociates/InterPerformanceReview/InterPerformanceReview"
 
 function App() {
@@ -108,9 +110,11 @@ function App() {
             <Route path="/mentor/dashboard" element={<MentorDashboard />} />
             <Route path="/mentor/assign-task" element={<MentorAssignTask />} />
             <Route path="/mentor/review-associates" element={<MentorReview />} />
+            <Route path="/mentor/project-rating" element={<InstructorRating />} />
             <Route path="/mentor/review-associates/inter-performance-review" element={<InterPerformanceReview/>}/>
           </Route>
 
+          <Route path="/session-calendar" element={<SessionCalendar />} />
           <Route path="/error/statusCode=400" element={<Error_400 />} />
           <Route path="/error/statusCode=500" element={<Error_500 />} />
           <Route path="/error/statusCode=401" element={<SessionExpired />} />
