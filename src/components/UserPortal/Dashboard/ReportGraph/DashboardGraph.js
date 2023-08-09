@@ -619,12 +619,33 @@ export default function DashboardGraph() {
   const currentDate = new Date();
   // Calculating the start date (Monday) of the current week
   const currentDay = currentDate.getDay();
-  const diff = currentDate.getDate() - currentDay + (currentDay === 0 ? -6 : 1); // Adjusting for Sunday
+  console.log(currentDay, "This is currentDay")
+  console.log(currentMonth, "This is month")
+  var diff;
+  if(new Date(currentDate.getFullYear(), currentMonth + 1, 0).getDate()==30){
+     diff = currentDate.getDate() - currentDay + (currentDay === 0 ? -6 : 1); // Adjusting for Sunday
+
+  }else if(new Date(currentDate.getFullYear(), currentMonth + 1, 0).getDate()==29){ // Adjust for february month
+    diff=  currentDate.getDate() - currentDay + (currentDay === 0 ? -6 : 2); // Adjusting for Sunday
+  }
+  else if(new Date(currentDate.getFullYear(), currentMonth + 1, 0).getDate()==28){ // Adjust for february month
+    diff=  currentDate.getDate() - currentDay + (currentDay === 0 ? -6 : 2); // Adjusting for Sunday
+
+  }
+  else{
+     diff=  currentDate.getDate() - currentDay + (currentDay === 0 ? -6 : 2); // Adjusting for Sunday
+
+  }
+  console.log(diff, "This diff")
   const startDate = new Date(currentDate.setDate(diff));
+ console.log(startDate, "this srarrt datar")
+  // console.log(new Date(currentDate.setDate(-4)), "New date")
   // Calculating the end date (Friday) of the current week
   const endDate = new Date(currentDate.setDate(diff + 4));
   const startDateFormatted = startDate.toISOString().split("T")[0];
+  console.log(startDateFormatted, "startdateformatted")
   const endDateFormatted = endDate.toISOString().split("T")[0];
+  console.log(endDateFormatted, "enddateformatted")
 
   const weekTaskRecords = tableData?.filter((record) => {
     const recordDate = new Date(record.startDate);
@@ -665,6 +686,7 @@ export default function DashboardGraph() {
     else totalHoursByDay[dayOfWeek].projectHours += hours;
   });
 
+  console.log(totalHoursByDay, "This is total hours ")
   const data = [
     {
       name: "Mon",

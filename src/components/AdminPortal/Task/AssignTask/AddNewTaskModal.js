@@ -342,7 +342,7 @@ export const AddNewTask = ({
                   </div>
                 </div>
 
-                <div className="mb-3">
+                <div className="mb-3"> 
                   <label
                     for="assigned-to"
                     className="col-form-label form-title-names"
@@ -400,7 +400,7 @@ export const AddNewTask = ({
                       </ul>
                     </div>
                   </div>
-                </div>
+                </div> 
               </form>
             </div>
 

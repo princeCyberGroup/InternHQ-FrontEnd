@@ -6,6 +6,11 @@ import uploadImage from "../../../../Assets/VectorUpload.svg";
 import { ReactComponent as AlertImage } from "../../../../Assets/Vectoralert.svg";
 import { ReactComponent as CameraIcon } from "../../../../Assets/Cameracamera.svg";
 import { ReactComponent as ExpandMore } from "../../../../Assets/expand_more.svg";
+import { ReactComponent as ProfileDetails } from "../../../../Assets/ProfileDetails.svg";
+import { ReactComponent as PermissionsDisabled } from "../../../../Assets/PermissionsDisabled.svg";
+import { ReactComponent as HorizontalLine } from "../../../../Assets/HorizontalLine.svg";
+import { ReactComponent as ProfileDetailsDone } from "../../../../Assets/ProfileDetailsDone.svg";
+import { ReactComponent as PermissionsEnabled } from "../../../../Assets/PermissionsEnabled.svg";
 import TechnologyDropDown from "../AssignTask/TechnologyDropdown(Admin)";
 
 import { storage } from "../config/firebase";
@@ -26,6 +31,7 @@ export const AddMentorModal = ({ onAddMentor }) => {
   const [tech, setTech] = useState({});
   const [selectedTechIds, setSelectedTechIds] = useState([]);
   const [searchQuery, setSearchQuery] = useState("");
+  const [isNext, setisNext] = useState(false);
 
   const position = [
     "Principal 1",
@@ -96,35 +102,39 @@ export const AddMentorModal = ({ onAddMentor }) => {
     ) {
       alert("Please fill out the necessary fields");
     } else {
-      try {
-        await axios.post(
-          process.env.REACT_APP_API_URL + "/api/v3/postMentorDetails",
-          {
+      if(isNext) {
+        try {
+          await axios.post(
+            process.env.REACT_APP_API_URL + "/api/v3/postMentorDetails",
+            {
+              mentorName,
+              emailId,
+              imageUrl,
+              designation,
+              skills: technologyNames,
+            }
+          );
+          onAddMentor({
             mentorName,
             emailId,
             imageUrl,
             designation,
-            skills: technologyNames,
-          }
-        );
-        onAddMentor({
-          mentorName,
-          emailId,
-          imageUrl,
-          designation,
-          technologyNames,
-        });
-
-        setTechnologyNames([]);
-        setMentorName("");
-        setEmailId("");
-        setImageUrl("");
-        setDesignation("");
-        setNameError(true);
-        setTech({});
-        setEmailError(true);
-      } catch (err) {
-        console.log(err);
+            technologyNames,
+          });
+  
+          setTechnologyNames([]);
+          setMentorName("");
+          setEmailId("");
+          setImageUrl("");
+          setDesignation("");
+          setNameError(true);
+          setTech({});
+          setEmailError(true);
+        } catch (err) {
+          console.log(err);
+        }
+      } else  {
+        setisNext(true);
       }
     }
   };
@@ -185,9 +195,28 @@ export const AddMentorModal = ({ onAddMentor }) => {
               ></button>
             </div>
 
+            <div className="mt-3 mentor-step">
+              <div className="row">
+                <div className="col d-flex flex-column align-items-center justify-content-center">
+                  <div className="row">
+                    {isNext ? <ProfileDetailsDone/> : <ProfileDetails/>}
+                  </div>
+                  <div className="row fw-bold permissions-text" style={{width: "6rem"}}>Profile Details</div>
+                </div>
+                <div className="col d-flex flex-column align-items-center justify-content-center">
+                  <HorizontalLine/>
+                </div>
+                <div className="col d-flex flex-column align-items-center justify-content-center">
+                  <div className="row">
+                    {isNext ? <PermissionsEnabled/> : <PermissionsDisabled/>}
+                  </div>
+                  <div className={`row permissions-text ${isNext ? "fw-bold" : "permissions-disabled-text"}`} style={{width: "6rem"}}>Permissions</div>
+                </div>
+              </div>
+            </div>
             <div className="align-items-center">
               <div className="upload-image-box">
-                <div className="d-flex align-items-center mt-4">
+                <div className="d-flex align-items-center mt-3">
                   <div className="uploaded-image">
                     <img
                       src={imageUrl || uploadImage}
@@ -379,7 +408,7 @@ export const AddMentorModal = ({ onAddMentor }) => {
                 }
                 onClick={handleFormSubmit}
               >
-                <span className="save-text">Save</span>
+                <span className="save-text">{isNext ? "Add" : "Next"}</span>
               </button>
             </div>
           </div>

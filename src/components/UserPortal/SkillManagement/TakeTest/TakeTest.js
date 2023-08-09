@@ -37,7 +37,6 @@ const TakeTest = () => {
   const [originalTests, setOriginalTests] = useState([]);
   const [data, setdata] = useState();
   const [searchFilterValue, setSearchFilterValue] = useState("");
-  
 
   const [isLoading, setIsLoading] = useState(true);
   useEffect(() => {
@@ -66,23 +65,23 @@ const TakeTest = () => {
           },
         }
       );
+      console.log(response);
+      if (!response.ok) {
+        if (response.status === 401) {
+          navigate("/error/statusCode=401");
+        } else if (response.status === 400) {
+          navigate("/error/statusCode=400");
+        } else if (response.status === 500) {
+          navigate("/error/statusCode=500");
+        } else if (response.status === 404) {
+          navigate("/error/statusCode=404");
+        }
+      }
       const data = await response.json();
       setTests(data);
       setOriginalTests(data);
       setIsLoading(false);
     } catch (error) {
-      if (error.response.status === 401) {
-        navigate("/error/statusCode=401");
-      }
-      if (error.response.status === 400) {
-        navigate("/error/statusCode=400");
-      }
-      if (error.response.status === 500) {
-        navigate("/error/statusCode=500");
-      }
-      if (error.response.status === 404) {
-        navigate("/error/statusCode=404");
-      }
       console.error("Error fetching exam details:", error);
     }
   };
@@ -90,7 +89,7 @@ const TakeTest = () => {
     const getFilterItems = (items, searchValue) => {
       if (searchValue) {
         return items.filter((item) =>
-          item.techName?.toLowerCase().includes(searchValue.toLowerCase())
+          item.techName?.toLowerCase().startsWith(searchValue.toLowerCase())
         );
       }
       return items;

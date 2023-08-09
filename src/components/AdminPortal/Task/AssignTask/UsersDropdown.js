@@ -83,13 +83,13 @@ const UsersDropdown = (props) => {
     );
     setFilteredUsers(filtered);
   
-    const searchInputValue = e.target.value;
-    const selectAllCheckbox = document.querySelector("#selectAll");
-    if (searchInputValue === "") {
-      selectAllCheckbox.style.display = "block";
-    } else {
-      selectAllCheckbox.checked=false;
-    }
+    // const searchInputValue = e.target.value;
+    // const selectAllCheckbox = document.querySelector("#selectAll");
+    // if (searchInputValue === "") {
+    //   selectAllCheckbox.style.display = "block";
+    // } else {
+    //   selectAllCheckbox.checked=false;
+    // }
   };
 
   return (

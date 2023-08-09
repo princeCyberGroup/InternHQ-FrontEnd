@@ -1,6 +1,6 @@
 import { ReactComponent as CloudImage } from "../../../../Assets/Cloud.svg";
 import { ReactComponent as CloseBtn } from "../../../../Assets/Close-admin.svg";
-import {ReactComponent as CSVIcon } from "../../../../Assets/CSVIcon.svg"
+import { ReactComponent as CSVIcon } from "../../../../Assets/CSVIcon.svg";
 import React, { useEffect, useState, useRef } from "react";
 import "./Modals.css";
 import axios from "axios";
@@ -12,6 +12,7 @@ export const AddNewSkillTest = () => {
   const [technology, setTechnology] = useState("");
   const [name, setName] = useState("");
   const [fileError, setFileError] = useState("");
+  const [fileValue, setFileValue] = useState("");
   const navigate = useNavigate();
 
   const [question, setQuestion] = useState("");
@@ -39,7 +40,7 @@ export const AddNewSkillTest = () => {
       const response = await axios.get(
         "https://cg-interns-hq.azurewebsites.net/getAllTechnology"
       );
-      setApiTechnology(response.data.response);
+      setApiTechnology(response?.data?.response);
     } catch (error) {
       if (error.response.status === 401) {
         navigate("/error/statusCode=401");
@@ -69,9 +70,7 @@ export const AddNewSkillTest = () => {
     if (selectedFile) {
       // Check file extension
       if (!selectedFile.name.endsWith(".csv")) {
-        setFileError(
-          "Unsupported File Format. Please select .csv files only."
-        );
+        setFileError("Unsupported File Format. Please select .csv files only.");
         setFile(null);
       } else {
         setFileError("");
@@ -79,11 +78,11 @@ export const AddNewSkillTest = () => {
       }
       readFileData(selectedFile);
     }
+
     setProgress(0);
   };
   const readFileData = (file) => {
     const reader = new FileReader();
-
     reader.onloadstart = () => {
       setProgress(0);
     };
@@ -95,6 +94,7 @@ export const AddNewSkillTest = () => {
     };
     reader.onload = (e) => {
       const contents = e.target.result;
+      setFileValue(contents);
       // Process the file data here if needed
       setProgress(100);
     };
@@ -142,25 +142,17 @@ export const AddNewSkillTest = () => {
       setError(true);
       return;
     }
-    const formData = new FormData();
-    // formData.append('technology', technology);
-    // formData.append('level', level);
-    // formData.append('name', name);
-    formData.append("file", file);
-    // formData.append('question', question);
-    // formData.append('duration', duration);
     try {
       const response = await axios.post(
         process.env.REACT_APP_API_URL +
-          `/api/v3/questions?technology=${technology}&level=${level}&examName=${name}&noOfQuestion=${question}&examDuration=${duration}`,
-        formData,
+          `/api/v3/uploadQuestions?technologyId=${technology}&level=${level}&examName=${name}&noOfQuestion=${question}&examDuration=${duration}`,
+        fileValue,
         {
           headers: {
-            "Content-Type": "multipart/form-data",
+            "Content-Type": "text/csv",
           },
         }
       );
-      // console.log(response);
       // Reset form inputs
       setTechnology("");
       setName("");
@@ -176,7 +168,7 @@ export const AddNewSkillTest = () => {
       console.log(error);
     }
   };
-    return (
+  return (
     <div>
       <div
         className="modal fade"
@@ -226,7 +218,8 @@ export const AddNewSkillTest = () => {
                       <option
                         className="dtt-opns"
                         key={tech.techId}
-                        value={tech.techName}
+                        // value={tech.techName}
+                        value={tech.techId}
                       >
                         {tech.techName}
                       </option>
@@ -339,8 +332,10 @@ export const AddNewSkillTest = () => {
                             }}
                             className="d-flex align-items-center"
                           >
-                            <CSVIcon/>
-                            <div style={{marginLeft: "0.5rem"}}>{file.name}</div>
+                            <CSVIcon />
+                            <div style={{ marginLeft: "0.5rem" }}>
+                              {file.name}
+                            </div>
                           </div>
                         )}
                       </div>
@@ -356,7 +351,9 @@ export const AddNewSkillTest = () => {
                     </div>
                   </div>
                 )}
-                {fileError && <p style={{ color: "red", fontSize: "1rem" }}>{fileError}</p>}
+                {fileError && (
+                  <p style={{ color: "red", fontSize: "1rem" }}>{fileError}</p>
+                )}
                 <div className="d-flex justify-content-between">
                   <div>
                     <label
@@ -421,7 +418,8 @@ export const AddNewSkillTest = () => {
                 onClick={(e) => {
                   handleSubmit(e);
                 }}
-              >Save
+              >
+                Save
                 {/* <span
                   className="save-text"
                   
