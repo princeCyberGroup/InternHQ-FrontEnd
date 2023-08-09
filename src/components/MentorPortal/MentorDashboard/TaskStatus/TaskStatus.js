@@ -8,7 +8,7 @@ import { useNavigate } from "react-router-dom";
 import { ReactComponent as AngularIcon } from "../../../../Assets/angular.svg";
 import { ReactComponent as Calender } from "../../../../Assets/Calendar.svg";
 import { ReactComponent as TimeLogo } from "../../../../Assets/clock-regular 1logClock.svg";
-import { ReactComponent as Right } from "../../../../Assets/right.svg";
+import { ReactComponent as Right } from "../../../../Assets/chevron-right.svg";
 import { ReactComponent as Completed } from "../../../../Assets/Task Status.svg";
 import { ReactComponent as Ongoing } from "../../../../Assets/Task StatusOngoing.svg";
 import { ReactComponent as Overdue } from "../../../../Assets/Task Statusoverdue.svg";
@@ -680,14 +680,16 @@ export const TaskStatus = () => {
     // </>
 
     <>
+    <p className="p-0 m-0">
       <Link
         to="/mentor/assign-task"
         className="about-link p-0"
-        style={{ width: "757px", maxHeight: "360px", overflow: "auto" }}
+        // style={{ width: "757px", maxHeight: "360px", overflow: "auto" }}
       >
-        Manage Associate Task Status <Right style={{ marginBottom: "2px" }} />
+        Manage Associate Task Status <Right style={{marginBottom: "2px" }} />
       </Link>
-      <div className="card task-status-card mt-3">
+      </p>
+      <div className="card task-status-card ">
         {taskStatus?.map((task) => (
           <div
             key={task.taskId}
