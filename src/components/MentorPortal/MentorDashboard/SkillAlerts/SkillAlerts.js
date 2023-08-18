@@ -15,7 +15,7 @@ import { Link } from "react-router-dom";
 import "./SkillAlerts.css";
 import SkillAlertSkeleton from "./SkillAlertSkeleton";
 
-export const SkillAlerts = () => {
+export const SkillAlerts = (props) => {
   const [isLoading, setIsLoading] = useState(true);
   const [notifications, setNotifications] = useState([]);
 
@@ -25,7 +25,7 @@ export const SkillAlerts = () => {
     setTimeout(() => {
       fetchNotifications();
     }, 1000);
-  }, []);
+  }, [props.selectedBatches]);
 
   const fetchNotifications = async () => {
     const secretkeyUser = process.env.REACT_APP_USER_KEY;
@@ -42,22 +42,42 @@ export const SkillAlerts = () => {
     } else {
       console.log("No encrypted data found in localStorage.");
     }
-    try {
-      // Make an API request to fetch data
-      const response = await fetch(
-        process.env.REACT_APP_API_URL + `/api/v4/mentor-notification?mentorEmail=${parsedObject["email"]}`,
-        {
-          headers: {
-            Authorization: `Bearer ${parsedObject["token"]}`,
+    // try {
+    //   // Make an API request to fetch data
+    //   const response = await fetch(
+    //     process.env.REACT_APP_API_URL + `/api/v4/mentor-notification?mentorEmail=${parsedObject["email"]}`,
+    //     {
+    //       headers: {
+    //         Authorization: `Bearer ${parsedObject["token"]}`,
             
-          },
-        }
-      );
-      const data = await response.json();
-      setNotifications(data);
-      // console.log(data.pass);
+    //       },
+    //     }
+    //   );
+    //   const data = await response.json();
+    //   setNotifications(data);
+    //   // console.log(data.pass);
+    //   setIsLoading(false);
+    // }
+    try {
+      let apiUrl = `${process.env.REACT_APP_API_URL}/api/v4/mentor-notification?mentorEmail=${parsedObject["email"]}`;
+      
+      if (props.selectedBatches.length > 0) {
+        const batchNamesQuery = props.selectedBatches.join(',');
+        console.log(batchNamesQuery);
+      apiUrl += `&batch=${encodeURIComponent(batchNamesQuery)}`;
+      }
+      
+      const response = await fetch(apiUrl, {
+        headers: {
+          Authorization: `Bearer ${parsedObject["token"]}`,
+        },
+      });
+  
+      const rsp = await response.json();
+      setNotifications(rsp);
       setIsLoading(false);
-    } catch (error) {
+    }
+     catch (error) {
       if (error.response.status === 401) {
         navigate("/error/statusCode=401");
       }

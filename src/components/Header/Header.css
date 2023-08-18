@@ -81,3 +81,14 @@ span.logout {
   font-style: italic;
   font-size: 14px;
 }
+
+.batch-selector {
+  display: flex;
+  height: 40px;
+  padding: 10px 12px;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+  border-radius: 4px;
+  border: 1px solid #e0e0e0;
+}

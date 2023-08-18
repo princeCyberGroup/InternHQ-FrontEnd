@@ -8,6 +8,8 @@ import { UserContext } from "../../../../../Context/Context";
 import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
 import CryptoJS from "crypto-js";
+import TechnologyDropDown from "../../../../AdminPortal/Task/AssignTask/TechnologyDropdown(Admin)";
+
 
 const AddProject = () => {
   const { project } = useContext(UserContext);
@@ -18,7 +20,8 @@ const AddProject = () => {
   const [projectLink, setProjectLink] = useState("");
   const [hostedLink, setHostedLink] = useState("");
   const [textInput, setTextInput] = useState("");
-  const [memberNames, setMemberNames] = useState({});
+  // const [memberNames, setMemberNames] = useState({});
+  const [memberNames, setMemberNames] = useState([]);
   const [techNames, seTechNames] = useState({});
   const [dropDown, setDropDown] = useState(false);
   const [error, setError] = useState(true);
@@ -32,6 +35,8 @@ const AddProject = () => {
   const [isProjectDescriptionValid, setIsProjectDescriptionValid] = useState(false);
   const [isProjectLinkValid, setIsProjectLinkValid] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [searchQuery, setSearchQuery] = useState("");
+  const [selectedTechIds, setSelectedTechIds] = useState([]);
 
   useEffect(() => {
     setTimeout(() => {
@@ -82,9 +87,20 @@ const AddProject = () => {
   const techDataComingFrmChild = (data) => {
     return setTech(data);
   };
+
   const handleInputChange = (event) => {
-    setTextInput(event.target.value);
+    const inputText = event.target.value;
+    setTextInput(inputText);
+    const memberNamesArray = inputText.split(',').map(name => name.trim());
+    const membersObj = {};
+    memberNamesArray.forEach((name, index) => {
+      membersObj[`member${index + 1}`] = name;
+    });
+    isObjectEmpty(membersObj);
   };
+  // const handleInputChange = (event) => {
+  //   setTextInput(event.target.value);
+  // };
 
   const handleClick = async (e) => {
     e.preventDefault();
@@ -111,13 +127,18 @@ const AddProject = () => {
   };
 
 
+  // const isObjectEmpty = (object) => {
+  //   if (object.member1.length > 0) {
+  //     setMemberNames(object);
+  //     return;
+  //   } else {
+  //     return setMemberNames("");
+  //   }
+  // };
+
   const isObjectEmpty = (object) => {
-    if (object.member1.length > 0) {
-      setMemberNames(object);
-      return;
-    } else {
-      return setMemberNames("");
-    }
+    const memberNamesArray = Object.values(object).filter(value => value.trim() !== '');
+    setMemberNames(memberNamesArray);
   };
 
   const handleSubmit = (e) => {
@@ -143,7 +164,7 @@ const AddProject = () => {
           userId,
           projectLink,
           hostedLink,
-          technologyNames: techNames,
+          technologyNames: technologyNames,
           memberNames: memberNames,
         })
         .then((res) => {
@@ -386,12 +407,25 @@ const AddProject = () => {
                         style={{ display: dropDown ? "" : "none" }}
                         className="ul-styling"
                       >
-                        <TechDropDown
+                        {/* <TechDropDown
                           techDataComingChild={techDataComingFrmChild}
                           seTechNames={seTechNames}
                           techNames={techNames}
                           technologyNames={technologyNames}
-                        />
+                        /> */}
+                        <TechnologyDropDown
+                        techDataComingChild={techDataComingFrmChild}
+                        // seTechNames={seTechNames}
+                        // techNames={techNames}
+                        // technologyNames={technologyNames}
+                        // selectedTech={editProject?.technologyNames}
+                        selectedTechIds={selectedTechIds}
+                        setSelectedTechIds={setSelectedTechIds}
+                        setTechnologyNames={setTechnologyNames}
+                        technologyNames={technologyNames}
+                        searchQuery={searchQuery}
+                        setSearchQuery={setSearchQuery}
+                      />
                       </ul>
                     </div>
                   </div>

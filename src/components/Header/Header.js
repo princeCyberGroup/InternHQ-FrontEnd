@@ -10,8 +10,13 @@ import { ReactComponent as UploadCsvv } from "../../Assets/upload.svg";
 import { UploadCsv } from "../AdminPortal/Dashboard/UploadCsv/UploadCsvModal";
 import "../AdminPortal/Dashboard/UploadCsv/uploadCsv.css";
 import axios from "axios";
+import BatchSelect from "./BatchSelect";
 
-const Header = () => {
+const Header = (props) => {
+  const [batchDropdown, setBatchDropdown] = useState(false);
+  const [batches, setBatches] = useState({});
+  // const [selectedBatches,setSelectedBatches]= useState([]);
+  const [selectAllChecked,setSelectAllChecked]= useState(false);
   const { resetTimer } = useContext(UserContext);
   const secretKey = process.env.REACT_APP_USER_KEY;
   const [userData, setUserData] = useState({});
@@ -30,32 +35,32 @@ const Header = () => {
 
   const [isTodayDate, setIsTodayDate] = useState(false);
   const navigate = useNavigate();
- const handleLogout = async (e) => {
-  e.preventDefault();
-  if (userData.randomString !== process.env.REACT_APP_USER_DES_ADMIN) {
-    const secretkeyUser = process.env.REACT_APP_USER_KEY;
-    var parsedObject;
-    const data = localStorage.getItem("userData");
-    if (data) {
-      const bytes = CryptoJS.AES.decrypt(data, secretkeyUser);
-      const decryptedJsonString = bytes.toString(CryptoJS.enc.Utf8);
-      parsedObject = JSON.parse(decryptedJsonString);
-    } else {
-      console.log("No encrypted data found in localStorage.");
-    }
-    var userId = parsedObject.userId;
-    await axios.post(
-      process.env.REACT_APP_API_URL + "/api/v3/postLogoutLog",
-      {
-        userId,
+  const handleLogout = async (e) => {
+    e.preventDefault();
+    if (userData.randomString !== process.env.REACT_APP_USER_DES_ADMIN) {
+      const secretkeyUser = process.env.REACT_APP_USER_KEY;
+      var parsedObject;
+      const data = localStorage.getItem("userData");
+      if (data) {
+        const bytes = CryptoJS.AES.decrypt(data, secretkeyUser);
+        const decryptedJsonString = bytes.toString(CryptoJS.enc.Utf8);
+        parsedObject = JSON.parse(decryptedJsonString);
+      } else {
+        console.log("No encrypted data found in localStorage.");
       }
-    );
-  }
-  localStorage.clear("userData");
-  localStorage.clear("tD8kFi5j");
-  resetTimer();
-  navigate("/");
-};
+      var userId = parsedObject.userId;
+      await axios.post(
+        process.env.REACT_APP_API_URL + "/api/v3/postLogoutLog",
+        {
+          userId,
+        }
+      );
+    }
+    localStorage.clear("userData");
+    localStorage.clear("tD8kFi5j");
+    resetTimer();
+    navigate("/");
+  };
 
   const anotherFunc = (mentorTask) => {
     const today = new Date();
@@ -80,6 +85,9 @@ const Header = () => {
       permission.add(`${element}`);
     });
   }
+  const batchDataComingFrmChild = (data) => {
+    setBatches(data);
+  };
 
   return (
     <>
@@ -193,6 +201,103 @@ const Header = () => {
               )}
             </ul>
           </div>
+
+          {userData.randomString !== process.env.REACT_APP_USER_DES_USER ? (
+            // <div className="container border p-0" style={{width:"20rem"}}>
+            //           <div className="input-with-button"style={{width:"20rem"}}>
+            //             <button
+            //               type="button"
+            //               className="button-for-dropdown"
+            //               onClick={() => {
+            //                 // setUsersDropDown(!usersDropDown);
+            //                 setBatchDropdown(!batchDropdown);
+            //               }}
+            //             >
+            //               <input
+            //               style={{width:"20rem"}}
+            //                 type="text"
+            //                 className="custom-input"
+            //                 placeholder="Select Batch"
+            //                 // value={Object.values(users)}
+            //                 disabled
+            //               />
+            //             </button>
+            //             <button
+            //               type="button"
+            //               className="expand-more"
+            //               onClick={() => {
+            //                 // setUsersDropDown(!usersDropDown);
+            //                 setBatchDropdown(!batchDropdown);
+            //               }}
+            //             >
+            //               {/* <ExpandMore /> */}
+            //             </button>
+            //           </div>
+            //           <div>
+            //             <ul
+            //               style={{
+            //                 height: "10rem",
+            //                 display: batchDropdown ? "" : "none",
+            //               }}
+            //               className="ul-styling"
+            //             >
+            //               <BatchSelect
+            //                 // usersDataComingChild={usersDataComingFrmChild}
+            //                 // selectAllUsers={selectAllUsers}
+            //                 // setSelectedUserIds={setSelectedUserIds}
+            //                 // selectedUserIds={selectedUserIds}
+            //                 // setSelectedUsers={setSelectedUsers}
+            //                 // selectedUsers={selectedUsers}
+            //                 // selectAllChecked={selectAllChecked}
+            //                 // setSelectAllChecked={setSelectAllChecked}
+            //                 // searchUserQuery={searchUserQuery}
+            //                 // setSearchUserQuery={setSearchUserQuery}
+            //               />
+            //             </ul>
+            //           </div>
+            //         </div>
+            <div className="container border p-0" style={{ width: "10rem",marginRight:"2rem" }}>
+              <div
+                className="input-with-btn"
+                style={{ width: "10rem" }}
+                onClick={() => {
+                  // setUsersDropDown(!usersDropDown);
+                  setBatchDropdown(!batchDropdown);
+                }}
+              >
+                <input
+                style={{width:"10rem"}}
+                  type="text"
+                  className="custom-input"
+                  placeholder="Select Batch"
+                  value={Object.values(batches)}
+                  disabled
+                />
+              </div>
+              <div
+                className="ul-styling p-2"
+                style={{
+                  width:"10rem",
+                  marginTop: "13rem",
+                  height: "10rem",
+                  display: batchDropdown ? "" : "none",
+                }}
+              >
+                <BatchSelect
+                batchDataComingChild={batchDataComingFrmChild}
+                // selectAllBatches={selectAllBatches}
+                setSelectedBatches={props.setSelectedBatches}
+                selectedBatches={props.selectedBatches}
+                selectAllChecked={selectAllChecked}
+                setSelectAllChecked={setSelectAllChecked}
+                // searchUserQuery={searchUserQuery}
+                // setSearchUserQuery={setSearchUserQuery}
+                />
+              </div>
+            </div>
+          ) : (
+            ""
+          )}
 
           {userData.randomString === process.env.REACT_APP_USER_DES_USER ? (
             <>

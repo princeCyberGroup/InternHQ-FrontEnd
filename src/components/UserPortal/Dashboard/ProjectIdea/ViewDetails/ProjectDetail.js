@@ -5,11 +5,23 @@ import { ReactComponent as EditButton } from "../../../../../Assets/Buttonedit.s
 import { ReactComponent as DeleteButton } from "../../../../../Assets/Buttondelete.svg";
 import ProjectModalEdit from "./EditModalProject";
 import AddProject from "../Project/AddProject";
-const ProjectDetail = ({ data, mentorApiData, indexNumber, mentorIndexNumber }) => {
-  const [taskIdToChild, setTaskIdToChild] = useState(0);
+import DeleteProject from "./DeleteProject";
+
+
+const ProjectDetail = ({ data, mentorApiData, indexNumber, mentorIndexNumber,setTaskVersion}) => {
+  const [projectIdToChild, setProjectIdToChild] = useState(0);
+  const [showDeleteTask, setShowDeleteTask] = useState(false);
+  const [isOpen, setIsOpen] = useState(indexNumber===0);
+ 
+  // const deleteTask = (e, projectId, index) => {
+  //   e.preventDefault();
+  //   setTaskIdToChild(projectId);
+  // };
   const deleteTask = (e, projectId, index) => {
     e.preventDefault();
-    setTaskIdToChild(projectId);
+    setProjectIdToChild(projectId);
+    setShowDeleteTask(true);
+    setIsOpen(true);
   };
 
   useEffect(() => {
@@ -32,36 +44,55 @@ const ProjectDetail = ({ data, mentorApiData, indexNumber, mentorIndexNumber }) 
 
   return (
     <>
+    {showDeleteTask ? (
+        <DeleteProject
+          projectId={projectIdToChild}
+          isOpen={isOpen}
+          setIsOpen={setIsOpen}
+          setShowDeleteTask={setShowDeleteTask}
+          setTaskVersion={setTaskVersion}
+        />
+      ) : (
+        ""
+      )}
       {data !== null && Array.isArray(data) && data.length > indexNumber && mentorIndexNumber != 0 ? (
         <div className="" >
-          <div className="d-flex">
-            <h5 className="project-detail-name">{data[indexNumber]?.projectNames}</h5>
+          <div className="d-flex" style={{justifyContent:"space-between"}}>
             <div>
-              <button className="border-0 bg-transparent">
+            <h5 className="project-detail-name">{data[indexNumber]?.projectNames}</h5>
+            </div>
+            <div>
+              {/* <button className="border-0 bg-transparent"> */}
                 <EditButton
                   className="mx-3"
                   data-bs-toggle="modal"
                   data-bs-target="#editProjectModal"
-
+                  onClick={(e) => {
+                   console.log(data[indexNumber]?.technology);
+                  }}
                 />
-              </button>
+              {/* </button> */}
               <ProjectModalEdit
                 projectName={data[indexNumber]?.projectNames}
                 projectDescriptions={data[indexNumber]?.projectText}
-                projectTechnology={data[indexNumber]?.technology}
+                projectTechnology={data[indexNumber]?.technology.filter(tech => tech !== null)}
                 projectLinks={data[indexNumber]?.projectLink}
                 hostedLinks={data[indexNumber]?.hostedLink}
-                memberName = {data[indexNumber]?.members}
+                memberName = {data[indexNumber]?.members.filter(tech => tech !== null)}
                 indexNumber={indexNumber}
               />
-              <button  
+              {/* <button  
                 projectId={data[indexNumber].projectId}
                 onClick = {(e) => {
                   deleteTask(e,data[indexNumber].projectId,indexNumber)
-                }}>
+                }}> */}
                 <DeleteButton 
-               
-                /></button>
+                projectId={data[indexNumber].projectId}
+                onClick={(e) => {
+                  deleteTask(e, data[indexNumber].projectId, indexNumber);
+                }}
+                />
+                {/* </button> */}
             </div>
           </div>
           <p className="created-at">{data[indexNumber]?.createdAt}</p>
@@ -114,7 +145,7 @@ const ProjectDetail = ({ data, mentorApiData, indexNumber, mentorIndexNumber }) 
                   const initials = `${firstName[0]}${lastName ? lastName[0] : ''}`.toUpperCase();
                   return (
                     <div className="project-idea-members" key={index}>
-                      <p className="name-of-members">{initials}</p>
+                      <p className="name-of-members" title={curElem}>{initials}</p>
                     </div>
                   );
                 }

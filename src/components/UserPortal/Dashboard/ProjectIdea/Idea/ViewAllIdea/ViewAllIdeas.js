@@ -10,7 +10,7 @@ import axios from "axios";
 import { UserContext } from "../../../../../../Context/Context";
 import BreadCrumbs from "../../../../../BreadCrumbs/BreadCrumbs";
 import IdeaDetails from "../../ViewDetails/IdeaDetails";
-import {ReactComponent as VectorAdd} from "../../../../../../Assets/Vectoradd.svg";
+import { ReactComponent as VectorAdd } from "../../../../../../Assets/Vectoradd.svg";
 import CryptoJS from "crypto-js";
 
 const ViewAllIdeas = () => {
@@ -28,8 +28,11 @@ const ViewAllIdeas = () => {
   const [memberNames, setMemberNames] = useState({});
   const [techNames, seTechNames] = useState({});
   const [isProjectNameValid, setIsProjectNameValid] = useState(false);
-  const [isProjectDescriptionValid, setIsProjectDescriptionValid] = useState(false);
+  const [isProjectDescriptionValid, setIsProjectDescriptionValid] =
+    useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [taskVersion, setTaskVersion] = useState(0);
+
   const navigate = useNavigate();
 
   const handelIndex = (index) => {
@@ -68,7 +71,9 @@ const ViewAllIdeas = () => {
     e.preventDefault();
     const description = e.target.value;
     setProjDescription(description);
-    setIsProjectDescriptionValid(description.match(/^.{50,750}$/) ? true : false);
+    setIsProjectDescriptionValid(
+      description.match(/^.{50,750}$/) ? true : false
+    );
     if (!description) {
       setError(true);
       setProjDescriptionError("Project Description is required");
@@ -146,14 +151,7 @@ const ViewAllIdeas = () => {
       console.log("No encrypted data found in localStorage.");
     }
     var userId = parsedObject.userId;
-    axios
-     /* .get(process.env.REACT_APP_API_URL+`/api/v3/getProjectIdea?userId=${userId}`,
-      {
-        headers: {
-          Authorization:`Bearer ${JSON.parse(localStorage.getItem('userData'))['token']}`,
-        },
-      } */
-      .get(
+    axios.get(
         process.env.REACT_APP_API_URL +
           `/api/v3/getProjectIdea?userId=${userId}`,
         {
@@ -164,7 +162,9 @@ const ViewAllIdeas = () => {
       )
       .then((response) => {
         setIdea(response.data.response);
-        {console.log("Api",response.data)}
+        {
+          console.log("Api", response.data);
+        }
       })
       .catch((error) => {
         if (error.response.status === 401) {
@@ -181,7 +181,7 @@ const ViewAllIdeas = () => {
         }
         console.error("Error fetching tasks:", error);
       });
-  }, []);
+  }, [taskVersion]);
 
   useEffect(() => {
     const texts = textInput.split(",").map((text) => text.trim());
@@ -213,7 +213,9 @@ const ViewAllIdeas = () => {
             data-bs-toggle="modal"
             data-bs-target="#viewAllAddModal"
           >
-            <p className="add-new-project"><VectorAdd/> Add New Idea</p>
+            <p className="add-new-project">
+              <VectorAdd /> Add New Idea
+            </p>
           </div>
 
           <div
@@ -257,11 +259,12 @@ const ViewAllIdeas = () => {
                         placeholder="Enter Project Name"
                         onChange={handleChangeProjNameError}
                       />
-                      {!isProjectNameValid && projName &&(
-                    <span style={{ color: "red", fontSize: "11px" }}>
-                      Please enter a text with a length between 1 and 100 characters.
-                    </span>
-                  )}
+                      {!isProjectNameValid && projName && (
+                        <span style={{ color: "red", fontSize: "11px" }}>
+                          Please enter a text with a length between 1 and 100
+                          characters.
+                        </span>
+                      )}
                     </div>
                     <div className="mb-3">
                       <label
@@ -270,21 +273,23 @@ const ViewAllIdeas = () => {
                       >
                         Project Description
                         <span style={{ color: "red" }}>*</span>{" "}
-                        <span style={{color: "grey"}}>(Minimum 50 characters)</span>
+                        <span style={{ color: "grey" }}>
+                          (Minimum 50 characters)
+                        </span>
                       </label>
                       <textarea
                         className="form-control"
                         value={projDescription}
                         id="project-description"
                         placeholder="Write Here.."
-                        onChange={ (e) => handleChangeProjDescriptionError(e)}
+                        onChange={(e) => handleChangeProjDescriptionError(e)}
                         rows={3}
                       />
-                        {!isProjectDescriptionValid && projDescription &&(
-                      <span style={{ color: "red", fontSize: "11px" }}>
-                       Maximum description can be of 750 characters.
-                      </span>
-                    )}
+                      {!isProjectDescriptionValid && projDescription && (
+                        <span style={{ color: "red", fontSize: "11px" }}>
+                          Maximum description can be of 750 characters.
+                        </span>
+                      )}
                     </div>
 
                     <div className="mb-3">
@@ -294,7 +299,9 @@ const ViewAllIdeas = () => {
                         required
                       >
                         Technology Used <span style={{ color: "red" }}>*</span>
-                        <span style={{color: "grey"}}>(Select atleast 1 technology)</span>
+                        <span style={{ color: "grey" }}>
+                          (Select atleast 1 technology)
+                        </span>
                       </label>
                       <div className="container border p-0">
                         <div className="input-with-button">
@@ -336,10 +343,10 @@ const ViewAllIdeas = () => {
                         </div>
                       </div>
                       {!Object.values(tech).length && (
-                          <span style={{ color: "grey", fontSize: "11px" }}>
-                           Maximum 10 technologies
-                          </span>
-                        )}
+                        <span style={{ color: "grey", fontSize: "11px" }}>
+                          Maximum 10 technologies
+                        </span>
+                      )}
                     </div>
 
                     <div className="mb-3">
@@ -348,7 +355,9 @@ const ViewAllIdeas = () => {
                         className="col-form-label title-text"
                       >
                         Members(Optional)
-                        <span style={{color: "grey"}}>(Minimum 8 members)</span>
+                        <span style={{ color: "grey" }}>
+                          (Minimum 8 members)
+                        </span>
                       </label>
                       <input
                         className="form-control"
@@ -372,9 +381,13 @@ const ViewAllIdeas = () => {
                   <button
                     type="button"
                     class="btn btn-primary save-button"
-                    disabled={!isProjectNameValid || !isProjectDescriptionValid || isModalOpen}
+                    disabled={
+                      !isProjectNameValid ||
+                      !isProjectDescriptionValid ||
+                      isModalOpen
+                    }
                     data-bs-target="#viewAllAddModal"
-                    data-bs-dismiss={!error ? 'modal' : ''}
+                    data-bs-dismiss={!error ? "modal" : ""}
                     onClick={(e) => {
                       handleSubmit(e);
                       setIsModalOpen(true);
@@ -398,7 +411,11 @@ const ViewAllIdeas = () => {
               <DetailsLeft data={idea} projectDetails={handelIndex} />
             </div>
             <div className="project-detail">
-              <IdeaDetails data={idea} indexNumber={projectIndex} />
+              <IdeaDetails
+                data={idea}
+                indexNumber={projectIndex}
+                setTaskVersion={setTaskVersion}
+              />
             </div>
           </div>
         )}

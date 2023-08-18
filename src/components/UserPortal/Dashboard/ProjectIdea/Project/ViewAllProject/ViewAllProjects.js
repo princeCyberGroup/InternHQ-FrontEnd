@@ -36,6 +36,7 @@ const ViewAllProjects = () => {
   const [isProjectDescriptionValid, setIsProjectDescriptionValid] = useState(false);
   const [isProjectLinkValid, setIsProjectLinkValid] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [taskVersion, setTaskVersion] = useState(0);
   
   const navigate = useNavigate();
 
@@ -227,10 +228,11 @@ const ViewAllProjects = () => {
       })
     Promise.all([firstAPIPromise, secondAPIPromise])
       .then((responses) => {
-        const firstAPIData = responses[0].data.response;
+        const project = responses[0].data.response;
         const mentorAssignedData = responses[1].data.response;
-        { console.log("Forst:", mentorAssignData) }
-        setProject(firstAPIData);
+         console.log("mentor Task:", mentorAssignData) ;
+         console.log("Project :", project) ;
+        setProject(project);
         setMentorAssignData(mentorAssignedData);
 
       })
@@ -252,8 +254,9 @@ const ViewAllProjects = () => {
     //   .catch((error) => {
     //     console.error("Error fetching data from another API:", error);
     // });
-  }, []);
+  }, [taskVersion]);
 
+  
   useEffect(() => {
     const texts = textInput.split(",").map((text) => text.trim());
     const membersObj = {};
@@ -508,7 +511,7 @@ const ViewAllProjects = () => {
               <DetailsLeft data={project} mentorApiData={mentorAssignData} projectDetails={handelIndex} />
             </div>
             <div className="project-detail">
-              <ProjectDetail data={project} mentorApiData={mentorAssignData} indexNumber={projectIndex} mentorIndexNumber={mentorIndex} />
+              <ProjectDetail data={project} mentorApiData={mentorAssignData} indexNumber={projectIndex} mentorIndexNumber={mentorIndex} setTaskVersion={setTaskVersion} />
             </div>
           </div>
         )}

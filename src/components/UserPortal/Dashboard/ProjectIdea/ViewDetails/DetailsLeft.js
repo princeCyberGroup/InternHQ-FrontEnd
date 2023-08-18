@@ -24,7 +24,6 @@ const DetailsLeft = (props) => {
       <div className="all-project-names border-end">
         <div className="child-wrapper-1">
           {props.mentorApiData && Array.isArray(props.mentorApiData) && props.mentorApiData.map((user, indexForMentor) => {
-
             const isSelected = mentorSelectedIndex === indexForMentor;
             const isBorder = isSelected && mentorSelectedIndex === indexForMentor;
             return (
@@ -33,7 +32,6 @@ const DetailsLeft = (props) => {
                 key={indexForMentor}
                 onClick={(e) => {
                   e.preventDefault();
-                 
                   props.projectDetails("MT", indexForMentor);
                   setSelectedIdx(-1);
                   setMentorSelectedIndex(indexForMentor);
@@ -72,7 +70,6 @@ const DetailsLeft = (props) => {
                 key={index}
                 onClick={(e) => {
                   e.preventDefault();
-                
                   props.projectDetails(index, "MT");
                   setMentorSelectedIndex(-1);
                   setSelectedIdx(index);
@@ -96,8 +93,6 @@ const DetailsLeft = (props) => {
               </div>
             );
           })}
-
-
         </div>
       </div>
     </>
