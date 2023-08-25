@@ -1,6 +1,5 @@
 import React from "react";
 import { ReactComponent as DeleteVector } from "../../../../../Assets/VectordeleteTsk.svg";
-// import "./Successfull.css";
 import axios from "axios";
 import CryptoJS from "crypto-js";
 
@@ -28,23 +27,24 @@ const DeleteProject = ({
     }
     var userId = parsedObject.userId;
     await axios
-      .post(process.env.REACT_APP_API_URL + "/api/deleteProject", {
-        userId,
-        projectId,
-      },
-      {
-        headers: {
-          Authorization: `Bearer ${parsedObject["token"]}`,
+      .post(
+        process.env.REACT_APP_API_URL + "/api/deleteProject",
+        {
+          userId,
+          projectId,
         },
-      }
+        {
+          headers: {
+            Authorization: `Bearer ${parsedObject["token"]}`,
+          },
+        }
       )
       .then((res) => {
         console.log("print", res.data);
-        
-          setIsOpen(false);
-          setShowDeleteTask(false);
-          setTaskVersion((prevVersion) => prevVersion + 1);
-        
+
+        setIsOpen(false);
+        setShowDeleteTask(false);
+        setTaskVersion((prevVersion) => prevVersion + 1);
       })
       .catch((err) => {
         console.log(err);

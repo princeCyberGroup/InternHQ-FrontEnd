@@ -5,10 +5,11 @@ import { ReactComponent as EditButton } from "../../../../../Assets/Buttonedit.s
 import { ReactComponent as DeleteButton } from "../../../../../Assets/Buttondelete.svg";
 import EditProjectIdeaModal from "./EditProjectIdeaModal";
 
-const IdeaDetails = ({ data, indexNumber, setTaskVersion }) => {
+const IdeaDetails = ({ data, indexNumber, setTaskVersion, taskVersion }) => {
   const [projectIdToChild, setProjectIdToChild] = useState(0);
   const [showDeleteTask, setShowDeleteTask] = useState(false);
   const [isOpen, setIsOpen] = useState(indexNumber === 0);
+  const [textInput, setTextInput] = useState("");
 
   const deleteTask = (e, projectId, index) => {
     e.preventDefault();
@@ -40,45 +41,52 @@ const IdeaDetails = ({ data, indexNumber, setTaskVersion }) => {
       )}
 
       <div className="">
-      <div className="d-flex" style={{justifyContent:"space-between"}}>
-        <div>
-          <h5 className="project-detail-name">
-            {data[indexNumber]?.projectNames}
-          </h5>
-        </div>
-        <div>
-          <EditButton
-            className="mx-3"
-            data-bs-toggle="modal"
-            data-bs-target="#editProjectIdeaModal"
-          />
-          
-          {/* <ProjectModalEdit
-            projectName={data[indexNumber]?.projectNames}
-            projectDescriptions={data[indexNumber]?.projectText}
-            projectTechnology={data[indexNumber]?.technology}
-            projectLinks={data[indexNumber]?.projectLink}
-            hostedLinks={data[indexNumber]?.hostedLink}
-            memberName={data[indexNumber]?.members}
-            indexNumber={indexNumber}
-          /> */}
+        <div className="d-flex" style={{ justifyContent: "space-between" }}>
+          <div>
+            <h5 className="project-detail-name">
+              {data[indexNumber]?.projectNames}
+            </h5>
+          </div>
+          <div>
+            <EditButton
+              className="mx-3"
+              data-bs-toggle="modal"
+              data-bs-target="#editProjectIdeaModal"
+              onClick={(e) => {
+                setTextInput(
+                  data[indexNumber]?.members
+                    ?.filter((tech) => tech !== null)
+                    .join(",")
+                );
+              }}
+            />
 
-          <EditProjectIdeaModal
-          projectName={data[indexNumber]?.projectNames}
-          projectDescriptions={data[indexNumber]?.projectText}
-          projectTechnology={data[indexNumber]?.technology}
-          memberName = {data[indexNumber]?.members}
-          indexNumber={indexNumber}
-          />
-          
-          <DeleteButton
-            projectId={data[indexNumber].projectId}
-            onClick={(e) => {
-              deleteTask(e, data[indexNumber].projectId, indexNumber);
-            }}
-          />
-          {/* </button> */}
-        </div>
+            <EditProjectIdeaModal
+              setTaskVersion={setTaskVersion}
+              projectId={data[indexNumber]?.projectId}
+              projectName={data[indexNumber]?.projectNames}
+              projectDescriptions={data[indexNumber]?.projectText}
+              projectTechnology={data[indexNumber]?.technology?.filter(
+                (tech) => tech !== null
+              )}
+              memberName={
+                data[indexNumber]?.members?.filter((tech) => tech !== null) ||
+                ""
+              }
+              indexNumber={indexNumber}
+              textInput={textInput}
+              setTextInput={setTextInput}
+              projectVersion={true}
+              taskVersion={taskVersion}
+            />
+
+            <DeleteButton
+              projectId={data[indexNumber]?.projectId}
+              onClick={(e) => {
+                deleteTask(e, data[indexNumber].projectId, indexNumber);
+              }}
+            />
+          </div>
         </div>
         <p className="created-at">{data[indexNumber]?.createdAt}</p>
         <p className="project-detail-text">{data[indexNumber]?.projectText}</p>
@@ -136,9 +144,10 @@ const IdeaDetails = ({ data, indexNumber, setTaskVersion }) => {
                 }`.toUpperCase();
                 return (
                   <div className="project-idea-members" key={index}>
-                    <p className="name-of-members" title={curElem}>{initials}</p>
+                    <p className="name-of-members" title={curElem}>
+                      {initials}
+                    </p>
                   </div>
-                  
                 );
               }
             })}

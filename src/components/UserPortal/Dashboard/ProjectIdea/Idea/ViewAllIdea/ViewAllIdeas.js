@@ -11,27 +11,30 @@ import { UserContext } from "../../../../../../Context/Context";
 import BreadCrumbs from "../../../../../BreadCrumbs/BreadCrumbs";
 import IdeaDetails from "../../ViewDetails/IdeaDetails";
 import { ReactComponent as VectorAdd } from "../../../../../../Assets/Vectoradd.svg";
+import TechnologyDropDown from "../../../../../AdminPortal/Task/AssignTask/TechnologyDropdown(Admin)";
+
 import CryptoJS from "crypto-js";
 
 const ViewAllIdeas = () => {
-  // const { idea, setIdea, project, setProject } = useContext(UserContext);
   const [idea, setIdea] = useState([]);
   const [projectIndex, setProjectIndex] = useState(0);
-  const [projNameError, setProjNameError] = useState("");
-  const [projDescriptionError, setProjDescriptionError] = useState("");
+  const [nameError, setNameError] = useState(true);
+  const [descError, setDescError] = useState(true);
   const [projName, setProjName] = useState("");
   const [projDescription, setProjDescription] = useState("");
   const [tech, setTech] = useState({});
-  const [error, setError] = useState(true);
   const [dropDown, setDropDown] = useState(false);
   const [textInput, setTextInput] = useState("");
-  const [memberNames, setMemberNames] = useState({});
+  const [memberNames, setMemberNames] = useState([]);
   const [techNames, seTechNames] = useState({});
   const [isProjectNameValid, setIsProjectNameValid] = useState(false);
   const [isProjectDescriptionValid, setIsProjectDescriptionValid] =
     useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [taskVersion, setTaskVersion] = useState(0);
+  const [searchQuery, setSearchQuery] = useState("");
+  const [selectedTechIds, setSelectedTechIds] = useState([]);
+  const [technologyNames, setTechnologyNames] = useState([]);
 
   const navigate = useNavigate();
 
@@ -44,8 +47,6 @@ const ViewAllIdeas = () => {
     setProjName("");
     setProjDescription("");
     setDropDown(false);
-    setProjNameError("");
-    setProjDescriptionError("");
     setTech({});
     seTechNames({});
 
@@ -60,11 +61,9 @@ const ViewAllIdeas = () => {
     setProjName(name);
     setIsProjectNameValid(name.match(/^.{1,100}$/) ? true : false);
     if (!name) {
-      setError(true);
-      setProjNameError("Project Name is required");
+      setNameError(true);
     } else {
-      setError(false);
-      setProjNameError("");
+      setNameError(false);
     }
   };
   const handleChangeProjDescriptionError = (e) => {
@@ -75,23 +74,30 @@ const ViewAllIdeas = () => {
       description.match(/^.{50,750}$/) ? true : false
     );
     if (!description) {
-      setError(true);
-      setProjDescriptionError("Project Description is required");
+      setDescError(true);
     } else {
-      setError(false);
-      setProjDescriptionError("");
+      setDescError(false);
     }
   };
+
   const handleInputChange = (event) => {
-    setTextInput(event.target.value);
+    const inputText = event.target.value;
+    setTextInput(inputText);
+    const memberNamesArray = inputText.split(",").map((name) => name.trim());
+    const membersObj = {};
+    memberNamesArray.forEach((name, index) => {
+      membersObj[`member${index + 1}`] = name;
+    });
+    isObjectEmpty(membersObj);
   };
+
   const isObjectEmpty = (object) => {
-    if (object.member1?.length > 0) {
-      return setMemberNames(object);
-    } else {
-      return setMemberNames("");
-    }
+    const memberNamesArray = Object.values(object).filter(
+      (value) => value.trim() !== ""
+    );
+    setMemberNames(memberNamesArray);
   };
+
   const techDataComingFrmChild = (data) => {
     return setTech(data);
   };
@@ -108,16 +114,16 @@ const ViewAllIdeas = () => {
       console.log("No encrypted data found in localStorage.");
     }
     var userId = parsedObject.userId;
-    if (error) {
+    if (nameError || descError || technologyNames.length === 0) {
       alert("Please fill in the required details");
     } else {
       await axios
-        .post(process.env.REACT_APP_API_URL + "/api/v3/projectIdea", {
-          projName,
-          projDescription,
+        .post(process.env.REACT_APP_API_URL + "/user/dashboard/projectIdea", {
+          name: projName,
+          description: projDescription,
           userId,
-          technologyNames: tech,
-          memberNames: memberNames,
+          technology: technologyNames,
+          members: memberNames,
         })
         .then((res) => {
           console.log("print", res.data);
@@ -140,6 +146,16 @@ const ViewAllIdeas = () => {
   };
 
   useEffect(() => {
+    const texts = textInput.split(",").map((text) => text.trim());
+    const membersObj = {};
+    texts.forEach((text, index) => {
+      membersObj[`member${index + 1}`] = text;
+    });
+
+    isObjectEmpty(membersObj);
+  }, [textInput]);
+
+  useEffect(() => {
     const secretkeyUser = process.env.REACT_APP_USER_KEY;
     var parsedObject;
     const data = localStorage.getItem("userData");
@@ -151,7 +167,8 @@ const ViewAllIdeas = () => {
       console.log("No encrypted data found in localStorage.");
     }
     var userId = parsedObject.userId;
-    axios.get(
+    axios
+      .get(
         process.env.REACT_APP_API_URL +
           `/api/v3/getProjectIdea?userId=${userId}`,
         {
@@ -334,10 +351,14 @@ const ViewAllIdeas = () => {
                             style={{ display: dropDown ? "" : "none" }}
                             className="ul-styling"
                           >
-                            <TechDropDown
+                            <TechnologyDropDown
                               techDataComingChild={techDataComingFrmChild}
-                              seTechNames={seTechNames}
-                              techNames={techNames}
+                              selectedTechIds={selectedTechIds}
+                              setSelectedTechIds={setSelectedTechIds}
+                              setTechnologyNames={setTechnologyNames}
+                              technologyNames={technologyNames}
+                              searchQuery={searchQuery}
+                              setSearchQuery={setSearchQuery}
                             />
                           </ul>
                         </div>
@@ -381,13 +402,12 @@ const ViewAllIdeas = () => {
                   <button
                     type="button"
                     class="btn btn-primary save-button"
-                    disabled={
-                      !isProjectNameValid ||
-                      !isProjectDescriptionValid ||
-                      isModalOpen
-                    }
                     data-bs-target="#viewAllAddModal"
-                    data-bs-dismiss={!error ? "modal" : ""}
+                    data-bs-dismiss={
+                      !nameError && !descError && technologyNames.length !== 0
+                        ? "modal"
+                        : ""
+                    }
                     onClick={(e) => {
                       handleSubmit(e);
                       setIsModalOpen(true);
@@ -408,13 +428,14 @@ const ViewAllIdeas = () => {
             style={{ overFlowY: "scroll" }}
           >
             <div className="">
-              <DetailsLeft data={idea} projectDetails={handelIndex} />
+              <DetailsLeft project={idea} projectDetails={handelIndex} />
             </div>
             <div className="project-detail">
               <IdeaDetails
                 data={idea}
                 indexNumber={projectIndex}
                 setTaskVersion={setTaskVersion}
+                taskVersion={taskVersion}
               />
             </div>
           </div>

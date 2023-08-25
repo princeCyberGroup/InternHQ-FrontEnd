@@ -10,33 +10,32 @@ import "react-loading-skeleton/dist/skeleton.css";
 import CryptoJS from "crypto-js";
 import TechnologyDropDown from "../../../../AdminPortal/Task/AssignTask/TechnologyDropdown(Admin)";
 
-
 const AddProject = () => {
   const { project } = useContext(UserContext);
   const navigate = useNavigate();
+  const [nameError, setNameError] = useState(true);
+  const [descError, setDescError] = useState(true);
+  const [projLinkError, setProjLinkError] = useState(true);
   const [first, ...rest] = project;
   const [projName, setProjName] = useState("");
   const [projDescription, setProjDescription] = useState("");
   const [projectLink, setProjectLink] = useState("");
   const [hostedLink, setHostedLink] = useState("");
   const [textInput, setTextInput] = useState("");
-  // const [memberNames, setMemberNames] = useState({});
   const [memberNames, setMemberNames] = useState([]);
   const [techNames, seTechNames] = useState({});
   const [dropDown, setDropDown] = useState(false);
-  const [error, setError] = useState(true);
-  const [projNameError, setProjNameError] = useState("");
-  const [desError, setDesError] = useState("");
-  const [projLinkError, setProjLinkError] = useState("");
   const [tech, setTech] = useState({});
   const [technologyNames, setTechnologyNames] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [isProjectNameValid, setIsProjectNameValid] = useState(false);
-  const [isProjectDescriptionValid, setIsProjectDescriptionValid] = useState(false);
+  const [isProjectDescriptionValid, setIsProjectDescriptionValid] =
+    useState(false);
   const [isProjectLinkValid, setIsProjectLinkValid] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedTechIds, setSelectedTechIds] = useState([]);
+  let memberCount = 0;
 
   useEffect(() => {
     setTimeout(() => {
@@ -50,37 +49,33 @@ const AddProject = () => {
     setProjName(name);
     setIsProjectNameValid(name.match(/^.{1,100}$/) ? true : false);
     if (!name) {
-      setError(true);
-      setProjNameError("Project Name is required");
+      setNameError(true);
     } else {
-      setError(false);
-      setProjNameError("");
+      setNameError(false);
     }
   };
   const handleProjectDescriptionChange = (e) => {
     e.preventDefault();
     const description = e.target.value;
     setProjDescription(description);
-    setIsProjectDescriptionValid(description.match(/^.{50,750}$/) ? true : false);
+    setIsProjectDescriptionValid(
+      description.match(/^.{50,750}$/) ? true : false
+    );
     if (!description) {
-      setError(true);
-      setDesError("Project Description is required");
+      setDescError(true);
     } else {
-      setDesError("");
-      setError(false);
+      setDescError(false);
     }
   };
 
   const handleProjectLinkChange = (e) => {
     const link = e.target.value;
     setProjectLink(link);
-    setIsProjectLinkValid(link.match(/^https?:\/\//) ? true : false)
+    setIsProjectLinkValid(link.match(/^https?:\/\//) ? true : false);
     if (!link) {
-      setError(true);
-      setProjLinkError("Project link is required");
+      setProjLinkError(true);
     } else {
-      setProjLinkError("");
-      setError(false);
+      setProjLinkError(false);
     }
   };
 
@@ -91,16 +86,13 @@ const AddProject = () => {
   const handleInputChange = (event) => {
     const inputText = event.target.value;
     setTextInput(inputText);
-    const memberNamesArray = inputText.split(',').map(name => name.trim());
+    const memberNamesArray = inputText.split(",").map((name) => name.trim());
     const membersObj = {};
     memberNamesArray.forEach((name, index) => {
       membersObj[`member${index + 1}`] = name;
     });
     isObjectEmpty(membersObj);
   };
-  // const handleInputChange = (event) => {
-  //   setTextInput(event.target.value);
-  // };
 
   const handleClick = async (e) => {
     e.preventDefault();
@@ -113,9 +105,6 @@ const AddProject = () => {
     setProjectLink("");
     setHostedLink("");
     setDropDown(false);
-    setProjNameError("");
-    setDesError("");
-    setProjLinkError("");
     setTech({});
     seTechNames({});
     setTechnologyNames([]);
@@ -126,18 +115,10 @@ const AddProject = () => {
     });
   };
 
-
-  // const isObjectEmpty = (object) => {
-  //   if (object.member1.length > 0) {
-  //     setMemberNames(object);
-  //     return;
-  //   } else {
-  //     return setMemberNames("");
-  //   }
-  // };
-
   const isObjectEmpty = (object) => {
-    const memberNamesArray = Object.values(object).filter(value => value.trim() !== '');
+    const memberNamesArray = Object.values(object).filter(
+      (value) => value.trim() !== ""
+    );
     setMemberNames(memberNamesArray);
   };
 
@@ -154,18 +135,23 @@ const AddProject = () => {
       console.log("No encrypted data found in localStorage.");
     }
     var userId = parsedObject.userId;
-    if (error) {
+    if (
+      nameError ||
+      descError ||
+      projLinkError ||
+      technologyNames.length === 0
+    ) {
       alert("Please fill in the required details");
     } else {
       axios
-        .post(process.env.REACT_APP_API_URL + "/api/v3/Project", {
-          projName,
-          projDescription,
+        .post(process.env.REACT_APP_API_URL + "/user/dashboard/project", {
+          name: projName,
+          description: projDescription,
           userId,
           projectLink,
           hostedLink,
-          technologyNames: technologyNames,
-          memberNames: memberNames,
+          technology: technologyNames,
+          members: memberNames,
         })
         .then((res) => {
           console.log("print", res.data);
@@ -180,6 +166,7 @@ const AddProject = () => {
       setHostedLink("");
 
       setTech({});
+      setTechnologyNames([]);
 
       const checkboxes = document.querySelectorAll(".tech-checkbox");
       checkboxes.forEach((checkbox) => {
@@ -281,6 +268,53 @@ const AddProject = () => {
                   }
                 })}
               </div>
+              <div className="members-div pt-0">
+                {first?.members &&
+                  !first?.members?.every((value) => value === null) && (
+                    <div className="member mb pt-1 fw-bold mb-2">Members:</div>
+                  )}
+                <div className="project-members ml-0">
+                  {first.members.slice(0, 8)?.map((curElem, index) => {
+                    if (curElem != null) {
+                      const [firstName, lastName] = curElem.split(" ");
+                      const initials = `${firstName[0]}${
+                        lastName ? lastName[0] : ""
+                      }`.toUpperCase();
+                      return (
+                        <div className="project-idea-members" key={index}>
+                          <p className="name-of-members" title={curElem}>
+                            {initials}
+                          </p>
+                        </div>
+                      );
+                    }
+                  })}
+
+                  {first.members?.map((mem) => {
+                    if (mem != null) memberCount++;
+                    const remainingMembersCounts = memberCount - 8;
+                    {
+                    }
+
+                    remainingMembersCounts > 0 ? (
+                      <div className="count-of-members">
+                        + {remainingMembersCounts}
+                      </div>
+                    ) : (
+                      <></>
+                    );
+                  })}
+                  {/* {remainingMembersCounts > 0 ? (
+            <div className="count-of-members">
+              <p className="remaining-members">+{remainingMembersCounts}</p>
+              {console.log("count: ", remainingMembersCounts)}
+            </div>
+          )
+            :
+            <div>        {console.log("count: ")}</div>
+          } */}
+                </div>
+              </div>
             </div>
           </div>
         )}
@@ -339,7 +373,8 @@ const AddProject = () => {
                   />
                   {!isProjectNameValid && projName && (
                     <span style={{ color: "red", fontSize: "11px" }}>
-                      Please enter a name with only letters and spaces, between 1 and 100 characters.
+                      Please enter a name with only letters and spaces, between
+                      1 and 100 characters.
                     </span>
                   )}
                 </div>
@@ -351,7 +386,9 @@ const AddProject = () => {
                   >
                     Project Description
                     <span style={{ color: "red" }}>*</span>{" "}
-                    <span style={{ color: "grey" }}>(Minimum 50 characters)</span>
+                    <span style={{ color: "grey" }}>
+                      (Minimum 50 characters)
+                    </span>
                   </label>
                   <textarea
                     className="form-control"
@@ -363,7 +400,8 @@ const AddProject = () => {
                   />
                   {!isProjectDescriptionValid && projDescription && (
                     <span style={{ color: "red", fontSize: "11px" }}>
-                      Please enter a description with a length between 50 and 750 characters.
+                      Please enter a description with a length between 50 and
+                      750 characters.
                     </span>
                   )}
                 </div>
@@ -374,7 +412,9 @@ const AddProject = () => {
                     required
                   >
                     Technology Used <span style={{ color: "red" }}>*</span>
-                    <span style={{ color: "grey" }}>(Select atleast 1 technology)</span>
+                    <span style={{ color: "grey" }}>
+                      (Select atleast 1 technology)
+                    </span>
                   </label>
                   <div className="container border p-0">
                     <div className="input-with-button">
@@ -407,25 +447,15 @@ const AddProject = () => {
                         style={{ display: dropDown ? "" : "none" }}
                         className="ul-styling"
                       >
-                        {/* <TechDropDown
-                          techDataComingChild={techDataComingFrmChild}
-                          seTechNames={seTechNames}
-                          techNames={techNames}
-                          technologyNames={technologyNames}
-                        /> */}
                         <TechnologyDropDown
-                        techDataComingChild={techDataComingFrmChild}
-                        // seTechNames={seTechNames}
-                        // techNames={techNames}
-                        // technologyNames={technologyNames}
-                        // selectedTech={editProject?.technologyNames}
-                        selectedTechIds={selectedTechIds}
-                        setSelectedTechIds={setSelectedTechIds}
-                        setTechnologyNames={setTechnologyNames}
-                        technologyNames={technologyNames}
-                        searchQuery={searchQuery}
-                        setSearchQuery={setSearchQuery}
-                      />
+                          techDataComingChild={techDataComingFrmChild}
+                          selectedTechIds={selectedTechIds}
+                          setSelectedTechIds={setSelectedTechIds}
+                          setTechnologyNames={setTechnologyNames}
+                          technologyNames={technologyNames}
+                          searchQuery={searchQuery}
+                          setSearchQuery={setSearchQuery}
+                        />
                       </ul>
                     </div>
                   </div>
@@ -452,7 +482,8 @@ const AddProject = () => {
                   />
                   {!isProjectLinkValid && projectLink && (
                     <span style={{ color: "red", fontSize: "11px" }}>
-                      Invalid project link. Please enter a valid URL starting with http:// or https://.
+                      Invalid project link. Please enter a valid URL starting
+                      with http:// or https://.
                     </span>
                   )}
                 </div>
@@ -477,7 +508,6 @@ const AddProject = () => {
                     className="col-form-label title-text"
                   >
                     Members(Optional)
-                    <span style={{ color: "grey" }}>(Minimum 8 members)</span>
                   </label>
                   <input
                     className="form-control"
@@ -502,9 +532,15 @@ const AddProject = () => {
               <button
                 type="button"
                 className="btn btn-primary save-button"
-                disabled={!isProjectNameValid || !isProjectDescriptionValid || !isProjectLinkValid || isModalOpen}
                 data-bs-target="#projectExampleModal"
-                data-bs-dismiss={!error ? 'modal' : ''}
+                data-bs-dismiss={
+                  !nameError &&
+                  !descError &&
+                  !projLinkError &&
+                  technologyNames.length !== 0
+                    ? "modal"
+                    : ""
+                }
                 onClick={(e) => {
                   handleSubmit(e);
                   setIsModalOpen(true);

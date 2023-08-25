@@ -3,6 +3,8 @@ import { UserContext } from "../../Context/Context";
 import { Link, NavLink, useNavigate } from "react-router-dom";
 import { BsChevronDown } from "react-icons/bs";
 import { ReactComponent as CGlogo } from "../../Assets/CG-Logo (1) 1CGlogo.svg";
+import { ReactComponent as ExpandMore } from "../../Assets/expand_more.svg";
+
 import "./Header.css";
 import MentorAssignedAlerts from "../UserPortal/Dashboard/MentorAssignedAlerts/MentorAssignedAlerts";
 import CryptoJS from "crypto-js";
@@ -256,24 +258,27 @@ const Header = (props) => {
             //             </ul>
             //           </div>
             //         </div>
-            <div className="container border p-0" style={{ width: "10rem",marginRight:"2rem" }}>
+            <div className="container border p-0" style={{ width: "10rem",marginRight:"2rem", cursor:"pointer" }}>
               <div
                 className="input-with-btn"
-                style={{ width: "10rem" }}
+                style={{ width: "10rem",cursor:"pointer",border:"none" }}
                 onClick={() => {
                   // setUsersDropDown(!usersDropDown);
                   setBatchDropdown(!batchDropdown);
                 }}
               >
                 <input
-                style={{width:"10rem"}}
+                style={{width:"8rem",outline:"none",cursor:"pointer"}}
                   type="text"
                   className="custom-input"
                   placeholder="Select Batch"
                   value={Object.values(batches)}
-                  disabled
+                  // disabled
                 />
+                <ExpandMore />
+                
               </div>
+              {/* divider */}
               <div
                 className="ul-styling p-2"
                 style={{

@@ -4,14 +4,17 @@ import React, { useEffect, useState, useContext } from "react";
 import axios from "axios";
 import EmptyProject from "../../EmptyStates/EmptyProject/MyIdea";
 import { ReactComponent as ExpandMore } from "../../../../../Assets/expand_more.svg";
-import TechDropDown from "../TechDropDown";
 import { UserContext } from "../../../../../Context/Context";
 import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
+import TechnologyDropDown from "../../../../AdminPortal/Task/AssignTask/TechnologyDropdown(Admin)";
+
 import CryptoJS from "crypto-js";
 const AddNewIdea = () => {
   const { idea } = useContext(UserContext);
   const navigate = useNavigate();
+  const [nameError, setNameError] = useState(true);
+  const [descError, setDescError] = useState(true);
   const [first, ...rest] = idea;
   const [projName, setProjName] = useState("");
   const [projDescription, setProjDescription] = useState("");
@@ -20,35 +23,15 @@ const AddNewIdea = () => {
   const [tech, setTech] = useState({});
   const [dropDown, setDropDown] = useState(false);
   const [projNameError, setProjNameError] = useState("");
-  const [projDescriptionError, setProjDescriptionError] = useState("");
-  const [error, setError] = useState(true);
   const [techNames, seTechNames] = useState({});
-  const [technologyNames, setTechnologyNames] = useState([]);
   const [isProjectNameValid, setIsProjectNameValid] = useState(false);
-  const [isProjectDescriptionValid, setIsProjectDescriptionValid] = useState(false);
-  const [technologySelected, setTechnologySelected] = useState("");
+  const [isProjectDescriptionValid, setIsProjectDescriptionValid] =
+    useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [searchQuery, setSearchQuery] = useState("");
+  const [selectedTechIds, setSelectedTechIds] = useState([]);
+  const [technologyNames, setTechnologyNames] = useState([]);
   let memberCount = 0;
-  // {
-  //   first.members.map((mem) => {
-
-  //     if (mem != null) memberCount++;
-  //   })
-  // }
-  // let memberCount = 0 //8
-  // first.members.map((mem) => {
-  //   if(mem != null) memberCount++;
-  // })
-  // const remainingMembersCounts = memberCount - 3;
-
-  // if (first && first.members) {
-  //   first.members.map((mem) => {
-  //     if (mem != null) memberCount++;
-
-  //   });
-
-  // }
-  const remainingMembersCounts = memberCount - 3;
 
   const [isLoading, setIsLoading] = useState(true);
 
@@ -58,7 +41,6 @@ const AddNewIdea = () => {
     }, 1000);
   }, []);
 
-
   const handleClickClear = (event) => {
     event.preventDefault();
     setTextInput("");
@@ -66,7 +48,6 @@ const AddNewIdea = () => {
     setProjDescription("");
     setDropDown(false);
     setProjNameError("");
-    setProjDescriptionError("");
     setTech({});
     seTechNames({});
     setTechnologyNames([]);
@@ -83,11 +64,9 @@ const AddNewIdea = () => {
     setProjName(name);
     setIsProjectNameValid(name.match(/^.{1,100}$/) ? true : false);
     if (!name) {
-      setError(true);
-      setProjNameError("Project Name is required");
+      setNameError(true);
     } else {
-      setError(false);
-      setProjNameError("");
+      setNameError(false);
     }
   };
 
@@ -95,40 +74,44 @@ const AddNewIdea = () => {
     event.preventDefault();
     const description = event.target.value;
     setProjDescription(description);
-    setIsProjectDescriptionValid(description.match(/^.{50,750}$/) ? true : false);
+    setIsProjectDescriptionValid(
+      description.match(/^.{50,750}$/) ? true : false
+    );
     if (!description) {
-      setError(true);
-      setProjDescriptionError("Project Description is required");
+      setDescError(true);
     } else {
-      setProjDescriptionError("");
-      setError(false);
+      setDescError(false);
     }
   };
-  const handleChangeTechnology = (e) => {
-    e.preventDefault();
-    const technology = e.target.value;
-    setTechnologySelected(technology);
 
-  }
   const truncate = (str, maxLength) => {
     if (str.length > maxLength) return str.slice(0, maxLength) + "...";
     else return str;
   };
 
   const handleInputChange = (event) => {
-    setTextInput(event.target.value);
+    const inputText = event.target.value;
+    setTextInput(inputText);
+    const memberNamesArray = inputText.split(",").map((name) => name.trim());
+    const membersObj = {};
+    memberNamesArray.forEach((name, index) => {
+      membersObj[`member${index + 1}`] = name;
+    });
+    isObjectEmpty(membersObj);
   };
+
   const handleClick = (e) => {
     e.preventDefault();
     navigate("/project-idea");
   };
+
   const isObjectEmpty = (object) => {
-    if (object.member1.length > 0) {
-      return setMemberNames(object);
-    } else {
-      return setMemberNames("");
-    }
+    const memberNamesArray = Object.values(object).filter(
+      (value) => value.trim() !== ""
+    );
+    setMemberNames(memberNamesArray);
   };
+
   const techDataComingFrmChild = (data) => {
     return setTech(data);
   };
@@ -145,16 +128,16 @@ const AddNewIdea = () => {
       console.log("No encrypted data found in localStorage.");
     }
     var userId = parsedObject.userId;
-    if (error) {
+    if (nameError || descError || technologyNames.length === 0) {
       alert("Please fill in the required details");
     } else {
       await axios
-        .post(process.env.REACT_APP_API_URL + "/api/v3/projectIdea", {
-          projName,
-          projDescription,
+        .post(process.env.REACT_APP_API_URL + "/user/dashboard/projectIdea", {
+          name: projName,
+          description: projDescription,
           userId,
-          technologyNames: tech,
-          memberNames: memberNames,
+          technology: technologyNames,
+          members: memberNames,
         })
         .then((res) => {
           console.log("print", res.data);
@@ -175,6 +158,16 @@ const AddNewIdea = () => {
       });
     }
   };
+
+  useEffect(() => {
+    const texts = textInput.split(",").map((text) => text.trim());
+    const membersObj = {};
+    texts.forEach((text, index) => {
+      membersObj[`member${index + 1}`] = text;
+    });
+
+    isObjectEmpty(membersObj);
+  }, [textInput]);
 
   useEffect(() => {
     const texts = textInput.split(",").map((text) => text.trim());
@@ -288,42 +281,41 @@ const AddNewIdea = () => {
                   : first.projectText}
               </p>
               <div className="members-div pt-0">
-              {first?.members && !(first?.members?.every((value) => value === null)) && (
-          <div className="member mb pt-1 fw-bold mb-2">Members:</div>
-        )}
+                {first?.members &&
+                  !first?.members?.every((value) => value === null) && (
+                    <div className="member mb pt-1 fw-bold mb-2">Members:</div>
+                  )}
                 <div className="project-members ml-0">
                   {first.members.slice(0, 8)?.map((curElem, index) => {
                     if (curElem != null) {
                       const [firstName, lastName] = curElem.split(" ");
-                      const initials = `${firstName[0]}${lastName ? lastName[0] : ''}`.toUpperCase();
+                      const initials = `${firstName[0]}${
+                        lastName ? lastName[0] : ""
+                      }`.toUpperCase();
                       return (
                         <div className="project-idea-members" key={index}>
-                          <p className="name-of-members" data-title={`${firstName} ${lastName}`}>
+                          <p className="name-of-members" title={curElem}>
                             {initials}
                           </p>
                         </div>
-
                       );
                     }
                   })}
 
                   {first.members?.map((mem) => {
-
                     if (mem != null) memberCount++;
-                    const remainingMembersCounts = memberCount - 8; {
+                    const remainingMembersCounts = memberCount - 8;
+                    {
                     }
 
                     remainingMembersCounts > 0 ? (
                       <div className="count-of-members">
-
                         + {remainingMembersCounts}
-
-
-                      </div>)
-                      :
+                      </div>
+                    ) : (
                       <></>
-                  }
-                  )}
+                    );
+                  })}
                   {/* {remainingMembersCounts > 0 ? (
             <div className="count-of-members">
               <p className="remaining-members">+{remainingMembersCounts}</p>
@@ -382,7 +374,6 @@ const AddNewIdea = () => {
                     className="col-form-label title-text"
                   >
                     Project Name<span style={{ color: "red" }}>*</span>{" "}
-
                   </label>
                   <input
                     type="text"
@@ -394,7 +385,8 @@ const AddNewIdea = () => {
                   />
                   {!isProjectNameValid && projName && (
                     <span style={{ color: "red", fontSize: "11px" }}>
-                      Please enter a name with only letters and spaces, between 1 and 100 characters.
+                      Please enter a name with only letters and spaces, between
+                      1 and 100 characters.
                     </span>
                   )}
                 </div>
@@ -404,8 +396,9 @@ const AddNewIdea = () => {
                     className="col-form-label title-text"
                   >
                     Project Description<span style={{ color: "red" }}>*</span>{" "}
-                    <span style={{color: "grey"}}>(Minimum 50 characters)</span>
-
+                    <span style={{ color: "grey" }}>
+                      (Minimum 50 characters)
+                    </span>
                   </label>
                   <textarea
                     className="form-control"
@@ -417,7 +410,8 @@ const AddNewIdea = () => {
                   ></textarea>
                   {!isProjectDescriptionValid && projDescription && (
                     <span style={{ color: "red", fontSize: "11px" }}>
-                      Please enter a description with a length between 50 and 750 characters.
+                      Please enter a description with a length between 50 and
+                      750 characters.
                     </span>
                   )}
                 </div>
@@ -429,7 +423,9 @@ const AddNewIdea = () => {
                     required
                   >
                     Technology Used <span style={{ color: "red" }}>*</span>
-                    <span style={{color: "grey"}}>(Select atleast 1 technology)</span>
+                    <span style={{ color: "grey" }}>
+                      (Select atleast 1 technology)
+                    </span>
                   </label>
                   <div className="container border p-0">
                     <div className="input-with-button">
@@ -462,22 +458,24 @@ const AddNewIdea = () => {
                         style={{ display: dropDown ? "" : "none" }}
                         className="ul-styling"
                       >
-                        <TechDropDown
+                        <TechnologyDropDown
                           techDataComingChild={techDataComingFrmChild}
-                          seTechNames={seTechNames}
-                          techNames={techNames}
+                          selectedTechIds={selectedTechIds}
+                          setSelectedTechIds={setSelectedTechIds}
+                          setTechnologyNames={setTechnologyNames}
                           technologyNames={technologyNames}
+                          searchQuery={searchQuery}
+                          setSearchQuery={setSearchQuery}
                         />
                       </ul>
                     </div>
                     {/* </div> */}
-                
                   </div>
                   {!Object.values(tech).length && (
-                          <span style={{ color: "grey", fontSize: "11px" }}>
-                          Maximum 10 technologies
-                          </span>
-                        )}
+                    <span style={{ color: "grey", fontSize: "11px" }}>
+                      Maximum 10 technologies
+                    </span>
+                  )}
                 </div>
 
                 <div className="mb-3">
@@ -486,7 +484,7 @@ const AddNewIdea = () => {
                     className="col-form-label title-text"
                   >
                     Members(Optional)
-                    <span style={{color: "grey"}}>(Minimum 8 members)</span>
+                    <span style={{ color: "grey" }}>(Minimum 8 members)</span>
                   </label>
                   <input
                     className="form-control"
@@ -510,14 +508,17 @@ const AddNewIdea = () => {
               <button
                 type="button"
                 class="btn btn-primary save-button"
-                disabled={!isProjectNameValid || !isProjectDescriptionValid || isModalOpen}
+                // disabled={!isProjectNameValid || !isProjectDescriptionValid || isModalOpen}
                 data-bs-target="#myIdeaModal"
-                data-bs-dismiss={!error ? 'modal' : ''}
+                data-bs-dismiss={
+                  !nameError && !descError && technologyNames.length !== 0
+                    ? "modal"
+                    : ""
+                }
                 onClick={(e) => {
                   handleSubmit(e);
                   setIsModalOpen(true);
                 }}
-             
               >
                 <span className="save-text"> Save </span>
               </button>

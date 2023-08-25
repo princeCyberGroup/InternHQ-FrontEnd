@@ -731,7 +731,7 @@ export const TaskStatus = (props) => {
       </Link>
       </p>
       <div className="card task-status-card ">
-        {taskStatus?.map((task) => (
+        {taskStatus && taskStatus?.map((task) => (
           <div
             key={task.taskId}
             className="each-task mb-2"

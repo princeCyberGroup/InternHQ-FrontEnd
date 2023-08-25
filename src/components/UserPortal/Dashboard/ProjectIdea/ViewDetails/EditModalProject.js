@@ -5,6 +5,10 @@ import axios from "axios";
 import TechnologyDropDown from "../../../../AdminPortal/Task/AssignTask/TechnologyDropdown(Admin)";
 
 const ProjectModalEdit = ({
+  taskVersion,
+  setTaskVersion,
+  idProp,
+  idValue,
   projectName,
   projectDescriptions,
   indexNumber,
@@ -12,42 +16,48 @@ const ProjectModalEdit = ({
   projectLinks,
   hostedLinks,
   memberName,
+  textInput,
+  setTextInput,
+  projectVersion,
 }) => {
   const [projName, setProjName] = useState(projectName);
+  const [proVersion, setProVersion] = useState(false);
   const [description, setDescription] = useState(projectDescriptions);
   const [projectLink, setProjectLink] = useState(projectLinks);
   const [hostedLink, setHostedLink] = useState(hostedLinks);
-  const [textInput, setTextInput] = useState("");
-  const [memberNames, setMemberNames] = useState([memberName]);
-  const [techNames, seTechNames] = useState({});
+  const [memberNames, setMemberNames] = useState(memberName);
   const [dropDown, setDropDown] = useState(false);
-  const [error, setError] = useState(true);
-  const [projNameError, setProjNameError] = useState("");
-  const [desError, setDesError] = useState("");
-  const [projLinkError, setProjLinkError] = useState("");
+  const [projNameError, setProjNameError] = useState(false);
+  const [desError, setDesError] = useState(false);
+  const [projLinkError, setProjLinkError] = useState(false);
   const [tech, setTech] = useState({ projectTechnology });
-  const [technologyNames, setTechnologyNames] = useState([projectTechnology]);
-  const [isProjectNameValid, setIsProjectNameValid] = useState(false);
-  const [isProjectDescriptionValid, setIsProjectDescriptionValid] =
-    useState(false);
+  const [technologyNames, setTechnologyNames] = useState(projectTechnology);
+  const [isProjectNameValid, setIsProjectNameValid] = useState(true);
   const [isProjectLinkValid, setIsProjectLinkValid] = useState(false);
   const [editProject, setEditProject] = useState({});
   const [projectToEdit, setProjectToEdit] = useState(null);
-  const [projectId, setProjectId] = useState();
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedTechIds, setSelectedTechIds] = useState([]);
 
   const handleProjectNameChange = (e) => {
-    setProjName(e.target.value);
-    if (e.target.value > 0) {
-      setError(false);
+    e.preventDefault();
+    const name = e.target.value;
+    setProjName(name);
+    if (!name) {
+      setProjNameError(true);
     } else {
-      setError(true);
+      setProjNameError(false);
     }
-    // setIsProjectNameValid(name.match(/^.{1,100}$/) ? true : false);
+    setIsProjectNameValid(e.target.value.match(/^.{1,100}$/) ? true : false);
   };
   const handleProjectDescriptionChange = (e) => {
-    setDescription(e.target.value);
+    const desc = e.target.value;
+    setDescription(desc);
+    if (!desc) {
+      setDesError(true);
+    } else {
+      setDesError(false);
+    }
   };
   const handleChangeTechnology = (e) => {
     setTech(e.target.value);
@@ -58,66 +68,73 @@ const ProjectModalEdit = ({
     setProjectLink(link);
     setIsProjectLinkValid(link.match(/^https?:\/\//) ? true : false);
     if (!link) {
-      setError(true);
-      setProjLinkError("Project link is required");
+      setProjLinkError(true);
     } else {
-      setProjLinkError("");
-      setError(false);
+      setProjLinkError(false);
     }
   };
   const techDataComingFrmChild = (data) => {
     return setTech(data);
   };
-  const handleInputChange = (e) => {
-    setMemberNames(e.target.value);
+
+  const handleInputChange = (event) => {
+    const inputText = event.target.value;
+    setTextInput(inputText);
+    const memberNamesArray = inputText.split(",").map((name) => name.trim());
+    const membersObj = {};
+    memberNamesArray.forEach((name, index) => {
+      membersObj[`member${index + 1}`] = name;
+    });
+    isObjectEmpty(membersObj);
   };
+
   const isObjectEmpty = (object) => {
-    if (object.member1.length > 0) {
-      setMemberNames(object);
-      return;
-    } else {
-      return setMemberNames("");
-    }
+    const memberNamesArray = Object.values(object).filter(
+      (value) => value.trim() !== ""
+    );
+    setMemberNames(memberNamesArray);
   };
-  // const handleOnEditClose = () => {
-  //     onEditClose();
-  //   }
+
   const handleSubmit = (e) => {
-    // var storedObject = localStorage.getItem("userData");
-    // var parsedObject = JSON.parse(storedObject);
-    // var projectId = parsedObject.projectId;
-    if (error) {
+    if (
+      projNameError ||
+      desError ||
+      projLinkError ||
+      technologyNames?.length === 0
+    ) {
       alert("Please fill in the required details");
     } else {
       axios
         .post(process.env.REACT_APP_API_URL + "/api/v4/project-task", {
-          projectId,
-          projName,
+          [idProp === "projectId" ? "projectId" : "taskId"]: idValue,
+          name: projName,
           description,
           projectLink,
           hostedLink,
-          technologyNames: technologyNames,
-          memberNames: memberNames,
+          technology: technologyNames,
+          members: memberNames,
         })
 
         .then((res) => {
           console.log("print", res.data);
-          handleEditCloseModal();
+          setTaskVersion((prevVersion) => prevVersion + 1);
         })
         .catch((err) => {
           console.log(err);
         });
     }
   };
+
   useEffect(() => {
-    const texts = textInput.split(",").map((text) => text.trim());
+    const texts = textInput?.split(",").map((text) => text.trim());
     const membersObj = {};
-    texts.forEach((text, index) => {
+    texts?.forEach((text, index) => {
       membersObj[`member${index + 1}`] = text;
     });
 
     isObjectEmpty(membersObj);
   }, [textInput]);
+
   useEffect(() => {
     setEditProject(projectToEdit);
   }, [projectToEdit]);
@@ -138,17 +155,28 @@ const ProjectModalEdit = ({
     setHostedLink(hostedLinks);
     setMemberNames(memberName);
     setTechnologyNames(projectTechnology);
-    {
-      console.log("names", memberName);
-      console.log("tech",projectTechnology);
-    }
-  }, [indexNumber]);
+    setProVersion(projectVersion);
+    // }
+  }, [indexNumber, proVersion]);
 
-  const handleEditProject = (project) => {
-    setProjectToEdit(project);
-  };
   const handleEditCloseModal = () => {
     setProjectToEdit(null);
+    setProjName(projectName);
+    setDescription(projectDescriptions);
+    setProjectLink(projectLinks);
+    setHostedLink(hostedLinks);
+    setMemberNames(memberName);
+    setTechnologyNames(projectTechnology);
+    setProjNameError(false);
+    setDesError(false);
+    setProjLinkError(false);
+    setIsProjectNameValid(true);
+    setIsProjectLinkValid(true);
+
+    const checkboxes = document.querySelectorAll(".tech-checkbox");
+    checkboxes.forEach((checkbox) => {
+      checkbox.checked = false;
+    });
   };
   return (
     <div
@@ -168,6 +196,7 @@ const ProjectModalEdit = ({
               type="button"
               class="btn-close"
               data-bs-dismiss="modal"
+              onClick={() => handleEditCloseModal()}
               aria-label="Close"
             ></button>
           </div>
@@ -186,13 +215,16 @@ const ProjectModalEdit = ({
                   id="project-name"
                   value={projName}
                   placeholder="Enter Project Name"
-                  onChange={handleProjectNameChange}
+                  onChange={(e) => {
+                    handleProjectNameChange(e);
+                  }}
                 />
-                {/* {!isProjectNameValid && projName && (
-                                    <span style={{ color: "red", fontSize: "11px" }}>
-                                        Please enter a name with only letters and spaces, between 1 and 100 characters.
-                                    </span>
-                                )} */}
+                {!isProjectNameValid && projName && (
+                  <span style={{ color: "red", fontSize: "11px" }}>
+                    Please enter a name with only letters and spaces, between 1
+                    and 100 characters.
+                  </span>
+                )}
               </div>
               <div class="mb-3">
                 <label
@@ -211,11 +243,6 @@ const ProjectModalEdit = ({
                   onChange={handleProjectDescriptionChange}
                   rows={3}
                 />
-                {/* {!isProjectDescriptionValid && description && (
-                                    <span style={{ color: "red", fontSize: "11px" }}>
-                                        Please enter a description with a length between 50 and 750 characters.
-                                    </span>
-                                )} */}
               </div>
               <div className="mb-3">
                 <label
@@ -262,10 +289,6 @@ const ProjectModalEdit = ({
                     >
                       <TechnologyDropDown
                         techDataComingChild={techDataComingFrmChild}
-                        // seTechNames={seTechNames}
-                        // techNames={techNames}
-                        // technologyNames={technologyNames}
-                        // selectedTech={editProject?.technologyNames}
                         selectedTechIds={selectedTechIds}
                         setSelectedTechIds={setSelectedTechIds}
                         setTechnologyNames={setTechnologyNames}
@@ -276,11 +299,6 @@ const ProjectModalEdit = ({
                     </ul>
                   </div>
                 </div>
-                {/* {!Object.values(tech).length && (
-                                    <span style={{ color: "grey", fontSize: "11px" }}>
-                                        Maximum 10 technologies
-                                    </span>
-                                )} */}
               </div>
               <div className="mb-3">
                 <label for="Project Link" className="col-form-label title-text">
@@ -293,11 +311,6 @@ const ProjectModalEdit = ({
                   value={projectLink}
                   onChange={handleProjectLinkChange}
                 />
-                {/* {!isProjectLinkValid && projectLink && (
-                                    <span style={{ color: "red", fontSize: "11px" }}>
-                                        Invalid project link. Please enter a valid URL starting with http:// or https://.
-                                    </span>
-                                )} */}
               </div>
               <div className="mb-3">
                 <label
@@ -314,28 +327,32 @@ const ProjectModalEdit = ({
                   onChange={(event) => setHostedLink(event.target.value)}
                 />
               </div>
-              <div className="mb-3">
-                <label
-                  for="Members(Optional)"
-                  className="col-form-label title-text"
-                >
-                  Members(Optional)
-                  <span style={{ color: "grey" }}>(Minimum 8 members)</span>
-                </label>
-                <input
-                  className="form-control"
-                  id="project-description"
-                  placeholder="Member Name"
-                  value={memberNames}
-                  onChange={handleInputChange}
-                />
-              </div>
+              {idProp === "projectId" ? (
+                <div className="mb-3">
+                  <label
+                    for="Members(Optional)"
+                    className="col-form-label title-text"
+                  >
+                    Members(Optional)
+                    <span style={{ color: "grey" }}>(Minimum 8 members)</span>
+                  </label>
+                  <input
+                    className="form-control"
+                    id="project-description"
+                    placeholder="Member Name"
+                    value={textInput}
+                    onChange={handleInputChange}
+                  />
+                </div>
+              ) : (
+                ""
+              )}
             </form>
           </div>
           <div class="modal-footer">
             <button
               type="button"
-              class="btn btn-secondary"
+              class="btn cancel-button"
               data-bs-dismiss="modal"
               onClick={() => handleEditCloseModal()}
             >
@@ -343,7 +360,16 @@ const ProjectModalEdit = ({
             </button>
             <button
               type="button"
-              class="btn btn-primary"
+              class="btn btn-primary save-button"
+              data-bs-target="#editProjectModal"
+              data-bs-dismiss={
+                !projNameError &&
+                !desError &&
+                !projLinkError &&
+                technologyNames?.length !== 0
+                  ? "modal"
+                  : ""
+              }
               onClick={() => handleSubmit()}
             >
               {" "}
