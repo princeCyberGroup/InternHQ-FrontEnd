@@ -31,7 +31,7 @@
     border-radius: 4px;
     background: var(--blue, #28519E);
     border-color: var(--blue, #28519E);
-    margin-top: 10px;
+    margin-top: 8px;
 }
 .assign-review-button:hover {
     background: var(--blue, #28519E);
