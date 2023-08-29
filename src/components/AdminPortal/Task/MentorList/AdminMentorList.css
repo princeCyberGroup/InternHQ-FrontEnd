@@ -205,20 +205,6 @@ linear-gradient(0deg, #F4F6F5, #F4F6F5); */
 
 .assign-btn {
   margin-right: 1rem;
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  align-items: center;
-  padding: 6px;
-  gap: 6px;
-  border: none;
-  width: 5.125rem;
-  height: 1.688rem;
-  color: white;
-  background: #28519e;
-  border-radius: 4px;
-  font-family: "Roboto";
-  font-style: normal;
-  font-weight: 400;
-  font-size: 0.813rem;
+  width: 28px;
+  height: 28px;
 }
