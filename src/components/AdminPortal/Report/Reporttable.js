@@ -16,7 +16,6 @@ const Reporttable = ({
 }) => {
   //data
   const navigate = useNavigate();
-  const [indexOfUserId, setIndexOfUserId] = useState(-1);
   const [selectedIndex, setSelectedIndex] = useState(-1);
   //function
   const handleOnclick = (index) => {

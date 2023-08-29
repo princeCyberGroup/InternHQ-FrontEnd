@@ -53,26 +53,28 @@ const DailyUpdateTableSection = (props) => {
       }
     )
       .then((response) => {
+        if (!response.ok) {
+          throw new Error(parseInt(response.status));
+        }
         return response.json();
       })
       .then(async (data) => {
         setTableData(data.response);
         setOriginalTableData(data.response);
-        console.log(data.response, "This is data")
         setIsLoading(false);
       })
       .catch((error) => {
-        console.log("this is error", error.response.status);
-        if (error.response.status === 401) {
+        const err = parseInt(error.message);
+        if (err === 401) {
           navigate("/error/statusCode=401");
         }
-        if (error.response.status === 400) {
+        if (err === 400) {
           navigate("/error/statusCode=400");
         }
-        if (error.response.status === 500) {
+        if (err === 500) {
           navigate("/error/statusCode=500");
         }
-        if (error.response.status === 404) {
+        if (err === 404) {
           navigate("/error/statusCode=404");
         }
       });

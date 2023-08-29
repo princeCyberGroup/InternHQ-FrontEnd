@@ -1,0 +1,128 @@
+.session-parent-wrapper {
+  width: 80rem;
+  margin: auto;
+  height: calc(100vh - 80px);
+  overflow-y: hidden;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  padding: 0 3.5rem 1.875rem 3.5rem;
+}
+.session-header-wrapper {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.session-header-wrapper span {
+  color: var(--primary-royal-blue, #002c3f);
+  font-family: Roboto;
+  font-size: 20px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
+}
+.rbc-calendar {
+  height: 600px;
+}
+.rbc-selected {
+  background-color: #3174ad;
+}
+.rbc-event {
+  background-color: #3b98e3;
+  color: #fff;
+}
+.rbc-event-content {
+  margin: 2px;
+}
+.calendar-wrapper {
+  overflow-y: auto;
+  box-shadow: 0px 4px 20px 0px rgba(40, 52, 73, 0.15);
+}
+.rbc-toolbar .rbc-today-button {
+  margin: 30px 8px;
+}
+.rbc-toolbar-label {
+  font-weight: bold;
+  text-align: center;
+}
+.rbc-toolbar .rbc-btn-group {
+  float: right;
+}
+.rbc-toolbar {
+  display: flex;
+  justify-content: space-between;
+}
+.event-tooltip {
+  box-shadow: 0px 4px 20px 0px rgba(40, 52, 73, 0.15);
+  border-radius: 4px;
+  background-color: #fff;
+  padding-top: 1rem;
+  padding-right: 10px;
+  width: max-content;
+}
+/* Custom styles for the calendar buttons */
+/* Custom styles for the calendar buttons */
+.custom-toolbar-calendar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin: 30px 16px;
+}
+
+.rbc-btn-group {
+  display: flex;
+  align-items: center;
+}
+
+.rbc-btn {
+  color: var(--primary-royal-blue, #002c3f);
+  background-color: #fff;
+  border: 1px solid var(--secondary-light-gray, #e9eceb);
+  border-radius: 2px;
+  padding: 4px 8px;
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 20px;
+  cursor: pointer;
+}
+
+.rbc-btn.rbc-today-button {
+  background-color: #002c3f;
+  color: #fff;
+  margin-right: 1rem;
+}
+
+.rbc-btn.rbc-active {
+  background-color: #002c3f;
+  color: #fff;
+  border: 1px solid #002c3f;
+}
+.upload-session-calendar {
+  display: flex;
+  padding: 10px 12px;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+  border-radius: 4px;
+  border: none;
+  background: var(--primary-blue, #28519e);
+  color: var(--white, #fff);
+  font-size: 14px;
+  font-weight: 600;
+  line-height: normal;
+}
+
+@media (max-width: 767px) {
+  .custom-toolbar-calendar {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .rbc-btn-group {
+    margin-top: 10px;
+  }
+
+  .rbc-btn {
+    margin-right: 8px;
+  }
+}

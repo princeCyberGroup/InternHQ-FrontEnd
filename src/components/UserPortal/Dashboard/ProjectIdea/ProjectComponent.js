@@ -53,7 +53,6 @@ const ProjectComponent = () => {
       if (error.response.status === 404) {
         navigate("/error/statusCode=404");
       }
-      console.log(error.response?.data.msg);
     }
   };
   const ProjectApi = async () => {
@@ -81,7 +80,6 @@ const ProjectComponent = () => {
       if (error.response.status === 404) {
         navigate("/error/statusCode=404");
       }
-      console.log(error.response?.data.msg);
     }
   };
   useEffect(() => {
