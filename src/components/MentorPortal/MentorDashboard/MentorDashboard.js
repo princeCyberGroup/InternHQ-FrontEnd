@@ -11,6 +11,8 @@ import "./MentorDashboard.css";
 
 const MentorDashboard = () => {
   const [StatusData, setStatusData] = useState([]);
+  const [selectedBatches, setSelectedBatches] = useState([]);
+
   const secretkeyUser = process.env.REACT_APP_USER_KEY;
   const navigate = useNavigate();
   var parsedObject;
@@ -26,34 +28,58 @@ const MentorDashboard = () => {
   useEffect(() => {
     fetchData();
     // InsightData();
-  }, []);
+  }, [selectedBatches]);
 
   const fetchData = async () => {
     try {
-      const response = await fetch(
-        process.env.REACT_APP_API_URL + `/api/v4/dashboard-status`,
-        {
-          headers: {
-            Authorization: `Bearer ${parsedObject["token"]}`,
-          },
-        }
-      );
-      if (response.status === 401) {
-        navigate("/error/statusCode=401");
+      let apiUrl = `${process.env.REACT_APP_API_URL}/api/v4/dashboard-status`;
+      
+      if (selectedBatches.length > 0) {
+        // const batchNames = props.selectedBatches.map(Batch => Batch.batchName);
+        // const batchNamesQuery = batchNames.join(',');
+        // console.log(batchNamesQuery);
+        // apiUrl += `&batch=${batchNamesQuery}`;
+        const batchNamesQuery = selectedBatches.join(',');
+        console.log(batchNamesQuery);
+      apiUrl += `?&batch=${encodeURIComponent(batchNamesQuery)}`;
       }
-      if (response.status === 400) {
-        navigate("/error/statusCode=400");
-      }
-      if (response.status === 500) {
-        navigate("/error/statusCode=500");
-      }
-      if (response.status === 404) {
-        navigate("/error/statusCode=404");
-      }
+      
+      const response = await fetch(apiUrl, {
+        headers: {
+          Authorization: `Bearer ${parsedObject["token"]}`,
+        },
+      });
+  
       const rsp = await response.json();
-      console.log(rsp, "This is dashboard statuis");
+      console.log(rsp, "This is dashboard status");
       setStatusData(rsp);
-    } catch (error) {
+    }
+    // try {
+    //   const response = await fetch(
+    //     process.env.REACT_APP_API_URL + `/api/v4/dashboard-status`,
+    //     {
+    //       headers: {
+    //         Authorization: `Bearer ${parsedObject["token"]}`,
+    //       },
+    //     }
+    //   );
+    //   if (response.status === 401) {
+    //     navigate("/error/statusCode=401");
+    //   }
+    //   if (response.status === 400) {
+    //     navigate("/error/statusCode=400");
+    //   }
+    //   if (response.status === 500) {
+    //     navigate("/error/statusCode=500");
+    //   }
+    //   if (response.status === 404) {
+    //     navigate("/error/statusCode=404");
+    //   }
+    //   const rsp = await response.json();
+    //   console.log(rsp, "This is dashboard statuis");
+    //   setStatusData(rsp);
+    // } 
+    catch (error) {
       if (error.response.status === 401) {
         navigate("/error/statusCode=401");
       }
@@ -73,7 +99,10 @@ const MentorDashboard = () => {
   return (
     <>
       <div className="" style={{ marginBottom: "5rem" }}>
-        <Header />
+        <Header
+          selectedBatches={selectedBatches}
+          setSelectedBatches={setSelectedBatches}
+        />
       </div>
       {/* write your code below */}
       <div className="responsivenessM ">
@@ -82,22 +111,22 @@ const MentorDashboard = () => {
             <div className="col-4 p-0" style={{ marginLeft: "56px" }}>
               <div className="row ">
                 <div className="col-6 outer-row-info">
-                  <Status data={StatusData} />
+                  <Status data={StatusData} selectedBatches={selectedBatches} />
                 </div>
               </div>
               <div className="row">
                 <div className="col-6 outer-row-info">
-                  <TrainingCalender />
+                  <TrainingCalender selectedBatches={selectedBatches} />
                 </div>
               </div>
             </div>
 
             <div className="col-7 p-0" style={{ marginLeft: "-1rem" }}>
               <div className="row">
-                <TaskStatus />
+                <TaskStatus selectedBatches={selectedBatches} />
               </div>
               <div className="row mt-3">
-                <SkillAlerts />
+                <SkillAlerts selectedBatches={selectedBatches} />
               </div>
             </div>
           </div>

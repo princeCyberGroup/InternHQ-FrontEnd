@@ -24,8 +24,8 @@ const SessionExpired = () => {
               className="text-center error-desc "
               style={{ width: "330px", margin: "auto" }}
             >
-              Apologies for the inconvenience caused. Our team is actively
-              addressing the issue and working towards a solution.
+            Your Session is Expired. Please login again.
+
             </p>
           </div>
         </div>

@@ -4,17 +4,14 @@ import TechDropDown from "../TechDropDown";
 import axios from "axios";
 import TechnologyDropDown from "../../../../AdminPortal/Task/AssignTask/TechnologyDropdown(Admin)";
 
-const ProjectModalEdit = ({
+const EditProjectIdeaModal = ({
   taskVersion,
   setTaskVersion,
-  idProp,
-  idValue,
+  projectId,
   projectName,
   projectDescriptions,
   indexNumber,
   projectTechnology,
-  projectLinks,
-  hostedLinks,
   memberName,
   textInput,
   setTextInput,
@@ -22,59 +19,52 @@ const ProjectModalEdit = ({
 }) => {
   const [projName, setProjName] = useState(projectName);
   const [proVersion, setProVersion] = useState(false);
+
   const [description, setDescription] = useState(projectDescriptions);
-  const [projectLink, setProjectLink] = useState(projectLinks);
-  const [hostedLink, setHostedLink] = useState(hostedLinks);
   const [memberNames, setMemberNames] = useState(memberName);
   const [dropDown, setDropDown] = useState(false);
   const [projNameError, setProjNameError] = useState(false);
   const [desError, setDesError] = useState(false);
-  const [projLinkError, setProjLinkError] = useState(false);
   const [tech, setTech] = useState({ projectTechnology });
   const [technologyNames, setTechnologyNames] = useState(projectTechnology);
   const [isProjectNameValid, setIsProjectNameValid] = useState(true);
-  const [isProjectLinkValid, setIsProjectLinkValid] = useState(false);
+  const [isProjectDescriptionValid, setIsProjectDescriptionValid] =
+    useState(true);
   const [editProject, setEditProject] = useState({});
   const [projectToEdit, setProjectToEdit] = useState(null);
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedTechIds, setSelectedTechIds] = useState([]);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
-  const handleProjectNameChange = (e) => {
-    e.preventDefault();
-    const name = e.target.value;
+  const handleChangeProjNameError = (event) => {
+    event.preventDefault();
+    const name = event.target.value;
     setProjName(name);
+    setIsProjectNameValid(name.match(/^.{1,100}$/) ? true : false);
     if (!name) {
       setProjNameError(true);
     } else {
       setProjNameError(false);
     }
-    setIsProjectNameValid(e.target.value.match(/^.{1,100}$/) ? true : false);
   };
-  const handleProjectDescriptionChange = (e) => {
-    const desc = e.target.value;
-    setDescription(desc);
-    if (!desc) {
+
+  const handleChangeProjDescriptionError = (event) => {
+    event.preventDefault();
+    const description = event.target.value;
+    setDescription(description);
+    setIsProjectDescriptionValid(
+      description.match(/^.{50,750}$/) ? true : false
+    );
+    if (!description) {
       setDesError(true);
     } else {
       setDesError(false);
     }
   };
-  const handleChangeTechnology = (e) => {
-    setTech(e.target.value);
-  };
 
-  const handleProjectLinkChange = (e) => {
-    const link = e.target.value;
-    setProjectLink(link);
-    setIsProjectLinkValid(link.match(/^https?:\/\//) ? true : false);
-    if (!link) {
-      setProjLinkError(true);
-    } else {
-      setProjLinkError(false);
-    }
-  };
-  const techDataComingFrmChild = (data) => {
-    return setTech(data);
+  const truncate = (str, maxLength) => {
+    if (str.length > maxLength) return str.slice(0, maxLength) + "...";
+    else return str;
   };
 
   const handleInputChange = (event) => {
@@ -94,23 +84,20 @@ const ProjectModalEdit = ({
     );
     setMemberNames(memberNamesArray);
   };
+  const techDataComingFrmChild = (data) => {
+    return setTech(data);
+  };
 
   const handleSubmit = (e) => {
-    if (
-      projNameError ||
-      desError ||
-      projLinkError ||
-      technologyNames?.length === 0
-    ) {
+    if (projNameError || desError || technologyNames?.length === 0) {
       alert("Please fill in the required details");
     } else {
       axios
         .post(process.env.REACT_APP_API_URL + "/api/v4/project-task", {
-          [idProp === "projectId" ? "projectId" : "taskId"]: idValue,
+          projectIdeaId: projectId,
           name: projName,
           description,
-          projectLink,
-          hostedLink,
+
           technology: technologyNames,
           members: memberNames,
         })
@@ -124,11 +111,10 @@ const ProjectModalEdit = ({
         });
     }
   };
-
   useEffect(() => {
-    const texts = textInput?.split(",").map((text) => text.trim());
+    const texts = textInput.split(",").map((text) => text.trim());
     const membersObj = {};
-    texts?.forEach((text, index) => {
+    texts.forEach((text, index) => {
       membersObj[`member${index + 1}`] = text;
     });
 
@@ -142,8 +128,7 @@ const ProjectModalEdit = ({
   useEffect(() => {
     setProjName(editProject?.projName);
     setDescription(editProject?.description);
-    setProjectLink(editProject?.projectLink);
-    setHostedLink(editProject?.hostedLink);
+
     setMemberNames(editProject?.memberNames);
     setTechnologyNames(editProject?.technologyNames);
   }, [editProject]);
@@ -151,27 +136,28 @@ const ProjectModalEdit = ({
   useEffect(() => {
     setProjName(projectName);
     setDescription(projectDescriptions);
-    setProjectLink(projectLinks);
-    setHostedLink(hostedLinks);
     setMemberNames(memberName);
     setTechnologyNames(projectTechnology);
     setProVersion(projectVersion);
-    // }
+    {
+      console.log("names", memberName);
+    }
   }, [indexNumber, proVersion]);
 
+  const handleEditProject = (project) => {
+    setProjectToEdit(project);
+  };
   const handleEditCloseModal = () => {
     setProjectToEdit(null);
     setProjName(projectName);
     setDescription(projectDescriptions);
-    setProjectLink(projectLinks);
-    setHostedLink(hostedLinks);
-    setMemberNames(memberName);
+    setDropDown(false);
     setTechnologyNames(projectTechnology);
+    setMemberNames(memberName);
     setProjNameError(false);
     setDesError(false);
-    setProjLinkError(false);
     setIsProjectNameValid(true);
-    setIsProjectLinkValid(true);
+    setIsProjectDescriptionValid(true);
 
     const checkboxes = document.querySelectorAll(".tech-checkbox");
     checkboxes.forEach((checkbox) => {
@@ -180,31 +166,34 @@ const ProjectModalEdit = ({
   };
   return (
     <div
-      class="modal fade"
-      id="editProjectModal"
-      tabindex="-1"
-      aria-labelledby="editProjectModalLabel"
+      className="modal fade"
+      id="editProjectIdeaModal"
+      tabIndex="-1"
+      aria-labelledby="editProjectIdeaModalLabel"
       aria-hidden="true"
     >
-      <div class="modal-dialog">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h1 class="modal-title fs-5" id="editProjectModalLabel">
-              Edit your project
+      <div className="modal-dialog">
+        <div className="modal-content">
+          <div className="modal-header">
+            <h1
+              className="modal-title fs-5 add-project-wrapper"
+              id="editProjectIdeaModalLabel"
+            >
+              Edit your Project Idea
             </h1>
             <button
               type="button"
-              class="btn-close"
+              className="btn-close"
               data-bs-dismiss="modal"
-              onClick={() => handleEditCloseModal()}
               aria-label="Close"
+              onClick={handleEditCloseModal}
             ></button>
           </div>
-          <div class="modal-body">
+          <div className="modal-body">
             <form>
-              <div class="mb-3">
+              <div className="mb-3">
                 <label
-                  htmfor="edit-project-name"
+                  htmlFor="project-name"
                   className="col-form-label title-text"
                 >
                   Project Name<span style={{ color: "red" }}>*</span>{" "}
@@ -212,12 +201,10 @@ const ProjectModalEdit = ({
                 <input
                   type="text"
                   className="form-control"
-                  id="project-name"
                   value={projName}
+                  id="project-name"
                   placeholder="Enter Project Name"
-                  onChange={(e) => {
-                    handleProjectNameChange(e);
-                  }}
+                  onChange={handleChangeProjNameError}
                 />
                 {!isProjectNameValid && projName && (
                   <span style={{ color: "red", fontSize: "11px" }}>
@@ -226,24 +213,30 @@ const ProjectModalEdit = ({
                   </span>
                 )}
               </div>
-              <div class="mb-3">
+              <div className="mb-3">
                 <label
-                  for="project-description"
+                  htmlFor="project-description"
                   className="col-form-label title-text"
                 >
-                  Project Description
-                  <span style={{ color: "red" }}>*</span>{" "}
+                  Project Description<span style={{ color: "red" }}>*</span>{" "}
                   <span style={{ color: "grey" }}>(Minimum 50 characters)</span>
                 </label>
                 <textarea
                   className="form-control"
-                  id="project-description"
                   value={description}
-                  placeholder="Write Here..."
-                  onChange={handleProjectDescriptionChange}
+                  id="project-description"
+                  placeholder="Write Here.."
+                  onChange={(e) => handleChangeProjDescriptionError(e)}
                   rows={3}
-                />
+                ></textarea>
+                {!isProjectDescriptionValid && description && (
+                  <span style={{ color: "red", fontSize: "11px" }}>
+                    Please enter a description with a length between 50 and 750
+                    characters.
+                  </span>
+                )}
               </div>
+
               <div className="mb-3">
                 <label
                   htmlFor="technology-used"
@@ -266,9 +259,8 @@ const ProjectModalEdit = ({
                     >
                       <input
                         type="text"
-                        className="custom-input"
-                        value={technologyNames}
-                        onChange={handleChangeTechnology}
+                        className="custom-input border-none"
+                        value={Object.values(tech)}
                         disabled
                       />
                     </button>
@@ -299,81 +291,55 @@ const ProjectModalEdit = ({
                     </ul>
                   </div>
                 </div>
+                {!Object.values(tech).length && (
+                  <span style={{ color: "grey", fontSize: "11px" }}>
+                    Maximum 10 technologies
+                  </span>
+                )}
               </div>
-              <div className="mb-3">
-                <label for="Project Link" className="col-form-label title-text">
-                  Project Link<span style={{ color: "red" }}>*</span>{" "}
-                </label>
-                <input
-                  className="form-control"
-                  id="project-link"
-                  placeholder="Enter Project Link"
-                  value={projectLink}
-                  onChange={handleProjectLinkChange}
-                />
-              </div>
+
               <div className="mb-3">
                 <label
-                  for="Hosted Link(Optional)"
+                  htmlFor="Members(Optional)"
                   className="col-form-label title-text"
                 >
-                  Hosted Link(Optional)
+                  Members(Optional)
+                  <span style={{ color: "grey" }}>(Minimum 8 members)</span>
                 </label>
                 <input
                   className="form-control"
-                  id="hosted-link"
-                  placeholder="Enter Hosted Link"
-                  value={hostedLink}
-                  onChange={(event) => setHostedLink(event.target.value)}
+                  id="project-description"
+                  placeholder="Member Name"
+                  value={textInput}
+                  onChange={handleInputChange}
                 />
               </div>
-              {idProp === "projectId" ? (
-                <div className="mb-3">
-                  <label
-                    for="Members(Optional)"
-                    className="col-form-label title-text"
-                  >
-                    Members(Optional)
-                    <span style={{ color: "grey" }}>(Minimum 8 members)</span>
-                  </label>
-                  <input
-                    className="form-control"
-                    id="project-description"
-                    placeholder="Member Name"
-                    value={textInput}
-                    onChange={handleInputChange}
-                  />
-                </div>
-              ) : (
-                ""
-              )}
             </form>
           </div>
-          <div class="modal-footer">
+          <div className="modal-footer">
             <button
               type="button"
-              class="btn cancel-button"
+              className="btn cancel-button"
               data-bs-dismiss="modal"
-              onClick={() => handleEditCloseModal()}
+              onClick={handleEditCloseModal}
             >
-              Cancel
+              <span className="cancel-text"> Cancel </span>
             </button>
             <button
               type="button"
               class="btn btn-primary save-button"
-              data-bs-target="#editProjectModal"
+              data-bs-target="#myIdeaModal"
               data-bs-dismiss={
-                !projNameError &&
-                !desError &&
-                !projLinkError &&
-                technologyNames?.length !== 0
+                !projNameError && !desError && technologyNames?.length !== 0
                   ? "modal"
                   : ""
               }
-              onClick={() => handleSubmit()}
+              onClick={(e) => {
+                handleSubmit(e);
+                setIsModalOpen(true);
+              }}
             >
-              {" "}
-              Edit
+              <span className="save-text"> Save </span>
             </button>
           </div>
         </div>
@@ -381,4 +347,4 @@ const ProjectModalEdit = ({
     </div>
   );
 };
-export default ProjectModalEdit;
+export default EditProjectIdeaModal;

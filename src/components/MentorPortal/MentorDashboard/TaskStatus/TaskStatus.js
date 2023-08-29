@@ -29,7 +29,7 @@ function getInitials(name) {
   return initials?.join("");
 }
 
-export const TaskStatus = () => {
+export const TaskStatus = (props) => {
   const [taskStatus, setTaskStatus] = useState();
 
   const secretkeyUser = process.env.REACT_APP_USER_KEY;
@@ -49,21 +49,30 @@ export const TaskStatus = () => {
     setTimeout(() => {
       fetchData();
     }, 1000);
-  }, []);
+  }, [props.selectedBatches]);
 
   const fetchData = async () => {
     try {
-      const response = await fetch(
-        process.env.REACT_APP_API_URL +
-          `/api/v4/dashboard-task-status?mentorId=${userId}`, //&batch=${batch}
-        {
-          headers: {
-            Authorization: `Bearer ${parsedObject["token"]}`,
-          },
-        }
-      );
+      let apiUrl = `${process.env.REACT_APP_API_URL}/api/v4/dashboard-task-status?mentorId=${userId}`;
+      
+      if (props.selectedBatches.length > 0) {
+        // const batchNames = props.selectedBatches.map(Batch => Batch.batchName);
+        // const batchNamesQuery = batchNames.join(',');
+        // console.log(batchNamesQuery);
+        // apiUrl += `&batch=${batchNamesQuery}`;
+        const batchNamesQuery = props.selectedBatches.join(',');
+        console.log(batchNamesQuery);
+      apiUrl += `&batch=${encodeURIComponent(batchNamesQuery)}`;
+      }
+      
+      const response = await fetch(apiUrl, {
+        headers: {
+          Authorization: `Bearer ${parsedObject["token"]}`,
+        },
+      });
+  
       const data = await response.json();
-
+  
       setTaskStatus(data.response);
       console.log(data.response, "This is task Status");
     } catch (error) {
@@ -81,6 +90,38 @@ export const TaskStatus = () => {
       }
     }
   };
+  
+
+  // const fetchData = async () => {
+  //   try {
+  //     const response = await fetch(
+  //       process.env.REACT_APP_API_URL +
+  //         `/api/v4/dashboard-task-status?mentorId=${userId}`, //&batch=${batch}
+  //       {
+  //         headers: {
+  //           Authorization: `Bearer ${parsedObject["token"]}`,
+  //         },
+  //       }
+  //     );
+  //     const data = await response.json();
+
+  //     setTaskStatus(data.response);
+  //     console.log(data.response, "This is task Status");
+  //   } catch (error) {
+  //     if (error.response.status === 401) {
+  //       navigate("/error/statusCode=401");
+  //     }
+  //     if (error.response.status === 400) {
+  //       navigate("/error/statusCode=400");
+  //     }
+  //     if (error.response.status === 500) {
+  //       navigate("/error/statusCode=500");
+  //     }
+  //     if (error.response.status === 404) {
+  //       navigate("/error/statusCode=404");
+  //     }
+  //   }
+  // };
 
   return (
     // <>
@@ -690,7 +731,7 @@ export const TaskStatus = () => {
       </Link>
       </p>
       <div className="card task-status-card ">
-        {taskStatus?.map((task) => (
+        {taskStatus && taskStatus?.map((task) => (
           <div
             key={task.taskId}
             className="each-task mb-2"
