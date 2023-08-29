@@ -212,8 +212,8 @@ const ViewAllProjects = () => {
     );
     Promise.all([projectDataFrmApi, mentorTaskFrmApi])
       .then((responses) => {
-        const projectAndMentorData = responses[0]?.data.response.concat(
-          responses[1]?.data.response
+        const projectAndMentorData = responses[1]?.data.response.concat(
+          responses[0]?.data.response
         );
         console.log("object", projectAndMentorData);
         setProject(projectAndMentorData);
