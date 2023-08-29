@@ -54,15 +54,22 @@
   background-color: whitesmoke;
 }
 
-.save-button {
+.mentor-save-button {
   background: #28519e;
   width: 4.625rem;
   border-radius: 0.25rem;
 }
 
-.save-button:hover {
+.mentor-save-button:hover {
   background: #28519e;
   color: white;
+}
+
+.mentor-save-button:disabled {
+  background: #28519e;
+  border-color: #28519e;
+  width: 4.625rem;
+  border-radius: 0.25rem;
 }
 
 .save-text {
@@ -80,9 +87,12 @@
   border: 1px solid #28519e;
 }
 
+.cancel-button:active {
+  color: red;
+}
+
 .cancel-text {
   color: #28519e;
-
   text-align: center;
 }
 
@@ -151,7 +161,7 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  width: 476px;
+  width: 445px;
   height: 80px;
   margin-left: 11px;
   margin-right: 11px;
