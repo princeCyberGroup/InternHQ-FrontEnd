@@ -69,7 +69,7 @@ const ProjectDetail = ({
             </div>
             <div>
               <EditButton
-                className="mx-3"
+                className="mx-3 clickable"
                 data-bs-toggle="modal"
                 data-bs-target="#editProjectModal"
                 onClick={(e) => {
@@ -111,6 +111,7 @@ const ProjectDetail = ({
 
               {data[indexNumber]?.projectId && (
                 <DeleteButton
+                  className="clickable"
                   projectId={data[indexNumber].projectId}
                   onClick={(e) => {
                     deleteTask(e, data[indexNumber].projectId, indexNumber);

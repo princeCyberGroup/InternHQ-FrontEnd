@@ -116,7 +116,7 @@ const AssignReviewer = () => {
             <div>
               <ul
                 style={{
-                  height: "8rem",
+                  height: "10rem",
                   width: "25rem",
                   display: usersDropDown ? "" : "none",
                 }}
