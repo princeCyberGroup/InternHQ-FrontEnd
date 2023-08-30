@@ -138,12 +138,12 @@ const UsersDropdown = (props) => {
         </div>
       ))}
       
-      <input
+      {/* <input
         type="text"
         className="custom-input"
         value={props.selectedUsers?.join(", ")}
         disabled
-      />
+      /> */}
       </div>
     </>
   );
