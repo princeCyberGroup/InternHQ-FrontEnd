@@ -181,6 +181,7 @@ const ProjectModalEdit = ({
   return (
     <div
       class="modal fade"
+      data-bs-backdrop="static"
       id="editProjectModal"
       tabindex="-1"
       aria-labelledby="editProjectModalLabel"
