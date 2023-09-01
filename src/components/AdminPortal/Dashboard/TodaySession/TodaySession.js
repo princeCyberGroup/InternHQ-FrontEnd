@@ -72,71 +72,38 @@ const TodaySession = () => {
             boxShadow: "0px 4px 20px rgba(40, 52, 73, 0.15)",
           }}
         >
-
           <div className="box-shadow d-flex justify-content-center align-item-center">
             {isLoading ? (
               <div
-                className="card-body pt-4"
-                style={{ width: "340px", height: "132px" }}
+                id="carouselExampleDark"
+                className="carousel slide "
+                data-bs-ride="carousel"
               >
-                <div>
-                  <div className="d-block rounded-circle">
-                    <Skeleton circle={true} width={80} height={80} />
-                  </div>
-                  <div className="mentor-text d-flex flex-column align-items-center">
-                    <p className="card-text fs mt-2">
+                <div
+                  className="card-body p-2"
+                  style={{ width: "370px", height: "142px" }}
+                >
+                  <div className="session-first-container">
+                    <div className="sess-detail">
                       <Skeleton width={106.61} height={13} />
-                    </p>
-                    <p className="role-fs">
-                      <Skeleton width={68} height={10} />
-                    </p>
-                    <p
-                      className="mx-0 mt-0 p-0"
-                      style={{ marginBottom: "10px" }}
-                    >
-                      <Skeleton
-                        inline={true}
-                        width={69.72}
-                        height={20.38}
-                        borderRadius={6}
-                        style={{ marginRight: "13px" }}
-                      />
-                      <Skeleton
-                        inline={true}
-                        width={41.41}
-                        height={20.38}
-                        borderRadius={6}
-                        style={{ marginRight: "13px" }}
-                      />
-                      <Skeleton
-                        inline={true}
-                        width={84.75}
-                        height={20.38}
-                        borderRadius={6}
-                      />
-                    </p>
-                    <p>
-                      <Skeleton
-                        inline={true}
-                        width={68}
-                        height={20.38}
-                        borderRadius={6}
-                        style={{ marginRight: "13px" }}
-                      />
-                      <Skeleton
-                        inline={true}
-                        width={64}
-                        height={20.38}
-                        borderRadius={6}
-                        style={{ marginRight: "13px" }}
-                      />
-                      <Skeleton
-                        inline={true}
-                        width={38.42}
-                        height={20.38}
-                        borderRadius={6}
-                      />
-                    </p>
+                      <Skeleton width={106.61} height={13} />
+                    </div>
+                    <div className="sess-name">
+                      <Skeleton width={106.61} height={13} />
+                    </div>
+                  </div>
+                  <div className="mt-3">
+                    <div className="sess-mentor-detail">
+                      <div className="sess-mentor-wrapper">
+                        <div className="sess-mentor-img">
+                          <Skeleton circle={true} width={25} height={25} />
+                        </div>
+                        <Skeleton width={106.61} height={13} />{" "}
+                      </div>
+                      <div className="mentor-pos-wrapper">
+                        <Skeleton width={106.61} height={13} />{" "}
+                      </div>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -184,10 +151,10 @@ const TodaySession = () => {
                           <div className="sess-mentor-detail">
                             <div className="sess-mentor-wrapper">
                               <div className="sess-mentor-img">
-                              {mentor.mentorName
-                                .split(" ")
-                                .map((name) => name.charAt(0).toUpperCase())
-                                .join("")}
+                                {mentor.mentorName
+                                  .split(" ")
+                                  .map((name) => name.charAt(0).toUpperCase())
+                                  .join("")}
                               </div>
                               {mentor.mentorName}
                             </div>
@@ -196,7 +163,6 @@ const TodaySession = () => {
                             </div>
                           </div>
                         </div>
-
                       </div>
                     </div>
                   ))}
