@@ -45,7 +45,7 @@ const DailyUpdateTableSection = (props) => {
     }
     await fetch(
       process.env.REACT_APP_API_URL +
-        `/api/v3/dailyTaskTrackerRecords?userId=${props.userId}`,
+        `/api/v3/getDailyTaskTrackerRecords?userId=${props.userId}`,
       {
         headers: {
           Authorization: `Bearer ${parsedObject["token"]}`,

@@ -88,7 +88,7 @@ export default function DashboardGraph() {
   const fetchData = async () => {
     await fetch(
       process.env.REACT_APP_API_URL +
-        `/api/v3/dailyTaskTrackerRecords?userId=${userId}`,
+        `/api/v3/getDailyTaskTrackerRecords?userId=${userId}`,
       {
         headers: {
           Authorization: `Bearer ${parsedObject["token"]}`,

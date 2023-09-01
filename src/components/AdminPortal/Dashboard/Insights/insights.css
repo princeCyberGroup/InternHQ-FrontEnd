@@ -3,7 +3,7 @@
     /* Converted from 200px */
     height: 1.1875rem;
     /* Converted from 19px */
-    margin-top: 1.25rem;
+    margin-top: 1.3rem;
     /* Converted from 20px */
     font-family: 'Roboto';
     font-style: normal;
@@ -21,7 +21,8 @@
 .insights-card {
     margin-top: 0.7rem;
     display: flex;
-    height: 54.7rem;
+    /* height: 54.7rem; */
+    height: 39.15rem;
     flex-direction: column;
     /* height: 109vh; */
     /* height: 44rem; */
