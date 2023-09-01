@@ -150,12 +150,22 @@ const TodaySession = () => {
                         <div className="mt-3">
                           <div className="sess-mentor-detail">
                             <div className="sess-mentor-wrapper">
+                                {mentor.imageUrl?
+                                <div className="sess-mentor-box">
+                                <img
+                                key={mentor.mentorId}
+                                src={mentor.imageUrl}
+                                alt=""
+                              />
+                              </div>
+                                :
+                                
                               <div className="sess-mentor-img">
                                 {mentor.mentorName
                                   .split(" ")
                                   .map((name) => name.charAt(0).toUpperCase())
                                   .join("")}
-                              </div>
+                              </div>}
                               {mentor.mentorName}
                             </div>
                             <div className="mentor-pos-wrapper">

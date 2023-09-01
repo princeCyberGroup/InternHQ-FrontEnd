@@ -163,8 +163,8 @@ h5.dtt-hfs-ml {
 
 .sess-mentor-img {
   margin-right: 10px;
-  width: 2rem;
-  height: 2rem;
+  width: 2.2rem;
+  height: 2.2rem;
   border-radius: 50%;
   background-color: #e9eceb;
   display: flex;
@@ -192,4 +192,15 @@ h5.dtt-hfs-ml {
     font-style: normal;
     font-weight: 400;
     line-height: normal;
+  }
+
+  .sess-mentor-box img {
+    margin-right: 10px;
+    width: 2.2rem;
+    height: 2.2rem;
+    background: #e9eceb;
+    border-radius: 1.125rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
   }
