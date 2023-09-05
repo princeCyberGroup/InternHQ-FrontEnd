@@ -209,3 +209,23 @@
   align-items: center;
   gap: 0.188rem;
 }
+
+.matCal-NoData {
+  height: 50%;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%,-50%);
+}
+
+.MatNoData{
+  position: absolute;
+  bottom: 25%;
+  left: 50%;
+  margin-left: 5px;
+  transform: translate(-50%, 0);
+
+}
+
+
+

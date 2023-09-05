@@ -7,7 +7,9 @@ import "./MentorAssignTask.css";
 import { useNavigate } from "react-router-dom";
 import { TASKDATA } from "./MentorAssignTask";
 import CryptoJS from "crypto-js";
+
 const MentorTaskDetail = ({ detail }) => {
+  console.log(detail, "detail:");
   //data
   const navigate = useNavigate();
   let startDate, endDate, taskOngoing;
@@ -60,16 +62,16 @@ const MentorTaskDetail = ({ detail }) => {
       </div>
       <div className="mentortask-duration-wrapper">
         <div className="mentortask-meta-heading">
-          <span>Duration:</span>
+          {detail === undefined ? "" : <span>Duration:</span>}
         </div>
         <div className="mentortask-duration-style">
-          <Clock />
+        {detail === undefined ? "" : <Clock />}
           <span>{`${startDate} - ${endDate}`}</span>
         </div>
       </div>
       <div className="mentortask-technology-wrapper">
         <div className="mentortask-meta-heading">
-          <span>Technology Used:</span>
+          {detail === undefined ? "" : <span>Technology Used:</span>}
         </div>
         <div className="tech-used-wrapper">
           {detail?.[TASKDATA.TECH]?.map((tech, index) => {
@@ -83,10 +85,15 @@ const MentorTaskDetail = ({ detail }) => {
       </div>
       {true ? ( //show task is rated or not
         <div className="mentortask-assigned-wrapper">
-          <div className="mentortask-meta-heading assign-header-style">
-            <span>Assigned To:</span>
-            <button onClick={handleNavigate}>Rate Assignment</button>
-          </div>
+          
+            {detail === undefined ? "" : (
+              <div className="mentortask-meta-heading assign-header-style">
+                <span>Assigned To:</span>
+                <button onClick={handleNavigate}>Rate Assignment</button>
+              </div>
+            )}
+
+          
           <div className="assigned-list-wrapper">
             {detail?.[TASKDATA.UI]?.map((info, index) => {
               return (

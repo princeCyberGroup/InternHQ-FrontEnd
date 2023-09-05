@@ -7,6 +7,7 @@ import MentorTaskDetail from "./MentorTaskDetail";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import CryptoJS from "crypto-js";
+import {ReactComponent as MatNoData} from "../../../Assets/NoData.svg"
 
 export const TASKDATA = {
   TID: "taskId",
@@ -56,7 +57,7 @@ const MentorAssignTask = () => {
         }
       )
       .then((res) => {
-        setAdminTask(res.data.response);
+       setAdminTask(res.data.response);
       })
       .catch((error) => {
         const errorCode = error.response.status;
@@ -92,31 +93,36 @@ const MentorAssignTask = () => {
           <MentorAssignNewTask mentorId={mentorId} fetchData={fetchData} />
         </div>
         <div className="mentortask-data-wrapper">
-          <div className="task-heading-wrapper">
-            {adminTask?.map((task, index) => {
-              return (
-                <div
-                  key={index}
-                  className="task-heading-inner-wrapper"
-                  onClick={() => setTaskInd(index)}
-                >
-                  {taskInd === index && <div className="selected-task-style" />}
-                  <div className="task-heading-head">
-                    <h5 style={{ marginBottom: "0" }}>{task?.[TASKDATA.TN]}</h5>
-                    <Arrorforward />
-                  </div>
-                  <div className="task-heading-body">
-                    <p style={{ marginBottom: "0" }}>
-                      {task?.[TASKDATA.TDES]?.length > 80
-                        ? `${task?.[TASKDATA.TDES].slice(0, 80)}...`
-                        : task?.[TASKDATA.TDES]}
-                    </p>
-                  </div>
-                </div>
-              );
-            })}
-          </div>
-          <div className="task-seperation-line" />
+          {adminTask?.length===0? (<div className="d-block"><MatNoData className="matCal-NoData" />
+        <p className="MatNoData">No Task Assigned!!</p>
+        </div>
+        ):<div className="task-heading-wrapper">
+        {adminTask?.map((task, index) => {
+          return (
+            <div
+              key={index}
+              className="task-heading-inner-wrapper"
+              onClick={() => setTaskInd(index)}
+            >
+              {taskInd === index && <div className="selected-task-style" />}
+              <div className="task-heading-head">
+                <h5 style={{ marginBottom: "0" }}>{task?.[TASKDATA.TN]}</h5>
+                <Arrorforward />
+              </div>
+              <div className="task-heading-body">
+                <p style={{ marginBottom: "0" }}>
+                  {task?.[TASKDATA.TDES]?.length > 80
+                    ? `${task?.[TASKDATA.TDES].slice(0, 80)}...`
+                    : task?.[TASKDATA.TDES]}
+                </p>
+              </div>
+            </div>
+          );
+        })}
+      </div>}
+
+          {adminTask.length===0? (""): <div className="task-seperation-line" />}
+         
           <MentorTaskDetail detail={adminTask[taskInd]} />
         </div>
       </div>

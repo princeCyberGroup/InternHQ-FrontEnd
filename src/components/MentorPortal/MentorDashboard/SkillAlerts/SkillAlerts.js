@@ -11,6 +11,8 @@ import { ReactComponent as TimeLogo } from "../../../../Assets/clock-regular 1lo
 import { ReactComponent as Right } from "../../../../Assets/right.svg";
 import { ReactComponent as Pass } from "../../../../Assets/PassIcon.svg";
 import { ReactComponent as Fail } from "../../../../Assets/FailIcon.svg";
+import { ReactComponent as SkillAlertNoData } from "../../../../Assets/NoData.svg";
+
 import { Link } from "react-router-dom";
 import "./SkillAlerts.css";
 import SkillAlertSkeleton from "./SkillAlertSkeleton";
@@ -36,8 +38,8 @@ export const SkillAlerts = (props) => {
       const decryptedJsonString = bytes.toString(CryptoJS.enc.Utf8);
       parsedObject = JSON.parse(decryptedJsonString);
       // console.log(parsedObject);
-      let mentorEmail=parsedObject.email;
-            console.log(parsedObject.email);
+      let mentorEmail = parsedObject.email;
+      console.log(parsedObject.email);
 
     } else {
       console.log("No encrypted data found in localStorage.");
@@ -49,7 +51,7 @@ export const SkillAlerts = (props) => {
     //     {
     //       headers: {
     //         Authorization: `Bearer ${parsedObject["token"]}`,
-            
+
     //       },
     //     }
     //   );
@@ -60,24 +62,25 @@ export const SkillAlerts = (props) => {
     // }
     try {
       let apiUrl = `${process.env.REACT_APP_API_URL}/api/v4/mentor-notification?mentorEmail=${parsedObject["email"]}`;
-      
+
       if (props.selectedBatches.length > 0) {
         const batchNamesQuery = props.selectedBatches.join(',');
         console.log(batchNamesQuery);
-      apiUrl += `&batch=${encodeURIComponent(batchNamesQuery)}`;
+        apiUrl += `&batch=${encodeURIComponent(batchNamesQuery)}`;
       }
-      
+
       const response = await fetch(apiUrl, {
         headers: {
           Authorization: `Bearer ${parsedObject["token"]}`,
         },
       });
-  
+
       const rsp = await response.json();
-      setNotifications(rsp);
+      //setNotifications(rsp);
+      console.log("Skills",rsp);
       setIsLoading(false);
     }
-     catch (error) {
+    catch (error) {
       if (error.response.status === 401) {
         navigate("/error/statusCode=401");
       }
@@ -101,42 +104,88 @@ export const SkillAlerts = (props) => {
       </p>
       {isLoading ? (
         <>
-        <div className="notification-pass card">
-        <div className="pass-head">
-                <Pass />
+          <div className="notification-pass card">
+            <div className="pass-head">
+              <Pass />
               <h5 className="card-title skill-alert-head">
                 Pass
               </h5>
             </div>
-        <SkillAlertSkeleton />
-        <SkillAlertSkeleton />
-        <SkillAlertSkeleton />
-        <SkillAlertSkeleton />
-        </div>
-        <div className="notification-fail card">
-        <div className="fail-head">
-                <Fail />
+            <SkillAlertSkeleton />
+            <SkillAlertSkeleton />
+            <SkillAlertSkeleton />
+            <SkillAlertSkeleton />
+          </div>
+          <div className="notification-fail card">
+            <div className="fail-head">
+              <Fail />
               <h5 className="card-title skill-alert-head">
                 Fail
               </h5>
             </div>
-        <SkillAlertSkeleton />
-        <SkillAlertSkeleton />
-        <SkillAlertSkeleton />
-        <SkillAlertSkeleton />
-        </div>
-      </>
+            <SkillAlertSkeleton />
+            <SkillAlertSkeleton />
+            <SkillAlertSkeleton />
+            <SkillAlertSkeleton />
+          </div>
+        </>
       ) : (
         <>
           <div className="notification-pass card">
             <div className="pass-head">
-                <Pass />
+              <Pass />
               <h5 className="card-title skill-alert-head">
                 Pass
               </h5>
             </div>
             <div className="skill-alert-cover">
-              {notifications?.pass?.map((notification, index) => (
+              <div className="skill-alert-cover">
+                {notifications?.length === 0 ? (
+                  <div className="d-block">
+                    <SkillAlertNoData className="skillAlerts-NoData" />
+                    <p className="SaNoData">No Skill Exam has been attempted</p>
+                  </div>
+                ) : (
+                  notifications?.pass?.map((notification, index) => (
+                    <div className="notification-pass-wrapper" key={index}>
+                      <div className="image-wrapper mt-1">
+                        <div className="image-box">
+                          <img
+                            src={notification.techImage}
+                            alt={notification.techName}
+                            width={32}
+                          />
+                        </div>
+                      </div>
+                      <div className="text-wrapper mt-2">
+                        <p className="m-0">
+                          <b>{`${notification.firstName} ${notification.lastName}`}</b>{" "}
+                          has achieved <b>{notification.level}</b> skill on{" "}
+                          <b>{notification.techName}</b>
+                        </p>
+                        <p className="m-0 date-wrapper">{notification.examDate}</p>
+                      </div>
+                    </div>
+                  ))
+                )}
+              </div>
+
+            </div>
+          </div>
+          <div className="notification-fail card">
+            <div className="fail-head">
+              <Fail />
+              <h5 className="card-title skill-alert-head">
+                Fail
+              </h5>
+            </div>
+            <div className="skill-alert-cover">
+            {notifications?.length === 0 ? (
+                  <div className="d-block">
+                    <SkillAlertNoData className="skillAlerts-NoData" />
+                    <p className="SaNoData">No Skill Exam has been attempted</p>
+                  </div>
+                ) : (notifications?.fail?.map((notification, index) => (
                 <div className="notification-pass-wrapper" key={index}>
                   <div className="image-wrapper mt-1">
                     <div className="image-box">
@@ -150,44 +199,14 @@ export const SkillAlerts = (props) => {
                   <div className="text-wrapper mt-2">
                     <p className="m-0">
                       <b>{`${notification.firstName} ${notification.lastName}`}</b>{" "}
-                      has achieved <b>{notification.level}</b> skill on{" "}
+                      couldn't achieve <b>{notification.level}</b> skill on{" "}
                       <b>{notification.techName}</b>
                     </p>
                     <p className="m-0 date-wrapper">{notification.examDate}</p>
                   </div>
                 </div>
-              ))}
-            </div>
-          </div>
-          <div className="notification-fail card">
-            <div className="fail-head">
-                <Fail/>
-              <h5 className="card-title skill-alert-head">
-                Fail
-                </h5>
-            </div>
-            <div className="skill-alert-cover">
-            {notifications?.fail?.map((notification, index) => (
-              <div className="notification-pass-wrapper" key={index}>
-                <div className="image-wrapper mt-1">
-                  <div className="image-box">
-                    <img
-                      src={notification.techImage}
-                      alt={notification.techName}
-                      width={32}
-                    />
-                  </div>
-                </div>
-                <div className="text-wrapper mt-2">
-                  <p className="m-0">
-                    <b>{`${notification.firstName} ${notification.lastName}`}</b>{" "}
-                    couldn't achieve <b>{notification.level}</b> skill on{" "}
-                    <b>{notification.techName}</b>
-                  </p>
-                  <p className="m-0 date-wrapper">{notification.examDate}</p>
-                </div>
-              </div>
-            ))}
+              ))
+                )}
             </div>
           </div>
         </>
