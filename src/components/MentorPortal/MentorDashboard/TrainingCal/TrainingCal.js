@@ -15,7 +15,7 @@ import { ReactComponent as Upcoming } from "../../../../Assets/TagUpcoming.svg";
 import { ReactComponent as Expired } from "../../../../Assets/TagExpired.svg";
 import {ReactComponent as TrainingCalNoData} from "../../../../Assets/NoData.svg"
 
-Api.length=0;
+//Api.length=0;
 export const TrainingCalender = () => {
   return (
     <>
