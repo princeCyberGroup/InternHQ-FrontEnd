@@ -76,7 +76,7 @@ export const SkillAlerts = (props) => {
       });
 
       const rsp = await response.json();
-      //setNotifications(rsp);
+      setNotifications(rsp);
       console.log("Skills",rsp);
       setIsLoading(false);
     }
