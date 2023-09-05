@@ -3,6 +3,7 @@ import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
 import "../Accounts.css";
 import Cginfinitylogo from "../../../Assets/Cginfinitylogo.png";
+import Cginfinitylogoresponsive from "../../../Assets/Cginfinitylogoresponsive.svg";
 import CarouselImage1 from "../../../Assets/CarouselImage1.svg";
 import CarouselImage2 from "../../../Assets/CarouselImage2.svg";
 import CarouselImage3 from "../../../Assets/CarouselImage3.svg";
@@ -124,16 +125,12 @@ const LoginScreen = () => {
     }
   }, []);
   return (
-    <div className="container-fluid login-screen-body ">
+    <div className="container-fluid login-screen-body div-xs">
       <div className="row pos">
         <div className="d-flex justify-content-center  align-items-center flex-row">
           <div
-            className="col-md-5"
-            style={{
-              backgroundColor: "#002C3F",
-              height: "35.125rem",
-              width: "23.125rem",
-            }}
+            className="col-md-5 div-bg-height-width-fixed div-hidden-xs"
+           
           >
             <div className="d-flex flex-column justify-content-center align-items-center">
               <div className="row cglogoimg">
@@ -171,38 +168,35 @@ const LoginScreen = () => {
                   ></button>
                 </div>
                 <div className="carousel-inner">
-                  <div
-                    style={{ width: "16.25rem" }}
-                    className="carousel-item active"
+                  <div                    
+                    className="carousel-item active div-width-16-fixed"
                   >
                     <img
                       src={CarouselImage1}
-                      className="d-block "
-                      alt="..."
-                      style={{ width: "13rem", marginLeft: "1.5rem" }}
+                      className="d-block div-width-mar-fixed"
+                      alt="..."                      
                     />
                     <p className="carousel-text ms-4">
                       Record your daily work items
                     </p>
                   </div>
 
-                  <div style={{ width: "16.25rem" }} className="carousel-item">
+                  <div 
+                  className="carousel-item div-width-16-fixed">
                     <img
                       src={CarouselImage2}
-                      className="d-block "
-                      alt="..."
-                      style={{ width: "13rem", marginLeft: "1.5rem" }}
+                      className="d-block div-width-mar-fixed"
+                      alt="..."                      
                     />
                     <p className="carousel-text">
                       Enhance your skills via assessments
                     </p>
                   </div>
-                  <div style={{ width: "16.25rem" }} className="carousel-item">
+                  <div className="carousel-item div-width-16-fixed">
                     <img
                       src={CarouselImage3}
-                      className="d-block "
-                      alt="..."
-                      style={{ width: "13rem", marginLeft: "1.5rem" }}
+                      className="d-block div-width-mar-fixed"
+                      alt="..."                      
                     />
                     <p className="carousel-text">
                       Get certificate and share achievement
@@ -213,15 +207,25 @@ const LoginScreen = () => {
             </div>
           </div>
           <div
-            className="col-md-7 bg-white p-4"
-            style={{ height: "35.125rem" }}
+            className="col-md-7 bg-white p-4 div-height-35-fixed"           
           >
-            <div className="row ">
+             <div className="row div-hidden-xs">
               <p className="right-container-heading">Login</p>
             </div>
-            <div className="row" style={{ height: "15.625rem" }}>
+                <div className="row div-hidden">
+              <div className="row cglogoimg">
+                <img
+                  className="p-0 cglogoimg-xs"
+                  src={Cginfinitylogoresponsive}
+                  alt="CG-Infinity Logo"                
+                />
+              </div>
+              <p className="right-container-heading">CGI SkillFinity</p>
+            </div>
+           
+            <div className="row div-height-156-fixed">
               <form onSubmit={handleSubmit}>
-                <div style={{ height: "10.625rem", marginTop: "1rem" }}>
+                <div className="div-hight106-martop-fixed">
                   <div className="d-flex flex-column">
                     <label
                       className="input-label-text"
@@ -249,9 +253,8 @@ const LoginScreen = () => {
                     )}
                   </div>
                   <div className="d-flex flex-column">
-                    <label
-                      style={{ marginTop: "1.75rem" }}
-                      className="input-label-text"
+                    <label                      
+                      className="input-label-text div-martop-fixed"
                       for="exampleInputPassword1"
                     >
                       Password
@@ -268,8 +271,7 @@ const LoginScreen = () => {
                           onChange={handlePasswordChange}
                         />
                         <button
-                          className="btn password-toggle-button"
-                          style={{ border: "none" }}
+                          className="btn password-toggle-button btn-border-none-fixed"                          
                           type="button"
                           onClick={handleTogglePasswordVisibility}
                         >
@@ -291,8 +293,7 @@ const LoginScreen = () => {
 
                 <button
                   type="submit"
-                  className="btn btn-warning border-0 sign-up-btn mt-3"
-                  style={{ width: "inherit" }}
+                  className="btn btn-warning border-0 sign-up-btn mt-3 width-inherit-fixed"                  
                   disabled={!isEmailValid || isLoading}
                 >
                   {isLoading ? (
@@ -313,8 +314,8 @@ const LoginScreen = () => {
                 Forgot Password?
               </Link>
               <Link
-                className="mt-0 right-container-link"
-                style={{ marginBottom: "0.4rem" }}
+                className="mt-0 right-container-link div-marbottom-fixed"
+                
                 to="/sign-up"
               >
                 Sign Up if you are a first time user

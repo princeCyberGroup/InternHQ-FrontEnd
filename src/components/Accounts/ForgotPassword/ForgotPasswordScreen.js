@@ -3,6 +3,7 @@ import { useNavigate, Link } from "react-router-dom";
 import axios from "axios";
 import "../Accounts.css";
 import Cginfinitylogo from "../../../Assets/Cginfinitylogo.png";
+import Cginfinitylogoresponsive from "../../../Assets/Cginfinitylogoresponsive.svg";
 import CarouselImage1 from "../../../Assets/CarouselImage1.svg";
 import CarouselImage2 from "../../../Assets/CarouselImage2.svg";
 import CarouselImage3 from "../../../Assets/CarouselImage3.svg";
@@ -56,16 +57,12 @@ const ForgotPasswordScreen = () => {
   }, []);
 
   return (
-    <div className="container-fluid login-screen-body ">
+    <div className="container-fluid login-screen-body div-xs">
       <div className="row pos">
         <div className="d-flex justify-content-center  align-items-center flex-row">
           <div
-            className="col-md-5"
-            style={{
-              backgroundColor: "#002C3F",
-              height: "35.125rem",
-              width: "23.125rem",
-            }}
+            className="col-md-5 div-bg-height-width-fixed div-hidden-xs"
+           
           >
             <div className="d-flex flex-column justify-content-center align-items-center">
               <div className="row cglogoimg">
@@ -104,37 +101,35 @@ const ForgotPasswordScreen = () => {
                 </div>
                 <div className="carousel-inner">
                   <div
-                    style={{ width: "16.25rem" }}
-                    className="carousel-item active"
+                    
+                    className="carousel-item active div-width-16-fixed"
                   >
                     <img
                       src={CarouselImage1}
-                      className="d-block "
+                      className="d-block div-width-mar-fixed"
                       alt="..."
-                      style={{ width: "13rem", marginLeft: "1.5rem" }}
+                     
                     />
                     <p className="carousel-text ms-4">
                       Record your daily work items
                     </p>
                   </div>
 
-                  <div style={{ width: "16.25rem" }} className="carousel-item">
+                  <div className="carousel-item div-width-16-fixed">
                     <img
                       src={CarouselImage2}
-                      className="d-block "
-                      alt="..."
-                      style={{ width: "13rem", marginLeft: "1.5rem" }}
+                      className="d-block div-width-mar-fixed "
+                      alt="..."                      
                     />
                     <p className="carousel-text">
                       Enhance your skills via assessments
                     </p>
                   </div>
-                  <div style={{ width: "16.25rem" }} className="carousel-item">
+                  <div className="carousel-item div-width-16-fixed">
                     <img
                       src={CarouselImage3}
-                      className="d-block "
-                      alt="..."
-                      style={{ width: "13rem", marginLeft: "1.5rem" }}
+                      className="d-block div-width-mar-fixed"
+                      alt="..."                    
                     />
                     <p className="carousel-text">
                       Get certificate and share achievement
@@ -145,42 +140,39 @@ const ForgotPasswordScreen = () => {
             </div>
           </div>
           <div
-            className="col-md-7 bg-white p-4"
-            style={{ height: "35.125rem", width: "30.864rem" }}
+            className="col-md-7 bg-white p-4 div-hight35-width30-fixed"
+            
           >
+            <div className="row div-hidden">
+              <div className="row cglogoimg">
+                <img
+                  className="p-0 cglogoimg-xs"
+                  src={Cginfinitylogoresponsive}
+                  alt="CG-Infinity Logo"
+                 
+                />
+              </div>
+            </div>
             <div className="row ">
               <p className="right-container-heading">Forgot Password</p>
             </div>
             <div
-              className="row"
-              style={{
-                width: "25.75rem",
-                background: "rgba(184, 221, 225, 0.54)",
-                borderRadius: "0.25rem",
-                padding: "0.313rem",
-                marginLeft: "0",
-                paddingLeft: "0",
-                marginBottom: "2.2rem",
-              }}
+              className="row div-container-heading"
+             
             >
-              <div style={{ display: "flex", alignItems: "flex-start" }}>
+              <div className="d-flex align-items: flex-start">
                 <img
                   src={InfoIcon}
-                  style={{
-                    width: "1.2rem",
-                    padding: "0",
-                    marginTop: "0.188rem",
-                    marginRight: "0.625rem",
-                  }}
+                  className="div-btn-back"
                   alt="Go Back"
                 />
-                <p style={{ fontSize: "1rem", margin: "0" }}>
+                <p className="font-margin">
                   Please enter your email address below. You will receive an OTP
                   to reset your password.
                 </p>
               </div>
             </div>
-            <div className="row" style={{ height: "10rem" }}>
+            <div className="row h-10rem">
               <form onSubmit={handleSubmit}>
                 <div
                   className="d-flex flex-column"
@@ -211,12 +203,8 @@ const ForgotPasswordScreen = () => {
                 </div>
                 <button
                   type="submit"
-                  style={{
-                    top: "2.5rem",
-                    marginBottom: "2rem",
-                    width: "inherit",
-                  }}
-                  className="btn btn-warning border-0 sign-up-btn"
+                  
+                  className="btn btn-warning border-0 sign-up-btn top-marbot-width-fixed"
                   disabled={!isEmailValid || isLoading}
                 >
                   {isLoading ? (
@@ -233,7 +221,7 @@ const ForgotPasswordScreen = () => {
               </form>
             </div>
             <div className="row">
-              <Link className="right-container-link" to="/">
+              <Link className="right-container-link right-container-link-xs" to="/">
                 Back to login?
               </Link>
             </div>

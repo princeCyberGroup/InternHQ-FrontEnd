@@ -3,6 +3,7 @@ import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
 import "../Accounts.css";
 import Cginfinitylogo from "../../../Assets/Cginfinitylogo.png";
+import Cginfinitylogoresponsive from "../../../Assets/Cginfinitylogoresponsive.svg";
 import CarouselImage1 from "../../../Assets/CarouselImage1.svg";
 import CarouselImage2 from "../../../Assets/CarouselImage2.svg";
 import CarouselImage3 from "../../../Assets/CarouselImage3.svg";
@@ -78,16 +79,12 @@ const SignUpScreen = () => {
   }, []);
 
   return (
-    <div className="container-fluid login-screen-body ">
+    <div className="container-fluid login-screen-body div-xs">
       <div className="row pos">
         <div className="d-flex justify-content-center align-items-center flex-row">
           <div
-            className="col-md-5"
-            style={{
-              backgroundColor: "#002C3F",
-              height: "35.125rem",
-              width: "23.125rem",
-            }}
+            className="col-md-5 div-bg-height-width-fixed div-hidden-xs"
+            
           >
             <div className="d-flex flex-column justify-content-center align-items-center">
               <div className="row cglogoimg">
@@ -126,43 +123,40 @@ const SignUpScreen = () => {
                 </div>
                 <div className="carousel-inner">
                   <div
-                    style={{ width: "16.25rem" }}
-                    className="carousel-item active"
+                    
+                    className="carousel-item active div-width-16-fixed"
                   >
                     <img
                       src={CarouselImage1}
-                      className="d-block "
-                      alt="..."
-                      style={{ width: "13rem", marginLeft: "1.5rem" }}
+                      className="d-block div-width-mar-fixed "
+                      alt="..."                 
                     />
                     <p className="carousel-text ms-4">
                       Record your daily work items
                     </p>
                   </div>
 
-                  <div
-                    style={{ width: "16.25rem" }}
-                    className="carousel-item"
+                  <div                    
+                    className="carousel-item div-width-16-fixed"
                   >
                     <img
                       src={CarouselImage2}
-                      className="d-block "
+                      className="d-block div-width-mar-fixed"
                       alt="..."
-                      style={{ width: "13rem", marginLeft: "1.5rem" }}
+                      
                     />
                     <p className="carousel-text">
                       Enhance your skills via assessments
                     </p>
                   </div>
-                  <div
-                    style={{ width: "16.25rem" }}
-                    className="carousel-item"
+                  <div                    
+                    className="carousel-item div-width-16-fixed"
                   >
                     <img
                       src={CarouselImage3}
-                      className="d-block "
+                      className="d-block div-width-mar-fixed"
                       alt="..."
-                      style={{ width: "13rem", marginLeft: "1.5rem" }}
+                      
                     />
                     <p className="carousel-text">
                       Get certificate and share achievement
@@ -173,20 +167,31 @@ const SignUpScreen = () => {
             </div>
           </div>
           <div
-            className="col-md-7 bg-white p-4"
-            style={{ height: "35.125rem"}}
+            className="col-md-7 bg-white p-4 div-height-35-fixed"            
           >
-            <div className="row ">
-              <p className="right-container-heading">Sign Up</p>
+            <div className="row div-hidden-xs">
+              <p className="right-container-heading">Sign Up</p>        
             </div>
-            <div className="row" style={{ height: "15.625rem" }}>
-              <form
+            <div className="row  div-hidden">
+            <div className="row cglogoimg">
+                <img
+                  className="p-0 cglogoimg-xs"
+                  src={Cginfinitylogoresponsive}
+                  alt="CG-Infinity Logo"                 
+                />
+              </div>
+              <div className="row">
+              <p className="right-container-heading">CGI SkillFinity</p>
+              </div>
+            </div>          
+            <div className="row div-height-166-fixed" >
+              <form 
                 onSubmit={(e) => {
                   handleSubmit(e);
                 }}
               >
-                <div style={{ height: "11.25rem", marginTop: "1rem" }}>
-                  <div className="d-flex flex-column">
+                <div className="div-hight-martop-fixed ">
+                  <div className="d-flex flex-column ">
                     <label
                       className="input-label-text"
                       htmlFor="exampleInputEmail1"
@@ -214,8 +219,8 @@ const SignUpScreen = () => {
                   </div>
                   <div className="d-flex flex-column">
                     <label
-                      style={{ marginTop: "1.75rem" }}
-                      className="input-label-text"
+                      
+                      className="input-label-text div-martop-fixed"
                       htmlFor="exampleInputPassword1"
                     >
                       Password
@@ -232,8 +237,8 @@ const SignUpScreen = () => {
                       onChange={handlePasswordChange}
                     />
                      <button
-                        className="btn password-toggle-button"
-                        style={{border: "none"}}
+                        className="btn password-toggle-button btn-border-none-fixed"
+                        
                         type="button"
                         onClick={handleTogglePasswordVisibility}
                       >
@@ -256,8 +261,8 @@ const SignUpScreen = () => {
 
                 <button
                   type="submit"
-                  className="btn btn-warning border-0 sign-up-btn"
-                  style={{width:"inherit"}}
+                  className="btn btn-warning border-0 sign-up-btn width-inherit-fixed"
+                  
                   disabled={!isEmailValid || !isPasswordValid || isLoading}
                 >
                   {isLoading ? (

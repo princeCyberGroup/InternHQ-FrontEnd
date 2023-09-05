@@ -1,3 +1,8 @@
+
+@media only screen   
+and (min-width: 640px)  
+
+{
 .login-screen-body {
   height: 100vh;
   font-family: "Roboto";
@@ -99,7 +104,7 @@
 .sign-up-btn:hover {
   background-color: #ffb81c;
   color: #343435;
-}
+  }
 
 /* .btn:hover {
   background-color: #ffb81c;
@@ -174,12 +179,10 @@ a:hover {
   color: #343435;
   font-weight: 600;
 }
-
 .sign-up-warning {
   color: red;
   font-size: 0.8rem;
 }
-
 .password-toggle-button {
   background: none;
 }
@@ -190,4 +193,206 @@ a:hover {
 .div-input {
   border-bottom: 0.063rem solid #b2b2b3;
   width: 26.786rem;
+}
+.div-bg-height-width-fixed{  
+    background-color: #002C3F;
+    height: 35.125rem;
+    width: 23.125rem; 
+}
+
+.div-width-16-fixed{  
+  width: 16.25rem;
+}
+.div-width-mar-fixed{  
+  width: 13rem;
+  margin-left: 1.5rem;
+}
+.div-height-35-fixed{  
+  height: 35.125rem;
+}
+.div-hight-martop-fixed{  
+  height: 11.25rem; 
+  margin-top: 1rem;
+}
+.div-martop-fixed{  
+  margin-Top: 1.75rem;
+}
+.div-marbottom-fixed{  
+  margin-Top: 0.4rem;
+}
+.btn-border-none-fixed{  
+  border: none;
+}
+.width-inherit-fixed{  
+  width:inherit;
+}
+.div-height-166-fixed{  
+  height: 16.625rem;
+}
+.div-height-156-fixed{  
+  height: 15.625rem;
+}
+.div-hight106-martop-fixed{  
+  height: 10.625rem; 
+  margin-top: 1rem;
+}
+
+.div-hight106-martop-fixed{  
+  height: 10.625rem; 
+  margin-top: 1rem;
+}
+.div-hight35-width30-fixed{ 
+  height: 35.125rem; 
+  width: 30.864rem;
+}
+
+.div-container-heading{
+  width: 25.75rem;
+  background: rgba(184, 221, 225, 0.54);
+  border-radius: 0.25rem;
+  padding: 0.313rem;
+  margin-Left: 0;
+  padding-Left: 0;
+  margin-Bottom: 2.2rem;
+}
+
+.div-btn-back{
+  width: 1.2rem;
+  padding: 0;
+  margin-top: 0.188rem;
+  margin-right:0.625rem;
+}
+
+.font-margin{
+  font-size:1rem;
+  margin: 0
+}
+
+  .div-hidden{
+    display: none;
+  }
+}
+
+@media only screen    
+
+and (max-width : 640px) {
+  .div-xs{
+    height: 100vh;
+    font-family: "Roboto";
+    background: 
+      #ffffff;    
+    justify-content: center;
+    align-items: center;   
+  }
+  .div-hidden-xs{
+    display: none;
+  }
+  .right-container-heading{
+    font-weight: 600;
+    font-size: 2rem;
+    line-height: 125%;
+    color: blue;
+    display: flex;
+    justify-content: center;
+    margin-bottom: 6.25rem;
+    position: relative;
+    top: 1rem;
+  }
+  .right-container-link{
+    display: flex;
+    margin-top: 1.594rem;
+    justify-content: center;
+    color: #28519e;
+    font-weight: 600;
+    font-size: 1rem;
+    line-height: 1.188rem;
+    text-decoration: none;
+    cursor: pointer;
+    margin-bottom: 3.1rem;
+  }
+  .cglogoimg-xs {                  
+    width: 68vw;
+    display: block;                  
+    margin: 5vh;                    
+  }
+  .sign-up-warning {
+    color: red;
+    font-size: 0.8rem;
+  }
+ .div-hight-martop-fixed{
+    height: 11.25rem; 
+    margin-top: 1rem;
+  }
+  .input-label-text {
+    font-weight: 400;
+    font-size: 0.938rem;
+    line-height: 1.125rem;
+    color: #343435;
+  }
+  .div-input {
+    border-bottom: 0.063rem solid #b2b2b3;
+    width: 80vw;
+  }
+  .input-login {
+    border: none;
+    width: 80vw;
+    font-size: 0.938rem;
+    line-height: 2.563rem;
+    /* max-width: 100%; */
+  }
+  .input-login:focus {
+    outline: none;
+  }
+  .input-label-text {
+    font-weight: 400;
+    font-size: 0.938rem;
+    line-height: 1.125rem;
+    color: #343435;
+  }
+  .div-martop-fixed{  
+    margin-Top: 1.75rem;  
+  }
+  .pass-input-div{
+    display: flex;
+    justify-content: space-between;
+  }
+  .password-toggle-button {
+    background: none;
+  }
+  .btn-border-none-fixed{  
+    border: none;  
+  }
+  .sign-up-btn {
+    width: 95%;
+    position: relative;
+    top: 1.688rem;
+    margin-bottom: 1.313rem;
+    background: #ffb81c;
+    color: #343435;
+    font-size: 1.063rem;
+    font-weight: 600;
+  }
+  .width-inherit-fixed{  
+    width:inherit;  
+  }
+
+  .top-marbot-width-fixed{  
+        top: 2.5rem;
+    margin-Bottom: 2rem;
+    width: inherit;
+    
+  }
+
+  .div-container-heading{
+    width: 90vw;
+    background: rgba(184, 221, 225, 0.54);
+    border-radius: 0.25rem;
+    padding: 0.313rem;
+    margin-Left: 0;
+    padding-Left: 0;
+    margin-Bottom: 2.2rem;
+  }
+
+
+
 }
