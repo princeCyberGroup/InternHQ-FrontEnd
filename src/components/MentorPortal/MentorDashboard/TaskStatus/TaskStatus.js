@@ -30,7 +30,7 @@ function getInitials(name) {
 }
 
 export const TaskStatus = (props) => {
-  const [taskStatus, setTaskStatus] = useState();
+  const [taskStatus, setTaskStatus] = useState([]);
 
   const secretkeyUser = process.env.REACT_APP_USER_KEY;
   var parsedObject;

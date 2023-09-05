@@ -37,6 +37,7 @@ const MentorReview = () => {
     const bytes = CryptoJS.AES.decrypt(data, secretkeyUser);
     const decryptedJsonString = bytes.toString(CryptoJS.enc.Utf8);
     parsedObject = JSON.parse(decryptedJsonString);
+    var userId=parsedObject.userId;
   } else {
     console.log("No encrypted data found in localStorage.");
   }
@@ -44,7 +45,7 @@ const MentorReview = () => {
   const fetchData = async () => {
     try {
       const response = await axios.get(
-        process.env.REACT_APP_API_URL + `/api/v3/getuserReport`,
+        process.env.REACT_APP_API_URL + `/internsDetailsToBeReviewed?userId=${parsedObject["userId"]}`,
         {
           headers: {
             Authorization: `Bearer ${parsedObject["token"]}`,

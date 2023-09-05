@@ -240,7 +240,7 @@ export default function AssociateConsultant(props) {
             >
               <button className="btn-nav p-0">Associates</button>
             </div>
-            <div
+            {/* <div
               className={`nav-btn pointer ${
                 activeButton === "Mentors" ? "activated" : ""
               }`}
@@ -249,7 +249,7 @@ export default function AssociateConsultant(props) {
               }}
             >
               <button className="btn-nav p-0">Mentors</button>
-            </div>
+            </div> */}
           </div>
           <div className="d-flex align-items-center ps-1 associate-search-log-wrapper">
             <SearchIcon />
