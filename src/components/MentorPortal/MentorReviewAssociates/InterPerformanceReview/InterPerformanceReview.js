@@ -13,8 +13,14 @@ import { ReactComponent as ReviewYesGreen } from "../../../../Assets/ReviewYesGr
 import "./InterPerformanceReview.css";
 import InterPerformanceReviewSection from "./InterPerformanceReviewSection";
 
-const InterPerformanceReview = () => {
+const InterPerformanceReview = (props) => {
   // const [selectedValue, setSelectedValue] = useState(null); // 1-2-3-4-5
+  const[name,setName]=useState(sessionStorage.getItem("detailName"))
+  const[id,setId]=useState(sessionStorage.getItem("detailId"))
+  const[duration,setDuration]=useState(sessionStorage.getItem("detailDuration"))
+  // sessionStorage.getItem("detailId");
+  // sessionStorage.getItem("detailName");
+  // sessionStorage.getItem("detailDuration");
   
   const [productivity, setProductivity] = useState("");
   const [productivityOption, setProductivityOption] = useState(null);
@@ -49,6 +55,7 @@ const InterPerformanceReview = () => {
   // }
 
   const handleSave = () => {
+    console.log("ID", id)
     console.log("Productivity", productivity)
     console.log("ProductivityOption", productivityOption)
     console.log("Quality", quality)
@@ -93,18 +100,18 @@ const InterPerformanceReview = () => {
               <div className="interper-info-detail">
                 <div className="interper-user-name">
                   <Usercircle />
-                  <span>{"John Doe"}</span>
+                  <span>{name}</span>
                 </div>
                 <div className="interper-other-info">
                   <div className="interper-icon-pair">
                     <Profile />
-                    <span>{"INT 123"}</span>
+                    <span>{id}</span>
                   </div>
                   <div className="interper-det-dot" />
                   <div className="interper-icon-pair">
                     <Clock />
 
-                    <span>{`08 months`}</span>
+                    <span>{duration} Months</span>
                   </div>
                 </div>
               </div>

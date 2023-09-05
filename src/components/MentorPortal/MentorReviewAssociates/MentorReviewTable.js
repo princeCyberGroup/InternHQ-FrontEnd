@@ -7,15 +7,52 @@ import { ReactComponent as ReviewCompleted } from "../../../Assets/review-comple
 import { ReactComponent as ReviewWarning } from "../../../Assets/review-warning.svg";
 import { ReactComponent as ReviewFlag } from "../../../Assets/review-flag.svg";
 import { useNavigate } from "react-router-dom";
+import InterPerformanceReview from "./InterPerformanceReview/InterPerformanceReview";
 
 const MentorReviewTable = ({ tableData, isLoading }) => {
+  console.log(tableData);
   const navigate = useNavigate();
+  // const [revieweeData, setRevieweeData] = useState([]);
+  const [selectedUser, setSelectedUser] = useState(null);
+
   const [selectedIndex, setSelectedIndex] = useState(-1);
   //function
   const handleOnclick = (index) => {
-    sessionStorage.setItem("detailId", tableData[index].userId);
+    // console.log(tableData[index]);
+    sessionStorage.setItem("detailId", tableData[index].internId);
+    sessionStorage.setItem("detailName", tableData[index].firstName+' '+tableData[index].lastName);
+    sessionStorage.setItem("detailDuration", tableData[index].durationOfInternship);
+
     navigate(`/mentor/review-associates/inter-performance-review`);
+    // <InterPerformanceReview
+    // selectedUser={selectedUser}
+    // setSelectedUser={setSelectedUser}
+    // />
   };
+
+  // const handleOnclick =  (id) => {
+  //   const selectedUserData = tableData.find((user) => user.userId === id);
+  //   // console.log(selectedUserData);
+  //   setSelectedUser(selectedUserData);
+  // navigate(`/mentor/review-associates/inter-performance-review`);
+  //   <InterPerformanceReview
+  //   selectedUser={selectedUser}
+  //   setSelectedUser={setSelectedUser}
+  //   />
+    
+  // //     const response = await axios.get(
+  // //       process.env.REACT_APP_API_URL + `/api/v3/getActivityLog?userId=${id}`,
+  // //       {
+  // //         headers: {
+  // //           Authorization: `Bearer ${parsedObject["token"]}`,
+  // //         },
+  // //       }
+  // //     );
+
+  // //     props.setLogData(response.data.response);
+    
+  // };
+
   return (
     <div className="container-fluid review-container-table">
       <table className="review-table-report" cellPadding="0" cellSpacing="0">
@@ -30,6 +67,7 @@ const MentorReviewTable = ({ tableData, isLoading }) => {
         {tableData ? (
           <tbody>
             {tableData.map((val, ind) => {
+              console.log('val',val);
               let objectKeyCount = 0;
               return (
                 <tr

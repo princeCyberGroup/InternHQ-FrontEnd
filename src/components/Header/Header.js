@@ -268,12 +268,12 @@ const Header = (props) => {
                 }}
               >
                 <input
-                style={{width:"8rem",outline:"none",cursor:"pointer"}}
+                style={{width:"8rem",outline:"none"}}
                   type="text"
                   className="custom-input"
                   placeholder="Select Batch"
                   value={Object.values(batches)}
-                  // disabled
+                  disabled
                 />
                 <ExpandMore />
                 
