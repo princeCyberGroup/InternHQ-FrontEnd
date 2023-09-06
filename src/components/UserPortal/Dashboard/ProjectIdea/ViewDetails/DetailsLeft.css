@@ -1,14 +1,25 @@
-.mentor-assigned-task-badges{
-    width: 8.313rem;
+.mentor-assigned-task-badges {
+  width: 8.313rem;
 }
 
-.mentor-assigned-badge{
-    background:#FFB81C;
-    border-radius: 0.25rem;
-    padding: 0.25rem;
-    color: #343435;
-    font-weight: 400;
-    font-size: 0.813rem;
-    line-height: 0.952rem;
-    text-align: center;
+.mentor-assigned-badge {
+  background: #ffb81c;
+  border-radius: 0.25rem;
+  padding: 0.25rem;
+  color: #343435;
+  font-weight: 400;
+  font-size: 0.813rem;
+  line-height: 0.952rem;
+  text-align: center;
+}
+.child-wrapper-1 {
+  width: 26rem;
+}
+.task-deadline {
+  color: #6d6d6d;
+  font-family: Roboto;
+  font-size: 13px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
 }

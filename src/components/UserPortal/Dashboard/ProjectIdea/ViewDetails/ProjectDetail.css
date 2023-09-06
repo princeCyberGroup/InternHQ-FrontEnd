@@ -79,3 +79,39 @@
     text-decoration-line: underline;
     color: #28519E;
 }
+
+.name-of-members {
+    position: relative;
+    display: inline-block;
+  }
+  
+  .name-of-members:hover .full-name {
+    display: inline;
+  }
+  
+  .full-name {
+    display: none;
+    position: absolute;
+    top: -1.25rem;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: transparent;
+    color: #000;
+    padding: 5px;
+    border-radius: 3px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+
+  .task-deadline-detailed
+  {
+    color: #6D6D6D;
+font-family: Roboto;
+font-size: 14px;
+font-style: normal;
+font-weight: 500;
+line-height: normal;
+  }
+
+.clickable{
+    cursor: pointer;
+}

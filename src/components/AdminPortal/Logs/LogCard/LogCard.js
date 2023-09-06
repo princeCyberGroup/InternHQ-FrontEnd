@@ -76,7 +76,7 @@ export default function AssociateConsultant(props) {
     const getFilterItems = (items, searchValue, keyValue) => {
       if (searchValue) {
         return items.filter((item) =>
-          item?.[keyValue].toLowerCase().includes(searchValue.toLowerCase())
+          item?.[keyValue].toLowerCase().startsWith(searchValue.toLowerCase())
         );
       }
       return items;
@@ -166,7 +166,7 @@ export default function AssociateConsultant(props) {
               </p>
             </div>
             <div
-              style={{ width: "21rem" }}
+              style={{ width: "19.75rem" }}
               onClick={() => {
                 handleOnUserclick(userData.userId);
               }}
@@ -227,7 +227,7 @@ export default function AssociateConsultant(props) {
 
         <div
           className="card mentor-card pt-0"
-          style={{ maxHeight: "80vh", width: "420px", overflow: "auto" }}
+          // style={{ maxHeight: "80vh", width: "420px", overflow: "auto" }}
         >
           <div className="log-header-nav">
             <div
@@ -240,7 +240,7 @@ export default function AssociateConsultant(props) {
             >
               <button className="btn-nav p-0">Associates</button>
             </div>
-            <div
+            {/* <div
               className={`nav-btn pointer ${
                 activeButton === "Mentors" ? "activated" : ""
               }`}
@@ -249,7 +249,7 @@ export default function AssociateConsultant(props) {
               }}
             >
               <button className="btn-nav p-0">Mentors</button>
-            </div>
+            </div> */}
           </div>
           <div className="d-flex align-items-center ps-1 associate-search-log-wrapper">
             <SearchIcon />

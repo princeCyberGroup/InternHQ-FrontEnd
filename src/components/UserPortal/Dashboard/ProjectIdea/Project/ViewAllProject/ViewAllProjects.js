@@ -9,11 +9,16 @@ import TechDropDown from "../../TechDropDown";
 import EmptyProjectView from "../../../EmptyStates/EmptyProject/ProjectViewAll";
 import { ReactComponent as ExpandMore } from "../../../../../../Assets/expand_more.svg";
 import BreadCrumbs from "../../../../../BreadCrumbs/BreadCrumbs";
+import { ReactComponent as VectorAdd } from "../../../../../../Assets/Vectoradd.svg";
+import TechnologyDropDown from "../../../../../AdminPortal/Task/AssignTask/TechnologyDropdown(Admin)";
+
 import CryptoJS from "crypto-js";
 import { useNavigate } from "react-router-dom";
 
 const ViewAllProjects = () => {
-  // const { project } = useContext(UserContext);
+  const [nameError, setNameError] = useState(true);
+  const [descError, setDescError] = useState(true);
+  const [projLinkError, setProjLinkError] = useState(true);
   const [project, setProject] = useState([]);
   const [dropDown, setDropDown] = useState(false);
   const [projName, setProjName] = useState("");
@@ -21,46 +26,71 @@ const ViewAllProjects = () => {
   const [projectLink, setProjectLink] = useState("");
   const [hostedLink, setHostedLink] = useState("");
   const [textInput, setTextInput] = useState("");
-  const [memberNames, setMemberNames] = useState({});
+  const [memberNames, setMemberNames] = useState([]);
   const [techNames, seTechNames] = useState({});
-  const [error, setError] = useState(true);
-  const [projNameError, setProjNameError] = useState("");
-  const [desError, setDesError] = useState("");
-  const [projLinkError, setProjLinkError] = useState("");
   const [projectIndex, setProjectIndex] = useState(0);
+  const [mentorIndex, setMentorIndex] = useState(0);
   const [tech, setTech] = useState({});
-  const navigate = useNavigate();
+  const [mentorAssignData, setMentorAssignData] = useState([]);
+  const [isProjectNameValid, setIsProjectNameValid] = useState(false);
+  const [isProjectDescriptionValid, setIsProjectDescriptionValid] =
+    useState(false);
+  const [isProjectLinkValid, setIsProjectLinkValid] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [taskVersion, setTaskVersion] = useState(0);
+  const [searchQuery, setSearchQuery] = useState("");
+  const [selectedTechIds, setSelectedTechIds] = useState([]);
+  const [technologyNames, setTechnologyNames] = useState([]);
 
-  // const details = project;
+  const navigate = useNavigate();
 
   const techDataComingFrmChild = (data) => {
     return setTech(data);
   };
 
-  const handleProjectNameChange = (event) => {
-    const name = event.target.value;
+  const handleProjectNameChange = (e) => {
+    e.preventDefault();
+    const name = e.target.value;
     setProjName(name);
+    setIsProjectNameValid(name.match(/^.{1,100}$/) ? true : false);
     if (!name) {
-      setError(true);
-      setProjNameError("Project name is required");
+      setNameError(true);
     } else {
-      setError(false);
-      setProjNameError("");
+      setNameError(false);
     }
   };
-  const handleProjectDescriptionChange = (event) => {
-    const description = event.target.value;
+  const handleProjectDescriptionChange = (e) => {
+    const description = e.target.value;
     setProjDescription(description);
+    setIsProjectDescriptionValid(
+      description.match(/^.{50,750}$/) ? true : false
+    );
     if (!description) {
-      setError(true);
-      setDesError("Project description is required");
+      setDescError(true);
     } else {
-      setError(false);
-      setDesError("");
+      setDescError(false);
     }
   };
+  const handleProjectLinkChange = (e) => {
+    const link = e.target.value;
+    setProjectLink(link);
+    setIsProjectLinkValid(link.match(/^https?:\/\//) ? true : false);
+    if (!link) {
+      setProjLinkError(true);
+    } else {
+      setProjLinkError(false);
+    }
+  };
+
   const handleInputChange = (event) => {
-    setTextInput(event.target.value);
+    const inputText = event.target.value;
+    setTextInput(inputText);
+    const memberNamesArray = inputText.split(",").map((name) => name.trim());
+    const membersObj = {};
+    memberNamesArray.forEach((name, index) => {
+      membersObj[`member${index + 1}`] = name;
+    });
+    isObjectEmpty(membersObj);
   };
 
   const clear = () => {
@@ -72,31 +102,19 @@ const ViewAllProjects = () => {
     setDropDown(false);
     setTech({});
     seTechNames({});
+    setTechnologyNames([]);
 
     const checkboxes = document.querySelectorAll(".tech-checkbox");
     checkboxes.forEach((checkbox) => {
       checkbox.checked = false;
     });
   };
-  const handleProjectLinkChange = (event) => {
-    const link = event.target.value;
-    setProjectLink(link);
-    if (!link) {
-      setError(true);
-      setProjLinkError("Project link is required");
-    } else {
-      setError(false);
-      setProjLinkError("");
-    }
-  };
 
   const isObjectEmpty = (object) => {
-    if (object.member1.length > 0) {
-      setMemberNames(object);
-      return;
-    } else {
-      return setMemberNames("");
-    }
+    const memberNamesArray = Object.values(object).filter(
+      (value) => value.trim() !== ""
+    );
+    setMemberNames(memberNamesArray);
   };
 
   const handleSubmit = (e) => {
@@ -112,18 +130,26 @@ const ViewAllProjects = () => {
       console.log("No encrypted data found in localStorage.");
     }
     var userId = parsedObject.userId;
-    if (error) {
+    if (
+      nameError ||
+      descError ||
+      projLinkError ||
+      technologyNames.length === 0
+    ) {
       alert("Please fill in the required details");
     } else {
       axios
-        .post(process.env.REACT_APP_API_URL + "/api/v3/Project", {
-          projName,
-          projDescription,
+        .post(process.env.REACT_APP_API_URL + "/user/dashboard/project", {
+          name: projName,
+          description: projDescription,
           userId,
           projectLink,
           hostedLink,
-          technologyNames: techNames,
-          memberNames: memberNames,
+          technology: technologyNames,
+          members: memberNames,
+        })
+        .then((res) => {
+          setTaskVersion((prevVersion) => prevVersion + 1);
         })
         .catch((err) => {
           console.log(err);
@@ -135,6 +161,7 @@ const ViewAllProjects = () => {
       setHostedLink("");
       setTech({});
       seTechNames({});
+      setTechnologyNames([]);
 
       const checkboxes = document.querySelectorAll(".tech-checkbox");
       checkboxes.forEach((checkbox) => {
@@ -143,26 +170,15 @@ const ViewAllProjects = () => {
     }
   };
 
-  // useEffect(() => {
-  //   var storedObject = localStorage.getItem("userData");
-  //   var parsedObject = JSON.parse(storedObject);
-  //   var userId = parsedObject.userId;
+  useEffect(() => {
+    const texts = textInput.split(",").map((text) => text.trim());
+    const membersObj = {};
+    texts.forEach((text, index) => {
+      membersObj[`member${index + 1}`] = text;
+    });
 
-  //   axios.all([
-  //     axios.get(`https://cg-interns-hq.azurewebsites.net/getProject?userId=${userId}`),
-  //     axios.get("https://cg-interns-hq.azurewebsites.net/getAssignedTask")
-  //   ])
-  //     .then(axios.spread((projectResponse, mentorTaskApiResponse) => {
-  //       const combinedResponse = {
-  //         project: projectResponse.data.response,
-  //         anotherData: mentorTaskApiResponse.data.response
-  //       };
-  //       setProject(combinedResponse);
-  //     }))
-  //     .catch((error) => {
-  //       console.error("Error fetching data:", error);
-  //     });
-  // }, []);
+    isObjectEmpty(membersObj);
+  }, [textInput]);
 
   useEffect(() => {
     const secretkeyUser = process.env.REACT_APP_USER_KEY;
@@ -176,17 +192,31 @@ const ViewAllProjects = () => {
       console.log("No encrypted data found in localStorage.");
     }
     var userId = parsedObject.userId;
-    axios
-      .get(
-        process.env.REACT_APP_API_URL + `/api/v3/getProject?userId=${userId}`,
-        {
-          headers: {
-            Authorization: `Bearer ${parsedObject["token"]}`,
-          },
-        }
-      )
-      .then((response) => {
-        setProject(response.data.response);
+    const projectDataFrmApi = axios.get(
+      process.env.REACT_APP_API_URL + `/api/v3/getProject?userId=${userId}`,
+      {
+        headers: {
+          Authorization: `Bearer ${parsedObject["token"]}`,
+        },
+      }
+    );
+
+    const mentorTaskFrmApi = axios.get(
+      process.env.REACT_APP_API_URL +
+        `/api/v3/getAssignedNotification?userId=${userId}`,
+      {
+        headers: {
+          Authorization: `Bearer ${parsedObject["token"]}`,
+        },
+      }
+    );
+    Promise.all([projectDataFrmApi, mentorTaskFrmApi])
+      .then((responses) => {
+        const projectAndMentorData = responses[1]?.data.response.concat(
+          responses[0]?.data.response
+        );
+        console.log("object", projectAndMentorData);
+        setProject(projectAndMentorData);
       })
       .catch((error) => {
         if (error.response.status === 401) {
@@ -203,16 +233,7 @@ const ViewAllProjects = () => {
         }
         console.error("Error fetching tasks:", error);
       });
-
-    // axios
-    //   .get(`https://cg-interns-hq.azurewebsites.net/getAssignedTask`)
-    //   .then((responsedata) => {
-    //     setProject(responsedata.data.response);
-    //   })
-    //   .catch((error) => {
-    //     console.error("Error fetching data from another API:", error);
-    // });
-  }, []);
+  }, [taskVersion]);
 
   useEffect(() => {
     const texts = textInput.split(",").map((text) => text.trim());
@@ -224,8 +245,10 @@ const ViewAllProjects = () => {
   }, [textInput, tech]);
 
   const handelIndex = (index) => {
+    console.log(index);
     setProjectIndex(index);
   };
+
   return (
     <>
       <div className="" style={{ marginBottom: "4rem" }}>
@@ -248,14 +271,18 @@ const ViewAllProjects = () => {
               data-bs-toggle="modal"
               data-bs-target="#xampleModal"
             >
-              <p className="me-2 add-your-project">Add Project</p>
+              <p className="me-2 add-your-project">
+                <VectorAdd />
+                <span className="text-for-the-modal">Add Project</span>
+              </p>
             </button>
           </div>
+
           <div
             className="modal fade"
             id="xampleModal"
             tabindex="-1"
-            aria-labelledby="xampleModalLabel"
+            aria-labelledby="projectExampleModalLabel"
             aria-hidden="true"
           >
             <div className="modal-dialog">
@@ -263,7 +290,7 @@ const ViewAllProjects = () => {
                 <div className="modal-header">
                   <h1
                     className="modal-title fs-5 add-project-wrapper"
-                    id="xampleModalLabel"
+                    id="projectExampleModalLabel"
                   >
                     Add Project
                   </h1>
@@ -283,11 +310,6 @@ const ViewAllProjects = () => {
                         className="col-form-label title-text"
                       >
                         Project Name<span style={{ color: "red" }}>*</span>{" "}
-                        {projNameError && (
-                          <span style={{ color: "red", fontSize: "11px" }}>
-                            ({projNameError})
-                          </span>
-                        )}
                       </label>
                       <input
                         type="text"
@@ -297,6 +319,12 @@ const ViewAllProjects = () => {
                         placeholder="Enter Project Name"
                         onChange={handleProjectNameChange}
                       />
+                      {!isProjectNameValid && projName && (
+                        <span style={{ color: "red", fontSize: "11px" }}>
+                          Please enter a name with only letters and spaces,
+                          between 1 and 100 characters.
+                        </span>
+                      )}
                     </div>
 
                     <div className="mb-3">
@@ -306,11 +334,9 @@ const ViewAllProjects = () => {
                       >
                         Project Description
                         <span style={{ color: "red" }}>*</span>{" "}
-                        {desError && (
-                          <span style={{ color: "red", fontSize: "11px" }}>
-                            ({desError})
-                          </span>
-                        )}
+                        <span style={{ color: "grey" }}>
+                          (Minimum 50 characters)
+                        </span>
                       </label>
                       <textarea
                         className="form-control"
@@ -319,7 +345,13 @@ const ViewAllProjects = () => {
                         placeholder="Write Here..."
                         onChange={handleProjectDescriptionChange}
                         rows={3}
-                      ></textarea>
+                      />
+                      {!isProjectDescriptionValid && projDescription && (
+                        <span style={{ color: "red", fontSize: "11px" }}>
+                          Please enter a description with a length between 50
+                          and 750 characters.
+                        </span>
+                      )}
                     </div>
                     <div className="mb-3">
                       <label
@@ -328,6 +360,9 @@ const ViewAllProjects = () => {
                         required
                       >
                         Technology Used <span style={{ color: "red" }}>*</span>
+                        <span style={{ color: "grey" }}>
+                          (Select atleast 1 technology)
+                        </span>
                       </label>
                       <div className="container border p-0">
                         <div className="input-with-button">
@@ -360,33 +395,45 @@ const ViewAllProjects = () => {
                             style={{ display: dropDown ? "" : "none" }}
                             className="ul-styling"
                           >
-                            <TechDropDown
+                            <TechnologyDropDown
                               techDataComingChild={techDataComingFrmChild}
-                              seTechNames={seTechNames}
-                              techNames={techNames}
+                              selectedTechIds={selectedTechIds}
+                              setSelectedTechIds={setSelectedTechIds}
+                              setTechnologyNames={setTechnologyNames}
+                              technologyNames={technologyNames}
+                              searchQuery={searchQuery}
+                              setSearchQuery={setSearchQuery}
                             />
                           </ul>
                         </div>
                       </div>
+                      {!Object.values(tech).length && (
+                        <span style={{ color: "grey", fontSize: "11px" }}>
+                          Maximum 10 technologies
+                        </span>
+                      )}
                     </div>
+
                     <div className="mb-3">
                       <label
                         for="Project Link"
                         className="col-form-label title-text"
                       >
                         Project Link<span style={{ color: "red" }}>*</span>{" "}
-                        {projLinkError && (
-                          <span style={{ color: "red", fontSize: "11px" }}>
-                            ({projLinkError})
-                          </span>
-                        )}
                       </label>
                       <input
                         className="form-control"
                         id="project-link"
+                        placeholder="Enter Project Link"
                         value={projectLink}
                         onChange={handleProjectLinkChange}
                       />
+                      {!isProjectLinkValid && projectLink && (
+                        <span style={{ color: "red", fontSize: "11px" }}>
+                          Invalid project link. Please enter a valid URL
+                          starting with http:// or https://.
+                        </span>
+                      )}
                     </div>
                     <div className="mb-3">
                       <label
@@ -398,6 +445,7 @@ const ViewAllProjects = () => {
                       <input
                         className="form-control"
                         id="hosted-link"
+                        placeholder="Enter Hosted Link"
                         value={hostedLink}
                         onChange={(event) => setHostedLink(event.target.value)}
                       />
@@ -408,6 +456,9 @@ const ViewAllProjects = () => {
                         className="col-form-label title-text"
                       >
                         Members(Optional)
+                        <span style={{ color: "grey" }}>
+                          (Minimum 8 members)
+                        </span>
                       </label>
                       <input
                         className="form-control"
@@ -419,6 +470,7 @@ const ViewAllProjects = () => {
                     </div>
                   </form>
                 </div>
+
                 <div className="modal-footer">
                   <button
                     type="button"
@@ -430,10 +482,20 @@ const ViewAllProjects = () => {
                   </button>
                   <button
                     type="button"
-                    className="btn save-button"
+                    className="btn btn-primary save-button"
                     data-bs-target="#xampleModal"
-                    data-bs-dismiss={!error ? "modal" : ""}
-                    onClick={handleSubmit}
+                    data-bs-dismiss={
+                      !nameError &&
+                      !descError &&
+                      !projLinkError &&
+                      technologyNames.length !== 0
+                        ? "modal"
+                        : ""
+                    }
+                    onClick={(e) => {
+                      handleSubmit(e);
+                      setIsModalOpen(true);
+                    }}
                   >
                     <span className="save-text"> Save</span>
                   </button>
@@ -450,10 +512,21 @@ const ViewAllProjects = () => {
             style={{ overFlowY: "scroll" }}
           >
             <div>
-              <DetailsLeft data={project} projectDetails={handelIndex} />
+              <DetailsLeft
+                project={project}
+                mentorApiData={mentorAssignData}
+                projectDetails={handelIndex}
+              />
             </div>
             <div className="project-detail">
-              <ProjectDetail data={project} indexNumber={projectIndex} />
+              <ProjectDetail
+                data={project}
+                mentorApiData={mentorAssignData}
+                indexNumber={projectIndex}
+                mentorIndexNumber={mentorIndex}
+                setTaskVersion={setTaskVersion}
+                taskVersion={taskVersion}
+              />
             </div>
           </div>
         )}

@@ -41,31 +41,21 @@ const Report = () => {
     setSelectedOption(value);
   };
   const handleDeployChange = (userId) => {
-    const index = tableData.findIndex((item) => item.userId === userId);
+    const index = orgTableData.findIndex((item) => item.userId === userId);
     const containValue = deployData?.some(
       (value) => value?.userId === orgTableData[index].userId
     );
     if (containValue) {
-      const tempData = deployData.map((value) => {
-        if (value.userId === orgTableData[index].userId) {
-          return { ...value, status: !tableData[index].isDeployed };
-        }
-        return value;
-      });
+      const tempData = deployData.filter((value) => value.userId !== userId);
       setDeployData(tempData);
     } else {
       const tempData = [...deployData];
       tempData.push({
         userId: orgTableData[index].userId,
-        status: !tableData[index].isDeployed,
+        status: !orgTableData[index].isDeployed,
       });
       setDeployData(tempData);
     }
-    const updatedValues = tableData.map((val) => {
-      if (val.userId === userId) return { ...val, isDeployed: !val.isDeployed };
-      return val;
-    });
-    setTableData(updatedValues);
   };
   const handleCancel = () => {
     let tempDeployedTable = [];
@@ -78,21 +68,18 @@ const Report = () => {
   };
   const handleConfirm = async () => {
     setIsLoading(true);
+    let response;
     try {
-      const response = await axios.post(
-        "https://cg-interns-hq.azurewebsites.net/api/v3/update-deployed",
+      response = await axios.post(
+        process.env.REACT_APP_API_URL + "/api/v3/update-deployed",
         deployData.map((value) => {
           return { ...value, status: value.status.toString() };
         })
       );
-      console.log("response api data", response.data);
     } catch (error) {
       console.log("this is error in report post api", error);
     }
-    // setConfirmChange(false);
-    // setLoadFilter((prev) => !prev);
-    // fetchData();
-    window.location.reload();
+    if (response.status === 200) fetchData();
   };
   const handleFiltersChange = () => {
     const getFilterItems = (items, query) => {
@@ -100,7 +87,7 @@ const Report = () => {
         return items.filter((item) =>
           `${item[Data.FN]} ${item[Data.LN]}`
             .toLowerCase()
-            .startsWith(query.toLowerCase())
+            .includes(query.toLowerCase())
         );
       }
       return items;
@@ -157,9 +144,6 @@ const Report = () => {
     const filterItems = getFilterItems(orgTableData, query);
     const filterTech = getfilterTech(filterItems);
     const filterDep = getfilterDep(filterTech, selectedOption);
-    // const workingData = filterDep.map((value, index) => {
-    //   return { ...value, isDeployed: tableData[index].isDeployed };
-    // });
     setTableData(filterDep);
   };
   if (data) {
@@ -179,20 +163,30 @@ const Report = () => {
           },
         }
       );
-      setOrgTableData(response?.data.response);
-      setTableData(response?.data.response);
+      // console.log("object");
+      setOrgTableData(
+        response?.data.response.sort((a, b) => {
+          return a.firstName.localeCompare(b.firstName);
+        })
+      );
+      setTableData(
+        response?.data.response.sort((a, b) => {
+          return a.firstName.localeCompare(b.firstName);
+        })
+      );
       setIsLoading(false);
     } catch (error) {
-      if (error.response.status === 401) {
+      const errorCode = error.response.status;
+      if (errorCode === 401) {
         navigate("/error/statusCode=401");
       }
-      if (error.response.status === 400) {
+      if (errorCode === 400) {
         navigate("/error/statusCode=400");
       }
-      if (error.response.status === 500) {
+      if (errorCode === 500) {
         navigate("/error/statusCode=500");
       }
-      if (error.response.status === 404) {
+      if (errorCode === 404) {
         navigate("/error/statusCode=404");
       }
       console.error("Error fetching data:", error.message);
@@ -262,6 +256,7 @@ const Report = () => {
             <Reporttable
               tableData={tableData}
               isLoading={isLoading}
+              deployData={deployData}
               handleDeployChange={handleDeployChange}
             />
           </div>

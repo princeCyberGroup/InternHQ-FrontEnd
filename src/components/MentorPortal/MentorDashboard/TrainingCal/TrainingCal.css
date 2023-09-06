@@ -1,0 +1,93 @@
+.cal-card {
+  height: 511px;
+  overflow: auto;
+  width: 24.5rem;
+  display: flex;
+  padding: 16px;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  flex: 1 0 0;
+  align-self: stretch;
+  border-radius: 8px;
+  background: #fff;
+  /* Shadow */
+  box-shadow: 0px 4px 20px 0px rgba(40, 52, 73, 0.15);
+}
+.cal-inner-card {
+  display: flex;
+  padding: 12px 16px;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 16px;
+  align-self: stretch;
+  border-radius: 8px;
+  border: 1px solid var(--secondary-light-gray, #e9eceb);
+  background: #fff;
+}
+
+.inner-cal-head {
+  margin: auto;
+  margin-left: 6px;
+  color: var(--primary-gray, #343435);
+  text-align: center;
+  font-family: Roboto;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+}
+
+.cal-date{
+    margin: auto;
+    margin-left: 6px;
+    color: #6D6D6D;
+font-family: Roboto;
+font-size: 14px;
+font-style: normal;
+font-weight: 400;
+line-height: normal;
+}
+
+.cal-batch{
+  margin: auto;
+  margin-left: 6px;
+  color: var(--primary-gray, #343435);
+  font-family: Roboto;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+}
+
+.attended-batch{
+  color: #6D6D6D;
+font-family: Roboto;
+font-size: 14px;
+font-style: normal;
+font-weight: 400;
+line-height: normal;
+}
+
+.cal-time{
+    margin: auto;
+    margin-left: 6px;
+    color: #6D6D6D;
+font-family: Roboto;
+font-size: 14px;
+font-style: normal;
+font-weight: 400;
+line-height: normal;
+}
+
+.TrainingCal-NoData{
+  height:30%;
+  margin-top: 90%;
+
+}
+
+.TcNoData{
+  margin-top: 10px;
+  margin-left: 11%;
+}
+

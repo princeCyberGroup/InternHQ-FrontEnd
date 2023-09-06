@@ -4,28 +4,38 @@ import "./ViewAllIdea.css";
 import Header from "../../../../../Header/Header";
 import EmptyIdea from "../../../EmptyStates/EmptyProject/MyIdeaViewAll";
 import DetailsLeft from "../../ViewDetails/DetailsLeft";
-import ProjectDetail from "../../ViewDetails/ProjectDetail";
 import { ReactComponent as ExpandMore } from "../../../../../../Assets/expand_more.svg";
 import TechDropDown from "../../TechDropDown";
 import axios from "axios";
 import { UserContext } from "../../../../../../Context/Context";
 import BreadCrumbs from "../../../../../BreadCrumbs/BreadCrumbs";
+import IdeaDetails from "../../ViewDetails/IdeaDetails";
+import { ReactComponent as VectorAdd } from "../../../../../../Assets/Vectoradd.svg";
+import TechnologyDropDown from "../../../../../AdminPortal/Task/AssignTask/TechnologyDropdown(Admin)";
+
 import CryptoJS from "crypto-js";
 
 const ViewAllIdeas = () => {
-  // const { idea, setIdea, project, setProject } = useContext(UserContext);
   const [idea, setIdea] = useState([]);
   const [projectIndex, setProjectIndex] = useState(0);
-  const [projNameError, setProjNameError] = useState("");
-  const [projDescriptionError, setProjDescriptionError] = useState("");
+  const [nameError, setNameError] = useState(true);
+  const [descError, setDescError] = useState(true);
   const [projName, setProjName] = useState("");
   const [projDescription, setProjDescription] = useState("");
   const [tech, setTech] = useState({});
-  const [error, setError] = useState(true);
   const [dropDown, setDropDown] = useState(false);
   const [textInput, setTextInput] = useState("");
-  const [memberNames, setMemberNames] = useState({});
+  const [memberNames, setMemberNames] = useState([]);
   const [techNames, seTechNames] = useState({});
+  const [isProjectNameValid, setIsProjectNameValid] = useState(false);
+  const [isProjectDescriptionValid, setIsProjectDescriptionValid] =
+    useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [taskVersion, setTaskVersion] = useState(0);
+  const [searchQuery, setSearchQuery] = useState("");
+  const [selectedTechIds, setSelectedTechIds] = useState([]);
+  const [technologyNames, setTechnologyNames] = useState([]);
+
   const navigate = useNavigate();
 
   const handelIndex = (index) => {
@@ -37,8 +47,6 @@ const ViewAllIdeas = () => {
     setProjName("");
     setProjDescription("");
     setDropDown(false);
-    setProjNameError("");
-    setProjDescriptionError("");
     setTech({});
     seTechNames({});
 
@@ -47,40 +55,49 @@ const ViewAllIdeas = () => {
       checkbox.checked = false;
     });
   };
-  const handleChangeProjNameError = (event) => {
-    event.preventDefault();
-    const name = event.target.value;
+  const handleChangeProjNameError = (e) => {
+    e.preventDefault();
+    const name = e.target.value;
     setProjName(name);
+    setIsProjectNameValid(name.match(/^.{1,100}$/) ? true : false);
     if (!name) {
-      setError(true);
-      setProjNameError("Project Name is required");
+      setNameError(true);
     } else {
-      setError(false);
-      setProjNameError("");
+      setNameError(false);
     }
   };
-  const handleChangeProjDescriptionError = (event) => {
-    event.preventDefault();
-    const description = event.target.value;
+  const handleChangeProjDescriptionError = (e) => {
+    e.preventDefault();
+    const description = e.target.value;
     setProjDescription(description);
+    setIsProjectDescriptionValid(
+      description.match(/^.{50,750}$/) ? true : false
+    );
     if (!description) {
-      setError(true);
-      setProjDescriptionError("Project Description is required");
+      setDescError(true);
     } else {
-      setError(false);
-      setProjDescriptionError("");
+      setDescError(false);
     }
   };
+
   const handleInputChange = (event) => {
-    setTextInput(event.target.value);
+    const inputText = event.target.value;
+    setTextInput(inputText);
+    const memberNamesArray = inputText.split(",").map((name) => name.trim());
+    const membersObj = {};
+    memberNamesArray.forEach((name, index) => {
+      membersObj[`member${index + 1}`] = name;
+    });
+    isObjectEmpty(membersObj);
   };
+
   const isObjectEmpty = (object) => {
-    if (object.member1?.length > 0) {
-      return setMemberNames(object);
-    } else {
-      return setMemberNames("");
-    }
+    const memberNamesArray = Object.values(object).filter(
+      (value) => value.trim() !== ""
+    );
+    setMemberNames(memberNamesArray);
   };
+
   const techDataComingFrmChild = (data) => {
     return setTech(data);
   };
@@ -97,16 +114,16 @@ const ViewAllIdeas = () => {
       console.log("No encrypted data found in localStorage.");
     }
     var userId = parsedObject.userId;
-    if (error) {
+    if (nameError || descError || technologyNames.length === 0) {
       alert("Please fill in the required details");
     } else {
       await axios
-        .post(process.env.REACT_APP_API_URL + "/api/v3/projectIdea", {
-          projName,
-          projDescription,
+        .post(process.env.REACT_APP_API_URL + "/user/dashboard/projectIdea", {
+          name: projName,
+          description: projDescription,
           userId,
-          technologyNames: tech,
-          memberNames: memberNames,
+          technology: technologyNames,
+          members: memberNames,
         })
         .then((res) => {
           console.log("print", res.data);
@@ -127,6 +144,16 @@ const ViewAllIdeas = () => {
       });
     }
   };
+
+  useEffect(() => {
+    const texts = textInput.split(",").map((text) => text.trim());
+    const membersObj = {};
+    texts.forEach((text, index) => {
+      membersObj[`member${index + 1}`] = text;
+    });
+
+    isObjectEmpty(membersObj);
+  }, [textInput]);
 
   useEffect(() => {
     const secretkeyUser = process.env.REACT_APP_USER_KEY;
@@ -152,6 +179,9 @@ const ViewAllIdeas = () => {
       )
       .then((response) => {
         setIdea(response.data.response);
+        {
+          console.log("Api", response.data);
+        }
       })
       .catch((error) => {
         if (error.response.status === 401) {
@@ -168,7 +198,7 @@ const ViewAllIdeas = () => {
         }
         console.error("Error fetching tasks:", error);
       });
-  }, []);
+  }, [taskVersion]);
 
   useEffect(() => {
     const texts = textInput.split(",").map((text) => text.trim());
@@ -196,11 +226,13 @@ const ViewAllIdeas = () => {
           </div>
 
           <div
-            className="add-new-project-wrapper pb-0 me-0"
+            className="add-new-project-wrapper me-0"
             data-bs-toggle="modal"
             data-bs-target="#viewAllAddModal"
           >
-            <p className="add-new-project me-2">Add New Idea</p>
+            <p className="add-new-project">
+              <VectorAdd /> Add New Idea
+            </p>
           </div>
 
           <div
@@ -235,11 +267,6 @@ const ViewAllIdeas = () => {
                         className="col-form-label title-text"
                       >
                         Project Name<span style={{ color: "red" }}>*</span>{" "}
-                        {projNameError && (
-                          <span style={{ color: "red", fontSize: "11px" }}>
-                            ({projNameError})
-                          </span>
-                        )}
                       </label>
                       <input
                         type="text"
@@ -249,6 +276,12 @@ const ViewAllIdeas = () => {
                         placeholder="Enter Project Name"
                         onChange={handleChangeProjNameError}
                       />
+                      {!isProjectNameValid && projName && (
+                        <span style={{ color: "red", fontSize: "11px" }}>
+                          Please enter a text with a length between 1 and 100
+                          characters.
+                        </span>
+                      )}
                     </div>
                     <div className="mb-3">
                       <label
@@ -257,20 +290,23 @@ const ViewAllIdeas = () => {
                       >
                         Project Description
                         <span style={{ color: "red" }}>*</span>{" "}
-                        {projDescriptionError && (
-                          <span style={{ color: "red", fontSize: "11px" }}>
-                            ({projDescriptionError})
-                          </span>
-                        )}
+                        <span style={{ color: "grey" }}>
+                          (Minimum 50 characters)
+                        </span>
                       </label>
                       <textarea
                         className="form-control"
                         value={projDescription}
                         id="project-description"
                         placeholder="Write Here.."
-                        onChange={handleChangeProjDescriptionError}
+                        onChange={(e) => handleChangeProjDescriptionError(e)}
                         rows={3}
-                      ></textarea>
+                      />
+                      {!isProjectDescriptionValid && projDescription && (
+                        <span style={{ color: "red", fontSize: "11px" }}>
+                          Maximum description can be of 750 characters.
+                        </span>
+                      )}
                     </div>
 
                     <div className="mb-3">
@@ -280,6 +316,9 @@ const ViewAllIdeas = () => {
                         required
                       >
                         Technology Used <span style={{ color: "red" }}>*</span>
+                        <span style={{ color: "grey" }}>
+                          (Select atleast 1 technology)
+                        </span>
                       </label>
                       <div className="container border p-0">
                         <div className="input-with-button">
@@ -312,14 +351,23 @@ const ViewAllIdeas = () => {
                             style={{ display: dropDown ? "" : "none" }}
                             className="ul-styling"
                           >
-                            <TechDropDown
+                            <TechnologyDropDown
                               techDataComingChild={techDataComingFrmChild}
-                              seTechNames={seTechNames}
-                              techNames={techNames}
+                              selectedTechIds={selectedTechIds}
+                              setSelectedTechIds={setSelectedTechIds}
+                              setTechnologyNames={setTechnologyNames}
+                              technologyNames={technologyNames}
+                              searchQuery={searchQuery}
+                              setSearchQuery={setSearchQuery}
                             />
                           </ul>
                         </div>
                       </div>
+                      {!Object.values(tech).length && (
+                        <span style={{ color: "grey", fontSize: "11px" }}>
+                          Maximum 10 technologies
+                        </span>
+                      )}
                     </div>
 
                     <div className="mb-3">
@@ -328,6 +376,9 @@ const ViewAllIdeas = () => {
                         className="col-form-label title-text"
                       >
                         Members(Optional)
+                        <span style={{ color: "grey" }}>
+                          (Minimum 8 members)
+                        </span>
                       </label>
                       <input
                         className="form-control"
@@ -350,10 +401,17 @@ const ViewAllIdeas = () => {
                   </button>
                   <button
                     type="button"
-                    className="btn save-button"
+                    class="btn btn-primary save-button"
                     data-bs-target="#viewAllAddModal"
-                    data-bs-dismiss={!error ? "modal" : ""}
-                    onClick={handleSubmit}
+                    data-bs-dismiss={
+                      !nameError && !descError && technologyNames.length !== 0
+                        ? "modal"
+                        : ""
+                    }
+                    onClick={(e) => {
+                      handleSubmit(e);
+                      setIsModalOpen(true);
+                    }}
                   >
                     <span className="save-text"> Save </span>
                   </button>
@@ -370,10 +428,15 @@ const ViewAllIdeas = () => {
             style={{ overFlowY: "scroll" }}
           >
             <div className="">
-              <DetailsLeft data={idea} projectDetails={handelIndex} />
+              <DetailsLeft project={idea} projectDetails={handelIndex} />
             </div>
             <div className="project-detail">
-              <ProjectDetail data={idea} indexNumber={projectIndex} />
+              <IdeaDetails
+                data={idea}
+                indexNumber={projectIndex}
+                setTaskVersion={setTaskVersion}
+                taskVersion={taskVersion}
+              />
             </div>
           </div>
         )}

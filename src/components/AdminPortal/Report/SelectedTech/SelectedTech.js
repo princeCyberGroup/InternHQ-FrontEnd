@@ -37,11 +37,8 @@ const SelectedTech = ({ loadFilter, handleSelectTech }) => {
             },
           }
         );
-        setTechOptions(
-          response.data.response.map((value, index) => {
-            return value.techName;
-          })
-        );
+        const tempArr = response.data.response.map((value) => value.techName);
+        setTechOptions(tempArr.sort((a, b) => a.localeCompare(b)));
       } catch (error) {
         if (error.response.status === 401) {
           navigate("/error/statusCode=401");

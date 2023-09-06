@@ -7,7 +7,7 @@
   align-items: flex-start;
   /* //need a change  */
   width: 27.1rem;
-  height: 11.9rem;
+  height: 12rem;
   background: #eaeef6;
 
   border: 1px solid #28519e;
@@ -31,7 +31,7 @@
     border-radius: 4px;
     background: var(--blue, #28519E);
     border-color: var(--blue, #28519E);
-    margin-top: 10px;
+    margin-top: 8px;
 }
 .assign-review-button:hover {
     background: var(--blue, #28519E);

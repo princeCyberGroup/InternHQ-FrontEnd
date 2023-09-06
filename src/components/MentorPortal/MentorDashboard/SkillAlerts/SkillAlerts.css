@@ -1,0 +1,91 @@
+.notification-pass {
+  padding: 0%;
+  display: flex;
+  width: 387.5px;
+  height: 341px;
+  flex-direction: column;
+  border-radius: 8px;
+  background: #fff;
+
+  /* Shadow */
+  box-shadow: 0px 4px 20px 0px rgba(40, 52, 73, 0.15);
+}
+
+.notification-fail {
+  padding: 0%;
+  margin-left: 0.5rem;
+  display: flex;
+  width: 387.5px;
+  height: 341px;
+  flex-direction: column;
+  border-radius: 8px;
+  background: #fff;
+
+  /* Shadow */
+  box-shadow: 0px 4px 20px 0px rgba(40, 52, 73, 0.15);
+}
+
+.notification-pass-wrapper {
+  /* overflow-y: scroll; */
+  padding-bottom: 12px;
+  padding-left: 12px;
+  gap: 12px;
+
+  background: #ffffff;
+  border-bottom: 1px solid #e9eceb;
+  display: flex;
+  align-items: flex-start;
+}
+
+.skill-alert-cover {
+  /* max-height: 29.43rem; */
+  /* padding-bottom: 1rem; */
+  max-height: 290px;
+  overflow-y: scroll;
+}
+
+h5.skill-alert-head {
+  width: 8.18rem;
+  margin-top: 8px;
+  margin-bottom: 8px;
+  font-family: "Roboto";
+  font-style: normal;
+  font-weight: 600;
+  font-size: 1rem;
+  line-height: 1.18rem;
+  color: #343435;
+}
+
+.pass-head {
+  display: flex;
+  height: 35px;
+  padding: 8px;
+  align-items: center;
+  gap: 8px;
+  flex-shrink: 0;
+  align-self: stretch;
+  border-bottom: 1px solid var(--other-green, #2dc26b);
+}
+.fail-head {
+    display: flex;
+  height: 35px;
+  padding: 8px;
+  align-items: center;
+  gap: 8px;
+  flex-shrink: 0;
+  align-self: stretch;
+    border-bottom: 1px solid var(--other-red, #E03E2D);
+}
+
+.skillAlerts-NoData{
+  height: 30%;
+  width: 30%;
+  margin-left: 34%;
+  margin-top: 20%;
+  
+}
+
+.SaNoData{
+  margin-top: 3%;
+ margin-left: 20%;
+}

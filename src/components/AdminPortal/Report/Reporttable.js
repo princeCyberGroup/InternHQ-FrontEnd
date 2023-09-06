@@ -8,7 +8,12 @@ import { Data } from "./Fetcheddataobject";
 import { useNavigate } from "react-router-dom";
 import ReportTableSkeleton from "./ReportTableSkeleton";
 
-const Reporttable = ({ tableData, isLoading, handleDeployChange }) => {
+const Reporttable = ({
+  tableData,
+  isLoading,
+  deployData,
+  handleDeployChange,
+}) => {
   //data
   const navigate = useNavigate();
   const [selectedIndex, setSelectedIndex] = useState(-1);
@@ -74,7 +79,6 @@ const Reporttable = ({ tableData, isLoading, handleDeployChange }) => {
                   <td>
                     <div
                       className="tech-tags"
-                      onMouseEnter={() => setSelectedIndex(ind)}
                       onMouseLeave={() => setSelectedIndex(-1)}
                     >
                       {val?.[Data.TN]
@@ -106,8 +110,11 @@ const Reporttable = ({ tableData, isLoading, handleDeployChange }) => {
                         })}
                       {selectedIndex !== ind &&
                         objectKeyCount > 2 &&
-                        val?.[Data.TN].slice(4).length !== 0 && (
-                          <div className="all-tech">
+                        val?.[Data.TN].slice(3).length !== 0 && (
+                          <div
+                            className="all-tech"
+                            onMouseEnter={() => setSelectedIndex(ind)}
+                          >
                             <span>+ {val?.[Data.TN].slice(3).length}</span>
                           </div>
                         )}
@@ -149,7 +156,15 @@ const Reporttable = ({ tableData, isLoading, handleDeployChange }) => {
                         onChange={() => {
                           handleDeployChange(val.userId);
                         }}
-                        checked={val[Data.DE]}
+                        checked={
+                          deployData.some(
+                            (value) => value?.userId === val?.userId
+                          )
+                            ? deployData.find((value) => {
+                                return value?.userId === val?.userId;
+                              }).status
+                            : val[Data.DE]
+                        }
                       />
                     </div>
                   </td>

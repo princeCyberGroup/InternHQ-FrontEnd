@@ -92,24 +92,33 @@ p.card-textt {
     margin-left: -0.5rem;
 }
 
-/* .project-idea-members:last-child {
+.count-of-members{
     background-color: rgba(40, 81, 158, 0.2);
-} */
-.project-idea-members-aditional{
     width: 2.5rem;
     height: 2.5rem;
     border-radius: 50%;
-    background-color: #fff;
+    text-align: center;
+    margin-left: -10px;
     display: flex;
-    align-items: center;
     justify-content: center;
-    background-color: rgba(40, 81, 158, 0.2);
+    align-items: center;
 }
 
-.project-idea-members-aditional p {
+.project-idea-members:last-child p {
     font-size: 1.1rem;
 }
 
+.remaining-members{
+    font-size:0.875rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    margin-bottom: 0;
+    font-style:normal;
+    font-weight: 400;
+    color: #343435;
+}
 .project-idea-members-skeleton {
     width: 2.5rem;
     height: 2.5rem;
@@ -220,6 +229,7 @@ p.card-textt {
     border: 0.25rem;
     justify-content: center;
     align-items: center;
+    cursor: not-allowed;
 }
 
 .save-text {
@@ -280,7 +290,8 @@ p.card-textt {
     font-size: 0.875rem;
     line-height: 1rem;
     text-align: center;
-
+    margin-top: 0.5rem;
+    margin-bottom: 0.5rem;
     color: #FFFFFF;
 }
 .add-new-project-wrapper{
@@ -298,4 +309,5 @@ p.card-textt {
     order: 1;
     flex-grow: 0;
     cursor: pointer;
+    width: 9.67rem;
 }

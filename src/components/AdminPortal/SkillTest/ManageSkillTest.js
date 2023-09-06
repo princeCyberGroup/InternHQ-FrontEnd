@@ -78,16 +78,16 @@ export const ManageSkillTest = () => {
   };
 
   return (
-    <>
+    <div style={{ backgroundColor: "#fbfbfb" }}>
       {showConfirm && (
         <Confirmation
           handleCancel={handleCancel}
           id={confirmId}
           handleDel={handleDel}
-          confirmationValue = "manageskill"
+          confirmationValue="manageskill"
         />
       )}
-      <div style={{ marginBottom: "5.5rem" }}>
+      <div style={{ marginBottom: "5.5rem", border: "0.1px solid" }}>
         <Header />
       </div>
       <div className="container-fluid manage-skill-test-container d-flex flex-column">
@@ -123,7 +123,7 @@ export const ManageSkillTest = () => {
               style={{ overflow: "visible" }}
             ></div>
             <table id="example" className="table table-striped">
-              <thead className="manageskilltest-thead">
+              <thead className="manageskilltest-thead" style={{zIndex: "5"}}>
                 <tr className="color-table">
                   <th className="column-technology" style={{ width: "1rem" }}>
                     S.No
@@ -195,6 +195,6 @@ export const ManageSkillTest = () => {
           </div>
         </div>
       </div>
-    </>
+    </div>
   );
 };
