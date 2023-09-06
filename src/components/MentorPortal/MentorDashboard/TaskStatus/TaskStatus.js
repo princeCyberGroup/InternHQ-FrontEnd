@@ -12,6 +12,7 @@ import { ReactComponent as Right } from "../../../../Assets/chevron-right.svg";
 import { ReactComponent as Completed } from "../../../../Assets/Task Status.svg";
 import { ReactComponent as Ongoing } from "../../../../Assets/Task StatusOngoing.svg";
 import { ReactComponent as Overdue } from "../../../../Assets/Task Statusoverdue.svg";
+import { ReactComponent as NoTask } from "../../../../Assets/NoData.svg";
 import { Link } from "react-router-dom";
 import "./TaskStatus.css";
 
@@ -54,7 +55,7 @@ export const TaskStatus = (props) => {
   const fetchData = async () => {
     try {
       let apiUrl = `${process.env.REACT_APP_API_URL}/api/v4/dashboard-task-status?mentorId=${userId}`;
-      
+
       if (props.selectedBatches.length > 0) {
         // const batchNames = props.selectedBatches.map(Batch => Batch.batchName);
         // const batchNamesQuery = batchNames.join(',');
@@ -62,18 +63,19 @@ export const TaskStatus = (props) => {
         // apiUrl += `&batch=${batchNamesQuery}`;
         const batchNamesQuery = props.selectedBatches.join(',');
         console.log(batchNamesQuery);
-      apiUrl += `&batch=${encodeURIComponent(batchNamesQuery)}`;
+        apiUrl += `&batch=${encodeURIComponent(batchNamesQuery)}`;
       }
-      
+
       const response = await fetch(apiUrl, {
         headers: {
           Authorization: `Bearer ${parsedObject["token"]}`,
         },
       });
-  
+
       const data = await response.json();
-  
+
       setTaskStatus(data.response);
+
       console.log(data.response, "This is task Status");
     } catch (error) {
       if (error.response.status === 401) {
@@ -90,113 +92,90 @@ export const TaskStatus = (props) => {
       }
     }
   };
-  
-
-
   return (
-
-
     <>
-    <p className="p-0 m-0">
-      <Link
-        to="/mentor/assign-task"
-        className="about-link p-0"
+      <p className="p-0 m-0">
+        <Link
+          to="/mentor/assign-task"
+          className="about-link p-0"
         // style={{ width: "757px", maxHeight: "360px", overflow: "auto" }}
-      >
-        Manage Associate Task Status <Right style={{marginBottom: "2px" }} />
-      </Link>
+        >
+          Manage Associate Task Status <Right style={{ marginBottom: "2px" }} />
+        </Link>
       </p>
       <div className="card task-status-card ">
-        {taskStatus && taskStatus?.map((task) => (
-          <div
-            key={task.taskId}
-            className="each-task mb-2"
-            style={{ width: "100%" }}
-          >
-            <h5 className="mb-3">{task.taskName}</h5>
+        {
+          taskStatus?.length == 0 ? (<div className="d-block">
+            <NoTask className="nodata" />
+            <p class="assment">No Task Assigned!</p>
+            <p class="reports">Sorry, There is no task available to display at this time.</p>
+
+          </div>) : (taskStatus && taskStatus?.map((task) => (
             <div
-              className="accordion "
-              id={`accordion-${task.taskId}`}
+              key={task.taskId}
+              className="each-task mb-2"
               style={{ width: "100%" }}
             >
-              {task.batchUsers.map((batchUser, index) => (
-                <div className="mb-3 batch-accord" key={index}>
-                  <h2
-                    className="accordion-header"
-                    id={`heading-${task.taskId}-${index}`}
-                  >
-                    <button
-                      className="accordion-button batch-accord-btn collapsed"
-                      type="button"
-                      data-bs-toggle="collapse"
-                      data-bs-target={`#collapse-${task.taskId}-${index}`}
-                      aria-expanded="false"
-                      aria-controls={`collapse-${task.taskId}-${index}`}
+              <h5 className="mb-3">{task.taskName}</h5>
+              <div
+                className="accordion "
+                id={`accordion-${task.taskId}`}
+                style={{ width: "100%" }}
+              >
+                {task.batchUsers.map((batchUser, index) => (
+                  <div className="mb-3 batch-accord" key={index}>
+                    <h2
+                      className="accordion-header"
+                      id={`heading-${task.taskId}-${index}`}
                     >
-                      {batchUser.batchName}
-                    </button>
-                  </h2>
-                  <div
-                    id={`collapse-${task.taskId}-${index}`}
-                    className="accordion-collapse collapse "
-                    aria-labelledby={`heading-${task.taskId}-${index}`}
-                    data-bs-parent={`#accordion-${task.taskId}`}
-                  >
-                    <div className="accordion-body">
-                      {batchUser.users.map((user, userIndex) => (
-                        <div
-                          key={user.user_id}
-                          className="card associate-mapped-card-task"
-                        >
-                          <div className="row d-flex justify-content-space-between">
-                            <div className="col-8 d-flex align-items-center">
-                              <div className="row">
-                                <div className="col-4 frame pointer">
-                                  <p
-                                    style={{
-                                      display: "flex",
-                                      justifyContent: "center",
-                                      alignItems: "center",
-                                      marginTop: "0.938rem",
-                                    }}
-                                  >
-                                    {getInitials(user.name)}
-                                  </p>
-                                </div>
-                                <div className="col-4 pointer">
-                                  <div className="frame-text">{user.name}</div>
-                                  <div className="frame-id-task">
-                                    {user.internId}
+                      <button
+                        className="accordion-button batch-accord-btn collapsed"
+                        type="button"
+                        data-bs-toggle="collapse"
+                        data-bs-target={`#collapse-${task.taskId}-${index}`}
+                        aria-expanded="false"
+                        aria-controls={`collapse-${task.taskId}-${index}`}
+                      >
+                        {batchUser.batchName}
+                      </button>
+                    </h2>
+                    <div
+                      id={`collapse-${task.taskId}-${index}`}
+                      className="accordion-collapse collapse "
+                      aria-labelledby={`heading-${task.taskId}-${index}`}
+                      data-bs-parent={`#accordion-${task.taskId}`}
+                    >
+                      <div className="accordion-body">
+                        {batchUser.users.map((user, userIndex) => (
+                          <div
+                            key={user.user_id}
+                            className="card associate-mapped-card-task"
+                          >
+                            <div className="row d-flex justify-content-space-between">
+                              <div className="col-8 d-flex align-items-center">
+                                <div className="row">
+                                  <div className="col-4 frame pointer">
+                                    <p
+                                      style={{
+                                        display: "flex",
+                                        justifyContent: "center",
+                                        alignItems: "center",
+                                        marginTop: "0.938rem",
+                                      }}
+                                    >
+                                      {getInitials(user.name)}
+                                    </p>
+                                  </div>
+                                  <div className="col-4 pointer">
+                                    <div className="frame-text">{user.name}</div>
+                                    <div className="frame-id-task">
+                                      {user.internId}
+                                    </div>
                                   </div>
                                 </div>
                               </div>
-                            </div>
-                            <div className="col-4 task-status">
-                              {/* {user.task_done ? (
-                                user.task_complete_date ? (
-                                  <>
-                                    <Completed />
-                                    <div className="mt-1 frame-id-task">
-                                      {formatDate(user.task_complete_date)}
-                                    </div>
-                                  </>
-                                ) : (
-                                  <>
-                                    <Ongoing />
-                                    <div className="mt-1 frame-id-task">
-                                      {formatDate(task.endDate)}
-                                    </div>
-                                  </>
-                                )
-                              ) : (
-                                <>
-                                  <Overdue />
-                                  <div className="mt-1 frame-id-task">
-                                    {formatDate(task.endDate)}
-                                  </div>
-                                </>
-                              )} */}
-                              {user.task_done ? (
+                              <div className="col-4 task-status">
+                                {user.task_done ? (
                                   user.task_complete_date ? (
                                     <>
                                       <Completed />
@@ -213,33 +192,25 @@ export const TaskStatus = (props) => {
                                     </>
                                   )
                                 ) : (
-                                  new Date() <= new Date(task.endDate) ? (
-                                    <>
-                                      <Ongoing />
-                                      <div className="mt-1 frame-id-task">
-                                        {formatDate(task.endDate)}
-                                      </div>
-                                    </>
-                                  ) : (
-                                    <>
-                                      <Overdue />
-                                      <div className="mt-1 frame-id-task">
-                                        {formatDate(task.endDate)}
-                                      </div>
-                                    </>
-                                  )
+                                  <>
+                                    <Overdue />
+                                    <div className="mt-1 frame-id-task">
+                                      {formatDate(task.endDate)}
+                                    </div>
+                                  </>
                                 )}
+                              </div>
                             </div>
                           </div>
-                        </div>
-                      ))}
+                        ))}
+                      </div>
                     </div>
                   </div>
-                </div>
-              ))}
+                ))}
+              </div>
             </div>
-          </div>
-        ))}
+          )))
+        }
       </div>
     </>
   );

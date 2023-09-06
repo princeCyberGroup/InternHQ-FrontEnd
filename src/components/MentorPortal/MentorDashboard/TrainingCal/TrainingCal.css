@@ -79,3 +79,15 @@ font-style: normal;
 font-weight: 400;
 line-height: normal;
 }
+
+.TrainingCal-NoData{
+  height:30%;
+  margin-top: 90%;
+
+}
+
+.TcNoData{
+  margin-top: 10px;
+  margin-left: 11%;
+}
+
