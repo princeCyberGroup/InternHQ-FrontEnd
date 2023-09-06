@@ -12,6 +12,7 @@ import { ReactComponent as Right } from "../../../Assets/right.svg";
 import Header from "../../Header/Header";
 import CryptoJS from "crypto-js";
 import AssignReviewer from "./AssignReviewer/AssignReviewer";
+import TodaySession from "./TodaySession/TodaySession";
 
 const DashboardA = () => {
   const [StatusData, setStatusData] = useState([]);
@@ -83,9 +84,7 @@ const DashboardA = () => {
         <>
           <div className="row">
             <div className="col-8 component-div"  >
-            <div className="about">
-               
-              </div>
+            <div className="about"></div>
               <div className="row div-staus-upload">
                 <div className="col-6 outer-row-info">
                   <Status data={StatusData} />
@@ -105,7 +104,11 @@ const DashboardA = () => {
               </div>
             </div>
             {/* //insights */}
-            <div className="col-4 " style={{marginTop:"1rem"}}>
+            <div className="col-4 " 
+            // style={{marginTop:"1rem"}}
+            >
+            <div className="about"></div>
+              <TodaySession/>
               <Insights />
             </div>
           </div>

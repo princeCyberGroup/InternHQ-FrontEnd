@@ -129,12 +129,12 @@ const BatchSelect = (props) => {
         </div>
       ))}
       
-      <input
+      {/* <input
         type="text"
         className="custom-input"
         value={props.selectedBatches?.join(", ")}
         disabled
-      />
+      /> */}
       </div>
     </>
   );

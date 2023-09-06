@@ -69,7 +69,7 @@ const ProjectDetail = ({
             </div>
             <div>
               <EditButton
-                className="mx-3"
+                className="mx-3 clickable"
                 data-bs-toggle="modal"
                 data-bs-target="#editProjectModal"
                 onClick={(e) => {
@@ -97,8 +97,8 @@ const ProjectDetail = ({
                     (tech) => tech !== null
                   ) || data[indexNumber]?.techNames
                 }
-                projectLinks={data[indexNumber]?.projectLink}
-                hostedLinks={data[indexNumber]?.hostedLink}
+                projectLinks={data[indexNumber]?.projectLink || ""}
+                hostedLinks={data[indexNumber]?.hostedLink || ""}
                 memberName={
                   data[indexNumber]?.members?.filter((tech) => tech !== null) ||
                   ""
@@ -111,6 +111,7 @@ const ProjectDetail = ({
 
               {data[indexNumber]?.projectId && (
                 <DeleteButton
+                  className="clickable"
                   projectId={data[indexNumber].projectId}
                   onClick={(e) => {
                     deleteTask(e, data[indexNumber].projectId, indexNumber);
@@ -162,27 +163,27 @@ const ProjectDetail = ({
           </div>
           <div>
             {data[indexNumber]?.projectLink && (
+              <>
               <p className="project-detail-link">Project Link:</p>
-            )}
-            {data[indexNumber].projectLink && (
               <p className="project-link-name">
                 <Link to={data[indexNumber]?.projectLink} target="_blank">
                   {data[indexNumber]?.projectLink}
                 </Link>
               </p>
+              </>
             )}
           </div>
 
           <div>
             {data[indexNumber]?.hostedLink && (
+              <>
               <p className="project-detail-hosted-link">Hosted Link:</p>
-            )}
-            {data[indexNumber]?.hostedLink && (
               <p className="hosted-link-name text-decoration-none">
                 <Link to={data[indexNumber].hostedLink} target="_blank">
                   {data[indexNumber].hostedLink}
                 </Link>
               </p>
+              </>
             )}
           </div>
           <div className="members-div pt-0">

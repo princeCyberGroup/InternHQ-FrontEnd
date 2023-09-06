@@ -92,9 +92,7 @@ export const TaskStatus = (props) => {
       }
     }
   };
-
   return (
-
     <>
       <p className="p-0 m-0">
         <Link
